@@ -1,0 +1,15 @@
+salesforce.AuraDefinitionBundle openQuotesInDealHub {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  description = "A Lightning Component Bundle"
+  fullName = "openQuotesInDealHub"
+  type = "Component"
+  rendererContent = file("salesforce/Records/AuraDefinitionBundle/openQuotesInDealHub/openQuotesInDealHubRenderer.js")
+  documentationContent = file("salesforce/Records/AuraDefinitionBundle/openQuotesInDealHub/openQuotesInDealHub.auradoc")
+  styleContent = file("salesforce/Records/AuraDefinitionBundle/openQuotesInDealHub/openQuotesInDealHub.css")
+  helperContent = file("salesforce/Records/AuraDefinitionBundle/openQuotesInDealHub/openQuotesInDealHubHelper.js")
+  controllerContent = file("salesforce/Records/AuraDefinitionBundle/openQuotesInDealHub/openQuotesInDealHubController.js")
+  markup = file("salesforce/Records/AuraDefinitionBundle/openQuotesInDealHub/openQuotesInDealHub.cmp")
+  SVGContent = file("salesforce/Records/AuraDefinitionBundle/openQuotesInDealHub/openQuotesInDealHub.svg")
+  designContent = file("salesforce/Records/AuraDefinitionBundle/openQuotesInDealHub/openQuotesInDealHub.design")
+}

@@ -1,0 +1,10 @@
+salesforce.Role RightDecisionPartnerManager {
+  fullName = "RightDecisionPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Right Decision Partner Manager"
+  mayForecastManagerShare = false
+  name = "Right Decision Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

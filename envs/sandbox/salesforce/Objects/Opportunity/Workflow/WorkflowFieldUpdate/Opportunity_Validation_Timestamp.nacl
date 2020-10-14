@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Validation_Timestamp {
+  fullName = "Opportunity.Validation_Timestamp"
+  field = salesforce.Opportunity.field.Validation_Timestamp__c
+  formula = "today()"
+  name = "Validation Timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

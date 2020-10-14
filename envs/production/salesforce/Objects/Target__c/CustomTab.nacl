@@ -1,0 +1,8 @@
+salesforce.CustomTab Target__c {
+  fullName = "Target__c"
+  customObject = true
+  motif = "Custom8: Diamond"
+  _parent = [
+    salesforce.Target__c,
+  ]
+}

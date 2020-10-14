@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__zaapit_tab_RLT {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Related Info Tabs"
+  fullName = "zaapit__zaapit_tab_RLT"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tab_RLT.page")
+}

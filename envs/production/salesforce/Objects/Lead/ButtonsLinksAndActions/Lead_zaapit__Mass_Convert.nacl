@@ -1,0 +1,17 @@
+salesforce.WebLink Lead_zaapit__Mass_Convert {
+  fullName = "Lead.zaapit__Mass_Convert"
+  availability = "online"
+  description = "used inside zaa[ot's apps"
+  displayType = "massActionButton"
+  encodingKey = "UTF-8"
+  height = 600
+  linkType = "url"
+  masterLabel = "Mass Convert"
+  openType = "sidebar"
+  protected = false
+  requireRowSelection = true
+  url = "/**/openMassConvert();"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

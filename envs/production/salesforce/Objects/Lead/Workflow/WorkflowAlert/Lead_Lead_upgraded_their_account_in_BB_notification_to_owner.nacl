@@ -1,0 +1,16 @@
+salesforce.WorkflowAlert Lead_Lead_upgraded_their_account_in_BB_notification_to_owner {
+  fullName = "Lead.Lead_upgraded_their_account_in_BB_notification_to_owner"
+  description = "Lead upgraded their account in BB notification to owner"
+  protected = false
+  recipients = [
+    {
+      recipient = "galom@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Lead_Upgraded
+  _parent = [
+    salesforce.Lead,
+  ]
+}

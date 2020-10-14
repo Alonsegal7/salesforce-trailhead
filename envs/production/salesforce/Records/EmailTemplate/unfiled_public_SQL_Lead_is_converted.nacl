@@ -1,0 +1,53 @@
+salesforce.EmailTemplate unfiled_public_SQL_Lead_is_converted {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "SQL Lead is converted"
+  style = "freeForm"
+  subject = "SQL lead from {!Lead.Company} was selected as qualified by {!Lead.AE__c}!"
+  textOnly = '''
+New SDR Handover for {!Lead.Company}
+
+Lead details:
+
+Use case:
+{!Lead.Use_Case__c}
+
+Pains:
+{!Lead.Pains_SDR__c}
+
+Opportunity size:
+{!Lead.Opportunity_Size__c}
+
+Authority:
+{!Lead.Authority_SDR__c}
+
+Budget:
+{!Lead.Budget_Text__c}
+
+Timeline:
+{!Lead.Timeline_SDR__c}
+
+Competition:
+{!Lead.Competition__c}
+
+SDR notes:
+{!Lead.SDR_Notes__c}
+
+Date of meeting:
+{!Lead.Date_of_Meeting__c}
+
+Attendees:
+{!Lead.Attendees__c}
+
+Link to call:
+{!Lead.Link_to_Call__c}
+
+Click here to view the lead
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/SQL_Lead_is_converted"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/SQL_Lead_is_converted.email")
+}

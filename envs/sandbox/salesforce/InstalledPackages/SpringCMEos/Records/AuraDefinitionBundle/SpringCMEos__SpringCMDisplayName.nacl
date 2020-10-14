@@ -1,0 +1,11 @@
+salesforce.AuraDefinitionBundle SpringCMEos__SpringCMDisplayName {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 40
+  description = "A Lightning Component Bundle"
+  fullName = "SpringCMEos__SpringCMDisplayName"
+  type = "Component"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+  rendererContent = "(hidden)"
+}

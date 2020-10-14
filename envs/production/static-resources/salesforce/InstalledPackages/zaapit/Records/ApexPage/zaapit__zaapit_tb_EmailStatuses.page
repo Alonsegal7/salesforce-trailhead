@@ -1,0 +1,18 @@
+<apex:page standardController="contact">
+ 
+<!--
+    <apex:pageBlock title="Email Statuses">
+        <apex:pageBlockTable value="{!contact.EmailStatuses}" var="item">
+            <apex:column value="{!item.Task.subject}"/>
+        
+            <apex:column value="{!item.firstopendate}"/>
+            <apex:column value="{!item.LastOpenDate}"/>
+            <apex:column value="{!item.TimesOpened}"/>
+            <apex:column value="{!item.EmailTemplateName}"/>
+            <apex:column value="{!item.Taskid}"/>
+
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+-->
+
+</apex:page>

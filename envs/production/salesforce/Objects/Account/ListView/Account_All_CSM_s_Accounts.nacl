@@ -1,0 +1,36 @@
+salesforce.ListView Account_All_CSM_s_Accounts {
+  fullName = "Account.All_CSM_s_Accounts"
+  columns = [
+    "ACCOUNT.NAME",
+    "PARENT_NAME",
+    "CORE.USERS.FIRST_NAME",
+    "CSM__c",
+    "Monday_Account_Status__c",
+    "Monday_Account_Lifecycle__c",
+    "ARR__c",
+    "Plan_Name__c",
+    "WAPP__c",
+    "WAPP_Goal_For_Adoption__c",
+    "WAPP_Goal_For_Engagement__c",
+    "Members__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "ACCOUNT.RECORDTYPE"
+      operation = "equals"
+      value = "Account.Monday_Account"
+    },
+    {
+      field = "CSM__c"
+      operation = "notEqual"
+    },
+  ]
+  label = "All CSM's Accounts"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Account,
+  ]
+}

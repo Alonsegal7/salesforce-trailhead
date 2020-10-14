@@ -1,0 +1,25 @@
+salesforce.ListView Billing_Entity__c_All {
+  fullName = "Billing_Entity__c.All"
+  columns = [
+    "NAME",
+    "Priority_Id__c",
+    "Agent_Code_Priority__c",
+    "Billing_Address__c",
+    "Billing_Currency__c",
+    "City__c",
+    "Contact_phone_number__c",
+    "Country__c",
+    "CREATED_DATE",
+    "CURRENCY_ISO_CODE",
+    "Contact_Email__c",
+    "Finance_Contact_Phone__c",
+    "Last_Sync_iConduct__c",
+    "Error_Message__c",
+    "Sync_Status__c",
+  ]
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Billing_Entity__c,
+  ]
+}

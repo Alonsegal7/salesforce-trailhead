@@ -1,0 +1,1388 @@
+type salesforce.RecordAction {
+  serviceid Id {
+    apiName = "RecordAction.Id"
+    label = "RecordAction ID"
+    _required = false
+    queryable = true
+    _hidden = true
+    updateable = false
+    createable = false
+  }
+  salesforce.Checkbox IsDeleted {
+    apiName = "RecordAction.IsDeleted"
+    label = "Deleted"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+    _required = false
+  }
+  salesforce.Picklist CurrencyIsoCode {
+    apiName = "RecordAction.CurrencyIsoCode"
+    label = "Currency ISO Code"
+    _required = false
+    valueSet = [
+      {
+        fullName = "AUD"
+        default = false
+        label = "Australian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "BRL"
+        default = false
+        label = "Brazilian Real"
+        isActive = true
+      },
+      {
+        fullName = "GBP"
+        default = false
+        label = "British Pound"
+        isActive = true
+      },
+      {
+        fullName = "CAD"
+        default = false
+        label = "Canadian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "EUR"
+        default = false
+        label = "Euro"
+        isActive = true
+      },
+      {
+        fullName = "ILS"
+        default = false
+        label = "Israeli Shekel"
+        isActive = true
+      },
+      {
+        fullName = "MXN"
+        default = false
+        label = "Mexican Peso"
+        isActive = true
+      },
+      {
+        fullName = "USD"
+        default = true
+        label = "U.S. Dollar"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime CreatedDate {
+    apiName = "RecordAction.CreatedDate"
+    label = "Created Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup CreatedById {
+    apiName = "RecordAction.CreatedById"
+    label = "Created By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime LastModifiedDate {
+    apiName = "RecordAction.LastModifiedDate"
+    label = "Last Modified Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup LastModifiedById {
+    apiName = "RecordAction.LastModifiedById"
+    label = "Last Modified By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime SystemModstamp {
+    apiName = "RecordAction.SystemModstamp"
+    label = "System Modstamp"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup RecordId {
+    apiName = "RecordAction.RecordId"
+    label = "Parent Record ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.ARH__Configuration__c,
+      salesforce.Account,
+      salesforce.Account_Snapshot__c,
+      salesforce.Allocation__c,
+      salesforce.Asset,
+      salesforce.AssetRelationship,
+      salesforce.AssociatedLocation,
+      salesforce.Billing_Entity__c,
+      salesforce.Business_Review__c,
+      salesforce.CalendlyAction__c,
+      salesforce.Campaign,
+      salesforce.CampaignMember,
+      salesforce.Case,
+      salesforce.CollaborationGroup,
+      salesforce.Company_Billing__c,
+      salesforce.Company_Domain__c,
+      salesforce.Contact,
+      salesforce.ContactRequest,
+      salesforce.Contract,
+      salesforce.Country_Region_Mapping__c,
+      salesforce.Customer_Address__c,
+      salesforce.DOZISF__Complete_Setting__c,
+      "EnhancedLetterhead",
+      salesforce.ExchangeRate__c,
+      salesforce.Field_Trip__Field_Analysis__c,
+      salesforce.Field_Trip__Field_Analytic_Config__c,
+      salesforce.Field_Trip__Logistics__c,
+      salesforce.Field_Trip__Object_Analysis__c,
+      salesforce.GB_Threshold__c,
+      salesforce.HandlerExecution__c,
+      salesforce.Handover__c,
+      salesforce.Kickoff__c,
+      salesforce.LH__LH_Export_Lookups__c,
+      salesforce.LH__LH_Queue__c,
+      salesforce.LH__Lookup_Helper_App_Settings__c,
+      salesforce.LH__Lookup_Helper_Error__c,
+      salesforce.LH__Lookup_Helper_Filter_Group__c,
+      salesforce.LH__Lookup_Helper_Filter__c,
+      salesforce.LH__Lookup_Helper_Record_Creation__c,
+      salesforce.LH__Lookup_Helper_Setting_Filter_Association__c,
+      salesforce.LH__Lookup_Helper_Setting__c,
+      salesforce.LSNLY__Job__c,
+      salesforce.LSNLY__Lessonly_Assignment__c,
+      salesforce.LSNLY__Lessonly_Content_Tag__c,
+      salesforce.LSNLY__Lessonly_Content__c,
+      salesforce.LSNLY__Lessonly_Custom_Field_Mapping__c,
+      salesforce.LSNLY__Lessonly_Group_Member__c,
+      salesforce.LSNLY__Lessonly_Group__c,
+      salesforce.LSNLY__Lessonly_Library_Attempt__c,
+      salesforce.LSNLY__Lessonly_Settings__c,
+      salesforce.LSNLY__Lessonly_Tag__c,
+      salesforce.LSNLY__Lessonly_User__c,
+      salesforce.LSNLY__Users__c,
+      salesforce.Last_Viewed_Account__c,
+      salesforce.Lead,
+      salesforce.Lead_Registration__c,
+      salesforce.LineItem_Sync__c,
+      "Location",
+      salesforce.Milestone__c,
+      salesforce.Monday_Account__c,
+      salesforce.OpportunitiesMondayAccountsLink__c,
+      salesforce.Opportunity,
+      salesforce.Opportunity_Snapshot__c,
+      salesforce.Order,
+      salesforce.Partner_Region__c,
+      salesforce.Partner_SO_Request__c,
+      salesforce.Pricebook2,
+      salesforce.PricebookEntry,
+      salesforce.Product2,
+      salesforce.Professional_Service_Request__c,
+      salesforce.Project__c,
+      salesforce.Queue__c,
+      salesforce.Quote,
+      salesforce.QuoteLineItem,
+      salesforce.Relationship__c,
+      salesforce.Round_Robin__c,
+      salesforce.Sale_Snapshot__c,
+      salesforce.Sale__c,
+      salesforce.SocialPersona,
+      salesforce.SocialPost,
+      salesforce.SpringCMEos__DSWConfig__c,
+      salesforce.SpringCMEos__EOS_Type__c,
+      salesforce.SpringCMEos__Environment__c,
+      salesforce.SpringCMEos__Org_Url__c,
+      salesforce.SpringCMEos__SpringCM_Attribute_Field__c,
+      salesforce.SpringCMEos__SpringCM_Attribute_Group__c,
+      salesforce.SpringCMEos__SpringCM_Public_Settings__c,
+      salesforce.SpringCMEos__SpringCM_Testing__c,
+      salesforce.StoryLogItemSetting__c,
+      salesforce.StoryLogSetting__c,
+      salesforce.StoryLogSnapshot__c,
+      salesforce.Subscription__c,
+      salesforce.Survey__c,
+      salesforce.Target__c,
+      salesforce.Team__c,
+      salesforce.User,
+      salesforce.leadconvertchtr__LeadConvertChatter__c,
+      salesforce.mondayapp__IntegrationWebhookSubscription__c,
+      salesforce.rh2__Filter__c,
+      salesforce.rh2__PS_Describe__c,
+      salesforce.rh2__PS_Exception__c,
+      salesforce.rh2__PS_Export_Rollups__c,
+      salesforce.rh2__PS_Object_Realtime__c,
+      salesforce.rh2__PS_Queue__c,
+      salesforce.rh2__PS_Rollup_Conditions__c,
+      salesforce.rh2__PS_Rollup_Dummy__c,
+      salesforce.rh2__PS_Settings__c,
+      salesforce.rh2__RH_Job__c,
+      salesforce.rh2__Rollup_Helper_Record_Scope__c,
+      salesforce.valt__Valooto_Opportunity_Answer__c,
+      salesforce.valt__Valooto_Quote_Answer__c,
+      salesforce.valt__Valooto_Quote_Workflow__c,
+      salesforce.valt__Valooto_Workflow__c,
+      salesforce.yw__YeswareContactSync__c,
+      salesforce.yw__YeswareEventSync__c,
+      salesforce.yw__YeswareHistoricalSync__c,
+      salesforce.yw__YeswareOpportunitySync__c,
+      salesforce.yw__YeswareTaskSync__c,
+      salesforce.zaapit__View_Style__c,
+      salesforce.zaapit__ZaapIT_General_Settings__c,
+      salesforce.zaapit__ZaapIT_Global_Settings__c,
+      salesforce.zaapit__ZaapIT_Related_List_Tabs1__c,
+      salesforce.zaapit__ZaapIT_Table_user_configuration__c,
+      salesforce.zaapit__zaapit_editable_table2__c,
+      salesforce.zaapit__zaapit_editable_tb__c,
+      salesforce.zisf__FmcDefaultValue__c,
+      salesforce.zisf__ZoomAppTokenStorage__c,
+      salesforce.zisf__ZoomInfo_Clean_Settings__c,
+      salesforce.zisf__ZoomInfo_Custom_Settings__c,
+      salesforce.zisf__ZoomInfo_Inbound_Settings__c,
+      salesforce.zisf__ZoomInfo__c,
+      salesforce.zisf__ZoomSessions__c,
+      salesforce.zisf__ZoomTokenStorage__c,
+      salesforce.zisf__Zoom_Scheduler__c,
+      salesforce.zisf__zicCleanJob__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist FlowDefinition {
+    apiName = "RecordAction.FlowDefinition"
+    label = "Interaction Definition ID"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Activity_on_Creation"
+        default = false
+        label = "Activity_on_Creation"
+        isActive = true
+      },
+      {
+        fullName = "Before_Lead_Save_Clean_Leads_Phone_Numbers"
+        default = false
+        label = "Before_Lead_Save_Clean_Leads_Phone_Numbers"
+        isActive = true
+      },
+      {
+        fullName = "Business_Review_Record_Screen_Floww"
+        default = false
+        label = "Business_Review_Record_Screen_Floww"
+        isActive = true
+      },
+      {
+        fullName = "CancelEvent"
+        default = false
+        label = "CancelEvent"
+        isActive = true
+      },
+      {
+        fullName = "Closed_Won_Opportunity_Summary"
+        default = false
+        label = "Closed_Won_Opportunity_Summary"
+        isActive = true
+      },
+      {
+        fullName = "Company_Ownership_Logic"
+        default = false
+        label = "Company_Ownership_Logic"
+        isActive = true
+      },
+      {
+        fullName = "Company_Score_Workspace"
+        default = false
+        label = "Company_Score_Workspace"
+        isActive = true
+      },
+      {
+        fullName = "Contract_Status"
+        default = false
+        label = "Contract_Status"
+        isActive = true
+      },
+      {
+        fullName = "Create_a_new_user_in_SF"
+        default = false
+        label = "Create_a_new_user_in_SF"
+        isActive = true
+      },
+      {
+        fullName = "Create_Milestone_to_Project"
+        default = false
+        label = "Create_Milestone_to_Project"
+        isActive = true
+      },
+      {
+        fullName = "Create_Monday_Account_Snapshots"
+        default = false
+        label = "Create_Monday_Account_Snapshots"
+        isActive = true
+      },
+      {
+        fullName = "Create_Zendesk_Ticket_CS_Pass"
+        default = false
+        label = "Create_Zendesk_Ticket_CS_Pass"
+        isActive = true
+      },
+      {
+        fullName = "CreateEvent"
+        default = false
+        label = "CreateEvent"
+        isActive = true
+      },
+      {
+        fullName = "Do_nothing"
+        default = false
+        label = "Do_nothing"
+        isActive = true
+      },
+      {
+        fullName = "During_lead_creation_before_save"
+        default = false
+        label = "During_lead_creation_before_save"
+        isActive = true
+      },
+      {
+        fullName = "Fix_Companies_Ownership"
+        default = false
+        label = "Fix_Companies_Ownership"
+        isActive = true
+      },
+      {
+        fullName = "Get_Similar_Opportunities"
+        default = false
+        label = "Get_Similar_Opportunities"
+        isActive = true
+      },
+      {
+        fullName = "Handover"
+        default = false
+        label = "Handover"
+        isActive = true
+      },
+      {
+        fullName = "Lead_Registration"
+        default = false
+        label = "Lead_Registration"
+        isActive = true
+      },
+      {
+        fullName = "LSNLY_Assignment_Before_Insert"
+        default = false
+        label = "LSNLY_Assignment_Before_Insert"
+        isActive = true
+      },
+      {
+        fullName = "LSNLY_User_Before_Insert"
+        default = false
+        label = "LSNLY_User_Before_Insert"
+        isActive = true
+      },
+      {
+        fullName = "Manage_Relationship_Communications"
+        default = false
+        label = "Manage_Relationship_Communications"
+        isActive = true
+      },
+      {
+        fullName = "Monday_Account_Handover"
+        default = false
+        label = "Monday_Account_Handover"
+        isActive = true
+      },
+      {
+        fullName = "Monday_Account_Unassignment"
+        default = false
+        label = "Monday_Account_Unassignment"
+        isActive = true
+      },
+      {
+        fullName = "OnLeadCreate"
+        default = false
+        label = "OnLeadCreate"
+        isActive = true
+      },
+      {
+        fullName = "Opportunity_Match_GB_Threshold"
+        default = false
+        label = "Opportunity_Match_GB_Threshold"
+        isActive = true
+      },
+      {
+        fullName = "Opportunity_on_Creation_Before"
+        default = false
+        label = "Opportunity_on_Creation_Before"
+        isActive = true
+      },
+      {
+        fullName = "Ownership_Unassignment"
+        default = false
+        label = "Ownership_Unassignment"
+        isActive = true
+      },
+      {
+        fullName = "Partner_SO_Request_new"
+        default = false
+        label = "Partner_SO_Request_new"
+        isActive = true
+      },
+      {
+        fullName = "Partners_UTM_Link_Generation"
+        default = false
+        label = "Partners_UTM_Link_Generation"
+        isActive = true
+      },
+      {
+        fullName = "Pick_Channel_by_Source"
+        default = false
+        label = "Pick_Channel_by_Source"
+        isActive = true
+      },
+      {
+        fullName = "Primary_Contact_Role_on_Opp"
+        default = false
+        label = "Primary_Contact_Role_on_Opp"
+        isActive = true
+      },
+      {
+        fullName = "Related_Duplicate_Lead_Distribution"
+        default = false
+        label = "Related_Duplicate_Lead_Distribution"
+        isActive = true
+      },
+      {
+        fullName = "Relation_Communication_Daily"
+        default = false
+        label = "Relation_Communication_Daily"
+        isActive = true
+      },
+      {
+        fullName = "Run_Manual_Account_Snapshot"
+        default = false
+        label = "Run_Manual_Account_Snapshot"
+        isActive = true
+      },
+      {
+        fullName = "SalesLoft1__Auto_Populate_PrimaryContact_from_Contact_Role_Object"
+        default = false
+        label = "SalesLoft1__Auto_Populate_PrimaryContact_from_Contact_Role_Object"
+        isActive = true
+      },
+      {
+        fullName = "Send_CSAT_Upon_Project_Completion"
+        default = false
+        label = "Send_CSAT_Upon_Project_Completion"
+        isActive = true
+      },
+      {
+        fullName = "Set_Account_Owner_Manager"
+        default = false
+        label = "Set_Account_Owner_Manager"
+        isActive = true
+      },
+      {
+        fullName = "Set_Lead_Owner_Manager_Id_on_lead_s_Owners_Manager"
+        default = false
+        label = "Set_Lead_Owner_Manager_Id_on_lead_s_Owners_Manager"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Create_Case"
+        default = false
+        label = "setup_service_experience__Create_Case"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Reset_Pwd"
+        default = false
+        label = "setup_service_experience__Reset_Pwd"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Verify_Cust"
+        default = false
+        label = "setup_service_experience__Verify_Cust"
+        isActive = true
+      },
+      {
+        fullName = "squivr__Milestone_Opportunity_Create_Template"
+        default = false
+        label = "squivr__Milestone_Opportunity_Create_Template"
+        isActive = true
+      },
+      {
+        fullName = "Take_Ownership_Flow"
+        default = false
+        label = "Take_Ownership_Flow"
+        isActive = true
+      },
+      {
+        fullName = "Update_Lead_with_task_activity"
+        default = false
+        label = "Update_Lead_with_task_activity"
+        isActive = true
+      },
+      {
+        fullName = "Update_Owner_s_Manager_on_Account"
+        default = false
+        label = "Update_Owner_s_Manager_on_Account"
+        isActive = true
+      },
+      {
+        fullName = "Update_Owner_s_Manager_on_Lead"
+        default = false
+        label = "Update_Owner_s_Manager_on_Lead"
+        isActive = true
+      },
+      {
+        fullName = "WAPP_Changes_Daily"
+        default = false
+        label = "WAPP_Changes_Daily"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup FlowInterviewId {
+    apiName = "RecordAction.FlowInterviewId"
+    label = "FlowInterview ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      "FlowInterview",
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Order {
+    apiName = "RecordAction.Order"
+    label = "Order"
+    _required = true
+    precision = 9
+    createable = true
+    updateable = true
+    scale = 0
+    unique = false
+    queryable = true
+  }
+  salesforce.Picklist Status {
+    apiName = "RecordAction.Status"
+    label = "Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "New"
+        default = true
+        label = "New"
+        isActive = true
+      },
+      {
+        fullName = "Paused"
+        default = false
+        label = "Paused"
+        isActive = true
+      },
+      {
+        fullName = "Complete"
+        default = false
+        label = "Complete"
+        isActive = true
+      },
+      {
+        fullName = "Started"
+        default = false
+        label = "Started"
+        isActive = true
+      },
+      {
+        fullName = "Unlinked"
+        default = false
+        label = "Unlinked"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Pinned {
+    apiName = "RecordAction.Pinned"
+    label = "Pinned"
+    _required = false
+    valueSet = [
+      {
+        fullName = "None"
+        default = true
+        label = "None"
+        isActive = true
+      },
+      {
+        fullName = "Top"
+        default = false
+        label = "Top"
+        isActive = true
+      },
+      {
+        fullName = "Bottom"
+        default = false
+        label = "Bottom"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist ActionType {
+    apiName = "RecordAction.ActionType"
+    label = "Action Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Flow"
+        default = true
+        label = "Flow"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction"
+        default = false
+        label = "QuickAction"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist ActionDefinition {
+    apiName = "RecordAction.ActionDefinition"
+    label = "Action Definition"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Activity_on_Creation"
+        default = false
+        label = "Activity_on_Creation"
+        isActive = true
+      },
+      {
+        fullName = "Before_Lead_Save_Clean_Leads_Phone_Numbers"
+        default = false
+        label = "Before_Lead_Save_Clean_Leads_Phone_Numbers"
+        isActive = true
+      },
+      {
+        fullName = "Business_Review_Record_Screen_Floww"
+        default = false
+        label = "Business_Review_Record_Screen_Floww"
+        isActive = true
+      },
+      {
+        fullName = "CancelEvent"
+        default = false
+        label = "CancelEvent"
+        isActive = true
+      },
+      {
+        fullName = "Closed_Won_Opportunity_Summary"
+        default = false
+        label = "Closed_Won_Opportunity_Summary"
+        isActive = true
+      },
+      {
+        fullName = "Company_Ownership_Logic"
+        default = false
+        label = "Company_Ownership_Logic"
+        isActive = true
+      },
+      {
+        fullName = "Company_Score_Workspace"
+        default = false
+        label = "Company_Score_Workspace"
+        isActive = true
+      },
+      {
+        fullName = "Contract_Status"
+        default = false
+        label = "Contract_Status"
+        isActive = true
+      },
+      {
+        fullName = "Create_a_new_user_in_SF"
+        default = false
+        label = "Create_a_new_user_in_SF"
+        isActive = true
+      },
+      {
+        fullName = "Create_Milestone_to_Project"
+        default = false
+        label = "Create_Milestone_to_Project"
+        isActive = true
+      },
+      {
+        fullName = "Create_Monday_Account_Snapshots"
+        default = false
+        label = "Create_Monday_Account_Snapshots"
+        isActive = true
+      },
+      {
+        fullName = "Create_Zendesk_Ticket_CS_Pass"
+        default = false
+        label = "Create_Zendesk_Ticket_CS_Pass"
+        isActive = true
+      },
+      {
+        fullName = "CreateEvent"
+        default = false
+        label = "CreateEvent"
+        isActive = true
+      },
+      {
+        fullName = "Do_nothing"
+        default = false
+        label = "Do_nothing"
+        isActive = true
+      },
+      {
+        fullName = "During_lead_creation_before_save"
+        default = false
+        label = "During_lead_creation_before_save"
+        isActive = true
+      },
+      {
+        fullName = "Fix_Companies_Ownership"
+        default = false
+        label = "Fix_Companies_Ownership"
+        isActive = true
+      },
+      {
+        fullName = "Get_Similar_Opportunities"
+        default = false
+        label = "Get_Similar_Opportunities"
+        isActive = true
+      },
+      {
+        fullName = "Handover"
+        default = false
+        label = "Handover"
+        isActive = true
+      },
+      {
+        fullName = "Lead_Registration"
+        default = false
+        label = "Lead_Registration"
+        isActive = true
+      },
+      {
+        fullName = "LSNLY_Assignment_Before_Insert"
+        default = false
+        label = "LSNLY_Assignment_Before_Insert"
+        isActive = true
+      },
+      {
+        fullName = "LSNLY_User_Before_Insert"
+        default = false
+        label = "LSNLY_User_Before_Insert"
+        isActive = true
+      },
+      {
+        fullName = "Manage_Relationship_Communications"
+        default = false
+        label = "Manage_Relationship_Communications"
+        isActive = true
+      },
+      {
+        fullName = "Monday_Account_Handover"
+        default = false
+        label = "Monday_Account_Handover"
+        isActive = true
+      },
+      {
+        fullName = "Monday_Account_Unassignment"
+        default = false
+        label = "Monday_Account_Unassignment"
+        isActive = true
+      },
+      {
+        fullName = "OnLeadCreate"
+        default = false
+        label = "OnLeadCreate"
+        isActive = true
+      },
+      {
+        fullName = "Opportunity_Match_GB_Threshold"
+        default = false
+        label = "Opportunity_Match_GB_Threshold"
+        isActive = true
+      },
+      {
+        fullName = "Opportunity_on_Creation_Before"
+        default = false
+        label = "Opportunity_on_Creation_Before"
+        isActive = true
+      },
+      {
+        fullName = "Ownership_Unassignment"
+        default = false
+        label = "Ownership_Unassignment"
+        isActive = true
+      },
+      {
+        fullName = "Partner_SO_Request_new"
+        default = false
+        label = "Partner_SO_Request_new"
+        isActive = true
+      },
+      {
+        fullName = "Partners_UTM_Link_Generation"
+        default = false
+        label = "Partners_UTM_Link_Generation"
+        isActive = true
+      },
+      {
+        fullName = "Pick_Channel_by_Source"
+        default = false
+        label = "Pick_Channel_by_Source"
+        isActive = true
+      },
+      {
+        fullName = "Primary_Contact_Role_on_Opp"
+        default = false
+        label = "Primary_Contact_Role_on_Opp"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.Account_Handover"
+        default = false
+        label = "QuickActionDefinition.Account.Account_Handover"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.Address_and_Others"
+        default = false
+        label = "QuickActionDefinition.Account.Address_and_Others"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.BI_and_Admin"
+        default = false
+        label = "QuickActionDefinition.Account.BI_and_Admin"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.Create_New_Business_Review"
+        default = false
+        label = "QuickActionDefinition.Account.Create_New_Business_Review"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.CSM_Update"
+        default = false
+        label = "QuickActionDefinition.Account.CSM_Update"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.Keep_this_account"
+        default = false
+        label = "QuickActionDefinition.Account.Keep_this_account"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.Take_Ownership"
+        default = false
+        label = "QuickActionDefinition.Account.Take_Ownership"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.Un_assign_Myself"
+        default = false
+        label = "QuickActionDefinition.Account.Un_assign_Myself"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.Unassign_Myself"
+        default = false
+        label = "QuickActionDefinition.Account.Unassign_Myself"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.Update_Project"
+        default = false
+        label = "QuickActionDefinition.Account.Update_Project"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Case._LightningUpdateCase"
+        default = false
+        label = "QuickActionDefinition.Case._LightningUpdateCase"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Case.NewChildCase"
+        default = false
+        label = "QuickActionDefinition.Case.NewChildCase"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.CollaborationGroup.NewGroupMember"
+        default = false
+        label = "QuickActionDefinition.CollaborationGroup.NewGroupMember"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.CollaborationGroup.NewGroupRecord"
+        default = false
+        label = "QuickActionDefinition.CollaborationGroup.NewGroupRecord"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Contact._LightningRelatedContact"
+        default = false
+        label = "QuickActionDefinition.Contact._LightningRelatedContact"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Contact.Contact_Edit_from_Relationship"
+        default = false
+        label = "QuickActionDefinition.Contact.Contact_Edit_from_Relationship"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Contact.Create_Relationship"
+        default = false
+        label = "QuickActionDefinition.Contact.Create_Relationship"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Contact.LID__LinkedIn_Message"
+        default = false
+        label = "QuickActionDefinition.Contact.LID__LinkedIn_Message"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Contact.LID__View_Profile"
+        default = false
+        label = "QuickActionDefinition.Contact.LID__View_Profile"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Contact.yw__Yesware_Email"
+        default = false
+        label = "QuickActionDefinition.Contact.yw__Yesware_Email"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Contract.Contract_High_Level"
+        default = false
+        label = "QuickActionDefinition.Contract.Contract_High_Level"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.FeedItem.ContentNote"
+        default = false
+        label = "QuickActionDefinition.FeedItem.ContentNote"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.FeedItem.ContentPost"
+        default = false
+        label = "QuickActionDefinition.FeedItem.ContentPost"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.FeedItem.LinkPost"
+        default = false
+        label = "QuickActionDefinition.FeedItem.LinkPost"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.FeedItem.MobileSmartActions"
+        default = false
+        label = "QuickActionDefinition.FeedItem.MobileSmartActions"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.FeedItem.PollPost"
+        default = false
+        label = "QuickActionDefinition.FeedItem.PollPost"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.FeedItem.QuestionPost"
+        default = false
+        label = "QuickActionDefinition.FeedItem.QuestionPost"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.FeedItem.RypplePost"
+        default = false
+        label = "QuickActionDefinition.FeedItem.RypplePost"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.FeedItem.TextPost"
+        default = false
+        label = "QuickActionDefinition.FeedItem.TextPost"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.GuestCommunityCase"
+        default = false
+        label = "QuickActionDefinition.GuestCommunityCase"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Kickoff__c.Kickoff_Details"
+        default = false
+        label = "QuickActionDefinition.Kickoff__c.Kickoff_Details"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Lead_Registration__c.Register_a_Lead"
+        default = false
+        label = "QuickActionDefinition.Lead_Registration__c.Register_a_Lead"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Lead.Change_Status"
+        default = false
+        label = "QuickActionDefinition.Lead.Change_Status"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Lead.Company_Fields"
+        default = false
+        label = "QuickActionDefinition.Lead.Company_Fields"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Lead.Create_a_Zendesk_Ticket"
+        default = false
+        label = "QuickActionDefinition.Lead.Create_a_Zendesk_Ticket"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Lead.LID__LinkedIn_Message"
+        default = false
+        label = "QuickActionDefinition.Lead.LID__LinkedIn_Message"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Lead.Relationship_Fields"
+        default = false
+        label = "QuickActionDefinition.Lead.Relationship_Fields"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Lead.Reporting_Fields"
+        default = false
+        label = "QuickActionDefinition.Lead.Reporting_Fields"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.LogACall"
+        default = false
+        label = "QuickActionDefinition.LogACall"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.NewCase"
+        default = false
+        label = "QuickActionDefinition.NewCase"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.NewCommunityCase"
+        default = false
+        label = "QuickActionDefinition.NewCommunityCase"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.NewContact"
+        default = false
+        label = "QuickActionDefinition.NewContact"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.NewEvent"
+        default = false
+        label = "QuickActionDefinition.NewEvent"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.NewGroup"
+        default = false
+        label = "QuickActionDefinition.NewGroup"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.NewTask"
+        default = false
+        label = "QuickActionDefinition.NewTask"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.BI_Admin"
+        default = false
+        label = "QuickActionDefinition.Opportunity.BI_Admin"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Billing_Quote_Information"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Billing_Quote_Information"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Clone_with_Products"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Clone_with_Products"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Create_Partner_SO_Request"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Create_Partner_SO_Request"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Create_Quote"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Create_Quote"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Create_Relate_Billing_Entity"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Create_Relate_Billing_Entity"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Handover"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Handover"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.OldHandover"
+        default = false
+        label = "QuickActionDefinition.Opportunity.OldHandover"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Request_a_Sales_Engineer"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Request_a_Sales_Engineer"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Send_Opportunity_Summary"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Send_Opportunity_Summary"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.System_Info"
+        default = false
+        label = "QuickActionDefinition.Opportunity.System_Info"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Time_and_Date_Fields"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Time_and_Date_Fields"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.View_Quotes"
+        default = false
+        label = "QuickActionDefinition.Opportunity.View_Quotes"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Partner_Region__c.Generate_UTM_Link"
+        default = false
+        label = "QuickActionDefinition.Partner_Region__c.Generate_UTM_Link"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Project__c.Create_Milestone"
+        default = false
+        label = "QuickActionDefinition.Project__c.Create_Milestone"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Project__c.Update_Project"
+        default = false
+        label = "QuickActionDefinition.Project__c.Update_Project"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Quote.SendEmail"
+        default = false
+        label = "QuickActionDefinition.Quote.SendEmail"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.SendEmail"
+        default = false
+        label = "QuickActionDefinition.SendEmail"
+        isActive = true
+      },
+      {
+        fullName = "Related_Duplicate_Lead_Distribution"
+        default = false
+        label = "Related_Duplicate_Lead_Distribution"
+        isActive = true
+      },
+      {
+        fullName = "Relation_Communication_Daily"
+        default = false
+        label = "Relation_Communication_Daily"
+        isActive = true
+      },
+      {
+        fullName = "Run_Manual_Account_Snapshot"
+        default = false
+        label = "Run_Manual_Account_Snapshot"
+        isActive = true
+      },
+      {
+        fullName = "SalesLoft1__Auto_Populate_PrimaryContact_from_Contact_Role_Object"
+        default = false
+        label = "SalesLoft1__Auto_Populate_PrimaryContact_from_Contact_Role_Object"
+        isActive = true
+      },
+      {
+        fullName = "Send_CSAT_Upon_Project_Completion"
+        default = false
+        label = "Send_CSAT_Upon_Project_Completion"
+        isActive = true
+      },
+      {
+        fullName = "Set_Account_Owner_Manager"
+        default = false
+        label = "Set_Account_Owner_Manager"
+        isActive = true
+      },
+      {
+        fullName = "Set_Lead_Owner_Manager_Id_on_lead_s_Owners_Manager"
+        default = false
+        label = "Set_Lead_Owner_Manager_Id_on_lead_s_Owners_Manager"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Create_Case"
+        default = false
+        label = "setup_service_experience__Create_Case"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Reset_Pwd"
+        default = false
+        label = "setup_service_experience__Reset_Pwd"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Verify_Cust"
+        default = false
+        label = "setup_service_experience__Verify_Cust"
+        isActive = true
+      },
+      {
+        fullName = "squivr__Milestone_Opportunity_Create_Template"
+        default = false
+        label = "squivr__Milestone_Opportunity_Create_Template"
+        isActive = true
+      },
+      {
+        fullName = "Take_Ownership_Flow"
+        default = false
+        label = "Take_Ownership_Flow"
+        isActive = true
+      },
+      {
+        fullName = "Update_Lead_with_task_activity"
+        default = false
+        label = "Update_Lead_with_task_activity"
+        isActive = true
+      },
+      {
+        fullName = "Update_Owner_s_Manager_on_Account"
+        default = false
+        label = "Update_Owner_s_Manager_on_Account"
+        isActive = true
+      },
+      {
+        fullName = "Update_Owner_s_Manager_on_Lead"
+        default = false
+        label = "Update_Owner_s_Manager_on_Lead"
+        isActive = true
+      },
+      {
+        fullName = "WAPP_Changes_Daily"
+        default = false
+        label = "WAPP_Changes_Daily"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox IsMandatory {
+    apiName = "RecordAction.IsMandatory"
+    label = "Is Mandatory"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox IsUiRemoveHidden {
+    apiName = "RecordAction.IsUiRemoveHidden"
+    label = "Hide Remove Action in UI"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

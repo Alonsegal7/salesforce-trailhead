@@ -1,0 +1,114 @@
+salesforce.Flow LSNLY_Assignment_After_Insert {
+  fullName = "LSNLY_Assignment_After_Insert"
+  decisions = [
+    {
+      name = "LSNLY_User_not_NULL"
+      label = "LSNLY User not NULL"
+      locationX = 208
+      locationY = 305
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Not_NULL"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "$Record.LSNLY__Lessonly_User__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Get_LSNLY_User"
+          }
+          label = "Not NULL"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "LSNLY Assignment - After Insert {!$Flow.CurrentDateTime}"
+  label = "LSNLY Assignment - After Insert"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get_LSNLY_User"
+      label = "Get LSNLY User"
+      locationX = 438
+      locationY = 308
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Update_LSNLY_Assignment"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.LSNLY__Lessonly_User__c"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.LSNLY__Lessonly_User__c
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_LSNLY_Assignment"
+      label = "Update LSNLY Assignment"
+      locationX = 582
+      locationY = 301
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Partner_Contact__c"
+          value = {
+            elementReference = "Get_LSNLY_User.Partner_Contact__c"
+          }
+        },
+        {
+          field = "Partner_User__c"
+          value = {
+            elementReference = "Get_LSNLY_User.Partner_User__c"
+          }
+        },
+      ]
+      object = salesforce.LSNLY__Lessonly_Assignment__c
+    },
+  ]
+  start = {
+    locationX = 49
+    locationY = 50
+    connector = {
+      targetReference = "LSNLY_User_not_NULL"
+    }
+    object = salesforce.LSNLY__Lessonly_Assignment__c
+    triggerType = "RecordAfterSave"
+  }
+  status = "Active"
+}

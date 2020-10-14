@@ -1,0 +1,297 @@
+salesforce.Flow Scaled_Touch_Choice {
+  fullName = "Scaled_Touch_Choice"
+  assignments = [
+    {
+      name = "Build_Collections"
+      label = "Build Collections"
+      locationX = 300
+      locationY = 275
+      assignmentItems = [
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:lightning_usage"
+          }
+        },
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:coaching"
+          }
+        },
+        {
+          assignToReference = "labelCollection"
+          operator = "Add"
+          value = {
+            stringValue = "P1 - Improve Usage/WAPP"
+          }
+        },
+        {
+          assignToReference = "labelCollection"
+          operator = "Add"
+          value = {
+            stringValue = "P2 - Increase Capacity"
+          }
+        },
+        {
+          assignToReference = "SubsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "explanation 1"
+          }
+        },
+        {
+          assignToReference = "SubsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "explanation 2"
+          }
+        },
+        {
+          assignToReference = "labelCollection"
+          operator = "Add"
+          value = {
+            stringValue = "P3 - Improve Feature Adoption"
+          }
+        },
+        {
+          assignToReference = "labelCollection"
+          operator = "Add"
+          value = {
+            stringValue = "P4 - Improve Engagement"
+          }
+        },
+        {
+          assignToReference = "labelCollection"
+          operator = "Add"
+          value = {
+            stringValue = "P5 - Secure Renewal"
+          }
+        },
+        {
+          assignToReference = "labelCollection"
+          operator = "Add"
+          value = {
+            stringValue = "P6 - Non-Tech POC"
+          }
+        },
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:apps_admin"
+          }
+        },
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:omni_supervisor"
+          }
+        },
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:work_order_item"
+          }
+        },
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:client"
+          }
+        },
+        {
+          assignToReference = "SubsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "explanation 3"
+          }
+        },
+        {
+          assignToReference = "SubsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "explanation 4"
+          }
+        },
+        {
+          assignToReference = "SubsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "explanation 5"
+          }
+        },
+        {
+          assignToReference = "SubsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "explanation 6"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Header"
+      }
+    },
+  ]
+  interviewLabel = "Scaled Touch Choice {!$Flow.CurrentDateTime}"
+  label = "Scaled Touch Choice"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  screens = [
+    {
+      name = "Header"
+      label = "ST Action Plan"
+      locationX = 176
+      locationY = 478
+      allowBack = true
+      allowFinish = true
+      allowPause = true
+      fields = [
+        {
+          name = "Test"
+          extensionName = "profFlow_vNav:visualNav"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "choiceIcons"
+              value = {
+                elementReference = "iconsCollection"
+              }
+            },
+            {
+              name = "choiceLabels"
+              value = {
+                elementReference = "labelCollection"
+              }
+            },
+            {
+              name = "choiceValues"
+              value = {
+                elementReference = "labelCollection"
+              }
+            },
+            {
+              name = "showIcons"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "showSubLabel"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "iconVariant"
+              value = {
+                stringValue = "square"
+              }
+            },
+            {
+              name = "iconSize"
+              value = {
+                stringValue = "medium"
+              }
+            },
+            {
+              name = "choiceSubLabels"
+              value = {
+                elementReference = "SubsCollection"
+              }
+            },
+            {
+              name = "buttonSize"
+              value = {
+                numberValue = 150
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "conf"
+          extensionName = "c:FlowConfettiCMP"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "confettiEffect"
+              value = {
+                stringValue = "Fireworks"
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "Build_Collections"
+    }
+  }
+  status = "Draft"
+  variables = [
+    {
+      name = "iconsCollection"
+      dataType = "String"
+      isCollection = true
+      isInput = false
+      isOutput = false
+    },
+    {
+      name = "labelCollection"
+      dataType = "String"
+      isCollection = true
+      isInput = false
+      isOutput = false
+    },
+    {
+      name = "SubsCollection"
+      dataType = "String"
+      isCollection = true
+      isInput = false
+      isOutput = false
+    },
+    {
+      name = "valueCollection"
+      dataType = "String"
+      isCollection = false
+      isInput = false
+      isOutput = false
+    },
+    {
+      name = "valueCollections"
+      dataType = "String"
+      isCollection = true
+      isInput = false
+      isOutput = false
+    },
+  ]
+}

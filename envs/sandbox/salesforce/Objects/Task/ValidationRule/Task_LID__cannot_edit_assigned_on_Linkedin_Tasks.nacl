@@ -1,0 +1,13 @@
+salesforce.ValidationRule Task_LID__cannot_edit_assigned_on_Linkedin_Tasks {
+  fullName = "Task.LID__cannot_edit_assigned_on_Linkedin_Tasks"
+  active = false
+  errorConditionFormula = '''
+OR(RecordType.Name = "inMail", RecordType.Name = "Messages", RecordType.Name = "PointDrive Presentation Created", RecordType.Name = "PointDrive Presentation Viewed", RecordType.Name = "LinkedIn_Call")
+&& (ISCHANGED( OwnerId ))
+'''
+  errorDisplayField = "Status"
+  errorMessage = "You cannot edit the Assigned To field on LinkedIn Tasks"
+  _parent = [
+    salesforce.Task,
+  ]
+}

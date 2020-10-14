@@ -1,0 +1,23 @@
+salesforce.CustomObjectTranslation StoryLogEvent__e_en_US {
+  fullName = "StoryLogEvent__e-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Story Log Event"
+    },
+    {
+      plural = true
+      value = "Story Log Events"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.StoryLogEvent__e.field.ParentRecordId__c
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.StoryLogEvent__e,
+  ]
+}

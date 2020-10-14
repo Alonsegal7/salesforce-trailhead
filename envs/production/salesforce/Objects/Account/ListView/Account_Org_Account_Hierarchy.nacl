@@ -1,0 +1,21 @@
+salesforce.ListView Account_Org_Account_Hierarchy {
+  fullName = "Account.Org_Account_Hierarchy"
+  columns = [
+    "ACCOUNT.NAME",
+    "ACCOUNT.ADDRESS1_COUNTRY",
+    "ACCOUNT.RECORDTYPE",
+    "Active_Users__c",
+    "Health_Score_Flag__c",
+    "Last_Touched_by_Sales__c",
+    "Last_Touched_by_CSM__c",
+    "Plan_Name__c",
+    "ARR__c",
+    "WAPP__c",
+    "WAPP_From_Members__c",
+  ]
+  filterScope = "Everything"
+  label = "Org_Account_Hierarchy"
+  _parent = [
+    salesforce.Account,
+  ]
+}

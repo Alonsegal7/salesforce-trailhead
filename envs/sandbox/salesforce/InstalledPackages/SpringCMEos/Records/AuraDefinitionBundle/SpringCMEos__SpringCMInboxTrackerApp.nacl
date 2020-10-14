@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle SpringCMEos__SpringCMInboxTrackerApp {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 40
+  description = "DESCRIPTION"
+  fullName = "SpringCMEos__SpringCMInboxTrackerApp"
+  type = "Application"
+  markup = "(hidden)"
+}

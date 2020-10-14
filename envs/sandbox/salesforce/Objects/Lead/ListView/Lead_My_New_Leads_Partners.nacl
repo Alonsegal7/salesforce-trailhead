@@ -1,0 +1,34 @@
+salesforce.ListView Lead_My_New_Leads_Partners {
+  fullName = "Lead.My_New_Leads_Partners"
+  columns = [
+    "Website_company__c",
+    "FULL_NAME",
+    "LEAD.TITLE",
+    "LEAD.COUNTRY",
+    "LEAD.LEAD_SOURCE",
+    "Days_left_in_trial__c",
+    "Enabled_users__c",
+    "Engagement__c",
+    "LEAD.EMAIL",
+    "Related_Company__c",
+    "LEAD.COMPANY",
+    "Sign_up_date__c",
+    "Slug__c",
+    "LEAD.CREATED_DATE",
+  ]
+  filterScope = "Mine"
+  filters = [
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Received"
+    },
+  ]
+  label = "My New Leads (Partners)"
+  sharedTo = {
+    allPartnerUsers = ""
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,68 @@
+type salesforce.LH__Lookup_Helper_App_Settings__c {
+  salesforce.Number LH__Record_Scope__c {
+    apiName = "LH__Lookup_Helper_App_Settings__c.LH__Record_Scope__c"
+    label = "Record Scope"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LH__emailToSendExceptions__c {
+    apiName = "LH__Lookup_Helper_App_Settings__c.LH__emailToSendExceptions__c"
+    label = "Email To Send Exceptions"
+    _required = false
+    inlineHelpText = "Lookup Helper will send an email to the specified email address daily with a summary of exceptions that have occurred (no emails will be sent if this field is not populated)."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox LH__Exception_Monitor_Can_Disable_Settings__c {
+    apiName = "LH__Lookup_Helper_App_Settings__c.LH__Exception_Monitor_Can_Disable_Settings__c"
+    label = "Exception Monitor Can Disable Settings"
+    defaultValue = true
+    inlineHelpText = "Allows the Lookup Helper Exception Monitor to automatically disable settings that are causing an error."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Allows the Lookup Helper Exception Monitor to automatically disable settings that are causing an error."
+  }
+  salesforce.Number LH__Max_FlexQueue_Utilization_Pct__c {
+    apiName = "LH__Lookup_Helper_App_Settings__c.LH__Max_FlexQueue_Utilization_Pct__c"
+    label = "Max Flex Queue Utilization Percent"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox LH__Prevent_Setting_Deactivation__c {
+    apiName = "LH__Lookup_Helper_App_Settings__c.LH__Prevent_Setting_Deactivation__c"
+    label = "Prevent Automatic Setting Deactivation?"
+    defaultValue = false
+    inlineHelpText = "If this is checked Lookup Helper will not disable lookups when errors are encountered during both manual and realtime runs."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "If this is checked Lookup Helper will not disable lookups when errors are encountered during both manual and realtime runs."
+  }
+  salesforce.Checkbox LH__Trigger_Deployments_Run_Tests__c {
+    apiName = "LH__Lookup_Helper_App_Settings__c.LH__Trigger_Deployments_Run_Tests__c"
+    label = "Run All Local Tests on Trigger Creation?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "If this is checked all local tests will run during realtime trigger deployments. If left unchecked only the realtime trigger test will run."
+  }
+}

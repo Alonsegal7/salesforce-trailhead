@@ -1,0 +1,10 @@
+salesforce.Role AvalonDEPartnerUser {
+  fullName = "AvalonDEPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Avalon (DE) Partner User"
+  mayForecastManagerShare = false
+  name = "Avalon (DE) Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

@@ -1,0 +1,6 @@
+salesforce.SharingRules LSNLY__Lessonly_Tag__c {
+  fullName = "LSNLY__Lessonly_Tag__c"
+  _parent = [
+    salesforce.LSNLY__Lessonly_Tag__c,
+  ]
+}

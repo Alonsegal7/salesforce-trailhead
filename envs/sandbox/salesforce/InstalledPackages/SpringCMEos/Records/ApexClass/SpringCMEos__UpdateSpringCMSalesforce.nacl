@@ -1,0 +1,7 @@
+salesforce.ApexClass SpringCMEos__UpdateSpringCMSalesforce {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 24
+  status = "Active"
+  fullName = "SpringCMEos__UpdateSpringCMSalesforce"
+  content = file("salesforce/InstalledPackages/SpringCMEos/Records/ApexClass/SpringCMEos__UpdateSpringCMSalesforce.cls")
+}

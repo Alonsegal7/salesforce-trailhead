@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle StoryLogFilter {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 47
+  description = "A Lightning Component Bundle"
+  fullName = "StoryLogFilter"
+  type = "Component"
+  helperContent = file("salesforce/Records/AuraDefinitionBundle/StoryLogFilter/StoryLogFilterHelper.js")
+  controllerContent = file("salesforce/Records/AuraDefinitionBundle/StoryLogFilter/StoryLogFilterController.js")
+  markup = file("salesforce/Records/AuraDefinitionBundle/StoryLogFilter/StoryLogFilter.cmp")
+}

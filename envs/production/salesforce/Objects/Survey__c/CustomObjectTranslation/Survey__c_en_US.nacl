@@ -1,0 +1,123 @@
+salesforce.CustomObjectTranslation Survey__c_en_US {
+  fullName = "Survey__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Survey"
+    },
+    {
+      plural = true
+      value = "Surveys"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Account_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Account__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Answer_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Answer_Day__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Answer_Month__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Answer_Year__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Detractors__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Is_Admin__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.NPS_Score__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Survey__c.field.NPS__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Passives__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Promoters__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Pulse_Account_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Survery_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Survey_ID__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Survey_Update_Age__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.Updated_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Survey__c.field.User_Email__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "CSAT Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+    {
+      layout = "NPS Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  recordTypes = [
+    {
+      label = ""
+      name = salesforce.RecordType.instance.Survey__c_CSAT
+    },
+    {
+      label = ""
+      name = salesforce.RecordType.instance.Survey__c_NPS
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Survey__c,
+  ]
+}

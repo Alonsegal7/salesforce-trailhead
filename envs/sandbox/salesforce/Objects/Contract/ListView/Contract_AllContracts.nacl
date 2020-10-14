@@ -1,0 +1,17 @@
+salesforce.ListView Contract_AllContracts {
+  fullName = "Contract.AllContracts"
+  columns = [
+    "CONTRACT.CONTRACT_NUMBER",
+    "SALES.ACCOUNT.NAME",
+    "CONTRACT.START_DATE",
+    "CONTRACT.END_DATE",
+    "CONTRACT.STATUS",
+    "CORE.USERS.ALIAS",
+    "CONTRACT.CREATED_DATE",
+  ]
+  filterScope = "Everything"
+  label = "All Contracts"
+  _parent = [
+    salesforce.Contract,
+  ]
+}

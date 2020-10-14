@@ -1,0 +1,102 @@
+type salesforce.LH__Lookup_Helper_Filter__c {
+  salesforce.TextArea LH__Field__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Field__c"
+    label = "Field"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup LH__Filter_Group__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Filter_Group__c"
+    label = "Filter Group"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.LH__Lookup_Helper_Filter_Group__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number LH__Filter_Number__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Filter_Number__c"
+    label = "Filter Number"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.TextArea LH__Logic__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Logic__c"
+    label = "Logic"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea LH__Operator__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Operator__c"
+    label = "Operator"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text LH__Required__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Required__c"
+    label = "Required"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 3
+    queryable = true
+    externalId = false
+  }
+  salesforce.TextArea LH__Value__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Value__c"
+    label = "Value"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup LH__Dupe_Lookup_Test__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Dupe_Lookup_Test__c"
+    label = "Dupe Record Lookup Test"
+    referenceTo = [
+      salesforce.Account,
+    ]
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.FormulaText LH__Dupe_Test__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Dupe_Test__c"
+    externalId = false
+    formula = "' ' + '- test'"
+    label = "Dupe Record Test"
+    _required = false
+    unique = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.FormulaDate LH__Test_Formula_Calculated_Filter__c {
+    apiName = "LH__Lookup_Helper_Filter__c.LH__Test_Formula_Calculated_Filter__c"
+    formula = "DATEVALUE(CreatedDate)"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Test_Formula_Calculated_Filter"
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+}

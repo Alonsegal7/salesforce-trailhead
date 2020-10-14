@@ -1,0 +1,69 @@
+salesforce.DuplicateRule Lead_Standard_Rule_for_Leads_with_Duplicate_Contacts {
+  fullName = "Lead.Standard_Rule_for_Leads_with_Duplicate_Contacts"
+  actionOnInsert = "Allow"
+  actionOnUpdate = "Allow"
+  alertText = "Use one of these records?"
+  description = "Identify leads with duplicate contacts."
+  duplicateRuleMatchRules = [
+    {
+      matchRuleSObjectType = "Contact"
+      matchingRule = "Standard_Contact_Match_Rule_v1_1"
+      objectMapping = [
+        {
+          inputObject = "Lead"
+          mappingFields = [
+            {
+              inputField = "City"
+              outputField = "MailingCity"
+            },
+            {
+              inputField = "Company"
+              outputField = "AccountId"
+            },
+            {
+              inputField = "Email"
+              outputField = "Email"
+            },
+            {
+              inputField = "FirstName"
+              outputField = "FirstName"
+            },
+            {
+              inputField = "LastName"
+              outputField = "LastName"
+            },
+            {
+              inputField = "Phone"
+              outputField = "Phone"
+            },
+            {
+              inputField = "PostalCode"
+              outputField = "MailingPostalCode"
+            },
+            {
+              inputField = "Street"
+              outputField = "MailingStreet"
+            },
+            {
+              inputField = "Title"
+              outputField = "Title"
+            },
+          ]
+          outputObject = "Contact"
+        },
+      ]
+    },
+  ]
+  isActive = false
+  masterLabel = "Standard Rule for Leads with Duplicate Contacts"
+  operationsOnInsert = [
+    "Alert",
+    "Report",
+  ]
+  operationsOnUpdate = "Report"
+  securityOption = "EnforceSharingRules"
+  sortOrder = 2
+  _parent = [
+    salesforce.Lead,
+  ]
+}

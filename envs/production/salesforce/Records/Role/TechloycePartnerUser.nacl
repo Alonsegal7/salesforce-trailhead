@@ -1,0 +1,10 @@
+salesforce.Role TechloycePartnerUser {
+  fullName = "TechloycePartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Techloyce Partner User"
+  mayForecastManagerShare = false
+  name = "Techloyce Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.TechloycePartnerManager
+}

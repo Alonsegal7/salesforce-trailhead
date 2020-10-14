@@ -1,0 +1,6 @@
+<apex:page title="Search"
+  showHeader="false"
+  sideBar="false"
+  id="pg" lightningStylesheets="true" >
+<c:GenericLookupCompnenet />
+</apex:page>

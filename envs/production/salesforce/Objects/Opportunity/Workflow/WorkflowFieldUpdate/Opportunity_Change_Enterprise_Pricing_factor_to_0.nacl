@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Change_Enterprise_Pricing_factor_to_0 {
+  fullName = "Opportunity.Change_Enterprise_Pricing_factor_to_0"
+  field = salesforce.Opportunity.field.Enterprise_Pricing_Factor__c
+  formula = "0"
+  name = "Change Enterprise Pricing factor to 0"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

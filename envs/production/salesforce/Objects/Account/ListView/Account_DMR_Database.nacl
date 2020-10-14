@@ -1,0 +1,36 @@
+salesforce.ListView Account_DMR_Database {
+  fullName = "Account.DMR_Database"
+  columns = [
+    "Active_Partner__c",
+    "CORE.USERS.FIRST_NAME",
+    "Partner_Company_Status__c",
+    "ACCOUNT.NAME",
+    "ACCOUNT.ADDRESS1_COUNTRY_CODE",
+    "ACCOUNT.ADDRESS1_STATE",
+    "ACCOUNT.EMPLOYEES",
+    "ACCOUNT.URL",
+    "Partner_Type__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "ACCOUNT.RECORDTYPE"
+      operation = "equals"
+      value = "Account.Partner_Company"
+    },
+    {
+      field = "Partner_is_CPM__c"
+      operation = "equals"
+      value = "0"
+    },
+    {
+      field = "Partner_Type__c"
+      operation = "equals"
+      value = "DMR"
+    },
+  ]
+  label = "DMR Database"
+  _parent = [
+    salesforce.Account,
+  ]
+}

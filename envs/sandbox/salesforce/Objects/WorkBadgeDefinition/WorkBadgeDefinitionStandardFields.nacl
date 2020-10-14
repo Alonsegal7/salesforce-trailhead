@@ -1,0 +1,250 @@
+type salesforce.WorkBadgeDefinition {
+  serviceid Id {
+    apiName = "WorkBadgeDefinition.Id"
+    label = "Badge ID"
+    _required = false
+    queryable = true
+    _hidden = true
+    updateable = false
+    createable = false
+  }
+  salesforce.Lookup OwnerId {
+    apiName = "WorkBadgeDefinition.OwnerId"
+    label = "Owner ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Group,
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Checkbox IsDeleted {
+    apiName = "WorkBadgeDefinition.IsDeleted"
+    label = "Deleted"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+    _required = false
+  }
+  salesforce.Text Name {
+    apiName = "WorkBadgeDefinition.Name"
+    label = "Badge Name"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.Picklist CurrencyIsoCode {
+    apiName = "WorkBadgeDefinition.CurrencyIsoCode"
+    label = "Currency ISO Code"
+    _required = false
+    valueSet = [
+      {
+        fullName = "AUD"
+        default = false
+        label = "Australian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "BRL"
+        default = false
+        label = "Brazilian Real"
+        isActive = true
+      },
+      {
+        fullName = "GBP"
+        default = false
+        label = "British Pound"
+        isActive = true
+      },
+      {
+        fullName = "CAD"
+        default = false
+        label = "Canadian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "EUR"
+        default = false
+        label = "Euro"
+        isActive = true
+      },
+      {
+        fullName = "ILS"
+        default = false
+        label = "Israeli Shekel"
+        isActive = true
+      },
+      {
+        fullName = "MXN"
+        default = false
+        label = "Mexican Peso"
+        isActive = true
+      },
+      {
+        fullName = "USD"
+        default = true
+        label = "U.S. Dollar"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime CreatedDate {
+    apiName = "WorkBadgeDefinition.CreatedDate"
+    label = "Created Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup CreatedById {
+    apiName = "WorkBadgeDefinition.CreatedById"
+    label = "Created By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime LastModifiedDate {
+    apiName = "WorkBadgeDefinition.LastModifiedDate"
+    label = "Last Modified Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup LastModifiedById {
+    apiName = "WorkBadgeDefinition.LastModifiedById"
+    label = "Last Modified By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime SystemModstamp {
+    apiName = "WorkBadgeDefinition.SystemModstamp"
+    label = "System Modstamp"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Checkbox IsCompanyWide {
+    apiName = "WorkBadgeDefinition.IsCompanyWide"
+    label = "Company Badge"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Description {
+    apiName = "WorkBadgeDefinition.Description"
+    label = "Description"
+    _required = true
+    createable = true
+    updateable = true
+    length = 4000
+    queryable = true
+  }
+  salesforce.Url ImageUrl {
+    apiName = "WorkBadgeDefinition.ImageUrl"
+    label = "Image URL"
+    _required = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox IsActive {
+    apiName = "WorkBadgeDefinition.IsActive"
+    label = "Active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup NetworkId {
+    apiName = "WorkBadgeDefinition.NetworkId"
+    label = "Network ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Network,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number LimitNumber {
+    apiName = "WorkBadgeDefinition.LimitNumber"
+    label = "Limit Number"
+    _required = false
+    precision = 9
+    createable = true
+    updateable = true
+    scale = 0
+    unique = false
+    queryable = true
+  }
+  salesforce.Checkbox IsLimitPerUser {
+    apiName = "WorkBadgeDefinition.IsLimitPerUser"
+    label = "Limit Per User"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date LimitStartDate {
+    apiName = "WorkBadgeDefinition.LimitStartDate"
+    label = "Limit Start Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number GivenBadgeCount {
+    apiName = "WorkBadgeDefinition.GivenBadgeCount"
+    label = "Given Badge Count"
+    _required = false
+    precision = 9
+    createable = false
+    updateable = false
+    scale = 0
+    unique = false
+    queryable = true
+  }
+  salesforce.Checkbox IsRewardBadge {
+    apiName = "WorkBadgeDefinition.IsRewardBadge"
+    label = "Reward Badge"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+  }
+}

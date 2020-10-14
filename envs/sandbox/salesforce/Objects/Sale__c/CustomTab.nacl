@@ -1,0 +1,8 @@
+salesforce.CustomTab Sale__c {
+  fullName = "Sale__c"
+  customObject = true
+  motif = "Custom13: Box"
+  _parent = [
+    salesforce.Sale__c,
+  ]
+}

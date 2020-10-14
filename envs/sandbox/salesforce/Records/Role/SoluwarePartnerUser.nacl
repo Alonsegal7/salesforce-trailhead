@@ -1,0 +1,10 @@
+salesforce.Role SoluwarePartnerUser {
+  fullName = "SoluwarePartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Soluware Partner User"
+  mayForecastManagerShare = false
+  name = "Soluware Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.SoluwarePartnerManager
+}

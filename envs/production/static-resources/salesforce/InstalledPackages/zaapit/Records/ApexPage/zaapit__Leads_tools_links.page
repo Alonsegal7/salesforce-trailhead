@@ -1,0 +1,80 @@
+<apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="true" standardStylesheets="true" >
+<style>
+.toolsrus{color:#333333;padding:10px;width:269px;}
+.toolsrus h3{margin-left:10px;;font-size:15px;color:#333333;display:block;}
+.toolsrus ul{margin-left:10px;padding-left:0px;}
+.toolsrus a{;font-size:13px;color:#333333;display:block;}
+.toolsrus a:hover{;font-size:13px;color:#333333;display:block;background:#efefef}
+</style>
+<div class="toolsrus" >
+<div>
+<div>
+<div>
+<div >
+<div >
+<h3 >Reports</h3>
+<div >
+<ul>
+<li>
+<a target="_blank" href="/00O?rt=28&retURL=%2F00Q%2Fo&scope=user&sdate={!URLENCODE(text(MONTH(TODAY()-30))+'/'+text(Day(TODAY()-30))+'/'+text(year(TODAY()-30)))}&s=AM&c=CD&c=LS&c=FN&c=LN&c=LU&c=CA&c=CND&c=SU&c=OW&c=OP&c=OA&c=CLD&c=OO&details=yes">Lead Lifetime</a>
+</li>
+<li>
+<a target="_blank" href="/00O?rt=20&retURL=%2F00Q%2Fo&function=c&date=d&break0=LEAD_SOURCE&new_break=LEAD_SOURCE&pivot=STATUS&scope=user&colDt=CREATED_DATE&sdate={!URLENCODE(text(MONTH(TODAY()-30))+'/'+text(Day(TODAY()-30))+'/'+text(year(TODAY()-30)))}&hidden=STREET_LINE1&hidden=STREET_LINE2&hidden=STREET_LINE3&hidden=ANNUAL_REVENUE.CONVERT&t=title_LeadsBySourceReport&details=no&format=t">Leads By Source</a>
+</li>
+<li>
+<a target="_blank" href="/00O?rt=21&retURL=%2F00Q%2Fo&pc0=EMAIL_BOUNCED_REASON&pn0=ne&pv0=&sort=EM&c=FN&c=LN&c=CO&c=EM&c=OW&c=EMAIL_BOUNCED_REASON&c=EMAIL_BOUNCED_DATE&details=yes">Bounced Leads</a>
+</li>
+<li>
+<a target="_blank" href="/00O/o?entityType=00O">Go to Reports&nbsp;»</a>
+</li>
+</ul>
+</div>
+
+</div>
+<div >
+<h3 >Tools</h3>
+<div >
+<ul>
+<li>
+<span>
+<a target="_blank" href="/lead/leadImportWelcome.jsp">Import Leads</a>
+</span>
+</li>
+<li>
+<span>
+<a target="_blank" href="/setup/own/massdelete.jsp?ftype=l&retURL=%2F00Q%2Fo">Mass Delete Leads</a>
+</span>
+</li>
+<li>
+<span>
+<a target="_blank" href="/p/own/BulkTransfer?retURL=%2F00Q%2Fo&ent=Lead">Transfer Leads</a>
+</span>
+</li>
+<li>
+<span>
+<a target="_blank" href="/ui/massmail/MassMailStageManager?setupid=MassMailFilter&mm_type=Lead&wizardRetUrl=%2F00Q%2Fo">Mass Email Leads</a>
+</span>
+</li>
+<li>
+<span>
+<a target="_blank" href="/ui/campaign/MassAddCampaignMembersWizard?macmw_type=Lead&macmw_mode=Add&wizardRetUrl=%2F00Q%2Fo">Mass Add Leads to Campaign</a>
+</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<h3 style="margin-top:10px;">Guides</h3>
+<ul>
+<li>
+<a href="javascript:void(0)" onclick="guideMe('welcome_guide_me',0);" >{!$Label.Welcome_Tour}</a>
+</li><li>
+<a href="{!$Label.user_guide_link}" target="_blank">{!$Label.User_Guide}</a>
+</li>
+</ul>
+</div>
+</apex:page>

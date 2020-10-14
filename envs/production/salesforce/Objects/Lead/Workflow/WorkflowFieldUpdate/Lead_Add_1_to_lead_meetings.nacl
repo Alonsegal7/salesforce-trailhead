@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Add_1_to_lead_meetings {
+  fullName = "Lead.Add_1_to_lead_meetings"
+  field = salesforce.Lead.field.of_Meetings__c
+  formula = "if(isblank(of_Meetings__c),1,of_Meetings__c + 1)"
+  name = "Add 1 to lead meetings"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

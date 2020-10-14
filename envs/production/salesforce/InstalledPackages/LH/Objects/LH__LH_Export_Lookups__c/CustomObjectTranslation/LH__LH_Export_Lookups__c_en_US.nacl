@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation LH__LH_Export_Lookups__c_en_US {
+  fullName = "LH__LH_Export_Lookups__c-en_US"
+  _parent = [
+    salesforce.LH__LH_Export_Lookups__c,
+  ]
+}

@@ -1,0 +1,152 @@
+salesforce.Flow Partners_Pre_Sale_Survey {
+  fullName = "Partners_Pre_Sale_Survey"
+  actionCalls = [
+    {
+      processMetadataValues = [
+        {
+          name = "emailAlertSelection"
+          value = {
+            stringValue = "Partners_Pre_Sale_Survey"
+          }
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Send Pre-Sale Survey"
+      locationX = 100
+      locationY = 200
+      actionName = salesforce.WorkflowAlert.instance.Lead_Partners_Pre_Sale_Survey
+      actionType = "emailAlert"
+      inputParameters = [
+        {
+          name = "SObjectRowId"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "formula_myRule_1"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Lead Status = Contacted"
+        },
+      ]
+    },
+  ]
+  formulas = [
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = '''
+ISCHANGED([Lead].Status )
+&&
+ispickval([Lead].Status ,'Contacted')
+&&
+[Lead].RecordTypeId = '0121t000000IQTEAA4'
+/*&&
+CONTAINS([Lead].Owner:User.UserRole.Name , 'Partner')*/
+&&
+[Lead].Owner_Company_Name__c   != NULL
+&&
+[Lead].Email  != NULL
+
+
+
+'''
+        }
+      }
+      name = "formula_myRule_1"
+      dataType = "Boolean"
+      expression = '''
+ISCHANGED({!myVariable_current.Status} )
+&&
+ispickval({!myVariable_current.Status} ,'Contacted')
+&&
+{!myVariable_current.RecordTypeId} = '0121t000000IQTEAA4'
+/*&&
+CONTAINS(myVariable_current.Owner:User.UserRole.Name , 'Partner')*/
+&&
+{!myVariable_current.Owner_Company_Name__c}   != NULL
+&&
+{!myVariable_current.Email}  != NULL
+'''
+    },
+  ]
+  interviewLabel = "Partners_Pre_Sale_Survey-1_InterviewLabel"
+  label = "Partners: Pre-Sale Survey"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Lead"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  startElementReference = "myDecision"
+  status = "Draft"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Lead
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Lead
+    },
+  ]
+}

@@ -1,0 +1,98 @@
+<apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false" >
+<style>
+.toolsrus{color:#333333;padding:10px;width:269px;}
+.toolsrus h3{margin-left:10px;;font-size:15px;color:#333333;display:block;}
+.toolsrus ul{margin-left:10px;padding-left:0px;}
+.toolsrus a{;font-size:13px;color:#333333;display:block;}
+.toolsrus a:hover{;font-size:13px;color:#333333;display:block;background:#efefef}
+</style>
+<div class="toolsrus" >
+<div>
+<div>
+<div>
+<div >
+<div >
+<h3 >Reports</h3>
+<div >
+<ul>
+<li>
+<a target="_blank" href="/00O?rt=1&retURL=%2F001%2Fo&edit=yes&scope=user&sort=ACCOUNT.NAME&t=title1&colDt_c=DUE_DATE&colDt_s=6%2F2%2F2015&c=AO&c=AN&c=A1SA&c=TY&c=RT&c=IN&c=CD&details=yes">Active Accounts</a>
+</li>
+<li>
+<a target="_blank" href="/00O?rt=1&retURL=%2F001%2Fo&edit=yes&scope=user&sort=DUE_DATE&t=title2&colDt_c=DUE_DATE&colDt_e=5%2F9%2F2015&c=DD&c=AO&c=AN&c=A1SA&c=TY&c=RT&c=UD&details=yes">Accounts with last activity &gt; 30 days</a>
+</li>
+<li>
+<a target="_blank" href="/00O?rt=47&retURL=%2F001%2Fo&paramform=yes&sort=ACCOUNT_NAME&name_op=sw&t=title1&details=yes">Account Owners</a>
+</li>
+<li>
+<a target="_blank" href="/00O?rt=69&retURL=%2F001%2Fo&edit=yes&scope=user&sort=ACCOUNT.NAME&t=titleContactRole&c=MA&c=PR&c=RN&c=FN&c=LN&c=DD&c=AO&c=AN&c=A1SA&c=TY&c=RT&c=UD&details=yes">Contact Role Report</a>
+</li>
+<li>
+<a target="_blank" href="/00O?rt=111&retURL=%2F001%2Fo&sortdir=down&sort=CD&sdate=6%2F9%2F2015&edate=6%2F9%2F2015&break0=AN&c=AN&c=OW&c=CR&c=FD&c=OV&c=NV&c=CD&details=yes&format=t">Account History Report</a>
+</li>
+<li>
+<a target="_blank" href="/00O?rt=45&retURL=%2F001%2Fo&edit=yes&scope=user&sort=ACCOUNT.NAME&c=AO&c=AN&c=TY&c=P_AN&c=P_RO&details=yes">Partner Accounts</a>
+</li>
+
+<li>
+<a target="_blank" href="/00O/o?entityType=00O">Go to Reports&nbsp;»</a>
+</li>
+</ul>
+</div>
+
+</div>
+</div>
+<div>
+<div >
+<div >
+<h3 >Tools</h3>
+<div >
+<ul>
+<li>
+<span>
+<a target="_blank" href="/ui/setup/walkthrough/DataImporterHomePage">Import My Accounts &amp; Contacts</a>
+</span>
+</li>
+<li>
+<span>
+<a target="_blank" href="/setup/imp/orgimport_welcome.jsp">Import My Organization's Accounts &amp; Contacts</a>
+</span>
+</li>
+<li>
+<span>
+<a target="_blank" href="/setup/own/massdelete.jsp?ftype=a&retURL=%2F001%2Fo">Mass Delete Accounts</a>
+</span>
+</li>
+<li>
+<span>
+<a target="_blank" href="/p/own/BulkTransfer?retURL=%2F001%2Fo&ent=Account">Transfer Accounts</a>
+</span>
+</li>
+<li>
+<span>
+<a target="_blank" href="/merge/accmergewizard.jsp?retURL=%2F001%2Fo">Merge Accounts</a>
+</span>
+</li>
+<li>
+<span>
+<a target="_blank" href="javascript:openPopupFocus%28%27http%3A%2F%2Fwww.salesforce.com%2Fappexchange%27%2C%20%27_blank%27%2C%20800%2C%20600%2C%20%27width%3D800%2Cheight%3D600%2Cresizable%3Dyes%2Ctoolbar%3Dyes%2Cstatus%3Dyes%2Cscrollbars%3Dyes%2Cmenubar%3Dyes%2Cdirectories%3Dyes%2Clocation%3Dno%2Cdependant%3Dno%27%2C%20false%2C%20true%29%3B" title="Sales Methodologies (New Window)">Sales Methodologies</a>
+</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h3 style="margin-top:10px;">Guides</h3>
+<ul>
+<li>
+<a href="javascript:void(0)" onclick="guideMe('welcome_guide_me',0);" >{!$Label.Welcome_Tour}</a>
+</li><li>
+<a href="{!$Label.user_guide_link}" target="_blank">{!$Label.User_Guide}</a>
+</li>
+</ul>
+</div>
+ </apex:page>

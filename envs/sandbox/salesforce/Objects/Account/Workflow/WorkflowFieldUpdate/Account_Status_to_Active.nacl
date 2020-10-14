@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Status_to_Active {
+  fullName = "Account.Status_to_Active"
+  field = salesforce.Account.field.Partner_Company_Status__c
+  literalValue = "Active"
+  name = "Status to Active"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

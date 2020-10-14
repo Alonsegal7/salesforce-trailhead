@@ -1,0 +1,9 @@
+<apex:page >
+<script>
+try{
+window.close();
+}catch(e){
+}
+</script>
+  <a style="font-size:10pt;text-align: center;display: block;" href="javascript:void(0)" onclick="window.close();">Close window</a>
+</apex:page>

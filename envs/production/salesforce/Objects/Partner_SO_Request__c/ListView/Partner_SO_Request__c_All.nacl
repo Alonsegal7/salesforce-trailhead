@@ -1,0 +1,8 @@
+salesforce.ListView Partner_SO_Request__c_All {
+  fullName = "Partner_SO_Request__c.All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Partner_SO_Request__c,
+  ]
+}

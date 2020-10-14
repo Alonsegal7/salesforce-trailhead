@@ -1,0 +1,20 @@
+salesforce.ListView LSNLY__Lessonly_User__c_All {
+  fullName = "LSNLY__Lessonly_User__c.All"
+  columns = [
+    "NAME",
+    "LSNLY__Email__c",
+    "Partner__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Is_Monday_User__c"
+      operation = "equals"
+      value = "0"
+    },
+  ]
+  label = "All"
+  _parent = [
+    salesforce.LSNLY__Lessonly_User__c,
+  ]
+}

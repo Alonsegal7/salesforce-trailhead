@@ -1,0 +1,12 @@
+salesforce.CompactLayout Task_LID__Tasks {
+  fullName = "Task.LID__Tasks"
+  fields = [
+    "Subject",
+    "WhoId",
+    "Status",
+  ]
+  label = "Tasks"
+  _parent = [
+    salesforce.Task,
+  ]
+}

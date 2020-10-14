@@ -1,0 +1,115 @@
+salesforce.LightningPage Home_Page_Default {
+  fullName = "Home_Page_Default"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "New_Leads"
+            },
+            {
+              name = "hideActionBar"
+              value = "true"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "10"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Opportunity"
+            },
+            {
+              name = "filterName"
+              value = "MyOpportunities"
+            },
+            {
+              name = "hideActionBar"
+              value = "true"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "5"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentName = "home:heroChart"
+        },
+      ]
+      mode = "Replace"
+      name = "top"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "home:eventContainer"
+        },
+        {
+          componentName = "home:assistant"
+        },
+      ]
+      mode = "Replace"
+      name = "bottomLeft"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "home:recentRecordContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "bottomRight"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "runtime_sales_activities:todayTaskContainer"
+        },
+        {
+          componentName = "home:topDealsContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Home Page Default"
+  parentFlexiPage = "home__desktopDefault"
+  template = {
+    name = "home:desktopTemplate"
+  }
+  type = "HomePage"
+}

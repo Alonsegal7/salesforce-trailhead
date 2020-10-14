@@ -1,0 +1,10 @@
+salesforce.Role DrewMarketingPartnerManager {
+  fullName = "DrewMarketingPartnerManager"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  description = "Drew Marketing Partner Manager"
+  mayForecastManagerShare = false
+  name = "Drew Marketing Partner Manager"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

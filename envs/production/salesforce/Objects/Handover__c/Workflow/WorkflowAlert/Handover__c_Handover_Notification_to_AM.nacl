@@ -1,0 +1,36 @@
+salesforce.WorkflowAlert Handover__c_Handover_Notification_to_AM {
+  fullName = "Handover__c.Handover_Notification_to_AM"
+  description = "Handover Notification to AM"
+  protected = false
+  recipients = [
+    {
+      field = salesforce.Handover__c.field.AM_Manager_Email__c
+      type = "email"
+    },
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "nir@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "saar@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "shahar@monday.com"
+      type = "user"
+    },
+    {
+      field = salesforce.Handover__c.field.AM__c
+      type = "userLookup"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Handover_Notification
+  _parent = [
+    salesforce.Handover__c,
+  ]
+}

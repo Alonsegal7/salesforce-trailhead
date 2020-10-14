@@ -1,0 +1,15 @@
+salesforce.AuraDefinitionBundle SpringCMEos__SpringCMBaseDataView {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 40
+  description = "A Lightning Component Bundle"
+  fullName = "SpringCMEos__SpringCMBaseDataView"
+  type = "Component"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+  SVGContent = "(hidden)"
+  designContent = "(hidden)"
+  rendererContent = "(hidden)"
+  documentationContent = "(hidden)"
+  styleContent = "(hidden)"
+  helperContent = "(hidden)"
+}

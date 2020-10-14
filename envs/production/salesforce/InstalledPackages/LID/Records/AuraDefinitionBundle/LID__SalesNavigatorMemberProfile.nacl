@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle LID__SalesNavigatorMemberProfile {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 42
+  description = "SalesNavigatorMemberProfile"
+  fullName = "LID__SalesNavigatorMemberProfile"
+  type = "Application"
+  markup = "(hidden)"
+}

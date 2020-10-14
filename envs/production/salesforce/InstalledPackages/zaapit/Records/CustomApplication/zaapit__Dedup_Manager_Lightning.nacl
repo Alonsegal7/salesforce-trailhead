@@ -1,0 +1,18 @@
+salesforce.CustomApplication zaapit__Dedup_Manager_Lightning {
+  fullName = "zaapit__Dedup_Manager_Lightning"
+  brand = {
+    headerColor = "#0070D2"
+    logo = salesforce.ContentAsset.instance.zaapit__zaapit_logo_main_app_logdedupManage4
+    logoVersion = 1
+    shouldOverrideOrgTheme = false
+  }
+  description = "Find & Clean duplicate data with ease with  ZaapIT.com"
+  formFactors = [
+    "Large",
+  ]
+  isNavAutoTempTabsDisabled = false
+  isNavPersonalizationDisabled = false
+  label = "Dedup Manager™"
+  navType = "Standard"
+  uiType = "Lightning"
+}

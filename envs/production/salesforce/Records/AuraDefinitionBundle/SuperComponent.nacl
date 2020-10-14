@@ -1,0 +1,9 @@
+salesforce.AuraDefinitionBundle SuperComponent {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 47
+  description = "A Lightning Component Bundle"
+  fullName = "SuperComponent"
+  type = "Component"
+  helperContent = file("salesforce/Records/AuraDefinitionBundle/SuperComponent/SuperComponentHelper.js")
+  markup = file("salesforce/Records/AuraDefinitionBundle/SuperComponent/SuperComponent.cmp")
+}

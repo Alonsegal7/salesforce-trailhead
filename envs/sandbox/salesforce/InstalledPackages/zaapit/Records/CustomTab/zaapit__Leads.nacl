@@ -1,0 +1,7 @@
+salesforce.CustomTab zaapit__Leads {
+  fullName = "zaapit__Leads"
+  description = "Leads - mass update"
+  label = "Leads"
+  motif = "Custom39: Telescope"
+  page = "zaapit__zaapit_tb_LeadWL"
+}

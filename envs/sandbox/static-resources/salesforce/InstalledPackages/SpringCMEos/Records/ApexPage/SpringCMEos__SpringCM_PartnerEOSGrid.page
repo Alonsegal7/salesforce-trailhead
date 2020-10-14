@@ -1,0 +1,3 @@
+<apex:page controller="SpringCMEos.PartnerEOSController" action="{!setup}" showHeader="false" sidebar="false" >
+	<c:SpringCM_EOSGrid objectType="{!objectType}" objectId="{!objectId}"/>
+</apex:page>

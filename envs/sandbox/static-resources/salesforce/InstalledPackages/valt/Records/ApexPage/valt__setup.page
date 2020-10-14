@@ -1,0 +1,69 @@
+<apex:page tabStyle="Setup__tab" controller="valt.Setup"  >
+    <style>
+        .panelStyle
+        {
+            font-size: 14px;
+            line-height: 35px;
+            margin: 5px;
+            padding: 5px;
+        }
+    </style>
+    
+    <apex:form >
+        <apex:outputLink value="http://valooto.com/" target="_blank">
+            <apex:image value="{!$Resource.valt__logob}" style="width: 200px;"/>
+        </apex:outputLink>
+
+        <apex:outputPanel layout="block" styleClass="panelStyle">
+            <h1> <apex:outputText value="Welcome to Valooto!" /> </h1>
+            <br/>
+            <ol type="1">
+                <li> 
+                    <apex:outputText value="Click this "/> 
+                    <apex:commandButton value="Submit" onclick="javascript:window.open('{!SetupURL}'); return false ;  " />
+                    <apex:outputText value=" , a new browser tab will appear with the Valooto Administration Control Panel." /> 
+                </li>
+                <li> <apex:outputText value="Once in the control panel screen, click on the &quot;Versions&quot; icon to go to the Version selection screen." escape="false"/> </li>
+                <li> <apex:outputText value="In the Version selection screen, click on the &quot;Default&quot; version that appears and then click &quot;Edit Version.&quot;" escape="false"/> </li>
+                <li>
+                    <apex:outputText value="Once inside the Default version you will see six icons. To begin using Valooto you will need to configure each of the following three items:" escape="false"/>
+                    
+                    <ol type="a">
+                        <li> <apex:outputText value="Playbook – Here is where you will configure your Guided Selling discovery questions (refer to Playbook instructions provided by Valooto)." escape="false"/> </li>
+                        <li> <apex:outputText value="Pricebook – Here is where you will set the pricing for each of your products (refer to Pricebook instructions provided by Valooto)." escape="false"/> </li>
+                        <li> <apex:outputText value="Output Document – Here is where you will define your sales proposal templates (refer to Output Document instructions provided by Valooto)." escape="false"/> </li>
+                    </ol>
+                </li>
+                <li> <apex:outputText value="Return to the Version selection screen by clicking on &quot;Versions&quot; in breadcrumb menu at the top left of the screen." escape="false"/> </li>
+                <li> 
+                    <apex:outputText value="Click on the green and white arrow on the right side of the &quot;Default&quot; version line and select &quot;Active&quot; from the pop-up menu." escape="false"/>
+                     <br/><br/>
+                     <h1> <apex:outputText value="NOTE:" /> </h1>
+                     <apex:outputText value="You should only make a version &quot;Active&quot; after configuring the Playbook, Pricebook and Output Document. In the event that you activate the version without completing the above." escape="false"/> 
+                     <br/> 
+                     <apex:outputText value="configurations, simply create a new version, or duplicate the active version, on the &quot;Version&quot; selection screen and return to step 4 for the new version you created." escape="false"/>
+                </li>
+                <br/>
+                <li type="7"> 
+                    <apex:outputText value="On your Salesforce implementation:" escape="false"/>
+                    
+                    <ol type="a">
+                        <li> <apex:outputText value="Add Valooto &quot;Create Quote&quot; button to the Opportunity Layout" escape="false"/> </li>
+                        <li> <apex:outputText value="Make &quot;Discount&quot; field visible on Opportunity Products" escape="false"/> </li>
+                        <ol type="1">
+                            <li> <apex:outputText value="Open Setup" escape="false"/> </li>
+                            <li> <apex:outputText value="Go to Customize &rarr; Opportunity &rarr; Opportunity Products &rarr; Fields" escape="false"/> </li>
+                            <li> <apex:outputText value="Click on &quot;Discount&quot; name (, not the Edit link)" escape="false"/> </li>
+                            <li> <apex:outputText value="Press the &quot;Set Field-Level Security&quot; Bbutton" escape="false"/> </li>
+                            <li> <apex:outputText value="Make it visible for all profiles by selecting the checkbox on the column header" escape="false"/> </li>
+                            <li> <apex:outputText value="Click the &quot;save&quot; button" escape="false"/> </li>
+                        </ol>
+                    </ol> 
+                </li>
+            </ol>
+            
+            <br/>
+            <apex:outputText value="Valooto is now configured and ready to use." escape="false"/>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

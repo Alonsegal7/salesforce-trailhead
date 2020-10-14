@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_at_risk_more_then_30_days {
+  fullName = "Account.at_risk_more_then_30_days"
+  field = salesforce.Account.field.At_Risk__c
+  literalValue = "1"
+  name = "at risk (more then 30 days)"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

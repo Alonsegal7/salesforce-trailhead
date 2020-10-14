@@ -1,0 +1,309 @@
+salesforce.Flow Monday_Account_Lifecycle_Stage_Changed {
+  fullName = "Monday_Account_Lifecycle_Stage_Changed"
+  actionCalls = [
+    {
+      processMetadataValues = [
+        {
+          name = "emailAlertSelection"
+          value = {
+            stringValue = "Send_email_alert_when_monday_account_lifecycle_stage_has_changed"
+          }
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Notification to AM"
+      locationX = 100
+      locationY = 200
+      actionName = salesforce.WorkflowAlert.instance.Account_Send_email_alert_when_monday_account_lifecycle_stage_has_changed
+      actionType = "emailAlert"
+      inputParameters = [
+        {
+          name = "SObjectRowId"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      name = "isChangedDecision2_myRule_1_Monday_Account_Lifecycle_c"
+      label = "isChangedDecision2_myRule_1_Monday_Account_Lifecycle_c"
+      locationX = 0
+      locationY = 0
+      defaultConnector = {
+        targetReference = "myDecision"
+      }
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "isChangedRule_2_myRule_1_Monday_Account_Lifecycle_c"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "myVariable_old.Monday_Account_Lifecycle__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "myVariable_current.Monday_Account_Lifecycle__c"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myDecision"
+          }
+          label = "isChangedRule_2_myRule_1_Monday_Account_Lifecycle_c"
+        },
+      ]
+    },
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "1 AND 2 AND (3 OR 4) AND 5"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.RecordType.DeveloperName"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Monday_Account"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "isChangedRule_2_myRule_1_Monday_Account_Lifecycle_c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Enterprise AM"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AM"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "User"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.CSM__c"
+              operator = "NotEqualTo"
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Monday Account Lifecycle Stage Changed"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Monday_Account_Lifecycle_Stage_Changed-2_InterviewLabel"
+  label = "Monday Account Lifecycle Stage Changed"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Account"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  startElementReference = "isChangedDecision2_myRule_1_Monday_Account_Lifecycle_c"
+  status = "Active"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Account
+    },
+  ]
+}

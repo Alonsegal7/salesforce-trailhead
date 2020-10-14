@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__zaapit_tb_opportunityPrd2 {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Opportunity Products 2 (Z)"
+  fullName = "zaapit__zaapit_tb_opportunityPrd2"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tb_opportunityPrd2.page")
+}

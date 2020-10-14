@@ -1,0 +1,8 @@
+<apex:page sidebar="true" showChat="false" title="Opportunities">
+
+    <c:zaapit_tables_v1 />
+    <!-- Thank you for looking :) please contact us for customizing this application -->
+    <apex:outputpanel rendered="{!NOT(contains($Label.zaapit__disableincludescript, 'zaapit_tb_OpportunityWL'))}">
+   <script type="text/javascript" src="{!$Resource.Opportunities_stage_dep}"></script>
+   </apex:outputpanel> 
+</apex:page>

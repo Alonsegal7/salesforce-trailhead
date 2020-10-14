@@ -1,0 +1,33 @@
+<apex:page tabStyle="Valooto__tab"  >
+    <style>
+        .panelStyle
+        {
+            font-size: 14px;
+            line-height: 35px;
+            margin: 5px;
+            padding: 5px;
+        }
+    </style>
+    
+    <apex:form >
+        <apex:outputLink value="http://valooto.com/" target="_blank">
+            <apex:image value="{!$Resource.valt__logob}" style="width: 200px;"/>
+        </apex:outputLink>
+
+        <apex:outputPanel layout="block" styleClass="panelStyle">
+            <h1> <apex:outputText value="About Us" /> </h1>
+            <br/>
+            <apex:outputText value="Valooto is a next generation Configure Price Quote (CPQ) solution offering advanced pricing and proposal functionality, without the cost and complexity of traditional CPQ solutions. An enterprise-grade SaaS solution, Valooto provides a wide and comprehensive array of built-in functionality that can quickly and easily be configured to suit different sales models, without any coding." />
+
+            <br/><br/>
+            <h1> <apex:outputText value="Contact Us" /> </h1>
+            <br/>
+            
+            <apex:outputText value="Please feel free to contact us with any questions or issues you may have at " />
+             
+            <apex:outputLink value="mailto:support@valooto.com?subject=SFDC%20Application"> 
+                <apex:outputText value=" support@valooto.com" /> 
+            </apex:outputLink>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

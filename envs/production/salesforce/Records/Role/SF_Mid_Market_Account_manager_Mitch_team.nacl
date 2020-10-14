@@ -1,0 +1,9 @@
+salesforce.Role SF_Mid_Market_Account_manager_Mitch_team {
+  fullName = "SF_Mid_Market_Account_manager_Mitch_team"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "SF Mid Market Account manager- Mitch team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.SF_Team_Leader_Mitch_team
+}

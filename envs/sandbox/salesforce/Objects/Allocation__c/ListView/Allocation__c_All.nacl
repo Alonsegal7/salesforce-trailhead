@@ -1,0 +1,8 @@
+salesforce.ListView Allocation__c_All {
+  fullName = "Allocation__c.All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Allocation__c,
+  ]
+}

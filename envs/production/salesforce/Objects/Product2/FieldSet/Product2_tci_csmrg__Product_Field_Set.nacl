@@ -1,0 +1,37 @@
+salesforce.FieldSet Product2_tci_csmrg__Product_Field_Set {
+  fullName = "Product2.tci_csmrg__Product_Field_Set"
+  availableFields = [
+    {
+      field = "Description"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  description = "Mass Edit Products VF Page"
+  displayedFields = [
+    {
+      field = "Name"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Family"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ProductCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "IsActive"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Product Field Set"
+  _parent = [
+    salesforce.Product2,
+  ]
+}

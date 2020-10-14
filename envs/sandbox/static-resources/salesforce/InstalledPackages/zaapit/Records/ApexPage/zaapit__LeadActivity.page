@@ -1,0 +1,64 @@
+<apex:page standardController="lead" showHeader="false" sidebar="false"> 
+<c:zp_ifrm_helper />
+  <a href="/{!lead.id}" target="_top"><div class="h1"><apex:outputText value="{!Lead.name}">
+    </apex:outputText></div></a>
+    
+<apex:relatedList subject="{!lead}" list="OpenActivities"/>
+<apex:relatedList subject="{!lead}" list="ActivityHistories"/>
+
+
+
+
+  <script>
+  
+  $(document).ready(function(){
+  	$("#mapIframe").attr("src","https://zaapitsc3.appspot.com/maps/maps1.html?userAddr1="+encodeURIComponent($("#userAddr").text())+"&Addr="+encodeURIComponent($("#Addr").text())+"&Contact_address={!JSENCODE($Label.Contact_address)}");
+  	
+  });
+ 
+   </script>
+     <apex:pageBlock title="{!$Label.zaapit__contact_address}">
+   <iframe scr="about:blank" id="mapIframe" width="100%;" height="630" frameborder="0"/>
+ <textarea id="Addr" class="hd1">
+ {!lead.Street}, {!lead.City}, {!lead.State}, {!lead.Country}
+ </textarea>
+
+ </apex:pageBlock>
+
+
+<!--
+<apex:pageBlock title="Open Activities" >
+<apex:pageblockTable value="{!lead.OpenActivities}" var="act" id="theTable" rowClasses="odd,even"
+
+                        styleClass="tableClass">
+<apex:column value="{!act.Subject}">
+           </apex:column>
+           
+           <apex:column value="{!act.ActivityDate}">
+           </apex:column>
+  <apex:column value="{!act.Status}">
+           </apex:column>         
+           <apex:column value="{!act.Description}">
+           </apex:column>
+
+    </apex:pageblockTable >
+</apex:pageBlock>
+
+<apex:pageBlock title="Activity History">
+<apex:pageblockTable value="{!lead.ActivityHistories}" var="act" id="theTable" rowClasses="odd,even"
+
+                        styleClass="tableClass">
+<apex:column value="{!act.Subject}">
+           </apex:column>
+           
+           <apex:column value="{!act.ActivityDate}">
+           </apex:column>
+  <apex:column value="{!act.Status}">
+           </apex:column>         
+           <apex:column value="{!act.Description}">
+           </apex:column>
+
+    </apex:pageblockTable >
+</apex:pageBlock>
+-->
+</apex:page>

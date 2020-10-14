@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Task_Public_True {
+  fullName = "Task.Public_True"
+  field = salesforce.Task.field.IsVisibleInSelfService
+  literalValue = "1"
+  name = "Public= True"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Task,
+  ]
+}

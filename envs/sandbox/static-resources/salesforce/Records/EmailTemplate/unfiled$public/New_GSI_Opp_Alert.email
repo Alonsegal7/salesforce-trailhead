@@ -1,0 +1,26 @@
+<table border="0" cellpadding="10" width="650" cellspacing="5" height="400" >
+<tr valign="top" height="100" >
+<td width="150" tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[]]></td>
+<td tEditID="c2r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c2r1" locked="0" >
+<![CDATA[<font face="arial" color="#33cc00"><span style="font-size: 12pt;"><b>New Opportunity was created by GSI partner</b></span></font><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font size="2"><font style="background-color: rgb(255, 255, 255);"><b><br></b></font></font></div><div style=""><font style="color: rgb(0, 0, 0); font-family: arial;" size="2"><font style="background-color: rgb(255, 255, 255);"><b style="">Opportunity Name:&nbsp;</b></font><font face="arial" style="background-color: rgb(255, 255, 255);">{!Opportunity.Name}</font></font><div style=""><font size="2"><font style="color: rgb(0, 0, 0); font-family: arial;"><b>Owner:&nbsp;</b><font face="arial">{!Opportunity.OwnerFullName}</font><br style="background-color: rgb(255, 255, 255);"><font style="background-color: rgb(255, 255, 255);"><b>Partner:&nbsp;</b></font></font><font face="arial">{!Opportunity.Owner_Role__c}</font></font></div><div style="color: rgb(0, 0, 0); font-family: arial;"><font size="2"><font style="background-color: rgb(255, 255, 255);"><b>ARR:</b>&nbsp;</font><font face="arial" style="">{!Opportunity.ARR_For_Reports__c}</font></font><div style=""><font size="2"><font face="arial" style="background-color: rgb(255, 255, 255);"><b>Link:&nbsp;</b></font><b id="ext-gen38" style="color: rgb(22, 50, 92);"><font face="Arial, sans-serif" style="">{!Opportunity.Link}</font></b></font></div></div></div>]]></td>
+</tr>
+<tr valign="top" height="100" >
+<td width="150" tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[]]></td>
+<td tEditID="c2r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c2r2" locked="0" >
+<![CDATA[]]></td>
+</tr>
+<tr valign="top" height="100" >
+<td width="150" tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+<td tEditID="c2r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c2r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+<tr valign="top" height="100" >
+<td width="150" tEditID="c1r4" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r4" locked="0" >
+<![CDATA[]]></td>
+<td tEditID="c2r4" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c2r4" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

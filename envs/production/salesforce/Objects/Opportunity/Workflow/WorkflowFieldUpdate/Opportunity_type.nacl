@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_type {
+  fullName = "Opportunity.type"
+  field = salesforce.Opportunity.field.Type
+  literalValue = "New Business"
+  name = "type"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

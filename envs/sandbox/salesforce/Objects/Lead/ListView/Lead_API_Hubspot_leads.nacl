@@ -1,0 +1,47 @@
+salesforce.ListView Lead_API_Hubspot_leads {
+  fullName = "Lead.API_Hubspot_leads"
+  columns = [
+    "CORE.USERS.LAST_NAME",
+    "LEAD.CREATED_DATE",
+    "LEAD.STATUS",
+    "of_employees__c",
+    "Company_Size__c",
+    "Related_Company__c",
+    "LEAD.COUNTRY",
+    "LEAD.EMAIL",
+    "FULL_NAME",
+    "LEAD.TITLE",
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "Last_Activity_subject__c",
+    "Channel__c",
+    "Channel_Lead_Source__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "CORE.USERS.LAST_NAME"
+      operation = "contains"
+      value = "Hubspot"
+    },
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "greaterOrEqual"
+      value = "2/10/2020 12:00 AM"
+    },
+    {
+      field = "Last_Activity_subject__c"
+      operation = "notEqual"
+      value = "New registration form (July 31,2019 12:10:35 PM"
+    },
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead"
+    },
+  ]
+  label = "API Hubspot leads"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

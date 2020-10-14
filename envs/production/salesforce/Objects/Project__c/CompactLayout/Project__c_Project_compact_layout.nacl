@@ -1,0 +1,16 @@
+salesforce.CompactLayout Project__c_Project_compact_layout {
+  fullName = "Project__c.Project_compact_layout"
+  fields = [
+    "Name",
+    "OwnerId",
+    "Handover__c",
+    "Package_Sign__c",
+    "Project_Status__c",
+    "Project_Closed_Date__c",
+    "Age__c",
+  ]
+  label = "Project compact layout"
+  _parent = [
+    salesforce.Project__c,
+  ]
+}

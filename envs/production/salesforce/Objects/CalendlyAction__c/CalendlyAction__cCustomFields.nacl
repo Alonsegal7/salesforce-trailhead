@@ -1,0 +1,452 @@
+type salesforce.CalendlyAction__c {
+  salesforce.Text CustomQuestion1__c {
+    apiName = "CalendlyAction__c.CustomQuestion1__c"
+    label = "CustomQuestion1"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text CustomQuestion2__c {
+    apiName = "CalendlyAction__c.CustomQuestion2__c"
+    label = "CustomQuestion2"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text CustomQuestion3__c {
+    apiName = "CalendlyAction__c.CustomQuestion3__c"
+    label = "CustomQuestion3"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text CustomQuestion4__c {
+    apiName = "CalendlyAction__c.CustomQuestion4__c"
+    label = "CustomQuestion4"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea CustomResponse1__c {
+    apiName = "CalendlyAction__c.CustomResponse1__c"
+    label = "CustomResponse1"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea CustomResponse2__c {
+    apiName = "CalendlyAction__c.CustomResponse2__c"
+    label = "CustomResponse2"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea CustomResponse3__c {
+    apiName = "CalendlyAction__c.CustomResponse3__c"
+    label = "CustomResponse3"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea CustomResponse4__c {
+    apiName = "CalendlyAction__c.CustomResponse4__c"
+    label = "CustomResponse4"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Text EventCancelReason__c {
+    apiName = "CalendlyAction__c.EventCancelReason__c"
+    label = "Event Cancel Reason"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox EventCanceled__c {
+    apiName = "CalendlyAction__c.EventCanceled__c"
+    label = "Event Canceled"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text EventCancelerName__c {
+    apiName = "CalendlyAction__c.EventCancelerName__c"
+    label = "Event Canceler Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime EventCreatedAt__c {
+    apiName = "CalendlyAction__c.EventCreatedAt__c"
+    label = "Event Created At"
+    _required = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea EventDescription__c {
+    apiName = "CalendlyAction__c.EventDescription__c"
+    label = "Event Description"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 2
+  }
+  salesforce.DateTime EventEndTime__c {
+    apiName = "CalendlyAction__c.EventEndTime__c"
+    label = "Event End Time"
+    _required = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text EventPrimaryPublisherEmail__c {
+    apiName = "CalendlyAction__c.EventPrimaryPublisherEmail__c"
+    label = "Event Primary Publisher Email"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text EventPrimaryPublisherName__c {
+    apiName = "CalendlyAction__c.EventPrimaryPublisherName__c"
+    label = "Event Primary Publisher Name"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime EventStartTime__c {
+    apiName = "CalendlyAction__c.EventStartTime__c"
+    label = "Event Start Time"
+    _required = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text EventSubject__c {
+    apiName = "CalendlyAction__c.EventSubject__c"
+    label = "Event Subject"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number EventTypeDuration__c {
+    apiName = "CalendlyAction__c.EventTypeDuration__c"
+    label = "Event Type Duration"
+    _required = true
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text EventTypeKind__c {
+    apiName = "CalendlyAction__c.EventTypeKind__c"
+    label = "Event Type Kind"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text EventTypeName__c {
+    apiName = "CalendlyAction__c.EventTypeName__c"
+    label = "Event Type Name"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text EventTypeSlug__c {
+    apiName = "CalendlyAction__c.EventTypeSlug__c"
+    label = "Event Type Slug"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text EventUuid__c {
+    apiName = "CalendlyAction__c.EventUuid__c"
+    label = "Event Uuid"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text InviteeCancelReason__c {
+    apiName = "CalendlyAction__c.InviteeCancelReason__c"
+    label = "Invitee Cancel Reason"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime InviteeCanceledAt__c {
+    apiName = "CalendlyAction__c.InviteeCanceledAt__c"
+    label = "Invitee Canceled At"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox InviteeCanceled__c {
+    apiName = "CalendlyAction__c.InviteeCanceled__c"
+    label = "Invitee Canceled"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text InviteeCancelerName__c {
+    apiName = "CalendlyAction__c.InviteeCancelerName__c"
+    label = "Invitee Canceler Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime InviteeCreatedAt__c {
+    apiName = "CalendlyAction__c.InviteeCreatedAt__c"
+    label = "Invitee Created At"
+    _required = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Email InviteeEmail__c {
+    apiName = "CalendlyAction__c.InviteeEmail__c"
+    label = "Invitee Email"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text InviteeFirstName__c {
+    apiName = "CalendlyAction__c.InviteeFirstName__c"
+    label = "Invitee First Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text InviteeLastName__c {
+    apiName = "CalendlyAction__c.InviteeLastName__c"
+    label = "Invitee Last Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text InviteeName__c {
+    apiName = "CalendlyAction__c.InviteeName__c"
+    label = "Invitee Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text InviteeTimezone__c {
+    apiName = "CalendlyAction__c.InviteeTimezone__c"
+    label = "Invitee Timezone"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text InviteeUuid__c {
+    apiName = "CalendlyAction__c.InviteeUuid__c"
+    label = "Invitee Uuid"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Location__c {
+    apiName = "CalendlyAction__c.Location__c"
+    label = "Location"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Text ObjectId__c {
+    apiName = "CalendlyAction__c.ObjectId__c"
+    label = "Object Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text UtmCampaign__c {
+    apiName = "CalendlyAction__c.UtmCampaign__c"
+    label = "UtmCampaign"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text UtmContent__c {
+    apiName = "CalendlyAction__c.UtmContent__c"
+    label = "UtmContent"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text UtmMedium__c {
+    apiName = "CalendlyAction__c.UtmMedium__c"
+    label = "UtmMedium"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text UtmSource__c {
+    apiName = "CalendlyAction__c.UtmSource__c"
+    label = "UtmSource"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text UtmTerm__c {
+    apiName = "CalendlyAction__c.UtmTerm__c"
+    label = "UtmTerm"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+}

@@ -1,0 +1,8 @@
+salesforce.Document SalesTools_Documentation_for_Salesforce_com_Sample_Dashboards_pdf {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  internalUseOnly = false
+  name = "Documentation for Salesforce.com Sample Dashboards"
+  public = false
+  fullName = "SalesTools/Documentation_for_Salesforce_com_Sample_Dashboards.pdf"
+  content = file("salesforce/Records/Document/SalesTools/Documentation_for_Salesforce_com_Sample_Dashboards.pdf")
+}

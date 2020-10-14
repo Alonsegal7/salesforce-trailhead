@@ -1,0 +1,39 @@
+salesforce.EmailTemplate unfiled_public_Account_has_been_Disabled {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "Your lead's account has been disabled"
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "Account has been Disabled"
+  style = "freeForm"
+  subject = "Your lead's account has been disabled"
+  textOnly = '''
+Hi {!Lead.OwnerFullName}
+
+Seems like this lead's account has been disabled.
+
+INFORMATION:
+
+Lead Name - {!Lead.Name}
+
+Account Name - {!Lead.Lead_name__c}
+
+Lead Status - {!Lead.Status}
+
+Days left in trial - {!Lead.Days_left_in_trial__c}
+
+Engagement - {!Lead.Engagement__c}
+
+Enabled users - {!Lead.Enabled_users__c}
+
+Trial End Date - {!Lead.Trial_end__c}
+
+Last Activity Subject - {!Lead.Last_Activity_subject__c}
+
+Link to Lead - {!Lead.Link}
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Account_has_been_Disabled"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Account_has_been_Disabled.email")
+}

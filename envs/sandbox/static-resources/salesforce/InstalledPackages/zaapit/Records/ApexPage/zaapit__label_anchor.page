@@ -1,0 +1,5 @@
+<apex:page >
+{!$Label.zaapit__follow_instruction_guide}
+{!$Label.zaapit__welcome_tour}
+{!$Label.zaapit__welcome_guide_me}
+</apex:page>

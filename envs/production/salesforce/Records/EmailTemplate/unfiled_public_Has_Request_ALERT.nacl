@@ -1,0 +1,13 @@
+salesforce.EmailTemplate unfiled_public_Has_Request_ALERT {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "Has Request ALERT"
+  encodingKey = "ISO-8859-1"
+  name = "Has Request ALERT"
+  style = "none"
+  subject = "Has Request ALERT"
+  type = "text"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Has_Request_ALERT"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Has_Request_ALERT.email")
+}

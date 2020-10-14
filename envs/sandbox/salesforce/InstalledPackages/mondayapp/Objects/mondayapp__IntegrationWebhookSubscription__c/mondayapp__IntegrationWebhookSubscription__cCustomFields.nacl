@@ -1,0 +1,47 @@
+type salesforce.mondayapp__IntegrationWebhookSubscription__c {
+  salesforce.Text mondayapp__ActionType__c {
+    apiName = "mondayapp__IntegrationWebhookSubscription__c.mondayapp__ActionType__c"
+    label = "ActionType"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text mondayapp__EntityType__c {
+    apiName = "mondayapp__IntegrationWebhookSubscription__c.mondayapp__EntityType__c"
+    label = "EntityType"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    businessStatus = "Active"
+    externalId = false
+  }
+  salesforce.Number mondayapp__SubscriptionID__c {
+    apiName = "mondayapp__IntegrationWebhookSubscription__c.mondayapp__SubscriptionID__c"
+    label = "SubscriptionID"
+    _required = true
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = true
+    externalId = true
+    queryable = true
+  }
+  salesforce.Url mondayapp__WebhookURL__c {
+    apiName = "mondayapp__IntegrationWebhookSubscription__c.mondayapp__WebhookURL__c"
+    label = "WebhookURL"
+    _required = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

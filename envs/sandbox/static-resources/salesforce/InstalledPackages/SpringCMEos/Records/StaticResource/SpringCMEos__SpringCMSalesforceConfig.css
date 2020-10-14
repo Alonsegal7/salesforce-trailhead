@@ -1,0 +1,11 @@
+html, body{
+    		height:100%;
+}
+
+.config-form{
+	height: calc(100vh - 12px);
+}
+
+iframe{
+	height: calc(100% - 12px);
+}

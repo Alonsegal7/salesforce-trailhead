@@ -1,0 +1,26 @@
+salesforce.ListView Opportunity_PS_Requests_Opportunities {
+  fullName = "Opportunity.PS_Requests_Opportunities"
+  columns = [
+    "Professional_Service__c",
+    "PS_Request_Provider__c",
+    "ACCOUNT.NAME",
+    "OPPORTUNITY.NAME",
+    "OPPORTUNITY.STAGE_NAME",
+    "OPPORTUNITY.CLOSE_DATE",
+    "Expected_Plan_Name__c",
+    "Expected_ARR_Temp__c",
+    "Green_Bucket_ARR__c",
+    "CORE.USERS.FULL_NAME",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Professional_Service__c"
+      operation = "notEqual"
+    },
+  ]
+  label = "PS Requests Opportunities"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

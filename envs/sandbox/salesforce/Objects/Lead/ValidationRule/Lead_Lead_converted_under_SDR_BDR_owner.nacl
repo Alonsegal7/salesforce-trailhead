@@ -1,0 +1,15 @@
+salesforce.ValidationRule Lead_Lead_converted_under_SDR_BDR_owner {
+  fullName = "Lead.Lead_converted_under_SDR_BDR_owner"
+  active = true
+  errorConditionFormula = '''
+(ischanged(Status)||ischanged(OwnerId))&&
+or(ISPICKVAL( Status , "Qualified"),
+ISPICKVAL( Status , "Converted")) &&
+ or( Owner:User.Profile.Name ="SDR / BDR", Owner:User.Long_User_ID__c ="0051t000003OiHnAAK")
+'''
+  errorDisplayField = "OwnerId"
+  errorMessage = "The lead owner can't be SDR/BDR before convert"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

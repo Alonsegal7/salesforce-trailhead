@@ -1,0 +1,35 @@
+type salesforce.RecommendationDefinitionDetail {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  string actionUrl {
+    _required = false
+  }
+  string description {
+    _required = false
+  }
+  string linkText {
+    _required = false
+  }
+  salesforce.ScheduledRecommendation scheduledRecommendations {
+    _required = false
+  }
+  string setupName {
+    _required = false
+  }
+  string title {
+    _required = false
+  }
+  metadataType = "RecommendationDefinitionDetail"
+}

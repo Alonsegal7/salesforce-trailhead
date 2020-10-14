@@ -1,0 +1,3 @@
+<apex:page standardController="Opportunity" showChat="false" showHeader="false" sidebar="false">
+<apex:include pageName="zaapit__zaapit_tb_opportunityPrd"/>
+</apex:page>

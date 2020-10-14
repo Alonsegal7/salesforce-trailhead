@@ -1,0 +1,9 @@
+salesforce.ProfileSessionSetting Screens_profileSessionSetting1561467980221 {
+  fullName = "Screens_profileSessionSetting1561467980221"
+  externalCommunityUserIdentityVerif = false
+  forceLogout = false
+  profile = "screens- read only"
+  sessionPersistence = false
+  sessionTimeout = 1440
+  sessionTimeoutWarning = false
+}

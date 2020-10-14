@@ -1,0 +1,135 @@
+salesforce.Flow LSNLY_User_Before_Insert {
+  fullName = "LSNLY_User_Before_Insert"
+  assignments = [
+    {
+      name = "Update_LSNLY_User"
+      label = "Update LSNLY User"
+      locationX = 626
+      locationY = 322
+      assignmentItems = [
+        {
+          assignToReference = "$Record.Partner__c"
+          operator = "Assign"
+          value = {
+            elementReference = "Get.AccountId"
+          }
+        },
+        {
+          assignToReference = "$Record.Partner_Contact__c"
+          operator = "Assign"
+          value = {
+            elementReference = "Get.Id"
+          }
+        },
+        {
+          assignToReference = "$Record.Partner_User__c"
+          operator = "Assign"
+          value = {
+            elementReference = "Get_User.Id"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      name = "Email_not_NULL"
+      label = "Email not NULL"
+      locationX = 169
+      locationY = 321
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Not_NULL"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "$Record.LSNLY__Email__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Get"
+          }
+          label = "Not NULL"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "LSNLY User - Before Insert {!$Flow.CurrentDateTime}"
+  label = "LSNLY User - Before Insert"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get"
+      label = "Get Contact"
+      locationX = 348
+      locationY = 318
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Get_User"
+      }
+      filters = [
+        {
+          field = "Email"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.LSNLY__Email__c"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Contact
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_User"
+      label = "Get User"
+      locationX = 496
+      locationY = 314
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Update_LSNLY_User"
+      }
+      filters = [
+        {
+          field = "Email"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.LSNLY__Email__c"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.User
+      storeOutputAutomatically = true
+    },
+  ]
+  start = {
+    locationX = 51
+    locationY = 50
+    connector = {
+      targetReference = "Email_not_NULL"
+    }
+    object = salesforce.LSNLY__Lessonly_User__c
+    triggerType = "RecordBeforeSave"
+  }
+  status = "Active"
+}

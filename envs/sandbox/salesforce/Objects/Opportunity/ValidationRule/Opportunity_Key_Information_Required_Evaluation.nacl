@@ -1,0 +1,30 @@
+salesforce.ValidationRule Opportunity_Key_Information_Required_Evaluation {
+  fullName = "Opportunity.Key_Information_Required_Evaluation"
+  active = true
+  description = "Except: Admin, Partners, Orange Bucket Opps"
+  errorConditionFormula = '''
+(DATEVALUE(CreatedDate)>=Date(2020,04,9))
+	&& ISCHANGED( StageName ) &&
+
+or(ISPICKVAL(StageName,"Validation"),
+ISPICKVAL(StageName,"Buying process"),
+ISPICKVAL(StageName,"Closed Won")) 
+&& 
+or(isblank(Competition_They_re_Evaluating__c),
+isblank(Other_tools_they_re_using__c))
+	&&  
+NOT(ISPICKVAL(Type,"Expansion"))
+&& RecordType.DeveloperName = 'Internal_Opportunity'
+&&  (Sale_status__c = "Expected Complete" || Sale_status__c = "Complete" ||  Green_Bucket_ARR__c >= 6000)
+&&  $User.ProfileId <> '00e1t000001bu2u' 
+&&  $User.ProfileId <> '00e1t000000i6Zm'
+'''
+  errorMessage = '''
+Please fill all key information required for this stage:
+• Competition they're evaluating
+• Tools in their ecosystem
+'''
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

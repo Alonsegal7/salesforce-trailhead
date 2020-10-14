@@ -1,0 +1,123 @@
+<apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false" >
+<style>
+.toolsrus{color:#333333;padding:10px;width:269px;}
+.toolsrus h3{margin-left:10px;;font-size:15px;color:#333333;display:block;}
+.toolsrus ul{margin-left:10px;padding-left:0px;}
+.toolsrus a{;font-size:13px;color:#333333;display:block;}
+.toolsrus a:hover{;font-size:13px;color:#333333;display:block;background:#efefef}
+</style>
+<div class="toolsrus" >
+<div>
+<div>
+<div>
+<div >
+<div >
+<h3 >Reports</h3>
+<div >
+<ul>
+<li>
+<a href="/00O?rt=22&retURL=%2F006%2Fo&open=open&break0=STAGE_NAME&t=title5&c=RD&c=FN&c=AN&c=ON&c=SN&c=FQ&c=PB&c=AG&c=CD&c=CR&c=NS&c=LS&c=TY&s=AM&s=EA&a=AG&details=yes&format=t">Opportunity Pipeline</a>
+</li>
+<li>
+<a href="/00O?rt=22&retURL=%2F006%2Fo&open=open&break0=STAGE_NAME&sort=STAGE_DURATION&sortdir=down&t=title7&c=FN&c=AN&c=ON&c=SN&c=FQ&c=PB&c=CD&c=TY&s=AM&a=AG&a=SD&details=yes&format=t">Stuck Opportunities</a>
+</li>
+<li>
+<a href="/00O?rt=22&retURL=%2F006%2Fo&open=closedwon&t=title9&c=FN&c=AN&c=ON&c=SN&c=FQ&c=CD&c=TY&s=AM&a=AG&details=yes">Closed Opportunities</a>
+</li>
+<li>
+<a href="/00O?rt=114&retURL=%2F006%2Fo&sortdir=down&sort=CD&sdate={!URLENCODE(text(MONTH(TODAY()))+'/'+text(Day(TODAY()))+'/'+text(year(TODAY())))}&edate={!URLENCODE(text(MONTH(TODAY()))+'/'+text(Day(TODAY()))+'/'+text(year(TODAY())))}&include=all&break0=ON&c=ON&c=OW&c=CR&c=FD&c=OV&c=NV&c=CD&details=yes&format=t">Opportunity Field History Report</a>
+</li>
+<li><a href="/00O/o?entityType=00O">Go to Reports&nbsp;»</a></li>
+</ul>
+</div>
+
+</div>
+
+</div>
+</div>
+<div>
+<div >
+<div >
+<h3 >Quarterly Summary</h3>
+<div style="padding:10px 0px 10px 10px;">
+<form action="/00O"  method="GET" name="lead_summary" onsubmit="if (window.ffInAlert) { return false; }" target="_blank" >
+<input type="hidden" name="c"  value="RD"/>
+<input type="hidden" name="c"  value="AL"/>
+<input type="hidden" name="c"  value="AN"/>
+<input type="hidden" name="c"  value="ON"/>
+<input type="hidden" name="c"  value="SN"/>
+<input type="hidden" name="c"  value="FQ"/>
+<input type="hidden" name="c"  value="AM"/>
+<input type="hidden" name="c"  value="EA"/>
+<input type="hidden" name="c"  value="PB"/>
+<input type="hidden" name="c"  value="AG"/>
+<input type="hidden" name="c"  value="CD"/>
+<input type="hidden" name="c"  value="CR"/>
+<input type="hidden" name="c"  value="NS"/>
+<input type="hidden" name="c"  value="LS"/>
+<input type="hidden" name="c"  value="TY"/>
+<input type="hidden" name="rt"  value="22"/>
+<input type="hidden" name="sort"  value="STAGE_NAME"/>
+<div >
+<div>
+<div>
+<div scope="row">
+<label for="quarter_q">
+<span >*</span>Interval:</label>
+</div>
+<div>
+<select  name="quarter_q" onclick="stopProp1(event)">
+<option value="current" selected="selected">Current FQ</option>
+<option value="curnext1">Current and Next FQ</option>
+<option value="next1">Next FQ</option>
+<option value="prev1">Previous FQ</option>
+<option value="curnext3">Current and Next 3 FQ</option>
+<option value="curfy">Current FY</option>
+<option value="curnextfy">Current and Next FY</option>
+<option value="prevcurfy">Current and Previous FY</option>
+<option value="prevfy">Previous FY</option>
+<option value="nextfy">Next FY</option>
+</select>
+</div>
+</div>
+<div>
+<div scope="row">
+<label for="open">
+<span >*</span>Include:</label>
+</div>
+<div>
+<select  name="open" onclick="stopProp1(event);">
+<option value="all" selected="selected">All Opportunities</option>
+<option value="open">Open Opportunities</option>
+<option value="closed">Closed Opportunities</option>
+<option value="closedwon">Closed/Won Opportunities</option>
+</select>
+</div>
+</div>
+<div>
+<div scope="row">&nbsp;</div>
+<div>
+<input value="Run Report"  name="go" title="Run Report" type="submit" class="btn"/>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<h3 style="margin-top:10px;">Guides</h3>
+<ul>
+<li>
+<a href="javascript:void(0)" onclick="guideMe('welcome_guide_me',0);" >{!$Label.Welcome_Tour}</a>
+</li><li>
+<a href="{!$Label.user_guide_link}" target="_blank">{!$Label.User_Guide}</a>
+</li>
+</ul>
+</div>
+
+</apex:page>

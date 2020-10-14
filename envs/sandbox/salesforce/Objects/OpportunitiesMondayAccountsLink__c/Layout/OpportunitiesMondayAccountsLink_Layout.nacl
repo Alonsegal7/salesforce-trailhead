@@ -1,0 +1,85 @@
+salesforce.Layout OpportunitiesMondayAccountsLink_Layout {
+  fullName = "OpportunitiesMondayAccountsLink__c-OpportunitiesMondayAccountsLink Layout"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunitiesMondayAccountsLink__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.OpportunitiesMondayAccountsLink__c.field.Opportunity__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.OpportunitiesMondayAccountsLink__c.field.Monday_Account__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.OpportunitiesMondayAccountsLink__c.field.Billing_Ids__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunitiesMondayAccountsLink__c.field.monday_account_link__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.OpportunitiesMondayAccountsLink__c.field.is_Primary__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.OpportunitiesMondayAccountsLink__c.field.CurrencyIsoCode
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunitiesMondayAccountsLink__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunitiesMondayAccountsLink__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      style = "CustomLinks"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  _parent = [
+    salesforce.OpportunitiesMondayAccountsLink__c,
+  ]
+}

@@ -1,0 +1,100 @@
+salesforce.CustomObjectTranslation Relationship__c_en_US {
+  fullName = "Relationship__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Relationship"
+    },
+    {
+      plural = true
+      value = "Relationships"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Comments__c
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Contact_Seniority__c
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Contact__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Decision_Maker_For_Reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Decision_Maker__c
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Last_Checkup__c
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Last_Email_Communication__c
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Last_Verbal_Communication__c
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Relationship_Level__c
+      picklistValues = [
+        {
+          masterLabel = "High"
+          translation = ""
+        },
+        {
+          masterLabel = "Low"
+          translation = ""
+        },
+        {
+          masterLabel = "Medium"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.Status__c
+      picklistValues = [
+        {
+          masterLabel = "Active"
+          translation = ""
+        },
+        {
+          masterLabel = "Inactive"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Relationship__c.field.monday_Account__c
+      relationshipLabel = ""
+    },
+  ]
+  layouts = [
+    {
+      layout = "Relationship Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Relationship__c,
+  ]
+}

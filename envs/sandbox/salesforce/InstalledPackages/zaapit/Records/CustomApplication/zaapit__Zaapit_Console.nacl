@@ -1,0 +1,96 @@
+salesforce.CustomApplication zaapit__Zaapit_Console {
+  fullName = "zaapit__Zaapit_Console"
+  brand = {
+    headerColor = "#0070D2"
+    logoVersion = 1
+    shouldOverrideOrgTheme = false
+  }
+  description = "Manage your data in bulk inside a console, use with zaapit's tabs or standard tabs"
+  formFactors = [
+    "Large",
+  ]
+  isNavAutoTempTabsDisabled = false
+  isNavPersonalizationDisabled = false
+  label = "ZaapIT's Console"
+  navType = "Console"
+  tabs = [
+    salesforce.CustomTab.instance.zaapit__Leads,
+    salesforce.CustomTab.instance.zaapit__Contact_Working_List,
+    salesforce.CustomTab.instance.zaapit__Opportunities,
+    salesforce.CustomTab.instance.zaapit__Pricebook_Entires,
+    salesforce.CustomTab.instance.zaapit__TasksWL,
+    salesforce.CustomTab.instance.zaapit__Accounts_Activities,
+    salesforce.CustomTab.instance.zaapit__Custom_Objects,
+    salesforce.CustomTab.instance.zaapit__Custom_Sub_Demo,
+    salesforce.CustomTab.instance.zaapit__Tasks_Recent,
+    salesforce.CustomTab.instance.zaapit__Events_Recent,
+    salesforce.CustomTab.instance.zaapit__EventsWL,
+    salesforce.CustomTab.instance.zaapit__All_Attachments,
+    salesforce.CustomTab.instance.zaapit__Campaigns,
+    salesforce.CustomTab.instance.zaapit__All_Tasks,
+    salesforce.CustomTab.instance.zaapit__All_Events,
+    "standard-Contact",
+    salesforce.CustomTab.instance.zaapit__Accounts,
+    "standard-Opportunity",
+  ]
+  uiType = "Lightning"
+  utilityBar = "zaapit__Zaapit_Console_UtilityBar"
+  workspaceConfig = {
+    mappings = [
+      {
+        tab = "standard-Contact"
+      },
+      {
+        tab = "standard-Opportunity"
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Accounts
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Accounts_Activities
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__All_Attachments
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__All_Events
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__All_Tasks
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Campaigns
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Contact_Working_List
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Custom_Objects
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Custom_Sub_Demo
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__EventsWL
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Events_Recent
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Leads
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Opportunities
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Pricebook_Entires
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__TasksWL
+      },
+      {
+        tab = salesforce.CustomTab.instance.zaapit__Tasks_Recent
+      },
+    ]
+  }
+}

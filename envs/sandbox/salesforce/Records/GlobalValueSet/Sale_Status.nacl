@@ -1,0 +1,32 @@
+salesforce.GlobalValueSet Sale_Status {
+  fullName = "Sale_Status"
+  customValue = [
+    {
+      fullName = "Expected Partial"
+      default = false
+      label = "Expected Partial"
+    },
+    {
+      fullName = "Partial"
+      default = false
+      label = "Partial"
+    },
+    {
+      fullName = "Expected Complete"
+      default = false
+      label = "Expected Complete"
+    },
+    {
+      fullName = "Complete"
+      default = false
+      label = "Complete"
+    },
+    {
+      fullName = "Blank"
+      default = false
+      label = "Blank"
+    },
+  ]
+  masterLabel = "Sale Status"
+  sorted = false
+}

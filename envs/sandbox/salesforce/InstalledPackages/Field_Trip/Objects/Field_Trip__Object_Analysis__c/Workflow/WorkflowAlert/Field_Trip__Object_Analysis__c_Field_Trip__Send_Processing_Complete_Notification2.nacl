@@ -1,0 +1,15 @@
+salesforce.WorkflowAlert Field_Trip__Object_Analysis__c_Field_Trip__Send_Processing_Complete_Notification2 {
+  fullName = "Field_Trip__Object_Analysis__c.Field_Trip__Send_Processing_Complete_Notification2"
+  description = "Send Processing Complete Notification"
+  protected = false
+  recipients = [
+    {
+      type = "owner"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.Field_Trip__Field_Trip_Postcards_Field_Trip__Processing_Completed
+  _parent = [
+    salesforce.Field_Trip__Object_Analysis__c,
+  ]
+}

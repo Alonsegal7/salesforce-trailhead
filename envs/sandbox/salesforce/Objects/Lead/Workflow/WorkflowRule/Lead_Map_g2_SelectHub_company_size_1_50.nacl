@@ -1,0 +1,32 @@
+salesforce.WorkflowRule Lead_Map_g2_SelectHub_company_size_1_50 {
+  fullName = "Lead.Map g2 %26 SelectHub company size 1-50"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_X1_50
+      type = "FieldUpdate"
+    },
+  ]
+  active = false
+  booleanFilter = "1 OR (2 AND 3)"
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.G2C_Company_Size__c
+      operation = "equals"
+      value = "Myself Only,2-10 employees,11-50 employees"
+    },
+    {
+      field = salesforce.Lead.field.SelectHub_Company_Size__c
+      operation = "greaterOrEqual"
+      value = "1"
+    },
+    {
+      field = salesforce.Lead.field.SelectHub_Company_Size__c
+      operation = "lessOrEqual"
+      value = "50"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

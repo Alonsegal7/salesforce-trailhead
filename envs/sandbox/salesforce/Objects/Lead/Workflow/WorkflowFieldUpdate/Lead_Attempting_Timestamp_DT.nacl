@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Attempting_Timestamp_DT {
+  fullName = "Lead.Attempting_Timestamp_DT"
+  field = salesforce.Lead.field.Attempting_Timestamp_DT__c
+  formula = "NOW()"
+  name = "Attempting Timestamp DT"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

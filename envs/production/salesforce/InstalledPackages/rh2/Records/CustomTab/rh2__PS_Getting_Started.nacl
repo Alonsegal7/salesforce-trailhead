@@ -1,0 +1,6 @@
+salesforce.CustomTab rh2__PS_Getting_Started {
+  fullName = "rh2__PS_Getting_Started"
+  label = "Getting Started"
+  motif = "Custom33: Desk"
+  page = "rh2__PS_Home"
+}

@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Partner_Qualified_Status {
+  fullName = "Account.Partner_Qualified_Status"
+  field = salesforce.Account.field.Partner_Qualified_Timestamp__c
+  formula = "TODAY()"
+  name = "Partner Qualified Status"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,7 @@
+salesforce.StaticResource zaapit__clear_search {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "image/png"
+  fullName = "zaapit__clear_search"
+  content = file("salesforce/InstalledPackages/zaapit/Records/StaticResource/zaapit__clear_search.png")
+}

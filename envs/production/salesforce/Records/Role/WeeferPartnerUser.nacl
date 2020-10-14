@@ -1,0 +1,10 @@
+salesforce.Role WeeferPartnerUser {
+  fullName = "WeeferPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Weefer (PT Weefer Indonesia) Partner User"
+  mayForecastManagerShare = false
+  name = "Weefer (PT Weefer Indonesia) Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

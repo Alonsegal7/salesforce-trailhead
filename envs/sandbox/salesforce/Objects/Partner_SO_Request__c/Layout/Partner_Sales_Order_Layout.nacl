@@ -1,0 +1,243 @@
+salesforce.Layout Partner_Sales_Order_Layout {
+  fullName = "Partner_SO_Request__c-Partner Sales Order Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Billing Customer"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Customer_payed_by_wire_transfer_before__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Financial_Customer_Name__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.VAT__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.CurrencyIsoCode
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Shipping_Country__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Shipping_State__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Shipping_City__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Shipping_Street__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Shipping_Zip_Postal_Code__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Finance_Contact_Email__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Finance_Contact_Phone__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Partner_Opportunity__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Billing_Country__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Billing_City__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Billing_State__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Billing_Street__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Zip_Postal_Code__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Sales Order"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.NGO__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Type_of_Engagement__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Tier__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Period__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.of_Free_Months__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Additional_commercial_comments__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.End_Date__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Customer_Success_Package__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_SO_Request__c.field.Balance_carry_over__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Addendum_to_SO__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Discount__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Duration__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Payment_Term__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Price_per_Seat__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Additional_Seats_v8__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Additional_Seats_v7__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Start_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Seats_v8__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.Seats_v7__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Partner_SO_Request__c.field.CreatedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      relatedList = "RelatedEntityHistoryList"
+    },
+    {
+      relatedList = "RelatedNoteList"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000jYONO"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Partner_SO_Request__c,
+  ]
+}

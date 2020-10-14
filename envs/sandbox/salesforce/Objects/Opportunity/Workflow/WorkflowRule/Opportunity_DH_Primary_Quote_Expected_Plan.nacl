@@ -1,0 +1,23 @@
+salesforce.WorkflowRule Opportunity_DH_Primary_Quote_Expected_Plan {
+  fullName = "Opportunity.DH Primary Quote Expected Plan"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Map_DH_Period_to_Expected_Period
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Map_DH_Seats_to_Expected_Seats
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Map_DH_Tier_to_Expected_Tier
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "ISCHANGED( DH_Expected_Plan_Period__c ) || ISCHANGED( DH_Expected_Plan_Seats__c )|| ISCHANGED( DH_Expected_Plan_Tier__c )"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,8 @@
+salesforce.Document zaapit__icon_folder1_zaapit__Dedup_manager_logo_png {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  internalUseOnly = false
+  name = "Dedup  manager logo"
+  public = true
+  fullName = "zaapit__icon_folder1/zaapit__Dedup_manager_logo.png"
+  content = file("salesforce/InstalledPackages/zaapit/Records/Document/zaapit__icon_folder1/zaapit__Dedup_manager_logo.png")
+}

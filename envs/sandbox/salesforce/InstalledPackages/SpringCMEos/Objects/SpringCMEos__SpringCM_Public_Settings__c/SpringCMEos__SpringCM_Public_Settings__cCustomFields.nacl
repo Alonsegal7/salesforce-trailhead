@@ -1,0 +1,11 @@
+type salesforce.SpringCMEos__SpringCM_Public_Settings__c {
+  salesforce.Checkbox SpringCMEos__Use_Legacy_Frame__c {
+    apiName = "SpringCMEos__SpringCM_Public_Settings__c.SpringCMEos__Use_Legacy_Frame__c"
+    label = "Use Legacy Frame"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "When enabled, Folder Portal and SpringCM Content will authenticate using the legacy iframe and Salesforce session ID instead of Canvas. This is useful for orgs that are reaching Canvas governor limits."
+  }
+}

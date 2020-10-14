@@ -1,0 +1,30 @@
+salesforce.WorkflowAlert Account_Partner_s_Monday_Account_ARR_is_greater_than_0 {
+  fullName = "Account.Partner_s_Monday_Account_ARR_is_greater_than_0"
+  description = "Partner's Monday Account ARR is greater than 0"
+  protected = false
+  recipients = [
+    {
+      type = "accountOwner"
+    },
+    {
+      type = "owner"
+    },
+    {
+      recipient = "avital@monday.com"
+      type = "user"
+    },
+    {
+      field = salesforce.Account.field.Owner_s_Manager__c
+      type = "userLookup"
+    },
+    {
+      field = salesforce.Account.field.Partner__c
+      type = "userLookup"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Monday_Account_0
+  _parent = [
+    salesforce.Account,
+  ]
+}

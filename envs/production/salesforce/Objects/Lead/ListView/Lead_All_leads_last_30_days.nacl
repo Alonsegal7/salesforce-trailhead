@@ -1,0 +1,62 @@
+salesforce.ListView Lead_All_leads_last_30_days {
+  fullName = "Lead.All_leads_last_30_days"
+  columns = [
+    "Strategic_Company__c",
+    "CORE.USERS.FIRST_NAME",
+    "LEAD.CREATED_DATE",
+    "Lead_name__c",
+    "LEAD.STATUS",
+    "Related_Company__c",
+    "LEAD.COUNTRY",
+    "Current_score__c",
+    "Distribution_reason__c",
+    "LEAD.LEAD_SOURCE",
+    "Strategic_Company_Owner__c",
+    "Company_Size__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "greaterOrEqual"
+      value = "10/31/2019 12:00 AM"
+    },
+    {
+      field = "of_employees__c"
+      operation = "greaterOrEqual"
+      value = "100"
+    },
+    {
+      field = "LEAD.COUNTRY"
+      operation = "notEqual"
+      value = "USA,US,United States"
+    },
+    {
+      field = "LEAD.COUNTRY"
+      operation = "notEqual"
+      value = "Canada"
+    },
+    {
+      field = "CORE.USERS.FIRST_NAME"
+      operation = "notContain"
+      value = "BigBrain,Josh,Ora,Tamir,Tanya,Leanni,Amir,Donna,Amitai,Michael,Mitchell,Einat,Aaron,Tali,Leah,Gad,Roy,Sam,Anthony,Sheree,Andrew,Ruby,Harrison"
+    },
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "notEqual"
+      value = "Lead.Partner_Lead"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "notEqual"
+      value = "Outreach - Resurrect"
+    },
+  ]
+  label = "All leads - last 30 days"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

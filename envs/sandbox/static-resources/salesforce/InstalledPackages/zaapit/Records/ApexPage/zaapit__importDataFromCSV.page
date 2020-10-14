@@ -1,0 +1,120 @@
+<apex:page controller="zaapit.importDataFromCSVController" showHeader="false" sidebar="false" lightningStylesheets="true">
+<script src="{!$resource.zaapit__zp_jquery172}"></script>
+<style>
+.redRows{    background-color: #ffbbbb;}
+.file1{border:1px solid #efefef;}
+.importOK{display:block;font-size:15pt;padding:10px;color:#55FF55}
+.importTb{display:{!If(hasError,'block','none')};}
+#loadingx1Anchor{position:relative;}
+#loadingx1{z-index:9;position:absolute;background:#E5E5E5 url('/img/loading.gif') 45% 45% no-repeat;opacity: 0.5;}
+</style>
+<script>
+function loadingSH(){
+    
+    $("#loadingx1").fadeTo("fast",0.5);
+    $("#loadingx1").width($("#mainTBX1").width());
+    $("#loadingx1").height($("#mainTBX1").height());
+    $("#loadingx1").show();
+}
+
+var mainID="{!JSENCODE($CurrentPage.parameters.id)}";
+var buttonName="{!JSENCODE($CurrentPage.parameters.buttonName)}";
+</script>
+
+    <apex:form >
+        
+                <apex:pagemessages />
+        <apex:pageBlock rendered="{!NOT(importOK)}" title="Import {!tableName}">
+        <div style="padding:10px;display:{!if(table==''||table==null,'block','none')}">Object Name:&nbsp;&nbsp;&nbsp;
+        <apex:inputtext value="{!table}" required="true" /> (use the obj parameter to auto-populate)
+        </div>
+        <div id="loadingx1Anchor"><div id="loadingx1" class="hd1"></div></div>    
+        <div style="padding:10px;" id="mainTBX1">
+                 <!--  Choose a UTF-8 Tab delimited File:&nbsp;&nbsp;&nbsp;<apex:inputFile value="{!csvFileBody}"  filename="{!csvAsString}" styleClass="file1"/>&nbsp;&nbsp;&nbsp;
+                   -->
+Choose a Tab delimited File:&nbsp;&nbsp;&nbsp;
+                   <input type="file" id="files" name="files[]" />
+                   <select id="encode1"><option value="ISO-8859-1">Default Encoding (ISO-8859-1)</option><option value="UTF-8">UTF-8</option></select>
+<output id="list"></output>
+
+<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+      // Only process image files.
+      if (!f.type.match('text.*')) {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+        	$(".fileX1").val(e.target.result)
+          // Render thumbnail.
+          //var span = document.createElement('span');
+          
+          //span.innerHTML = ['<img class="thumb" src="', e.target.result,
+          //                  '" title="', escape(theFile.name), '"/>'].join('');
+          //document.getElementById('list').insertBefore(span, null);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsText(f,$("#encode1").val());
+    }
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
+<br/>
+<br/>
+
+                  Preview File Content: &nbsp;&nbsp;&nbsp; <apex:inputTextarea value="{!csvAsString}" styleClass="fileX1" style="width:690px;height:69px;"/>
+                 <div style="padding:15px 10px 10px 0px;text-align:center;">
+                  <apex:commandButton value="Import {!tableName}" action="{!importCSVFile}" onclick="if($('.file1').val()==''){alert('Please select a file!');return false;}else{loadingSH();}"/>                  
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <apex:commandButton value="{!if(HTMLENCODE($CurrentPage.parameters.buttonName)!='',HTMLENCODE($CurrentPage.parameters.buttonName),'Close Window')}" onclick="if(mainID!=''){top.location='/'+mainID;}else{self.close();}return false;"/>
+
+                 
+                 </div>
+                 </div>
+                    </apex:pageBlock>
+
+ <apex:pageBlock rendered="{!(importOK)}" title="Import {!tableName}">
+            <div style="padding:15px 10px 10px 0px;text-align:center;">
+             <apex:commandButton value="Show Imported {!tableName}" onclick="$('.importTb').toggle();return false;"/>
+&nbsp;&nbsp;&nbsp;
+             <apex:commandButton value="{!if(HTMLENCODE($CurrentPage.parameters.buttonName)!='',HTMLENCODE($CurrentPage.parameters.buttonName),'Close Window & Refresh')}" onclick="if(mainID!=''){top.location='/'+mainID;}else{self.close();}return false;"/>
+             
+            </div>
+        </apex:pageBlock>
+        
+        <div class="importTb">
+        <apex:pageBlock title="{!tableName} on File">
+        <table class="list" cellspacing="0" cellpadding="0" border="0">
+        <thead >
+        <tr class="headerRow">
+        <apex:repeat value="{!thead}" var="thead">
+        <th>{!thead}</th>
+        </apex:repeat>
+        </tr>
+        </thead>
+        <tbody>
+        <apex:repeat value="{!objlist}" var="row">
+        <tr class="{!if(row['Error']!=' ','redRows','')}">
+        <apex:repeat value="{!thead}" var="thead">
+        <td> {!row[thead]}</td>
+        </apex:repeat>
+        </tr>
+                   </apex:repeat>
+        </tbody>
+        </table>
+     </apex:pageBlock>
+     </div>
+   </apex:form>
+</apex:page>

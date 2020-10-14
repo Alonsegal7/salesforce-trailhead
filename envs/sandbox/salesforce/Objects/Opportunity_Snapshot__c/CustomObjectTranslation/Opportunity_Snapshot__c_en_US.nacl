@@ -1,0 +1,119 @@
+salesforce.CustomObjectTranslation Opportunity_Snapshot__c_en_US {
+  fullName = "Opportunity_Snapshot__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Opportunity Snapshot"
+    },
+    {
+      plural = true
+      value = "Opportunity Snapshots"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Bi_Weekly_Snapshot__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Close_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Commit_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Commit__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.End_of_Month__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Expected_Plan_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Forecast_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.GB_Opp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Green_bucket_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Long_Opp_Snapshot_ID__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Opportunity_Created_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Opportunity_Record_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Opportunity__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Owner_Manager__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Owner_Office__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Owner_Team__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Owner__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Probability__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Record_Type_Number__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Snapshot_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Stage__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Start_of_Month__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Opportunity Snapshot Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Opportunity_Snapshot__c,
+  ]
+}

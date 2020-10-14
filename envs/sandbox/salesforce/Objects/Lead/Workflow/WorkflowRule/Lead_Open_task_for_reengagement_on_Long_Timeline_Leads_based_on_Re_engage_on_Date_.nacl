@@ -1,0 +1,9 @@
+salesforce.WorkflowRule Lead_Open_task_for_reengagement_on_Long_Timeline_Leads_based_on_Re_engage_on_Date_ {
+  fullName = "Lead.Open task for reengagement on %27Long Timeline Leads%27 based on %27Re-engage on %28Date%29%27"
+  active = false
+  formula = "Re_engage_On_Date__c = Today() &&  ispickval(Status , \"Unqualified\") && not(isblank( Text(Timeline_to_Reengage__c )))"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

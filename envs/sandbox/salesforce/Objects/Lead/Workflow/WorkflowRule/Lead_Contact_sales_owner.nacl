@@ -1,0 +1,48 @@
+salesforce.WorkflowRule Lead_Contact_sales_owner {
+  fullName = "Lead.Contact sales owner"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_owner
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  booleanFilter = "((1 or (5 or 6)) AND 2 AND 4 AND 5) OR (3 AND 4)"
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Status
+      operation = "notEqual"
+      value = "Unqualified,Attempting,Contacted,Qualified"
+    },
+    {
+      field = salesforce.Lead.field.Company_Size__c
+      operation = "equals"
+      value = "100-250,251-1500,1500+"
+    },
+    {
+      field = salesforce.Lead.field.LeadSource
+      operation = "equals"
+      value = "CS Pass"
+    },
+    {
+      field = salesforce.Lead.field.RecordTypeId
+      operation = "equals"
+      value = "Internal Lead"
+    },
+    {
+      field = salesforce.Lead.field.OwnerId
+      operation = "equals"
+      value = "API Hubspot,Oran Akron"
+    },
+    {
+      field = salesforce.Lead.field.Channel_Lead_Source__c
+      operation = "equals"
+      value = "Contact Sales"
+    },
+  ]
+  description = "For New Leads"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

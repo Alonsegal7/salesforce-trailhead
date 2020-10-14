@@ -1,0 +1,57 @@
+salesforce.FieldSet Solution_tci_csmrg__Solution_Field_Set {
+  fullName = "Solution.tci_csmrg__Solution_Field_Set"
+  availableFields = [
+    {
+      field = "IsReviewed"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SolutionNote"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  description = "Mass Edit Solutions VF Page"
+  displayedFields = [
+    {
+      field = "SolutionName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SolutionNumber"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Status"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "TimesUsed"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "IsPublished"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "IsPublishedInPublicKb"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Solution Field Set"
+  _parent = [
+    salesforce.Solution,
+  ]
+}

@@ -1,0 +1,10 @@
+salesforce.Role ITTICONPartnerManager {
+  fullName = "ITTICONPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "ITTICON Partner Manager"
+  mayForecastManagerShare = false
+  name = "ITTICON Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

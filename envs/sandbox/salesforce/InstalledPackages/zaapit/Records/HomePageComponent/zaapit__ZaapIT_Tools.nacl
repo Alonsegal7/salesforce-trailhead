@@ -1,0 +1,6 @@
+salesforce.HomePageComponent zaapit__ZaapIT_Tools {
+  fullName = "zaapit__ZaapIT Tools"
+  body = "  X"
+  pageComponentType = "htmlArea"
+  width = "narrow"
+}

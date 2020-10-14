@@ -1,0 +1,14 @@
+salesforce.ApexClass LSNLY__MatchLessonlyUserBatch {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 43
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 2
+      namespace = "LSNLY"
+    },
+  ]
+  status = "Active"
+  fullName = "LSNLY__MatchLessonlyUserBatch"
+  content = file("salesforce/InstalledPackages/LSNLY/Records/ApexClass/LSNLY__MatchLessonlyUserBatch.cls")
+}

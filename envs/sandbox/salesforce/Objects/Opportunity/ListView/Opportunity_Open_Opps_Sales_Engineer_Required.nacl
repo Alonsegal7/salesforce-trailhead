@@ -1,0 +1,42 @@
+salesforce.ListView Opportunity_Open_Opps_Sales_Engineer_Required {
+  fullName = "Opportunity.Open_Opps_Sales_Engineer_Required"
+  columns = [
+    "CORE.USERS.FULL_NAME",
+    "OPPORTUNITY.NAME",
+    "ACCOUNT.NAME",
+    "OPPORTUNITY.STAGE_NAME",
+    "Other_tools_they_re_using__c",
+    "Top_Opportunity__c",
+    "Key_Deal__c",
+    "Green_Bucket_ARR__c",
+    "OPPORTUNITY.TYPE",
+    "SE_Score__c",
+    "Sales_Engineer__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "OPPORTUNITY.STAGE_NAME"
+      operation = "equals"
+      value = "Qualified,Evaluation,Validation,Buying process,Negotiation"
+    },
+    {
+      field = "OPPORTUNITY.RECORDTYPE"
+      operation = "equals"
+      value = "Opportunity.Internal_Opportunity"
+    },
+    {
+      field = "Request_a_Sales_Engineer__c"
+      operation = "equals"
+      value = "1"
+    },
+    {
+      field = "Sales_Engineer__c"
+      operation = "equals"
+    },
+  ]
+  label = "Open Opps - Sales Engineer Required"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,73 @@
+type salesforce.DOZISF__JWT_Setting__mdt {
+  salesforce.Text DOZISF__Audience__c {
+    apiName = "DOZISF__JWT_Setting__mdt.DOZISF__Audience__c"
+    label = "Audience"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text DOZISF__Issuer__c {
+    apiName = "DOZISF__JWT_Setting__mdt.DOZISF__Issuer__c"
+    label = "Issuer"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea DOZISF__Private_Key__c {
+    apiName = "DOZISF__JWT_Setting__mdt.DOZISF__Private_Key__c"
+    label = "Private Key"
+    _required = false
+    createable = false
+    updateable = false
+    length = 32768
+    queryable = true
+    visibleLines = 20
+  }
+  salesforce.Text DOZISF__Subject__c {
+    apiName = "DOZISF__JWT_Setting__mdt.DOZISF__Subject__c"
+    label = "Subject"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text DOZISF__User_Name__c {
+    apiName = "DOZISF__JWT_Setting__mdt.DOZISF__User_Name__c"
+    label = "User Name"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number DOZISF__Valid_Time__c {
+    apiName = "DOZISF__JWT_Setting__mdt.DOZISF__Valid_Time__c"
+    label = "Valid Time"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    description = "in seconds"
+    externalId = false
+  }
+}

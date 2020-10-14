@@ -1,0 +1,95 @@
+type salesforce.User {
+  salesforce.Checkbox SpringCMEos__Portal_Only__c {
+    apiName = "User.SpringCMEos__Portal_Only__c"
+    label = "SpringCM Portal Only"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date SpringCMEos__SpringCM_EnabledEndDate__c {
+    apiName = "User.SpringCMEos__SpringCM_EnabledEndDate__c"
+    label = "SpringCM Enabled End Date"
+    _required = false
+    inlineHelpText = "This is the date that the user becomes disabled in SpringCM.  Leave blank for never.  Put in today's date for immediately."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date SpringCMEos__SpringCM_EnabledStartDate__c {
+    apiName = "User.SpringCMEos__SpringCM_EnabledStartDate__c"
+    label = "SpringCM Enabled Start Date"
+    _required = false
+    inlineHelpText = "This is that date that the user becomes enabled in SpringCM. Leave blank if enabled immediately."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text SpringCMEos__SpringCM_Persona__c {
+    apiName = "User.SpringCMEos__SpringCM_Persona__c"
+    label = "SpringCM Persona"
+    _required = false
+    inlineHelpText = "Type in the name of the Persona the user is to be assinged to."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    description = "Personas, or role-based user settings, displays different buttons and menu items depending upon the user's job function"
+    externalId = false
+  }
+  salesforce.Picklist SpringCMEos__SpringCM_Role__c {
+    apiName = "User.SpringCMEos__SpringCM_Role__c"
+    label = "SpringCM Role"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Full Subscriber"
+        default = true
+        label = "Full Subscriber"
+      },
+      {
+        fullName = "Super Administrator"
+        default = false
+        label = "Super Administrator"
+      },
+      {
+        fullName = "User Administrator"
+        default = false
+        label = "User Administrator"
+      },
+      {
+        fullName = "Limited Subscriber"
+        default = false
+        label = "Limited Subscriber"
+      },
+      {
+        fullName = "Guest"
+        default = false
+        label = "Guest"
+      },
+    ]
+    restricted = false
+    inlineHelpText = '''
+-Guest (View Only Access)
+-Limited Subscriber (Select access to features)
+-Full Subscriber (Complete access to features)
+-User Administrator (Complete access to features and some administrative power)
+-Super Administrator (Full administrative power)
+'''
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Checkbox SpringCMEos__SpringCM_User__c {
+    apiName = "User.SpringCMEos__SpringCM_User__c"
+    label = "SpringCM User"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "By clicking this the user will be added to SpringCM.  Also unclicking this will delete the user from SpringCM."
+  }
+}

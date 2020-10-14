@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Add_1_to_SDR_Calls {
+  fullName = "Lead.Add_1_to_SDR_Calls"
+  field = salesforce.Lead.field.of_calls_by_SDR__c
+  formula = "if(isnull( of_calls_by_SDR__c ), 1, of_calls_by_SDR__c + 1)"
+  name = "Add 1 to SDR Calls"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

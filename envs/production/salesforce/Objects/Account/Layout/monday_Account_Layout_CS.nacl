@@ -1,0 +1,547 @@
+salesforce.Layout monday_Account_Layout_CS {
+  fullName = "Account-monday Account Layout - CS"
+  excludeButtons = [
+    "DataDotComAccountInsights",
+    "DataDotComClean",
+    "DisableCustomerPortalAccount",
+    "DisablePartnerPortalAccount",
+    "IncludeOffline",
+  ]
+  layoutSections = [
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Account Team"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.OwnerId
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.CSM__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.CSM_Function__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Low_Touch_CS__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.AM__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Second_CSM__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Partner__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Top Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Plan_Name__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Health_Score__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Health_Score_Flag__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Last_Touched_by_CSM__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Next_Charge_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.MA_NPS__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Plan_Seats__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Members__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.WAPP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.MAPP__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.WAPP_From_Members__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Viewers__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Guests__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Free_Users__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Link_to_BB_Account__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Monday Account Info"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Previous_Month_ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Plan_Start_Date__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Days_Left_in_Plan__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Go_live_date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Last_Touched_by_Sales__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Renewal_Certainty__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.ParentId
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Active_Contract__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.primary_pulse_account_id__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.SDR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.AE__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Monday_Account_Status__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Company_ARR_for_reports__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Monday_Account_Lifecycle__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Current_Lifecycle_Age__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.members_exceeding_Seats__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Engagement__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.AccountSource
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.At_Risk__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Covid_Risk__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.GSI__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Account.field.Name
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Scaled Touch info"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Prioritized_Account__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Priority_Reason__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Action_Plan__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Scale_Account_Status__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Account_Sentiment__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = false
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  platformActionList = {
+    actionListContext = "Record"
+    platformActionListItems = [
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 0
+      },
+      {
+        actionName = "NewTask"
+        actionType = "QuickAction"
+        sortOrder = 1
+      },
+      {
+        actionName = "Account.Account_Handover"
+        actionType = "QuickAction"
+        sortOrder = 2
+      },
+      {
+        actionName = "LogACall"
+        actionType = "QuickAction"
+        sortOrder = 3
+      },
+      {
+        actionName = "EmailHighlightAction"
+        actionType = "ProductivityAction"
+        sortOrder = 4
+      },
+      {
+        actionName = "FeedItem.ContentNote"
+        actionType = "QuickAction"
+        sortOrder = 5
+      },
+      {
+        actionName = "FeedItem.TextPost"
+        actionType = "QuickAction"
+        sortOrder = 6
+      },
+      {
+        actionName = "FeedItem.ContentPost"
+        actionType = "QuickAction"
+        sortOrder = 7
+      },
+      {
+        actionName = "Share"
+        actionType = "StandardButton"
+        sortOrder = 8
+      },
+      {
+        actionName = "Delete"
+        actionType = "StandardButton"
+        sortOrder = 9
+      },
+    ]
+  }
+  relatedContent = {
+    relatedContentItems = [
+      {
+        layoutItem = {
+          component = "runtime_sales_social:socialPanel"
+        }
+      },
+    ]
+  }
+  relatedLists = [
+    {
+      fields = [
+        "FULL_NAME",
+        "CONTACT.TITLE",
+        "CONTACT.EMAIL",
+        "CONTACT.PHONE1",
+        "CONTACT.PHONE3",
+        "Survey_Contact__c",
+        "CONTACT.LAST_ACTIVITY",
+      ]
+      relatedList = "RelatedContactList"
+    },
+    {
+      fields = [
+        "OPPORTUNITY.NAME",
+        "CORE.USERS.FULL_NAME",
+        "OPPORTUNITY.STAGE_NAME",
+        "OPPORTUNITY.CLOSE_DATE",
+        "Green_Bucket_ARR__c",
+      ]
+      relatedList = "RelatedOpportunityList"
+      sortField = "OPPORTUNITY.CLOSE_DATE"
+      sortOrder = "Asc"
+    },
+    {
+      fields = [
+        "NAME",
+        "Contact__c",
+        "OWNER.FIRST_NAME",
+        "Relationship_Level__c",
+        "Status__c",
+        "Contact_Seniority__c",
+        "Decision_Maker__c",
+        "Comments__c",
+      ]
+      relatedList = salesforce.Relationship__c.field.monday_Account__c
+    },
+    {
+      excludeButtons = [
+        "MassChangeOwner",
+        "New",
+      ]
+      fields = [
+        "NAME",
+      ]
+      relatedList = salesforce.Handover__c.field.Monday_Account__c
+    },
+    {
+      fields = [
+        "NAME",
+        "Kickoff_meeting_date__c",
+        "Go_Live_Date__c",
+        "Success_Metrics__c",
+        "Use_Case__c",
+      ]
+      relatedList = salesforce.Kickoff__c.field.Monday_Account__c
+    },
+    {
+      fields = [
+        "NAME",
+        "Package_Sign__c",
+        "Project_Status__c",
+        "Project_Type__c",
+        "Kickoff_Date__c",
+        "of_Milestones__c",
+        "Post_Onboarding_Readiness__c",
+        "Reason_For_Low_Readiness__c",
+        "Project_Closure_Notes__c",
+      ]
+      relatedList = salesforce.Project__c.field.monday_Account__c
+    },
+    {
+      fields = [
+        "NAME",
+        "Answer_Date__c",
+        "Survey_ID__c",
+        "NPS_Score__c",
+        "RECORDTYPE",
+        "User_Email__c",
+        "Is_Admin__c",
+      ]
+      relatedList = salesforce.Survey__c.field.Account__c
+    },
+    {
+      fields = [
+        "NAME",
+        "Team_Status__c",
+      ]
+      relatedList = salesforce.Team__c.field.Monday_Account__c
+      sortField = "NAME"
+      sortOrder = "Asc"
+    },
+    {
+      fields = [
+        "NAME",
+        "Status__c",
+        "CREATED_DATE",
+        "Activation_Date__c",
+        "Expiration_Date__c",
+        "ARR_Gain__c",
+        "Seats__c",
+        "Tier__c",
+        "Period__c",
+      ]
+      relatedList = salesforce.Subscription__c.field.Monday_Account__c
+      sortField = "Activation_Date__c"
+      sortOrder = "Desc"
+    },
+    {
+      relatedList = "RelatedNoteList"
+    },
+    {
+      fields = [
+        "NAME",
+        "ARR__c",
+        "FinalSaleStatus__c",
+        "Close_Date__c",
+      ]
+      relatedList = salesforce.Sale__c.field.Monday_Account__c
+      sortField = "Close_Date__c"
+      sortOrder = "Desc"
+    },
+    {
+      relatedList = "RelatedFileList"
+    },
+    {
+      relatedList = "RelatedEntityHistoryList"
+    },
+    {
+      fields = [
+        "ACCOUNT.NAME",
+        "CORE.USERS.ALIAS",
+        "ACCOUNT.PHONE1",
+        "ACCOUNT.URL",
+        "ACCOUNT.EMPLOYEES",
+      ]
+      relatedList = salesforce.Account.field.GSI__c
+    },
+    {
+      relatedList = "RelatedContentNoteList"
+    },
+  ]
+  relatedObjects = [
+    "ParentId",
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000jKVum"
+    sizeX = 4
+    sizeY = 2
+    summaryLayoutItems = [
+      {
+        field = salesforce.Account.field.Company__c
+        posX = 0
+        posY = 0
+      },
+      {
+        field = salesforce.Account.field.WAPP__c
+        posX = 1
+        posY = 0
+      },
+      {
+        field = salesforce.Account.field.ARR__c
+        posX = 2
+        posY = 0
+      },
+      {
+        field = salesforce.Account.field.Health_Score_Flag__c
+        posX = 2
+        posY = 1
+      },
+      {
+        field = salesforce.Account.field.Days_Left_in_Plan__c
+        posX = 3
+        posY = 0
+      },
+      {
+        field = salesforce.Account.field.WAPP_From_Members__c
+        posX = 3
+        posY = 1
+      },
+    ]
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Account,
+  ]
+}

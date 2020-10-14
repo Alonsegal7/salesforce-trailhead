@@ -1,0 +1,73 @@
+<apex:page sidebar="false" showheader="false">
+<div id="msec1">
+<h1 style="font-size: 15pt;text-align: left;display: block;padding: 10px 10px 0px 10px;color:#696969;">
+Thank you for installing ZaapIT's tools for Salesforce.
+</h1>
+<br/>
+<span class="mititle">Available Tools:</span>
+<ul id="psix1">
+<li>
+<span  class="lititle">ZaapiIT Smart-Update&trade;:</span> A collection of tabs with built-in mass actions for any CRM object.
+</li>
+<li>
+<span  class="lititle">Dedup Manager&trade;:</span> Search for duplicate data and clean it with ease in bulk / automatically.
+</li>
+<li>
+<span class="lititle">ZaapiIT Smart-Tables&trade;:</span> A Smart List component for any object/page/related list (<a href="{!$Label.user_guide_link}" target="_blank">Read More p.42-45</a>).
+</li>
+<li>
+<span class="lititle">Smart-Activity-Manager&trade;:</span> Smart Tabs for tasks/ events with built-in mass actions.
+</li>
+</ul>
+
+<div class="moreinf">
+For more information about the apps read the <a href="{!$Label.user_guide_link}" target="_blank">user guide</a> or <a href="mailto:support@zaapit.com">contact ZaapIT's support</a>, you can access this post install page later by going to setup>installed packages>Zaapit Tools.
+</div> 
+
+<style>
+.lititle{
+width: 205px;
+display: inline-block;
+font-weight:bold;
+color:#696969;
+}
+
+.mititle{
+font-size: 12pt;
+display: block;
+font-weight:bold;
+margin: 10px 0px 0px 10px;
+color:#696969;
+}
+.moreinf{
+font-size: 12pt;
+display: block;
+margin: 10px 0px 0px 10px;
+font-weight:normal;
+color:#696969;
+}
+
+#psix1{font-size: 12pt;text-align: left;display: block;padding: 5px 10px 10px 10px;margin: 0px 10px 10px 10px;color:#696969;}
+#msec1 a,#msec1:link{color:#696969;}
+#psix1 li{padding:3px; color:#696969;}
+#mainIng1{
+border: 7px solid rgb(100, 100, 100);
+ border: 7px solid rgba(225, 225, 225, 0.8); 
+ -webkit-background-clip: padding-box; /* for Safari */
+ background-clip: padding-box; 
+/*-webkit-box-shadow: 0px 0px 10px 15px rgba(238,255,0,1);
+-moz-box-shadow: 0px 0px 10px 15px rgba(238,255,0,1);
+box-shadow: 0px 0px 10px 15px rgba(238,255,0,1);
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+*/
+border-radius: 5px;
+background:url(https://sc2.zaapit.com/images/email_pre_listviews.jpg) -7px -7px no-repeat;width:1155px;height: 334px;
+}
+</style>
+
+<a name="postInstall1" style="font-weight:bold;font-size:12pt;color:#666666;display:block;padding:5px 10px 10px 10px;">Finding the apps:</a>
+
+<img src="https://sc2.zaapit.com/images/email_pre_listviews.jpg" width="100%;"/>
+</div>
+</apex:page>

@@ -1,0 +1,103 @@
+salesforce.LightningPage SMB_Queue {
+  fullName = "SMB_Queue"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "SMB_EMEA_Contact_Sales"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "10"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "SMB_USA_Contact_Sales"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "10"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "New_Leads"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "30"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+      ]
+      name = "main"
+      type = "Region"
+    },
+  ]
+  masterLabel = "SMB Queue"
+  template = {
+    name = "flexipage:defaultAppHomeTemplate"
+  }
+  type = "AppPage"
+}

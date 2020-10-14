@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting SpringCMEos__SpringCM_prod_eu21 {
+  fullName = "SpringCMEos__SpringCM_prod_eu21"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://eu21.springcm.com"
+}

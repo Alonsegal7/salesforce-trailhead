@@ -1,0 +1,18 @@
+salesforce.LightningPage squivr__Squivr_UtilityBar {
+  fullName = "squivr__Squivr_UtilityBar"
+  flexiPageRegions = [
+    {
+      name = "utilityItems"
+      type = "Region"
+    },
+    {
+      name = "backgroundComponents"
+      type = "Background"
+    },
+  ]
+  masterLabel = "Squivr UtilityBar"
+  template = {
+    name = "one:utilityBarTemplateDesktop"
+  }
+  type = "UtilityBar"
+}

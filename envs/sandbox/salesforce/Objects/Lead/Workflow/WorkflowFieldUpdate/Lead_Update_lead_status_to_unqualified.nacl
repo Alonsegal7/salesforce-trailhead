@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Update_lead_status_to_unqualified {
+  fullName = "Lead.Update_lead_status_to_unqualified"
+  field = salesforce.Lead.field.Status
+  literalValue = "Unqualified"
+  name = "Update lead status to unqualified"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

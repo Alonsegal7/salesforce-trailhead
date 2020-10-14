@@ -1,0 +1,37 @@
+salesforce.ValidationRule Opportunity_Partner_Evaluation_Stage {
+  fullName = "Opportunity.Partner_Evaluation_Stage"
+  active = true
+  errorConditionFormula = '''
+(DATEVALUE(CreatedDate)>=Date(2020,09,1))&&ISCHANGED(StageName)
+
+&&
+or(ISPICKVAL(StageName,"Validation"),
+ISPICKVAL(StageName,"Evaluation"),
+ISPICKVAL(StageName,"Buying process"),
+ISPICKVAL(StageName,"Closed Won"))
+
+&&
+or(isblank(Competition_They_re_Evaluating__c),
+isblank(Timeline__c),
+ISPICKVAL(Deal_Enablers_1__c,""),
+ISPICKVAL(Deal_Blockers_1__c,""),
+isblank(Pains_PL__c),
+isblank(Main_Point_of_Contacts__c))
+&&
+
+NOT(ISPICKVAL(Type,"Expansion"))
+&& RecordType.DeveloperName = 'Partner_Opportunity'
+'''
+  errorMessage = '''
+Please fill all key information required for this stage:
+• Competition they're evaluating
+• Main Point of Contact
+• Timeline & Why
+• Pain
+• Deal Enablers
+• Deal Blockers
+'''
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

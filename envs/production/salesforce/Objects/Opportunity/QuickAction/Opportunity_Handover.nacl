@@ -1,0 +1,10 @@
+salesforce.QuickAction Opportunity_Handover {
+  fullName = "Opportunity.Handover"
+  flowDefinition = "Handover"
+  label = "Handover"
+  optionsCreateFeedItem = false
+  type = "Flow"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

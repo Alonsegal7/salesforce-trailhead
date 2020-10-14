@@ -1,0 +1,15 @@
+salesforce.CompactLayout Lead_Partner_Lead_Compact_Layout {
+  fullName = "Lead.Partner_Lead_Compact_Layout"
+  fields = [
+    "Name",
+    "Email",
+    "Company",
+    "Engagement__c",
+    "Phone",
+    "Lead_Source_Type__c",
+  ]
+  label = "Partner Lead Compact Layout"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

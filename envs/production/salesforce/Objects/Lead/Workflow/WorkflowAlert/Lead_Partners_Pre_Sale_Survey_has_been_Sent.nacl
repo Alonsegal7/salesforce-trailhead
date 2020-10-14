@@ -1,0 +1,16 @@
+salesforce.WorkflowAlert Lead_Partners_Pre_Sale_Survey_has_been_Sent {
+  fullName = "Lead.Partners_Pre_Sale_Survey_has_been_Sent"
+  description = "Partners: Pre-Sale Survey has been Sent (Internal)"
+  protected = false
+  recipients = [
+    {
+      recipient = "avivc@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Partners_Pre_Sale_Survey_Sent
+  _parent = [
+    salesforce.Lead,
+  ]
+}

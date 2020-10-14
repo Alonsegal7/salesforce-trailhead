@@ -1,0 +1,6 @@
+salesforce.CustomTab LH__LH_Landing {
+  fullName = "LH__LH_Landing"
+  label = "Lookup Helper Menu"
+  motif = "Custom67: Gears"
+  page = "LH__LH_LandingPage"
+}

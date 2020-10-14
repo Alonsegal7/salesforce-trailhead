@@ -1,0 +1,9 @@
+salesforce.ApexPage zisf__ZoomLeadProfile {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 38
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "ZoomLeadProfile"
+  fullName = "zisf__ZoomLeadProfile"
+  content = file("salesforce/InstalledPackages/zisf/Records/ApexPage/zisf__ZoomLeadProfile.page")
+}

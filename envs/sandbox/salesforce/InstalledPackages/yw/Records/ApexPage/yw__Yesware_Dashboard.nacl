@@ -1,0 +1,10 @@
+salesforce.ApexPage yw__Yesware_Dashboard {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 27
+  availableInTouch = false
+  confirmationTokenRequired = false
+  description = "Deprecated"
+  label = "Yesware Dashboard"
+  fullName = "yw__Yesware_Dashboard"
+  content = file("salesforce/InstalledPackages/yw/Records/ApexPage/yw__Yesware_Dashboard.page")
+}

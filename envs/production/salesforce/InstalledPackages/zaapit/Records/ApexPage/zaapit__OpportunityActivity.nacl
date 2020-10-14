@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__OpportunityActivity {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 31
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "OpportunityActivity"
+  fullName = "zaapit__OpportunityActivity"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__OpportunityActivity.page")
+}

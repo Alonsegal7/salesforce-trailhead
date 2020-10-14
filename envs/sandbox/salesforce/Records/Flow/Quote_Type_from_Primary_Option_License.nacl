@@ -1,0 +1,336 @@
+salesforce.Flow Quote_Type_from_Primary_Option_License {
+  fullName = "Quote_Type_from_Primary_Option_License"
+  decisions = [
+    {
+      name = "isChangedDecision2_myRule_1_DH_Option_Quote_Type_c"
+      label = "isChangedDecision2_myRule_1_DH_Option_Quote_Type_c"
+      locationX = 0
+      locationY = 0
+      defaultConnector = {
+        targetReference = "myDecision"
+      }
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "isChangedRule_2_myRule_1_DH_Option_Quote_Type_c"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "myVariable_old.DH_Option_Quote_Type__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "myVariable_current.DH_Option_Quote_Type__c"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myDecision"
+          }
+          label = "isChangedRule_2_myRule_1_DH_Option_Quote_Type_c"
+        },
+      ]
+    },
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "(1 and 2 and 4) OR (1 AND 2 AND 3)"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Is_Primary__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Product_Type__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "License"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "isChangedRule_2_myRule_1_DH_Option_Quote_Type_c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.DH_Option_Quote_Type__c"
+              operator = "NotEqualTo"
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Primary License Quote Line Item"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Quote_Type_from_Primary_Option_License-10_InterviewLabel"
+  label = "Quote Type from Primary Option License"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "QuoteLineItem"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  recordUpdates = [
+    {
+      processMetadataValues = [
+        {
+          name = "evaluationType"
+          value = {
+            stringValue = "always"
+          }
+        },
+        {
+          name = "extraTypeInfo"
+        },
+        {
+          name = "isChildRelationship"
+          value = {
+            booleanValue = false
+          }
+        },
+        {
+          name = "reference"
+          value = {
+            stringValue = "[QuoteLineItem].Quote ID"
+          }
+        },
+        {
+          name = "referenceTargetField"
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Update Quote Type"
+      locationX = 100
+      locationY = 200
+      filters = [
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "myVariable_current.QuoteId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "Picklist"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Quote Type"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          field = "Quote_Type__c"
+          value = {
+            elementReference = "myVariable_current.DH_Option_Quote_Type__c"
+          }
+        },
+      ]
+      object = salesforce.Quote
+    },
+  ]
+  startElementReference = "isChangedDecision2_myRule_1_DH_Option_Quote_Type_c"
+  status = "Active"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.QuoteLineItem
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.QuoteLineItem
+    },
+  ]
+}

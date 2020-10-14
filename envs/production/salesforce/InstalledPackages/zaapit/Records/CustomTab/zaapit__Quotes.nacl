@@ -1,0 +1,6 @@
+salesforce.CustomTab zaapit__Quotes {
+  fullName = "zaapit__Quotes"
+  label = "Quotes"
+  motif = "Custom45: Ticket"
+  page = "zaapit__zaapit_tb_Quotes"
+}

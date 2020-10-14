@@ -1,0 +1,25 @@
+<apex:page standardController="Case" recordSetVar="Cases" extensions="tci_csmrg.MassEditCases" sidebar="false">
+  <apex:form id="theform">
+ <apex:pagemessages id="msg"/>
+       <apex:pageBlock title="Mass Edit - Cases" mode="edit">     
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveRecords}" value="Save"/>                
+                <apex:commandButton value="Cancel" action="{!ccancel}"/>
+            </apex:pageBlockButtons>     
+                          
+                <apex:pageBlockTable value="{!cases}" var="case">                
+                <apex:repeat value="{!$ObjectType.Case.FieldSets.tci_csmrg__Case_Field_Set}" var="f">  
+                        <apex:column rendered="{!$ObjectType.Case.Fields[f].accessible}">
+                               <apex:facet name="header">
+                                    <apex:outputPanel >
+                                        <apex:outputText value="{!$ObjectType['Case'].Fields[f].label}" />
+                                    </apex:outputPanel>
+                                </apex:facet>
+                                <apex:inputField value="{!case[f]}"/>
+                            </apex:column>               
+                 </apex:repeat>
+                </apex:pageBlockTable><br/>
+        <apex:outputLabel ><b>&nbsp;&nbsp; Total Records Selected:&nbsp;{!size} </b></apex:outputLabel>
+        </apex:pageBlock>
+      </apex:form> 
+</apex:page>

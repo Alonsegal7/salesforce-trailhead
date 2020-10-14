@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__include_css {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 33
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "include_css"
+  fullName = "zaapit__include_css"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__include_css.page")
+}

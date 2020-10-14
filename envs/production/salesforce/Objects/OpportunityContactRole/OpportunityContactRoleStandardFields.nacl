@@ -1,0 +1,188 @@
+type salesforce.OpportunityContactRole {
+  serviceid Id {
+    apiName = "OpportunityContactRole.Id"
+    label = "Contact Role ID"
+    _required = false
+    queryable = true
+    _hidden = true
+    updateable = false
+    createable = false
+  }
+  salesforce.Lookup OpportunityId {
+    apiName = "OpportunityContactRole.OpportunityId"
+    label = "Opportunity ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Opportunity,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Lookup ContactId {
+    apiName = "OpportunityContactRole.ContactId"
+    label = "Contact ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contact,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Role {
+    apiName = "OpportunityContactRole.Role"
+    label = "Role"
+    _required = false
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.StandardValueSet.instance.ContactRole
+  }
+  salesforce.Checkbox IsPrimary {
+    apiName = "OpportunityContactRole.IsPrimary"
+    label = "Primary"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime CreatedDate {
+    apiName = "OpportunityContactRole.CreatedDate"
+    label = "Created Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup CreatedById {
+    apiName = "OpportunityContactRole.CreatedById"
+    label = "Created By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime LastModifiedDate {
+    apiName = "OpportunityContactRole.LastModifiedDate"
+    label = "Last Modified Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup LastModifiedById {
+    apiName = "OpportunityContactRole.LastModifiedById"
+    label = "Last Modified By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime SystemModstamp {
+    apiName = "OpportunityContactRole.SystemModstamp"
+    label = "System Modstamp"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Checkbox IsDeleted {
+    apiName = "OpportunityContactRole.IsDeleted"
+    label = "Deleted"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+    _required = false
+  }
+  salesforce.Picklist CurrencyIsoCode {
+    apiName = "OpportunityContactRole.CurrencyIsoCode"
+    label = "Currency ISO Code"
+    _required = false
+    valueSet = [
+      {
+        fullName = "AUD"
+        default = false
+        label = "Australian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "BRL"
+        default = false
+        label = "Brazilian Real"
+        isActive = true
+      },
+      {
+        fullName = "GBP"
+        default = false
+        label = "British Pound"
+        isActive = true
+      },
+      {
+        fullName = "CAD"
+        default = false
+        label = "Canadian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "DKK"
+        default = false
+        label = "Danish Krone"
+        isActive = true
+      },
+      {
+        fullName = "EUR"
+        default = false
+        label = "Euro"
+        isActive = true
+      },
+      {
+        fullName = "ILS"
+        default = false
+        label = "Israeli Shekel"
+        isActive = true
+      },
+      {
+        fullName = "MXN"
+        default = false
+        label = "Mexican Peso"
+        isActive = true
+      },
+      {
+        fullName = "SEK"
+        default = false
+        label = "Swedish Krona"
+        isActive = true
+      },
+      {
+        fullName = "USD"
+        default = true
+        label = "U.S. Dollar"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+}

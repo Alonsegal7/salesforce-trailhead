@@ -1,0 +1,10 @@
+salesforce.CustomTab Partners_Commit {
+  fullName = "Partners_Commit"
+  description = "Created by Lightning App Builder"
+  flexiPage = "Partners_Commit"
+  label = "Partners Commit"
+  motif = "Custom4: Hexagon"
+  _generated_dependencies = [
+    salesforce.LightningPage.instance.Partners_Commit,
+  ]
+}

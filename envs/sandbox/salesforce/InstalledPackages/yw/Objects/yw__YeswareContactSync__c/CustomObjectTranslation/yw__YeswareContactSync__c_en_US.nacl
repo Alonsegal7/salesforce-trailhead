@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation yw__YeswareContactSync__c_en_US {
+  fullName = "yw__YeswareContactSync__c-en_US"
+  _parent = [
+    salesforce.yw__YeswareContactSync__c,
+  ]
+}

@@ -1,0 +1,10 @@
+salesforce.ValidationRule Lead_Unqualified_reason {
+  fullName = "Lead.Unqualified_reason"
+  active = true
+  errorConditionFormula = "ispickval( Status ,\"Unqualified\") &&  isblank(text(Why_unqualified__c))&&  or($Profile.Name = \"monday Sales\",$Profile.Name = \"Managers monday sales\")"
+  errorDisplayField = "Why_unqualified__c"
+  errorMessage = "You must enter why the lead is unqualified"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

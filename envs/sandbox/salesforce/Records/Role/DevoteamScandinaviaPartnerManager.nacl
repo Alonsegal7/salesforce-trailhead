@@ -1,0 +1,10 @@
+salesforce.Role DevoteamScandinaviaPartnerManager {
+  fullName = "DevoteamScandinaviaPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Devoteam Scandinavia Partner Manager"
+  mayForecastManagerShare = false
+  name = "Devoteam Scandinavia Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

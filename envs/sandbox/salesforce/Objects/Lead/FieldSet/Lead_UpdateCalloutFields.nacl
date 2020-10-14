@@ -1,0 +1,40 @@
+salesforce.FieldSet Lead_UpdateCalloutFields {
+  fullName = "Lead.UpdateCalloutFields"
+  description = "x"
+  displayedFields = [
+    {
+      field = "pulse_account_ids__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Status"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SQL__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SDR_Name__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Sync_to_BB__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "UpdateCalloutFields"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

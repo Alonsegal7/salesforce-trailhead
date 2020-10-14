@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Account_BigBrain_ID_is_changed {
+  fullName = "Account.BigBrain ID is changed"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Update_MA_Name
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "ischanged( primary_pulse_account_id__c ) && NOT(ISBLANK( primary_pulse_account_id__c )) &&  RecordType.DeveloperName ='Monday_Account'"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Account,
+  ]
+}

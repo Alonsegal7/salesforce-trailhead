@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting SpringCMEos__SpringCM_api_auth_prod {
+  fullName = "SpringCMEos__SpringCM_api_auth_prod"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://auth.springcm.com"
+}

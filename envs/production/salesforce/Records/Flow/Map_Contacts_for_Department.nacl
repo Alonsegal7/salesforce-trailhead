@@ -1,0 +1,1166 @@
+salesforce.Flow Map_Contacts_for_Department {
+  fullName = "Map_Contacts_for_Department"
+  assignments = [
+    {
+      name = "Assign_Created_Contact_Name"
+      label = "Assign Created Contact Name"
+      locationX = 369
+      locationY = 1000
+      assignmentItems = [
+        {
+          assignToReference = "NewContactName"
+          operator = "Assign"
+          value = {
+            elementReference = "New_Name.firstName"
+          }
+        },
+        {
+          assignToReference = "Count_Contacts_Chosen"
+          operator = "Assign"
+          value = {
+            numberValue = 0
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Where_to_map_decision"
+      }
+    },
+    {
+      name = "AssignLoopedContact"
+      label = "AssignLoopedContact"
+      locationX = 602
+      locationY = 597
+      assignmentItems = [
+        {
+          assignToReference = "ChosenContactSingle"
+          operator = "Assign"
+          value = {
+            elementReference = "Loop_over_account"
+          }
+        },
+        {
+          assignToReference = "NewContactName"
+          operator = "Assign"
+          value = {
+            elementReference = "Loop_over_account.Name"
+          }
+        },
+        {
+          assignToReference = "ChosenContactId"
+          operator = "Assign"
+          value = {
+            elementReference = "Loop_over_account.Id"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Loop_over_account"
+      }
+    },
+    {
+      name = "Assing_Labels_Values"
+      label = "Assing Labels Values"
+      locationX = 370
+      locationY = 309
+      assignmentItems = [
+        {
+          assignToReference = "Labels_Contact_Roles_Collection"
+          operator = "AddAtStart"
+          value = {
+            stringValue = "Manager"
+          }
+        },
+        {
+          assignToReference = "Labels_Contact_Roles_Collection"
+          operator = "Add"
+          value = {
+            stringValue = "Signer"
+          }
+        },
+        {
+          assignToReference = "Labels_Contact_Roles_Collection"
+          operator = "Add"
+          value = {
+            stringValue = "Influencer"
+          }
+        },
+        {
+          assignToReference = "Labels_Contact_Roles_Collection"
+          operator = "Add"
+          value = {
+            stringValue = "Final Decision Maker"
+          }
+        },
+        {
+          assignToReference = "Icons_Collection_Variable"
+          operator = "AddAtStart"
+          value = {
+            stringValue = "https://monday--c.visualforce.com/resource/1601149378000/Manager?"
+          }
+        },
+        {
+          assignToReference = "Icons_Collection_Variable"
+          operator = "Add"
+          value = {
+            stringValue = "https://monday--c.visualforce.com/resource/1601149196000/Signer?"
+          }
+        },
+        {
+          assignToReference = "Icons_Collection_Variable"
+          operator = "Add"
+          value = {
+            stringValue = "https://monday--c.visualforce.com/resource/1601149277000/Influencer?"
+          }
+        },
+        {
+          assignToReference = "Icons_Collection_Variable"
+          operator = "Add"
+          value = {
+            stringValue = "https://monday--c.visualforce.com/resource/1601149342000/FinalDM?"
+          }
+        },
+        {
+          assignToReference = "SubLabels"
+          operator = "AddAtStart"
+          value = {
+            stringValue = "The Department Manager"
+          }
+        },
+        {
+          assignToReference = "SubLabels"
+          operator = "Add"
+          value = {
+            stringValue = "The person who signs the contract"
+          }
+        },
+        {
+          assignToReference = "SubLabels"
+          operator = "Add"
+          value = {
+            stringValue = "The person who influences the decision maker"
+          }
+        },
+        {
+          assignToReference = "SubLabels"
+          operator = "Add"
+          value = {
+            stringValue = "The person who makes the call whether to buy or not"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Persona_Mapping"
+      }
+    },
+    {
+      name = "Count_Contacts_Chosen_Assignment"
+      label = "Count Contacts Chosen"
+      locationX = 369
+      locationY = 709
+      assignmentItems = [
+        {
+          assignToReference = "Count_Contacts_Chosen"
+          operator = "AssignCount"
+          value = {
+            elementReference = "Chosen_Contacts"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Create_new_or_Choose"
+      }
+    },
+    {
+      name = "Reset_Variables"
+      label = "Reset Variables"
+      locationX = 801
+      locationY = 566
+      assignmentItems = [
+        {
+          assignToReference = "Persona_Role_Decision"
+          operator = "Assign"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          assignToReference = "Count_Contacts_Chosen"
+          operator = "Assign"
+          value = {
+            numberValue = 0
+          }
+        },
+        {
+          assignToReference = "NewContactName"
+          operator = "Assign"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          assignToReference = "ChosenContactId"
+          operator = "Assign"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          assignToReference = "Chosen_Contacts"
+          operator = "RemovePosition"
+          value = {
+            numberValue = 0
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Persona_Mapping"
+      }
+    },
+  ]
+  choices = [
+    {
+      name = "Final_Decision_Maker"
+      choiceText = "Final Decision Maker"
+      dataType = "String"
+      value = {
+        stringValue = "Final Decision Maker"
+      }
+    },
+    {
+      name = "Influencer_Choice"
+      choiceText = "Influencer"
+      dataType = "String"
+      value = {
+        stringValue = "Influencer"
+      }
+    },
+    {
+      name = "Manager_Choice"
+      choiceText = "Department Manager"
+      dataType = "String"
+      value = {
+        stringValue = "Department Manager"
+      }
+    },
+    {
+      name = "Other"
+      choiceText = "Other"
+      dataType = "String"
+      userInput = {
+        isRequired = true
+        promptText = "Which role?"
+      }
+      value = {
+        stringValue = "Other"
+      }
+    },
+    {
+      name = "Signing_Contact_Choice"
+      choiceText = "Signing Contact"
+      dataType = "String"
+      value = {
+        stringValue = "Signing Contact"
+      }
+    },
+  ]
+  decisions = [
+    {
+      name = "Create_new_or_Choose"
+      label = "Create new or Choose?"
+      locationX = 361
+      locationY = 850
+      defaultConnector = {
+        targetReference = "Loop_over_account"
+      }
+      defaultConnectorLabel = "Chose Contact"
+      rules = [
+        {
+          name = "Create_New"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Count_Contacts_Chosen"
+              operator = "EqualTo"
+              rightValue = {
+                numberValue = 0
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Create_New_Contact"
+          }
+          label = "Create New"
+        },
+      ]
+    },
+    {
+      name = "Map_again_decision_path"
+      label = "Map again decision"
+      locationX = 969
+      locationY = 711
+      defaultConnectorLabel = "End"
+      rules = [
+        {
+          name = "Map_Again"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Map_Again_Decision"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Reset_Variables"
+          }
+          label = "Map Again"
+        },
+      ]
+    },
+    {
+      name = "Where_to_map_decision"
+      label = "Where to map decision"
+      locationX = 597
+      locationY = 1002
+      defaultConnector = {
+        targetReference = "Error_Screen"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Manager_Selected"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Persona_Role_Decision"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Manager"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Manager"
+          }
+          label = "Manager"
+        },
+        {
+          name = "Final_Decision_Maker_Selected"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Persona_Role_Decision"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Final Decision Maker"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_DM"
+          }
+          label = "Final Decision Maker"
+        },
+        {
+          name = "Signer_Decision"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Persona_Role_Decision"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Signer"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Signer"
+          }
+          label = "Signer Decision"
+        },
+        {
+          name = "Influencer"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Persona_Role_Decision"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Influencer"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Influencer"
+          }
+          label = "Influencer"
+        },
+      ]
+    },
+  ]
+  formulas = [
+    {
+      name = "UserId"
+      dataType = "String"
+      expression = "{!$User.Id}"
+    },
+  ]
+  interviewLabel = "Map Contacts for Department {!$Flow.CurrentDateTime}"
+  label = "Map Contacts for Department"
+  loops = [
+    {
+      name = "Loop_over_account"
+      label = "Loop over account"
+      locationX = 603
+      locationY = 847
+      collectionReference = "Chosen_Contacts"
+      iterationOrder = "Asc"
+      nextValueConnector = {
+        targetReference = "AssignLoopedContact"
+      }
+      noMoreValuesConnector = {
+        targetReference = "Where_to_map_decision"
+      }
+    },
+  ]
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordCreates = [
+    {
+      name = "Create_New_Contact_Action"
+      label = "Create_New_Contact"
+      locationX = 189
+      locationY = 1000
+      assignRecordIdToReference = "ChosenContactId"
+      connector = {
+        targetReference = "Assign_Created_Contact_Name"
+      }
+      faultConnector = {
+        targetReference = "Error_Screen"
+      }
+      inputAssignments = [
+        {
+          field = "AccountId"
+          value = {
+            elementReference = "Get_Department.Company__c"
+          }
+        },
+        {
+          field = "Company__c"
+          value = {
+            elementReference = "Get_Department.Company__c"
+          }
+        },
+        {
+          field = "Decision_Maker__c"
+          value = {
+            elementReference = "Is_a_Decision_Maker"
+          }
+        },
+        {
+          field = "Department_Lookup__c"
+          value = {
+            elementReference = "Get_Department.Id"
+          }
+        },
+        {
+          field = "Email"
+          value = {
+            elementReference = "Email.value"
+          }
+        },
+        {
+          field = "FirstName"
+          value = {
+            elementReference = "New_Name.firstName"
+          }
+        },
+        {
+          field = "LastName"
+          value = {
+            elementReference = "New_Name.lastName"
+          }
+        },
+        {
+          field = "MailingCity"
+          value = {
+            elementReference = "Address_New_Contact.city"
+          }
+        },
+        {
+          field = "MailingCountry"
+          value = {
+            elementReference = "Address_New_Contact.country"
+          }
+        },
+        {
+          field = "MailingPostalCode"
+          value = {
+            elementReference = "Address_New_Contact.postalCode"
+          }
+        },
+        {
+          field = "MailingState"
+          value = {
+            elementReference = "Address_New_Contact.province"
+          }
+        },
+        {
+          field = "MailingStreet"
+          value = {
+            elementReference = "Address_New_Contact.street"
+          }
+        },
+        {
+          field = "OwnerId"
+          value = {
+            elementReference = "UserId"
+          }
+        },
+        {
+          field = "Phone"
+          value = {
+            elementReference = "New_Phone.value"
+          }
+        },
+        {
+          field = "Title"
+          value = {
+            elementReference = "Title"
+          }
+        },
+      ]
+      object = salesforce.Contact
+    },
+  ]
+  recordLookups = [
+    {
+      name = "Get_contacts_from_company"
+      label = "Get contacts from company"
+      locationX = 367
+      locationY = 450
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Choose_Contact"
+      }
+      faultConnector = {
+        targetReference = "Create_New_Contact"
+      }
+      filters = [
+        {
+          field = "Company__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Department.Company__c"
+          }
+        },
+      ]
+      getFirstRecordOnly = false
+      object = salesforce.Contact
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_Department"
+      label = "Get Department"
+      locationX = 373
+      locationY = 192
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Assing_Labels_Values"
+      }
+      faultConnector = {
+        targetReference = "Error_Screen"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Department__c
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_DM"
+      label = "Update DM"
+      locationX = 854
+      locationY = 1212
+      connector = {
+        targetReference = "Success_Screen"
+      }
+      faultConnector = {
+        targetReference = "Error_Screen"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Department.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Final_Decision_Maker__c"
+          value = {
+            elementReference = "ChosenContactId"
+          }
+        },
+      ]
+      object = salesforce.Department__c
+    },
+    {
+      name = "Update_Influencer"
+      label = "Update Influencer"
+      locationX = 793
+      locationY = 895
+      connector = {
+        targetReference = "Success_Screen"
+      }
+      faultConnector = {
+        targetReference = "Error_Screen"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Department.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Influencer__c"
+          value = {
+            elementReference = "ChosenContactId"
+          }
+        },
+      ]
+      object = salesforce.Department__c
+    },
+    {
+      name = "Update_Manager"
+      label = "Update Manager"
+      locationX = 815
+      locationY = 1105
+      connector = {
+        targetReference = "Success_Screen"
+      }
+      faultConnector = {
+        targetReference = "Error_Screen"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Department.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Manager__c"
+          value = {
+            elementReference = "ChosenContactId"
+          }
+        },
+      ]
+      object = salesforce.Department__c
+    },
+    {
+      name = "Update_Signer"
+      label = "Update Signer"
+      locationX = 793
+      locationY = 996
+      connector = {
+        targetReference = "Success_Screen"
+      }
+      faultConnector = {
+        targetReference = "Error_Screen"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Department.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Signing_Contact__c"
+          value = {
+            elementReference = "ChosenContactId"
+          }
+        },
+      ]
+      object = salesforce.Department__c
+    },
+  ]
+  screens = [
+    {
+      name = "Choose_Contact"
+      label = "Choose Contact"
+      locationX = 370
+      locationY = 579
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Count_Contacts_Chosen_Assignment"
+      }
+      fields = [
+        {
+          name = "select_contacts_text"
+          fieldText = "<p>Below are the existing contacts that are linked to <b>{!Get_Department.Company_Name__c}</b>.</p><p>Select existing contact to map, or create a new contact:</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Company_Contacts_list"
+          extensionName = "c:datatableFSC"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "mydata_standard4"
+              value = {
+                elementReference = "Get_contacts_from_company"
+              }
+            },
+            {
+              name = "column01_fieldName"
+              value = {
+                stringValue = "Name"
+              }
+            },
+            {
+              name = "column01_label"
+              value = {
+                stringValue = "Name"
+              }
+            },
+            {
+              name = "column02_fieldName"
+              value = {
+                stringValue = "Title"
+              }
+            },
+            {
+              name = "column02_label"
+              value = {
+                stringValue = "Title"
+              }
+            },
+            {
+              name = "column03_align"
+              value = {
+                stringValue = "left"
+              }
+            },
+            {
+              name = "column03_fieldName"
+              value = {
+                stringValue = "Monday_Account__c"
+              }
+            },
+            {
+              name = "column03_label"
+              value = {
+                stringValue = "Account"
+              }
+            },
+            {
+              name = "column03_type"
+              value = {
+                stringValue = "Lookup(Account)"
+              }
+            },
+            {
+              name = "column04_fieldName"
+              value = {
+                stringValue = "Email"
+              }
+            },
+            {
+              name = "column04_label"
+              value = {
+                stringValue = "Email"
+              }
+            },
+            {
+              name = "column05_fieldName"
+              value = {
+                stringValue = "Phone"
+              }
+            },
+            {
+              name = "column05_label"
+              value = {
+                stringValue = "Phone"
+              }
+            },
+            {
+              name = "singleSelection"
+              value = {
+                stringValue = "1"
+              }
+            },
+            {
+              name = "selectedRows_standard4"
+              value = {
+                elementReference = "Chosen_Contacts"
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "Chosen_Contacts"
+              name = "selectedRows_standard4"
+            },
+          ]
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Create_New_Contact"
+      label = "Create New Contact"
+      locationX = 190
+      locationY = 847
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Create_New_Contact_Action"
+      }
+      fields = [
+        {
+          name = "Create_New_Text"
+          fieldText = "<p>Create a new contact to map as the {!Persona_Role_Decision} of {!Get_Department.Name}:</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "New_Name"
+          extensionName = "flowruntime:name"
+          fieldType = "ComponentInstance"
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Title"
+          dataType = "String"
+          fieldText = "Title"
+          fieldType = "InputField"
+          isRequired = false
+        },
+        {
+          name = "Email"
+          extensionName = "flowruntime:email"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "placeholder"
+              value = {
+                stringValue = "email@domain.com"
+              }
+            },
+            {
+              name = "readonly"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "required"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "New_Phone"
+          extensionName = "flowruntime:phone"
+          fieldType = "ComponentInstance"
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Address_New_Contact"
+          extensionName = "flowruntime:address"
+          fieldType = "ComponentInstance"
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Is_a_Decision_Maker"
+          dataType = "Boolean"
+          fieldText = "Is a Decision Maker"
+          fieldType = "InputField"
+          isRequired = true
+        },
+      ]
+      showFooter = true
+      showHeader = false
+    },
+    {
+      name = "Error_Screen"
+      label = "Error Screen"
+      locationX = 50
+      locationY = 1188
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "Error"
+          fieldText = "<p>Something went wrong. </p><p>Please notify your administrator try again.</p><p><br></p><p><span style=\"color: rgb(255, 0, 0);\">{!$Flow.FaultMessage}</span></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Persona_Mapping"
+      label = "Persona Mapping"
+      locationX = 603
+      locationY = 442
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Get_contacts_from_company"
+      }
+      fields = [
+        {
+          name = "Text_Map_Role"
+          fieldText = "<p>Which persona would you like to map in this department?</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Visual_Selection"
+          extensionName = "profFlow_vNav:visualNav"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "choiceLabels"
+              value = {
+                elementReference = "Labels_Contact_Roles_Collection"
+              }
+            },
+            {
+              name = "choiceValues"
+              value = {
+                elementReference = "Labels_Contact_Roles_Collection"
+              }
+            },
+            {
+              name = "showIcons"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "showSubLabel"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "iconSize"
+              value = {
+                stringValue = "small"
+              }
+            },
+            {
+              name = "choiceIcons"
+              value = {
+                elementReference = "Icons_Collection_Variable"
+              }
+            },
+            {
+              name = "choiceSubLabels"
+              value = {
+                elementReference = "SubLabels"
+              }
+            },
+            {
+              name = "autoNext"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "buttonSize"
+              value = {
+                numberValue = 130
+              }
+            },
+            {
+              name = "iconVariant"
+              value = {
+                stringValue = "circle"
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "Persona_Role_Decision"
+              name = "value"
+            },
+          ]
+        },
+      ]
+      showFooter = false
+      showHeader = true
+    },
+    {
+      name = "Success_Screen"
+      label = "Success"
+      locationX = 976
+      locationY = 992
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Map_again_decision_path"
+      }
+      fields = [
+        {
+          name = "Success"
+          fieldText = "<p>{!NewContactName} has been mapped as the {!Persona_Role_Decision} of {!Get_Department.Name}.</p><p>Check the box to map another contact, or click 'Finish' to exit.</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Map_Again_Decision"
+          dataType = "Boolean"
+          defaultValue = {
+            booleanValue = false
+          }
+          fieldText = "Map another contact?"
+          fieldType = "InputField"
+          isRequired = true
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  start = {
+    locationX = 247
+    locationY = 50
+    connector = {
+      targetReference = "Get_Department"
+    }
+  }
+  status = "Draft"
+  variables = [
+    {
+      name = "Chosen_Contacts"
+      dataType = "SObject"
+      isCollection = true
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Contact
+    },
+    {
+      name = "ChosenContactId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "ChosenContactSingle"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Contact
+    },
+    {
+      name = "Count_Contacts_Chosen"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      name = "Icons_Collection_Variable"
+      dataType = "String"
+      isCollection = true
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "Labels_Contact_Roles_Collection"
+      dataType = "String"
+      isCollection = true
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "NewContactName"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "Persona_Role_Decision"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "recordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "SubLabels"
+      dataType = "String"
+      isCollection = true
+      isInput = true
+      isOutput = true
+    },
+  ]
+}

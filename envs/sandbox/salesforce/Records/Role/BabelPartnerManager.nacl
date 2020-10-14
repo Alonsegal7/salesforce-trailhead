@@ -1,0 +1,10 @@
+salesforce.Role BabelPartnerManager {
+  fullName = "BabelPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Babel Partner Manager"
+  mayForecastManagerShare = false
+  name = "Babel Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

@@ -1,0 +1,42 @@
+<apex:page standardController="zaapit__zaapit_editable_tb__c" lightningStylesheets="true" >
+<script type="text/javascript" src="{!$Resource.zaapit__zp_jquery172}"></script>
+<script>
+    var json =<apex:outputText escape="false" value="{!(zaapit__zaapit_editable_tb__c.zaapit__Columns_Filters__c+''+zaapit__zaapit_editable_tb__c.zaapit__Columns_Filters2__c+''+zaapit__zaapit_editable_tb__c.zaapit__Columns_Filters3__c)}"></apex:outputText>;
+    function getVals(str){
+        var res="<table>";
+        if(str!=null){
+        var arr1=str.split(";");
+            for(var i=0;i<arr1.length;i++){
+                var a1=arr1[i].split(/\-/ig);
+                if(a1[1]!=null)res+='<tr><td>'+(a1[1]+'').split('__xx')[0]+':</td><td>' +a1[0]+'</td></tr>';
+            }
+        }
+        res+="</table>"
+        return res;
+    }
+$(document).ready(function(){
+        
+     
+   $("<table width='100%' cellpadding='5'>"+
+   "<tr><td width='30%'>Object</td><td>"+json.mainObject+"</td></tr>"+
+   "<tr><td>Field Used to detect duplicates:</td><td>"+json.FieldSelDUPES+"</td></tr>"+
+   "<tr><td>Master selection field:</td><td>"+json.FieldSelLC+"</td></tr>"+
+    "<tr><td>Master selection order:</td><td>"+json.FieldSelLCAD+"</td></tr>"+
+    "<tr><td>SOQL Filter:</td><td>"+json.MassMergeAllSOQLFilter+"</td></tr>"+
+    "<tr><td>Schedule:</td><td>"+json.scdualeJob+"</td></tr>"+
+    "<tr><td>Fields action:</td><td><div style='max-height:100px;overflow:auto;'>"+getVals(json.FieldOverWrite)+"</div></td></tr>"+
+    "<tr><td>Copy Related Lists (custom objects):</td><td><div style='max-height:100px;overflow:auto;'>"+getVals(json.CopyRL)+"</div></td></tr>"+
+    "<tr><td>Batch Run Max limit:</td><td>"+json.limit1+"</td></tr>"+
+    "<tr><td>Batch size (Merge):</td><td>"+json.mergeLimit+"</td></tr>"+
+    
+    "<tr><td>Continue From val:</td><td>"+json.continueFromVal+"</td></tr>"+
+    
+    
+   
+   "</table>").appendTo(".jsonPlace");
+});
+</script>
+<apex:pageblock title="Job Settings">
+<div class="jsonPlace"></div>
+</apex:pageblock>
+</apex:page>

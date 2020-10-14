@@ -1,0 +1,512 @@
+salesforce.Layout Task_Layout {
+  fullName = "Task-Task Layout"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Task Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Task.field.OwnerId
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Task.field.Subject
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.ActivityDate
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Task.field.Type
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Task.field.Status
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Task.field.Priority
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.WhoId
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.Day_of_the_week__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              emptySpace = true
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.WhatId
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.CreatedById
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.LastModifiedById
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Time__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Task_Time_Zone__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.local_time__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.TaskSubtype
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Meeting Info"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Canceled_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Queue_Name_CP__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Meeting_Type_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Rescheduled_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Booked_By_Prospect_CP__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Call Info"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Call_Source__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Call_Start_Time__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Call_End_Time__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.CallType
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.CallDurationInSeconds
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.SalesLoft1__Call_Duration_in_Minutes__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.SalesLoft1__Call_Disposition__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.SalesLoft1__Call_Sentiment__c
+            },
+            {
+              behavior = "Edit"
+              field = "Call_Sentiment__c"
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.CallDisposition
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.aircall__Call_Recording__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.aircall__Is_Missed_call__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.aircall__Is_Voicemail__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Comments"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.Contact_Sales_From_Today__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Description
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Saleslof/Yesware"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.yw__SyncedFromYesware__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.SalesLoft1__SalesLoft_Cadence_Name__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.SalesLoft1__SalesLoft_Email_Template_Title__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.SalesLoft1__SalesLoft_Unique_Click_Count__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.SalesLoft1__SalesLoft_Unique_View_Count__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Related To"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.Team_Manager__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.Owner_s_Manager__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.Owner_Profile__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Owner_Team__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Task.field.Owner_Manager_Email__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Task.field.MA_Lifecycle_Stage_on_Completion__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      label = "Description Information"
+      style = "OneColumn"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = false
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  platformActionList = {
+    actionListContext = "Record"
+    platformActionListItems = [
+      {
+        actionName = "LogACall"
+        actionType = "QuickAction"
+        sortOrder = 0
+      },
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 1
+      },
+      {
+        actionName = "Delete"
+        actionType = "StandardButton"
+        sortOrder = 2
+      },
+      {
+        actionName = "Task.UpdateStatus"
+        actionType = "QuickAction"
+        sortOrder = 3
+      },
+      {
+        actionName = "Task.EditDescription"
+        actionType = "QuickAction"
+        sortOrder = 4
+      },
+      {
+        actionName = "Task.UpdatePriority"
+        actionType = "QuickAction"
+        sortOrder = 5
+      },
+      {
+        actionName = "Task.Defer"
+        actionType = "QuickAction"
+        sortOrder = 6
+      },
+    ]
+  }
+  quickActionList = {
+    quickActionListItems = [
+      {
+        quickActionName = "FeedItem.ContentPost"
+      },
+      {
+        quickActionName = "FeedItem.LinkPost"
+      },
+      {
+        quickActionName = "FeedItem.PollPost"
+      },
+      {
+        quickActionName = "FeedItem.TextPost"
+      },
+      {
+        quickActionName = "LogACall"
+      },
+      {
+        quickActionName = "NewEvent"
+      },
+      {
+        quickActionName = "NewTask"
+      },
+      {
+        quickActionName = "Task.Defer"
+      },
+      {
+        quickActionName = "Task.Defer_0"
+      },
+      {
+        quickActionName = "Task.Defer_1"
+      },
+      {
+        quickActionName = "Task.Defer_2"
+      },
+      {
+        quickActionName = "Task.Defer_3"
+      },
+      {
+        quickActionName = "Task.Defer_4"
+      },
+      {
+        quickActionName = "Task.Defer_5"
+      },
+      {
+        quickActionName = "Task.EditDescription"
+      },
+      {
+        quickActionName = "Task.EditDescription_0"
+      },
+      {
+        quickActionName = "Task.EditDescription_1"
+      },
+      {
+        quickActionName = "Task.EditDescription_2"
+      },
+      {
+        quickActionName = "Task.EditDescription_3"
+      },
+      {
+        quickActionName = "Task.EditDescription_4"
+      },
+      {
+        quickActionName = "Task.EditDescription_5"
+      },
+      {
+        quickActionName = "Task.UpdatePriority"
+      },
+      {
+        quickActionName = "Task.UpdatePriority_0"
+      },
+      {
+        quickActionName = "Task.UpdatePriority_1"
+      },
+      {
+        quickActionName = "Task.UpdatePriority_2"
+      },
+      {
+        quickActionName = "Task.UpdatePriority_3"
+      },
+      {
+        quickActionName = "Task.UpdatePriority_4"
+      },
+      {
+        quickActionName = "Task.UpdatePriority_5"
+      },
+      {
+        quickActionName = "Task.UpdateStatus"
+      },
+      {
+        quickActionName = "Task.UpdateStatus_0"
+      },
+      {
+        quickActionName = "Task.UpdateStatus_1"
+      },
+      {
+        quickActionName = "Task.UpdateStatus_2"
+      },
+      {
+        quickActionName = "Task.UpdateStatus_3"
+      },
+      {
+        quickActionName = "Task.UpdateStatus_4"
+      },
+      {
+        quickActionName = "Task.UpdateStatus_5"
+      },
+    ]
+  }
+  relatedContent = {
+    relatedContentItems = [
+      {
+        layoutItem = {
+          behavior = "Readonly"
+          field = salesforce.Task.field.WhoId
+        }
+      },
+      {
+        layoutItem = {
+          behavior = "Readonly"
+          field = salesforce.Task.field.WhatId
+        }
+      },
+    ]
+  }
+  relatedLists = [
+    {
+      relatedList = "RelatedActivityAttachmentList"
+    },
+  ]
+  relatedObjects = [
+    "WhoId",
+    "WhatId",
+  ]
+  showEmailCheckbox = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h1t000003PF80"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Task,
+  ]
+  _generated_dependencies = [
+    salesforce.Activity.field.MA_Lifecycle_Stage_on_Completion__c,
+    salesforce.Activity.field.Owner_Team__c,
+    salesforce.Activity.field.Team_Manager__c,
+    salesforce.Activity.field.Owner_s_Manager__c,
+    salesforce.Activity.field.Contact_Sales_From_Today__c,
+    salesforce.Activity.field.Owner_Manager_Email__c,
+    salesforce.Activity.field.Rescheduled_CP__c,
+    salesforce.Activity.field.Queue_Name_CP__c,
+    salesforce.Activity.field.Booked_By_Prospect_CP__c,
+    salesforce.Activity.field.Canceled_CP__c,
+    salesforce.Activity.field.Meeting_Type_CP__c,
+    salesforce.Activity.field.Call_End_Time__c,
+    salesforce.Activity.field.Call_Start_Time__c,
+    salesforce.Activity.field.Owner_Profile__c,
+    salesforce.Activity.field.Day_of_the_week__c,
+    salesforce.Activity.field.Time__c,
+    salesforce.Activity.field.Call_Sentiment__c,
+    salesforce.Activity.field.Call_Source__c,
+    salesforce.Activity.field.local_time__c,
+    salesforce.Activity.field.Task_Time_Zone__c,
+  ]
+}

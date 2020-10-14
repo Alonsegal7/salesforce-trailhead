@@ -1,0 +1,8 @@
+salesforce.ListView mondayapp__IntegrationWebhookSubscription__c_mondayapp__All {
+  fullName = "mondayapp__IntegrationWebhookSubscription__c.mondayapp__All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.mondayapp__IntegrationWebhookSubscription__c,
+  ]
+}

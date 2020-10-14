@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_stamped_as_GB_opp {
+  fullName = "Opportunity.stamped_as_GB_opp"
+  field = salesforce.Opportunity.field.Stamped_as_GB_opp__c
+  formula = "1"
+  name = "stamped as GB opp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

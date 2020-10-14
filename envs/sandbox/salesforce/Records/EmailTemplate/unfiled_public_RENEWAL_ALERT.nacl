@@ -1,0 +1,31 @@
+salesforce.EmailTemplate unfiled_public_RENEWAL_ALERT {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "RENEWAL ALERT"
+  style = "freeForm"
+  subject = "Your account is close to Renewal"
+  textOnly = '''
+Hi {!Account.OwnerFullName},
+
+Your account - {!Account.Name} from the company - {!Account.Company__c} 
+is 60 days or less before renewal 
+
+Next charge date - {!Account.Next_Charge_Date__c}
+
+ARR - {!Account.ARR__c}
+
+Plan Name - {!Account.Plan_Name__c}
+
+Last touch point date - {!Account.LastActivityDate}
+
+CSM - {!Account.CSM__c}
+
+Link to the monday account - https://monday.lightning.force.com/lightning/r/Account/{!Account.Id}/view
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/RENEWAL_ALERT"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/RENEWAL_ALERT.email")
+}

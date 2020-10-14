@@ -1,0 +1,6 @@
+salesforce.SharingRules CalendlyAction__c {
+  fullName = "CalendlyAction__c"
+  _parent = [
+    salesforce.CalendlyAction__c,
+  ]
+}

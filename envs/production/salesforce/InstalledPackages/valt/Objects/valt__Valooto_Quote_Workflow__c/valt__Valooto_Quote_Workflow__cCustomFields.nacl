@@ -1,0 +1,90 @@
+type salesforce.valt__Valooto_Quote_Workflow__c {
+  salesforce.Html valt__Comment__c {
+    apiName = "valt__Valooto_Quote_Workflow__c.valt__Comment__c"
+    label = "Comment"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 25
+  }
+  salesforce.Lookup valt__Quote__c {
+    apiName = "valt__Valooto_Quote_Workflow__c.valt__Quote__c"
+    label = "Quote"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Quote,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Html valt__Reasons__c {
+    apiName = "valt__Valooto_Quote_Workflow__c.valt__Reasons__c"
+    label = "Reasons"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 25
+  }
+  salesforce.Date valt__Status_Date__c {
+    apiName = "valt__Valooto_Quote_Workflow__c.valt__Status_Date__c"
+    label = "Status Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text valt__Status__c {
+    apiName = "valt__Valooto_Quote_Workflow__c.valt__Status__c"
+    label = "Status"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number valt__Step__c {
+    apiName = "valt__Valooto_Quote_Workflow__c.valt__Step__c"
+    label = "Step"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text valt__User_Name__c {
+    apiName = "valt__Valooto_Quote_Workflow__c.valt__User_Name__c"
+    label = "User Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup valt__User__c {
+    apiName = "valt__Valooto_Quote_Workflow__c.valt__User__c"
+    label = "User"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

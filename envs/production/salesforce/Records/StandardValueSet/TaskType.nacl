@@ -1,0 +1,186 @@
+salesforce.StandardValueSet TaskType {
+  fullName = "TaskType"
+  sorted = false
+  standardValue = [
+    {
+      fullName = "Advanced Training"
+      default = false
+      label = "Advanced Training"
+    },
+    {
+      fullName = "Basic Training"
+      default = false
+      label = "Basic Training"
+    },
+    {
+      fullName = "Bi-Weekly Meeting"
+      default = false
+      label = "Bi-Weekly Meeting"
+    },
+    {
+      fullName = "Call"
+      default = false
+      label = "Call"
+    },
+    {
+      fullName = "Chatbot Conversation"
+      default = false
+      label = "Chatbot Conversation"
+    },
+    {
+      fullName = "Contact Sales Form"
+      default = false
+      label = "Contact Sales Form"
+    },
+    {
+      fullName = "CS Pass"
+      default = false
+      label = "CS Pass"
+    },
+    {
+      fullName = "Demo"
+      default = false
+      label = "Demo"
+    },
+    {
+      fullName = "Discovery call"
+      default = false
+      label = "Discovery call"
+    },
+    {
+      fullName = "Email"
+      default = false
+      label = "Email"
+    },
+    {
+      fullName = "Exploratory call"
+      default = false
+      label = "Exploratory call"
+    },
+    {
+      fullName = "Goals Alignment"
+      default = false
+      label = "Goals Alignment"
+    },
+    {
+      fullName = "Growth Call"
+      default = false
+      label = "Growth Call"
+    },
+    {
+      fullName = "Internal Handover / Handshake"
+      default = false
+      label = "Internal Handover / Handshake"
+    },
+    {
+      fullName = "Intro to new DM / Champion"
+      default = false
+      label = "Intro to new DM / Champion"
+    },
+    {
+      fullName = "Kickoff"
+      default = false
+      label = "Kickoff"
+    },
+    {
+      fullName = "Meeting"
+      default = false
+      label = "Meeting"
+    },
+    {
+      fullName = "Negotiation Call"
+      default = false
+      label = "Negotiation Call"
+    },
+    {
+      fullName = "New Features Overview Call"
+      default = false
+      label = "New Features Overview Call"
+    },
+    {
+      fullName = "New Persona Meeting"
+      default = false
+      label = "New Persona Meeting"
+    },
+    {
+      fullName = "Note"
+      default = false
+      label = "Note"
+    },
+    {
+      fullName = "Onboarding Call"
+      default = false
+      label = "Onboarding Call"
+    },
+    {
+      fullName = "Onsite Meeting"
+      default = false
+      label = "Onsite Meeting"
+    },
+    {
+      fullName = "Other"
+      default = false
+      label = "Other"
+    },
+    {
+      fullName = "Process / Boards Optimisation"
+      default = false
+      label = "Process / Boards Optimisation"
+    },
+    {
+      fullName = "QBR"
+      default = false
+      label = "QBR / EBR"
+    },
+    {
+      fullName = "Regular Check-in Call"
+      default = false
+      label = "Regular Check-in Call"
+    },
+    {
+      fullName = "Resurrect Campaign"
+      default = false
+      label = "Resurrect Campaign"
+    },
+    {
+      fullName = "Strategic Session"
+      default = false
+      label = "Strategic Session"
+    },
+    {
+      fullName = "Swag Package"
+      default = false
+      label = "Swag Package"
+    },
+    {
+      fullName = "Task"
+      default = true
+      label = "Task"
+    },
+    {
+      fullName = "Training"
+      default = false
+      label = "Training"
+    },
+    {
+      fullName = "Vito Letter"
+      default = false
+      label = "Vito Letter"
+    },
+    {
+      fullName = "Webinar"
+      default = false
+      label = "Webinar"
+    },
+    {
+      fullName = "Workshop"
+      default = false
+      label = "Workshop"
+    },
+    {
+      fullName = "Offsite Hour"
+      default = false
+      label = "Offsite Hour"
+    },
+  ]
+}

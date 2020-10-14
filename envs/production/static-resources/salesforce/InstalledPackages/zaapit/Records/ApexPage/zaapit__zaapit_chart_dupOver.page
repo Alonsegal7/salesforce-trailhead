@@ -1,0 +1,18 @@
+<apex:page showchat="false" title="Dedup-Manager">
+<script>
+isDedupeManager=true;
+</script>
+<div style="background: #efefef;margin: 3px 0px 7px 0px;font-weight:bold;display:inline-block;padding:10px;font-size:12px;">
+The above tab-lists display the first 1200 duplicates (e.g. by email / name), Cross objects tabs (e.g. leads w. XXX) display the first 200 matchings. After each mass-merge click the grid's refresh link to dismiss the result-rows (aka merged rows) and to fetch more records. Alternatively you can use the grid's search to fetch other duplicate records or to jump to a different letter e.g. search for b*
+</div>
+
+<div style="padding-bottom:20px;">
+    <c:zaapit_chart />
+
+    </div>
+    <!-- Thank you for looking :) please contact us for customizing this application -->
+
+<div style="display:none;background: #f5f5f5;margin: 5px 0px 7px 0px;font-weight:bold;padding:10px;font-size:12px;z-index:5;position:fixed;bottom:0px;width:100%;">
+Video Guides: <a href="https://www.youtube.com/watch?v=nR0vKnlca7k" target="_blank">Create a Custom formula/fuzzy/any-field duplicates detection tab</a> (advanced), <a href="https://www.youtube.com/watch?v=bQ-ee2jO0w4" target="_blank">Create a Custom duplicates detection tab</a> (for group-able fields)
+</div>
+</apex:page>

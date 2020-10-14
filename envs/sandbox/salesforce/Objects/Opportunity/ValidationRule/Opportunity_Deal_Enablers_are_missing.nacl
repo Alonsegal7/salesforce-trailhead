@@ -1,0 +1,16 @@
+salesforce.ValidationRule Opportunity_Deal_Enablers_are_missing {
+  fullName = "Opportunity.Deal_Enablers_are_missing"
+  active = false
+  errorConditionFormula = '''
+((ISBLANK( text(Deal_Enablers_1__c)) &&  
+ DATEVALUE(CreatedDate)>  DATE(2019,07,23)))
+&& text(StageName)="Closed Won"
+&& ischanged(StageName)
+&&RecordType.DeveloperName = 'Internal_Opportunity'
+'''
+  errorDisplayField = "Deal_Enabler__c"
+  errorMessage = "Please enter deal's product enablers."
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,14 @@
+salesforce.LightningPage zaapit__Zaapit_Console_UtilityBar {
+  fullName = "zaapit__Zaapit_Console_UtilityBar"
+  flexiPageRegions = [
+    {
+      name = "utilityItems"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Zaapit Console UtilityBar"
+  template = {
+    name = "one:utilityBarTemplateDesktop"
+  }
+  type = "UtilityBar"
+}

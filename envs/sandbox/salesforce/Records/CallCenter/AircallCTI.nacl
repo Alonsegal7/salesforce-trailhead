@@ -1,0 +1,95 @@
+salesforce.CallCenter AircallCTI {
+  fullName = "AircallCTI"
+  adapterUrl = "https://phone.aircall.io/salesforce.html"
+  customSettings = "{\"reqTimeout\":\"10000\",\"reqStandbyUrl\":\"https://phone.aircall.io/salesforce.html\",\"reqSoftphoneHeight\":\"666\",\"reqUseApi\":\"true\",\"reqSoftphoneWidth\":\"375\",\"reqSalesforceCompatibilityMode\":\"Classic_and_Lightning\"}"
+  displayName = "Aircall CTI for Salesforce"
+  displayNameLabel = "Display Name"
+  internalNameLabel = "InternalName"
+  sections = [
+    {
+      items = [
+        {
+          label = "CTI Adapter URL"
+          name = "reqAdapterUrl"
+          value = "https://phone.aircall.io/salesforce.html"
+        },
+        {
+          label = "CTI Adapter URL2"
+          name = "reqStandbyUrl"
+          value = "https://phone.aircall.io/salesforce.html"
+        },
+        {
+          label = "Timeout"
+          name = "reqTimeout"
+          value = "10000"
+        },
+        {
+          label = "Use CTI API"
+          name = "reqUseApi"
+          value = "true"
+        },
+        {
+          label = "Softphone Height"
+          name = "reqSoftphoneHeight"
+          value = "666"
+        },
+        {
+          label = "Softphone Width"
+          name = "reqSoftphoneWidth"
+          value = "375"
+        },
+        {
+          label = "Salesforce Compatibility Mode"
+          name = "reqSalesforceCompatibilityMode"
+          value = "Classic_and_Lightning"
+        },
+      ]
+      label = "General Information"
+      name = "reqGeneralInfo"
+    },
+    {
+      items = [
+        {
+          label = "Outside Prefix"
+          name = "reqOutsidePrefix"
+        },
+        {
+          label = "Long Distance Prefix"
+          name = "reqLongDistPrefix"
+        },
+        {
+          label = "International Prefix"
+          name = "reqInternationalPrefix"
+        },
+      ]
+      label = "Dialing Options"
+      name = "reqDialingOptions"
+    },
+    {
+      items = [
+        {
+          label = "Simulated Incoming Phone Number"
+          name = "reqIncomingNumber"
+        },
+        {
+          label = "CTI Provider"
+          name = "reqProvider"
+        },
+        {
+          label = "Provider Account"
+          name = "reqProviderAccount"
+        },
+        {
+          label = "Provider Auth Token"
+          name = "reqProviderAuthToken"
+        },
+        {
+          label = "Provider Caller Number"
+          name = "reqProviderCallerNumber"
+        },
+      ]
+      label = "Phone Demo Settings"
+      name = "reqPhoneDemoSettings"
+    },
+  ]
+}

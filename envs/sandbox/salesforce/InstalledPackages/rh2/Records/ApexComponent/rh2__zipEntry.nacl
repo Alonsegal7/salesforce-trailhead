@@ -1,0 +1,7 @@
+salesforce.ApexComponent rh2__zipEntry {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 42
+  label = "Zip Entry"
+  fullName = "rh2__zipEntry"
+  content = "(hidden)"
+}

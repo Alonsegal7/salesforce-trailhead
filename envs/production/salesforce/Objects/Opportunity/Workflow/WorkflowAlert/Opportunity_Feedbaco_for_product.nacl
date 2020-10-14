@@ -1,0 +1,24 @@
+salesforce.WorkflowAlert Opportunity_Feedbaco_for_product {
+  fullName = "Opportunity.Feedbaco_for_product"
+  description = "Feedbaco for product"
+  protected = false
+  recipients = [
+    {
+      recipient = "ben@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "oran@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "yoni@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Product_feedback
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

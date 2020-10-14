@@ -1,0 +1,9 @@
+salesforce.ApexPage LID__AccountLinkedInCompanyPage {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 25
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "AccountLinkedInCompanyPage"
+  fullName = "LID__AccountLinkedInCompanyPage"
+  content = file("salesforce/InstalledPackages/LID/Records/ApexPage/LID__AccountLinkedInCompanyPage.page")
+}

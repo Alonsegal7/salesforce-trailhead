@@ -1,0 +1,25 @@
+salesforce.ListView Lead_TechStrong_Booth_Attendees {
+  fullName = "Lead.TechStrong_Booth_Attendees"
+  columns = [
+    "LEAD.STATUS",
+    "Company_Size__c",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "Related_Company__c",
+    "LEAD.COUNTRY",
+    "CORE.USERS.FIRST_NAME",
+    "Strategic_Company__c",
+    "Strategic_Company_Owner__c",
+    "Distribution_reason__c",
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "Current_score__c",
+    "Engagement__c",
+    "Event_Name__c",
+  ]
+  filterScope = "Everything"
+  label = "TechStrong Booth Attendees"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

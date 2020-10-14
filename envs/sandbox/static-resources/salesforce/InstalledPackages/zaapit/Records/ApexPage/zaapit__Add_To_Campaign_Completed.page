@@ -1,0 +1,4 @@
+<apex:page >
+  <div style="font-size: 15pt;margin: 20px;color:#00AA00;text-align: center;display: block;">Add To Campaign Completed {!IF($CurrentPage.parameters.s=='0','Successfully','')}</div>
+  <a style="font-size:10pt;text-align: center;display: block;" href="javascript:void(0)" onclick="window.close();">Close window</a>
+</apex:page>

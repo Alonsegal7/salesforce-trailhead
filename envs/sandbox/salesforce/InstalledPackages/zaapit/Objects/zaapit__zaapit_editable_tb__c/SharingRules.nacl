@@ -1,0 +1,6 @@
+salesforce.SharingRules zaapit__zaapit_editable_tb__c {
+  fullName = "zaapit__zaapit_editable_tb__c"
+  _parent = [
+    salesforce.zaapit__zaapit_editable_tb__c,
+  ]
+}

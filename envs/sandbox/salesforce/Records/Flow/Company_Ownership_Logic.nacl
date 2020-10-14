@@ -1,0 +1,724 @@
+salesforce.Flow Company_Ownership_Logic {
+  fullName = "Company_Ownership_Logic"
+  assignments = [
+    {
+      name = "Count_Active_MAs"
+      label = "Count Active MAs"
+      locationX = 1503
+      locationY = 217
+      assignmentItems = [
+        {
+          assignToReference = "PayingMAsCount"
+          operator = "AssignCount"
+          value = {
+            elementReference = "Get_all_Monday_Accounts_under_this_company"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Company_with_no_active_MAs"
+      }
+    },
+    {
+      name = "donothing"
+      label = "nothing"
+      locationX = 612
+      locationY = 643
+      assignmentItems = [
+        {
+          assignToReference = "LeadCount"
+          operator = "Assign"
+          value = {
+            numberValue = 0
+          }
+        },
+      ]
+    },
+    {
+      name = "Set_Current_Company_Owner_Function_Score"
+      label = "Set Current Company Owner Function Score"
+      locationX = 1196
+      locationY = 55
+      assignmentItems = [
+        {
+          assignToReference = "MaxCompanyOwnerFunctionScore"
+          operator = "Assign"
+          value = {
+            elementReference = "Get_Current_Company_ID.Owner.Function_Ownership_Score__c"
+          }
+        },
+        {
+          assignToReference = "TargetCompanyOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "Get_Current_Company_ID.OwnerId"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Get_all_Monday_Accounts_under_this_company"
+      }
+    },
+    {
+      name = "Set_TargetCompanyOwnerId_and_MaxCompanyOwnerFunctionScore"
+      label = "Set TargetCompanyOwnerId and MaxCompanyOwnerFunctionScore"
+      locationX = 2044
+      locationY = 296
+      assignmentItems = [
+        {
+          assignToReference = "MaxCompanyOwnerFunctionScore"
+          operator = "Assign"
+          value = {
+            elementReference = "CurrentLoopedMondayAccount.Owner.Function_Ownership_Score__c"
+          }
+        },
+        {
+          assignToReference = "TargetCompanyOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "CurrentLoopedMondayAccount.OwnerId"
+          }
+        },
+        {
+          assignToReference = "TargetOwnerManagerId"
+          operator = "Assign"
+          value = {
+            elementReference = "CurrentLoopedMondayAccount.Owner.ManagerId"
+          }
+        },
+        {
+          assignToReference = "TargetOwnerEmail"
+          operator = "Assign"
+          value = {
+            elementReference = "CurrentLoopedMondayAccount.Owner.Email"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Loop_over_monday_accounts"
+      }
+    },
+  ]
+  decisions = [
+    {
+      name = "Company_with_no_active_MAs"
+      label = "Companywith no active MAs"
+      locationX = 1495
+      locationY = 371
+      defaultConnector = {
+        targetReference = "Loop_over_monday_accounts"
+      }
+      defaultConnectorLabel = "Has Active MAs"
+      rules = [
+        {
+          name = "No_MAs"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "PayingMAsCount"
+              operator = "EqualTo"
+              rightValue = {
+                numberValue = 0
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Owner_as_Accounts_Pool"
+          }
+          label = "No MAs"
+        },
+      ]
+    },
+    {
+      description = "Get Account by ID if the account has 'Company' record type"
+      name = "Is_Company_Record_Type"
+      label = "Is Company Record Type?"
+      locationX = 935
+      locationY = 63
+      defaultConnector = {
+        targetReference = "Update_Error_on_Account"
+      }
+      defaultConnectorLabel = "Else"
+      rules = [
+        {
+          name = "Is_Company_not_strategic_claimed_test"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Company_ID.RecordTypeId"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "0121t000000IQTiAAO"
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Company_ID.Strategic__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Company_ID.Account_is_Claimed__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Company_ID.Is_Test_Account__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Company_ID.Strategic__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Company_ID.Accounts_transitioned__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Current_Company_Owner_Function_Score"
+          }
+          label = "Is Company, not strategic, claimed, test"
+        },
+      ]
+    },
+    {
+      description = "Is the current MA iteration owner function score greater than the Max Company Owner Function Score?"
+      name = "MA_owner_function_score_is_bigger_than_max"
+      label = "MA owner function score is bigger than max?"
+      locationX = 2036
+      locationY = 519
+      defaultConnector = {
+        targetReference = "Loop_over_monday_accounts"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Yes"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "CurrentLoopedMondayAccount.Owner.Function_Ownership_Score__c"
+              operator = "GreaterThan"
+              rightValue = {
+                elementReference = "MaxCompanyOwnerFunctionScore"
+              }
+            },
+            {
+              leftValueReference = "CurrentLoopedMondayAccount.Owner.IsActive"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              leftValueReference = "CurrentLoopedMondayAccount.Monday_Account_Status__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Paying Account"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_TargetCompanyOwnerId_and_MaxCompanyOwnerFunctionScore"
+          }
+          label = "Yes"
+        },
+      ]
+    },
+    {
+      description = '''
+Check if any of the monday accounts has an owner with score higher than the current company owner.
+If partner - the lead receiver will be the partner and the owner will be the CPM. (score 4 = partner according to the formula in the User field 'Function Ownership Score')
+'''
+      name = "MaxCompanyOwnerScore_bigger_than_current_company_owner_score"
+      label = "MaxCompanyOwnerScore bigger than current company owner score"
+      locationX = 1495
+      locationY = 529
+      defaultConnector = {
+        targetReference = "Update_Error_on_Account"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "MAOwnerIsAM"
+          conditionLogic = "1 AND (2 OR 3)"
+          conditions = [
+            {
+              leftValueReference = "MaxCompanyOwnerFunctionScore"
+              operator = "GreaterThan"
+              rightValue = {
+                elementReference = "Get_Current_Company_ID.Owner.Function_Ownership_Score__c"
+              }
+            },
+            {
+              leftValueReference = "MaxCompanyOwnerFunctionScore"
+              operator = "EqualTo"
+              rightValue = {
+                numberValue = 6
+              }
+            },
+            {
+              leftValueReference = "MaxCompanyOwnerFunctionScore"
+              operator = "EqualTo"
+              rightValue = {
+                numberValue = 7
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Company_Owner_to_MA_Owner"
+          }
+          label = "MAOwnerIsAM"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Company Ownership Logic {!$Flow.CurrentDateTime}"
+  label = "Company Ownership Logic V2"
+  loops = [
+    {
+      name = "Loop_over_monday_accounts"
+      label = "Loop over monday accounts"
+      locationX = 1843
+      locationY = 383
+      assignNextValueToReference = "CurrentLoopedMondayAccount"
+      collectionReference = "Get_all_Monday_Accounts_under_this_company"
+      iterationOrder = "Asc"
+      nextValueConnector = {
+        targetReference = "MA_owner_function_score_is_bigger_than_max"
+      }
+      noMoreValuesConnector = {
+        targetReference = "MaxCompanyOwnerScore_bigger_than_current_company_owner_score"
+      }
+    },
+  ]
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get_all_Monday_Accounts_under_this_company"
+      label = "Get all Monday Accounts under this company"
+      locationX = 1505
+      locationY = 63
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Count_Active_MAs"
+      }
+      faultConnector = {
+        targetReference = "Update_Error_on_Account"
+      }
+      filters = [
+        {
+          field = "ARR__c"
+          operator = "GreaterThan"
+          value = {
+            numberValue = 0
+          }
+        },
+        {
+          field = "ParentId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Current_Company_ID.Long_Account_ID__c"
+          }
+        },
+        {
+          field = "Monday_Account_Status__c"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "Owner_s_Function__c"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = "Bot"
+          }
+        },
+        {
+          field = "Owner_s_Function__c"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = "Ops"
+          }
+        },
+        {
+          field = "Owner_s_Function__c"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = "CSM"
+          }
+        },
+        {
+          field = "Owner_s_Function__c"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = "SDR"
+          }
+        },
+        {
+          field = "Owner_s_Function__c"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = "BDR"
+          }
+        },
+        {
+          field = "Owner_s_Function__c"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = "Partner"
+          }
+        },
+        {
+          field = "RecordTypeId"
+          operator = "EqualTo"
+          value = {
+            stringValue = "0121t000000IQTnAAO"
+          }
+        },
+      ]
+      getFirstRecordOnly = false
+      object = salesforce.Account
+      queriedFields = [
+        salesforce.Account.field.Id,
+        salesforce.Account.field.OwnerId,
+        salesforce.Account.field.Owner_s_Manager__c,
+        salesforce.Account.field.Company__c,
+        salesforce.Account.field.Monday_Account_Status__c,
+        salesforce.Account.field.ARR__c,
+      ]
+      sortField = salesforce.Account.field.ARR__c
+      sortOrder = "Desc"
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_Current_Company_ID"
+      label = "Get Current Company ID"
+      locationX = 464
+      locationY = 67
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Is_Company_Record_Type"
+      }
+      faultConnector = {
+        targetReference = "Update_Error_on_Account"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+        {
+          field = "RecordTypeId"
+          operator = "EqualTo"
+          value = {
+            stringValue = "0121t000000IQTiAAO"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Account
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Set_Company_Owner_to_MA_Owner"
+      label = "Set Company Owner to MA Owner"
+      locationX = 937
+      locationY = 647
+      connector = {
+        targetReference = "donothing"
+      }
+      faultConnector = {
+        targetReference = "Update_Error_on_Account"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Current_Company_ID.Long_Account_ID__c"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Last_Ownership_Update__c"
+          value = {
+            elementReference = "$Flow.CurrentDate"
+          }
+        },
+        {
+          field = "OwnerId"
+          value = {
+            elementReference = "TargetCompanyOwnerId"
+          }
+        },
+        {
+          field = "Owner_s_Email__c"
+          value = {
+            elementReference = "TargetOwnerEmail"
+          }
+        },
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            elementReference = "TargetOwnerManagerId"
+          }
+        },
+        {
+          field = "PreviousOwner__c"
+          value = {
+            elementReference = "Get_Current_Company_ID.OwnerId"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      name = "Set_Owner_as_Accounts_Pool"
+      label = "Set Owner as Accounts Pool"
+      locationX = 939
+      locationY = 763
+      connector = {
+        targetReference = "donothing"
+      }
+      faultConnector = {
+        targetReference = "Update_Error_on_Account"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Current_Company_ID.Long_Account_ID__c"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Last_Ownership_Update__c"
+          value = {
+            elementReference = "$Flow.CurrentDate"
+          }
+        },
+        {
+          field = "OwnerId"
+          value = {
+            stringValue = "0053X00000Bo8ZZQAZ"
+          }
+        },
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            stringValue = "0053X00000AWTJuQAP"
+          }
+        },
+        {
+          field = "PreviousOwner__c"
+          value = {
+            elementReference = "Get_Current_Company_ID.OwnerId"
+          }
+        },
+        {
+          field = "Strategic_receiver__c"
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      name = "Update_Error_on_Account"
+      label = "Update Error on Account"
+      locationX = 941
+      locationY = 511
+      connector = {
+        targetReference = "donothing"
+      }
+      faultConnector = {
+        targetReference = "donothing"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Current_Company_ID.Long_Account_ID__c"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Flow_Error_Handling_Message__c"
+          value = {
+            elementReference = "$Flow.FaultMessage"
+          }
+        },
+        {
+          field = "Last_Ownership_Update__c"
+          value = {
+            elementReference = "$Flow.CurrentDate"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+  ]
+  start = {
+    locationX = 59
+    locationY = 49
+    connector = {
+      targetReference = "Get_Current_Company_ID"
+    }
+  }
+  status = "Active"
+  variables = [
+    {
+      name = "ContactedLeads"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      name = "CurrentLoopedMondayAccount"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "CurrLead"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Lead
+    },
+    {
+      name = "CurrOppIteration"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Opportunity
+    },
+    {
+      name = "LeadCount"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      description = "Looping through the monday accounts of each company, this variable will hold the highest owner function score of all monday accounts and the company itself."
+      name = "MaxCompanyOwnerFunctionScore"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      name = "Nothing"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "OpenOppsCount"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      name = "PayingMAsCount"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      description = "Company ID to be passed to begin the flow"
+      name = "recordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "TargetCompanyOwnerId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "TargetOwnerEmail"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "TargetOwnerManagerId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+  ]
+}

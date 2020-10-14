@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__TaskView {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "TaskView"
+  fullName = "zaapit__TaskView"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__TaskView.page")
+}

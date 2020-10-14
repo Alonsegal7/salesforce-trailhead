@@ -1,0 +1,87 @@
+salesforce.QuickAction Project__c_Update_Project {
+  fullName = "Project__c.Update_Project"
+  label = "Update Project"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Name"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Project_Type__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Current_Milestone__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Current_Milestone_Type__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Executing_Department__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Age__c"
+            uiBehavior = "Readonly"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Project_Status__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Milestone__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Project_Owner_Notes__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Project_Closed_Date__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Postponed_Cancel_reasson__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Milestone_Type__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Package__c"
+            uiBehavior = "Readonly"
+          },
+        ]
+      },
+    ]
+  }
+  type = "Update"
+  _parent = [
+    salesforce.Project__c,
+  ]
+}

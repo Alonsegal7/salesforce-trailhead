@@ -1,0 +1,44 @@
+salesforce.ListView Opportunity_AllOpportunities {
+  fullName = "Opportunity.AllOpportunities"
+  columns = [
+    "OPPORTUNITY.NAME",
+    "ACCOUNT.NAME",
+    "CORE.USERS.FULL_NAME",
+    "OPPORTUNITY.CLOSE_DATE",
+    "OPPORTUNITY.TYPE",
+    "OPPORTUNITY.STAGE_NAME",
+    "OPPORTUNITY.PROBABILITY",
+    "Expected_Plan_Name__c",
+    "Expected_ARR__c",
+    "Green_Bucket_ARR__c",
+    "Forecast_ARR__c",
+    "primary_pulse_account_id__c",
+    "Sale__c",
+    "OPPORTUNITY.CREATED_DATE",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "OPPORTUNITY.RECORDTYPE"
+      operation = "equals"
+      value = "Opportunity.Partner_Opportunity"
+    },
+    {
+      field = "OPPORTUNITY.STAGE_NAME"
+      operation = "equals"
+      value = "Closed Won"
+    },
+    {
+      field = "Closed_Month__c"
+      operation = "equals"
+      value = "February"
+    },
+  ]
+  label = "All Sales Opportunities"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

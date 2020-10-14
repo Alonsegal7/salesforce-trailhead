@@ -1,0 +1,853 @@
+salesforce.Flow SalesLoft1__Populate_Primary_Contact_Opportunity_Field_from_Contact_Roles {
+  fullName = "SalesLoft1__Populate_Primary_Contact_Opportunity_Field_from_Contact_Roles"
+  actionCalls = [
+    {
+      processMetadataValues = [
+        {
+          name = "ActionCallType"
+          value = {
+            stringValue = "flow"
+          }
+        },
+        {
+          name = "flowSelection"
+          value = {
+            stringValue = "Auto_Populate_PrimaryContact_from_Contact_Role_Object"
+          }
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Update Primary Contact Field Value"
+      locationX = 100
+      locationY = 200
+      actionName = "SalesLoft1__Auto_Populate_PrimaryContact_from_Contact_Role_Object"
+      actionType = "flow"
+      inputParameters = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "varOpportunityID"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          name = "varOpportunityID"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnector = {
+        targetReference = "myDecision3"
+      }
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Contact"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.SalesLoft1__Primary_Contact__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.StageName"
+              operator = "NotEqualTo"
+              rightValue = {
+                stringValue = "Closed Won"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.StageName"
+              operator = "NotEqualTo"
+              rightValue = {
+                stringValue = "Closed Lost"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Formula"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.CreatedDate"
+              operator = "GreaterThanOrEqualTo"
+              rightValue = {
+                elementReference = "formula_2_myRule_1_0326623100"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Primary Contact is Null"
+        },
+      ]
+    },
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 1
+        }
+      }
+      name = "myDecision3"
+      label = "myDecision3"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_4"
+          conditionLogic = "1 AND (2 OR 3) AND 4 AND 5 AND 6"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Contact"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.SalesLoft1__Primary_Contact__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.SalesLoft1__Most_Recent_Cadence_Name__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.SalesLoft1__Most_Recent_Last_Completed_Step__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Formula"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.CreatedDate"
+              operator = "GreaterThanOrEqualTo"
+              rightValue = {
+                elementReference = "formula_5_myRule_4_0167622317"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.StageName"
+              operator = "NotEqualTo"
+              rightValue = {
+                stringValue = "Closed Won"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.StageName"
+              operator = "NotEqualTo"
+              rightValue = {
+                stringValue = "Closed Lost"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_4_A1"
+          }
+          label = "Most Recent Cadence Update"
+        },
+      ]
+    },
+  ]
+  description = "Added 'Closed Lost' & 'Closed Won' parameters to second criteria node."
+  formulas = [
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = '''
+Now() - 30
+
+
+'''
+        }
+      }
+      name = "formula_2_myRule_1_0326623100"
+      dataType = "DateTime"
+      expression = "Now() - 30"
+    },
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = '''
+Now() - 30
+
+'''
+        }
+      }
+      name = "formula_5_myRule_4_0167622317"
+      dataType = "DateTime"
+      expression = "Now() - 30"
+    },
+  ]
+  interviewLabel = "Populate_Primary_Contact_Opportunity_Field_from_Contact_Roles-7_InterviewLabel"
+  isTemplate = true
+  label = "Populate Primary Contact Opportunity Field from Contact Roles"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Opportunity"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "RecursiveCountVariable"
+      value = {
+        elementReference = "RecursiveCountVariable"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  recordUpdates = [
+    {
+      processMetadataValues = [
+        {
+          name = "evaluationType"
+          value = {
+            stringValue = "criteria"
+          }
+        },
+        {
+          name = "extraTypeInfo"
+        },
+        {
+          name = "isChildRelationship"
+          value = {
+            booleanValue = false
+          }
+        },
+        {
+          name = "reference"
+          value = {
+            stringValue = "[Opportunity]"
+          }
+        },
+        {
+          name = "referenceTargetField"
+        },
+      ]
+      name = "myRule_4_A1"
+      label = "Update Opportunity Most Recent Cadence"
+      locationX = 400
+      locationY = 200
+      connector = {
+        targetReference = "myRule_4_A2"
+      }
+      filters = [
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "inputDataType"
+              value = {
+                stringValue = "Boolean"
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Most Recent Cadence - Cadence Name"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "leftHandSideType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "operatorDataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Boolean"
+              }
+            },
+          ]
+          field = "SalesLoft1__Most_Recent_Cadence_Name__c"
+          operator = "IsNull"
+          value = {
+            booleanValue = true
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Most Recent Cadence - Cadence Name"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          field = "SalesLoft1__Most_Recent_Cadence_Name__c"
+          value = {
+            elementReference = "myVariable_current.SalesLoft1__Primary_Contact__r.SalesLoft1__Most_Recent_Cadence_Name__c"
+          }
+        },
+      ]
+      object = salesforce.Opportunity
+    },
+    {
+      processMetadataValues = [
+        {
+          name = "evaluationType"
+          value = {
+            stringValue = "criteria"
+          }
+        },
+        {
+          name = "extraTypeInfo"
+        },
+        {
+          name = "isChildRelationship"
+          value = {
+            booleanValue = false
+          }
+        },
+        {
+          name = "reference"
+          value = {
+            stringValue = "[Opportunity]"
+          }
+        },
+        {
+          name = "referenceTargetField"
+        },
+      ]
+      name = "myRule_4_A2"
+      label = "Update Opportunity Most Recent Cadence Last Step Completed"
+      locationX = 400
+      locationY = 300
+      filters = [
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "inputDataType"
+              value = {
+                stringValue = "Boolean"
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Most Recent Cadence- Last Completed Step"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "leftHandSideType"
+              value = {
+                stringValue = "Number"
+              }
+            },
+            {
+              name = "operatorDataType"
+              value = {
+                stringValue = "Number"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Boolean"
+              }
+            },
+          ]
+          field = "SalesLoft1__Most_Recent_Last_Completed_Step__c"
+          operator = "IsNull"
+          value = {
+            booleanValue = true
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "Number"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Most Recent Cadence- Last Completed Step"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          field = "SalesLoft1__Most_Recent_Last_Completed_Step__c"
+          value = {
+            elementReference = "myVariable_current.SalesLoft1__Primary_Contact__r.SalesLoft1__Most_Recent_Last_Completed_Step__c"
+          }
+        },
+      ]
+      object = salesforce.Opportunity
+    },
+  ]
+  startElementReference = "myDecision"
+  status = "Obsolete"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Opportunity
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Opportunity
+    },
+    {
+      name = "RecursiveCountVariable"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      scale = 2
+    },
+  ]
+}

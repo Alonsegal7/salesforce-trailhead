@@ -1,0 +1,37 @@
+salesforce.WorkflowRule Lead_Partners_Pre_Sale_Survey {
+  fullName = "Lead.Partners%3A Pre-Sale Survey"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Lead_Partners_Pre_Sale_Survey
+      type = "Alert"
+    },
+  ]
+  active = false
+  description = "An email is being sent to the partner whenever the lead status is marked as Contacted."
+  formula = '''
+ISCHANGED(Status) 
+&&
+ispickval(Status,'Contacted')
+&&
+CONTAINS(RecordType.Name,'Partner Lead')
+/*&&
+CONTAINS(Owner:User.UserRole.Name, 'Partner')
+&&
+ $User.ProfileId = '00e1t000000e3IT'*/
+&&
+Owner_Company_Name__c != NULL
+&&
+Email != NULL
+&&
+or(contains(text(LeadSource),'Big Brain - Signup'),
+contains(text(LeadSource),'Contact Sales'))
+&&
+not(contains(Owner_Company_Name__c, 'KPMG'))
+&&
+not(contains(Owner_Company_Name__c, 'Baker Tilly'))
+'''
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

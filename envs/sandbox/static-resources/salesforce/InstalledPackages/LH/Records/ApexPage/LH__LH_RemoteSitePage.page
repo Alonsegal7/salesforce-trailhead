@@ -1,0 +1,27 @@
+<apex:page standardStylesheets="false" title="Lookup Helper Remote Site Creation" controller="LH.LH_Realtime_Enablement_Controller" sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">  
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+ 
+</head>
+	
+	<style>
+	
+	.panel-primary > .panel-heading {
+			background-color: #16325c;
+	}
+	
+	</style>
+	
+	<div class="slds-scope" role="main" style="width:95%; margin-left:auto; margin-right:auto;">	
+	    <c:LH_Nav_Bar />
+		<c:LH_remotesitehelper rssName="{!rssNameString}"
+			host="{!deployVars.host}"
+			pageOverview="A Remote Site is required in order to deploy lookup fields, and realtime triggers through the Lookup Helper user interface."
+			pageSectionTitle="Lookup Helper Remote Site Creation Page"
+			pageSectionSubTitle="Create a Remote Site"
+			/>
+	</div>
+</html>
+</apex:page>

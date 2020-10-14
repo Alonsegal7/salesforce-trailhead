@@ -1,0 +1,268 @@
+salesforce.LightningPage AM_Monday_Account {
+  fullName = "AM_Monday_Account"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "collapsed"
+              value = "false"
+            },
+            {
+              name = "enableActionsConfiguration"
+              value = "false"
+            },
+            {
+              name = "hideChatterActions"
+              value = "false"
+            },
+            {
+              name = "numVisibleActions"
+              value = "6"
+            },
+          ]
+          componentName = "force:highlightsPanel"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideUpdateButton"
+              value = "true"
+            },
+            {
+              name = "variant"
+              value = "linear"
+            },
+          ]
+          componentName = "runtime_sales_pathassistant:pathAssistant"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://bigbrain.me"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+      ]
+      name = "header"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+      ]
+      name = "Facet-101dd4b2-4bed-4df6-bc40-c3d70081ce21"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Contacts"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "ADVGRID"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+      ]
+      name = "Facet-7200a29b-55a6-469c-ab6c-2564a27390c5"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "runtime_sales_activities:activityPanel"
+        },
+      ]
+      name = "Facet-yj2f90920kc"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "label"
+              value = "NPS Survey Trend"
+            },
+            {
+              name = "reportFilter"
+              value = "ACCOUNT_ID"
+            },
+            {
+              name = "reportName"
+              value = "Account_Surveys_lXq"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+      ]
+      name = "Facet-f6c8bd38-c6d1-4450-b389-b35951ae3e5f"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-101dd4b2-4bed-4df6-bc40-c3d70081ce21"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-7200a29b-55a6-469c-ab6c-2564a27390c5"
+            },
+            {
+              name = "title"
+              value = "Account Personas"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-yj2f90920kc"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.activity"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-f6c8bd38-c6d1-4450-b389-b35951ae3e5f"
+            },
+            {
+              name = "title"
+              value = "Account Trends"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-691be9fd-5aa9-4e31-8ad3-9df12bfab3e5"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-691be9fd-5aa9-4e31-8ad3-9df12bfab3e5"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      name = "main"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "lbpm:actionList"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "displayOption"
+              value = "BOTH"
+            },
+          ]
+          componentName = "runtime_sales_merge:mergeCandidatesPreviewCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideHeader"
+              value = "false"
+            },
+          ]
+          componentName = "force:relatedListQuickLinksContainer"
+        },
+      ]
+      name = "leftsidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "AM - Monday Account"
+  sobjectType = "Account"
+  template = {
+    name = "flexipage:recordHomePinnedHeaderLeftSidebarTwoColTemplateDesktop"
+  }
+  type = "RecordPage"
+}

@@ -1,0 +1,20 @@
+salesforce.WorkflowAlert Account_Sent_Ownership_Taken_alert_to_manager {
+  fullName = "Account.Sent_Ownership_Taken_alert_to_manager"
+  description = "Sent 'Ownership Taken' alert to manager"
+  protected = false
+  recipients = [
+    {
+      recipient = "galom@monday.com"
+      type = "user"
+    },
+    {
+      field = salesforce.Account.field.Owner_s_Manager__c
+      type = "userLookup"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Account_Ownership_Taken
+  _parent = [
+    salesforce.Account,
+  ]
+}

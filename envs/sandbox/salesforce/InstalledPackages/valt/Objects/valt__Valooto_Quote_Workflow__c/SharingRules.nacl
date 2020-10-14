@@ -1,0 +1,6 @@
+salesforce.SharingRules valt__Valooto_Quote_Workflow__c {
+  fullName = "valt__Valooto_Quote_Workflow__c"
+  _parent = [
+    salesforce.valt__Valooto_Quote_Workflow__c,
+  ]
+}

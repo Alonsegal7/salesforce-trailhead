@@ -1,0 +1,194 @@
+salesforce.CustomObjectTranslation CalendlyAction__c_en_US {
+  fullName = "CalendlyAction__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "CalendlyAction"
+    },
+    {
+      plural = true
+      value = "CalendlyActions"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.CustomQuestion1__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.CustomQuestion2__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.CustomQuestion3__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.CustomQuestion4__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.CustomResponse1__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.CustomResponse2__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.CustomResponse3__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.CustomResponse4__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventCancelReason__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventCanceled__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventCancelerName__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventCreatedAt__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventDescription__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventEndTime__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventPrimaryPublisherEmail__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventPrimaryPublisherName__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventStartTime__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventSubject__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventTypeDuration__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventTypeKind__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventTypeName__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventTypeSlug__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.EventUuid__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeCancelReason__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeCanceledAt__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeCanceled__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeCancelerName__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeCreatedAt__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeEmail__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeFirstName__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeLastName__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeName__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeTimezone__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.InviteeUuid__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.Location__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.ObjectId__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.UtmCampaign__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.UtmContent__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.UtmMedium__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.UtmSource__c
+    },
+    {
+      label = ""
+      name = salesforce.CalendlyAction__c.field.UtmTerm__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "CalendlyAction Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.CalendlyAction__c,
+  ]
+}

@@ -1,0 +1,8 @@
+salesforce.StaticResource yw__iOSEmailIcon {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "image/png"
+  description = "The icon for the 'send an email with yesware for iOS' action."
+  fullName = "yw__iOSEmailIcon"
+  content = file("salesforce/InstalledPackages/yw/Records/StaticResource/yw__iOSEmailIcon.png")
+}

@@ -1,0 +1,26 @@
+type salesforce.LSNLY__Lessonly_Tag__c {
+  salesforce.Text LSNLY__Lessonly_Id__c {
+    apiName = "LSNLY__Lessonly_Tag__c.LSNLY__Lessonly_Id__c"
+    label = "Lessonly Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Name__c {
+    apiName = "LSNLY__Lessonly_Tag__c.LSNLY__Name__c"
+    label = "Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+}

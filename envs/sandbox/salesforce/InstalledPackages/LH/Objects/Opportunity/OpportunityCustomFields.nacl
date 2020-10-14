@@ -1,0 +1,26 @@
+type salesforce.Opportunity {
+  salesforce.Lookup LH__LH_Test_1__c {
+    apiName = "Opportunity.LH__LH_Test_1__c"
+    label = "LH_Test_1"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup LH__LH_Test_2__c {
+    apiName = "Opportunity.LH__LH_Test_2__c"
+    label = "LH_Test_2"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

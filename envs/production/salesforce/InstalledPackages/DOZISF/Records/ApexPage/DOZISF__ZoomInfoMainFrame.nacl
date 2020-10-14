@@ -1,0 +1,9 @@
+salesforce.ApexPage DOZISF__ZoomInfoMainFrame {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 45
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "ZoomInfo Main Frame"
+  fullName = "DOZISF__ZoomInfoMainFrame"
+  content = file("salesforce/InstalledPackages/DOZISF/Records/ApexPage/DOZISF__ZoomInfoMainFrame.page")
+}

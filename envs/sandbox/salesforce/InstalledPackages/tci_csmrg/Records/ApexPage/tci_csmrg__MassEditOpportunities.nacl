@@ -1,0 +1,9 @@
+salesforce.ApexPage tci_csmrg__MassEditOpportunities {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 32
+  availableInTouch = false
+  confirmationTokenRequired = false
+  label = "MassEditOpportunities"
+  fullName = "tci_csmrg__MassEditOpportunities"
+  content = file("salesforce/InstalledPackages/tci_csmrg/Records/ApexPage/tci_csmrg__MassEditOpportunities.page")
+}

@@ -1,0 +1,9 @@
+salesforce.Role US_Enterprise_Account_Executive_Mansi_Team {
+  fullName = "US_Enterprise_Account_Executive_Mansi_Team"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "US Enterprise Account Executive - Mansi Team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.US_Enterprise_Team_Leader_Mansi_Team
+}

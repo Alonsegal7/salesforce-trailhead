@@ -1,0 +1,31 @@
+salesforce.WorkflowRule Lead_Automatically_mark_Account_Recycling_Lead {
+  fullName = "Lead.Automatically mark Account Recycling Lead"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Mark_as_account_recycling_lead
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.OwnerId
+      operation = "equals"
+      value = "Alexis Pumerantz,Erica Sperber,Ami Bennett,Caroline Rosen,Gal Omer"
+    },
+    {
+      field = salesforce.Lead.field.LeadSource
+      operation = "equals"
+      value = "BigBrain - Sync (Reengage)"
+    },
+    {
+      field = salesforce.Lead.field.CreatedDate
+      operation = "greaterOrEqual"
+      value = "22/05/2020 02:00"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,220 @@
+type salesforce.PricebookEntry {
+  serviceid Id {
+    apiName = "PricebookEntry.Id"
+    label = "Price Book Entry ID"
+    _required = false
+    queryable = true
+    _hidden = true
+    updateable = false
+    createable = false
+  }
+  salesforce.Text Name {
+    apiName = "PricebookEntry.Name"
+    label = "Product Name"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.Lookup Pricebook2Id {
+    apiName = "PricebookEntry.Pricebook2Id"
+    label = "Price Book ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Pricebook2,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Lookup Product2Id {
+    apiName = "PricebookEntry.Product2Id"
+    label = "Product ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Product2,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Picklist CurrencyIsoCode {
+    apiName = "PricebookEntry.CurrencyIsoCode"
+    label = "Currency ISO Code"
+    _required = false
+    valueSet = [
+      {
+        fullName = "AUD"
+        default = false
+        label = "Australian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "BRL"
+        default = false
+        label = "Brazilian Real"
+        isActive = true
+      },
+      {
+        fullName = "GBP"
+        default = false
+        label = "British Pound"
+        isActive = true
+      },
+      {
+        fullName = "CAD"
+        default = false
+        label = "Canadian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "EUR"
+        default = false
+        label = "Euro"
+        isActive = true
+      },
+      {
+        fullName = "ILS"
+        default = false
+        label = "Israeli Shekel"
+        isActive = true
+      },
+      {
+        fullName = "MXN"
+        default = false
+        label = "Mexican Peso"
+        isActive = true
+      },
+      {
+        fullName = "USD"
+        default = true
+        label = "U.S. Dollar"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Currency UnitPrice {
+    apiName = "PricebookEntry.UnitPrice"
+    label = "List Price"
+    _required = true
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Checkbox IsActive {
+    apiName = "PricebookEntry.IsActive"
+    label = "Active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox UseStandardPrice {
+    apiName = "PricebookEntry.UseStandardPrice"
+    label = "Use Standard Price"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime CreatedDate {
+    apiName = "PricebookEntry.CreatedDate"
+    label = "Created Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup CreatedById {
+    apiName = "PricebookEntry.CreatedById"
+    label = "Created By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime LastModifiedDate {
+    apiName = "PricebookEntry.LastModifiedDate"
+    label = "Last Modified Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup LastModifiedById {
+    apiName = "PricebookEntry.LastModifiedById"
+    label = "Last Modified By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime SystemModstamp {
+    apiName = "PricebookEntry.SystemModstamp"
+    label = "System Modstamp"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Text ProductCode {
+    apiName = "PricebookEntry.ProductCode"
+    label = "Product Code"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.Checkbox IsDeleted {
+    apiName = "PricebookEntry.IsDeleted"
+    label = "Deleted"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+    _required = false
+  }
+  salesforce.Checkbox IsArchived {
+    apiName = "PricebookEntry.IsArchived"
+    label = "Archived"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+  }
+  salesforce.Unknown StandardPrice {
+    apiName = "PricebookEntry.StandardPrice"
+    queryable = false
+    updateable = false
+    createable = false
+  }
+}

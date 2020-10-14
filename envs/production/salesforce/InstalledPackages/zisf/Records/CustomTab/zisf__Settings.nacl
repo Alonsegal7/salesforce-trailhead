@@ -1,0 +1,6 @@
+salesforce.CustomTab zisf__Settings {
+  fullName = "zisf__Settings"
+  label = "ZoomInfo Clean Settings"
+  motif = "Custom19: Wrench"
+  page = "zisf__ZoomCleanAdminPage"
+}

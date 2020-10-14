@@ -1,0 +1,32 @@
+type salesforce.Account {
+  salesforce.DateTime DOZISF__ZoomInfo_First_Updated__c {
+    apiName = "Account.DOZISF__ZoomInfo_First_Updated__c"
+    label = "ZoomInfo First Updated"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Date and time when the record was first created or updated by ZoomInfo."
+  }
+  salesforce.Text DOZISF__ZoomInfo_Id__c {
+    apiName = "Account.DOZISF__ZoomInfo_Id__c"
+    label = "ZoomInfo Company ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    externalId = true
+    caseSensitive = false
+    length = 30
+    queryable = true
+  }
+  salesforce.DateTime DOZISF__ZoomInfo_Last_Updated__c {
+    apiName = "Account.DOZISF__ZoomInfo_Last_Updated__c"
+    label = "ZoomInfo Last Updated"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Date and time when the record was last created or updated by ZoomInfo"
+  }
+}

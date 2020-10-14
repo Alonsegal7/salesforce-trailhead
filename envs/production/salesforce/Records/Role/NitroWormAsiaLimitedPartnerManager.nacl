@@ -1,0 +1,10 @@
+salesforce.Role NitroWormAsiaLimitedPartnerManager {
+  fullName = "NitroWormAsiaLimitedPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "NitroWorm (Asia) Limited Partner Manager"
+  mayForecastManagerShare = false
+  name = "NitroWorm (Asia) Limited Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

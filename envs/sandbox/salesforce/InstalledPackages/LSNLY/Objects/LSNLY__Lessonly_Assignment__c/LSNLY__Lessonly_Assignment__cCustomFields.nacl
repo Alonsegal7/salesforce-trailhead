@@ -1,0 +1,504 @@
+type salesforce.LSNLY__Lessonly_Assignment__c {
+  salesforce.MasterDetail LSNLY__Lessonly_User__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Lessonly_User__c"
+    label = "Lessonly User"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.LSNLY__Lessonly_User__c,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.MasterDetail LSNLY__Lessonly_Content__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Lessonly_Content__c"
+    label = "Lessonly Content"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.LSNLY__Lessonly_Content__c,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 1
+    queryable = true
+  }
+  salesforce.Text LSNLY__Assignable_Id__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Assignable_Id__c"
+    label = "Assignable Lessonly Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Assignable_Type__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Assignable_Type__c"
+    label = "Assignable Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Assigned_At__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Assigned_At__c"
+    label = "Assigned At"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime LSNLY__Assigned__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Assigned__c"
+    label = "Assigned"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text LSNLY__Assignee_Id__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Assignee_Id__c"
+    label = "Assignee Lessonly Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText LSNLY__Business_Unit__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Business_Unit__c"
+    label = "Business Unit"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Business_Unit__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text LSNLY__Completed_At__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Completed_At__c"
+    label = "Completed At"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime LSNLY__Completed__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Completed__c"
+    label = "Completed"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText LSNLY__Content_Archived_At__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Content_Archived_At__c"
+    label = "Content Archived At"
+    _required = false
+    formula = "LSNLY__Lessonly_Content__r.LSNLY__Archived_At__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__Content_Lessonly_Id__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Content_Lessonly_Id__c"
+    label = "Content Lessonly Id"
+    _required = false
+    formula = "LSNLY__Lessonly_Content__r.LSNLY__Lessonly_Id__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber LSNLY__Content_Number_of_Attempts__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Content_Number_of_Attempts__c"
+    label = "Content Number of Attempts"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "LSNLY__Lessonly_Content__r.LSNLY__Number_of_Attempts__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__Content_Type__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Content_Type__c"
+    label = "Content Type"
+    _required = false
+    formula = "LSNLY__Lessonly_Content__r.LSNLY__Type__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__Department__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Department__c"
+    label = "Department"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Department__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text LSNLY__Due_By__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Due_By__c"
+    label = "Due By"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime LSNLY__Due__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Due__c"
+    label = "Due"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text LSNLY__Ext_UID__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Ext_UID__c"
+    label = "Ext UID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaDateTime LSNLY__Hired__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Hired__c"
+    label = "Hired"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Hired__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__Job_Title__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Job_Title__c"
+    label = "Job Title"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Job_Title__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__Learner_Role__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Learner_Role__c"
+    label = "Learner Role"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Role__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text LSNLY__Lessonly_Id__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Lessonly_Id__c"
+    label = "Lessonly Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText LSNLY__Location__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Location__c"
+    label = "Location"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Location__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__Manager_Name__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Manager_Name__c"
+    label = "Manager Name"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Manager_Name__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__Name__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Name__c"
+    label = "Name"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Name__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text LSNLY__Reassigned_At__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Reassigned_At__c"
+    label = "Reassigned At"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime LSNLY__Reassigned__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Reassigned__c"
+    label = "Reassigned"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text LSNLY__Resource_Type__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Resource_Type__c"
+    label = "Resource Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number LSNLY__Score__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Score__c"
+    label = "Score"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Started_At__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Started_At__c"
+    label = "Started At"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime LSNLY__Started__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Started__c"
+    label = "Started"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text LSNLY__Status__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Status__c"
+    label = "Status"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber LSNLY__Time_to_Complete_Mins__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Time_to_Complete_Mins__c"
+    label = "Time to Complete (Mins)"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "(LSNLY__Completed__c - LSNLY__Started__c) * 24 * 60"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__Title__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Title__c"
+    label = "Title"
+    _required = false
+    formula = "LSNLY__Lessonly_Content__r.LSNLY__Title__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text LSNLY__Updated_At__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Updated_At__c"
+    label = "Updated At"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime LSNLY__Updated__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__Updated__c"
+    label = "Updated"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText LSNLY__User_Archived_At__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__User_Archived_At__c"
+    label = "User Archived At"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Archived_At__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__User_Lessonly_Id__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__User_Lessonly_Id__c"
+    label = "User Lessonly Id"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Lessonly_Id__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__User__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.LSNLY__User__c"
+    label = "User EXT UID"
+    _required = false
+    formula = "LSNLY__Lessonly_User__r.LSNLY__Ext_UID__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup Partner_Contact__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.Partner_Contact__c"
+    label = "Partner Contact"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contact,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Partner_User__c {
+    apiName = "LSNLY__Lessonly_Assignment__c.Partner_User__c"
+    label = "Partner User"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

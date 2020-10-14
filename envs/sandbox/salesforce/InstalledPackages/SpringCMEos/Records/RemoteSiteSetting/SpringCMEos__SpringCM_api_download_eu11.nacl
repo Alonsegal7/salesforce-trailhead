@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting SpringCMEos__SpringCM_api_download_eu11 {
+  fullName = "SpringCMEos__SpringCM_api_download_eu11"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://apidownloadeu11.springcm.com"
+}

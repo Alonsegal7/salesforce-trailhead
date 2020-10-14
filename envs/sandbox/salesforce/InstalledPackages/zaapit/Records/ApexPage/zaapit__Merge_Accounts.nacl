@@ -1,0 +1,10 @@
+salesforce.ApexPage zaapit__Merge_Accounts {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  availableInTouch = true
+  confirmationTokenRequired = false
+  description = "Merge Account in lightning"
+  label = "Merge Accounts"
+  fullName = "zaapit__Merge_Accounts"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__Merge_Accounts.page")
+}

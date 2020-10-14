@@ -1,0 +1,5 @@
+<apex:page sidebar="false" showheader="false" showChat="false" docType="html-5.0">
+    <c:zaapit_tables_v1 />
+    <!-- Thank you for looking :) please contact us for customizing this application, used in Smart Activity Manager -->
+    
+</apex:page>

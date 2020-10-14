@@ -1,0 +1,8 @@
+salesforce.PathAssistant Business_Review_Path {
+  fullName = "Business_Review_Path"
+  active = true
+  entityName = "Business_Review__c"
+  fieldName = "Status__c"
+  masterLabel = "Business Review Path"
+  recordTypeName = "__MASTER__"
+}

@@ -1,0 +1,21 @@
+salesforce.WorkflowRule CampaignMember_mark_mql_in_campaign_member {
+  fullName = "CampaignMember.mark mql in campaign member"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.CampaignMember_mark_mql_in_campaign_member
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.CampaignMember.field.MQL_2__c
+      operation = "equals"
+      value = "True"
+    },
+  ]
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.CampaignMember,
+  ]
+}

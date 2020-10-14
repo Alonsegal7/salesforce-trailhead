@@ -1,0 +1,199 @@
+<apex:page standardStylesheets="false" controller="LH.LH_All_Settings_Controller" title="Lookup Helper Home" sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+        <head>
+            <apex:slds />
+        </head>
+
+        <style>
+			.linkTile {
+				height:200px !important; 
+				width:300px !important;
+			}
+
+			a:hover {
+				text-decoration:none !important;
+			}
+		</style>
+        
+        <script>
+        sessionStorage.setItem('rootPage','home');
+        </script>
+ 
+        <body  class="slds-scope">
+            <div class="slds-card slds-card_empty">
+                <header class="slds-card__header slds-grid grid_flex-spread slds-text-heading_small slds-truncate slds-theme_alt-inverse">
+                    <h1 class="slds-text-heading--large">Welcome to Lookup Helper!</h1>
+                </header>
+            
+                <section class="slds-card__body" >
+                    <br/>
+                
+                    <div>
+                        <table style="margin-left: auto; margin-right: auto;">
+                            <tr class="slds-align_absolute-center">
+                                <td class="linkTile slds-button slds-button--neutral">
+                                    <a href="{! URLFOR($Page.LH_NewSetting_ChildObject) }">
+                                        <div>
+                                            <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">Create</h2>
+                                            <span class="slds-icon__container slds-icon-action-new">
+                                                <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                    <use xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#new')}"></use>
+                                                </svg>
+                                            </span>
+                                            <h3 class="slds-text-heading--medium" style="padding-top:15px;">A New Lookup</h3>
+                                        </div>
+                                    </a>
+                                </td>
+
+                                <td class="linkTile slds-button slds-button--neutral">
+                                    <a href="{! URLFOR($Page.LH_All_Settings) }">
+                                        <div>
+                                            <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">View</h2>
+                                            <span class="slds-icon__container slds-icon-action-update-status">
+                                                <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                    <use xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#update_status')}"></use>
+                                                </svg>
+                                            </span>
+                                            <h3 class="slds-text-heading--medium" style="padding-top:15px;">Existing Lookups</h3>
+                                        </div>
+                                    </a>
+                                </td>
+
+                                <td class="linkTile slds-button slds-button--neutral">
+                                    <a href="{! URLFOR($Page.LH_All_Realtime_Triggers) }">
+                                        <div>
+                                            <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">Enable</h2>
+                                            <span class="slds-icon__container slds-icon-action-fallback">
+                                                <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                    <use xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#fallback')}"></use>
+                                                </svg>
+                                            </span>
+                                            <h3 class="slds-text-heading--medium" style="padding-top:15px;">Real Time</h3>
+                                        </div>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr class="slds-align_absolute-center">
+                                <td class="linkTile slds-button slds-button--neutral">
+                                    <a href="{! URLFOR($Page.LH_HealthCheck) }">
+                                        <div>
+                                            <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">View</h2>
+                                            <span class="slds-icon__container slds-icon-action-question-post-action">
+                                                <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                    <use xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#approval')}"></use>
+                                                </svg>
+                                            </span>
+                                            <h3 class="slds-text-heading--medium" style="padding-top:15px;">Health Check</h3>
+                                        </div>
+                                    </a>
+                                </td> 		
+                                
+                                <td class="linkTile slds-button slds-button--neutral">
+                                    <a href="{! URLFOR($Page.LH_viewExceptions) }">
+                                        <div>
+                                            <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">View</h2>
+                                            <span class="slds-icon__container slds-icon-action-question-post-action">
+                                                <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                    <use xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/custom-sprite/svg/symbols.svg#custom86')}"></use>
+                                                </svg>
+                                            </span>
+                                            <h3 class="slds-text-heading--medium" style="padding-top:15px;">Lookup Helper Errors</h3>
+                                        </div>
+                                    </a>
+		    					</td>	
+
+                                <td class="linkTile slds-button slds-button--neutral">
+                                    <a href="{! URLFOR($Page.LH_Support) }">
+                                        <div>
+                                            <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">Help</h2>
+                                            <span class="slds-icon__container slds-icon-action-question-post-action">
+                                                <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                    <use xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#question_post_action')}"></use>
+                                                </svg>
+                                            </span>
+                                            <h3 class="slds-text-heading--medium" style="padding-top:15px;">And FAQ</h3>
+                                        </div>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr class="slds-align_absolute-center">
+                                <td class="linkTile slds-button slds-button--neutral">
+                                    <a href="https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A000000DFzQSAW" target="_blank" >
+                                        <div>
+                                            <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">Get Help</h2>
+                                            <span class="slds-icon__container slds-icon-action-apex">
+                                                <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                    <use xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#announcement')}"></use>
+                                                </svg>
+                                            </span>
+                                            <h3 class="slds-text-heading--medium" style="padding-top:15px;">From the Community</h3>
+                                        </div>
+                                    </a>
+                                </td>
+                                
+                                <td class="linkTile slds-button slds-button--neutral">
+                                    <a href="https://www.passagetechnology.com/lookup-helper-use-cases" target="_blank">
+                                        <div>
+                                            <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">Browse</h2>
+                                            <span class="slds-icon__container slds-icon-action-apex">
+                                                <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                    <use xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#canvas')}"></use>
+                                                </svg>
+                                            </span>
+                                            <h3 class="slds-text-heading--medium" style="padding-top:15px;">Use Cases</h3>
+                                        </div>
+                                    </a>
+                                </td>
+
+                                <apex:outputPanel rendered="{!hasSettingLimit}">
+                                    <td class="linkTile slds-button slds-button--neutral">
+                                        <a href="https://passagetechnology.force.com/Services" target="_blank">
+                                            <div>
+                                                <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">Get Custom Dev</h2>
+                                                <span class="slds-icon__container slds-icon-action-apex">
+                                                    <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                        <use xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#apex')}"></use>
+                                                    </svg>
+                                                </span>
+                                                <h3 class="slds-text-heading--medium" style="padding-top:15px;">For Your Org</h3>
+                                            </div>
+                                        </a>
+                                    </td>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!!hasSettingLimit}">
+                                    <td class="linkTile slds-button slds-button--neutral">
+                                        <a href="{! URLFOR($Page.LH_ExportData) }" target="_blank">
+                                            <div>
+                                                <h2 class="slds-text-heading--large" style="padding-bottom:15px; padding-top:15px;">Export</h2>
+                                                <span class="slds-icon__container slds-icon-action-apex">
+                                                <svg class="slds-icon slds-icon--large" aria-hidden="true">
+                                                    <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#download')}"></use>
+                                                </svg>
+                                                </span>
+                                                <h3 class="slds-text-heading--medium" style="padding-top:15px;">Lookup Settings</h3>
+                                            </div>
+                                        </a>
+                                    </td>
+                                </apex:outputPanel>                                  
+                            </tr>
+                        </table>
+                    </div>
+                </section>
+
+                <footer>
+                    <hr/>
+                    <div style="padding-left:15px;">Want to give us feedback?  Need assistance?  Contact 
+                        <a href="mailto:support@passagetech.com">support@passagetech.com</a>.
+                    </div>
+                </footer>
+            </div>
+        </body >
+
+        <br />
+
+        <c:LH_additionalInformation ></c:LH_additionalInformation>
+    </html>
+</apex:page>

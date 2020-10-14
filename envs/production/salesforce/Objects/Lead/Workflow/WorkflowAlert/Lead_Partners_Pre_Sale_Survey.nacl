@@ -1,0 +1,17 @@
+salesforce.WorkflowAlert Lead_Partners_Pre_Sale_Survey {
+  fullName = "Lead.Partners_Pre_Sale_Survey"
+  description = "Partners: Pre-Sale Survey"
+  protected = false
+  recipients = [
+    {
+      field = salesforce.Lead.field.Email
+      type = "email"
+    },
+  ]
+  senderAddress = "customerexperience@monday.com"
+  senderType = "OrgWideEmailAddress"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Partner_Pre_Sale_Survey
+  _parent = [
+    salesforce.Lead,
+  ]
+}

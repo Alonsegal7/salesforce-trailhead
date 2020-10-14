@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation SpringCMEos__DSWConfig__c_en_US {
+  fullName = "SpringCMEos__DSWConfig__c-en_US"
+  _parent = [
+    salesforce.SpringCMEos__DSWConfig__c,
+  ]
+}

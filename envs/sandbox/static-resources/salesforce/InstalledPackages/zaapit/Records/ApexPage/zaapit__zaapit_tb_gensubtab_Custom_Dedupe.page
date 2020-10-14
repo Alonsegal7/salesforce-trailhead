@@ -1,0 +1,224 @@
+<apex:page showHeader="false" sidebar="false" showchat="false" controller="zaapit.zp_generalSettings" extensions="zaapit.JSZTableAction" title="ZaapIT Tab">
+<style>
+.loading{height:125px;}
+.hd1{display:none;}
+</style>
+<script type="text/javascript" src="{!$Resource.zp_jquery172}"></script>
+
+<div class="hd1" id="ShowSettingsX">
+<apex:outputPanel id="mainForm">
+<apex:pageMessages />
+    <apex:form >
+    <script>
+    var queryX1="{!JSENCODE(mainQuery)}";
+    var continueURL="{!JSENCODE(continueURL)}";
+    var searchSTR="{!JSENCODE($CurrentPage.parameters.str)}".trim();
+    var id1X="{!JSENCODE($CurrentPage.parameters.id)}".trim();
+    var MergeJobView="{!JSENCODE($CurrentPage.parameters.MergeJobView)}".trim();
+    var tp="{!JSENCODE($CurrentPage.parameters.tp)}".trim();
+    </script>
+        <apex:pageBlock title="Custom Dedupe Setup:">
+            <apex:pageBlockSection columns="1" >
+                 
+                    <apex:outputfield value="{!objX.Name}" style="width:350px;background:#efefef;'" label="Custom Settings Name"/>     
+                    <apex:inputtextarea value="{!mainQuery}" style="width:550px;height:69px" label="Main Dedupe Query"/> 
+                    <div><b>Examples for Main Dedupe Query:</b> <br/> 
+                    select field,id from object where field!='' {{and field like '{STR}%'}} order by field asc<br/> 
+                    select name,id from lead where isconverted=false and name!='' {{and name like '{STR}%'}} order by name asc<br/>
+                    select FuzzyName__c,id from contact where FuzzyName__c!='' {{and FuzzyName__c like '{STR}%'}} order by FuzzyName__c desc
+                    </div>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!save}" value="Save" rerender="mainForm" oncomplete="continueAfterSave();"/>
+                <apex:actionfunction action="{!init}" name="init1" rerender="mainForm" oncomplete="getDups();">
+                <apex:param name="id1X" assignTo="{!id1X}" value="{!id1X}"/>
+                <apex:param name="MergeJobView" assignTo="{!MergeJobView}" value="{!MergeJobView}"/> 
+                
+                </apex:actionfunction>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+    </apex:outputPanel>
+
+<apex:pageBlock title="How to create a custom dedupe:">
+            <apex:pageBlockSection columns="1" >
+            1) Start by creating the Main Dedupe Query.<br/>
+            
+            <div style="margin-left:20px;">
+            Examples:<br/>  
+            a) if you want to dedupe all the contacts by firstname - use the following query:<br/>
+              select firstname,id from contact order by firstname asc<br/>
+                b) If you want to dedupe all the contacts by firstname &amp; lastname, the create first a formula field  - use the following query:<br/>
+                select firstAndLastName__c,id from contact order by firstAndLastName__c asc<br/>
+                c) If you want to dedupe all the contacts by fuzzy search create the formula field that appears in the next section and use the following query:<br/>
+                select fuzzyField__c,id from contact order by fuzzyField__c asc<br/>
+                </div>
+                2) Save this page and continue to the next page.<br/>
+                3) On the next page edit the layout.<br/>
+                4) Select the main object and add the relevant the dedupe field as a column.<br/>
+                5) Select the dedupe field as "Sort by Field #1".<br/>
+                6) Mark the "Apply shading to alternate rows".<br/>
+                7) In the "Advanced Filter" use this expration: id in ({ID})<br/>
+                8) Add the following buttons:<br/>
+                Name: Mass_Merge, Button link/JS:<br/>
+                Name: Load more records, Button link/JS: parent.location=parent.location; <br/>  
+                9) Save the default settings.
+                
+                
+ </apex:pageBlockSection>
+</apex:pageBlock>
+           
+           
+           <apex:pageBlock title="Popular custom text formulas for custom dedupe fields:">
+            <apex:pageBlockSection columns="1" >
+           1) Dedupe contacts by name &amp; phone (ignore case):<br/>
+lower(name &amp;' '&amp; phone)<br/>
+           2) Dedupe accounts by first word:<br/>
+if(find(' ',Name)>0,left(Name,find(' ',Name)),Name)<br/>
+Dedupe names by second word after the first 5 chars:<br/>
+lower( SUBSTITUTE(SUBSTITUTE( SUBSTITUTE(if(find(' ',Name,max(find(' ',Name)+1,5))>0,left(Name,find(' ',Name,max(find(' ',Name)+1,5))),Name),'.', '') , ',', ''), '&amp;', '')   )
+            3) Dedupe accounts by cleaned website:<br/>
+SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(website,'https://',''),'http://',''),'www.','')
+<br/>
+ 
+            </apex:pageBlockSection>
+</apex:pageBlock>
+
+<apex:pageBlock title="How to create a fuzzy custom dedupe:">
+            <apex:pageBlockSection columns="1" >
+
+1) Create the following formula field for the desired object.
+<div style="padding:10px;">
+
+SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE( SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE( SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE( SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(lower(
+<br/><b>YOUR_FIELD(S)_HERE</b><br/>
+)
+,'a','0') 
+,'b','1') 
+,'c','2') 
+,'d','3') 
+,'e','0') 
+,'f','1') 
+,'g','2') 
+,'h','0') 
+,'i','0') 
+,'j','2') 
+,'k','2') 
+,'l','4') 
+,'m','5') 
+,'n','5') 
+,'o','0') 
+,'p','1') 
+,'q','2') 
+,'r','6') 
+,'s','2') 
+,'t','3') 
+,'u','0')
+,'v','1') 
+,'w','0') 
+,'x','2') 
+,'y','0') 
+,'z','2')
+,'00','0')
+,'11','1')
+,'22','2')
+,'33','3')
+,'44','4')
+,'55','5')
+</div>
+<br/> 
+2) Use the formula's API name in the above main dedupe query.
+<br/>
+3) You can also remove "inc." and "LTD" by adding the following lines to the formula (before ",'a','0')"):<br/>
+Add to remove LTD: ,' ltd','')<br/>
+Add to remove INC: ,' inc.','') <br/>
+4) You can also make "company" and "co" the same by adding the following lines to the formula (before ",'a','0')"):<br/>
+Add: ,'company','co')<br/>
+5) You can even use steps 3 &amp; 4 without using the fuzzy logic:
+
+SUBSTITUTE(SUBSTITUTE(lower(
+<br/><b>YOUR_FIELD(S)_HERE</b><br/>
+)
+,'company','co') 
+,'inc.','')
+<br/> 
+6) You can also make "company" and "co" the same by adding the following lines to the formula (before ",'a','0')"):<br/>
+Add: ,'company','co')<br/>
+</apex:pageBlockSection>
+</apex:pageBlock>
+
+
+</div>
+
+<div class="{!if(objX.id==null,'hd1','')}" id="ShowLoadingX" style="text-align:right;">
+<a style="font-size:12pt;margin:5px;display:inline-block;" href="javascript:void(0);" onclick="stopCustomDedup=1;$('#ShowSettingsX').show();$('#ShowLoadingX').hide();" id="editLinkDeDupe">Edit Dedupe Query Settings</a>
+<div class="loading">
+<div style="font-size: 15px;text-align: center;display: inline-block;margin-top: 48px;background: url('/img/loading.gif') 0 0 no-repeat;padding-left:25px;">Calculating custom dedupe.
+<div id="foundDupes"></div>
+</div>
+</div>
+</div>
+
+<script>
+var stopCustomDedup=0;
+var remoteTotMethod='{!$RemoteAction.JSZTableAction.queryAjax2GetIDSDups2}'; 
+function continueAfterSave(){
+	stopCustomDedup=0;
+	$('#ShowSettingsX').hide();
+	$('#ShowLoadingX').show();
+	getDupLIst();
+}
+function getDupLIst(){
+     Visualforce.remoting.Manager.invokeAction(
+                remoteTotMethod,
+                queryX1,"", 
+                searchSTR,
+                function(result, event){
+                    //alert(result + " "+event);
+                    var ids="";
+                    if (event.status && result!=null) {
+                        if(result[1]!=null){
+                        for(var i=3;i<result.length;i++){
+                            ids+="~"+result[i]; 
+                        }
+                        $("#foundDupes").html("Found: <b>"+result[1]+"</b> rows out of <b>"+result[0]+"</b> rows -  preparing to show the first 200 rows...<br/> <span style='color:#aaaaaa'>"+result[2]+" groups with "+(Number(result[1])-Number(result[2]))+" duplicates</span>");
+                            continueURL=continueURL.replace(/\&pw1\=[^\&]+/ig,"");
+                            continueURL=continueURL.replace(/\&searchSTR\=[^\&]+/ig,"");
+                            var newURL=continueURL+"&id="+encodeURIComponent(ids.substring(1))+"&searchSTR="+encodeURIComponent(searchSTR)+"&pw1="+encodeURIComponent((self.location+'').split('?')[0]+'?isdtp=p1&tp='+escape(tp)+"&id="+escape(id1X)+'&MergeJobView='+escape(MergeJobView));
+                            //alert(newURL);
+                            setTimeout(function(){if(stopCustomDedup==0)self.location=newURL;},1500);
+                        //alert(newURL);
+                        }else{
+                            alert("An error was detected in your query: "+((result[0]+"").replace(/\&\#39\;/ig,"'")));
+                            $("#editLinkDeDupe").click();
+                        }
+                        
+                     } else if (event.type === 'exception') {
+                        //self.location=self.location;
+  
+                    } else {
+      
+                    }
+                }, 
+                {escape: true,buffer:true,timeout: 120000}
+            );
+    
+}
+function getDups(){
+	 $("#foundDupes").html("");
+	if(queryX1!=""){
+		$('#ShowSettingsX').hide();
+		$('#ShowLoadingX').show();
+		//alert(continueURL);
+		getDupLIst();
+	}else $("#ShowSettingsX").show();
+}
+$(document).ready(function(){
+	if(continueURL==""){
+		//$('#ShowLoadingX').show();
+		init1(id1X,MergeJobView);
+	} else getDups();
+});
+</script>
+
+</apex:page>

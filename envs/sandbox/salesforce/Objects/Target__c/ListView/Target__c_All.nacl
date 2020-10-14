@@ -1,0 +1,15 @@
+salesforce.ListView Target__c_All {
+  fullName = "Target__c.All"
+  columns = [
+    "NAME",
+    "Target_Date__c",
+    "User__c",
+    "Amount__c",
+    "Total_Actual__c",
+  ]
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Target__c,
+  ]
+}

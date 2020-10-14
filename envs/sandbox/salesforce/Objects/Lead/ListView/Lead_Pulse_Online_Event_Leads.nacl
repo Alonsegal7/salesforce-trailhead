@@ -1,0 +1,37 @@
+salesforce.ListView Lead_Pulse_Online_Event_Leads {
+  fullName = "Lead.Pulse_Online_Event_Leads"
+  columns = [
+    "LEAD.STATUS",
+    "Company_Size__c",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "Related_Company__c",
+    "LEAD.COUNTRY",
+    "CORE.USERS.FIRST_NAME",
+    "Strategic_Company__c",
+    "Strategic_Company_Owner__c",
+    "Distribution_reason__c",
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "Current_score__c",
+    "Engagement__c",
+    "Event_Name__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Event_Name__c"
+      operation = "equals"
+      value = "Pulse"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "equals"
+      value = "Online Event"
+    },
+  ]
+  label = "Pulse Online Event Leads"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

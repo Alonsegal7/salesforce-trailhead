@@ -1,0 +1,98 @@
+type salesforce.Kickoff__c {
+  salesforce.MasterDetail Monday_Account__c {
+    apiName = "Kickoff__c.Monday_Account__c"
+    label = "Monday Account"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.Number of_Users__c {
+    apiName = "Kickoff__c.of_Users__c"
+    label = "# of Users"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Go_Live_Date__c {
+    apiName = "Kickoff__c.Go_Live_Date__c"
+    label = "Go Live Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Use_Case__c {
+    apiName = "Kickoff__c.Use_Case__c"
+    label = "Use Case"
+    _required = false
+    createable = true
+    updateable = true
+    length = 20000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.LongTextArea Plan_for_Training__c {
+    apiName = "Kickoff__c.Plan_for_Training__c"
+    label = "Plan for Training"
+    _required = false
+    createable = true
+    updateable = true
+    length = 20000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.Lookup Main_Point_of_Contacts__c {
+    apiName = "Kickoff__c.Main_Point_of_Contacts__c"
+    label = "Main Point of Contacts"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contact,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Kickoff_meeting_date__c {
+    apiName = "Kickoff__c.Kickoff_meeting_date__c"
+    label = "Kickoff meeting date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Kickoff_Notes__c {
+    apiName = "Kickoff__c.Kickoff_Notes__c"
+    label = "Kickoff Notes"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.Html Success_Metrics__c {
+    apiName = "Kickoff__c.Success_Metrics__c"
+    label = "Success Metrics"
+    _required = false
+    inlineHelpText = "Define the main Success Metrics of the account."
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    description = "Define the main Success Metrics of the account."
+    visibleLines = 25
+  }
+}

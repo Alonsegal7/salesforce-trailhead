@@ -1,0 +1,16 @@
+salesforce.WebLink Lead_zaapit__Merge_Leads_L {
+  fullName = "Lead.zaapit__Merge_Leads_L"
+  availability = "online"
+  description = "Merge Leads in lightning"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Merge Leads (L)"
+  openType = "sidebar"
+  page = "zaapit__Merge_Leads"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Lead,
+  ]
+}

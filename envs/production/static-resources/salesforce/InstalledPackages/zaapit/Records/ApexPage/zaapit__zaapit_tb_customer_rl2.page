@@ -1,0 +1,4 @@
+<apex:page sidebar="true"  standardController="account">
+    <c:zaapit_tables_v1 />
+    <!-- Thank you for looking :) please contact us for customizing this application -->
+</apex:page>

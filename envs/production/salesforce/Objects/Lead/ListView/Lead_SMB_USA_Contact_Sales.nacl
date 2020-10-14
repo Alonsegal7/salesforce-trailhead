@@ -1,0 +1,46 @@
+salesforce.ListView Lead_SMB_USA_Contact_Sales {
+  fullName = "Lead.SMB_USA_Contact_Sales"
+  booleanFilter = "1 AND 2 AND (3 OR 4)"
+  columns = [
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "LEAD.STATUS",
+    "LEAD.CREATED_DATE",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.COUNTRY",
+    "LEAD.COMPANY",
+    "Company_Size__c",
+    "LEAD.TITLE",
+    "How_many_users_do_you_want_to_start_with__c",
+    "Description_shortcut__c",
+  ]
+  filterScope = "Queue"
+  filters = [
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Received"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "notEqual"
+      value = "ChiliPiper,Event,Linkedin Paid"
+    },
+    {
+      field = "LEAD.COUNTRY_CODE"
+      operation = "equals"
+      value = "CA,US"
+    },
+    {
+      field = "Region__c"
+      operation = "equals"
+      value = "LATAM"
+    },
+  ]
+  label = "SMB - USA Contact Sales"
+  queue = "SMB_Contact_Sales"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

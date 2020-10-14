@@ -1,0 +1,11 @@
+salesforce.ValidationRule Task_LID__cannot_edit_Priority_on_Linkedin_Tasks {
+  fullName = "Task.LID__cannot_edit_Priority_on_Linkedin_Tasks"
+  active = false
+  description = "Validation Rule not in use"
+  errorConditionFormula = "false"
+  errorDisplayField = "Priority"
+  errorMessage = "You cannot edit the Priority field on LInkedin Tasks"
+  _parent = [
+    salesforce.Task,
+  ]
+}

@@ -1,0 +1,15 @@
+salesforce.AuraDefinitionBundle squivr__ContactDetail {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  description = "A Lightning Component Bundle"
+  fullName = "squivr__ContactDetail"
+  type = "Component"
+  SVGContent = "(hidden)"
+  designContent = "(hidden)"
+  rendererContent = "(hidden)"
+  documentationContent = "(hidden)"
+  styleContent = "(hidden)"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

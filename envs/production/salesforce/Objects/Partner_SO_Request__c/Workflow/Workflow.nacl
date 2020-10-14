@@ -1,0 +1,12 @@
+salesforce.Workflow Partner_SO_Request__c {
+  fullName = "Partner_SO_Request__c"
+  alerts = [
+    salesforce.WorkflowAlert.instance.Partner_SO_Request__c_Partners_New_Partner_SO_request,
+  ]
+  rules = [
+    salesforce.WorkflowRule.instance.Partner_SO_Request__c_Partners_New_SO_Request,
+  ]
+  _parent = [
+    salesforce.Partner_SO_Request__c,
+  ]
+}

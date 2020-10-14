@@ -1,0 +1,18 @@
+<apex:page sidebar="false" showHeader="false" showChat="false" tabStyle="lead">
+ <c:zaapit_tables_v1 />
+    <!-- Thank you for looking :) please contact us for customizing this application -->
+    <script>
+    $(document).ready(function(){
+        $("body").addClass("light1");
+        $("td.pti1 img:first").attr("src","/img/icon/t4v35/standard/lead_120.png");
+        $(".lcbXAll").click();
+        $("button.btn[onclick*='Mass_Convert']").click();
+    });
+    </script>
+
+    <style>
+    td.pti1 img{background:#F88962;height:2rem;width:2rem;    border-radius: .25rem;}
+    body td.pti1{display:block;}
+    </style>
+    
+</apex:page>

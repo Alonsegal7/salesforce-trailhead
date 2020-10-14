@@ -1,0 +1,13 @@
+salesforce.EmailTemplate Field_Trip__Field_Trip_Postcards_Field_Trip__Processing_Completed {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "Notification that the Field Trip batch process has completed."
+  encodingKey = "ISO-8859-1"
+  name = "Processing Completed"
+  style = "none"
+  subject = "Field Trip Processing Complete: {!Field_Trip__Object_Analysis__c.Name}"
+  type = "text"
+  uiType = "Aloha"
+  fullName = "Field_Trip__Field_Trip_Postcards/Field_Trip__Processing_Completed"
+  content = file("salesforce/InstalledPackages/Field_Trip/Records/EmailTemplate/Field_Trip__Field_Trip_Postcards/Field_Trip__Processing_Completed.email")
+}

@@ -1,0 +1,1855 @@
+<apex:page standardController="zaapit__zaapit_editable_table2__c" showHeader="false" 
+ extensions="zaapit.zp_table_edit,zaapit.JSZTableAction" id="pgMain">
+
+ <script>
+ var remoteQueryAjax2SC='{!$RemoteAction.JSZTableAction.queryAjax2SC}';
+ var remotequeryAjax2GetTbFields='{!$RemoteAction.JSZTableAction.queryAjax2GetTbFields}';
+ var remotequeryAjax2CountFL='{!$RemoteAction.JSZTableAction.queryAjax2CountFL}';
+ var remoteQueryAjax2GetTablesETL='{!$RemoteAction.JSZTableAction.queryAjax2GetTablesETL}';
+  </script>  
+<div id="loadingx1Anchor"><div id="loadingx1" class="hd1"></div></div>
+   <link rel="stylesheet" href="{!URLFOR($Resource.jqueryui_pck, '/jquery-ui-1.12.1.custom/jquery-ui.min.css')}" type="text/css"/>
+ 
+     <apex:form id="pageBLK">
+<script type="text/javascript" src="{!$Resource.zp_jquery172}"></script>
+ <script type="text/javascript" src="{!URLFOR($Resource.jqueryui_pck, '/jquery-ui-1.12.1.custom/jquery-ui.min.js')}"></script>
+ <script>
+var isMobileRSModeCH1=null;
+function isMobileRSMode(){
+    var t1=true;
+    try{
+        if(isMobileRSModeCH1==null){
+            t1=navigator.userAgent.indexOf("iPhone")>-1 || navigator.userAgent.indexOf("iPad")>-1;
+            isMobileRSModeCH1=t1;
+        }else{
+            t1=isMobileRSModeCH1;
+        }
+    }catch(e1){}
+    return t1;
+}
+  var lastFFix=null;
+ function fieldsFix(){
+    var res=false;
+    var newFields=new Array();
+    $("#ss1F1 input[name='selectedFieldsStrX']").each(function(){
+        newFields.push($(this).val());
+    });
+    var temp1=newFields.join("#");
+    //alert(temp1);
+    $(".fieldsINPUT").val(temp1);
+    if($.trim(temp1)==""){
+        res=false;
+        $("#ss1F1").css({border:"3px solid red"});
+        alert("Please select at least one field for your table.");
+        //$('html, body').animate({ scrollTop: $('#ss1F1').offset().top-50 }, 'fast');
+        //$("#ss1F1").animate({border:"1px solid #D5D5D5;"},slow);
+    }else{
+        res=true;
+    }
+    return res;
+ }
+ 
+
+ var advancedSetClicked=false;
+
+   $(document).ready(function() {
+	   loadTableList(0);
+    if($("body").css("direction")=="rtl"){
+        $("html").attr("dir","rtl")
+    }
+    $(".hideWhenViewEditor").click(function(){
+        if(!advancedSetClicked && $.trim($(".curSelectedView").val())!=""){
+            setTimeout(function(){
+                alert("The advanced-settings, buttons and related-information sections are only being saved for the default view/settings (they are not saved per-view).\nSwitch first to the default view to edit those settings.");
+            },100);
+            advancedSetClicked=true;
+        }
+    });
+    
+  if($(".RLRF-TA").length>0){
+    sortDeFrance("ff1F1");
+    sortDeFrance("ff1F1");
+    sortPDTl();
+     extraConditionFilterTAVal($(".RLRF-TA")[0]);
+    
+    $("body").click(function(){$(".ui-tooltip").hide();});
+     $("body").mousedown(function(){$(".ui-tooltip").hide(500);});
+  //$("form").submit(function(){
+  //  return fieldsFix();
+  //});
+ // alert("aaaa"+$( "#ff1F1" ).length);
+
+$( ".connectedSortable" ).sortable({
+connectWith: ".connectedSortable"
+,cancel: ".ui-state-disabled",
+update: function( event, ui ) {
+    var p1=ui.item.parents(".connectedSortable:first");
+    var pid=p1.attr("id");
+    var obj=ui.item.find(".mlr1");
+     var li=obj.parents("li:first");
+    var ul=li.parents("ul:first");
+    
+    if(pid=="ff1F1"){//left side 
+        if(ui.item.find(".ui-icon-circle-arrow-w").length>0){
+            addDependantFields(obj,li,$("#ss1F1"),false);
+        }
+    }else{//right side
+        if(ui.item.find(".ui-icon-circle-arrow-e").length>0){
+            addDependantFields(obj,li,$("#ff1F1"),true);
+        }
+    }
+//alert(pid+" "+ui.item.find(".ui-icon-circle-arrow-w").length);
+}
+/*,receive( event, ui ){
+    //alert(ui.item);
+}*/
+}).disableSelection();
+var exTooltips=(isSmallScreen?"textarea.btt1T,input[type='checkbox'].btt1T,":"");
+$(exTooltips+"select.btt1T").each(function(){
+    var p1=$(this).parents("td:first");
+    p1.attr("nowrap","nowrap");
+    p1.append('<span class="btt1T helpQMSFDC" title="'+$(this).attr("title")+'">&nbsp;</span>');
+    $(this).removeClass("btt1T");
+    $(this).attr("title","");
+});
+exTooltips=(isSmallScreen?"textarea.btt1F,input[type='checkbox'].btt1F,":"");
+$(exTooltips+"select.btt1F").each(function(){
+    var p1=$(this).parents("td:first");
+    p1.attr("nowrap","nowrap");
+    p1.append('<span class="btt1F helpQMSFDC" title="'+$(this).attr("title")+'">&nbsp;</span>');
+    $(this).removeClass("btt1F");
+    $(this).attr("title","");
+});
+$("#HelpWithSyntax1").attr("title",$(".HelpWithSyntax").html());
+
+if(!isMobileRSMode()){
+    $(".btt1T").tooltip({ content: function() {return $(this).attr("title");}, position: { my: "center bottom", at: "center top-15" }} );
+    $(".btt1F").tooltip({ content: function() {return $(this).attr("title");},position: { my: "center top", at: "center bottom+15" }} );
+    $("#HelpWithSyntax1").tooltip({ content: function() {return $(this).attr("title");},position: { my: "center top", at: "center bottom+15" }, hide: { effect: "fadeOut",delay:10000, duration: 300 }} );
+}else{
+    $(".helpQMSFDC").tooltip({content: function() {return $(this).attr("title");}});
+    $("#HelpWithSyntax1").tooltip({content: function() {return $(this).attr("title");}});
+    
+}
+
+$(".stoppg1,.helpQMSFDC").attr("onmousedown","event.stopPropagation()").attr("onclick","event.stopPropagation()");
+}
+});
+/*,placeholder: "ui-state-highlight"*/
+
+
+          function closeWinAndRefresh(){
+              var openerURL='{!JSENCODE(openerURL)}';
+              if(openerURL==""){
+                  try{
+                      if(window.parent!=null){
+                	  		openerURL=window.parent.location.href+"";
+                	  		openerURL=openerURL.split(".com/")[0]+"com";
+                  		}
+                      }catch(e){}
+              }
+              parent.postMessage('$("#customizeViewx1").dialog( "close" );if(!isInIframe()){ refreshAfterSave("{!JSENCODE(viewid)}"); }else{ refershForParent("{!JSENCODE(viewid)}");}/*refresh for zaapit_tb_*/',openerURL);
+             
+     }
+
+function loadingSH(){
+    $("#loadingx1").fadeTo("fast",0.5);
+    $("#loadingx1").width($("body").width());
+    $("#loadingx1").height($("body").height());
+    $("#loadingx1").show();
+}
+function fixonload(){
+
+	//loadTableList(0);
+	$("#loadingx1").hide();
+}
+
+function loadTableList(seq){
+	if($(".tablesSelINP").is(":disabled")){
+		$(".tablesSel").attr("disabled","disabled");
+	}
+	
+	if($(".tablesSelINP").is(":visible")){
+		$(".tablesSelINP").hide();
+		$(".tablesSel").insertAfter(".tablesSelINP");
+		$(".tablesSel").addClass("loadingSel1");
+		
+	}
+	Visualforce.remoting.Manager.invokeAction( 
+			remoteQueryAjax2GetTablesETL, 
+			seq+"-All",//extra STR 
+			function(result, event){ 
+	
+			if (event.status && result!=null) { 
+	
+				var innerHtml = ''; 
+				var innerHtmlGroupable = ''; 
+				var innerHtmlOverwrite ='';
+				
+				
+				var oldVal=$(".tablesSel").val();
+				if($(".tablesSel option").length==1){
+					$(".tablesSel").html("");
+					$(".tablesSel").attr("oldVal",oldVal);
+				}else{
+					oldVal=$(".tablesSel").attr("oldVal");
+				}
+				
+				var records=result; 
+				for(var i=0; i<records.length; i++) {
+					 	innerHtml+='<option value="'+records[i].name+'" '+(records[i].name==oldVal?'selected':'')+'>'+records[i].label+'</option>';//records[i].name.toLowerCase();
+					
+				}
+				
+				$(".tablesSel").append(innerHtml);
+				$(".tablesSel").val($(".tablesSel").attr("oldVal"));
+				$(".searchSelMainOut:visible").remove();
+				if(records.length>=250 && seq<=3){
+					loadTableList(seq+1);
+				}else{
+					sortPDTl();
+					$(".tablesSel").removeClass("loadingSel1");
+				}
+			} else if (event.type === 'exception') { 
+			if(event.message!=null && ((event.message+"").indexOf("Logged in")>-1 || (event.message+"").indexOf("Refresh page")>-1)){ 
+			self.location=self.location; 
+			}else if(event.message!=null && (event.message+"").indexOf("Unable to connect")==-1){ 
+			if($("body:visible").length>0)alert("An error has occurred: "+event.message); 
+			} 
+			} else { 
+			//self.location=self.location; 
+			// $("#"+filterIdSpan+" .availVals").html(""); 
+			//alert(1); 
+			} 
+	
+			}, 
+			{escape: true,buffer:true,timeout: 90000} 
+			); 
+}
+
+function RLRFOp1Change(){
+    $("#condvalue").val('');
+    var selRLRFOp1=$("#RLRFOp1")[0];
+    var selOption=selRLRFOp1.options[selRLRFOp1.selectedIndex];
+    var typeValid=$(selOption.parentNode).attr("typeValid");//optgroup
+    if(typeValid!=null && typeValid!=""){
+        if($("#condvalue").attr("t1")=="checkbox"){
+            $("#condvalue").attr("t1","");
+            $("#condvalue").autocomplete("destroy").attr("onclick","");
+        }else if($("#condvalue").attr("t1")=="date"){
+            $("#condvalue").attr("t1","");
+            $("#condvalue").datepicker( "destroy" );
+        }
+        
+        if(typeValid=="date" && $("#RLRFOp1").val().indexOf(":{1}")==-1){
+            $("#condvalue").datepicker({"dateFormat":"yy-mm-dd"+(RLRFOp1FType=="DATETIME"?"'T00:00:00Z'":"")});
+            $("#condvalue").attr("t1","date");
+        }else  if(typeValid=="checkbox"){
+            $("#condvalue").attr("t1","checkbox");
+            $("#condvalue").autocomplete({
+            source: ["TRUE","FALSE"],minLength: 0
+            }).attr("onclick",'$(this).autocomplete( "search", "" )');
+        }
+    }
+}
+var RLRFOp1FType="";
+function selectSoqlFieldSel1(ColumnNameA,ColumnAPIA,FieldLinkA,FieldAJAXA,FieldReq,FieldDefaultVal,ftype){  
+    $(".RLRF").val(ColumnAPIA);
+    RLRFOp1FType=ftype;
+    var optgroups=$("#RLRFOp1").data("optgroup");
+    if(optgroups==null){
+        optgroups=$("#RLRFOp1").clone();
+        $("#RLRFOp1").data("optgroup",optgroups);
+        //alert(optgroups.find("[typeValid='multiPL']").length);
+    }
+    //optgroups=$(optgroups);
+    $("#RLRFOp1 optgroup").remove();
+    //alert(RLRFOp1FType);
+    if(RLRFOp1FType.indexOf("DATE")>-1){
+        $("#RLRFOp1").append( optgroups.find("[typeValid='date']").clone());    
+    }else if(RLRFOp1FType=="NUMBER" || RLRFOp1FType=="DOUBLE" || RLRFOp1FType=="CURRENCY"){
+        $("#RLRFOp1").append( optgroups.find("[typeValid='number']").clone());  
+    }else if(RLRFOp1FType=="MULTIPICKLIST"){
+        $("#RLRFOp1").append( optgroups.find("[typeValid='multiPL']").clone());
+    }else if(RLRFOp1FType=="BOOLEAN"){
+        $("#RLRFOp1").append( optgroups.find("[typeValid='checkbox']").clone());    
+    }else{
+        $("#RLRFOp1").append( optgroups.find("[typeValid='text']").clone());
+    }
+    $("#multiSelFldsWRp2").dialog("close");
+    closeMultiSelRel();
+    RLRFOp1Change();
+    $("#mainPAdvanceFilter").removeAttr("disabled").removeClass("btnDisabled").addClass("btn");
+}
+function selectSoqlField(){
+    $("#mainPAdvanceFilter").attr("disabled","disabled").removeClass("btn").addClass("btnDisabled");
+    $(".RLRF").val("");
+    $("#multiSelFldsWRp2").dialog({minHeight: 200,width:($(self).width()-10),modal: true});
+    useMultiSelRel("multiSelFldsWRp2",selectSoqlFieldSel1);
+    getRLfields('{!JSENCODE(zaapit_editable_table2__c.table__c)}',0);
+        
+}
+function addFieldToSelection(){
+    useMultiSelRel("multiSelFldsWRp1",appendFieldx1);
+    getRLfields('{!JSENCODE(zaapit_editable_table2__c.table__c)}',0,"1");    
+}
+
+var useMultiSelRelFunctionName=null;
+function useMultiSelRel(wraperid,func1){ 
+    $("#multiSelFlds").remove();
+    useMultiSelRelFunctionName=func1;
+    $("#"+wraperid).html('<div id="multiSelFlds" class="hd1" ><div class="loadingx1"></div></div>');
+}
+function closeMultiSelRel(){
+    $("#multiSelFlds").remove();
+}
+function appendToFieldVal(obj,destClStr){
+    var tmp=$("."+destClStr).val();
+    var RLRFAndOr1=$("#RLRFAndOr1").val();
+    if($.trim(RLRFAndOr1)==""){
+        RLRFAndOr1="AND";
+    }
+    var RLRFOp1=$("#RLRFOp1").val();
+    RLRFOp1=RLRFOp1.replace("&lt;","<").replace("&gt;",">");
+    var objVal=$("."+obj).val();//field name
+    var val1=$("#condvalue").val();//value
+    //alert(val1+" "+RLRFOp1);
+    if(val1.indexOf("{")>-1 && RLRFOp1.indexOf("'{")>-1 ){
+        RLRFOp1=RLRFOp1.replace(/\'/ig,"");
+    }
+    var objValX=objVal.split("__xx.");
+    if(objValX.length==3){
+        objVal=objValX[2];
+        RLRFOp1="id  in (select "+objValX[1]+" from "+objValX[0]+" where "+RLRFOp1+") ";
+    }
+    var out1=RLRFOp1.replace("{0}",objVal);
+    
+
+    if(RLRFOp1.indexOf("'")==-1 && $.trim(val1)==""){//empty not str
+        val1="null";
+    } 
+    out1=out1.replace("{1}",val1);
+    if(RLRFOp1.indexOf("('{1}')")>-1){
+        out1=out1.replace(/\,/ig,"','");
+    }
+    $("."+destClStr).val(($.trim(tmp)==""?"":tmp+" "+RLRFAndOr1+" ")+out1);
+}
+
+function testQueryx1(destClStr,submitMode){//check syntax
+var RLRF_TA=$(".RLRF-TA").val();
+$(".RLRF-TAX1").val(RLRF_TA);
+
+if(!fieldsFix()){
+    return false;
+}
+var tmp=$("."+destClStr).val();
+
+var query1="";
+
+tmp=$.trim(tmp);
+if(tmp!="" ){ //|| $("#ss1F1 .ui-icon-circle-close:visible").length>0
+tmp=tmp.replace(/\{UserInfo\.UserId\}/g,"'{!$User.Id}'");
+tmp=tmp.replace(/\{ID\}/g,"''");
+tmp=tmp.replace(/\{HID\}/g,"''");
+tmp=tmp.replace(/\{XQ\}/g,"");
+//tmp=tmp.replace(/\{UserInfo\.ProfileId\}/g,"'{/!$Profile.Id/}'");
+//var fls1=$(".fieldsINPUT").val().replace(/#/ig,",");
+//if(fls1==null || fls1==""){
+//fls1="id";
+//}
+if(tmp!=""){
+    tmp=" where "+tmp;
+}
+ query1="SELECT id FROM {!JSENCODE(zaapit_editable_table2__c.table__c)} "+tmp+" limit 1";
+ //alert(query1);
+ Visualforce.remoting.Manager.invokeAction(
+                remoteQueryAjax2SC,
+                query1, 
+                function(result, event){
+                    if (event.status && result!=null) {
+                        
+                        if(submitMode!=null && submitMode=="1"){
+                            loadingSH();
+                            save1();
+                        }else if(submitMode!=null && submitMode=="2"){
+                            loadingSH();
+                            saveCurrentView1();
+                        }else if(submitMode!=null && submitMode=="3"){
+                            loadingSH();
+                            saveCurrentView2();
+                        }else{
+                            alert("Your syntax is ok");
+                        }
+                     } else if (event.type === 'exception') {
+                        alert("Please revise your 'Advanced Filter': \n\nTest Query: "+query1+" \n\nThe Error:\n"+event.message);
+                    } else {
+                        alert("Please revise your 'Advanced Filter': \n\nTest Query: "+query1);
+                    }
+                }, 
+                {escape: true}
+            );
+}else{
+if(submitMode!=null){
+
+                    if(submitMode!=null && submitMode=="1"){
+                            loadingSH();
+                            save1();
+                        }else if(submitMode!=null && submitMode=="2"){
+                            loadingSH();
+                            saveCurrentView1();
+                        }else if(submitMode!=null && submitMode=="3"){
+                            loadingSH();
+                            saveCurrentView2();
+                        }
+    }else{
+        alert("Your syntax is ok");
+    }
+}
+
+}
+function selectRefFeilds(obj,idsM){
+    var selObj=obj.options[obj.selectedIndex];
+    var ref=$(selObj).attr("ref");
+    var value=$(selObj).attr("value");
+    var rn=$(selObj).attr("rn");
+    var isref=$(selObj).attr("isref");
+    //alert(ref+" "+isref);
+    $(".fldsSel").each(function(){
+            if(Number($(this).attr("c"))>Number(idsM)){
+                $(this).remove();
+            }
+        });
+        $(".Youhaveselected").remove();
+    if(isref=="1"){ 
+        getRLfields($(obj).val(),idsM,null,"noChilds");
+    }else{
+        var xxx=insertFldWzrdAppend();
+        var youSel="<div c='"+(idsM+1)+"' class='Youhaveselected'><div class='i'>You have selected:<br><div class='l'> "+xxx[0]+"</div><div class='g'>Type: "+xxx[1]+"</div><div class='g'>API Name: "+xxx[2]+"</div><input type='button' class='btn' value='Insert' onclick='insertFldWzrdAppend(1);'></div></div>";
+        $("#multiSelFlds").append(youSel);
+        $(".Youhaveselected").height($(".fldsSel:first").height()+2);
+        $("#multiSelFlds").scrollLeft($("#multiSelFlds").width());
+        
+    }
+}
+function insertFldWzrdAppend(x){
+    var selFld="";
+        var selFldN="";
+        var selFldTp="";
+        var size1=$(".fldsSel").length;
+        
+        $(".fldsSel").each(function(index){
+            var rn1=$(this.options[this.selectedIndex]).attr("rn");
+            var tp1=$(this.options[this.selectedIndex]).attr("tp");
+            if(rn1== null || rn1=='' || index ==size1-1){//last sel1
+                rn1=$(this).val();
+                selFldTp=tp1;
+            }
+            selFld+="."+rn1;
+            selFldN=$(this.options[this.selectedIndex]).text();
+        });
+        if(selFld!=""){
+            selFld=selFld.substring(1);
+            
+            //$("#ColumnNameA").val(selFldN);
+            //$("#ColumnAPIA").val(selFld);
+            //alert(selFldTp);
+            if(x!=null && x==1)useMultiSelRelFunctionName(selFldN,selFld,'','','','',selFldTp);
+        }
+        return [selFldN,selFldTp,selFld];
+}
+
+
+function getRLfields(table1,idsM,scroll1,addSubChilds){
+    if(idsM==0){
+        $("#multiSelFlds .fldsSel,#multiSelFlds .Youhaveselected").remove();
+    }
+    $("#multiSelFlds").removeClass("hd1");
+    if(scroll1!=null)$(self).scrollTop($("#multiSelFlds").position().top-250);
+    
+    $("#multiSelFlds .loadingx1").show();
+ Visualforce.remoting.Manager.invokeAction(
+                remotequeryAjax2GetTbFields,
+                table1, 
+                function(result, event){
+                    if (event.status && result!=null) {
+                    
+                        $("#multiSelFlds .loadingx1").hide();
+                        var sel1="<select size='9' onchange='selectRefFeilds(this,"+(idsM+1)+")' class='fldsSel' c='"+(idsM+1)+"'>";
+                        var isFirstChild=true;
+                        for(var i=0;i<result.length;i++){
+                            //alert(result[i].label+" "+result[i].name+ " "+result[i].relationshipName);
+                            if(result[i].name!=null && result[i].childRel==0 ){
+                                var isChilds=false;
+                                
+                                if(result[i].type!='CHILDS'){ 
+                                    sel1+="<option cr=\""+result[i].childRel+"\" value=\""+result[i].name+"\" ref=\""+result[i].referenceTo+"\" rn=\""+result[i].relationshipName+"\" tp=\""+result[i].type+"\" isref=\"0\">"+result[i].label+"</option>";  
+                                }else{
+                                    isChilds=true;
+                                    if(isFirstChild){
+                                        isFirstChild=false;
+                                        if(addSubChilds==null){
+                                            sel1+="<optgroup label=\" --- Child Relationships ---\"></optgroup>";
+                                        }
+                                    }
+                                }
+                                if((!isChilds ||addSubChilds==null)&&result[i].referenceTo!=null && result[i].referenceTo.indexOf("ActivityHistory")==-1 && result[i].referenceTo.indexOf("OpenActivity")==-1){
+                                    sel1+="<option value=\""+result[i].referenceTo+"\" ref=\""+result[i].referenceTo+"\" rn=\""+result[i].relationshipName+"\" isref=\"1\">"+result[i].referenceTo+" ("+result[i].label+") &gt;</option>";
+                                }
+                            }
+                        }
+                         sel1+="</select>";
+                         if($(".Youhaveselected").length==0){
+                            $("#multiSelFlds").append(sel1);
+                            $("#multiSelFlds").scrollLeft($("#multiSelFlds").width());
+                        }
+                        //loadingSH();
+                     } else if (event.type === 'exception') {
+                        if(event.message.indexOf("Logged in?")>-1){
+                            top.location=top.location;
+                        }else{
+                            alert(event.message);
+                        }
+                    } else {
+                        alert(event.message);
+                    }
+                }, 
+                {escape: true}
+            );
+}
+
+function tableChanged1(){
+	$(".tablesSelINP").val($(".tablesSel").val());
+    if(navigator.userAgent.indexOf('MSIE 8')>-1){
+        loadingSH();
+        $('.chngTb1').click();
+    }else{
+        loadingSH();
+        tableChanged();
+    }
+}
+
+function viewChanged1(){
+    if(navigator.userAgent.indexOf('MSIE 8')>-1){
+        loadingSH();
+        $('.viewTb1').click();
+    }else{
+        loadingSH();
+        viewChanged();
+    }
+}
+
+function moveElements(fromId,toId){
+    $('#'+toId).append($('#'+fromId+' li'));
+    sortDeFrance(toId);
+}
+
+function sortDeFrance(idX){
+        var sorted = $.makeArray($('#'+idX+' li')).sort(function(a,b){
+        return ($.trim($(a).text().toLowerCase()) < $.trim($(b).text().toLowerCase())) ? -1 : 1;
+        });
+        $('#'+idX).html(sorted);
+
+}
+function sortPDTl(){
+    var oldVal=$(".tablesSel").val();
+    var sorted = $.makeArray($(".tablesSel option")).sort(function(a,b){
+    return ($.trim($(a).text().toLowerCase()) < $.trim($(b).text().toLowerCase())) ? -1 : 1;
+    });
+    $(".tablesSel").html(sorted);
+    $(".tablesSel").val(oldVal);
+}
+
+function isSmallSCRN1X(){
+var res=false;
+try{
+    res=$(self).width()<650;
+}catch(e){
+}
+return res;
+}
+
+function isSF1X(){
+var res=false;
+try{
+    res=sforce!=null && sforce.one!=null;
+}catch(e){
+}
+return res;
+}
+
+
+     //var isSF1P=isSF1X();
+     //alert(isSF1P);
+     var body1=document.getElementsByTagName("body")[0];
+     //alert(self.innerWidth);
+     var isSmallScreen=false;
+     try{
+        isSmallScreen=self.innerWidth<710;
+     }catch(e){}
+     if(isSmallScreen ){//|| isSF1X()
+        try{
+            var lastClass=body1.className;
+           body1.className=(lastClass==null?"":lastClass)+" sf1";
+        }catch(e1){}
+        //$("body").addClass("sf1");
+     }else{
+    	 try{
+             var lastClass=body1.className;
+            body1.className=(lastClass==null?"":lastClass)+" light1";
+         }catch(e1){}
+    	 
+         }
+
+     function isSF1(){
+    		return isSmallScreen;
+    	}
+
+
+     function testQueryxSOQLFilter(){//check syntax
+         try{
+    	 var ColumnAPIA=$("#ColumnAPIA").val().toLowerCase();
+    	 var ColumnAPIAEl=ColumnAPIA.split("__xx.");
+         //var FieldLinkA=$("#FieldLinkA").val();
+         var FieldAJAXA=$("#FieldAJAXA").val();
+         if(FieldAJAXA!=""){
+    	  query1="SELECT id,"+ColumnAPIAEl[1]+","+ColumnAPIAEl[2]+" FROM "+ColumnAPIAEl[0]+" where "+FieldAJAXA+" limit 1";
+    	  //alert(query1);
+    	  Visualforce.remoting.Manager.invokeAction(
+    	                 remoteQueryAjax2SC,
+    	                 query1, 
+    	                 function(result, event){
+    	                     if (event.status && result!=null) {
+    	                             alert("Your syntax is ok");
+    	                             xxColSOQLValid=true;
+    	                      } else if (event.type === 'exception') {
+    	                         alert("Please revise your query: \n\nTest Query: "+query1+" \n\nThe Error:\n"+event.message);
+    	                         xxColSOQLValid=false;
+    	                     } else {
+    	                         alert("Please revise your query: \n\nTest Query: "+query1);
+    	                         xxColSOQLValid=false;
+    	                     }
+    	                 }, 
+    	                 {escape: true}
+    	             );
+         }else{
+             alert("The SOQL filter is empty i.e. there nothing to check/verify!");
+         }
+         }catch(e){
+         	alert("Error: "+e);   
+         }
+
+    	 }
+
+
+     var Search_label="Search";
+     /*search gen DP*/
+     
+     function openSearchSel3(obj,event,type){
+         if(!isSF1()){
+				type=type.replace(/\:/ig,"_");
+             var searchSelMainObj=obj;
+             var objID=$(searchSelMainObj).attr("idX");
+             if(objID==null){
+                 var uniqueID=(Math.floor((Math.random() * 100000000.0) + 1)).toString(24);
+                 objID=type+""+(uniqueID);
+                 $(searchSelMainObj).attr("idX",objID);
+                 
+             }
+             
+             //$(".searchSelMainOut").remove();
+             var searchSel=$("#"+objID+".searchSelMainOut");
+             //if(searchSel.size()==0 &&  $(".searchSelMainOut").size()>0){
+             //    $(".searchSelMainOut").remove();
+             //}
+             
+             
+             if($(".searchSelMainOut:visible").size()>=1){
+                 $(".searchSelMainOut:visible").each(function(){
+                 	if($(this).attr("id")!=objID) $(this).hide();
+                 });
+             }
+             	
+                 /*$(".searchSelMainOut").remove();*/
+                 if($("#"+objID+".searchSelMainOut").size()==0){
+                     $("body").append("<span class='searchSelMainOut "+type+"' id='"+objID+"'><input type='search' placeholder='"+Search_label+"' class='searchSelMainIn' value='' onkeyup='searchSelX3(this);' onsearch='searchSelX3(this);' onmouseup='searchSelX3(this);' onkeydown='searchSelUPDWX3(event);'/><div class='searchSelMainOpts'/></span>");
+                     var ObjPos=$(obj).offset();
+                     $("#"+objID+".searchSelMainOut").css({"position":"absolute","top":(ObjPos.top+$(obj).height()+3)+"px","left":ObjPos.left+"px","z-index":1005,"width":(Math.max($(obj).width()+20,215))+"px"});
+                     
+                      var html11=$(obj).html();
+                     var selectedIndex=obj.selectedIndex+1;
+                     /*alert(html11);*/
+                     html11=html11.replace(/\<option/ig,"<div class='opt' ");
+                     html11=html11.replace(/\/option\>/ig,"/div>");
+                     /*alert(selectedIndex);*/
+                     $("#"+objID+" .searchSelMainOpts").html(html11);
+                     $("#"+objID+".searchSelMainOut .searchSelMainOpts .opt:nth-child("+selectedIndex+")").addClass("sel");
+                    
+                     
+                     $("#"+objID+".searchSelMainOut .searchSelMainOpts .opt").click(function(){
+                         $("#"+objID+".searchSelMainOut .opt.sel").removeClass("sel");
+                         $(this).addClass("sel");
+                         $(searchSelMainObj).val($(this).attr("value"));
+                         $("#"+objID+".searchSelMainOut:visible").hide();
+                         $(searchSelMainObj).change();
+                     });
+             
+                 }else{
+                 	if(searchSel.is(":visible")){
+                    		searchSel.hide();
+                    	}else{
+                    		searchSel.show();
+                    	}
+                 }
+             $("#"+objID+" .searchSelMainIn:visible").focus();
+             searchSelX3($("#"+objID+" .searchSelMainIn")[0]);
+             return false;
+         }else{
+             return true;
+         }
+
+     }
+     function openSelXDP3(obj,e,type){ 
+         if (!isSF1() && e.keyCode == '40') {/* down arrow*/
+             openSearchSel3(obj,e,type);
+             return false;
+         }
+         return 9==e.keyCode || isSF1();/*tab or mob*/
+     }
+     function searchSelX3(obj){
+         var valToSearch=$(obj).val().toLowerCase();
+         $(obj).parents(".searchSelMainOut:first").find(".searchSelMainOpts .opt").each(function(){
+             if(valToSearch=="" || $(this).text().toLowerCase().indexOf(valToSearch)>-1){
+                 $(this).show();
+             }else{
+                 $(this).hide();
+             }
+         });
+     }
+     function searchSelUPDWX3(e){
+         var firstLastN=0;
+         var curSel=$(".searchSelMainOut .opt.HOV");
+         var newSel=null;
+         var posHOVChanged=false;
+         e = e || window.event;
+
+         if (e.keyCode == '38') {/* up arrow*/
+             firstLastN=-1;
+             posHOVChanged=true;
+             if(curSel.size()>0){
+                 var prev1=curSel.prevAll(".opt:visible:first");
+
+                 if(prev1!=null && prev1.size()>0){
+                     newSel=prev1;
+                 }else{
+                     newSel=$(".searchSelMainOut .opt:visible:last");
+                 }
+             }else{
+                 newSel=$(".searchSelMainOut .opt:visible:last");
+
+             }
+
+         }
+         else if (e.keyCode == '40') {/* down arrow*/
+             firstLastN=1;
+             posHOVChanged=true;
+             if(curSel.size()>0){
+                 var next1=curSel.nextAll(".opt:visible:first");
+	
+                 if(next1!=null && next1.size()>0){
+                     newSel=next1;
+                 }else{
+                     newSel=$(".searchSelMainOut .opt:visible:first");
+		
+                 }
+             }else{
+                 newSel=$(".searchSelMainOut .opt:visible:first");
+             }
+         }
+         else if (e.keyCode == '13' || e.keyCode == '9') {/*enter or tab*/
+             if(curSel.size()>0) curSel.click();
+         }
+         else if (e.keyCode == '37') {
+             /* left arrow*/
+         }
+         else if (e.keyCode == '39') {
+             /* right arrow*/
+         }else{
+
+         }
+         if(posHOVChanged){
+             if(curSel.size()>0) curSel.removeClass("HOV");
+             if(newSel!=null && newSel.size()>0){
+                 newSel.addClass("HOV");
+                 var elements1=$(".searchSelMainOpts .opt:visible");
+                 var index1=0;
+                 var index1Found=0;
+                 elements1.each(function(){
+                     if(index1Found==0 && !$(this).hasClass("HOV")){
+                         index1++;
+			
+                     }else{
+                         index1Found=1;
+                     }
+                 });
+                 /*alert(elements1.index(".HOV")*24);*/
+                 $(".searchSelMainOpts").animate({ scrollTop: index1*24 }, 10);
+             }
+         }
+         return 
+
+     }
+     
+         /*search gen DP*/
+         
+   function deleteView(){
+	   if(confirm("{!$label.Delete_this_view}")){
+		   deleteView1();
+		}
+	}      
+         
+ </script>
+ 
+ 
+  <style>
+.bPageBlock .pbTitle {width:auto !important;}
+.searchSelMainOpts .fav{   color: transparent; }
+.searchSelMainOpts .sel.m.opt .fav{   color: #0000FF;	float: right;    font-size: 20px;    line-height: 13px;    margin-right: 30px;}
+.searchSelMainOpts .opt:hover .fav{	color: #cccccc;	 float: right;    font-size: 20px;    line-height: 13px;    margin-right: 30px;}
+.searchSelMainOpts .opt.m .fav{	color: #0000FF;	 float: right;    font-size: 20px;    line-height: 13px;    margin-right: 30px;}
+
+.searchSelMainOut .opt{display:block;padding:5px;cursor:pointer;}
+.searchSelMainOut .opt:hover{background:#1E90FF;color:#ffffff;}
+.searchSelMainOut .opt.HOV{background:#1E90FF;color:#ffffff;}
+.searchSelMainOut .opt.sel{font-weight:bold;background: url("{!$Resource.zp_sfdc}")  right -259px no-repeat;color:#222;}
+.searchSelMainOut{padding:5px;border:1px solid #aaaaaa;display:block;background:#ffffff;}
+.searchSelMainOpts{max-height:250px;overflow-y:auto;margin-top: 5px;}
+.searchSelMainIn{width:98%;border:1px solid #aaaaaa;}
+  
+  
+  .fldsSel{overflow-y:scroll;}
+  .hideWhenViewEditor{ {!IF($User.Enable_ZaapIT_s_View_Editor__c==null || NOT($User.Enable_ZaapIT_s_View_Editor__c),'','display:none;')} }
+  .hideWhenViewEditor2{ {!IF($User.Enable_ZaapIT_s_View_Editor__c==null || NOT($User.Enable_ZaapIT_s_View_Editor__c) ||$label.showAdvSOQLNoneAdmins=='1','','display:none;')} }
+  .hd1{display:none;}
+  .RLVFLInk{min-height:50px;}
+  .bgYellow{background:yellow;}
+  .Youhaveselected{text-align:center;border:1px solid #aaaaaa;background:#fafafa;margin-left:0px;display:inline-block;min-width:150px;min-height:148px;height:100%;margin-right:3px;}
+  .Youhaveselected .i{padding:10px;}
+  .Youhaveselected .g{color:#666666;margin-bottom:7px;}
+  .Youhaveselected .l{text-align:center;font-weight:bold;padding:10px 0px;}
+  #multiSelFlds{position:relative;border: 1px solid #919191;white-space:nowrap;overflow-x:scroll;overflow-y:none;min-height:170px;width:95%; vertical-align: top;}
+   #multiSelFlds select{vertical-align: top;min-width:150px;max-height:148px;}
+   #multiSelFlds div{vertical-align: top;}
+.connectedSortable {padding:3px;border:1px solid #d5d5d5;height:198px;width:99%;overflow-y:auto;overflow-x:hidden;list-style-type: none; margin: 0; }
+.connectedSortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 8pt; width: 93%;cursor:move;overflow:hidden;text-overflow: ellipsis;}
+.connectedSortable li.ui-state-disabled{ opacity: 1.0; color:#555555;cursor:default;}
+.iconILB{display:inline-block;vertical-align:-3px;}
+#loadingx1Anchor{position:relative;}
+#loadingx1{z-index:3;position:absolute;background-color:#E5E5E5;}
+.loadingx1{z-index:9;position:absolute;background:#E5E5E5 url('/img/loading.gif') 45% 45% no-repeat;height:100%;min-height:100px;width:100%;opacity: 0.5;}
+.loadingSel1{background:#E5E5E5 url('/img/loading.gif') 91% 0% no-repeat;width:100%;opacity: 0.5;}
+.tablesSel{width:100%;}  
+.helpQMSFDC{background:#ffffff url(/img/alohaSkin/help_orange.png) top right no-repeat;display:inline-block;padding-right:21px;line-height:15px;vertical-align: top;margin-top:1px;}
+#HelpWithSyntax1{color:#666666;font-size:8pt;font-weight:bold;}
+.dndTB1{direction:ltr;width:99%;}
+.pbButton {}
+.ui-dnd{position:relative;}
+.ui-dnd-btns{position:absolute;right:0px;top: 4px;z-index:2;}
+
+.ui-dnd .ui-icon {opacity: 0.8;margin-left:0px;height:18px;width:16px;background-color:#E4F1FC;}
+
+html[dir='rtl'] .tophLnk{float:left;}
+.tophLnk{float:right;{!IF($User.Enable_ZaapIT_s_View_Editor__c==null || NOT($User.Enable_ZaapIT_s_View_Editor__c),'','display:none;')}}
+
+
+body.sf1 .detailList table,
+body.sf1 .detailList table th,
+body.sf1 .detailList label,
+body.sf1 .detailList th,
+body.sf1 .detailList td,
+body.sf1 .detailList tr,
+body.sf1 .detailList thead,
+body.sf1 .detailList tbody,
+body.sf1 .detailList thead,
+body.sf1 .detailList tfoot{display:block;text-align:left;min-width: 200px;}
+body.sf1 .detailList textarea,body.sf1 .detailList input[type='text']{min-width: 200px;}
+body.sf1 .tophLnk{position:absolute;height:16px;top:10px;right:5px;{!IF($User.Enable_ZaapIT_s_View_Editor__c==null || NOT($User.Enable_ZaapIT_s_View_Editor__c),'','display:none;')}}
+body.sf1 .ui-dnd .ui-icon {opacity: 0.8;margin-left:5px;height:18px;width:18px;background-color:#E4F1FC;}
+body.sf1 .pbButton input{margin-bottom:5px;} 
+body.sf1 .tophLnk .t{display:none;}
+body.sf1 .dndTB1 tr,body.sf1 .dndTB1 td,body.sf1 .dndTB1 tbody{display:block}
+body.sf1 .dndTB1 .btnico .mbr{display:inline;}
+body.sf1 .dndTB1 .btnico{padding-top:5px;}
+#columnDialog input{width:230px;}
+#columnDialog select{width:234px;}
+body.sf1 #columnDialog input,body.sf1 #columnDialog select{width:76%;}
+.dndTB1 .btnico .mbr{display:block;}
+.dndTB1 .btnico .ui-icon{display:inline-block;height:16px;}
+
+body.sf1 input[type='checkbox'] {
+ -webkit-appearance: none;
+display: inline-block;
+height: 18px;
+margin: 0 6px 0 0;
+border: 1px solid #c3c6c9;
+padding: 0;
+width: 18px;
+vertical-align: middle;
+background: white -webkit-linear-gradient(bottom,rgba(0,1,1,0.05) 0%,rgba(255,255,255,0.05) 100%);
+box-shadow: 0 1px 0 rgba(0,0,0,0.05),inset 0 0 1px 1px white;
+}
+body.sf1 input[type='checkbox']:checked {
+    background-image: url("{!$Resource.zp_sfdc}");
+    background-position: 0px -332px;
+    background-repeat: no-repeat;
+  border: 1px solid #D8DDE6;
+background-color: #FFFFFF;
+-webkit-box-shadow: 0 0 2px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);
+-moz-box-shadow: 0 0 2px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);
+box-shadow: 0 0 2px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);
+/*background-image: url("{!$Resource.zp_sfdc}") -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0%,#3b9fdd),color-stop(100%,#3b9fdd));
+background-image: url("{!$Resource.zp_sfdc}") -webkit-linear-gradient(bottom,#3b9fdd 0%,#3b9fdd 100%);
+background-image: url("{!$Resource.zp_sfdc}") -moz-linear-gradient(bottom,#3b9fdd 0%,#3b9fdd 100%);
+background-image: url("{!$Resource.zp_sfdc}") -o-linear-gradient(bottom,#3b9fdd 0%,#3b9fdd 100%);
+background-image: url("{!$Resource.zp_sfdc}") linear-gradient(bottom,#3b9fdd 0%,#3b9fdd 100%);
+*/
+}
+.center{text-align:center;}
+.pb5{padding-bottom: 5px;}
+#btnSec1 table.detailList tr:nth-child(odd){background:#eeeeee}
+#btnSec1 table.detailList tr th{vertical-align: middle;}
+
+body.light1 .btn, body.light1 .btnicoflt .btnBox2 input[type='submit'], body.light1 .btnicoflt .btnBox2 input[type='button'], body.light1 .btnicoflt .btnBox2 button, body.light1 .apexp .bPageBlock .pbHeader .btn {
+    height: 30px;
+    background-image: inherit;
+    padding: 0px 6px 0px 6px;
+    vertical-align: middle;
+    color: #0074D3 !important;
+    background-color: rgb(255, 255, 255) !important;
+    font-weight: 400;
+    font-size: 12px;
+    border: 1px solid rgb(216, 221, 230);
+    margin: 0px 0px 0px 2px;
+}
+
+body.light1 .btnDisabled{
+    0px 6px 0px 6px;
+height: 30px;
+background-image: inherit;
+padding: 0px 6px 0px 6px;
+vertical-align: middle;
+color: #999999 !important;
+background-color: rgb(255, 255, 255) !important;
+font-weight: 400;
+font-size: 12px;
+display: inline-block;
+border: 1px solid rgb(221, 221, 221)}
+
+.customnotabTab .bPageBlock {
+    border-top: 1px solid #cccccc !important;
+}
+.customnotabTab .tertiaryPalette, .individualPalette .customnotabBlock .tertiaryPalette{
+background-color: #aaaaaa !important;
+}
+html body.sfdcBody.light1{padding:0px !important;}
+
+</style>
+    <apex:pageBlock title="{!$Label.zaapit__layout_editor}" mode="edit" rendered="{!NOT(isDone)}"  id="pgBlock1">
+      <apex:pageBlockButtons >
+      <a href="mailto:support@zaapit.com?subject=Support Request" onclick="var w1=window.open($(this).attr('href'));w1.close();return false;" class="tophLnk helpQMSFDC" target="_blank"><span class="t">Email Support</span></a>
+        <apex:commandButton value="Save Default Settings" title="Save the below Smart-Table settings as the default settings for the default view. <br/><br/>* Use this button to save the <b>Advanced settings options</b>, <b>Related info.</b> and <b>Custom Buttons</b> sections - switch to the default view before to avoid overwriting the default settings with the current-view settings.<br/><br/>** This button is disabled when the user's enable view editor is enable" onclick="if({!NOT(canSaveView)} || (confirm('Are you sure you want to save the below Smart-Table settings as the default settings for the default view? \n\nPlease note that you are currently editing a view - to save the current settings for the current view click on the Save-View button!\n\nP.s. Advanced settings can only be saved for the default-view / default-settings!')&& confirm('Are you sure you want to save default settings? (last confirmation)'))){testQueryx1('RLRF-TA','1');}return false;" styleClass="btt1T" rendered="{!$User.zaapit__Enable_ZaapIT_s_View_Editor__c==null || false==$User.zaapit__Enable_ZaapIT_s_View_Editor__c}"/>
+        <apex:commandButton value="Save View" title="Save the below fields, sorts and advanced-filters only for the selected view (You need to select a view first - use the below view pulldown).<br/><br/>Please note: the advance settings section can only be save for the default view (use the save default settings button)" onclick="testQueryx1('RLRF-TA','2');return false;" styleClass="btt1T" disabled="{!NOT(canSaveView)}"/>
+        <apex:commandButton value="Save as New View" title="Save the below fields, sorts and advanced-filters as a view.<br/><br/>Please note: the advance settings section can only be save for the default view (use the save default settings button)" onclick="if(confirm('Do you want to save the current settings as a new view?')){testQueryx1('RLRF-TA','3');}return false;" styleClass="btt1T" disabled="{!zaapit__zaapit_editable_table2__c.id==null || objectChanged}"/>
+        <apex:commandButton value="Delete View" title="Delete the current / selected view, the view will be moved to the recycle bin. You can undelete it from there if needed." onclick="deleteView();return false;" styleClass="btt1T" disabled="{!NOT(canSaveView)}"/>
+        <apex:commandButton onclick="openImportExportDialog();return false;" value="Import" rendered="{!$User.zaapit__Enable_ZaapIT_s_View_Editor__c==null || false==$User.zaapit__Enable_ZaapIT_s_View_Editor__c}"/>
+        <apex:commandButton onclick="closeWinAndRefresh();return false;" value="Cancel"/>
+        
+        <apex:commandButton action="{!tableChanged}" value="change table" styleClass="hd1 chngTb1"/>
+        <apex:commandButton action="{!viewChanged}" value="change view" styleClass="hd1 viewTb1"/>
+        <apex:commandButton action="{!loadNewJson}" value="load New Json" styleClass="hd1 loadNewJson1"/>
+        
+        
+      </apex:pageBlockButtons>
+      <apex:pageMessages id="mainTB1Err"/>
+      <apex:pageBlockSection title="Basic Settings" columns="2">
+         <apex:outputField value="{!zaapit__zaapit_editable_table2__c.name}"/>
+         <apex:inputText label="{!if(!canSaveView,'Page Title','View Name')}" value="{!pagetitle}" size="100" style="width:220px" required="true" disabled="{!(!canSaveView) && $User.zaapit__Enable_ZaapIT_s_View_Editor__c!=null && $User.zaapit__Enable_ZaapIT_s_View_Editor__c}" maxlength="250"/>
+         
+         <apex:inputtext value="{!zaapit__zaapit_editable_table2__c.zaapit__table__c}" styleClass="tablesSelINP" label="Table for Object" disabled="{!$User.zaapit__Enable_ZaapIT_s_View_Editor__c!=null && $User.zaapit__Enable_ZaapIT_s_View_Editor__c}"/>
+
+           	<!--      
+            <apex:selectOptions value="{!availTable[0]}"/> 
+            <apex:selectOptions value="{!availTable[1]}" rendered="{!availTable.size>1}"/>
+            <apex:selectOptions value="{!availTable[2]}" rendered="{!availTable.size>2}"/>
+             -->      
+
+            <apex:selectList label="View" id="views1"  size="1" value="{!viewID}" styleClass="curSelectedView" onchange="viewChanged1()">
+        <apex:selectOption itemValue=" " itemLabel="{!$Label.zaapit__default_pd_txt}"/>
+        <apex:selectOptions value="{!availViews}"/> 
+        </apex:selectList>
+            <div class="hd1">       
+       <select  multiselect="false" size="1"   onchange="tableChanged1();" class="tablesSel"  onmousedown="return isSF1();" onclick=" return openSearchSel3(this,event,'tableSel');" onkeydown="return openSelXDP3(this,event,'tableSel');" style="min-width: 210px;">
+	         <option value="{!zaapit__zaapit_editable_table2__c.zaapit__table__c}" >Loading...</option>
+            </select></div>
+            </apex:pageBlockSection>
+        <a href="/apex/zaapit_tb_GeneralWL?tp={!zaapit__zaapit_editable_table2__c.name}&viewid={!JSENCODE(viewID)}" style="float:right;margin:-10px 15px 0px 0px;font-size:8pt;" target="_blank">Direct link to the selected view</a>     
+            <apex:pageBlockSection title="Fields Selection" columns="1" id="FieldSelection1"></apex:pageBlockSection>
+      
+        <div>
+        
+        
+<script>
+
+     
+function searchAvil(str){
+$("#ff1F1 li").each(function(){
+    if(!$(this).hasClass("cantFind")){
+        if(($(this).text()+"").toLowerCase().indexOf(str.toLowerCase())>-1){
+            $(this).show();        
+        }else{
+            $(this).hide();
+        }    
+    }
+});
+}
+
+function searchSelec(str){
+$("#ss1F1 li").each(function(){
+    if(($(this).text()+"").toLowerCase().indexOf(str.toLowerCase())>-1){
+        $(this).show();        
+    }else{
+        $(this).hide();
+    }    
+});
+}
+function deleteFieldx1Edit(obj1){
+    $(obj1).parents("li:first").remove();
+
+}
+function fmtIn(obj){
+    var vFormat=$(obj).attr("vFormat");
+    if(vFormat!=null && vFormat!=""){   
+        $(obj).val(($(obj).val().replace(new RegExp(vFormat,"ig"),"")));
+    }
+}
+
+function openImportExportDialog(){
+    //ImportExportDialog
+    $("#ImportExportDialogTA").val($(".ImportExportDialogTAReg").val());
+    if($("#ImportExportDialogTA").data("oldVal")==null){
+        $("#ImportExportDialogTA").data("oldVal",$("#ImportExportDialogTA").val());
+    }
+    $("#ImportExportDialog").dialog({
+        width:Math.min(400,($(self).width()-10)),
+         modal: true
+
+         ,close: function( event, ui ) {
+           
+         },
+    buttons: [{
+    text:"Import Default Settings",
+   click: function() {
+        if($("#ImportExportDialogTA").data("oldVal")!=$("#ImportExportDialogTA").val()){
+            if(confirm("Do you want to overwrite the old settings with the new settings?")){
+                var newConf=$("#ImportExportDialogTA").val();
+                $(".ImportExportDialogTAReg").val(newConf);
+                //$("#ImportExportDialogTA").data("oldVal",$("#ImportExportDialogTA").val());
+                loadingSH();
+                //loadNewJson(newConf,true);
+                $( this ).dialog( "close" );
+                $(".loadNewJson1").click();
+                
+            }
+        }else{
+            alert("No configuration change was detected - skipping import... ");
+        }
+            
+    }},
+    {text:"Cancel",
+    click: function() {
+        $( this ).dialog( "close" );
+    }
+    }]
+                                      });
+                                      
+}
+var xxColSOQLValid=false;
+var lastLIObj=null;
+function appendFieldx1(ColumnNameA,ColumnAPIA,FieldLinkA,FieldAJAXA,FieldReq,FieldDefaultVal,ftype){
+	xxColSOQLValid=false;
+    if(ColumnAPIA==""){
+        lastLIObj=null;
+    }
+    $("#ColumnNameA").val((ColumnNameA.replace(/\#/ig,"")));
+    $("#ColumnAPIA").val(ColumnAPIA);
+    $("#FieldLinkA").val(FieldLinkA);
+    //alert(ColumnAPIA+" "+ (ColumnAPIA.indexOf("__xx")>-1));
+    if(ColumnAPIA.indexOf("__xx")>-1){
+        $("#FieldAJAXALbl").html("SOQL Filter");
+        $(".FieldAJAXALblT2").show();
+        $(".FieldAJAXALblT3").show();
+        $(".FieldAJAXALblT1").hide();
+    }else{
+        $("#FieldAJAXALbl").html("Ajax Tool Tip");
+        $(".FieldAJAXALblT1").show();
+        $(".FieldAJAXALblT2").hide();
+        $(".FieldAJAXALblT3").hide();
+    }
+    $("#FieldAJAXA").val(FieldAJAXA);
+    //$("#FieldReq").val(FieldReq);
+    $("#FieldReq")[0].selectedIndex=0;
+    $("#FieldDefaultVal").val(FieldDefaultVal);
+
+    ftype=ftype.toLowerCase();
+    var vFormat="";
+    if(ColumnAPIA.indexOf("__xx")>-1 && ftype=="id" ){
+        alert("Ids fields are currently not supported for child objects - please use the record's name instead.");
+        return false;
+    }
+    if(ColumnAPIA.indexOf("__xx")>-1 && ftype!="combobox" && ftype!="string"  && ftype!="picklist" && ftype!="phone"){
+        alert("Multi-childs-column can only be of type String/Combobox/picklist.\n Please use the record's name instead and use the SOQL filter in this popup to filter-out none-relevant childs.\n\nUse the gird's advanced-filter to filter-out none-relevant rows with spsific child rows...");
+        return false;
+    }
+    if(ColumnAPIA.indexOf("__xx")>-1 &&  ColumnAPIA.split("__xx").length>3){
+        alert("Only direct child-objects can be fetched in this version, you can't fetch the childs of childs objects");
+        return false;
+    }
+    if(ColumnAPIA.indexOf("ContentDocumentLink__xx.")>-1){
+    	$("#FieldAJAXA").val(ColumnAPIA.split("__xx.")[1].split(".")[0]+" in (select id from {!JSENCODE(zaapit_editable_table2__c.table__c)})");
+    }
+    if(ftype=="integer" || ftype=="long"){
+        vFormat="[^0-9]+";
+    }else if(ftype=="decimal" || ftype=="currency" || ftype=="double"){
+        vFormat="[^0-9\\.]+";
+    }
+    $("#FieldDefaultVal").attr("vFormat",vFormat);
+            
+    $("#columnDialog").dialog({
+        width:Math.min(450,($(self).width()-10)),
+         modal: true
+
+         ,close: function( event, ui ) {
+           
+         },
+    buttons: [{
+    text:"Add Column",
+   click: function() {
+            var ColumnNameA=$("#ColumnNameA").val();
+            var ColumnAPIA=$("#ColumnAPIA").val().toLowerCase();;
+            var FieldLinkA=$("#FieldLinkA").val();
+            var FieldAJAXA=$("#FieldAJAXA").val();
+            var FieldReq=$("#FieldReq").val();
+            var FieldDefaultVal=$("#FieldDefaultVal").val();
+            if(ColumnAPIA.indexOf("__xx")>-1 && FieldAJAXA!="" && !xxColSOQLValid){//SOQL is not empty for __xx field
+                alert("Please check/fix/verify that the SOQL filter syntax is ok by clicking the CS button next to the SOQL-filter field.");
+                return;
+            }
+            if(FieldDefaultVal!=null){
+                FieldDefaultVal=FieldDefaultVal.replace(/#/ig,"");
+            }
+            
+            var apiFCleaned=(ColumnAPIA.replace(/[^a-z0-9]/ig,"."));
+            var pattFAPI=new RegExp("[^#]*"+apiFCleaned+"[^#]*","ig");
+            //alert(apiFCleaned);
+            
+            var fieldsHeaders=$(".fieldsHeaders").val();
+            //**********clean fields headers & links*******
+             var fields="";
+            $("#ss1F1 input[name='selectedFieldsStrX']").each(function(){
+               fields+="#"+$(this).val();
+            });
+            var fieldsHeadersarr=fieldsHeaders.split("#");
+            fieldsHeaders='';
+            for(var i=0;i<fieldsHeadersarr.length;i++){
+                if(fields.indexOf(fieldsHeadersarr[i].split("~")[0])>-1){
+                    fieldsHeaders+='#'+fieldsHeadersarr[i];
+                }
+            }
+            if(fieldsHeaders.length>0){
+                fieldsHeaders=fieldsHeaders.substring(1);
+            }
+            var customLinksOnReadMode=$(".customLinksOnReadMode").val();
+            var customLinksOnReadModeArr=customLinksOnReadMode.split("#");
+            customLinksOnReadMode="";
+            for(var i=0;i<customLinksOnReadModeArr.length;i++){
+                if(fields.indexOf(customLinksOnReadModeArr[i].split("~")[0])>-1){
+                    customLinksOnReadMode+='#'+customLinksOnReadModeArr[i];
+                }
+            }
+            if(customLinksOnReadMode.length>0){
+                customLinksOnReadMode=customLinksOnReadMode.substring(1);
+            }
+            
+            
+            
+            customLinksOnReadMode=customLinksOnReadMode.replace(pattFAPI,"").replace(/#{2}/ig,"#");
+            if(customLinksOnReadMode=="#"){
+                customLinksOnReadMode="";
+            }
+            customLinksOnReadMode=customLinksOnReadMode.replace(/#$/g,"");
+            if(customLinksOnReadMode!=""){
+                customLinksOnReadMode="#"+customLinksOnReadMode;
+            }
+            if(FieldLinkA!="" || FieldAJAXA!="" || FieldReq!="" ||FieldDefaultVal!=""){
+                customLinksOnReadMode=ColumnAPIA+"~"+FieldLinkA+(FieldAJAXA!=""?"~"+FieldAJAXA:"~ ")+(FieldReq!=""?"~"+FieldReq:"~ ")+(FieldDefaultVal!=""?"~"+FieldDefaultVal:"~ ")+customLinksOnReadMode;
+                $(".customLinksOnReadMode").val($.trim(customLinksOnReadMode));
+            }
+            
+            
+                        
+            fieldsHeaders=fieldsHeaders.replace(pattFAPI,"").replace(/#{2}/ig,"#");
+            if(fieldsHeaders=="#"){
+                fieldsHeaders="";
+            }
+            fieldsHeaders=fieldsHeaders.replace(/#$/g,"");
+            if(fieldsHeaders!=""){
+                fieldsHeaders="#"+fieldsHeaders;
+            }
+            if(ColumnNameA!=""){
+                fieldsHeaders=ColumnAPIA+"~"+ColumnNameA+fieldsHeaders;
+                $(".fieldsHeaders").val(fieldsHeaders);
+            }
+            
+            
+            var addField='<li class="ui-dnd ui-state-default" val="{0}"><span title="Apex Field: {0}">{0}<input type="hidden" name="selectedFieldsStrX" value="{0}"/><span class="ui-dnd-btns"> <span class="ui-icon-circle-close ui-icon iconILB" onclick="deleteFieldx1Edit(this);" style="cursor:pointer;" title="Remove"></span><span class="ui-icon-circle-arrow-w ui-icon iconILB" onclick="moveLeftRight(this);" style="cursor:pointer;" title="Move Left/Right"></span><span class="ui-icon-circle-arrow-n ui-icon iconILB" onclick="moveUp(this);" style="cursor:pointer;" title="Move Up"></span><span class="ui-icon-circle-arrow-s ui-icon iconILB" onclick="moveDown(this);" style="cursor:pointer;" title="Move Down"></span></span></span></li>';
+            addFieldHTML=addField.replace(/\{0\}/ig,ColumnAPIA);
+            $( this ).dialog( "close" );
+            $("#ss1F1").append(addFieldHTML);
+            var rowlast = $('#ss1F1 li:last');
+            $('#ss1F1').scrollTop(rowlast.position().top);
+            rowlast.addClass("bgYellow");
+            setTimeout(function(){
+                rowlast.removeClass("bgYellow",500);
+            },1500);
+    }},
+    {text:"Cancel",
+    click: function() {
+        $( this ).dialog( "close" );
+    }
+    }]
+                                      });
+}
+<apex:variable var="maxLenExtraCond" value="{!if(viewID==null ||viewID==''  ||viewID==' ',500,30000)}"/>
+var maxLenExtraCond={!maxLenExtraCond};
+function extraConditionFilterTAVal(obj){
+var len=$(obj).val().length;
+if(len>maxLenExtraCond){
+    $(obj).val($(obj).val().substring(maxLenExtraCond));
+    len=$(obj).val().length;
+}
+$(".RLRF-TA-count").html(len);
+
+}
+
+function moveLeftRight(obj){
+    var li=$(obj).parents("li:first");
+    var ul=li.parents("ul:first");
+    var isAdd=false;
+    //right: ui-icon-circle-arrow-e //left:ui-icon-circle-arrow-w
+    
+
+    if(isSmallSCRN1X())$(self).scrollTop($('.dndTB1').offset().top);
+    if($(obj).parents("#ff1F1").length==1){//on left
+        //if(isSF1X())$(self).scrollTop($('#ss1F1').offset().top);
+        $("#ss1F1").append(li);
+        $("#ss1F1").scrollTop($("#ss1F1").height());
+        isAdd=true; 
+    }else{
+        //if(isSF1X())$(self).scrollTop($('#ff1F1').offset().top);
+        li.insertBefore($("#ff1F1 li:first"));
+        $("#ff1F1").scrollTop(0);
+        isAdd=false;
+    }
+    li.addClass("bgYellow");
+    setTimeout(function(){  li.removeClass("bgYellow",1000,function(){});   },500);
+
+  addDependantFields(obj,li,ul,isAdd);
+    
+}
+function addDependantFields(obj,li,ul,isAdd){
+    //alert(ul.attr("id"));
+    if($(obj).parents("#ff1F1").length==0){
+        $(obj).removeClass("ui-icon-circle-arrow-e").addClass("ui-icon-circle-arrow-w");
+    }else{
+        $(obj).removeClass("ui-icon-circle-arrow-w").addClass("ui-icon-circle-arrow-e");
+    }
+  var lival=li.attr("val");
+    var liContN=li.attr("contN");
+    var liContA=li.attr("contA");
+    //alert(liContA);
+    //isAdd &&
+    if( liContA!=null && liContA!="" && ul.find("li[val='"+liContA+"']").length>0){
+        alert("The dependted field \"" +liContN+"\" will be "+(isAdd?"added":"removed")+" as well.");
+        ul.find("li[val='"+liContA+"']").show();
+        ul.find("li[val='"+liContA+"'] span.mlr1").show().click();
+        
+    
+    }
+    //isAdd &&
+    if( ul.find("li[contA='"+lival+"']").length>0){
+        var depFld=ul.find("li[contA='"+lival+"']");
+        depFld.each(function(){
+            var depFld1=$(this);
+            alert("The dependted field \"" +$.trim(depFld1.text())+"\" will be "+(isAdd?"added":"removed")+" as well.");
+            depFld1.show();
+            depFld1.find("span.mlr1").show().click();
+        });
+        
+    }
+    
+  
+}
+
+function moveUp(obj){
+    var li=$(obj).parents("li:first");
+    li.insertBefore(li.prev()).addClass("bgYellow");
+    setTimeout(function(){  li.removeClass("bgYellow",1000,function(){});   },500);
+}
+function moveDown(obj){
+var li=$(obj).parents("li:first");
+li.insertAfter(li.next()).addClass("bgYellow");
+setTimeout(function(){  li.removeClass("bgYellow",1000,function(){});   },500);
+}
+
+
+function setMoreActionLink(obj){
+    var val1=$(obj).val();
+    switch(val1){
+    case '0':
+        $(".RLVFLInk").val("");
+        break;
+    case '1':
+        $(".RLVFLInk").val("../apex/zaapit__zaapit_tb_GeneralWL?id={0}&isdtp=p1&tp={!zaapit__zaapit_editable_table2__c.name}R").addClass("bgYellow");
+         setTimeout(function(){
+             $(".RLVFLInk").removeClass("bgYellow",500);
+         },1500);
+        break;
+    case '2':
+        var name1="{!zaapit__zaapit_editable_table2__c.name}";
+        name1=name1.substring(0,1)+name1.substring(name1.length-2)+"T";
+        $(".RLVFLInk").val("../apex/zaapit__zaapit_tab_RLT?id={0}&isdtp=p1&tp="+name1).addClass("bgYellow");
+         setTimeout(function(){
+             $(".RLVFLInk").removeClass("bgYellow",500);
+         },1500);
+        break;
+    case '3':
+        break;
+    }
+    $(".RLVFLInkWidth").val("1200");    
+}
+
+</script>
+<div id="columnDialog" class="hd1" title="Advanced - Add a Column (For Experts!)">
+<b>Please use the options in this window only for special scenarios. Use the drag &amp; drop Fields-Selection (behind this window) for typical use cases.</b>
+<br/>
+<br/>
+<table>
+<tr><td><b>Column Label</b></td><td><input name="ColumnNameA" id="ColumnNameA" maxsize="55" /></td></tr>
+<tr><td><b>Field API Name</b></td><td><input name="ColumnAPIA" id="ColumnAPIA" maxsize="55" /></td></tr>
+<tr><td><b>Link Field</b></td><td><input name="FieldLinkA" id="FieldLinkA" maxsize="65" /><span class="btt1T helpQMSFDC" title="Use API field IDs as a link, this field will be also used as tooltip (optional)">&nbsp;</span></td></tr>
+<tr><td><b id="FieldAJAXALbl">Ajax Tool Tip</b></td><td><input name="FieldAJAXA" id="FieldAJAXA" maxsize="65" /><span class="btt1T helpQMSFDC FieldAJAXALblT1" title="Use a URL to your custom visual-force-page to use as a tooltip, the {0} part in the URL will be replaced with the Link Field.<br/> Example: /apex/test?id={0}<br/> Mini Layout: /{0}/m?isAjaxRequest=1">&nbsp;</span>
+<span class="btt1T helpQMSFDC FieldAJAXALblT2" style="padding-right: 17px;" title="Use SOQL where-statement to filter the sub-rows fetched for this column">&nbsp;</span>
+<span class="btt1T btn FieldAJAXALblT3" onclick="testQueryxSOQLFilter();" title="Check Syntax">CS</span>
+</td></tr>
+<tr><td><b>Input Required</b></td><td><select name="FieldReq" id="FieldReq" ><option value="0" selected="selected">Default</option><option value="1">Required</option></select><span class="btt1T helpQMSFDC" title="Force the input column to be required / mandatory i.e. when needed.">&nbsp;</span></td></tr>
+<tr><td><b>Default Value</b></td><td><input name="FieldDefaultVal" id="FieldDefaultVal" maxsize="65" onkeydown="fmtIn(this)" onkeyup="fmtIn(this)" /><span class="btt1T helpQMSFDC" title="Use this value as the default text /number / date / formula when adding new rows. Formula Example: {!'{'+'!'+'$'+'User.Id}'}, Number example: 50. <br/><br/>If the formula has incorrect syntax you may need to remove it from the table's custom settings. (setup&gt;custom settings&gt;zaapit editable table2>table name>edit)">&nbsp;</span></td></tr>
+
+</table>
+
+</div>
+        <table class="dndTB1">
+
+       <tbody> 
+         <tr>
+         
+        <td width="47%">
+        <div class="center pb5">
+        <c:SearchInput searchFieldID="1" width="160" Search_label="Search Available Fields" onchangeFunction="searchAvil" waitMilis="550"/>
+        </div>
+        <ul id="ff1F1" class="connectedSortable btt1T" title="Drag &amp; Drop the fields from or click the left &amp; right icons to add the fields as columns to the Smart-Table.">
+         <apex:repeat value="{!availFieldsStr}" var="f1" id="s11">
+            <li class="ui-dnd ui-state-default" val="{!f1[0]}" contN="{!f1[4]}" contA="{!f1[5]}">
+            <span title="Apex Field: {!f1[0]}">
+             <apex:outputText value="{!f1[1]}" id="theValue"/>
+             <span class="ui-dnd-btns">
+             <span class="ui-icon-circle-arrow-e ui-icon iconILB mlr1" onclick="moveLeftRight(this);" style="cursor:pointer;" title="Move Left/Right"></span>
+            <span class="ui-icon-circle-arrow-n ui-icon iconILB" onclick="moveUp(this);" style="cursor:pointer;" title="Move Up"></span>
+            <span class="ui-icon-circle-arrow-s ui-icon iconILB" onclick="moveDown(this);" style="cursor:pointer;" title="Move Down"></span>
+             </span>
+             <input type="hidden" name="selectedFieldsStrX" value="{!f1[0]}"/>
+             </span>
+            </li>
+         </apex:repeat>
+         <li style="color:#999999;" class="cantFind ui-state-disabled"><span class="hd1">zzzz</span>Can't find the field that you need / Looking for related-fields? Try the new [+] button!</li>
+         </ul>
+         
+         </td>
+        <td align="center" class="btnico" width="6%">
+        <span class="mbr" style="height: 26px;"><span title="Move Left / Right - Click the row's Move symbol to select/unselect a field." class="stoppg1 btt1T ui-icon ui-icon-arrowthick-2-e-w" style="vertical-align: -5px;"></span></span>
+        <span class="mbr"><button title="Add All Fields" type="button" onclick="if(confirm('Are you sure you want to add ALL the left fields to the right side?')){moveElements('ff1F1', 'ss1F1');}" class="btn btt1T"  style="margin-bottom:10px">&gt;&gt;</button></span>
+        <span class="mbr"><button title="Remove All Fields" type="button" onclick="if(confirm('Are you sure you want to REMOVE ALL the fields from the right side?')){moveElements('ss1F1','ff1F1');}" class="btn btt1T"  style="margin-bottom:10px">&lt;&lt;</button></span>
+        <span class="mbr"><button onclick="addFieldToSelection(); return false;" type="button" class="btn btt1T" title="The <b>'Advanced Add a Column'</b> option is meant for experts, please contact ZaapIT's support for more information." style="font-size:13pt;line-height: 13px;vertical-align: -2px;">+</button></span>
+        
+        <!-- appendFieldx1('','','',''); -->
+        </td>
+        <td width="47%">
+        <div class="center pb5">
+        <c:SearchInput searchFieldID="2" width="160" Search_label="Search Selected Fields" onchangeFunction="searchSelec" waitMilis="550"/>
+        </div>
+        <ul id="ss1F1" class="connectedSortable btt1T" title="Drag &amp; Drop the fields from the right to the left side to remove them from to the Smart-Table. "> 
+         <apex:repeat value="{!selectedFieldsStr}" var="f1" id="f11">
+         <!-- ui-state-disabled --> 
+            <li class="ui-dnd ui-state-default {!IF(f1[1]=='E','','')}" val="{!f1[0]}" contN="{!f1[4]}" contA="{!f1[5]}"> 
+             <span title="Apex Field: {!f1[0]}">
+              <apex:outputText value="{!IF(f1[1]=='E',f1[0],f1[1])}" id="theValue"/>
+             <input type="hidden" name="selectedFieldsStrX" value="{!f1[0]}"/>
+             
+            <span class="ui-dnd-btns"> <span class="{!IF(f1[1]=='E','ui-icon-circle-close ui-icon iconILB','')}" onclick="deleteFieldx1Edit(this);" style="cursor:pointer;" title="Remove"></span>
+            <span class="ui-icon-circle-arrow-w ui-icon iconILB mlr1" onclick="moveLeftRight(this);" style="cursor:pointer;" title="Move Left/Right"></span>
+            <span class="ui-icon-circle-arrow-n ui-icon iconILB" onclick="moveUp(this);" style="cursor:pointer;" title="Move Up"></span>
+            <span class="ui-icon-circle-arrow-s ui-icon iconILB" onclick="moveDown(this);" style="cursor:pointer;" title="Move Down"></span>
+            </span>
+             <!-- <span class="{!IF(f1[1]=='E','ui-icon-locked ui-icon iconILB','')}"></span>
+              -->
+             
+             </span>
+            </li>
+         </apex:repeat>
+         </ul></td>
+        </tr>
+        </tbody>
+        </table>
+        <div style="margin:5px 5px 5px 15px;font-size:8pt;font-weight:bold;color:#555555;">* Drag and drop the above fields or click the left and right icons to select the table's columns - sorting counts.</div> 
+        <apex:inputText value="{!fieldsStr}" styleClass="fieldsINPUT hd1"/>
+        <div style="text-align:center;" class="hd1">
+        <button onclick="getRLfields('{!JSENCODE(zaapit_editable_table2__c.table__c)}',0); return false;">Advanced - Add a Column</button>
+        </div>
+        <div id="multiSelFldsWRp1"></div>
+        </div>
+         <apex:pageBlockSection title="Sort Settings" columns="3" id="FieldSelection" >
+         
+        <apex:selectList label="Sort by Field #1" value="{!sortBy}" size="1" required="true" onmousedown="return isSF1();" onclick=" return openSearchSel3(this,event,'sort1');" onkeydown="return openSelXDP3(this,event,'sort1');">
+        <apex:selectOptions value="{!availFieldsSort}"/>
+        </apex:selectList>
+        
+         <apex:selectList label="Direction" value="{!sortDir}" size="1" >
+         <apex:selectOption itemValue="asc" itemLabel="Ascending"/>
+         <apex:selectOption itemValue="desc" itemLabel="Descending"/>
+         </apex:selectList>
+         
+                  <apex:inputcheckbox label="Enable Grouping" styleClass="btt1F EnableGrouping" title="Group different/alternate rows based on Sort by Field #1 / user sorting. <br>To enable the subtotals mark this checkbox and unmark the hide-table's-totals checkbox for the default view (switch first to the default view)" value="{!Enable_Sort_grouping}" onclick="if(!$(this).is(':checked') && $('.EnableGrouping2').is(':checked')) {$('.EnableGrouping2').click();}"/>
+         
+      
+       
+       <apex:selectList label="Sort by Field #2" value="{!sortBy2}" size="1" onmousedown="return isSF1();" onclick=" return openSearchSel3(this,event,'sort2');" onkeydown="return openSelXDP3(this,event,'sort2');">
+        <apex:selectOption itemValue=" " itemLabel="Please Select"/>
+        <apex:selectOptions value="{!availFieldsSort}"/>
+        </apex:selectList>
+        
+         <apex:selectList label="Direction" value="{!sortDir2}" size="1" >
+         <apex:selectOption itemValue="asc" itemLabel="Ascending"/>
+         <apex:selectOption itemValue="desc" itemLabel="Descending"/>
+         </apex:selectList>
+         
+                  <apex:inputcheckbox label="Enable Grouping" styleClass="btt1F EnableGrouping2" title="Group different/alternate rows based on Sort by Field #2 / user sorting. <br>To enable the subtotals mark this checkbox and unmark the hide-table's-totals checkbox for the default view (switch first to the default view). When you mark the grouping for field#2 the grouping  for field#1 is auto-enabled." value="{!Enable_Sort_grouping2}" onclick="if($(this).is(':checked') && !$('.EnableGrouping').is(':checked')) {$('.EnableGrouping').click();}"/>
+         
+         
+         
+         <apex:selectList label="Sort by Field #3" value="{!SortBy3}" size="1" onmousedown="return isSF1();" onclick=" return openSearchSel3(this,event,'sort3');" onkeydown="return openSelXDP3(this,event,'sort3');">
+          <apex:selectOption itemValue=" " itemLabel="Please Select"/>
+        <apex:selectOptions value="{!availFieldsSort}"/>
+        </apex:selectList>
+        
+         <apex:selectList label="Direction" value="{!sortDir3}" size="1" >
+         <apex:selectOption itemValue="asc" itemLabel="Ascending"/>
+         <apex:selectOption itemValue="desc" itemLabel="Descending"/>
+         </apex:selectList>
+       <apex:outputtext > </apex:outputtext>
+         
+         <apex:inputcheckbox label="Apply shading to alternate rows" styleClass="btt1F" title="Apply shading to alternate rows based on Sort by Field #1. Use Sort_color1 &amp; Sort_color2 custom labels to change the colors" value="{!Enable_Sort_coloring}"/>
+         
+         
+         <!-- setup&gt;Create&gt;Custom Lables (you may need to enable your salesforce-translation first, setup&gt;Translation Workbench&gt;Translate&gt;Enable) -->
+     </apex:pageBlockSection>
+     
+     <div id="AdvancedFilterSOQL" class="hideWhenViewEditor2">
+        <apex:pageBlockSection title="Advanced Filter (SOQL style)" columns="1">   
+     </apex:pageBlockSection>
+     <div style="padding:5px;display:inline-block;border:1px solid #eeeeee;margin-bottom:10px;">
+     <span>Add Condition: </span>
+     <select name="RLRFAndOr1" id="RLRFAndOr1">
+     <option value=" ">-</option>
+        <option value="AND">AND</option>
+        <option value="OR">OR</option>
+     </select>
+<!--      <apex:selectList label="Related List Reference Field" styleClass="RLRF" size="1" >
+        <apex:selectOption itemValue="" itemLabel="Select a Field"/>
+        <apex:selectOptions value="{!availFieldsSort}"/>
+        </apex:selectList>  
+      -->
+      
+        <input tyle="text" value="Select a Field" id="RLRF" class="RLRF" style="width:132px;background:#efefef url('/img/func_icons/util/lookup20.gif') 132px -2px no-repeat;border:1px solid #A9A9A9;padding:1px 20px 1px 0px;cursor:pointer;" onclick="selectSoqlField();"/>
+        <select name="RLRFOp1" id="RLRFOp1" onchange="RLRFOp1Change();" style="width: 171px;">
+        
+        <optgroup label="Texts" typeValid="text">
+        <option value="{0}='{1}'">equals</option>
+        <option value="{0}!='{1}'">not equal to</option>
+        <option value="{0} like '{1}%'">starts with</option>
+        <option value="{0} like '%{1}%'">contains</option>
+        <option value="(not {0} like '%{1}%')">does not contain</option>
+        <option value="{0} &lt; '{1}'">less than</option>
+        <option value="{0} &gt; '{1}'">greater than</option>
+        <option value="{0} &lt;= '{1}'">less or equal</option>
+        <option value="{0} &gt;= '{1}'">greater or equal</option>
+        <option value="{0} in ('{1}')">includes</option>
+        <option value="(not {0} in ('{1}'))">excludes</option>
+        </optgroup>
+        
+        <optgroup label="Numbers" typeValid="number">
+        
+        <option value="{0}={1}">equals</option>
+        <option value="{0}!={1}">not equal to</option>
+        <option value="{0} &lt; {1}">less than</option>
+        <option value="{0} &gt; {1}">greater than</option>
+        <option value="{0} &lt;= {1}">less or equal</option>
+        <option value="{0} &gt;= {1}">greater or equal</option>
+        <option value="{0} in ({1})">includes</option>
+        <option value="(not {0} in ({1}))">excludes</option>
+        </optgroup>
+        
+        <optgroup label="Dates" typeValid="date">
+        
+        
+        <option value="{0}={1}">equals</option>
+        <option value="{0}!={1}">not equal to</option>
+        <option value="{0} &lt; {1}">less than</option>
+        <option value="{0} &gt; {1}">greater than</option>
+        <option value="{0} &lt;= {1}">less or equal</option>
+        <option value="{0} &gt;= {1}">greater or equal</option>
+        <option value="{0} = TODAY">equals today</option>
+        <option value="{0} = LAST_N_DAYS:{1}">equals last n days</option>
+        <option value="{0} = NEXT_N_DAYS:{1}">equals next n days</option>
+        <option value="{0} = LAST_N_MONTHS:{1}">equals last n months</option>
+        <option value="{0} = NEXT_N_MONTHS:{1}">equals next n months</option>
+        <option value="{0} = LAST_N_QUARTERS:{1}">equals last n quarters</option>
+        <option value="{0} = NEXT_N_QUARTERS:{1}">equals next n quarters</option>
+        <option value="{0} = LAST_N_YEARS:{1}">equals last n years</option>
+        <option value="{0} = NEXT_N_YEARS:{1}">equals next n years</option>
+        </optgroup>
+        
+        <optgroup label="Multi Picklists" typeValid="multiPL">
+        <option value="{0} includes ('{1}')">includes</option>
+        <option value="{0} excludes ('{1}')">excludes</option>
+        <option value="{0}='{1}'">equals</option>
+        <option value="{0}!='{1}'">not equal to</option>
+        </optgroup>
+        <optgroup label="Check Boxes" typeValid="checkbox">
+        <option value="{0}={1}">equals</option>
+        <option value="{0}!={1}">not equal to</option>
+        </optgroup>
+        
+        </select>
+        <input type="text" name="condvalue" id="condvalue" value="" style="width:138px;"/>
+        <button id="mainPAdvanceFilter" disabled="disabled" onclick="appendToFieldVal('RLRF','RLRF-TA');" type="button" class="btnDisabled" style="font-size:13pt;line-height: 13px;vertical-align: -2px;">+</button>
+                </div>
+        <div id="multiSelFldsWRp2" title="Choose a Field"></div>
+        
+    <textarea onkeyup="extraConditionFilterTAVal(this);" label="Extra SOQL condition" class="RLRF-TA" style="width:95%;height:69px" >{!extraConditionFilter}</textarea>
+    <br/><span style="color:#999999;float:right;margin-right:5%;"><span class="RLRF-TA-count">0</span>/{!maxLenExtraCond}</span>
+    <br/>
+    <apex:inputText styleClass="RLRF-TAX1 hd1" style="width:95%;height:50px" value="{!extraConditionFilter}"/>
+
+<button type="button" class="btn" onclick="testQueryx1('RLRF-TA',null)">Check Syntax</button> <span class="helpQMSFDC" id="HelpWithSyntax1" onmousedown="event.stopPropagation()"  onclick="event.stopPropagation()">&nbsp;</span>
+        <div class="HelpWithSyntax hd1">
+            <b>SOQL Where syntax:</b><br/>
+            Examples:<br/> 
+            1. amount&gt;0 and quantity=3 <br/>
+            2. ( ownerid={UserInfo.UserId} ) or (quantity=3 and CreatedDate &gt; TODAY)<br/>
+            3. createdbyid={ID} <span style="color:#999999;">(in sub-tabs / related lists) </span><br/>
+            4. accountid={HID} <span style="color:#999999;">(in sub-tabs / related lists) </span><br/>
+            <a href="http://www.salesforce.com/us/developer/docs/soql_sosl/Content/sforce_api_calls_soql_select_conditionexpression.htm" target="_blank" >More Examples / Syntax</a>
+            <br/>
+            <br/>
+            <b>SOQL Date Formats and Date Literals:</b><br/>
+            Examples:<br/>
+             1. CreatedDate &gt; TODAY<br/>
+             2. CreatedDate = LAST_N_DAYS:365<br/>
+             3. CreatedDate &lt; LAST_N_DAYS:365<br/>
+             4. CloseDate &gt; NEXT_N_DAYS:15<br/>
+             5. CreatedDate &lt; NEXT_N_QUARTERS:2<br/>
+             6. CreatedDate = THIS_FISCAL_QUARTER<br/>
+             7. CloseDate = THIS_FISCAL_YEAR<br/>
+            <a href="https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_dateformats.htm" target="_blank" >More Examples / Syntax</a>
+
+            <br/>
+            
+        </div>
+
+<br/><br/>
+      <div style="padding:5px;">Examples: amount&gt;0 and quantity=3 and ownerid={UserInfo.UserId} and CreatedDate &gt; TODAY. You can use the current table's fields with SOQL operations.
+            
+      </div>
+      <div style="padding-bottom:0px;padding-left:5px;font-size:8pt;color:#696969">Use {UserInfo.UserId} for the logged-in Userid. Example: createdbyid={UserInfo.UserId}.<!-- or use {UserInfo.ProfileId} for the logged-in ProfileId.-->
+      </div>
+      <div style="padding-bottom:0px;padding-left:5px;font-size:8pt;color:#696969">Use {ID} for the current parentID (sent via the URL id=xxx). Example: createdbyid={ID}.
+      </div>
+      <div style="padding-bottom:5px;padding-left:5px;font-size:8pt;color:#696969">Use <span class="btt1T helpQMSFDC" title="For more information and options check the Hierarchy Relation field in the advance-setting section.">{HID}</span> for the current <u>Hierarchy ID</u> (of the current id=xxx), Example: accountid={HID}.
+      </div>
+      
+      <div style="padding:5px;font-size:8pt;color:#696969"> In case of an unexpected/problematic result you can empty this field (named "extraConditionFilter") 
+      under setup&gt;custom settings.
+      </div>
+      </div>
+     
+      <div id="btnSec1" class="hideWhenViewEditor">
+     <apex:pageBlockSection title="Custom Buttons" columns="2" id="CustomButton" >
+        <apex:repeat value="{!buttons}"  var="btn">
+        
+            <apex:inputtext label="Button Name" value="{!btn.key}" styleClass="btt1T" title="Empty the field to remove the button. <br/>Read the manual for more information on how to use custom Salesforce buttons (you can use the Object's button-API-name to use a predefined button)" />
+            <apex:inputtext label="Button Link / JS" value="{!btn.val}"  />
+      </apex:repeat>
+                
+     </apex:pageBlockSection>
+        
+
+        <div style="color:#999999;font-size:8pt;margin-bottom:10px;margin-top:5px;">
+        Can't find a button / want to add a new/create button? <a href="javascript:window.open('http://sc2.zaapit.com/pdf/ZaapitTools__User_Guide.pdf?page=45#page=45','_blank','width=800,height=800');" >List of available buttons</a>
+        <br/>
+        All the above buttons support a Link or a short javascript. 
+         Use "{ID}" on related list to get the parent Object ID.<br/>
+         Examples: /example_page?id={ID}, http://www.salesforce.com , alert("CurrentID={ID}");return false; (return false to stop submit)
+         </div>
+         
+         </div>
+         
+       
+      
+    <style>
+    #advenaceSettings table>thead>tr>th {white-space:normal;}
+    </style>
+    
+     <apex:pageBlockSection title="Deduplicates Settings" columns="1" rendered="{!contains(zaapit__zaapit_editable_table2__c.name,'dedup')}">  
+     	 <apex:inputtextarea label="Field Settings"  value="{!DupeSettings}" style="width:80%"/>
+     	 
+     </apex:pageBlockSection>
+     
+     <div id="advenaceSettings" class="hideWhenViewEditor">
+     
+     <apex:pageBlockSection title="Related Information - lightning Icon" columns="2">
+        
+         <apex:selectList value="{!relatedInfoType}" size="1" styleClass="btt1T" title="To setup the actual content displayed under the lightning-icon click the lightning icon and edit the layout/sub-tabs (use the Related List Reference Field under the lightning-icon>grid>edit-layout to set the relation)" label="Related Information type"  onchange="setMoreActionLink(this);">
+         <apex:selectOption itemValue="0" itemLabel="Please select"/>
+         <apex:selectOption itemValue="1" itemLabel="Smart table/grid"/>
+         <apex:selectOption itemValue="2" itemLabel="Sub Tabs"/>
+         <apex:selectOption itemValue="3" itemLabel="Custom"/> 
+         </apex:selectList>
+         
+     <apex:inputField label="Related Information vf Link" value="{!zaapit__zaapit_editable_table2__c.zaapit__More_Actions_Link__c}" styleClass="btt1T externalLinkTA RLVFLInk" html-title="Use an external VF page for more actions.&#60;br&#62;&#60;br&#62; Example: /apex/zaapit__LeadActivity?id={0}&isdtp=p1 &#60;br&#62;&#60;br&#62; {0} will be the row id."/>
+        <apex:inputField label="Max popup width" styleCLass="RLVFLInkWidth" value="{!zaapit__zaapit_editable_table2__c.zaapit__More_Actions_win_width__c}"/>
+      </apex:pageBlockSection>
+     
+     
+     <apex:pageBlockSection title="Advanced Settings" columns="2">     
+      <apex:selectList value="{!zaapit__zaapit_editable_table2__c.zaapit__maxRowsPerPage__c}" size="1" styleClass="btt1T" title="Select the default number of rows per page. Use the Table's bottom-right Items-per-page selector to change the number of displayed rows on-the-fly." label="Rows Per Page - Default" onchange="if($(this).val()>50)alert('Please note that the total page size is limited by Salesforce to 135k. \nMeaning if you are going to choose too many fields or large fields such as textarea or too many rows per page you will get a limit exceed error by Salesforce\n\nIn such case goto setup>custom setting>zaapit editable table2>table name> and change the default rows per page back to 25. \n\nPlease note that there is an update-all rows options when clicking the mass-update button and there is a delete-all button option\nunder the advance setting so there is no actual need to see more than 50 rows per page (tell us if you think you need it).')" disabled="{!$User.zaapit__Enable_ZaapIT_s_View_Editor__c!=null && $User.zaapit__Enable_ZaapIT_s_View_Editor__c}">
+         <apex:selectOption itemValue="10" itemLabel="10"/> 
+         <apex:selectOption itemValue="25" itemLabel="25"/>
+         <apex:selectOption itemValue="50" itemLabel="50"/>
+         <apex:selectOption itemValue="100" itemLabel="100"/>
+         <apex:selectOption itemValue="200" itemLabel="200"/>
+         <apex:selectOption itemValue="500" itemLabel="500"/>
+         </apex:selectList>
+         
+         <apex:inputField label="Table in Small Font" value="{!zaapit__zaapit_editable_table2__c.zaapit__useSmallTableFont__c}"/>
+         <apex:inputField label="Always Show Checkboxes" value="{!zaapit__zaapit_editable_table2__c.zaapit__showCheckBoxes__c}"/>
+         <!-- <apex:inputField label="Hide Confirm When Clicking # of Rows" value="{!zaapit_editable_table2__c.hidePageNumberConfirm__c}"/>
+          -->
+         <apex:inputField label="Show Mass Update & Inline Edit Buttons" value="{!zaapit__zaapit_editable_table2__c.zaapit__showRegButtons__c}"/>
+         <apex:inputField label="Hide Edit Button on View-Mode" value="{!zaapit__zaapit_editable_table2__c.zaapit__hideEditButton__c}"/>
+         <apex:inputField label="Show Mass Update Button on View-Mode" value="{!zaapit__zaapit_editable_table2__c.zaapit__Show_Mass_Updae_on_view_mode__c}"/>
+         
+        
+        
+         
+        
+         <apex:inputField label="Show Delete Button on View Mode" value="{!zaapit__zaapit_editable_table2__c.zaapit__showDeleteSelectedViewMode__c}" styleClass="btt1T" html-title="The mass delete all button is displayed under the normal delete button for admin users with enable-zaapit-layout-editor-checkbox marked. Mark the all-checkbox on teh grid and click the delete button to see the delete-all button."/>
+        
+          
+         <apex:inputField label="Show Mass Clone Button" value="{!zaapit__zaapit_editable_table2__c.zaapit__showMassDuplicate__c}" />
+         
+         <apex:inputField label="Hide New & Delete buttons on edit mode"  value="{!zaapit__zaapit_editable_table2__c.zaapit__hideNewAndDelete__c}" />
+        <apex:inputField label="Hide Add Row buttons"  value="{!zaapit__zaapit_editable_table2__c.zaapit__hideAddRow__c}" />
+            <!-- styleClass="btt1T" html-title="Mass-Shallow-Clone: Create new object-rows from all the visible column-data (none visible column-data will not be copied to the new object). This feature is usefull for tasks, events." -->
+         
+         <!-- <apex:inputField label="Maximum rows for Mass delete all" styleClass="btt1T" html-title="The default is 5000" value="{!zaapit_editable_table2__c.MaximumRowsMassDeleteAll__c}"/>
+         -->
+         
+         <apex:inputField label="Show Export (Xls,doc,pdf,csv) on View mode" value="{!zaapit__zaapit_editable_table2__c.zaapit__showExport__c}" />
+
+        <apex:inputField label="Maximum number of rows for export" value="{!zaapit__zaapit_editable_table2__c.zaapit__maxRowToExport__c}" styleClass="btt1T" html-title="The Default is 10,000 rows, oversize exports may affect the heap size."/>
+
+    <apex:inputField label="Turn On Scrolls for RL & sub-tabs" value="{!zaapit__zaapit_editable_table2__c.zaapit__turnOnScrollModeForRLNTabs__c}" styleClass="btt1T" html-title="Turn On Scroll Mode For related lists & Sub-Tabs"/>
+
+
+        <apex:selectList title="When using this table as a related-list/embedded-table you can choose what is the lookup field that the table should use. <br/>* The parent-object-ID is connected to the field that you choose here." label="Related List Reference Field" value="{!table_ref}" size="1" styleClass="btt1T" onmousedown="return isSF1();" onclick=" return openSearchSel3(this,event,'rlrf');" onkeydown="return openSelXDP3(this,event,'rlrf');">
+        <apex:selectOption itemValue=" " itemLabel="Please Select"/>
+        <apex:selectOptions value="{!availFields}"/>
+        </apex:selectList>
+        
+         <apex:inputField label="Show column filter (texts & numbers & Dates)" value="{!zaapit__zaapit_editable_table2__c.zaapit__Show_column_filter__c}" />
+         
+         <apex:inputField label="Disable formula-field groupings (on filter)" value="{!zaapit__zaapit_editable_table2__c.zaapit__Disable_formula_fields_groupings__c}" />
+         
+         <apex:inputField label="Maximum rows for calculating formula-field groupings (textual formula filters)" value="{!zaapit__zaapit_editable_table2__c.zaapit__Max_rows_for_formula_grouping__c}" />
+         
+         
+         
+         <apex:inputField label="Hide Action column (Edit&Delete) on read only mode" value="{!zaapit__zaapit_editable_table2__c.zaapit__hideEditDelColumn__c}" />
+         <apex:inputField label="Maximum item-per-page selector - footer" value="{!zaapit__zaapit_editable_table2__c.zaapit__maxRowsOnPage__c}" />
+         
+         <apex:inputField label="Hide Table's Totals (footer) + subtotals Rows"  value="{!zaapit__zaapit_editable_table2__c.zaapit__hideTotalsRow__c}" styleClass="btt1T" html-title="Auto summarizing number/currency fields."/>
+         <apex:inputField label="Exclude Fields From Total (Sepearte with #)"  value="{!zaapit__zaapit_editable_table2__c.zaapit__Exclude_Fields_From_Total__c}" />
+         
+        <apex:inputField label="Hide Scroll Buttons"  value="{!zaapit__zaapit_editable_table2__c.zaapit__Hide_Scroll_Buttons__c}" />
+        
+        <apex:inputField label="Open Page on edit mode (default)"  value="{!zaapit__zaapit_editable_table2__c.zaapit__isEdit__c}" />
+        
+         
+         <apex:inputField label="Hide Customize Link from EVERYONE (Revertible from custom settings)"  value="{!zaapit__zaapit_editable_table2__c.zaapit__hideCustomizeLink__c}" />
+         
+         <apex:inputField label="Hide Multi choice filter (excel style)"  value="{!zaapit__zaapit_editable_table2__c.zaapit__hide_multi_value_filters__c}" />
+         
+         
+          
+          <apex:inputField label="Hide instant graph link"  value="{!zaapit__zaapit_editable_table2__c.zaapit__Hide_graph_link_on_filter__c}" />
+          <apex:inputField label="Disable Geo-Map for graphs(country graph)"  value="{!zaapit__zaapit_editable_table2__c.zaapit__DisableGeoMaps__c}" />
+          
+          
+          <apex:selectList title="When the system generates an instance graphs it can use an amount/number field instead for the regular row-count.<br/><br/>The result will be a numbers-trends-graph, for example choose the amount field on opportunities and then click on the close-date column(instance graph), the result will be amount-trends grouped by date.<br/><br/>In case the current object/table doesn't have a number field the right pull-down will be empty. " styleClass="btt1T" label="Amount field for graphs (Default: count rows)" value="{!zaapit__zaapit_editable_table2__c.zaapit__Amount_field_For_Graphs__c}" size="1" disabled="{!$User.zaapit__Enable_ZaapIT_s_View_Editor__c!=null && $User.zaapit__Enable_ZaapIT_s_View_Editor__c}">
+        <apex:selectOption itemValue=" " itemLabel="Please Select"/>
+        <apex:selectOptions value="{!availFieldsAmounhts}"/>
+        </apex:selectList>
+       
+        
+       <apex:inputField label="New-Record-Button Link Special Chars (empty to enable the add row button, Default: {!record3Lnk})"  value="{!zaapit__zaapit_editable_table2__c.zaapit__newRecordLinkNum__c}" />
+       
+       <apex:inputField label="Open text-area in dialog (in edit mode)"  value="{!zaapit__zaapit_editable_table2__c.zaapit__Open_TextArea_in_a_dialog__c}" />
+       
+       <apex:inputField label="Remove name-field from export (for no-name tables)"  value="{!zaapit__zaapit_editable_table2__c.zaapit__removeAutoNameFromExport__c}" />
+       
+       <apex:inputField label="Show user-guide link next to buttons"  value="{!zaapit__zaapit_editable_table2__c.zaapit__showUserGuideLink__c}" styleClass="btt1T" html-title="Please note that the top-left orange question mark is a direct link to the user guide."  />  
+       
+       <apex:inputField label="Custom CSS for columns & fields" styleClass="btt1T" html-title="Use this option to add your custom CSS to the table - to control input text sizes etc. &#60;br&#62;&#60;br&#62;&#60;b&#62;Examples:&#60;/b&#62;  &#60;b&#62;Input text width:&#60;/b&#62; &#60;br&#62;.inpSt_amount{width:50px}.&#60;br&#62;&#60;br&#62;&#60;b&#62;Output text width:&#60;/b&#62; .oSt_amount{width:50px;display:block}.  &#60;br&#62;&#60;br&#62;&#60;b&#62;Output text width with elipsis:&#60;/b&#62; .oSt_amount{width:50px;display:block; overflow:hidden; text-overflow:ellipsis}" value="{!zaapit__zaapit_editable_table2__c.zaapit__Custom_CSS__c}" />  
+       
+       <apex:inputField label="Show ALL ROWS + Delete / Archived  " value="{!zaapit__zaapit_editable_table2__c.zaapit__Show_All_Rows_in_query__c}" />  
+
+        <apex:inputField label="Show hover preview on name field" value="{!zaapit__zaapit_editable_table2__c.zaapit__Show_Hover_Preview_On_Name_Field__c}" />
+        
+        <apex:inputTextarea label="Use custom link for fields" styleClass="customLinksOnReadMode btt1T" title="Format: API-field~ID_Field~../hovering-tool-tip-link/{0}?param1={0}#API-field2~ID_Field2~hovering-link?param1={0}.The ID_Field will replace the {0} markings. &#60;br&#62;&#60;br&#62;The hovering-tool-tip-links are optional - position [2]" value="{!customLinksOnReadMode}" />
+        
+        <apex:inputTextarea label="Use custom table headers" styleClass="fieldsHeaders btt1T" title="format: API-field~header-name#API-field2~header-name" value="{!fieldsHeaders}" />
+        
+        <apex:inputField label="Column filter maximum rows" value="{!zaapit__zaapit_editable_table2__c.zaapit__loadfilter_maxResRows__c}" styleClass="btt1T" html-title="Default: 250. Please note that increasing the bar too high (e.g. 2000+) may impact the filter-loading performance"/>
+        
+        <apex:inputField label="Hide the top view save section" value="{!zaapit__zaapit_editable_table2__c.zaapit__hideTopFilterSave__c}" styleClass="btt1T" html-title="Hide the top left view-section, the one with the default table pull-down." />
+        <apex:inputField label="Disable Autosave Views" value="{!zaapit__zaapit_editable_table2__c.zaapit__disable_autosave_views__c}" styleClass="btt1T" html-title="The auto-save feature saves a temp view every time a user uses a search/sort/filter or page-jump so the user will be able to go back to that page and continue his work.&#60;br&#62;This feature is disabled when the top-left-views-pull-down are disabled.&#60;br&#62;"/>
+        
+        <apex:inputField label="Hide Page Numbers" value="{!zaapit__zaapit_editable_table2__c.zaapit__hidePageNumbers__c}" styleClass="btt1T" html-title="Hide Page Numbers - Useful for mobile view" />
+        <apex:inputField label="Hide Item Per Page" value="{!zaapit__zaapit_editable_table2__c.zaapit__hideItemsPerPage__c}" styleClass="btt1T" html-title="Hide Item Per Page - Useful for mobile view" />
+        
+        <apex:inputField label="Show top task links (Mass Create Tasks) " value="{!zaapit__zaapit_editable_table2__c.zaapit__showTopTaskLinksSAM__c}" styleClass="btt1T" html-title="Show top task links (Mass Create Tasks). You will also need to create the relevant workflow-rules and workflow-tasks that are connected to the create-task field (multi value)." />
+        
+        <apex:inputField label="Pre Subquery API field name" value="{!zaapit__zaapit_editable_table2__c.zaapit__mainFieldSubQueryPre__c}" styleClass="btt1T" html-title="This field will be auto filter on the loading of the main table by the results from a pre sub-query, useful to find duplicates. &#60;br&#62;&#60;br&#62;Example: email, see also the advanced option: Pre Subquery API field name, you must add this field to the main table." />
+        <apex:inputField label="Pre Subquery SOQL" value="{!zaapit__zaapit_editable_table2__c.zaapit__soqlSubQueryPre__c}" styleClass="btt1T" html-title="Filter the main table with the result of a sub-query, useful to find duplicates. &#60;br&#62;&#60;br&#62; Example: select email from lead group by email having count(id)&gt;1 &#60;br&#62;&#60;br&#62;Please use this field with the Pre-Subquery-API-field-name field.&#60;br&#62;&#60;br&#62; PLease note: THERE IS NO SOQL VALIDATION FOR THIS FIELD - IF YOU GET AN ERROR GO TO CUSTOM SETTING AND EMPTY THIS FIELD" />
+
+        <apex:inputField label="Hide Chatter column" value="{!zaapit__zaapit_editable_table2__c.zaapit__hide_chatter__c}" />
+        
+        
+        <apex:inputField label="External JS Include URL" value="{!zaapit__zaapit_editable_table2__c.zaapit__external_JS_include__c}" styleClass="btt1T" html-title="External JS Include URL for extreme customization"/>
+        <apex:inputField label="External CSS Include URL" value="{!zaapit__zaapit_editable_table2__c.zaapit__external_CSS_include__c}" styleClass="btt1T" html-title="External CSS Include URL for extreme customization"/>
+        
+        <!-- 
+        <apex:inputField label="Enable Field Value CSS" value="{!zaapit_editable_table2__c.EnableFieldValueCss__c}" styleClass="btt1T" html-title="Use the field value inside a css - only applicable for text/pick-lists"/>
+        <apex:inputField label="Enable row-Field Value CSS (put an api_field_name)" value="{!zaapit_editable_table2__c.PutFieldOnRowCSSClass__c}" styleClass="btt1T" html-title="Use the field value inside a css on row, css example: .tr-mailingcity-blank{background:red;}. &#60;br&#62;&#60;br&#62;Use # when using more than one field: API_FIELD_NAME1#API_FIELD_NAME2 ...&#60;br&#62;&#60;br&#62; TIP: use the browser&rsquo;s inspect-element to see the result."/>
+         -->
+        
+        <apex:inputField label="Add Custom Action link" value="{!zaapit__zaapit_editable_table2__c.zaapit__CustomActionLink__c}" styleClass="btt1T" html-title="Add Custom Action link on the action column next to edit-del links (auto return-URL will be added).&#60;br&#62;&#60;br&#62;Format: link-text~/linkpart1{0}linkpart2~tooltip (optional), {0} is the record id.&#60;br&#62;&#60;br&#62;&#60;b&#62;Example 1:&#60;/b&#62; Cls~../{0}/e?close=1~Close Task&#60;br&#62;&#60;br&#62;&#60;b&#62;Example 2:&#60;/b&#62; alert~javascript:alert(&#39;{0}&#39;);~Show RowID &#60;br&#62;&#60;br&#62;&#60;b&#62;TIP:&#60;/b&#62; use the External-JS-Include-URL-field to add custom JavaScript."/>
+        
+        <apex:inputField label="Add Horizontal Scroll" value="{!zaapit__zaapit_editable_table2__c.zaapit__EnableHorizontalScroll__c}" styleClass="btt1T" html-title="Add Horizontal Scroll for the table (AKA Mac Mode)"/>
+        
+        <apex:inputField label="Export to URL" value="{!zaapit__zaapit_editable_table2__c.zaapit__export_to_url__c}" styleClass="btt1T" html-title="Use this option only with custom developments / communities.&#60;br&#62;Example: https://zaapit.xxx.visual.force.com"/>
+        <apex:inputField label="Hierarchy Relation for HID" value="{!zaapit__zaapit_editable_table2__c.zaapit__HierarchyRelation__c}" styleClass="btt1T" html-title="Hierarchy Relation collection {HID} parameter&#60;br&#62; Format: table~SON Field API FIELD NAME~Father Field API FIELD NAME &#60;br&#62;Example: account~id~parentid&#60;br&#62;Placing accountid={HID} inside the advance-extra-condition-filter will fetch all the accounts that belongs to the main-ID Hierarchy (where the main id is the id sent by the opener-URL)."/>
+        <apex:inputField label="Show Refresh Link" value="{!zaapit__zaapit_editable_table2__c.zaapit__ShowRefreshLink__c}" styleClass="btt1T" html-title="Show Refresh Link next to the save-view links."/>        
+        
+        <apex:inputField label="Filter Replace Values Label Name" value="{!zaapit__zaapit_editable_table2__c.zaapit__FilterReplaceLabelName__c}" styleClass="btt1T" html-title="Use a custom label (API NAME) to replace the filter's drop down values (useful for pull-down translations), label value format: key1~value#key2~value.."/>                
+        
+        <apex:inputField label="Hide Browse Table link" value="{!zaapit__zaapit_editable_table2__c.zaapit__hideChooseATableLink__c}" styleClass="btt1T" html-title="Hide Browse Tables / choose a table link (on the top right)"/>
+        
+        <apex:inputField label="Apex-Class Logic Extend (Events)" value="{!zaapit__zaapit_editable_table2__c.zaapit__LogicExtend__c}" styleClass="btt1T" html-title="Write your apex-class and trigger them on specific events (must implement ZPTableHandler)&#60;br&#62;format:&#60;br&#62; EventName~classNameSpace~ClassName#&#60;br&#62;EventName2~classNameSpace2~ClassName2&#60;br&#62;&#60;br&#62;Supported Events:&#60;br&#62; AfterDataFetched, BeforeSaveUpdate, AfterSaveUpdateOK, BeforeSaveInsert, AfterSaveInsertOK, AfterAllSaveOK,AfterAllSaveNOTOK, BeforeMassClone,AfterMassClone, BeforeMassUpdateAll,AfterMassUpdateAll, OnAddRow"/>
+        
+        <apex:inputText label="Show Charts for Fields on top" value="{!topChartsFields}" styleClass="btt1T" title="Show Fields Graphs on top, use this field-api-name to set the main charts on the default view. e.g. status#type#.. <br/><br/>For opportunities the default is: closedate#stagename"/>
+        
+        <apex:inputField label="Add X Empty Rows (default)"  value="{!zaapit__zaapit_editable_table2__c.zaapit__NumberOfNewRows__c}"/>
+        
+        <apex:inputField label="Show Tools link on top-left"  value="{!zaapit__zaapit_editable_table2__c.zaapit__tools_link__c}" styleClass="btt1T" html-title="Show Tools link on top-left next to the edit-layout link, put a URL to fetch via ajax."/>
+        <apex:inputField label="Override New Record link (prefix: {!record3Lnk})"  value="{!zaapit__zaapit_editable_table2__c.zaapit__new_record_link__c}" styleClass="btt1T" html-title="Replace the URL/Address for the top New button (use to autofill data).&#60;br&#62;Example: /{!record3Lnk}/e?parent_id={ID}&parent__c={NAME} &#60;br&#62; &lowast; {ID} and {NAME} are the parent&rsquo;s id and name, retUrl will added automatically so please omit that from the url. &#60;br&#62; Record-type selection link: {!recortTypeSelLink}"/>
+
+        <apex:inputField label="Enable Advanced Text Search"  value="{!zaapit__zaapit_editable_table2__c.zaapit__Advanced_Text_Search__c}" styleClass="btt1T" html-title="Enable Advanced Text Search - supports textareas & long-text fields, does not support picklists"/>
+        
+<div> <span style="color:#4a4a56;font-size: 91%;font-weight: bold;">New link with Record-Type chooser:</span>  <div style="width:250px;padding: 3px;border:1px solid #aaaaaa;overflow:auto;">{!recortTypeSelLink}   </div></div>
+
+
+        
+        <apex:inputField label="Freeze Columns /Pane"  value="{!zaapit__zaapit_editable_table2__c.zaapit__freezeColumn__c}" styleClass="btt1T" html-title="Freeze columns / / pane while scrolling"/>
+        <apex:inputField label="Using scope"  value="{!zaapit__zaapit_editable_table2__c.zaapit__Using_Scope__c}" styleClass="btt1T" html-title="&#60;b&#62;Delegated&#60;/b&#62;&#60;br/&#62;Filter for records delegated to another user for action. For example, a query could filter for only delegated Task records.&#60;br/&#62;&#60;b&#62;Everything&#60;/b&#62;&#60;br/&#62;Filter for all records.&#60;br/&#62;&#60;b&#62;Mine&#60;/b&#62;&#60;br/&#62;Filter for records owned by the user running the query.&#60;br/&#62;&#60;b&#62;My_Territory&#60;/b&#62;&#60;br/&#62;Filter for records in the territory of the user running the query. This option is available if territory management is enabled for your organization.&#60;br/&#62;&#60;b&#62;My_Team_Territory&#60;/b&#62;&#60;br/&#62;Filter for records in the territory of the team of the user running the query. This option is available if territory management is enabled for your organization.&#60;br/&#62;&#60;b&#62;Team&#60;/b&#62;&#60;br/&#62;Filter for records assigned to a team, such as an Account team."/>
+        <apex:inputField label="Freeze Num of Columns"  value="{!zaapit__zaapit_editable_table2__c.zaapit__freezeColumnNum__c}" styleClass="btt1T" html-title="Number of columns to freeze"/>
+        
+                
+        <!-- <apex:inputField label="Show mass-update all items button" value="{!zaapit__zaapit_editable_table2__c.zaapit__Show_Hover_Preview_On_Name_Field__c}" />
+ -->
+     </apex:pageBlockSection>   
+     </div>
+     
+    
+           <div style="font-size:10pt;font-weight:bold;color:#999999;text-align:center;margin-top:25px;" class="hideWhenViewEditor">Use Ctrl-F to find what you are looking for or send an email to <a href="mailto:support@zaapit.com?subject=Support Needed (Edit layout)" style="color:#999999;">support@zaapit.com</a></div>
+     
+    </apex:pageBlock>
+     <apex:pageBlock title="Customize View" mode="view" rendered="{!isDone}">
+     <apex:pageBlockButtons >
+        <apex:commandButton action="{!edit}" value="Edit"/>
+      </apex:pageBlockButtons>
+     <script>
+     $(document).ready(function(){
+     closeWinAndRefresh();
+     });
+     </script>
+     </apex:pageBlock>
+     
+      <apex:actionFunction action="{!tableChanged}" name="tableChanged" reRender="pageBLK,pgBlock1" oncomplete="fixonload();">
+      
+      </apex:actionFunction>
+      
+      <apex:actionFunction action="{!viewChanged}" name="viewChanged" reRender="pageBLK,pgBlock1" oncomplete="fixonload();">
+      
+      </apex:actionFunction>
+          
+     <apex:actionFunction action="{!save}" name="save1"/>
+     <apex:actionFunction action="{!saveCurrentView}" name="saveCurrentView1"/>
+     <apex:actionFunction action="{!saveCurrentView2}" name="saveCurrentView2"/>
+     <apex:actionFunction action="{!deleteView1}" name="deleteView1"/>
+     
+     
+       <apex:actionFunction action="{!loadNewJson}" name="loadNewJson" reRender="pageBLK" oncomplete="fixonload();">
+      <apex:param name="configJson" assignTo="{!configJson}" value="" />
+      <apex:param name="importConf1" assignTo="{!importConf1}" value="true" />
+      </apex:actionFunction>
+     <apex:inputtextarea styleClass="ImportExportDialogTAReg hd1" value="{!configJson}"/>
+     
+     <div id="ImportExportDialog" class="hd1" title="Export / Import Default Configuration">
+     Use this dialog to import/export this Smart-Table Default Configuration from one table to another or from one system to another.
+      
+     <textarea id="ImportExportDialogTA" style="width:100%;height:100px;margin:10px 0px;"></textarea>
+     <div style="color:#999999;">Example: Copy the content (configuration) of the above text-area on your sandbox and paste that in the same text-area on production and press the import button.
+     </div>
+     </div>
+  </apex:form>
+  
+</apex:page>

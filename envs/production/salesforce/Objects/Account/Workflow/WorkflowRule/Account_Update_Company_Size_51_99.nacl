@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Account_Update_Company_Size_51_99 {
+  fullName = "Account.Update Company Size 51-99"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Update_Company_Size_51_99
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "Long_Account_ID__c <> '0011t00000Lup6fAAB' && Long_Account_ID__c <> '0011t00000cRhxiAAC' && (( NumberOfEmployees <= 99 && NumberOfEmployees > 50) ||  (of_Employees__c > 50 && of_Employees__c <= 99)) &&  (text(Company_Size__c) = '')"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Account,
+  ]
+}

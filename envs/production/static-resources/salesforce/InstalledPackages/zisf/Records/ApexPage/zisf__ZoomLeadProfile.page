@@ -1,0 +1,820 @@
+<apex:page StandardController="Lead" showHeader="false" applyHtmlTag="false" standardStylesheets="true" sidebar="false"
+           extensions="zisf.StartupExtension,zisf.ZoomLeadExtension" action="{!appInit}">
+    <c:coreCSS />
+    <style>
+        body {
+            height: 525px !important;
+        }
+    </style>
+    <style type="text/css">
+        .pbfirst .pbSubheader {
+            margin-top: 0 !important
+        }
+        .hidden_div {
+            display:none;
+        }
+        .transition {
+            position: relative;
+            -webkit-animation-name: mymove;  /* Chrome, Safari, Opera */
+            -webkit-animation-duration: 5s;  /* Chrome, Safari, Opera */
+            animation-name: mymove;
+            animation-duration: 2s;
+        }
+        
+        .not_right {
+            border: none !important;
+            background: transparent !important;
+        }
+        /* Chrome, Safari, Opera */
+        @-webkit-keyframes mymove {
+            from {left: -200px;}
+            to {left: 0px;}
+        }
+                .ui-slider-horizontal .ui-slider-handle {
+            top: -0.41em;
+            margin-left: -.6em;
+        }
+        .ui-widget-header {
+            background:#DCDDDE;
+        }
+    
+        .ui-slider-horizontal {
+            height: 0.4em;
+        }
+    
+        .ui-state-default, .ui-widget-content .ui-state-default{
+            border: none!important;
+            background:#59C09B !important;
+            border-radius: 50px;
+            outline:none;
+        }
+        .zoom_key_value {
+            margin-bottom: 8px;
+        }
+        .zoom_key_value fieldset table tbody tr td input[type=radio]+label {
+            font-weight: 700;
+        }
+        .no_click {
+            pointer-events: none;
+            cursor: default;
+        }
+    </style>
+    <apex:includeScript value="{!URLFOR($Resource.zisf__jqueryUI, 'jquery-ui-1.12.1/jquery-ui.js' )}"/>
+    <script type="text/javascript">
+//      not in use, amplitude support
+      function httpGet(theUrl) {
+            return jQuery.get(theUrl);
+
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    //amplitude.getInstance().init("3538409eea2df00393d78a76ba767fe6");
+        var user_id = getRandomInt(0,9007199254740991);
+      function sendUpdateEvent(source, showCreditError, isSessionExpired) {
+        if(isSessionExpired){
+              logout();
+              return;
+          }
+          else if(showCreditError)
+        {
+            if (confirm("You have reached your import limit.\nTo continue, you may import the selected records using your Bulk Export Package."))
+            {
+            callUpdateFieldWithExtraCharge();
+            }
+            else{
+                return;
+            }
+        }
+        if(source != ''){
+        var url = 'https://api.amplitude.com/httpapi?api_key=3538409eea2df00393d78a76ba767fe6&event=[{"user_id":"'+user_id+'", "event_type":"update","page":"Leads","source":"'+source+'", "time":'+Date.now()+'}]';
+        httpGet(url);
+        }
+          //amplitude.getInstance().logEvent('update',{'page':'Accounts','source':source});
+      }
+
+      function sendUpdateEventAll(showCreditError, isSessionExpired) {
+          if(isSessionExpired){
+              logout();
+              return;
+          }
+          else if(showCreditError)
+          {
+            if (confirm("You have reached your import limit.\nTo continue, you may import the selected records using your Bulk Export Package."))
+            {
+            callUpdateAllWithExtraCharge();
+            }
+          }
+      }
+
+
+      var sendRevealEvent = function() {
+        var url = 'https://api.amplitude.com/httpapi?api_key=3538409eea2df00393d78a76ba767fe6&event=[{"user_id":"'+user_id+'", "event_type":"reveal","page":"Leads", "time":'+Date.now()+'}]';
+        httpGet(url);
+          //amplitude.getInstance().logEvent('update',{'page':'Accounts','source':source});
+      }
+    </script>
+    <script type="text/JavaScript">
+        if (typeof String.prototype.endsWith !== 'function') {
+            String.prototype.endsWith = function(suffix) {
+                return this.indexOf(suffix, this.length - suffix.length) !== -1;
+            };
+        }
+        
+        jQuery( document ).ready(function() {
+            var justClickedWrongPerson = false;
+            jQuery('.wrong_person').hide();
+            jQuery('.not_right').click(function () {
+                jQuery('.wrong_person').show();
+                jQuery('.wrong_person').click();
+                jQuery('.search_button').click();
+                jQuery('.web_mentions').hide();
+                justClickedWrongPerson = true;
+            });
+            jQuery('.overview_tab').click(function() {
+                if (!justClickedWrongPerson) {
+                   jQuery('.wrong_person').hide();
+                   jQuery('.web_mentions').show();
+                }
+                else {
+                    justClickedWrongPerson = false;
+                }
+            });
+        });
+    </script>
+    <apex:form >
+        <apex:actionFunction name="callUpdateFieldWithExtraCharge"
+                             action="{!updateFieldWithExtraCharge}"/>
+
+        <apex:actionFunction name="callUpdateAllWithExtraCharge"
+                             action="{!UpdateLeadWithExtraCharge}"/>
+
+        <apex:actionFunction name="logout"
+                             action="{!startupExtension.logoutWithError}"/>
+
+        <apex:outputPanel layout="block" rendered="{!AND(isLoginRequired,isLightning)}">
+                You are not logged in to ZoomInfo. Please login on the Zoominfo Tab.
+                <!--<apex:commandLink action="{!forwardToLogin}" target="_self" value="Go To Login Page" styleClass="action"/>-->
+                <!--<a href="/apex/login?callbackUrl={!CallbackUrl}"-->
+                   <!--style="color:#0000EE">-->
+                    <!--Go To Login Page-->
+                <!--</a>-->u
+                <apex:commandLink action="{!logout}" target="_self" value="Go To Login Page"
+                              styleClass="action"/>
+        </apex:outputPanel>
+        <apex:outputPanel styleClass="zoom_noselect" id="zoom_form" rendered="{!NOT(AND(isLoginRequired,isLightning))}">
+        <apex:pageMessage title="Your partner key is not valid."
+                          summary="Please try again. If these errors continue, contact your Salesforce.com administrator."
+                          severity="error" strength="3" rendered="{!NOT(ValidKey)}"/>
+        <!--<apex:outputPanel styleClass="zoom_not_found"-->
+                          <!--rendered="{!AND(ValidKey, AND(NOT(HasPeople), OR(ISNULL(ZoomCompanyRecord), ISNULL(ZoomCompanyRecord.CompanyID))))}">-->
+            <!--<apex:outputText value="We did not find this lead in our database.  Please visit "/>-->
+            <!--<apex:outputLink value="http://www.zoominfo.com" target="_blank">zoominfo.com</apex:outputLink>-->
+            <!--<apex:outputText value=" to conduct a wider search."/>-->
+        <!--</apex:outputPanel>-->
+
+        <apex:pageBlock title="{!Lead.Name}" rendered="{!OR(HasPeople, NOT(ZoomCompanyRecord.CompanyID == 0))}">
+            <apex:outputPanel id="pageErrorsBlock">
+                <apex:includeScript value="/support/console/37.0/integration.js"/>
+                <apex:outputPanel id="refreshPage" rendered="{!refreshPage==true}">
+                    <script type="text/javascript">
+                        window.reloadParentFrame = function () {
+                            if (sforce.console.isInConsole()) {
+                                sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+                                    sforce.console.refreshPrimaryTabById(primaryResult.id,true,function() {
+                                        sforce.console.getFocusedSubtabId(function(subResult) {
+                                            sforce.console.refreshSubtabById(subResult.id,true);
+                                        });
+                                    });
+                                });
+                            }
+                            else {
+                                window.top.location = '/{!Lead.id}';
+                            }
+                        };
+                        window.reloadParentFrame();
+                    </script>
+                </apex:outputPanel>
+                <!--  workaround to stop page refresh if there is an error when a field is updated -->
+                <!--<script type="text/javascript">-->
+                    <!--window.reloadParentFrame = function () {-->
+                        <!--return;-->
+                    <!--};-->
+                <!--</script>-->
+
+                <apex:pageMessages />
+            </apex:outputPanel>
+            <script type="text/javascript">
+                jQuery( document ).ready(function() {
+                    jQuery('.reveal_button').click(function () {
+                        jQuery('.reveal_button').hide();
+
+                    })
+                });
+            </script>
+            <apex:facet name="header">
+                <apex:outputPanel layout="block" id="zoom_title_panel">
+                    <!--<apex:outputPanel rendered="{!PeopleSearchResult.RestrictedSize > 1}">-->
+                        <!--&nbsp;&nbsp;&nbsp;&nbsp;-->
+                        <!--<apex:repeat value="{!TotalResultsIndexes}" var="i">-->
+                            <!--<apex:outputText value="{!i}" rendered="{!i-1 == CurrentIndex}"/>-->
+                            <!--<apex:commandLink value="{!i}" action="{!SelectContactByIndex}"-->
+                                              <!--rendered="{!i-1 != CurrentIndex}">-->
+                                <!--<apex:param name="index" value="{!i-1}" assignTo="{!CurrentIndex}"/>-->
+                            <!--</apex:commandLink>-->
+                            <!--<apex:outputText value=" | " rendered="{!i < TotalResultsIndexes.size}"/>-->
+                        <!--</apex:repeat>-->
+                        <!--&nbsp;-->
+                        <!--<apex:image url="/s.gif" styleClass="helpIcon" style="vertical-align: text-bottom"-->
+                                    <!--title="{!$Label.zoomMultipleResults}"/>-->
+                    <!--</apex:outputPanel>-->
+
+                    <apex:image styleClass="zoom_logo" url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/logo.png')}"/>
+                    <span class="zoom_header_actions">
+                        <i class="fa fa-comment" aria-hidden="true" style="margin-right:3px"></i>
+                        <apex:outputLink value="mailto:websupport@zoominfo.com?subject={!$Label.zisf__feedbackemailsubject}"
+                                         styleClass="action"
+                                         target="_blank">{!$Label.zisf__feedbackemailtitle}</apex:outputLink>
+                        <span class="divider"><!--  --></span>
+                        <i class="fa fa-sign-out" aria-hidden="true" style="margin-right:3px"></i>
+                        <apex:commandLink action="{!logout}" target="_self" value="{!$Label.zisf__actionlogout}"
+                                          styleClass="action"/>
+                    </span>
+                </apex:outputPanel>
+            </apex:facet>
+
+            <apex:tabPanel switchType="client"
+                           selectedTab="{!tabCust_SelectedTab}"
+                           value="{!tabCust_SelectedTab}"
+                           id="zoom_tab_panel"
+                           contentClass="zoom_tab_content" styleClass="zoom_tab_panel" tabClass="zoom_tab"
+                           activeTabClass="zoom_active_tab" inactiveTabClass="zoom_inactive_tab">
+                <apex:tab label="Overview" name="Overview" rendered="{!(tabCust_Disable_Overview=='false')}" styleClass="overview_tab"
+                          id="zoom_summary_tab">
+                    <div class="zoom_tab_title">
+                        <apex:outputText styleClass="zoom_title" value="{!ZoomPersonRecord.FirstName} {!ZoomPersonRecord.LastName} |" id="zoom_title"/>
+                        <apex:commandButton styleClass="not_right" value="Not the right person?" rerender="zoom_wrong_person_tab zoom_tab_panel"/>
+                    </div>
+                    <div class="zoom_tab_child" style="align-items:stretch;overflow: hidden;">
+                        <div style="display:flex; flex-direction:column; min-width: 250px; padding: 16px;">
+                            <apex:outputPanel rendered="{!NOT(HasPeople)}">
+                                <apex:outputPanel styleClass="zoom_not_found">
+                                    <apex:outputText value="We did not find this lead in our database.  Please visit "/>
+                                    <apex:outputLink value="http://www.zoominfo.com" target="_blank">zoominfo.com
+                                    </apex:outputLink>
+                                    <apex:outputText value=" to conduct a wider search."/>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                            <apex:outputPanel id="sdfsdfsdf" rendered="{!HasPeople}">
+                                <apex:outputPanel styleClass="zoom_key_value">
+                                    <div>
+                                        <apex:outputLabel value="Name" for="zoom_name"/>
+
+                                        <apex:outputPanel >
+                                            
+                                            <apex:outputLink value="http://subscriber.zoominfo.com/zoominfo/#search/profile/person?personId={!ZoomPersonRecord.PersonID}&targetid=profile" id="zoom_link"
+                                                             styleClass="{!IF(ValidateName, 'zoom_different', '')} zoom_value" target="_blank">
+                                                {!ZoomPersonRecord.FirstName} {!ZoomPersonRecord.LastName}
+                                            </apex:outputLink>
+                                            <!-- disabled by Yonatan's request
+                                            <apex:outputLink styleClass="help" value="http://www.facebook.com/srch.php?nm={!ZoomPersonRecord.FirstName}+{!ZoomPersonRecord.LastName}" target="_blank" title="Find {!ZoomPersonRecord.FirstName} {!ZoomPersonRecord.LastName} on Facebook">
+                                                <apex:image styleClass="FacebookIcon" url="{!URLFOR($Resource.bundle, 'bundle/images/facebook.png')}"/>
+                                            </apex:outputLink>
+                                            &nbsp;
+                                            -->
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div>
+                                        <apex:outputLink styleClass="help" value="http://subscriber.zoominfo.com/zoominfo/#search/profile/person?personId={!ZoomPersonRecord.PersonID}&targetid=profile"
+                                                         target="_blank"
+                                                         title="Find {!ZoomPersonRecord.FirstName} {!ZoomPersonRecord.LastName} on ZoomInfo">
+                                            <apex:image styleClass="PinWheelIcon"
+                                                        url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/wheel.png')}"/>
+                                        </apex:outputLink>
+                                        &nbsp;
+                                        <apex:outputLink styleClass="help"
+                                                         value="https://www.linkedin.com/pub/dir/{!ZoomPersonRecord.FirstName}/{!ZoomPersonRecord.LastName}"
+                                                         target="_blank"
+                                                         title="Find {!ZoomPersonRecord.FirstName} {!ZoomPersonRecord.LastName} on LinkedIn">
+                                            <apex:image styleClass="linkedInIcon"
+                                                        url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/linkedin.png')}"/>
+                                        </apex:outputLink>
+                                        <apex:outputPanel rendered="{!AND(ValidateName == true, DisabledName == false)}">
+                                            &nbsp;
+                                            <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            title="Click to update SFDC name to '{!ZoomPersonRecord.FirstName} {!ZoomPersonRecord.LastName}'"
+                                                            rerender="pageErrorsBlock"
+                                                            onComplete="return sendUpdateEvent('name', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});"
+                                                            >
+                                            <apex:param name="fieldToUpdate" value="FullName"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton></apex:outputPanel>
+                                    </div>
+                                </apex:outputPanel>
+                                <apex:outputPanel styleClass="zoom_key_value"
+                                                  rendered="{!ZoomPersonRecord.JobTitle != ''}">
+                                    <div>
+                                        <apex:outputLabel value="Title" for="zoom_title"/>
+
+                                        <apex:outputPanel >
+                                            <apex:outputText styleClass="{!IF(ValidateTitle, 'zoom_different', '')} zoom_value"
+                                                             value="{!ZoomPersonRecord.JobTitle}"/>
+
+
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div>
+                                        <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            title="Click to update SFDC title to '{!ZoomPersonRecord.JobTitle}'"
+                                                            rendered="{!AND(ValidateTitle == true, DisabledTitle == false)}"
+                                                            disabled="{!NOT(CanUpdateTitle)}"
+                                                            rerender="pageErrorsBlock"
+                                                            onComplete="return sendUpdateEvent('jobTitle', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});"
+                                                            >
+                                            <apex:param name="fieldToUpdate" value="JobTitle"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel styleClass="zoom_key_value"
+                                                  rendered="{!ZoomPersonRecord.Phone != ''}">
+                                    <div>
+                                        <apex:outputPanel >
+                                            <apex:outputPanel id="phone_space" style="margin-right:6px;color:#6B6C6F">
+                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                            </apex:outputPanel>
+                                            <apex:outputText styleClass="{!IF(ValidatePhone, 'zoom_different', '')} {!IF(infoRevealed,'transition','')} zoom_revealed zoom_value"
+                                                             value="{!IF(showPhone == true,ZoomPersonRecord.Phone,ZoomPersonRecord.PhoneDisplay)}"
+                                                             id="zoom_phone"/>
+                                            <apex:outputPanel id="direct_green" styleClass="{!IF(AND(infoRevealed==true,OR(ZoomPersonRecord.DirectPhone != null ,AND(ZoomPersonRecord.Phone != null,ZoomPersonRecord.CompanyPhone!=null,ZoomPersonRecord.Phone != ZoomPersonRecord.CompanyPhone))),'directPhoneIcon','')}"></apex:outputPanel>
+
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div>
+                                        <apex:commandButton id="update_phone" action="{!checkIfCanUpdateField}"
+                                                            title="{!if(CanUpdatePhone, 'Click to update SFDC phone', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                            styleClass="{!IF(ShowPhone == true && ValidatePhone == true && DisabledPhone == false,'','hidden_div')} update_button"
+
+                                                            rerender="pageErrorsBlock"
+                                                            onComplete="return sendUpdateEvent('phone', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});"
+                                                            disabled="{!NOT(CanUpdatePhone)}">
+                                            <apex:param name="fieldToUpdate" value="Phone"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                        
+                                        <apex:commandButton id="reveal_info" styleClass="reveal_button" action="{!revealInfo}" value="Reveal Info" style="color:white;background:#F27B4A;" rendered="{!ShowPhone==false}" rerender="zoom_phone,zoom_email,update_phone,reveal_info,update_email,direct_green,phone_space" onclick="sendRevealEvent();"/>
+                                    </div>
+                                </apex:outputPanel>
+                                <apex:outputPanel styleClass="zoom_key_value"
+                                                  rendered="{!ZoomPersonRecord.Email != ''}">
+                                    <div>
+
+                                        <apex:outputPanel >
+                                            <apex:outputPanel style="margin-right:6px;color:#6B6C6F">
+                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                            </apex:outputPanel>
+                                            <apex:outputLink styleClass="{!IF(ValidateEmail, 'zoom_different_link', '')} {!IF(infoRevealed,'transition','no_click')} zoom_value"
+                                                             value="mailto://{!IF(ShowEmail, ZoomPersonRecord.Email,ZoomPersonRecord.EmailDisplay)}"
+                                                             id="zoom_email" target="_blank">
+                                                {!IF(ShowEmail, ZoomPersonRecord.Email,ZoomPersonRecord.EmailDisplay)}
+                                            </apex:outputLink>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div>
+                                        <apex:commandButton id="update_email" action="{!checkIfCanUpdateField}"
+                                                            title="{!if(CanUpdateEmail, 'Click to update SFDC email', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                            styleClass="{!IF(ShowEmail == true && ValidateEmail == true && DisabledEmail == false,'','hidden_div')} update_button"
+                                                            rerender="pageErrorsBlock"
+                                                            onComplete="return sendUpdateEvent('email', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});"
+                                                            disabled="{!NOT(CanUpdateEmail)}">
+                                            <apex:param name="fieldToUpdate" value="Email" assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                        <apex:commandButton id="reveal_info_email" styleClass="reveal_button" action="{!revealInfo}" value="Reveal Info" style="color:white;background:#F27B4A;" rendered="{!ShowPhone==false && ZoomPersonRecord.Phone==''}" rerender="zoom_phone,zoom_email,update_phone,reveal_info,reveal_info_email,update_email,direct_green,phone_space" onclick="sendRevealEvent();"/>
+                                    </div>
+                                </apex:outputPanel>
+                                <apex:outputPanel style="margin-left: -16px; margin-right: -16px; border-top: 1px solid #C2C2C5; padding-left: 16px;    padding-top: 10px; padding-bottom: 10px;background-color: #DCDDDE;"
+                                                  styleClass="zoom_key_value"
+                                                  rendered="{!AND(NOT(ISNULL(ZoomCompanyRecord.CompanyName)), ZoomCompanyRecord.CompanyName != '')}">
+                                    <div>
+                                        <apex:outputLabel value="Company" for="zoom_company"/>
+
+
+                                        <apex:outputPanel id="zoom_company">
+                                            <apex:outputLink styleClass="zoom_company_url zoom_value"
+                                                             value="http://subscriber.zoominfo.com/zoominfo/#search/profile/company?companyId={!ZoomCompanyRecord.CompanyID}&targetid=profile"
+                                                             rendered="{!NOT(ISNULL(ZoomCompanyRecord.CompanyID))}"
+                                                             target="_blank">
+                                                {!ZoomCompanyRecord.CompanyName}
+                                            </apex:outputLink>
+                                            <apex:outputText styleClass="zoom_company_ref zoom_value"
+                                                             value="{!ZoomCompanyRecord.CompanyName}"
+                                                             rendered="{!ISNULL(ZoomCompanyRecord.CompanyID)}"/>
+                                            &nbsp;
+                                            <apex:outputText style="color: red; font-style:italic"
+                                                             value="This person may have moved to another company."
+                                                             rendered="{!IsPast == true}"/>
+                                        </apex:outputPanel>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <!--<apex:outputPanel styleClass="zoom_key_value" rendered="{!NOT(ISNULL(ZoomPersonRecord.LastUpdatedDate))}">-->
+                                <!--<apex:outputLabel value="Last Mentioned Date" for="zoom_last_updated"/>-->
+                                <!--<apex:outputText value="{!ZoomPersonRecord.LastUpdatedDateFormatted}"-->
+                                <!--id="zoom_last_updated"/>-->
+                                <!--</apex:outputPanel>-->
+                                <!--<apex:outputPanel styleClass="zoom_key_value" rendered="{!AND(NOT(ISNULL(ZoomPersonRecord)), ZoomPersonRecord.PastEmployment.size != 0)}">-->
+                                <!--<apex:outputLabel value="Employment History" for="zoom_history"/>-->
+                                <!--<apex:dataList value="{!ZoomPersonRecord.PastEmployment}" var="c"-->
+                                <!--styleClass="zoom_list" id="zoom_history">-->
+                                <!--<apex:outputPanel >-->
+                                <!--<apex:outputText value="{!c.JobTitleJoined} at "/>-->
+                                <!--<apex:outputLink styleClass="zoom_company_url"-->
+                                <!--value="{!c.Company.ZoomCompanyUrl}"-->
+                                <!--rendered="{!NOT(ISNULL(c.Company.ZoomCompanyUrl))}"-->
+                                <!--target="_blank">{!c.Company.CompanyName}-->
+                                <!--</apex:outputLink>-->
+                                <!--<apex:outputText styleClass="zoom_company_ref"-->
+                                <!--value="{!c.Company.CompanyName}"-->
+                                <!--rendered="{!ISNULL(c.Company.ZoomCompanyUrl)}"/>-->
+                                <!--</apex:outputPanel>-->
+                                <!--</apex:dataList>-->
+                                <!--</apex:outputPanel>-->
+                                <!--<apex:outputPanel styleClass="zoom_key_value" rendered="{!ZoomPersonRecord.Education.size != 0}">-->
+                                <!--<apex:outputLabel value="Education" for="zoom_education"/>-->
+                                <!--<apex:dataList value="{!EducationRecords}" var="e" styleClass="zoom_list"-->
+                                <!--id="zoom_education">-->
+                                <!--<apex:outputPanel >-->
+                                <!--<apex:outputText value="{!e}" styleClass="entry"/>-->
+                                <!--</apex:outputPanel>-->
+                                <!--</apex:dataList>-->
+                                <!--</apex:outputPanel>-->
+
+
+                                <!--
+                              <apex:pageBlockSectionItem rendered="{!ZoomPersonRecord.Industry.size != 0}">
+                                  <apex:outputLabel value="Industry" for="zoom_industry"/>
+                                  <apex:dataList value="{!ZoomPersonRecord.Industry}" var="ind" styleClass="zoom_list" id="zoom_industry">
+                                      <apex:outputText value="{!ind}"/>
+                                  </apex:dataList>
+                              </apex:pageBlockSectionItem>
+                          </apex:outputPanel>
+
+                           COMPANY INFORMATION -->
+                            </apex:outputPanel>
+                        </div>
+                        <apex:variable var="displayCompanyInformation" value="{!NOT(ISNULL(ZoomCompanyRecord.CompanyID))}"/>
+                        <div style="display: flex;flex-direction: column; flex-grow:1;height: 100%">
+                            <div style="display: flex; flex-direction:column;     height: 100%; background-color:#DCDDDE; padding: 16px; padding-left: 30px; -webkit-user-select: none;">
+                                <apex:outputPanel style="display:flex;height: 99%;overflow:auto;"
+                                                  rendered="{!displayCompanyInformation}">
+                                    <div style="display: flex;flex-direction: column;max-height: 400px;flex-basis: 300px; margin-right: 40px;">
+                                        <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!ZoomCompanyRecord.CompanyName != ''}">
+                                            <div>
+                                                <apex:outputLabel value="Company" for="company_name"/>
+                                                <apex:outputPanel id="company_name">
+                                                    <apex:outputLink value="http://subscriber.zoominfo.com/zoominfo/#search/profile/company?companyId={!ZoomCompanyRecord.CompanyID}&targetid=profile"
+                                                                     styleClass="{!IF(ValidateCompanyName, 'zoom_different', '')} zoom_value"
+                                                                     rendered="{!NOT(ISNULL(ZoomCompanyRecord.CompanyID))}"
+                                                                     target="_blank">{!ZoomCompanyRecord.CompanyName}
+                                                    </apex:outputLink>
+                                                    <!--<apex:outputText styleClass="zoom_company_ref"-->
+                                                    <!--value="{!ZoomCompanyRecord.CompanyName}"-->
+                                                    <!--rendered="{!ISNULL(ZoomCompanyRecord.ZoomCompanyUrl)}"/>-->
+                                                    <!--</apex:outputPanel>-->
+                                                </apex:outputPanel>
+                                            </div>
+
+                                            <div>
+                                                <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                                    title="{!if(CanUpdateCompanyName, 'Click to update SFDC company name', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                                    rendered="{!AND(ValidateCompanyName == true, DisabledCompanyName == false)}"
+                                                                    rerender="pageErrorsBlock"
+                                                                    disabled="{!NOT(CanUpdateCompanyName)}"
+                                                                    onComplete="return sendUpdateEvent('', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                                    <apex:param name="fieldToUpdate" value="company.CompanyName"
+                                                                assignTo="{!fieldToUpdate}"/>
+                                                </apex:commandButton>
+
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!ZoomCompanyRecord.CompanyAddress.FullAddress != ''}">
+                                            <div>
+                                                <apex:outputLabel value="Address" for="company_address"/>
+
+                                                <apex:outputPanel layout="block" style="white-space: pre-wrap;overflow: hidden;text-overflow: ellipsis;max-height: 75px;">
+                                                    <apex:outputText styleClass="{!IF(ValidateAddress, 'zoom_different', '')} zoom_value"
+                                                                     id="company_address"
+                                                                     value="{!ZoomCompanyRecord.CompanyAddress.FullAddress}"/>
+                                                </apex:outputPanel>
+                                            </div>
+                                            <div>
+                                                <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                                    title="{!if(CanUpdateAddressAll, 'Click to update SFDC address', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                                    rendered="{!AND(ValidateAddress == true, DisabledAddress == false)}"
+                                                                    rerender="pageErrorsBlock"
+                                                                    onComplete="sendUpdateEvent('address', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});"
+                                                                    disabled="{!NOT(CanUpdateAddressAll)}">
+                                                    <apex:param name="fieldToUpdate" value="Address"
+                                                                assignTo="{!fieldToUpdate}"/>
+                                                </apex:commandButton>
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!ZoomCompanyRecord.Website != ''}">
+                                            <div>
+                                                <apex:outputLabel value="Website" for="company_website"/>
+
+                                                <apex:outputPanel >
+                                                    <apex:outputLink styleClass="{!IF(ValidateWebsite, 'zoom_different_link', '')} zoom_value"
+                                                                     value="http://{!ZoomCompanyRecord.Website}"
+                                                                     rendered="{!NOT(ISNULL(ZoomCompanyRecord.Website))}"
+                                                                     target="_blank">{!ZoomCompanyRecord.Website}
+                                                    </apex:outputLink>
+                                                </apex:outputPanel>
+                                            </div>
+                                            <div>
+                                                &nbsp;
+                                                <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                                    title="{!if(CanUpdateWebsite, 'Click to update SFDC website', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                                    rendered="{!AND(ValidateWebsite == true, DisabledWebsite == false)}"
+                                                                    rerender="pageErrorsBlock"
+                                                                    disabled="{!NOT(CanUpdateWebsite)}"
+                                                                    onComplete="return sendUpdateEvent('', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                                    <apex:param name="fieldToUpdate" value="company.Website"
+                                                                assignTo="{!fieldToUpdate}"/>
+                                                </apex:commandButton>
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!ZoomCompanyRecord.Phone != ''}">
+                                            <div>
+                                                <apex:outputLabel value="Phone" for="company_phone"/>
+
+                                                <apex:outputText value="{!ZoomCompanyRecord.Phone}"
+                                                                 styleClass="{!IF(ValidateCompanyPhone, 'zoom_different', '')} zoom_value"/>
+                                            </div>
+                                            <div>
+                                                <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                                    title="{!if(CanUpdateCompanyPhone, 'Click to update SFDC phone', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                                    rendered="{!AND(ValidateCompanyPhone == true, DisabledCompanyPhone == false)}"
+                                                                    rerender="pageErrorsBlock"
+                                                                    disabled="{!NOT(CanUpdateCompanyPhone)}"
+                                                                    onComplete="return sendUpdateEvent('', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                                    <apex:param name="fieldToUpdate" value="company.Phone"
+                                                                assignTo="{!fieldToUpdate}"/>
+                                                </apex:commandButton>
+
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!ZoomCompanyRecord.Fax != ''}">
+                                            <div>
+                                                <apex:outputLabel value="Fax" for="company_fax"/>
+
+                                                <apex:outputText value="{!ZoomCompanyRecord.Fax}"
+                                                                 styleClass="{!IF(ValidateCompanyFax, 'zoom_different', '')} zoom_value"/>
+                                            </div>
+                                            <div>
+                                                <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                                    title="{!if(CanUpdateCompanyFax, 'Click to update SFDC fax', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                                    rendered="{!AND(ValidateCompanyFax == true, DisabledCompanyFax == false)}"
+                                                                    rerender="pageErrorsBlock"
+                                                                    disabled="{!NOT(CanUpdateCompanyFax)}"
+                                                                    onComplete="return sendUpdateEvent('', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                                    <apex:param name="fieldToUpdate" value="company.Fax"
+                                                                assignTo="{!fieldToUpdate}"/>
+                                                </apex:commandButton>
+
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!AND(NOT(ISNULL(ZoomCompanyRecord.Employees)), ZoomCompanyRecord.Employees != 0)}">
+                                            <div>
+                                                <apex:outputLabel value="Employees" for="company_employees"/>
+
+                                                <apex:outputPanel >
+                                                    <apex:outputText styleClass="{!IF(ValidateEmployees, 'zoom_different', '')} zoom_value"
+                                                                     id="company_employees"
+                                                                     value="{!ZoomCompanyRecord.Employees}"/>
+                                                </apex:outputPanel>
+                                            </div>
+                                            <div>
+                                                <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                                    title="{!if(CanUpdateTitle, 'Click to update SFDC employee count', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                                    rendered="{!AND(ValidateEmployees == true, DisabledEmployees == false)}"
+                                                                    rerender="pageErrorsBlock"
+                                                                    disabled="{!NOT(CanUpdateTitle)}"
+                                                                    onComplete="return sendUpdateEvent('', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                                    <apex:param name="fieldToUpdate" value="company.Employees"
+                                                                assignTo="{!fieldToUpdate}"/>
+                                                </apex:commandButton>
+                                            </div>
+
+                                        </apex:outputPanel>
+                                        <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!ZoomCompanyRecord.Revenue != ''}">
+                                            <div>
+                                                <apex:outputLabel value="Revenue" for="company_revenue"/>
+
+                                                <apex:outputPanel >
+                                                    <apex:outputText styleClass="{!IF(ValidateRevenue, 'zoom_different', '')} zoom_value"
+                                                                     id="company_revenue" value="{!ZoomCompanyRecord.Revenue}"/>
+                                                </apex:outputPanel>
+                                            </div>
+                                            
+                                            <div>
+                                                <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                                    title="{!if(CanUpdateAnnualRevenue, 'Click to update SFDC revenue', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                                    rendered="{!AND(ValidateRevenue == true, DisabledRevenue == false)}"
+                                                                    rerender="pageErrorsBlock"
+                                                                    disabled="{!NOT(CanUpdateAnnualRevenue)}"
+                                                                    onComplete="return sendUpdateEvent('', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                                    <apex:param name="fieldToUpdate" value="company.Revenue"
+                                                                assignTo="{!fieldToUpdate}"/>
+                                                </apex:commandButton>
+
+                                            </div>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div style="display: flex;flex-direction: column;justify-content:space-between;max-height: 390px;flex-grow:1">
+                                        <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!ZoomCompanyRecord.CompanyDescription != ''}">
+                                            <div style="flex-basis:100%">
+                                                <apex:outputLabel value="Description" for="company_description"/>
+
+                                                <apex:outputPanel layout="block" id="company_description" styleClass="{!IF(ValidateCompanyDescription, 'zoom_different', '')} zoom_value" style="overflow:auto;max-height:110px;max-width: 955px;">
+                                                     {!ZoomCompanyRecord.CompanyDescription}
+                                                </apex:outputPanel>
+                                            </div>
+
+
+                                            <div>
+                                                <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                                    title="{!if(CanUpdateCompanyDescription, 'Click to update SFDC description', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                                    rendered="{!AND(ValidateCompanyDescription == true, DisabledCompanyDescription == false)}"
+                                                                    rerender="pageErrorsBlock"
+                                                                    disabled="{!NOT(CanUpdateCompanyDescription)}"
+                                                                    onComplete="return sendUpdateEvent('', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                                <apex:param name="fieldToUpdate" value="company.CompanyDescription"
+                                                                assignTo="{!fieldToUpdate}"/>
+                                                </apex:commandButton>
+
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel style="display:flex;align-items:flex-start">
+                                            <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!AND(ZoomCompanyRecord.CompanyTicker != '', DisabledTicker == false)}">
+                                            <div style="padding-right: 34px;
+                                                 margin-right: 50px;
+                                                 border-right: 1px solid;">
+                                                <apex:outputLabel value="Ticker" for="company_ticker"/>
+
+                                                <apex:outputLink id="company_ticker"
+                                                                 styleClass="zoom_company_url zoom_value"
+                                                                 value="http://www.google.com/finance?q={!ZoomCompanyRecord.CompanyTicker}"
+                                                                 target="_blank">{!ZoomCompanyRecord.CompanyTicker}
+                                                </apex:outputLink>
+                                            </div>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel styleClass="zoom_key_value"
+                                                              rendered="{!ZoomCompanyRecord.CompanyRankingInlined != ''}">
+                                                <div>
+                                                    <apex:outputLabel value="Ranking" for="company_ranking"/>
+
+
+                                                    <apex:outputText value="{!ZoomCompanyRecord.CompanyRankingInlined}"
+                                                                     styleClass="zoom_value"
+                                                                     id="company_ranking"/>
+                                                </div>
+                                            </apex:outputPanel></apex:outputPanel>
+                                        <apex:outputPanel styleClass="zoom_key_value"
+                                                          rendered="{!ZoomCompanyRecord.Industry.size != 0}">
+                                            <div>
+                                                <apex:outputLabel value="Industry" for="company_industry"/>
+
+                                                <apex:outputPanel styleClass="zoom_key_value">
+
+                                                    <apex:selectRadio value="{!ZoomCompanyRecord.IndustryChosen}"
+                                                                      styleClass="{!IF(ValidateIndustry, 'zoom_different_list', 'zoom_list')} zoom_value"
+                                                                      id="zoom_industry" layout="pageDirection">
+                                                        <apex:selectOptions value="{!ZoomCompanyRecord.IndustryOptions}"/>
+                                                    </apex:selectRadio>
+
+
+                                                </apex:outputPanel>
+                                            </div>
+                                            <div>
+                                                <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                                    title="{!if(CanUpdateIndustry, 'Click to update SFDC industry with selected value', 'You do not have access to update this field. Please contact your Salesforce administrator if you believe this to be in error.')}"
+                                                                    rendered="{!AND(IF(ZoomCompanyRecord.IndustryOptions!=null, true, false), DisabledIndustry == false)}"
+                                                                    rerender="pageErrorsBlock"
+                                                                    disabled="{!NOT(CanUpdateIndustry)}"
+                                                                    onComplete="return sendUpdateEvent('', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                                    <apex:param name="fieldToUpdate" value="company.Industry"
+                                                                assignTo="{!fieldToUpdate}"/>
+                                                </apex:commandButton>
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel layout="block" rendered="{!displayCompanyInformation || HasPeople}" style="display:flex;flex-direction:column;align-items: flex-end;right: 5px;bottom: 5px;">
+                                            <apex:variable var="updateAllButtonTooltipText" rendered="{!CanUpdateAll}"
+                                                           value="Update all mapped fields from Zoominfo"/>
+                                            <apex:variable var="updateAllButtonTooltipText"
+                                                           rendered="{!NOT(CanUpdateAll) && NOT(CanUpdateNone)}"
+                                                           value="Due to insufficient permissions, you can only update the following fields: {!UpdatableFields}. Please contact your Salesforce administrator if you believe this to be in error."/>
+                                            <apex:variable var="updateAllButtonTooltipText" rendered="{!CanUpdateNone}"
+                                                           value="Due to insufficient permissions, you cannot update this record. Please contact your Salesforce administrator if you believe this to be in error."/>
+                                            <apex:commandButton id="copyLeadToSalesforceButton"
+                                                                action="{!checkIfCanUpdateLead}"
+                                                                styleClass="update_all_button"
+                                                                style=""
+                                                                title="{!updateAllButtonTooltipText}"
+                                                                rerender="pageErrorsBlock,refreshPage"
+                                                                disabled="{!CanUpdateNone}"
+                                                                onComplete="return sendUpdateEventAll({!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired})"
+                                                                />
+                                        </apex:outputPanel>
+                                    </div>
+                                </apex:outputPanel>
+                                <apex:outputPanel style="background-color:#DCDDDE; flex-grow:1;flex:basis:100%"
+                                                  title="Company Information"
+                                                  rendered="{!NOT(displayCompanyInformation)}">
+                                    <apex:outputPanel styleClass="zoom_not_found">
+                                        <apex:outputText value="We did not find any company information for this lead in our database."/>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </div>
+                </apex:tab>
+                <apex:tab label="Web Mentions" name="References" rendered="{!(tabCust_Disable_WM=='false')}"
+                          id="zoom_ref_tab" styleClass="web_mentions">
+                    <div class="pbfirst"
+                         style="height:450px; overflow: auto; padding-left: 50px; padding-top:15px; padding-right:150px">
+                        <apex:repeat value="{!ZoomPersonRecord.WebReference}" var="wr">
+                            <div style="margin-bottom: 25px">
+                                <apex:outputLink value="{!wr.Url}" target="{!wr.Url}" styleClass="zoom_link big"
+                                                 style="display:block">
+                                    <apex:outputText value="{!wr.Title}"/>
+                                </apex:outputLink>
+                                <apex:outputText value="{!wr.CreatedDateFormatted}" styleClass="date_text"/>
+                                <apex:outputLink value="{!wr.Url}" target="{!wr.Url}" id="zoom_ref_url"
+                                                 style="display:block" styleClass="zoom_link">
+                                    <apex:outputText value="{!wr.Url}"/>
+                                </apex:outputLink>
+                                <!--<apex:outputText value="{!wr.CreatedDateFormatted}" id="zoom_ref_date"/>-->
+
+
+                                <apex:outputText value="{!wr.Description}" styleClass="zoom_description"
+                                                 id="zoom_ref_desc"/>
+                            </div>
+                        </apex:repeat>
+
+                        <apex:outputText styleClass="zoom_wm_notfound" value="No web mentions available."
+                                         rendered="{!ZoomPersonRecord.WebReference.size == 0}"/>
+                        <apex:outputPanel layout="block" styleClass="zoom_wm_more"
+                                          rendered="{!AND(ZoomPersonRecord.WebReference.size > 0, ZoomPersonRecord.WebReference.size <= 25)}">
+                            <apex:outputText value="View full ZoomInfo "/>
+                            <apex:outputLink value="http://subscriber.zoominfo.com/zoominfo/#search/profile/person?personId={!ZoomPersonRecord.PersonID}&targetid=profile" target="_blank">profile
+                            </apex:outputLink>
+                            <apex:outputText value="."/>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block" styleClass="zoom_wm_more"
+                                          rendered="{!ZoomPersonRecord.WebReference.size > 25}">
+                            <apex:outputText value="View all web mentions on the ZoomInfo "/>
+                            <apex:outputLink value="http://subscriber.zoominfo.com/zoominfo/#search/profile/person?personId={!ZoomPersonRecord.PersonID}&targetid=profile" target="_blank">website
+                            </apex:outputLink>
+                            <apex:outputText value="."/>
+                        </apex:outputPanel>
+                    </div>
+                </apex:tab>
+                <apex:tab label="Wrong Person" name="wrong person" id="zoom_wrong_person_tab" styleClass="wrong_person" style="padding:0;">
+                    <div>
+                        <apex:outputPanel id="messagePanelPeople">
+                            <apex:pagemessages id="personMessages"/>
+                        </apex:outputPanel>
+                        <div style="display:flex">
+                            <div>
+                                <c:LeadPersonSearch basePageAttr="{!searchCtrl}" searchName="{!Lead.FirstName} {!Lead.LastName}" searchCompName="{!Lead.Company}"/>
+                            </div>
+                            <div style="flex-grow: 1;padding-top:25px;">
+                                <c:LeadPersonSearchResults basePageAttr="{!searchCtrl}" leadBaseAttr="{!me}"/>
+                            </div>
+                        </div>
+                    </div>
+                </apex:tab>
+            </apex:tabPanel>
+
+        </apex:pageBlock>
+    </apex:outputPanel>
+    </apex:form>
+
+    <c:coreJS />
+    <script type="text/javascript">
+        zi.ui.disableTextSelect();
+    </script>
+
+</apex:page>

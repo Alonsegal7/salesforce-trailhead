@@ -1,0 +1,19 @@
+salesforce.WorkflowAlert Account_Titles_have_been_added_to_this_account_Account_Level {
+  fullName = "Account.Titles_have_been_added_to_this_account_Account_Level"
+  description = "Titles have been added to this account - Account Level"
+  protected = false
+  recipients = [
+    {
+      type = "accountOwner"
+    },
+    {
+      field = salesforce.Account.field.CSM__c
+      type = "userLookup"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Titles_added_to_the_account_account_level
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,231 @@
+salesforce.StandardValueSet LeadSource {
+  fullName = "LeadSource"
+  sorted = false
+  standardValue = [
+    {
+      fullName = "Big Brain - Signup"
+      default = false
+      label = "Big Brain - Signup"
+    },
+    {
+      fullName = "BigBrain - Sync"
+      default = false
+      label = "BigBrain - Sync"
+    },
+    {
+      fullName = "BigBrain - Sync (Reengage)"
+      default = false
+      label = "BigBrain - Sync (Reengage)"
+    },
+    {
+      fullName = "ChiliPiper"
+      default = false
+      label = "ChiliPiper"
+    },
+    {
+      fullName = "Cold Outbound"
+      default = false
+      label = "Cold Outbound"
+    },
+    {
+      fullName = "Contact Sales- Phone"
+      default = false
+      label = "Contact Sales- Phone"
+    },
+    {
+      fullName = "Contact Sales - Tech Partner"
+      default = false
+      label = "Contact Sales - Tech Partner"
+    },
+    {
+      fullName = "Content"
+      default = false
+      label = "Content"
+    },
+    {
+      fullName = "Corzdesk"
+      default = false
+      label = "Corzdesk"
+    },
+    {
+      fullName = "Cross Sell"
+      default = false
+      label = "Cross Sell"
+    },
+    {
+      fullName = "CS Pass"
+      default = false
+      label = "CS Pass"
+    },
+    {
+      fullName = "Drift - Contact Sales"
+      default = false
+      label = "Drift - Contact Sales"
+    },
+    {
+      fullName = "Emails - Contact sales"
+      default = false
+      label = "Emails - Contact sales"
+    },
+    {
+      fullName = "Event"
+      default = false
+      label = "Event"
+    },
+    {
+      fullName = "g2crowd"
+      default = false
+      label = "g2crowd"
+    },
+    {
+      fullName = "Intercom"
+      default = false
+      label = "Intercom"
+    },
+    {
+      fullName = "Linkedin Paid"
+      default = false
+      label = "Linkedin Paid"
+    },
+    {
+      fullName = "Linkedin Sales Navigator"
+      default = false
+      label = "Linkedin - Sales Navigator"
+    },
+    {
+      fullName = "NGO request"
+      default = false
+      label = "NGO request"
+    },
+    {
+      fullName = "Online Event"
+      default = false
+      label = "Online Event"
+    },
+    {
+      fullName = "Other"
+      default = false
+      label = "Other"
+    },
+    {
+      fullName = "Outreach - Part of paying account"
+      default = false
+      label = "Outreach - Part of paying account"
+    },
+    {
+      fullName = "Outreach - Resurrect"
+      default = false
+      label = "Outreach - Resurrect"
+    },
+    {
+      fullName = "Partner"
+      default = false
+      label = "Partner"
+    },
+    {
+      fullName = "Partner Campaign"
+      default = false
+      label = "Partner Campaign"
+    },
+    {
+      fullName = "Partner Link"
+      default = false
+      label = "Partner Link"
+    },
+    {
+      fullName = "Platform"
+      default = false
+      label = "Platform"
+    },
+    {
+      fullName = "Podcast"
+      default = false
+      label = "Podcast"
+    },
+    {
+      fullName = "Partners Website"
+      default = false
+      label = "Potential Partner's Website"
+    },
+    {
+      fullName = "project-management.com"
+      default = false
+      label = "project-management.com"
+    },
+    {
+      fullName = "Referral"
+      default = false
+      label = "Referral"
+    },
+    {
+      fullName = "Referred by colleague"
+      default = false
+      label = "Referred by colleague"
+    },
+    {
+      fullName = "Referred by existing partner"
+      default = false
+      label = "Referred by existing partner"
+    },
+    {
+      fullName = "Refunneling"
+      default = false
+      label = "Refunneling"
+    },
+    {
+      fullName = "SelectHub"
+      default = false
+      label = "SelectHub"
+    },
+    {
+      fullName = "Signup - Contact Sales"
+      default = false
+      label = "Signup - Contact Sales"
+    },
+    {
+      fullName = "Software Advice"
+      default = false
+      label = "Software Advice"
+    },
+    {
+      fullName = "TechnologyAdvice"
+      default = false
+      label = "TechnologyAdvice"
+    },
+    {
+      fullName = "Test"
+      default = false
+      label = "Test"
+    },
+    {
+      fullName = "Unqualified refunneling"
+      default = false
+      label = "Unqualified refunneling"
+    },
+    {
+      fullName = "Webinar"
+      default = false
+      label = "Webinar"
+    },
+    {
+      fullName = "Website - Become a partner"
+      default = false
+      label = "Website - Become a partner"
+    },
+    {
+      fullName = "Website - Contact Sales"
+      default = false
+      label = "Website - Contact Sales"
+    },
+    {
+      fullName = "Website - Request a Demo"
+      default = false
+      label = "Website - Request a Demo"
+    },
+    {
+      fullName = "Zoominfo"
+      default = false
+      label = "Zoominfo"
+    },
+  ]
+}

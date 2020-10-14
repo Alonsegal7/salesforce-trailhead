@@ -1,0 +1,4 @@
+salesforce.Community Internal_Community {
+  fullName = "Internal Community"
+  active = true
+}

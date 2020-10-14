@@ -1,0 +1,389 @@
+salesforce.Flow Start_Company_Ownership_Flow {
+  fullName = "Start_Company_Ownership_Flow"
+  actionCalls = [
+    {
+      processMetadataValues = [
+        {
+          name = "ActionCallType"
+          value = {
+            stringValue = "flow"
+          }
+        },
+        {
+          name = "flowSelection"
+          value = {
+            stringValue = "Company Ownership Logic"
+          }
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Trigger Company Ownership Logic Flow"
+      locationX = 100
+      locationY = 200
+      actionName = "Company_Ownership_Logic"
+      actionType = "flow"
+      inputParameters = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "recordId"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          name = "recordId"
+          value = {
+            elementReference = "myVariable_current.Long_Account_ID__c"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      name = "isChangedDecision2_myRule_1_Trigger_Company_Owner_Update_c"
+      label = "isChangedDecision2_myRule_1_Trigger_Company_Owner_Update_c"
+      locationX = 0
+      locationY = 0
+      defaultConnector = {
+        targetReference = "myDecision"
+      }
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "isChangedRule_2_myRule_1_Trigger_Company_Owner_Update_c"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "myVariable_old.Trigger_Company_Owner_Update__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "myVariable_current.Trigger_Company_Owner_Update__c"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myDecision"
+          }
+          label = "isChangedRule_2_myRule_1_Trigger_Company_Owner_Update_c"
+        },
+      ]
+    },
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "isChangedRule_2_myRule_1_Trigger_Company_Owner_Update_c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "DateTime"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Trigger_Company_Owner_Update__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Strategic__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "RecordType"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.RecordTypeId"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "0121t000000IQTiAAO"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Account_is_Claimed__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Is_Test_Account__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Trigger Changes"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Start_Company_Ownership_Flow-8_InterviewLabel"
+  label = "Start Company Ownership Flow"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Account"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  startElementReference = "isChangedDecision2_myRule_1_Trigger_Company_Owner_Update_c"
+  status = "Active"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Account
+    },
+  ]
+}

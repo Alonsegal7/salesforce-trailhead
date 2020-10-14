@@ -1,0 +1,13 @@
+salesforce.CompactLayout Account_Account_Team {
+  fullName = "Account.Account_Team"
+  fields = [
+    "OwnerId",
+    "CSM__c",
+    "Partner__c",
+    "SDR__c",
+  ]
+  label = "Account Team"
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,256 @@
+type salesforce.Opportunity_Snapshot__c {
+  salesforce.Text Owner__c {
+    apiName = "Opportunity_Snapshot__c.Owner__c"
+    label = "Owner"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Forecast_ARR__c {
+    apiName = "Opportunity_Snapshot__c.Forecast_ARR__c"
+    label = "Forecast ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Green_bucket_ARR__c {
+    apiName = "Opportunity_Snapshot__c.Green_bucket_ARR__c"
+    label = "Green bucket ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Stage__c {
+    apiName = "Opportunity_Snapshot__c.Stage__c"
+    label = "Stage"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 150
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Expected_Plan_Name__c {
+    apiName = "Opportunity_Snapshot__c.Expected_Plan_Name__c"
+    label = "Expected Plan Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Opportunity__c {
+    apiName = "Opportunity_Snapshot__c.Opportunity__c"
+    label = "Opportunity"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Opportunity,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Long_Opp_Snapshot_ID__c {
+    apiName = "Opportunity_Snapshot__c.Long_Opp_Snapshot_ID__c"
+    label = "Long Opp Snapshot ID"
+    _required = false
+    formula = "CASESAFEID(Id)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Percent Probability__c {
+    apiName = "Opportunity_Snapshot__c.Probability__c"
+    label = "Probability"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number GB_Opp__c {
+    apiName = "Opportunity_Snapshot__c.GB_Opp__c"
+    label = "GB Opp"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Close_Date__c {
+    apiName = "Opportunity_Snapshot__c.Close_Date__c"
+    label = "Close Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Record_Type_Number__c {
+    apiName = "Opportunity_Snapshot__c.Record_Type_Number__c"
+    label = "Record Type Number"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Opportunity_Record_Type__c {
+    apiName = "Opportunity_Snapshot__c.Opportunity_Record_Type__c"
+    label = "Opportunity Record Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Commit_ARR__c {
+    apiName = "Opportunity_Snapshot__c.Commit_ARR__c"
+    label = "Commit ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Commit__c {
+    apiName = "Opportunity_Snapshot__c.Commit__c"
+    label = "Commit"
+    _required = false
+    defaultValueFormula = "0"
+    precision = 12
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Owner_Manager__c {
+    apiName = "Opportunity_Snapshot__c.Owner_Manager__c"
+    label = "Owner Manager"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Owner_Office__c {
+    apiName = "Opportunity_Snapshot__c.Owner_Office__c"
+    label = "Owner Office"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Owner_Team__c {
+    apiName = "Opportunity_Snapshot__c.Owner_Team__c"
+    label = "Owner Team"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Bi_Weekly_Snapshot__c {
+    apiName = "Opportunity_Snapshot__c.Bi_Weekly_Snapshot__c"
+    label = "Bi-Weekly Snapshot"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox End_of_Month__c {
+    apiName = "Opportunity_Snapshot__c.End_of_Month__c"
+    label = "End of Month"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Opportunity_Created_Date__c {
+    apiName = "Opportunity_Snapshot__c.Opportunity_Created_Date__c"
+    label = "Opportunity Created Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Snapshot_Date__c {
+    apiName = "Opportunity_Snapshot__c.Snapshot_Date__c"
+    label = "Snapshot Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Start_of_Month__c {
+    apiName = "Opportunity_Snapshot__c.Start_of_Month__c"
+    label = "Start of Month"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Owner_s_Manager__c {
+    apiName = "Opportunity_Snapshot__c.Owner_s_Manager__c"
+    label = "Owner's Manager"
+    _required = false
+    formula = "Opportunity__r.Owner_s_Manager__r.Full_Name__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+  }
+}

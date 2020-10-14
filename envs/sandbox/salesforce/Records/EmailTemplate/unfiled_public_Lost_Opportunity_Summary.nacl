@@ -1,0 +1,40 @@
+salesforce.EmailTemplate unfiled_public_Lost_Opportunity_Summary {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "This will be sent for lost opportunities above 10k, based on opportunity info"
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "Lost Opportunity Summary"
+  style = "products"
+  subject = "Lost Opportunity Summary - {!Opportunity.Name}, {!Opportunity.Expected_ARR__c}"
+  textOnly = '''
+Lost Deal
+Lead source and opportunity information
+Opportunity Name: {!Opportunity.Name}
+Owner: {!Opportunity.OwnerFullName}
+ARR: {!Opportunity.ARR_For_Reports__c}
+Why closed lost: {!Opportunity.Lost_Reason__c} {!Opportunity.Which_features_were_missing__c}{!Opportunity.Which_competitor__c}
+Link: {!Opportunity.Link}
+
+Lead Created Date: {!Opportunity.Lead_created_date__c}
+UTM Source: {!Opportunity.Utm_source__c}
+Lead Source: {!Opportunity.LeadSource}
+Company: {!Opportunity.Company__c}
+SDR Name: {!Opportunity.SDR_Name_for_reports__c}
+CSM Name: {!Opportunity.CSM_Name__c}
+Opportunity background
+They wanted to replace: {!Opportunity.Main_tool_we_re_replacing__c}
+They were examining: {!Opportunity.Competition_They_re_Evaluating__c}
+They were looking for {!Opportunity.Expected_Plan_Tier__c} -  {!Opportunity.Expected_Plan_Seats__c} seats.
+For their {!Opportunity.DepartmentFunction__c} departments.
+For the following use cases:
+{!Opportunity.Use_cases__c}
+Why we lost
+(opportunity age: {!Opportunity.Opportunity_Age__c} days)
+{!Opportunity.Closed_Opportunity_Summary__c}
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Lost_Opportunity_Summary"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Lost_Opportunity_Summary.email")
+}

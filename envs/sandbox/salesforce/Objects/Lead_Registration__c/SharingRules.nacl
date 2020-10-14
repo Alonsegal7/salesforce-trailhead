@@ -1,0 +1,6 @@
+salesforce.SharingRules Lead_Registration__c {
+  fullName = "Lead_Registration__c"
+  _parent = [
+    salesforce.Lead_Registration__c,
+  ]
+}

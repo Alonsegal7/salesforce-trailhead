@@ -1,0 +1,12 @@
+salesforce.Territory2Settings {
+  fullName = "Territory2"
+  defaultAccountAccessLevel = "Read"
+  defaultCaseAccessLevel = "None"
+  defaultContactAccessLevel = "Edit"
+  defaultOpportunityAccessLevel = "None"
+  enableTerritoryManagement2 = true
+  opportunityFilterSettings = {
+    enableFilter = false
+    runOnCreate = false
+  }
+}

@@ -1,0 +1,1086 @@
+type salesforce.Quote {
+  salesforce.Summary ARR__c {
+    apiName = "Quote.ARR__c"
+    label = "ARR"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    description = "sum of ARR of all quote line items"
+    summarizedField = "QuoteLineItem.ARR__c"
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Is_Primary__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "sum"
+  }
+  salesforce.Picklist Quote_Type__c {
+    apiName = "Quote.Quote_Type__c"
+    label = "Quote Type"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Quote_Type
+  }
+  salesforce.Lookup Billing_Entity__c {
+    apiName = "Quote.Billing_Entity__c"
+    label = "Billing Entity"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Billing_Entity__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Duration__c {
+    apiName = "Quote.Duration__c"
+    label = "Duration"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Duration in months"
+    externalId = false
+  }
+  salesforce.Text Priority_Customer_ID_Text__c {
+    apiName = "Quote.Priority_Customer_ID_Text__c"
+    label = "Priority Customer ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 40
+    queryable = true
+    description = "Used for proposal management"
+    externalId = false
+  }
+  salesforce.Picklist Sync_Status__c {
+    apiName = "Quote.Sync_Status__c"
+    label = "Sync Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Transferred"
+        default = false
+        label = "Transferred"
+      },
+      {
+        fullName = "Created Successfully"
+        default = false
+        label = "Created Successfully"
+      },
+      {
+        fullName = "Error"
+        default = false
+        label = "Error"
+      },
+      {
+        fullName = "Need to Transfer"
+        default = false
+        label = "Need to Transfer"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Addendum_to_SO__c {
+    apiName = "Quote.Addendum_to_SO__c"
+    label = "Addendum to SO"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Governing Law and Jurisdiction"
+        default = false
+        label = "Governing Law and Jurisdiction"
+      },
+      {
+        fullName = "Customer Reference"
+        default = false
+        label = "Customer Reference"
+      },
+      {
+        fullName = "Subscription Auto-renewal"
+        default = false
+        label = "Subscription Auto-renewal"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Ballance_Carryover__c {
+    apiName = "Quote.Ballance_Carryover__c"
+    label = "Ballance Carryover"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Commercial_Comments__c {
+    apiName = "Quote.Commercial_Comments__c"
+    label = "Commercial Comments"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.Text DH_Customer_Name__c {
+    apiName = "Quote.DH_Customer_Name__c"
+    label = "DH Customer Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime DH_Date_of_Signature__c {
+    apiName = "Quote.DH_Date_of_Signature__c"
+    label = "DH Date of Signature"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist DH_Quote_Status__c {
+    apiName = "Quote.DH_Quote_Status__c"
+    label = "DH Quote Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Draft"
+        default = false
+        label = "Draft"
+      },
+      {
+        fullName = "Ready To Be Sent"
+        default = false
+        label = "Ready To Be Sent"
+      },
+      {
+        fullName = "Approved"
+        default = false
+        label = "Approved"
+      },
+      {
+        fullName = "Won"
+        default = false
+        label = "Won"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text DH_Signer_Name__c {
+    apiName = "Quote.DH_Signer_Name__c"
+    label = "DH Signer Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text DH_Signer_Title__c {
+    apiName = "Quote.DH_Signer_Title__c"
+    label = "DH Signer Title"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Document_Type__c {
+    apiName = "Quote.Document_Type__c"
+    label = "Document Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Quote"
+        default = false
+        label = "Quote"
+      },
+      {
+        fullName = "Sales Order"
+        default = false
+        label = "Sales Order"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text Error_Message__c {
+    apiName = "Quote.Error_Message__c"
+    label = "Error Message"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaCheckbox Is_Finalized__c {
+    apiName = "Quote.Is_Finalized__c"
+    label = "Is Signed"
+    formula = "(ISPICKVAL(Document_Type__c ,'Sales Order') && ISPICKVAL(DH_Quote_Status__c ,'Won')) ||  Is_Manually_Signed__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Checkbox Is_Manually_Signed__c {
+    apiName = "Quote.Is_Manually_Signed__c"
+    label = "Is Manually Signed?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Is_NGO__c {
+    apiName = "Quote.Is_NGO__c"
+    label = "Is NGO?"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Yes"
+        default = false
+        label = "Yes"
+      },
+      {
+        fullName = "No"
+        default = false
+        label = "No"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.DateTime Last_Sync_iConduct__c {
+    apiName = "Quote.Last_Sync_iConduct__c"
+    label = "Last_Sync_iConduct"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Payment_Terms_Code__c {
+    apiName = "Quote.Payment_Terms_Code__c"
+    label = "Payment Terms Code"
+    _required = false
+    formula = '''
+CASE( Payment_Terms__c , 
+"End of contract", "14",
+"Immediately", "08",
+"Net", "01",
+"Net 10", "10",
+"Net 120", "13",
+"Net 15", "02",
+"Net 30", "03",
+"Net 45", "04",
+"Net 60", "11",
+"Net 90", "12",
+"Net 5", "09",
+""
+
+)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Payment_Terms__c {
+    apiName = "Quote.Payment_Terms__c"
+    label = "Payment Terms"
+    _required = false
+    valueSet = [
+      {
+        fullName = "End of contract"
+        default = false
+        label = "End of contract"
+      },
+      {
+        fullName = "Immediately"
+        default = false
+        label = "Immediately"
+      },
+      {
+        fullName = "Net"
+        default = false
+        label = "Net"
+      },
+      {
+        fullName = "Net 10"
+        default = false
+        label = "Net 10"
+      },
+      {
+        fullName = "Net 120"
+        default = false
+        label = "Net 120"
+      },
+      {
+        fullName = "Net 15"
+        default = false
+        label = "Net 15"
+      },
+      {
+        fullName = "Net 30"
+        default = false
+        label = "Net 30"
+      },
+      {
+        fullName = "Net 45"
+        default = false
+        label = "Net 45"
+      },
+      {
+        fullName = "Net 60"
+        default = false
+        label = "Net 60"
+      },
+      {
+        fullName = "Net 90"
+        default = false
+        label = "Net 90"
+      },
+      {
+        fullName = "Net 5"
+        default = false
+        label = "Net 5"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaText Priority_Agent_ID__c {
+    apiName = "Quote.Priority_Agent_ID__c"
+    label = "Priority Agent ID"
+    _required = false
+    formula = "text(max( Owner:User.Agent_Code_Priority__c , Owner:User.Agent_Number__c ))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Priority_Customer_ID_Formula__c {
+    apiName = "Quote.Priority_Customer_ID_Formula__c"
+    label = "Priority Customer ID (Formula)"
+    _required = false
+    formula = "Opportunity.Billing_Entity__r.Priority_Id__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Priority_Order_No__c {
+    apiName = "Quote.Priority_Order_No__c"
+    label = "Priority Order No."
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime Sync_Request_Timestamp_iConduct__c {
+    apiName = "Quote.Sync_Request_Timestamp_iConduct__c"
+    label = "Sync Request Timestamp (iConduct)"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Summary License_Product_Count__c {
+    apiName = "Quote.License_Product_Count__c"
+    label = "License Product Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Product_Type__c"
+        operation = "equals"
+        value = "License"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "count"
+  }
+  salesforce.FormulaText Owner_s_Manager_Email__c {
+    apiName = "Quote.Owner_s_Manager_Email__c"
+    label = "Owner's Manager Email"
+    _required = false
+    formula = "Owner:User.Manager.Email"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Opportunity_Name__c {
+    apiName = "Quote.Opportunity_Name__c"
+    label = "Opportunity Name"
+    _required = false
+    formula = "Opportunity.Name"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Link_to_Opportunity__c {
+    apiName = "Quote.Link_to_Opportunity__c"
+    label = "Link to Opportunity"
+    _required = false
+    formula = "HYPERLINK(\"https://monday.lightning.force.com/lightning/r/Opportunity/\"& Opportunity.Long_Opportunity_ID__c &\"/view\", 'Link to opportunity')"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Company__c {
+    apiName = "Quote.Company__c"
+    label = "Company"
+    _required = false
+    formula = "Opportunity.Company__r.Name"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary Total_Seats__c {
+    apiName = "Quote.Total_Seats__c"
+    label = "Total Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "QuoteLineItem.Seats__c"
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Product_Type__c"
+        operation = "equals"
+        value = "License"
+      },
+      {
+        field = "QuoteLineItem.Is_Primary__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "sum"
+  }
+  salesforce.Summary Price_Per_Seat__c {
+    apiName = "Quote.Price_Per_Seat__c"
+    label = "Price Per Seat"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "QuoteLineItem.UnitPrice"
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Product_Type__c"
+        operation = "equals"
+        value = "License"
+      },
+      {
+        field = "QuoteLineItem.Is_Primary__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "sum"
+  }
+  salesforce.Summary Total_Free_Months__c {
+    apiName = "Quote.Total_Free_Months__c"
+    label = "Total Free Months"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "QuoteLineItem.Duration__c"
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Product_Type__c"
+        operation = "equals"
+        value = "Free"
+      },
+      {
+        field = "QuoteLineItem.Is_Primary__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "sum"
+  }
+  salesforce.Summary Total_CSM_Package__c {
+    apiName = "Quote.Total_CSM_Package__c"
+    label = "Total CSM Package"
+    _required = false
+    precision = 12
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "QuoteLineItem.Quantity"
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Product_Type__c"
+        operation = "equals"
+        value = "CSM"
+      },
+      {
+        field = "QuoteLineItem.Is_Primary__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "sum"
+  }
+  salesforce.Picklist DH_Period__c {
+    apiName = "Quote.DH_Period__c"
+    label = "DH Period"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Monthly"
+        default = false
+        label = "Monthly"
+      },
+      {
+        fullName = "Yearly"
+        default = false
+        label = "Yearly"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist DH_Tier__c {
+    apiName = "Quote.DH_Tier__c"
+    label = "DH Tier"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Standard"
+        default = false
+        label = "Standard"
+      },
+      {
+        fullName = "Pro"
+        default = false
+        label = "Pro"
+      },
+      {
+        fullName = "Enterprise"
+        default = false
+        label = "Enterprise"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Priority_SO_Final_Amount__c {
+    apiName = "Quote.Priority_SO_Final_Amount__c"
+    label = "Priority SO Final Amount"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaPercent Discount__c {
+    apiName = "Quote.Discount__c"
+    label = "Discount"
+    _required = false
+    formula = "Discount"
+    createable = false
+    updateable = false
+    scale = 2
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Is_Published__c {
+    apiName = "Quote.Is_Published__c"
+    label = "Is Published?"
+    formula = "IF(Opportunity.DealRoom_Link__c  <> \"\", TRUE, FALSE)"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.DealRoom_Link__c,
+    ]
+  }
+  salesforce.Picklist CSM_Package__c {
+    apiName = "Quote.CSM_Package__c"
+    label = "CSM Package"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Gold"
+        default = false
+        label = "Gold"
+      },
+      {
+        fullName = "Silver"
+        default = false
+        label = "Silver"
+      },
+      {
+        fullName = "Bronze"
+        default = false
+        label = "Bronze"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Email Owner_Manager_Email__c {
+    apiName = "Quote.Owner_Manager_Email__c"
+    label = "Owner Manager Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText DealRoom_Link__c {
+    apiName = "Quote.DealRoom_Link__c"
+    label = "DealRoom Link"
+    _required = false
+    formula = "if( IsSyncing = TRUE,  Opportunity.DealRoom_Link__c ,\"\")"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.DealRoom_Link__c,
+    ]
+  }
+  salesforce.Summary of_Options__c {
+    apiName = "Quote.of_Options__c"
+    label = "# of Options"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Product_Type__c"
+        operation = "equals"
+        value = "License"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "count"
+    _generated_dependencies = [
+      salesforce.QuoteLineItem.field.Product_Type__c,
+    ]
+  }
+  salesforce.Summary Total_Net_Price__c {
+    apiName = "Quote.Total_Net_Price__c"
+    label = "Total Net Price"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "QuoteLineItem.DealHub_Net_Price__c"
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Is_Primary__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "sum"
+    _generated_dependencies = [
+      salesforce.QuoteLineItem.field.Is_Primary__c,
+    ]
+  }
+  salesforce.Summary Primary_Option_Discount__c {
+    apiName = "Quote.Primary_Option_Discount__c"
+    label = "Primary Option Discount"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "QuoteLineItem.Discount"
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Is_Primary__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "sum"
+    _generated_dependencies = [
+      salesforce.QuoteLineItem.field.Is_Primary__c,
+    ]
+  }
+  salesforce.Text Get_Contract_Id__c {
+    apiName = "Quote.Get_Contract_Id__c"
+    label = "Get Contract Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 80
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Get_Contract_Tier__c {
+    apiName = "Quote.Get_Contract_Tier__c"
+    label = "Get Contract Tier"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Percent Get_Contract_Discount__c {
+    apiName = "Quote.Get_Contract_Discount__c"
+    label = "Get Contract Discount"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number Get_Contract_Unit_Price__c {
+    apiName = "Quote.Get_Contract_Unit_Price__c"
+    label = "Get Contract Unit Price"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Get_Contract_Seats__c {
+    apiName = "Quote.Get_Contract_Seats__c"
+    label = "Get Contract Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Get_Contract_Period__c {
+    apiName = "Quote.Get_Contract_Period__c"
+    label = "Get Contract Period"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Create_Contract_Upon_Finalized__c {
+    apiName = "Quote.Create_Contract_Upon_Finalized__c"
+    label = "Create Contract Upon Finalized"
+    _required = false
+    formula = '''
+if( ispickval(Quote_Type__c,'New Contract')||
+(ispickval(Quote_Type__c,"Pro-rated")&& lower(text(DH_Tier__c)) <> lower(Get_Contract_Tier__c) && Get_Contract_Id__c <>null),'Yes','No')
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Monday_Account_Id__c {
+    apiName = "Quote.Monday_Account_Id__c"
+    label = "Monday Account Id"
+    _required = false
+    formula = "Opportunity.Account.Long_Account_ID__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Regional_Manager_s_Email__c {
+    apiName = "Quote.Regional_Manager_s_Email__c"
+    label = "Regional Manager's Email"
+    _required = false
+    formula = '''
+if (
+ISPICKVAL( Owner:User.Office__c ,"Tel Aviv Office")|| ISPICKVAL( Owner:User.Office__c ,"Sydney Office")|| ISPICKVAL( Owner:User.Office__c ,"London Office"), 
+'nir@monday.com',
+(if (
+ISPICKVAL( Owner:User.Office__c ,"NY Office") || ISPICKVAL( Owner:User.Office__c ,"SF Office")|| ISPICKVAL( Owner:User.Office__c ,"Remote"), 'jamison@monday.com',
+"")))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Pricing_Version__c {
+    apiName = "Quote.Pricing_Version__c"
+    label = "Pricing Version"
+    _required = false
+    valueSet = [
+      {
+        fullName = "3"
+        default = false
+        label = "3"
+      },
+      {
+        fullName = "5"
+        default = false
+        label = "5"
+      },
+      {
+        fullName = "6"
+        default = false
+        label = "6"
+      },
+      {
+        fullName = "7"
+        default = false
+        label = "7"
+      },
+      {
+        fullName = "8"
+        default = false
+        label = "8"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Email Regional_Manager_s_Email_text__c {
+    apiName = "Quote.Regional_Manager_s_Email_text__c"
+    label = "Regional Manager's Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Summary Balance_Carryover_Amount__c {
+    apiName = "Quote.Balance_Carryover_Amount__c"
+    label = "Balance Carryover Amount"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "QuoteLineItem.DealHub_Net_Price__c"
+    summaryFilterItems = [
+      {
+        field = "QuoteLineItem.Product_Type__c"
+        operation = "equals"
+        value = "Balance Carryover"
+      },
+    ]
+    summaryForeignKey = "QuoteLineItem.QuoteId"
+    summaryOperation = "sum"
+  }
+  salesforce.DateTime Quote_Sent_Timestamp__c {
+    apiName = "Quote.Quote_Sent_Timestamp__c"
+    label = "Quote Sent Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Use_Photo_on_Proposal__c {
+    apiName = "Quote.Use_Photo_on_Proposal__c"
+    label = "Use Photo on Proposal"
+    _required = false
+    formula = "text( Owner:User.Use_my_photo_for_proposals__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.DateTime Approved_Timestamp__c {
+    apiName = "Quote.Approved_Timestamp__c"
+    label = "Approved Timestamp"
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.DateTime Archived_Timestamp__c {
+    apiName = "Quote.Archived_Timestamp__c"
+    label = "Archived Timestamp"
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.DateTime Draft_Timestamp__c {
+    apiName = "Quote.Draft_Timestamp__c"
+    label = "Draft Timestamp"
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.DateTime In_Approval_Process_Timestamp__c {
+    apiName = "Quote.In_Approval_Process_Timestamp__c"
+    label = "In Approval Process Timestamp"
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.DateTime Ready_To_be_Sent_Timestamp__c {
+    apiName = "Quote.Ready_To_be_Sent_Timestamp__c"
+    label = "Ready To be Sent Timestamp"
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.DateTime Won_Timestamp__c {
+    apiName = "Quote.Won_Timestamp__c"
+    label = "Won Timestamp"
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+}

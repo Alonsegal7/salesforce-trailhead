@@ -1,0 +1,569 @@
+salesforce.CustomObjectTranslation Quote_en_US {
+  fullName = "Quote-en_US"
+  fieldSets = [
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Quote_UpdateCalloutFields
+    },
+  ]
+  fields = [
+    {
+      caseValues = {
+        plural = "false"
+        value = "Primary"
+      }
+      name = "quote_issyncing"
+      startsWith = "Consonant"
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Addendum_to_SO__c
+      picklistValues = [
+        {
+          masterLabel = "Customer Reference"
+          translation = ""
+        },
+        {
+          masterLabel = "Governing Law and Jurisdiction"
+          translation = ""
+        },
+        {
+          masterLabel = "Subscription Auto-renewal"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Approved_Indication__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Approved_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Archived_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Balance_Carryover_Amount__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Ballance_Carryover__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Billing_Entity__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.CSM_Package__c
+      picklistValues = [
+        {
+          masterLabel = "Bronze"
+          translation = ""
+        },
+        {
+          masterLabel = "Gold"
+          translation = ""
+        },
+        {
+          masterLabel = "Silver"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Commercial_Comments__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Create_Contract_Upon_Finalized__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.DH_Customer_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.DH_Date_of_Signature__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.DH_Period__c
+      picklistValues = [
+        {
+          masterLabel = "Monthly"
+          translation = ""
+        },
+        {
+          masterLabel = "Yearly"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.DH_Quote_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Approved"
+          translation = ""
+        },
+        {
+          masterLabel = "Draft"
+          translation = ""
+        },
+        {
+          masterLabel = "Ready To Be Sent"
+          translation = ""
+        },
+        {
+          masterLabel = "Won"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.DH_Signer_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.DH_Signer_Title__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.DH_Tier__c
+      picklistValues = [
+        {
+          masterLabel = "Enterprise"
+          translation = ""
+        },
+        {
+          masterLabel = "Pro"
+          translation = ""
+        },
+        {
+          masterLabel = "Standard"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.DealRoom_Link__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Discount__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Document_Type__c
+      picklistValues = [
+        {
+          masterLabel = "Quote"
+          translation = ""
+        },
+        {
+          masterLabel = "Sales Order"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Draft_Indication__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Draft_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Duration__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Error_Message__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Get_Contract_Discount__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Get_Contract_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Get_Contract_Period__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Get_Contract_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Get_Contract_Tier__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Get_Contract_Unit_Price__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.In_Approval_Process_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Is_Finalized__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Is_Manually_Signed__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Is_NGO__c
+      picklistValues = [
+        {
+          masterLabel = "No"
+          translation = ""
+        },
+        {
+          masterLabel = "Yes"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Is_Published__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Last_Sync_iConduct__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Legal_Indication__c
+      picklistValues = [
+        {
+          masterLabel = "Addendum (negotiated)"
+          translation = ""
+        },
+        {
+          masterLabel = "Addendum to SO"
+          translation = ""
+        },
+        {
+          masterLabel = "Customer SaaS"
+          translation = ""
+        },
+        {
+          masterLabel = "Terms of Service"
+          translation = ""
+        },
+        {
+          masterLabel = "monday.com SaaS"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.License_Product_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Link_to_Opportunity__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Monday_Account_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Opportunity_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Owner_Manager_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Owner_s_Manager_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Payment_Terms_Code__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Payment_Terms__c
+      picklistValues = [
+        {
+          masterLabel = "End of contract"
+          translation = ""
+        },
+        {
+          masterLabel = "Immediately"
+          translation = ""
+        },
+        {
+          masterLabel = "Net"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 10"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 120"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 15"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 30"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 45"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 5"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 60"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 90"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Price_Per_Seat__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Pricing_Version__c
+      picklistValues = [
+        {
+          masterLabel = "3"
+          translation = ""
+        },
+        {
+          masterLabel = "5"
+          translation = ""
+        },
+        {
+          masterLabel = "6"
+          translation = ""
+        },
+        {
+          masterLabel = "7"
+          translation = ""
+        },
+        {
+          masterLabel = "8"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Primary_Option_Discount__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Priority_Agent_ID__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Priority_Customer_ID_Formula__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Priority_Customer_ID_Text__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Priority_Order_No__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Priority_SO_Final_Amount__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Quote_Sent_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Quote_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Ready_To_be_Sent_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Regional_Manager_s_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Regional_Manager_s_Email_text__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Sent_Indication__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Signed_Indication__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Sync_Request_Timestamp_iConduct__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Sync_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Created Successfully"
+          translation = ""
+        },
+        {
+          masterLabel = "Error"
+          translation = ""
+        },
+        {
+          masterLabel = "Need to Transfer"
+          translation = ""
+        },
+        {
+          masterLabel = "Transferred"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Temp_for_Data_Fix__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Total_CSM_Package__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Total_Free_Months__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Total_Net_Price__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Total_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Use_Photo_on_Proposal__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Won_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.of_Options__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Quote Layout"
+      sections = [
+        {
+          label = ""
+          section = "Billing Information"
+        },
+        {
+          label = ""
+          section = "Priority Integration Information"
+        },
+        {
+          label = ""
+          section = "Proposal Information"
+        },
+        {
+          label = ""
+          section = "Quote Status"
+        },
+      ]
+    },
+    {
+      layout = "Users Quote Layout"
+      sections = [
+        {
+          label = ""
+          section = "Additional Information"
+        },
+        {
+          label = ""
+          section = "Offer Commercial Details"
+        },
+        {
+          label = ""
+          section = "Post Signature Information"
+        },
+        {
+          label = ""
+          section = "Priority Integration Information"
+        },
+      ]
+    },
+  ]
+  quickActions = [
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Quote_SendEmail
+    },
+  ]
+  webLinks = [
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Quote_valt__Create_Quote
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Quote_valt__View_All_Quotes
+    },
+  ]
+  _parent = [
+    salesforce.Quote,
+  ]
+}

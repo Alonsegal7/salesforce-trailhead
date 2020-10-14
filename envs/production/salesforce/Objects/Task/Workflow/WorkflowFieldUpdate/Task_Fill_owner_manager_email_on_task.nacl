@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Task_Fill_owner_manager_email_on_task {
+  fullName = "Task.Fill_owner_manager_email_on_task"
+  field = salesforce.Task.field.Owner_Manager_Email__c
+  formula = "Owner:User.Manager.Email"
+  name = "Fill owner manager email on task"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Task,
+  ]
+}

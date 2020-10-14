@@ -1,0 +1,8 @@
+salesforce.ApexComponent zisf__CompanySearchPanel {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 26
+  description = "Visualforce Component for Company Search Panel. Part of ZoomInfo Search Bar."
+  label = "CompanySearchPanel"
+  fullName = "zisf__CompanySearchPanel"
+  content = "(hidden)"
+}

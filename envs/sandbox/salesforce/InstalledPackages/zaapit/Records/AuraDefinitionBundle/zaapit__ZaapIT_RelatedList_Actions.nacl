@@ -1,0 +1,9 @@
+salesforce.AuraDefinitionBundle zaapit__ZaapIT_RelatedList_Actions {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  description = "ZaapIT's Related List Actions support for lightning"
+  fullName = "zaapit__ZaapIT_RelatedList_Actions"
+  type = "Component"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

@@ -1,0 +1,8 @@
+salesforce.ListView Project__c_All {
+  fullName = "Project__c.All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Project__c,
+  ]
+}

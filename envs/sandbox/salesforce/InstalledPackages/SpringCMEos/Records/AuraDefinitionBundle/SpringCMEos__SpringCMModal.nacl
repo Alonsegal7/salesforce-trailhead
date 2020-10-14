@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle SpringCMEos__SpringCMModal {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 40
+  description = "DESCRIPTION"
+  fullName = "SpringCMEos__SpringCMModal"
+  type = "Component"
+  styleContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__zaapit_tab_dedup {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Dedup Tabs"
+  fullName = "zaapit__zaapit_tab_dedup"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tab_dedup.page")
+}

@@ -1,0 +1,10 @@
+salesforce.Role PDR {
+  fullName = "PDR"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  description = "PDR"
+  mayForecastManagerShare = false
+  name = "PDR"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

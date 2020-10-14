@@ -1,0 +1,58 @@
+<apex:page controller="zaapit.exportImportST" action="{!fetchCONF}" sidebar="false" showHeader="false" showChat="false">
+<script type="text/javascript" src="{!$Resource.zp_jquery172}"></script>
+  <script>
+  function validImport(){
+  	if($(".cbX:checked").length==0){
+  		$(".cbXC").addClass("yellow1");
+  		alert("Please select at least one settings to imoprt!");
+  		setTimeout(function(){$(".cbXC").removeClass("yellow1");},2500);
+  		return false;
+  	}else{
+  		if(confirm("Do you want to import the selected settings?")){
+  			$(".importBTN").val("Processing...").attr("disabled","disabled").addClass("btnDisabled");
+  			import1();
+  			//return true;
+  		}else{
+  			return false;
+  		}
+  	}
+  }
+  
+  </script>
+  <style>
+  .yellow1{background:yellow;}
+  .cbXC{display:inline-block;padding:5px;}
+  </style>
+    <apex:form id="importExport">
+  
+    <apex:pageBlock >
+        <div style="font-size:13px;font-weight:bold;padding:10px; background:#efefef;margin:20px 0px 20px 0px;line-height:20px;"> 
+         Use this dialog to import/export multiple Smart-Tables settings to another Salesforce system.
+         <div style="font-size:12px;font-weight:normal;"> 
+         Example: copy and paste the below settings from your sandbox to your production and then click the import button to migrate the settings.</div>
+         </div>
+  
+    	<apex:pageMessages id="mainTB1Err"/>
+          
+        <span class="cbXC"><apex:inputCheckbox value="{!importCB1}" styleClass="cbX"/> <b>Import ZaapiT Editable Table2 aka default table settings ({!if(NULLVALUE($CurrentPage.parameters.ZET2,'')=='','Showing All','Showing Selected')}):</b><br/>
+        </span>
+        <apex:inputTextarea id="exportImportTA1" value="{!importExport}" style="width:99%;height:130px;"/><p/>
+        
+        <span class="cbXC"><apex:inputCheckbox value="{!importCB2}" styleClass="cbX"/> <b>Import ZaapiT Related Tabs aka Sub-Tab ({!if(NULLVALUE($CurrentPage.parameters.ZPRL,'')=='','Showing All','Showing Selected')}):</b><br/>
+        </span>
+        <apex:inputTextarea id="exportImportTA" value="{!importExport2}" style="width:99%;height:130px;"/><p/>
+        
+        <span class="cbXC"><apex:inputCheckbox value="{!importCB3}" styleClass="cbX"/> <b>Import ZaapiT General Settings - dedupe / special lookups / special sub queries ({!if(NULLVALUE($CurrentPage.parameters.ZPGS,'')=='','Showing All','Showing Selected')}):</b><br/>
+        </span>        
+        <apex:inputTextarea id="exportImportTA2" value="{!importExport3}" style="width:99%;height:130px;"/><p/>
+        
+        <div style="font-size:13px;font-weight:bold;padding:10px; background:#efefef;margin:20px 0px 20px 0px;line-height:20px;"> 
+         Please backup the old settings before you import the new settings (to enable a quick roll back).
+         </div>
+        <apex:commandButton value="Import the Selected Settings" reRender="importExport" onclick="validImport();" styleClass="importBTN"/>
+    </apex:pageBlock>
+    
+       <apex:actionFunction action="{!import}" name="import1" reRender="importExport">
+            </apex:actionFunction>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,92 @@
+salesforce.Layout Territory_Model_Layout {
+  fullName = "Territory2Model-Territory Model Layout"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "Name"
+            },
+            {
+              behavior = "Edit"
+              field = "Description"
+            },
+            {
+              behavior = "Readonly"
+              field = "ActivatedDate"
+            },
+            {
+              behavior = "Readonly"
+              field = "LastRunRulesEndDate"
+            },
+            {
+              behavior = "Readonly"
+              field = "LastOppTerrAssignEndDate"
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "DeveloperName"
+            },
+            {
+              behavior = "Readonly"
+              field = "State"
+            },
+            {
+              behavior = "Readonly"
+              field = "DeactivatedDate"
+            },
+            {
+              behavior = "Readonly"
+              field = "IsCloneSource"
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = "LastModifiedById"
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = "LastModifiedDate"
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      style = "CustomLinks"
+    },
+  ]
+  showEmailCheckbox = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+}

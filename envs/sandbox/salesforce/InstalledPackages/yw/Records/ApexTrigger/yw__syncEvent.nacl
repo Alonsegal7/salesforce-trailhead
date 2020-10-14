@@ -1,0 +1,14 @@
+salesforce.ApexTrigger yw__syncEvent {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 27
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 24
+      namespace = "yw"
+    },
+  ]
+  status = "Active"
+  fullName = "yw__syncEvent"
+  content = "(hidden)"
+}

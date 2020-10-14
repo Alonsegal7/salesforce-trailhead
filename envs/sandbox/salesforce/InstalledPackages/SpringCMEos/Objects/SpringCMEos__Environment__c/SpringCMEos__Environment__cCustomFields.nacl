@@ -1,0 +1,60 @@
+type salesforce.SpringCMEos__Environment__c {
+  salesforce.Text SpringCMEos__Env_Prefix__c {
+    apiName = "SpringCMEos__Environment__c.SpringCMEos__Env_Prefix__c"
+    label = "Environment Prefix"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Environment prefix"
+    externalId = false
+  }
+  salesforce.Checkbox SpringCMEos__Environment_Selected__c {
+    apiName = "SpringCMEos__Environment__c.SpringCMEos__Environment_Selected__c"
+    label = "Environment Selected"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Environment selected is the SpringCM environment that you are using"
+  }
+  salesforce.Text SpringCMEos__Integration_User_Email__c {
+    apiName = "SpringCMEos__Environment__c.SpringCMEos__Integration_User_Email__c"
+    label = "Integration User Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SpringCMEos__SpringCM_Account_ID__c {
+    apiName = "SpringCMEos__Environment__c.SpringCMEos__SpringCM_Account_ID__c"
+    label = "SpringCM Account ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 25
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SpringCMEos__SpringCM_REST_URL__c {
+    apiName = "SpringCMEos__Environment__c.SpringCMEos__SpringCM_REST_URL__c"
+    label = "SpringCM REST URL"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+}

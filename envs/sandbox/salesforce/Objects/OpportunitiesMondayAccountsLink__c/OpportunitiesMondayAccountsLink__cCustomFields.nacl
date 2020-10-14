@@ -1,0 +1,67 @@
+type salesforce.OpportunitiesMondayAccountsLink__c {
+  salesforce.MasterDetail Opportunity__c {
+    apiName = "OpportunitiesMondayAccountsLink__c.Opportunity__c"
+    label = "Opportunity"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.Opportunity,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.MasterDetail Monday_Account__c {
+    apiName = "OpportunitiesMondayAccountsLink__c.Monday_Account__c"
+    label = "Monday Account"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.Monday_Account__c,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 1
+    queryable = true
+  }
+  salesforce.Text Billing_Ids__c {
+    apiName = "OpportunitiesMondayAccountsLink__c.Billing_Ids__c"
+    label = "Billing Ids"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText monday_account_link__c {
+    apiName = "OpportunitiesMondayAccountsLink__c.monday_account_link__c"
+    label = "monday account link"
+    _required = false
+    formula = "HYPERLINK(\"https://monday.lightning.force.com/lightning/r/Monday_Account__c/\" & Monday_Account__r.Id &\"/view\",\"link\")"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.OpportunitiesMondayAccountsLink__c.field.Monday_Account__c,
+    ]
+  }
+  salesforce.Checkbox is_Primary__c {
+    apiName = "OpportunitiesMondayAccountsLink__c.is_Primary__c"
+    label = "is Primary"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

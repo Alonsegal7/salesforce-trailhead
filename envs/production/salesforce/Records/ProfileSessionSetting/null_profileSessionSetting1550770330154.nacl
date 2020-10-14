@@ -1,0 +1,9 @@
+salesforce.ProfileSessionSetting null_profileSessionSetting1550770330154 {
+  fullName = "null_profileSessionSetting1550770330154"
+  externalCommunityUserIdentityVerif = false
+  forceLogout = false
+  profile = "integration administrator"
+  sessionPersistence = false
+  sessionTimeout = 0
+  sessionTimeoutWarning = false
+}

@@ -1,0 +1,54 @@
+<apex:page title="Grid Manager">
+<c:zaapit_tables_v1 />
+    <!-- Thank you for looking :) please contact us for customizing this application -->
+    
+    <script>
+        autoShowGuides="0";
+        function importExportSettings(){
+            var cIds="";
+            $(".lcbX input:checked").each(function(){
+                cIds+="~"+$(this).parents(".lcbX:first").attr("rid");
+            }); 
+            window.open("/apex/zaapit__Import_Export_Settings?ZET2="+(cIds.substring(1)),"import_export_settings","width=850,height=800");
+        }
+        
+        function newRL1(){
+            window.open(unescape('http://sc2.zaapit.com/pdf/ZaapIT_Getting_Started_Training.pdf?page=26%23page=26'),'UG1','width=800,height=800');
+        }
+        function newVFPG1(){
+            window.open(unescape('http://sc2.zaapit.com/pdf/ZaapitTools__User_Guide.pdf?page=29%23page=29'),'UG1','width=800,height=800');
+        }
+        function newST1(){
+            alert('On the next page choose a General-Working-List or General-Tabs (for sub tabs) ');
+            window.open('/setup/ui/tab/apexpages/apexPageTabWizard.jsp?setupid=CustomTabs&retURL=/apex/zaapit__closewin&isdtp=p1','_blank','width=800,height=800');
+        }
+        
+        function NewSmartTable1(){
+            window.location='/apex/zaapit__zaapit_tb_generalWL?isdtp=p1&tp=zp_'+(new Date().getTime().toString(24));
+        }
+        $(document).ready(function(){
+        if(!isSF1()){
+        	//setLS1("guide_grid_manager",null);
+            var guide_grid_manager=null;//getLS1("guide_grid_manager");
+            
+            //alert(welcome_guide_meLS);
+            if(guide_grid_manager==null){
+                //setLS1("guide_grid_manager","1");
+                guideMeStr=$.trim($(".guide_grid_manager").html());//
+                setTimeout(function(){guideMe(null,0);},600);//'guide_grid_manager'
+            }
+        }
+        });
+    </script>
+    <div class="hd1">{!$Label.zaapit__guide_grid_manager}</div>
+    <style>
+        .bluearrowtop{background:url("{!$Resource.bluearrowtop}") top left no-repeat;width:69px;height:75px;display:inline-block;}
+    </style>
+    <div class="guide_grid_manager hd1">
+    body~~~Grid Manager - Overview~~~<b style="font-size:11pt;line-height:30px;">Welcome to ZaapIT's Grid Manager Tab!</b> <br/>In this tab you can do the following actions: <ul style="margin:5px;padding:5px;"><li>Create new Smart Tabs (Grid Tab / Sub Tabs of Grids)</li><li> Create new Virtual Grids (Smart-Tables) </li><li> Create new Related Grids / Sub Tab of related grids </li><li> Manage the grid's settings in mass</li><li>Import / Export the grid settings from another system</li></ul> 
+    <br/>
+    <b style="font-size:10pt;">Please note that most of the standard  tabs were already created for you under the smart-mass-update app (the tabs next to the grid manager tab).</b>
+     
+    <br/><br/> Click next to take the quick tour.~~~ Dismiss~~~Next###.btnBox2~~~Welcome Tour~~~Use the following buttons to create new grids / Sub Tabs <br/> Click next to see the grids. ~~~ Dismiss ~~~Next###body~~~Welcome Tour~~~<span class="bluearrowtop" ></span><span style="margin-top: 22px; display: inline-block; vertical-align: top;width:256px;">Click the Contacts / Accounts / Leads tab to see the new grids! </span> ~~~Dismiss ~~~Done
+    </div>
+</apex:page>

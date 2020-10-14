@@ -1,0 +1,29 @@
+salesforce.BusinessProcess Opportunity_Partner_Recruitment {
+  fullName = "Opportunity.Partner Recruitment"
+  isActive = true
+  values = [
+    {
+      fullName = "Closed Lost"
+      default = false
+    },
+    {
+      fullName = "Closed Won"
+      default = false
+    },
+    {
+      fullName = "Evaluation"
+      default = false
+    },
+    {
+      fullName = "Negotiation"
+      default = false
+    },
+    {
+      fullName = "Qualified"
+      default = false
+    },
+  ]
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

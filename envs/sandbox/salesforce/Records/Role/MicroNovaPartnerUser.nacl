@@ -1,0 +1,10 @@
+salesforce.Role MicroNovaPartnerUser {
+  fullName = "MicroNovaPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "MicroNova Partner User"
+  mayForecastManagerShare = false
+  name = "MicroNova Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.MicroNovaPartnerManager
+}

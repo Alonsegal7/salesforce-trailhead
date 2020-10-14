@@ -1,0 +1,15 @@
+salesforce.AuraDefinitionBundle squivr__Timeline {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  description = "A Lightning Component Bundle"
+  fullName = "squivr__Timeline"
+  type = "Component"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+  SVGContent = "(hidden)"
+  designContent = "(hidden)"
+  rendererContent = "(hidden)"
+  documentationContent = "(hidden)"
+  styleContent = "(hidden)"
+}

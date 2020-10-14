@@ -1,0 +1,6 @@
+salesforce.CustomTab ARH__ARH_Configuration {
+  fullName = "ARH__ARH_Configuration"
+  label = "ARH Configuration"
+  lwcComponent = "ARH__arhConfigurationHome"
+  motif = "Custom18: Form"
+}

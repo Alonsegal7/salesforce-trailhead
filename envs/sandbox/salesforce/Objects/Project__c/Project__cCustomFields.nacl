@@ -1,0 +1,426 @@
+type salesforce.Project__c {
+  salesforce.FormulaNumber Age__c {
+    apiName = "Project__c.Age__c"
+    label = "Age"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(ISPICKVAL(Project_Status__c, \"Closed\"), Project_Closed_Date__c -Kickoff_Date__c, Today() -Kickoff_Date__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Project__c.field.Project_Closed_Date__c,
+      salesforce.Project__c.field.Project_Status__c,
+      salesforce.Project__c.field.Kickoff_Date__c,
+    ]
+  }
+  salesforce.Text Current_Milestone_Type__c {
+    apiName = "Project__c.Current_Milestone_Type__c"
+    label = "Current Milestone Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Field from PB"
+    externalId = false
+  }
+  salesforce.Text Current_Milestone__c {
+    apiName = "Project__c.Current_Milestone__c"
+    label = "Current Milestone"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "This is the milestone name"
+    externalId = false
+  }
+  salesforce.FormulaText Executing_Department__c {
+    apiName = "Project__c.Executing_Department__c"
+    label = "Executing Department"
+    _required = false
+    formula = "Text( $User.Function__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    description = "Reflects the project owner function"
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.User.field.Function__c,
+    ]
+  }
+  salesforce.Lookup Handover__c {
+    apiName = "Project__c.Handover__c"
+    label = "Handover"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Handover__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Percent WAPP_on_Close_Date__c {
+    apiName = "Project__c.WAPP_on_Close_Date__c"
+    label = "WAPP% on Close Date"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.FormulaText Package__c {
+    apiName = "Project__c.Package__c"
+    label = "Package"
+    _required = false
+    formula = "Text( Handover__r.Which_Kind_of_CSM__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Handover__c.field.Which_Kind_of_CSM__c,
+      salesforce.Project__c.field.Handover__c,
+    ]
+  }
+  salesforce.Picklist Postponed_Cancel_reasson__c {
+    apiName = "Project__c.Postponed_Cancel_reasson__c"
+    label = "Postponed/Cancel reason"
+    _required = false
+    valueSet = [
+      {
+        fullName = "No response"
+        default = false
+        label = "No response"
+      },
+      {
+        fullName = "Churned"
+        default = false
+        label = "Churned"
+      },
+      {
+        fullName = "Postponed"
+        default = false
+        label = "Postponed"
+      },
+      {
+        fullName = "Upgraded"
+        default = false
+        label = "Upgraded"
+      },
+      {
+        fullName = "POC filed"
+        default = false
+        label = "POC filed"
+      },
+      {
+        fullName = "Downgraded"
+        default = false
+        label = "Downgraded"
+      },
+    ]
+    restricted = false
+    fieldDependency = {
+      controllingField = "Project_Status__c"
+      valueSettings = [
+        {
+          valueName = "No response"
+          controllingFieldValue = [
+            "Postponed",
+            "Canceled",
+          ]
+        },
+        {
+          valueName = "Churned"
+          controllingFieldValue = [
+            "Postponed",
+            "Canceled",
+          ]
+        },
+        {
+          valueName = "Postponed"
+          controllingFieldValue = [
+            "Postponed",
+            "Canceled",
+          ]
+        },
+        {
+          valueName = "Upgraded"
+          controllingFieldValue = [
+            "Postponed",
+            "Canceled",
+          ]
+        },
+        {
+          valueName = "POC filed"
+          controllingFieldValue = [
+            "Postponed",
+            "Canceled",
+          ]
+        },
+        {
+          valueName = "Downgraded"
+          controllingFieldValue = [
+            "Postponed",
+            "Canceled",
+          ]
+        },
+      ]
+    }
+    inlineHelpText = "What was the reason the project is postponed or canceled"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "What was the reason the project is postponed or canceled"
+    sorted = false
+  }
+  salesforce.Date Project_Closed_Date__c {
+    apiName = "Project__c.Project_Closed_Date__c"
+    label = "Project Closed Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "When the project status changed to close"
+  }
+  salesforce.Text Project_Owner_Notes__c {
+    apiName = "Project__c.Project_Owner_Notes__c"
+    label = "Project Owner Notes"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 200
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Project_Status__c {
+    apiName = "Project__c.Project_Status__c"
+    label = "Project Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Open"
+        default = true
+        label = "Open"
+      },
+      {
+        fullName = "Closed"
+        default = false
+        label = "Closed"
+      },
+      {
+        fullName = "Postponed"
+        default = false
+        label = "Postponed"
+      },
+      {
+        fullName = "Canceled"
+        default = false
+        label = "Canceled"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Project_Type__c {
+    apiName = "Project__c.Project_Type__c"
+    label = "Project Type"
+    _required = true
+    valueSet = [
+      {
+        fullName = "Onboarding"
+        default = true
+        label = "Onboarding"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Lookup monday_Account__c {
+    apiName = "Project__c.monday_Account__c"
+    label = "monday Account"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Milestone__c {
+    apiName = "Project__c.Milestone__c"
+    label = "Milestone"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Milestone__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Milestone_Type__c {
+    apiName = "Project__c.Milestone_Type__c"
+    label = "Milestone Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Reflects the milestone type"
+    externalId = false
+  }
+  salesforce.Percent WAPP_30_Days_Post_Close__c {
+    apiName = "Project__c.WAPP_30_Days_Post_Close__c"
+    label = "WAPP% 30 Days Post Close"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Percent WAPP_90_Days_Post_Close__c {
+    apiName = "Project__c.WAPP_90_Days_Post_Close__c"
+    label = "WAPP% 90 Days Post Close"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.FormulaCheckbox Is_Test_Account__c {
+    apiName = "Project__c.Is_Test_Account__c"
+    label = "Is Test Account"
+    formula = "monday_Account__r.Is_Test_Account__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Package_Sign__c {
+    apiName = "Project__c.Package_Sign__c"
+    label = "Package Sign"
+    _required = false
+    formula = '''
+if(Package__c="Gold",IMAGE("/resource/Gold","Gold"),
+if(Package__c="Silver",IMAGE("/resource/Silver","Silver"),
+if(Package__c="Bronze",IMAGE("/resource/Bronze","Bronze"),
+"")))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary of_Closed_Milestones__c {
+    apiName = "Project__c.of_Closed_Milestones__c"
+    label = "# of Closed Milestones"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Milestone__c.Status__c"
+        operation = "equals"
+        value = "Closed"
+      },
+    ]
+    summaryForeignKey = "Milestone__c.Project__c"
+    summaryOperation = "count"
+  }
+  salesforce.FormulaNumber Current_Milestone_Number__c {
+    apiName = "Project__c.Current_Milestone_Number__c"
+    label = "Current Milestone Number"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if(of_Closed_Milestones__c==of_Milestones__c,of_Closed_Milestones__c, of_Closed_Milestones__c +1)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary of_Milestones__c {
+    apiName = "Project__c.of_Milestones__c"
+    label = "# of Milestones"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryForeignKey = "Milestone__c.Project__c"
+    summaryOperation = "count"
+  }
+  salesforce.Date Kickoff_Date__c {
+    apiName = "Project__c.Kickoff_Date__c"
+    label = "Kickoff Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox CSAT_Process_Launched__c {
+    apiName = "Project__c.CSAT_Process_Launched__c"
+    label = "CSAT Process Launched"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Project_Owner_Name__c {
+    apiName = "Project__c.Project_Owner_Name__c"
+    label = "Project Owner Name"
+    _required = false
+    formula = "Owner:User.Full_Name__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+}

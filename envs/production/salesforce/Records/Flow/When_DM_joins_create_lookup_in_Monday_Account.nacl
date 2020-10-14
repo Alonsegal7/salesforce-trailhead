@@ -1,0 +1,76 @@
+salesforce.Flow When_DM_joins_create_lookup_in_Monday_Account {
+  fullName = "When_DM_joins_create_lookup_in_Monday_Account"
+  assignments = [
+    {
+      name = "myUniquelyDummyAssignment"
+      label = "myUniquelyDummyAssignment"
+      locationX = 0
+      locationY = 0
+      assignmentItems = [
+        {
+          assignToReference = "myUniquelyDummyVariable"
+          operator = "Assign"
+          value = {
+            stringValue = "fakeVal"
+          }
+        },
+      ]
+    },
+  ]
+  interviewLabel = "When_DM_joins_create_lookup_in_Monday_Account-1_InterviewLabel"
+  label = "When DM joins, create lookup in Monday Account"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Account"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  startElementReference = "myUniquelyDummyAssignment"
+  status = "Draft"
+  variables = [
+    {
+      name = "myUniquelyDummyVariable"
+      dataType = "String"
+      isCollection = false
+      isInput = false
+      isOutput = false
+    },
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Account
+    },
+  ]
+}

@@ -1,0 +1,46 @@
+<apex:page tabStyle="Valooto__tab" sidebar="true" controller="valt.canvasApp"  >
+     <head>
+         <apex:includeScript value="{!$Resource.valt__valooto_jquery}"/>    
+        <style>
+           html
+        {
+            overflow: auto;
+        } 
+        
+        .oRight div
+        {
+            display: inherit;
+            height: 100%;
+        }
+        </style>   
+        <script type="text/javascript">
+            $(window).resize(function() {
+                resizeIframe();
+            });
+
+            function resizeIframe(){
+                var newHeight = $(window).height();
+                if($('.bPageHeader') != null && $('.bPageHeader').length != 0){
+                    newHeight -= $('.bPageHeader').height();
+                }
+                if($('.bPageFooter') != null && $('.bPageFooter').length != 0){
+                    newHeight -= $('.bPageFooter').height();
+                    newHeight -= 58;
+                    $("iframe").parent().height((newHeight)+'px');
+                }
+                $("iframe")[0].setAttribute('height', newHeight);
+                $("iframe").height(newHeight);
+            }
+
+            function fitSizeToWindow(){ 
+                resizeIframe();
+            }
+        </script>
+
+    </head>
+    
+    <body>   
+        <apex:canvasApp id="cnavasAppID" applicationName="Valooto_Prod" namespacePrefix="valt" width="100%" height="100%" parameters="{'recordID':'{!recordID}', 'action':'{!actionType}', 'sessionID':'{!sessionID}', 'organizationID':'{!organizationID}'}" onCanvasAppLoad="fitSizeToWindow()"/>
+    </body>
+    
+</apex:page>

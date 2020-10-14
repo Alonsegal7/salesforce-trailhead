@@ -1,0 +1,23 @@
+salesforce.WorkflowAlert Opportunity_Closed_won_email {
+  fullName = "Opportunity.Closed_won_email"
+  ccEmails = [
+    "dorit@monday.com",
+  ]
+  description = "Closed won email"
+  protected = false
+  recipients = [
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "nir@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "DefaultWorkflowUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Won_opportunity_email
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

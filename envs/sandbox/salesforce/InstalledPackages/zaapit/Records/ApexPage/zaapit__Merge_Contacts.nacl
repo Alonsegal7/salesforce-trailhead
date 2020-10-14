@@ -1,0 +1,10 @@
+salesforce.ApexPage zaapit__Merge_Contacts {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  availableInTouch = true
+  confirmationTokenRequired = false
+  description = "Merge Contacts in lightning"
+  label = "Merge Contacts"
+  fullName = "zaapit__Merge_Contacts"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__Merge_Contacts.page")
+}

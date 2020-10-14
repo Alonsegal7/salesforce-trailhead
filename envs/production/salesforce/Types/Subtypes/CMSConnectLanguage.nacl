@@ -1,0 +1,23 @@
+type salesforce.CMSConnectLanguage {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  string cmsLanguage {
+    _required = false
+  }
+  string language {
+    _required = false
+  }
+  metadataType = "CMSConnectLanguage"
+}

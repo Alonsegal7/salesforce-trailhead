@@ -1,0 +1,6 @@
+salesforce.SharingRules LH__LH_Queue__c {
+  fullName = "LH__LH_Queue__c"
+  _parent = [
+    salesforce.LH__LH_Queue__c,
+  ]
+}

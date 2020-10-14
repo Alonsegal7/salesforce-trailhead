@@ -1,0 +1,10 @@
+salesforce.Role DevinitiPartnerUser {
+  fullName = "DevinitiPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Deviniti Partner User"
+  mayForecastManagerShare = false
+  name = "Deviniti Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

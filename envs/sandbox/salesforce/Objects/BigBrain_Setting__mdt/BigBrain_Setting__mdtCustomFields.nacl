@@ -1,0 +1,10 @@
+type salesforce.BigBrain_Setting__mdt {
+  salesforce.Url Root_URL__c {
+    apiName = "BigBrain_Setting__mdt.Root_URL__c"
+    label = "Root URL"
+    _required = true
+    createable = false
+    updateable = false
+    queryable = true
+  }
+}

@@ -1,0 +1,7 @@
+salesforce.ApexClass zisf__LeadCompleteTriggerErrorHandlerJob {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 24
+  status = "Active"
+  fullName = "zisf__LeadCompleteTriggerErrorHandlerJob"
+  content = file("salesforce/InstalledPackages/zisf/Records/ApexClass/zisf__LeadCompleteTriggerErrorHandlerJob.cls")
+}

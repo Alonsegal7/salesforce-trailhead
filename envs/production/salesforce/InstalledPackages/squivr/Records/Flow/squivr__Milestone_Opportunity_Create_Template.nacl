@@ -1,0 +1,91 @@
+salesforce.Flow squivr__Milestone_Opportunity_Create_Template {
+  fullName = "squivr__Milestone_Opportunity_Create_Template"
+  actionCalls = [
+    {
+      name = "Create_Opportunity_Milestones"
+      label = "Create Opportunity Milestones"
+      locationX = 175
+      locationY = 506
+      actionName = salesforce.ApexClass.instance.squivr__MilestoneFlow
+      actionType = "apex"
+      inputParameters = [
+        {
+          name = "endDateField"
+          value = {
+            stringValue = "CloseDate"
+          }
+        },
+        {
+          name = "records"
+          value = {
+            elementReference = "Records"
+          }
+        },
+        {
+          name = "startDateField"
+          value = {
+            stringValue = "CreatedDate"
+          }
+        },
+      ]
+    },
+  ]
+  assignments = [
+    {
+      name = "Assign_Records_for_Milestones"
+      label = "Assign Records for Milestones"
+      locationX = 176
+      locationY = 328
+      assignmentItems = [
+        {
+          assignToReference = "Records"
+          operator = "Add"
+          value = {
+            elementReference = "$Record"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Create_Opportunity_Milestones"
+      }
+    },
+  ]
+  interviewLabel = "Milestone Opportunity Template {!$Flow.CurrentDateTime}"
+  isTemplate = true
+  label = "Milestone Opportunity Create Template"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "Assign_Records_for_Milestones"
+    }
+    object = salesforce.Opportunity
+    triggerType = "RecordAfterSave"
+  }
+  status = "Draft"
+  variables = [
+    {
+      name = "Records"
+      dataType = "SObject"
+      isCollection = true
+      isInput = false
+      isOutput = false
+      objectType = salesforce.Opportunity
+    },
+  ]
+}

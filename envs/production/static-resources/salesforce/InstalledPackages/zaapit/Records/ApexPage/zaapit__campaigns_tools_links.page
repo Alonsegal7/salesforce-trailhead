@@ -1,0 +1,44 @@
+<apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="true" standardStylesheets="true" >
+<style>
+.toolsrus{color:#333333;padding:10px;width:269px;}
+.toolsrus h3{margin-left:10px;;font-size:15px;color:#333333;display:block;}
+.toolsrus ul{margin-left:10px;padding-left:0px;}
+.toolsrus a{;font-size:13px;color:#333333;display:block;}
+.toolsrus a:hover{;font-size:13px;color:#333333;display:block;background:#efefef}
+</style>
+<div class="toolsrus" >
+
+<div>
+<div>
+<div>
+<div>
+<div >
+<h3 >Reports</h3>
+<div >
+<ul>
+<li >
+<a target="_blank" href="/00O?rt=4&retURL=%2F701%2Fo&t=title1&scope=user&c=CAN&c=CTY&c=CST&c=START_DATE&c=CNS&c=CNR&c=NOP&c=NWO&c=AWO&c=CAC&c=ROI&c=AVGCOST_CUST&c=AVGCOST_RESP&details=yes">Campaign ROI Analysis Report</a>
+</li>
+<li>
+<a target="_blank" href="/00O?rt=8&retURL=%2F701%2Fo&format=x&break0=CTY&break0a=CAN&break1=MEMBER_STATUS&scope=user&c=CAN&c=MEMBER_STATUS&details=yes">Campaign Member Analysis Report</a>
+</li>
+<li>
+<a target="_blank" href="/00O?rt=9&retURL=%2F701%2Fo&t=title12&open=closedwon&break0=CAMPAIGN_NAME&c=FN&c=AN&c=ON&c=SN&c=FQ&c=CD&c=TY&c=CAMPAIGN_NAME&s=AM&a=AG&details=yes&format=t">Campaign Revenue Report</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h3 style="margin-top:10px;">Guides</h3>
+<ul>
+<li>
+<a href="javascript:void(0)" onclick="guideMe('welcome_guide_me',0);" >{!$Label.Welcome_Tour}</a>
+</li><li>
+<a href="{!$Label.user_guide_link}" target="_blank">{!$Label.User_Guide}</a>
+</li>
+</ul>
+</div>
+</apex:page>

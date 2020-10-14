@@ -1,0 +1,23 @@
+salesforce.ContentAsset zisf__zilogo {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  isVisibleByExternalUsers = false
+  language = "en_US"
+  masterLabel = "zilogo"
+  relationships = [
+    {
+      organization = {
+        access = "VIEWER"
+      }
+    },
+  ]
+  versions = {
+    version = [
+      {
+        number = "1"
+        pathOnClient = "zilogo.png"
+      },
+    ]
+  }
+  fullName = "zisf__zilogo"
+  content = file("salesforce/InstalledPackages/zisf/Records/ContentAsset/zisf__zilogo.asset")
+}

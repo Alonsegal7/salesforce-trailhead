@@ -1,0 +1,14 @@
+salesforce.Workflow Target__c {
+  fullName = "Target__c"
+  fieldUpdates = [
+    salesforce.WorkflowFieldUpdate.instance.Target__c_Set_Target_Name,
+    salesforce.WorkflowFieldUpdate.instance.Target__c_Update_Target_Unique_Key,
+  ]
+  rules = [
+    salesforce.WorkflowRule.instance.Target__c_Set_Target_Name,
+    salesforce.WorkflowRule.instance.Target__c_Set_Target_Unique_Key,
+  ]
+  _parent = [
+    salesforce.Target__c,
+  ]
+}

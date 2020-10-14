@@ -1,0 +1,16 @@
+salesforce.ValidationRule Project__c_Survey_Contact_on_Project_Close {
+  fullName = "Project__c.Survey_Contact_on_Project_Close"
+  active = true
+  errorConditionFormula = '''
+ischanged( Project_Status__c ) &&
+ispickval(Project_Status__c,'Closed')&&
+(monday_Account__r.of_Survey_Contacts__c=0||
+isblank(monday_Account__r.of_Survey_Contacts__c))&&
+($User.LastName='Ben Ron'||
+$User.LastName='Axelrad')
+'''
+  errorMessage = "Please make sure you mark at least one contact on the Monday Account as a survey contact before closing the project"
+  _parent = [
+    salesforce.Project__c,
+  ]
+}

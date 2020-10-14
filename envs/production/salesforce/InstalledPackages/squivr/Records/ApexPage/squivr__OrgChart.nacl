@@ -1,0 +1,9 @@
+salesforce.ApexPage squivr__OrgChart {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 43
+  availableInTouch = false
+  confirmationTokenRequired = false
+  label = "OrgChart"
+  fullName = "squivr__OrgChart"
+  content = file("salesforce/InstalledPackages/squivr/Records/ApexPage/squivr__OrgChart.page")
+}

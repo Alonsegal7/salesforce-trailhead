@@ -1,0 +1,67 @@
+salesforce.LightningPage Biz_Ops_Workspace {
+  fullName = "Biz_Ops_Workspace"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "numUZinlWyrQlEDNyPpWBrjjnyAEvI1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+      ]
+      name = "region1"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "BanENLcrROxQtvpLjOrNuQyIdKwXrr"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+      ]
+      name = "region2"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "flowLayout"
+              value = "oneColumn"
+            },
+            {
+              name = "flowName"
+              value = "Run_Manual_Account_Snapshot"
+            },
+          ]
+          componentName = "flowruntime:interview"
+        },
+      ]
+      name = "region3"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Biz Ops Workspace"
+  template = {
+    name = "flexipage:appHomeTemplateThreeColumns"
+  }
+  type = "AppPage"
+}

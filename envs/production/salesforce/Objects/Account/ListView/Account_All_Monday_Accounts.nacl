@@ -1,0 +1,27 @@
+salesforce.ListView Account_All_Monday_Accounts {
+  fullName = "Account.All_Monday_Accounts"
+  columns = [
+    "ACCOUNT.NAME",
+    "Company_Size__c",
+    "ACCOUNT.EMPLOYEES",
+    "CORE.USERS.FIRST_NAME",
+    "Owner_s_Manager__c",
+    "AM__c",
+    "Company_ARR__c",
+    "Company_Seats__c",
+    "Strategic__c",
+    "Strategic_receiver__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "ACCOUNT.RECORDTYPE"
+      operation = "equals"
+      value = "Account.Company"
+    },
+  ]
+  label = "All Monday Accounts"
+  _parent = [
+    salesforce.Account,
+  ]
+}

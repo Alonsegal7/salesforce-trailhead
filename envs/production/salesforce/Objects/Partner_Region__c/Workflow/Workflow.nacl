@@ -1,0 +1,13 @@
+salesforce.Workflow Partner_Region__c {
+  fullName = "Partner_Region__c"
+  fieldUpdates = [
+    salesforce.WorkflowFieldUpdate.instance.Partner_Region__c_Set_UTM_Campaign,
+  ]
+  rules = [
+    salesforce.WorkflowRule.instance.Partner_Region__c_Main_User_Email,
+    salesforce.WorkflowRule.instance.Partner_Region__c_Partner_Region_Set_UTM_Campaign,
+  ]
+  _parent = [
+    salesforce.Partner_Region__c,
+  ]
+}

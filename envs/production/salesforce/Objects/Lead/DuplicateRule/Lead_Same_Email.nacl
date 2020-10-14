@@ -1,0 +1,19 @@
+salesforce.DuplicateRule Lead_Same_Email {
+  fullName = "Lead.Same_Email"
+  actionOnInsert = "Block"
+  actionOnUpdate = "Block"
+  alertText = "duplicate Email"
+  duplicateRuleMatchRules = [
+    {
+      matchRuleSObjectType = "Lead"
+      matchingRule = "Standard_Lead_Match_Rule_v1_0"
+    },
+  ]
+  isActive = false
+  masterLabel = "Same Email"
+  securityOption = "EnforceSharingRules"
+  sortOrder = 5
+  _parent = [
+    salesforce.Lead,
+  ]
+}

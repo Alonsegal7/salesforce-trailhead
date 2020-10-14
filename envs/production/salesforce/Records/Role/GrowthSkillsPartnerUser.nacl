@@ -1,0 +1,10 @@
+salesforce.Role GrowthSkillsPartnerUser {
+  fullName = "GrowthSkillsPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Growth Skills Partner User"
+  mayForecastManagerShare = false
+  name = "Growth Skills Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.GrowthSkillsPartnerManager
+}

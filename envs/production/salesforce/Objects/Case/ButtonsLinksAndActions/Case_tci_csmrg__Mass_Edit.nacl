@@ -1,0 +1,28 @@
+salesforce.WebLink Case_tci_csmrg__Mass_Edit {
+  fullName = "Case.tci_csmrg__Mass_Edit"
+  availability = "online"
+  displayType = "massActionButton"
+  linkType = "javascript"
+  masterLabel = "Mass Edit"
+  openType = "onClickJavaScript"
+  protected = false
+  requireRowSelection = true
+  url = '''
+{!REQUIRESCRIPT("/soap/ajax/19.0/connection.js")}
+
+var records = {!GETRECORDIDS($ObjectType.Case)};
+
+if (records[0] == null) {
+
+alert("Please select at least one Case to edit.");
+} 
+
+else {
+
+window.location = '/apex/tci_csmrg__MassEditCases?recs='+records.join(',');
+}
+'''
+  _parent = [
+    salesforce.Case,
+  ]
+}

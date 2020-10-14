@@ -1,0 +1,17 @@
+salesforce.WebLink Lead_zaapit__Mass_Merge {
+  fullName = "Lead.zaapit__Mass_Merge"
+  availability = "online"
+  description = "for dedup manager used inside zaapit's app"
+  displayType = "massActionButton"
+  encodingKey = "UTF-8"
+  height = 600
+  linkType = "url"
+  masterLabel = "Mass Merge"
+  openType = "sidebar"
+  protected = false
+  requireRowSelection = true
+  url = "/**/massMergeXSel(\"Lead\");"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

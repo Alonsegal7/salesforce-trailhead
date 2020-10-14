@@ -1,0 +1,2197 @@
+salesforce.CustomObjectTranslation Billing_Entity__c_en_US {
+  fullName = "Billing_Entity__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Billing Entity"
+    },
+    {
+      plural = true
+      value = "Billing Entities"
+    },
+  ]
+  fieldSets = [
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Billing_Entity__c_NewEntityfields
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Agent_Code_Priority__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Billing_Address__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Billing_Currency__c
+      picklistValues = [
+        {
+          masterLabel = "LOV Missing"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.City__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Company_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Contact_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Contact_phone_number__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Country__c
+      picklistValues = [
+        {
+          masterLabel = "Afghanistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Aland Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Albania"
+          translation = ""
+        },
+        {
+          masterLabel = "Algeria"
+          translation = ""
+        },
+        {
+          masterLabel = "Andorra"
+          translation = ""
+        },
+        {
+          masterLabel = "Angola"
+          translation = ""
+        },
+        {
+          masterLabel = "Anguilla"
+          translation = ""
+        },
+        {
+          masterLabel = "Antarctica"
+          translation = ""
+        },
+        {
+          masterLabel = "Antigua and Barbuda"
+          translation = ""
+        },
+        {
+          masterLabel = "Argentina"
+          translation = ""
+        },
+        {
+          masterLabel = "Armenia"
+          translation = ""
+        },
+        {
+          masterLabel = "Aruba"
+          translation = ""
+        },
+        {
+          masterLabel = "Australia"
+          translation = ""
+        },
+        {
+          masterLabel = "Austria"
+          translation = ""
+        },
+        {
+          masterLabel = "Azerbaijan"
+          translation = ""
+        },
+        {
+          masterLabel = "Bahamas"
+          translation = ""
+        },
+        {
+          masterLabel = "Bahrain"
+          translation = ""
+        },
+        {
+          masterLabel = "Bangladesh"
+          translation = ""
+        },
+        {
+          masterLabel = "Barbados"
+          translation = ""
+        },
+        {
+          masterLabel = "Belarus"
+          translation = ""
+        },
+        {
+          masterLabel = "Belgium"
+          translation = ""
+        },
+        {
+          masterLabel = "Belize"
+          translation = ""
+        },
+        {
+          masterLabel = "Benin"
+          translation = ""
+        },
+        {
+          masterLabel = "Bermuda"
+          translation = ""
+        },
+        {
+          masterLabel = "Bhutan"
+          translation = ""
+        },
+        {
+          masterLabel = "Bolivia, Plurinational State of"
+          translation = ""
+        },
+        {
+          masterLabel = "Bonaire, Sint Eustatius and Saba"
+          translation = ""
+        },
+        {
+          masterLabel = "Bosnia and Herzegovina"
+          translation = ""
+        },
+        {
+          masterLabel = "Botswana"
+          translation = ""
+        },
+        {
+          masterLabel = "Bouvet Island"
+          translation = ""
+        },
+        {
+          masterLabel = "Brazil"
+          translation = ""
+        },
+        {
+          masterLabel = "British Indian Ocean Territory"
+          translation = ""
+        },
+        {
+          masterLabel = "Brunei Darussalam"
+          translation = ""
+        },
+        {
+          masterLabel = "Bulgaria"
+          translation = ""
+        },
+        {
+          masterLabel = "Burkina Faso"
+          translation = ""
+        },
+        {
+          masterLabel = "Burundi"
+          translation = ""
+        },
+        {
+          masterLabel = "Cambodia"
+          translation = ""
+        },
+        {
+          masterLabel = "Cameroon"
+          translation = ""
+        },
+        {
+          masterLabel = "Canada"
+          translation = ""
+        },
+        {
+          masterLabel = "Cape Verde"
+          translation = ""
+        },
+        {
+          masterLabel = "Cayman Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Central African Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Chad"
+          translation = ""
+        },
+        {
+          masterLabel = "Chile"
+          translation = ""
+        },
+        {
+          masterLabel = "China"
+          translation = ""
+        },
+        {
+          masterLabel = "Christmas Island"
+          translation = ""
+        },
+        {
+          masterLabel = "Cocos (Keeling) Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Colombia"
+          translation = ""
+        },
+        {
+          masterLabel = "Comoros"
+          translation = ""
+        },
+        {
+          masterLabel = "Congo"
+          translation = ""
+        },
+        {
+          masterLabel = "Congo, the Democratic Republic of the"
+          translation = ""
+        },
+        {
+          masterLabel = "Cook Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Costa Rica"
+          translation = ""
+        },
+        {
+          masterLabel = "Cote d’Ivoire"
+          translation = ""
+        },
+        {
+          masterLabel = "Croatia"
+          translation = ""
+        },
+        {
+          masterLabel = "Cuba"
+          translation = ""
+        },
+        {
+          masterLabel = "Curaçao"
+          translation = ""
+        },
+        {
+          masterLabel = "Cyprus"
+          translation = ""
+        },
+        {
+          masterLabel = "Czech Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Denmark"
+          translation = ""
+        },
+        {
+          masterLabel = "Djibouti"
+          translation = ""
+        },
+        {
+          masterLabel = "Dominica"
+          translation = ""
+        },
+        {
+          masterLabel = "Dominican Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Ecuador"
+          translation = ""
+        },
+        {
+          masterLabel = "Egypt"
+          translation = ""
+        },
+        {
+          masterLabel = "El Salvador"
+          translation = ""
+        },
+        {
+          masterLabel = "Equatorial Guinea"
+          translation = ""
+        },
+        {
+          masterLabel = "Eritrea"
+          translation = ""
+        },
+        {
+          masterLabel = "Estonia"
+          translation = ""
+        },
+        {
+          masterLabel = "Ethiopia"
+          translation = ""
+        },
+        {
+          masterLabel = "Falkland Islands (Malvinas)"
+          translation = ""
+        },
+        {
+          masterLabel = "Faroe Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Fiji"
+          translation = ""
+        },
+        {
+          masterLabel = "Finland"
+          translation = ""
+        },
+        {
+          masterLabel = "France"
+          translation = ""
+        },
+        {
+          masterLabel = "French Guiana"
+          translation = ""
+        },
+        {
+          masterLabel = "French Polynesia"
+          translation = ""
+        },
+        {
+          masterLabel = "French Southern Territories"
+          translation = ""
+        },
+        {
+          masterLabel = "Gabon"
+          translation = ""
+        },
+        {
+          masterLabel = "Gambia"
+          translation = ""
+        },
+        {
+          masterLabel = "Georgia"
+          translation = ""
+        },
+        {
+          masterLabel = "Germany"
+          translation = ""
+        },
+        {
+          masterLabel = "Ghana"
+          translation = ""
+        },
+        {
+          masterLabel = "Gibraltar"
+          translation = ""
+        },
+        {
+          masterLabel = "Greece"
+          translation = ""
+        },
+        {
+          masterLabel = "Greenland"
+          translation = ""
+        },
+        {
+          masterLabel = "Grenada"
+          translation = ""
+        },
+        {
+          masterLabel = "Guadeloupe"
+          translation = ""
+        },
+        {
+          masterLabel = "Guatemala"
+          translation = ""
+        },
+        {
+          masterLabel = "Guernsey"
+          translation = ""
+        },
+        {
+          masterLabel = "Guinea"
+          translation = ""
+        },
+        {
+          masterLabel = "Guinea-Bissau"
+          translation = ""
+        },
+        {
+          masterLabel = "Guyana"
+          translation = ""
+        },
+        {
+          masterLabel = "Haiti"
+          translation = ""
+        },
+        {
+          masterLabel = "Heard Island and McDonald Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Holy See (Vatican City State)"
+          translation = ""
+        },
+        {
+          masterLabel = "Honduras"
+          translation = ""
+        },
+        {
+          masterLabel = "Hong Kong"
+          translation = ""
+        },
+        {
+          masterLabel = "Hungary"
+          translation = ""
+        },
+        {
+          masterLabel = "Iceland"
+          translation = ""
+        },
+        {
+          masterLabel = "India"
+          translation = ""
+        },
+        {
+          masterLabel = "Indonesia"
+          translation = ""
+        },
+        {
+          masterLabel = "Iran, Islamic Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Iraq"
+          translation = ""
+        },
+        {
+          masterLabel = "Ireland"
+          translation = ""
+        },
+        {
+          masterLabel = "Isle of Man"
+          translation = ""
+        },
+        {
+          masterLabel = "Israel"
+          translation = ""
+        },
+        {
+          masterLabel = "Italy"
+          translation = ""
+        },
+        {
+          masterLabel = "Jamaica"
+          translation = ""
+        },
+        {
+          masterLabel = "Japan"
+          translation = ""
+        },
+        {
+          masterLabel = "Jersey"
+          translation = ""
+        },
+        {
+          masterLabel = "Jordan"
+          translation = ""
+        },
+        {
+          masterLabel = "Kazakhstan"
+          translation = ""
+        },
+        {
+          masterLabel = "Kenya"
+          translation = ""
+        },
+        {
+          masterLabel = "Kiribati"
+          translation = ""
+        },
+        {
+          masterLabel = "Korea, Democratic People’s Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Korea, Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Kuwait"
+          translation = ""
+        },
+        {
+          masterLabel = "Kyrgyzstan"
+          translation = ""
+        },
+        {
+          masterLabel = "Lao People’s Democratic Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Latvia"
+          translation = ""
+        },
+        {
+          masterLabel = "Lebanon"
+          translation = ""
+        },
+        {
+          masterLabel = "Lesotho"
+          translation = ""
+        },
+        {
+          masterLabel = "Liberia"
+          translation = ""
+        },
+        {
+          masterLabel = "Libyan Arab Jamahiriya"
+          translation = ""
+        },
+        {
+          masterLabel = "Liechtenstein"
+          translation = ""
+        },
+        {
+          masterLabel = "Lithuania"
+          translation = ""
+        },
+        {
+          masterLabel = "Luxembourg"
+          translation = ""
+        },
+        {
+          masterLabel = "Macao"
+          translation = ""
+        },
+        {
+          masterLabel = "Macau"
+          translation = ""
+        },
+        {
+          masterLabel = "Macedonia, the former Yugoslav Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Madagascar"
+          translation = ""
+        },
+        {
+          masterLabel = "Malawi"
+          translation = ""
+        },
+        {
+          masterLabel = "Malaysia"
+          translation = ""
+        },
+        {
+          masterLabel = "Maldives"
+          translation = ""
+        },
+        {
+          masterLabel = "Mali"
+          translation = ""
+        },
+        {
+          masterLabel = "Malta"
+          translation = ""
+        },
+        {
+          masterLabel = "Martinique"
+          translation = ""
+        },
+        {
+          masterLabel = "Mauritania"
+          translation = ""
+        },
+        {
+          masterLabel = "Mauritius"
+          translation = ""
+        },
+        {
+          masterLabel = "Mayotte"
+          translation = ""
+        },
+        {
+          masterLabel = "Mexico"
+          translation = ""
+        },
+        {
+          masterLabel = "Moldova, Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Monaco"
+          translation = ""
+        },
+        {
+          masterLabel = "Mongolia"
+          translation = ""
+        },
+        {
+          masterLabel = "Montenegro"
+          translation = ""
+        },
+        {
+          masterLabel = "Montserrat"
+          translation = ""
+        },
+        {
+          masterLabel = "Morocco"
+          translation = ""
+        },
+        {
+          masterLabel = "Mozambique"
+          translation = ""
+        },
+        {
+          masterLabel = "Myanmar"
+          translation = ""
+        },
+        {
+          masterLabel = "Namibia"
+          translation = ""
+        },
+        {
+          masterLabel = "Nauru"
+          translation = ""
+        },
+        {
+          masterLabel = "Nepal"
+          translation = ""
+        },
+        {
+          masterLabel = "Netherlands"
+          translation = ""
+        },
+        {
+          masterLabel = "New Caledonia"
+          translation = ""
+        },
+        {
+          masterLabel = "New Zealand"
+          translation = ""
+        },
+        {
+          masterLabel = "Nicaragua"
+          translation = ""
+        },
+        {
+          masterLabel = "Niger"
+          translation = ""
+        },
+        {
+          masterLabel = "Nigeria"
+          translation = ""
+        },
+        {
+          masterLabel = "Niue"
+          translation = ""
+        },
+        {
+          masterLabel = "Norfolk Island"
+          translation = ""
+        },
+        {
+          masterLabel = "North Korea"
+          translation = ""
+        },
+        {
+          masterLabel = "Norway"
+          translation = ""
+        },
+        {
+          masterLabel = "Oman"
+          translation = ""
+        },
+        {
+          masterLabel = "Pakistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Palestine"
+          translation = ""
+        },
+        {
+          masterLabel = "Panama"
+          translation = ""
+        },
+        {
+          masterLabel = "Papua New Guinea"
+          translation = ""
+        },
+        {
+          masterLabel = "Paraguay"
+          translation = ""
+        },
+        {
+          masterLabel = "Peru"
+          translation = ""
+        },
+        {
+          masterLabel = "Philippines"
+          translation = ""
+        },
+        {
+          masterLabel = "Pitcairn"
+          translation = ""
+        },
+        {
+          masterLabel = "Poland"
+          translation = ""
+        },
+        {
+          masterLabel = "Portugal"
+          translation = ""
+        },
+        {
+          masterLabel = "Puerto Rico"
+          translation = ""
+        },
+        {
+          masterLabel = "Qatar"
+          translation = ""
+        },
+        {
+          masterLabel = "Reunion"
+          translation = ""
+        },
+        {
+          masterLabel = "Romania"
+          translation = ""
+        },
+        {
+          masterLabel = "Russia"
+          translation = ""
+        },
+        {
+          masterLabel = "Russian Federation"
+          translation = ""
+        },
+        {
+          masterLabel = "Rwanda"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Barthélemy"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Helena, Ascension and Tristan da Cunha"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Kitts and Nevis"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Lucia"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Martin (French part)"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Pierre and Miquelon"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Vincent and the Grenadines"
+          translation = ""
+        },
+        {
+          masterLabel = "Samoa"
+          translation = ""
+        },
+        {
+          masterLabel = "San Marino"
+          translation = ""
+        },
+        {
+          masterLabel = "Sao Tome and Principe"
+          translation = ""
+        },
+        {
+          masterLabel = "Saudi Arabia"
+          translation = ""
+        },
+        {
+          masterLabel = "Senegal"
+          translation = ""
+        },
+        {
+          masterLabel = "Serbia"
+          translation = ""
+        },
+        {
+          masterLabel = "Seychelles"
+          translation = ""
+        },
+        {
+          masterLabel = "Sierra Leone"
+          translation = ""
+        },
+        {
+          masterLabel = "Singapore"
+          translation = ""
+        },
+        {
+          masterLabel = "Sint Maarten (Dutch part)"
+          translation = ""
+        },
+        {
+          masterLabel = "Slovakia"
+          translation = ""
+        },
+        {
+          masterLabel = "Slovenia"
+          translation = ""
+        },
+        {
+          masterLabel = "Solomon Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Somalia"
+          translation = ""
+        },
+        {
+          masterLabel = "South Africa"
+          translation = ""
+        },
+        {
+          masterLabel = "South Georgia and the South Sandwich Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "South Korea"
+          translation = ""
+        },
+        {
+          masterLabel = "South Sudan"
+          translation = ""
+        },
+        {
+          masterLabel = "Spain"
+          translation = ""
+        },
+        {
+          masterLabel = "Sri Lanka"
+          translation = ""
+        },
+        {
+          masterLabel = "Sudan"
+          translation = ""
+        },
+        {
+          masterLabel = "Suriname"
+          translation = ""
+        },
+        {
+          masterLabel = "Svalbard and Jan Mayen"
+          translation = ""
+        },
+        {
+          masterLabel = "Swaziland"
+          translation = ""
+        },
+        {
+          masterLabel = "Sweden"
+          translation = ""
+        },
+        {
+          masterLabel = "Switzerland"
+          translation = ""
+        },
+        {
+          masterLabel = "Syrian Arab Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Taiwan"
+          translation = ""
+        },
+        {
+          masterLabel = "Tajikistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Tanzania, United Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Tasmania"
+          translation = ""
+        },
+        {
+          masterLabel = "Thailand"
+          translation = ""
+        },
+        {
+          masterLabel = "Timor-Leste"
+          translation = ""
+        },
+        {
+          masterLabel = "Togo"
+          translation = ""
+        },
+        {
+          masterLabel = "Tokelau"
+          translation = ""
+        },
+        {
+          masterLabel = "Tonga"
+          translation = ""
+        },
+        {
+          masterLabel = "Trinidad and Tobago"
+          translation = ""
+        },
+        {
+          masterLabel = "Tunisia"
+          translation = ""
+        },
+        {
+          masterLabel = "Turkey"
+          translation = ""
+        },
+        {
+          masterLabel = "Turkmenistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Turks and Caicos Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Tuvalu"
+          translation = ""
+        },
+        {
+          masterLabel = "U. Arab Emirates"
+          translation = ""
+        },
+        {
+          masterLabel = "Uganda"
+          translation = ""
+        },
+        {
+          masterLabel = "Ukraine"
+          translation = ""
+        },
+        {
+          masterLabel = "United Kingdom"
+          translation = ""
+        },
+        {
+          masterLabel = "United States"
+          translation = ""
+        },
+        {
+          masterLabel = "Uruguay"
+          translation = ""
+        },
+        {
+          masterLabel = "Uzbekistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Vanuatu"
+          translation = ""
+        },
+        {
+          masterLabel = "Venezuela, Bolivarian Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Vietnam"
+          translation = ""
+        },
+        {
+          masterLabel = "Virgin Islands, British"
+          translation = ""
+        },
+        {
+          masterLabel = "Wallis and Futuna"
+          translation = ""
+        },
+        {
+          masterLabel = "Western Sahara"
+          translation = ""
+        },
+        {
+          masterLabel = "Yemen"
+          translation = ""
+        },
+        {
+          masterLabel = "Zambia"
+          translation = ""
+        },
+        {
+          masterLabel = "Zimbabwe"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Error_Message__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Finance_Contact_Phone__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Last_Sync_iConduct__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Long_Billing_Entity_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Migrated__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Object_URL__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Owner_s_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Owner_s_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Priority_Customer_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Active"
+          translation = ""
+        },
+        {
+          masterLabel = "Inactive"
+          translation = ""
+        },
+        {
+          masterLabel = "Potential"
+          translation = ""
+        },
+        {
+          masterLabel = "Restricted"
+          translation = ""
+        },
+        {
+          masterLabel = "Warned"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Priority_Id__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Quote_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Shipping_Address__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Shipping_City__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Shipping_Country__c
+      picklistValues = [
+        {
+          masterLabel = "Afghanistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Aland Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Albania"
+          translation = ""
+        },
+        {
+          masterLabel = "Algeria"
+          translation = ""
+        },
+        {
+          masterLabel = "Andorra"
+          translation = ""
+        },
+        {
+          masterLabel = "Angola"
+          translation = ""
+        },
+        {
+          masterLabel = "Anguilla"
+          translation = ""
+        },
+        {
+          masterLabel = "Antarctica"
+          translation = ""
+        },
+        {
+          masterLabel = "Antigua and Barbuda"
+          translation = ""
+        },
+        {
+          masterLabel = "Argentina"
+          translation = ""
+        },
+        {
+          masterLabel = "Armenia"
+          translation = ""
+        },
+        {
+          masterLabel = "Aruba"
+          translation = ""
+        },
+        {
+          masterLabel = "Australia"
+          translation = ""
+        },
+        {
+          masterLabel = "Austria"
+          translation = ""
+        },
+        {
+          masterLabel = "Azerbaijan"
+          translation = ""
+        },
+        {
+          masterLabel = "Bahamas"
+          translation = ""
+        },
+        {
+          masterLabel = "Bahrain"
+          translation = ""
+        },
+        {
+          masterLabel = "Bangladesh"
+          translation = ""
+        },
+        {
+          masterLabel = "Barbados"
+          translation = ""
+        },
+        {
+          masterLabel = "Belarus"
+          translation = ""
+        },
+        {
+          masterLabel = "Belgium"
+          translation = ""
+        },
+        {
+          masterLabel = "Belize"
+          translation = ""
+        },
+        {
+          masterLabel = "Benin"
+          translation = ""
+        },
+        {
+          masterLabel = "Bermuda"
+          translation = ""
+        },
+        {
+          masterLabel = "Bhutan"
+          translation = ""
+        },
+        {
+          masterLabel = "Bolivia, Plurinational State of"
+          translation = ""
+        },
+        {
+          masterLabel = "Bonaire, Sint Eustatius and Saba"
+          translation = ""
+        },
+        {
+          masterLabel = "Bosnia and Herzegovina"
+          translation = ""
+        },
+        {
+          masterLabel = "Botswana"
+          translation = ""
+        },
+        {
+          masterLabel = "Bouvet Island"
+          translation = ""
+        },
+        {
+          masterLabel = "Brazil"
+          translation = ""
+        },
+        {
+          masterLabel = "British Indian Ocean Territory"
+          translation = ""
+        },
+        {
+          masterLabel = "Brunei Darussalam"
+          translation = ""
+        },
+        {
+          masterLabel = "Bulgaria"
+          translation = ""
+        },
+        {
+          masterLabel = "Burkina Faso"
+          translation = ""
+        },
+        {
+          masterLabel = "Burundi"
+          translation = ""
+        },
+        {
+          masterLabel = "Cambodia"
+          translation = ""
+        },
+        {
+          masterLabel = "Cameroon"
+          translation = ""
+        },
+        {
+          masterLabel = "Canada"
+          translation = ""
+        },
+        {
+          masterLabel = "Cape Verde"
+          translation = ""
+        },
+        {
+          masterLabel = "Cayman Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Central African Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Chad"
+          translation = ""
+        },
+        {
+          masterLabel = "Chile"
+          translation = ""
+        },
+        {
+          masterLabel = "China"
+          translation = ""
+        },
+        {
+          masterLabel = "Christmas Island"
+          translation = ""
+        },
+        {
+          masterLabel = "Cocos (Keeling) Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Colombia"
+          translation = ""
+        },
+        {
+          masterLabel = "Comoros"
+          translation = ""
+        },
+        {
+          masterLabel = "Congo"
+          translation = ""
+        },
+        {
+          masterLabel = "Congo, the Democratic Republic of the"
+          translation = ""
+        },
+        {
+          masterLabel = "Cook Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Costa Rica"
+          translation = ""
+        },
+        {
+          masterLabel = "Cote d’Ivoire"
+          translation = ""
+        },
+        {
+          masterLabel = "Croatia"
+          translation = ""
+        },
+        {
+          masterLabel = "Cuba"
+          translation = ""
+        },
+        {
+          masterLabel = "Curaçao"
+          translation = ""
+        },
+        {
+          masterLabel = "Cyprus"
+          translation = ""
+        },
+        {
+          masterLabel = "Czech Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Denmark"
+          translation = ""
+        },
+        {
+          masterLabel = "Djibouti"
+          translation = ""
+        },
+        {
+          masterLabel = "Dominica"
+          translation = ""
+        },
+        {
+          masterLabel = "Dominican Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Ecuador"
+          translation = ""
+        },
+        {
+          masterLabel = "Egypt"
+          translation = ""
+        },
+        {
+          masterLabel = "El Salvador"
+          translation = ""
+        },
+        {
+          masterLabel = "Equatorial Guinea"
+          translation = ""
+        },
+        {
+          masterLabel = "Eritrea"
+          translation = ""
+        },
+        {
+          masterLabel = "Estonia"
+          translation = ""
+        },
+        {
+          masterLabel = "Ethiopia"
+          translation = ""
+        },
+        {
+          masterLabel = "Falkland Islands (Malvinas)"
+          translation = ""
+        },
+        {
+          masterLabel = "Faroe Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Fiji"
+          translation = ""
+        },
+        {
+          masterLabel = "Finland"
+          translation = ""
+        },
+        {
+          masterLabel = "France"
+          translation = ""
+        },
+        {
+          masterLabel = "French Guiana"
+          translation = ""
+        },
+        {
+          masterLabel = "French Polynesia"
+          translation = ""
+        },
+        {
+          masterLabel = "French Southern Territories"
+          translation = ""
+        },
+        {
+          masterLabel = "Gabon"
+          translation = ""
+        },
+        {
+          masterLabel = "Gambia"
+          translation = ""
+        },
+        {
+          masterLabel = "Georgia"
+          translation = ""
+        },
+        {
+          masterLabel = "Germany"
+          translation = ""
+        },
+        {
+          masterLabel = "Ghana"
+          translation = ""
+        },
+        {
+          masterLabel = "Gibraltar"
+          translation = ""
+        },
+        {
+          masterLabel = "Greece"
+          translation = ""
+        },
+        {
+          masterLabel = "Greenland"
+          translation = ""
+        },
+        {
+          masterLabel = "Grenada"
+          translation = ""
+        },
+        {
+          masterLabel = "Guadeloupe"
+          translation = ""
+        },
+        {
+          masterLabel = "Guatemala"
+          translation = ""
+        },
+        {
+          masterLabel = "Guernsey"
+          translation = ""
+        },
+        {
+          masterLabel = "Guinea"
+          translation = ""
+        },
+        {
+          masterLabel = "Guinea-Bissau"
+          translation = ""
+        },
+        {
+          masterLabel = "Guyana"
+          translation = ""
+        },
+        {
+          masterLabel = "Haiti"
+          translation = ""
+        },
+        {
+          masterLabel = "Heard Island and McDonald Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Holy See (Vatican City State)"
+          translation = ""
+        },
+        {
+          masterLabel = "Honduras"
+          translation = ""
+        },
+        {
+          masterLabel = "Hong Kong"
+          translation = ""
+        },
+        {
+          masterLabel = "Hungary"
+          translation = ""
+        },
+        {
+          masterLabel = "Iceland"
+          translation = ""
+        },
+        {
+          masterLabel = "India"
+          translation = ""
+        },
+        {
+          masterLabel = "Indonesia"
+          translation = ""
+        },
+        {
+          masterLabel = "Iran, Islamic Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Iraq"
+          translation = ""
+        },
+        {
+          masterLabel = "Ireland"
+          translation = ""
+        },
+        {
+          masterLabel = "Isle of Man"
+          translation = ""
+        },
+        {
+          masterLabel = "Israel"
+          translation = ""
+        },
+        {
+          masterLabel = "Italy"
+          translation = ""
+        },
+        {
+          masterLabel = "Jamaica"
+          translation = ""
+        },
+        {
+          masterLabel = "Japan"
+          translation = ""
+        },
+        {
+          masterLabel = "Jersey"
+          translation = ""
+        },
+        {
+          masterLabel = "Jordan"
+          translation = ""
+        },
+        {
+          masterLabel = "Kazakhstan"
+          translation = ""
+        },
+        {
+          masterLabel = "Kenya"
+          translation = ""
+        },
+        {
+          masterLabel = "Kiribati"
+          translation = ""
+        },
+        {
+          masterLabel = "Korea, Democratic People’s Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Korea, Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Kuwait"
+          translation = ""
+        },
+        {
+          masterLabel = "Kyrgyzstan"
+          translation = ""
+        },
+        {
+          masterLabel = "Lao People’s Democratic Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Latvia"
+          translation = ""
+        },
+        {
+          masterLabel = "Lebanon"
+          translation = ""
+        },
+        {
+          masterLabel = "Lesotho"
+          translation = ""
+        },
+        {
+          masterLabel = "Liberia"
+          translation = ""
+        },
+        {
+          masterLabel = "Libyan Arab Jamahiriya"
+          translation = ""
+        },
+        {
+          masterLabel = "Liechtenstein"
+          translation = ""
+        },
+        {
+          masterLabel = "Lithuania"
+          translation = ""
+        },
+        {
+          masterLabel = "Luxembourg"
+          translation = ""
+        },
+        {
+          masterLabel = "Macao"
+          translation = ""
+        },
+        {
+          masterLabel = "Macau"
+          translation = ""
+        },
+        {
+          masterLabel = "Macedonia, the former Yugoslav Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Madagascar"
+          translation = ""
+        },
+        {
+          masterLabel = "Malawi"
+          translation = ""
+        },
+        {
+          masterLabel = "Malaysia"
+          translation = ""
+        },
+        {
+          masterLabel = "Maldives"
+          translation = ""
+        },
+        {
+          masterLabel = "Mali"
+          translation = ""
+        },
+        {
+          masterLabel = "Malta"
+          translation = ""
+        },
+        {
+          masterLabel = "Martinique"
+          translation = ""
+        },
+        {
+          masterLabel = "Mauritania"
+          translation = ""
+        },
+        {
+          masterLabel = "Mauritius"
+          translation = ""
+        },
+        {
+          masterLabel = "Mayotte"
+          translation = ""
+        },
+        {
+          masterLabel = "Mexico"
+          translation = ""
+        },
+        {
+          masterLabel = "Moldova, Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Monaco"
+          translation = ""
+        },
+        {
+          masterLabel = "Mongolia"
+          translation = ""
+        },
+        {
+          masterLabel = "Montenegro"
+          translation = ""
+        },
+        {
+          masterLabel = "Montserrat"
+          translation = ""
+        },
+        {
+          masterLabel = "Morocco"
+          translation = ""
+        },
+        {
+          masterLabel = "Mozambique"
+          translation = ""
+        },
+        {
+          masterLabel = "Myanmar"
+          translation = ""
+        },
+        {
+          masterLabel = "Namibia"
+          translation = ""
+        },
+        {
+          masterLabel = "Nauru"
+          translation = ""
+        },
+        {
+          masterLabel = "Nepal"
+          translation = ""
+        },
+        {
+          masterLabel = "Netherlands"
+          translation = ""
+        },
+        {
+          masterLabel = "New Caledonia"
+          translation = ""
+        },
+        {
+          masterLabel = "New Zealand"
+          translation = ""
+        },
+        {
+          masterLabel = "Nicaragua"
+          translation = ""
+        },
+        {
+          masterLabel = "Niger"
+          translation = ""
+        },
+        {
+          masterLabel = "Nigeria"
+          translation = ""
+        },
+        {
+          masterLabel = "Niue"
+          translation = ""
+        },
+        {
+          masterLabel = "Norfolk Island"
+          translation = ""
+        },
+        {
+          masterLabel = "Norway"
+          translation = ""
+        },
+        {
+          masterLabel = "Oman"
+          translation = ""
+        },
+        {
+          masterLabel = "Pakistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Palestine"
+          translation = ""
+        },
+        {
+          masterLabel = "Panama"
+          translation = ""
+        },
+        {
+          masterLabel = "Papua New Guinea"
+          translation = ""
+        },
+        {
+          masterLabel = "Paraguay"
+          translation = ""
+        },
+        {
+          masterLabel = "Peru"
+          translation = ""
+        },
+        {
+          masterLabel = "Philippines"
+          translation = ""
+        },
+        {
+          masterLabel = "Pitcairn"
+          translation = ""
+        },
+        {
+          masterLabel = "Poland"
+          translation = ""
+        },
+        {
+          masterLabel = "Portugal"
+          translation = ""
+        },
+        {
+          masterLabel = "Puerto Rico"
+          translation = ""
+        },
+        {
+          masterLabel = "Qatar"
+          translation = ""
+        },
+        {
+          masterLabel = "Reunion"
+          translation = ""
+        },
+        {
+          masterLabel = "Romania"
+          translation = ""
+        },
+        {
+          masterLabel = "Russian Federation"
+          translation = ""
+        },
+        {
+          masterLabel = "Rwanda"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Barthélemy"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Helena, Ascension and Tristan da Cunha"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Kitts and Nevis"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Lucia"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Martin (French part)"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Pierre and Miquelon"
+          translation = ""
+        },
+        {
+          masterLabel = "Saint Vincent and the Grenadines"
+          translation = ""
+        },
+        {
+          masterLabel = "Samoa"
+          translation = ""
+        },
+        {
+          masterLabel = "San Marino"
+          translation = ""
+        },
+        {
+          masterLabel = "Sao Tome and Principe"
+          translation = ""
+        },
+        {
+          masterLabel = "Saudi Arabia"
+          translation = ""
+        },
+        {
+          masterLabel = "Senegal"
+          translation = ""
+        },
+        {
+          masterLabel = "Serbia"
+          translation = ""
+        },
+        {
+          masterLabel = "Seychelles"
+          translation = ""
+        },
+        {
+          masterLabel = "Sierra Leone"
+          translation = ""
+        },
+        {
+          masterLabel = "Singapore"
+          translation = ""
+        },
+        {
+          masterLabel = "Sint Maarten (Dutch part)"
+          translation = ""
+        },
+        {
+          masterLabel = "Slovakia"
+          translation = ""
+        },
+        {
+          masterLabel = "Slovenia"
+          translation = ""
+        },
+        {
+          masterLabel = "Solomon Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Somalia"
+          translation = ""
+        },
+        {
+          masterLabel = "South Africa"
+          translation = ""
+        },
+        {
+          masterLabel = "South Georgia and the South Sandwich Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "South Sudan"
+          translation = ""
+        },
+        {
+          masterLabel = "Spain"
+          translation = ""
+        },
+        {
+          masterLabel = "Sri Lanka"
+          translation = ""
+        },
+        {
+          masterLabel = "Sudan"
+          translation = ""
+        },
+        {
+          masterLabel = "Suriname"
+          translation = ""
+        },
+        {
+          masterLabel = "Svalbard and Jan Mayen"
+          translation = ""
+        },
+        {
+          masterLabel = "Swaziland"
+          translation = ""
+        },
+        {
+          masterLabel = "Sweden"
+          translation = ""
+        },
+        {
+          masterLabel = "Switzerland"
+          translation = ""
+        },
+        {
+          masterLabel = "Syrian Arab Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Taiwan"
+          translation = ""
+        },
+        {
+          masterLabel = "Tajikistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Tanzania, United Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Tasmania"
+          translation = ""
+        },
+        {
+          masterLabel = "Thailand"
+          translation = ""
+        },
+        {
+          masterLabel = "Timor-Leste"
+          translation = ""
+        },
+        {
+          masterLabel = "Togo"
+          translation = ""
+        },
+        {
+          masterLabel = "Tokelau"
+          translation = ""
+        },
+        {
+          masterLabel = "Tonga"
+          translation = ""
+        },
+        {
+          masterLabel = "Trinidad and Tobago"
+          translation = ""
+        },
+        {
+          masterLabel = "Tunisia"
+          translation = ""
+        },
+        {
+          masterLabel = "Turkey"
+          translation = ""
+        },
+        {
+          masterLabel = "Turkmenistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Turks and Caicos Islands"
+          translation = ""
+        },
+        {
+          masterLabel = "Tuvalu"
+          translation = ""
+        },
+        {
+          masterLabel = "U. Arab Emirates"
+          translation = ""
+        },
+        {
+          masterLabel = "Uganda"
+          translation = ""
+        },
+        {
+          masterLabel = "Ukraine"
+          translation = ""
+        },
+        {
+          masterLabel = "United Kingdom"
+          translation = ""
+        },
+        {
+          masterLabel = "United States"
+          translation = ""
+        },
+        {
+          masterLabel = "Uruguay"
+          translation = ""
+        },
+        {
+          masterLabel = "Uzbekistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Vanuatu"
+          translation = ""
+        },
+        {
+          masterLabel = "Venezuela, Bolivarian Republic of"
+          translation = ""
+        },
+        {
+          masterLabel = "Vietnam"
+          translation = ""
+        },
+        {
+          masterLabel = "Virgin Islands, British"
+          translation = ""
+        },
+        {
+          masterLabel = "Wallis and Futuna"
+          translation = ""
+        },
+        {
+          masterLabel = "Western Sahara"
+          translation = ""
+        },
+        {
+          masterLabel = "Yemen"
+          translation = ""
+        },
+        {
+          masterLabel = "Zambia"
+          translation = ""
+        },
+        {
+          masterLabel = "Zimbabwe"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Shipping_State__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Shipping_Street__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Shipping_Zip_Postal_Code__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Status__c
+      picklistValues = [
+        {
+          masterLabel = "Active"
+          translation = ""
+        },
+        {
+          masterLabel = "Draft"
+          translation = ""
+        },
+        {
+          masterLabel = "Inactive"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Street__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Sync_Request_Timestamp_iConduct__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Sync_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Created Successfully"
+          translation = ""
+        },
+        {
+          masterLabel = "Error"
+          translation = ""
+        },
+        {
+          masterLabel = "Need to Transfer"
+          translation = ""
+        },
+        {
+          masterLabel = "Transferred"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Temp_Update__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Unique_Key__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.VAT_Number__c
+    },
+    {
+      label = ""
+      name = salesforce.Billing_Entity__c.field.Zip_Postal_Code__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Billing Entity Layout"
+      sections = [
+        {
+          label = ""
+          section = "Billing Data"
+        },
+        {
+          label = ""
+          section = "Custom Links"
+        },
+        {
+          label = ""
+          section = "Priority Status"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Billing_Entity__c,
+  ]
+}

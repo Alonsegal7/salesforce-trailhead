@@ -1,0 +1,6 @@
+salesforce.CustomTab LH__All_Settings {
+  fullName = "LH__All_Settings"
+  label = "Lookup Helper Settings"
+  motif = "Custom67: Gears"
+  page = "LH__LH_All_Settings"
+}

@@ -1,0 +1,7 @@
+<apex:page controller="SpringCMEos.SetupSpringCMController" extensions="SpringCMEos.SetupEnvironment" action="{!Setup}">
+    <apex:form styleClass="config-form">
+        <apex:iframe src="https://{!applicationBaseUrl}/atlas/Admin/Preferences.aspx?aid={!accountInfoFromSpring.AccountId}&url=SFConfiguration&nav=false&sfsid={!$Api.Session_ID}&sfapiurl={!URLENCODE(apiServerURL)}" scrolling="true"></apex:iframe>
+        <apex:commandButton action="{!back}" value="Back"  immediate="true" title="Back to page 1."/>
+    </apex:form>
+    <apex:stylesheet value="{!$Resource.SpringCMEos__SpringCMSalesforceConfig}"/>
+</apex:page>

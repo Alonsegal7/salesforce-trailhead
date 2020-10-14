@@ -1,0 +1,16 @@
+salesforce.WebLink Contact_zaapit__Mass_Merge {
+  fullName = "Contact.zaapit__Mass_Merge"
+  availability = "online"
+  displayType = "massActionButton"
+  encodingKey = "UTF-8"
+  height = 600
+  linkType = "url"
+  masterLabel = "Mass Merge"
+  openType = "sidebar"
+  protected = false
+  requireRowSelection = true
+  url = "/**/massMergeXSel(\"Contact\");"
+  _parent = [
+    salesforce.Contact,
+  ]
+}

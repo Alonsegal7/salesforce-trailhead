@@ -1,0 +1,18 @@
+salesforce.WorkflowRule Opportunity_Opportunity_Account_changes_set_BB_Id {
+  fullName = "Opportunity.Opportunity - Account changes%2C set BB Id"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Opportunity_Set_BB_Id_from_MA
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = '''
+ischanged(AccountId)&&
+ primary_pulse_account_id__c != Account.primary_pulse_account_id__c
+'''
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

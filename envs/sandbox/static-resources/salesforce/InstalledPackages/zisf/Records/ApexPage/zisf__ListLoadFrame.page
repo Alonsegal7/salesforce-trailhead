@@ -1,0 +1,88 @@
+<apex:page language="en" controller="zisf.page_ListLoadSearch" standardStylesheets="true" extensions="zisf.StartupExtension" action="{!appInit}">
+    <c:coreJS />
+    <script type="text/javascript">
+        zi.ui.disableTextSelect();
+    </script>
+   <script type="text/javascript">
+        (function() {
+            window.checkAll = function(cb) {
+                if(inputElem = document.getElementsByTagName("input")) {
+                    for(var i=0, len = inputElem.length; i < len; i++)
+                        (checkbox = inputElem[i]) && (checkbox.id.indexOf("checkedone")!=-1) && (checkbox.checked = cb.checked);
+                }
+            }
+        })();
+        (function() {
+            window.uncheckAll = function(cb) {
+                if(inputElem = document.getElementsByTagName("input")) {
+                    for(var i=0, len = inputElem.length; i < len; i++)
+                        (checkbox = inputElem[i]) && (checkbox.id.indexOf("checkedone")!=-1) && (checkbox.checked = false);
+                }
+            }
+        })();
+    </script>
+    <c:listLoadCSS />
+    <apex:actionStatus id="workingStatus">
+        <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.80;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait...." />
+                       <span id="statusText" style="font-size: 16px" class="waitingDescription">Please Wait....</span>
+                   </div>
+               </div>
+           </apex:facet>
+    </apex:actionStatus>
+    <div id="divHeader" class="divHeader">
+        <c:ZoomHeader />
+    </div>
+    <apex:form >
+        <apex:actionFunction name="clearPerson" action="{!clearPerson}" rerender="search_results_table"/>
+        <apex:actionFunction name="clearCompany" action="{!clearCompany}" rerender="companySearch_results_table"/>
+    </apex:form>
+    <apex:outputPanel id="tabPanelContainer">
+        <script type="text/javascript">
+            document.getElementById('statusText').innerHTML = 'Loading data from ZoomInfo....';
+        </script>
+        <apex:tabPanel switchType="client" activeTabClass="activeTab" inactiveTabClass="inactiveTab"
+                        contentClass="zoom-tab-content"
+                        selectedTab="{!tabCust_SelectedTab}" 
+                        tabClass="zoom_tab"
+                        value="{!tabCust_SelectedTab}"                      
+                        id="tabPanel" rendered="{!NOT(isImport)}">
+            <apex:tab label="People" name="findLeads" id="tabFindLeads" rendered="{!(tabCust_Disable_People=='false')}" ontableave="clearPerson()" style="padding:0"> 
+                <div>
+                    <apex:outputPanel id="messagePanelPeople">
+                        <apex:pagemessages id="personMessages"/>
+                    </apex:outputPanel>
+                    <div style="display:flex">
+                        <div>
+                            <c:PersonSearch basePageAttr="{!me}"/>
+                        </div>
+                        <div style="flex-grow: 1;">
+                            <c:PersonSearchResults basePageAttr="{!me}"/>
+                        </div>
+                    </div>
+                </div>
+            </apex:tab>
+            <apex:tab label="Companies" name="findAccounts" id="tabFindAccounts" rendered="{!(tabCust_Disable_Accounts=='false')}" ontableave="clearCompany()" style="padding:0">
+                <div>
+                    <apex:outputPanel id="messagePanelCompanies">
+                        <apex:pagemessages id="companyMessages"/>
+                    </apex:outputPanel>
+                    <div style="display:flex">
+                    <div>
+                        <c:CompanySearchPanel basePageAttr="{!me}"/>
+                    </div>
+                    <div style="width:100%">
+                        <c:CompanySearchResults basePageAttr="{!me}"/>
+                    </div>
+                    </div>
+                </div>
+            </apex:tab>
+        </apex:tabPanel>
+    </apex:outputPanel>
+    <apex:outputPanel id="importWizardContainer">
+        <c:ListLoadImportWizard id="importWizard" rendered="{!isImport}" basePageAttr="{!me}"/>
+    </apex:outputPanel>
+</apex:page>

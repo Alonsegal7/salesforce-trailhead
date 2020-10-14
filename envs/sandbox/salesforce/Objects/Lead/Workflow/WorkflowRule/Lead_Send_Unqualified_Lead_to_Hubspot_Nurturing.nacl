@@ -1,0 +1,58 @@
+salesforce.WorkflowRule Lead_Send_Unqualified_Lead_to_Hubspot_Nurturing {
+  fullName = "Lead.Send Unqualified Lead to Hubspot Nurturing"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Update_sync_to_hubspot_nurturing_trigger
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  booleanFilter = "1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8"
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Status
+      operation = "equals"
+      value = "Unqualified"
+    },
+    {
+      field = salesforce.Lead.field.Why_unqualified__c
+      operation = "equals"
+      value = "Never replied,No Show"
+    },
+    {
+      field = salesforce.Lead.field.Sync_UQ_to_HS_Nurture__c
+      operation = "equals"
+      value = "False"
+    },
+    {
+      field = salesforce.Lead.field.In_Marketing_Nurturing__c
+      operation = "equals"
+      value = "False"
+    },
+    {
+      field = salesforce.Lead.field.Stop_Hubspot_automatic_emails__c
+      operation = "equals"
+      value = "False"
+    },
+    {
+      field = salesforce.Lead.field.HasOptedOutOfEmail
+      operation = "equals"
+      value = "False"
+    },
+    {
+      field = salesforce.Lead.field.Channel__c
+      operation = "equals"
+      value = "Signup,Contact Sales,Download"
+    },
+    {
+      field = salesforce.Lead.field.RecordTypeId
+      operation = "equals"
+      value = "Internal Lead"
+    },
+  ]
+  description = "Send Unqualified, Never replied / no show, inbound, internal leads to Hubspot Nurturing flow"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

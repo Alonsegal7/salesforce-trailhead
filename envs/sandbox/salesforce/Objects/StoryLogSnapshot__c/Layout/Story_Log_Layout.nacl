@@ -1,0 +1,157 @@
+salesforce.Layout Story_Log_Layout {
+  fullName = "StoryLogSnapshot__c-Story Log Layout"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.StoryLogSnapshot__c.field.Name
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.DateTime__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.User__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.OldValue__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.NewValue__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.Type__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.FieldLabel__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.ShortDescription__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.StoryLogItemSetting__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.StoryLogSnapshot__c.field.SourceLabel__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.StoryLogSnapshot__c.field.IconName__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.RecordId__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.RecordName__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.ParentRecordId__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.LongDescription__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.ParentSnapshot__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.GroupKey__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.IsGrouped__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.FieldName__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.SubType__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.CurrencyIsoCode
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogSnapshot__c.field.OwnerId
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.StoryLogSnapshot__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.StoryLogSnapshot__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      fields = [
+        "NAME",
+      ]
+      relatedList = salesforce.StoryLogSnapshot__c.field.ParentSnapshot__c
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  _parent = [
+    salesforce.StoryLogSnapshot__c,
+  ]
+}

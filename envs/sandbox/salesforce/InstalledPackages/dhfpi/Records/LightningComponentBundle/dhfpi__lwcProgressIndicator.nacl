@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dhfpi__lwcProgressIndicator {
+  fullName = "dhfpi__lwcProgressIndicator"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/lwcProgressIndicator/lwcProgressIndicator.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/lwcProgressIndicator/lwcProgressIndicator.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/lwcProgressIndicator/lwcProgressIndicator.css"
+      },
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+<apex:page >
+	<apex:stylesheet value="{!URLFOR($Resource.SpringCMEos__SpringCMLightning, '/SpringCMLightning/css/salesforce-lightning-design-system-ltng.min.css')}"/>
+
+	<div class="springcm">
+
+		<div class="slds slds-p-around--xx-large"><h1 class="slds-text-heading--large slds-m-bottom--medium slds-show">Dang it!</h1>
+			<p class="slds-text-heading--medium slds-show slds-m-bottom--medium">An error has occurred during authentication to SpringCM.</p>
+			<p class="slds-text-heading--medium slds-show">Please try again in a few minutes or contact a SpringCM administrator.</p>
+		</div>
+
+	</div>
+</apex:page>

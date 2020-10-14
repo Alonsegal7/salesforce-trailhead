@@ -1,0 +1,25 @@
+salesforce.WorkflowRule Opportunity_Enterprise_38_False {
+  fullName = "Opportunity.Enterprise %2438 False"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Change_Enterprise_Pricing_factor_to_0
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Opportunity.field.Enterprise_38__c
+      operation = "equals"
+      value = "False"
+    },
+    {
+      field = salesforce.Opportunity.field.Enterprise_Pricing_Factor__c
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,65 @@
+salesforce.FieldSet Account_UpdateCalloutFields {
+  fullName = "Account.UpdateCalloutFields"
+  description = "Fields that would invoke a callout to BigBrain"
+  displayedFields = [
+    {
+      field = "AM__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Partner__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Partner_Id__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CSM__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SDR__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AE__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Pulse_Account_Id__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Account_Source_Type__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "primary_pulse_account_id__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "of_Complete_Sale__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "UpdateCalloutFields"
+  _parent = [
+    salesforce.Account,
+  ]
+}

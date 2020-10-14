@@ -1,0 +1,18 @@
+salesforce.CompactLayout Opportunity_Partners_Opportunity_Compact_Layout {
+  fullName = "Opportunity.Partners_Opportunity_Compact_Layout"
+  fields = [
+    "Name",
+    "OwnerId",
+    "AccountId",
+    "CloseDate",
+    "Green_Bucket_ARR__c",
+    "Probability",
+    "Expected_Plan_Name__c",
+    "Forecast_ARR__c",
+    "Opportunity_Source_Type__c",
+  ]
+  label = "Partners Opportunity Compact Layout"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

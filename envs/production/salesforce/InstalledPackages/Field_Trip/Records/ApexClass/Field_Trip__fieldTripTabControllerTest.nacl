@@ -1,0 +1,14 @@
+salesforce.ApexClass Field_Trip__fieldTripTabControllerTest {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 45
+  packageVersions = [
+    {
+      majorNumber = 2
+      minorNumber = 1
+      namespace = "Field_Trip"
+    },
+  ]
+  status = "Active"
+  fullName = "Field_Trip__fieldTripTabControllerTest"
+  content = "(hidden)"
+}

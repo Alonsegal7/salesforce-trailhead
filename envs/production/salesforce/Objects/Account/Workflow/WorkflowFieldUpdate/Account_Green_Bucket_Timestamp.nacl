@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Green_Bucket_Timestamp {
+  fullName = "Account.Green_Bucket_Timestamp"
+  field = salesforce.Account.field.Green_Bucket_Timestamp__c
+  formula = "TODAY()"
+  name = "Green Bucket Timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

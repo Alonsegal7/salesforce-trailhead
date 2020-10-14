@@ -1,0 +1,12 @@
+salesforce.ValidationRule Partner_Region__c_Cant_Update_UTM_Campaign {
+  fullName = "Partner_Region__c.Cant_Update_UTM_Campaign"
+  active = true
+  errorConditionFormula = '''
+not isblank( priorvalue(UTM_Campaign__c) )&&
+ischanged(UTM_Campaign__c)
+'''
+  errorMessage = "UTM Campaign can not be updated."
+  _parent = [
+    salesforce.Partner_Region__c,
+  ]
+}

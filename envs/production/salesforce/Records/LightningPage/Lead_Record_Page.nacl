@@ -1,0 +1,680 @@
+salesforce.LightningPage Lead_Record_Page {
+  fullName = "Lead_Record_Page"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "collapsed"
+              value = "false"
+            },
+            {
+              name = "enableActionsConfiguration"
+              value = "false"
+            },
+            {
+              name = "hideChatterActions"
+              value = "false"
+            },
+            {
+              name = "numVisibleActions"
+              value = "10"
+            },
+          ]
+          componentName = "force:highlightsPanel"
+        },
+      ]
+      mode = "Replace"
+      name = "header"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideUpdateButton"
+              value = "false"
+            },
+            {
+              name = "variant"
+              value = "linear"
+            },
+          ]
+          componentName = "runtime_sales_lead:pathAssistant"
+        },
+      ]
+      mode = "Replace"
+      name = "subheader"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "470px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://new.bigbrain.me/crm/sales/account"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "overflow: hidden;border: 1px solid rgb(221, 219, 218);border-radius: .25rem;background-clip: padding-box;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+      ]
+      name = "Facet-c92efa3d-6e15-4ffe-ab5f-c9ae737a1fa3"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "http://bigbrain.me/accounts/duplicates_page"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+      ]
+      name = "Facet-81f60b77-ca32-4eac-9b76-2d65b0582320"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-c92efa3d-6e15-4ffe-ab5f-c9ae737a1fa3"
+            },
+            {
+              name = "title"
+              value = "Big Brain"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-81f60b77-ca32-4eac-9b76-2d65b0582320"
+            },
+            {
+              name = "title"
+              value = "BB Related Accounts"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-c03c09be-e7d2-4232-9bf5-e9934582f122"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Lead.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Histories"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+      ]
+      name = "Facet-356b1bea-d641-4002-b635-cb2c517f6bac"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://bigbrain.me"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+      ]
+      name = "Facet-4c25e641-964e-4e11-9fe1-9b2c92fbec52"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "createQuickActionName"
+              value = "NewLead"
+            },
+            {
+              name = "lookupFieldName"
+              value = "Lead.Id"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Lead.Company_Fields"
+            },
+          ]
+          componentName = "console:relatedRecord"
+        },
+      ]
+      name = "Facet-7b49cf45-b540-4520-8f23-669cadc2978c"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "false"
+            },
+            {
+              name = "body"
+              value = "Facet-356b1bea-d641-4002-b635-cb2c517f6bac"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-4c25e641-964e-4e11-9fe1-9b2c92fbec52"
+            },
+            {
+              name = "title"
+              value = "Account Profile"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-7b49cf45-b540-4520-8f23-669cadc2978c"
+            },
+            {
+              name = "title"
+              value = "Company Data"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-e4228a1c-e7c3-462a-ac72-53a39d45b335"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-c03c09be-e7d2-4232-9bf5-e9934582f122"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-e4228a1c-e7c3-462a-ac72-53a39d45b335"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "displayGetIntroduced"
+              value = "true"
+            },
+            {
+              name = "displayHeader"
+              value = "false"
+            },
+            {
+              name = "displayHighlight"
+              value = "true"
+            },
+            {
+              name = "displayIcebreakers"
+              value = "true"
+            },
+            {
+              name = "displayRecentActivity"
+              value = "true"
+            },
+            {
+              name = "displayRelatedLeads"
+              value = "true"
+            },
+            {
+              name = "displayTopcard"
+              value = "true"
+            },
+            {
+              name = "headerText"
+              value = "Member Profile"
+            },
+            {
+              name = "minHeight"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+          ]
+          componentName = "LID:SalesNavigatorMemberProfileComponent"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.UserRole.Name}"
+                operator = "CONTAINS"
+                rightValue = "Enterprise"
+              },
+            ]
+          }
+        },
+      ]
+      mode = "Replace"
+      name = "main"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "createQuickActionName"
+              value = "NewLead"
+            },
+            {
+              name = "lookupFieldName"
+              value = "Lead.Id"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Lead.Relationship_Fields"
+            },
+          ]
+          componentName = "console:relatedRecord"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "EQUAL"
+                rightValue = "Ops"
+              },
+            ]
+          }
+        },
+      ]
+      name = "Facet-f460979a-ce1f-4191-b028-6bc069140fb1"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "createQuickActionName"
+              value = "NewLead"
+            },
+            {
+              name = "lookupFieldName"
+              value = "Lead.Id"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Lead.Reporting_Fields"
+            },
+          ]
+          componentName = "console:relatedRecord"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.Profile.Name}"
+                operator = "CONTAINS"
+                rightValue = "Admin"
+              },
+            ]
+          }
+        },
+      ]
+      name = "Facet-6eaf7435-e535-4899-b2e7-0d16866001d9"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Lead.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "CampaignMembers"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.Profile.Name}"
+                operator = "CONTAINS"
+                rightValue = "Admin"
+              },
+            ]
+          }
+        },
+      ]
+      name = "Facet-9a0f6a4b-93da-4c36-94bc-75016fb159ad"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-f460979a-ce1f-4191-b028-6bc069140fb1"
+            },
+            {
+              name = "title"
+              value = "Admin - Timestamp fields"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-6eaf7435-e535-4899-b2e7-0d16866001d9"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-9a0f6a4b-93da-4c36-94bc-75016fb159ad"
+            },
+            {
+              name = "title"
+              value = "History"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-7b3b50b9-949d-4091-a5fe-aa978e62b79a"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "decorate"
+              value = "true"
+            },
+            {
+              name = "richTextValue"
+              value = "<p style=\"text-align: center;\"><b style=\"color: rgb(47, 195, 91); font-size: 20px;\">This Lead is from an allocated account</b></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!Record.Strategic_Company__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "displayOption"
+              value = "BOTH"
+            },
+          ]
+          componentName = "runtime_sales_merge:mergeCandidatesPreviewCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Lead.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "AttachedContentNotes"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-7b3b50b9-949d-4091-a5fe-aa978e62b79a"
+            },
+          ]
+          componentName = "flexipage:tabset"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "EQUAL"
+                rightValue = "Ops"
+              },
+            ]
+          }
+        },
+        {
+          componentName = "runtime_sales_activities:activityPanel"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Lead.Related_Company__c"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Leads__r"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Lead.Related_Company__c"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Opportunities__r"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "ADVGRID"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentName = "forceChatter:recordFeedContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Lead.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "AttachedContentDocuments"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Lead Record Page"
+  parentFlexiPage = "runtime_sales_lead__Lead_rec_L"
+  sobjectType = "Lead"
+  template = {
+    name = "flexipage:recordHomeWithSubheaderTemplateDesktop"
+  }
+  type = "RecordPage"
+}

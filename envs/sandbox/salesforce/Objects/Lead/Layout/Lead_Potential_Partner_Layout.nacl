@@ -1,0 +1,411 @@
+salesforce.Layout Lead_Potential_Partner_Layout {
+  fullName = "Lead-Potential Partner Layout"
+  excludeButtons = [
+    "DataDotComClean",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Lead Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.OwnerId
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Lead.field.Lead_name__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Lead.field.Company
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Lead.field.Name
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Email
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Title
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Seniority__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Enriched_phone__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Phone
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Sync_to_BB__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.First_Visitor_Id__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Tell_us_about_yourself__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Lead.field.Why_unqualified__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Lead.field.LeadSource
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Partner_Company__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Related_Company__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Main_Point_of_Contacts__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Core_Business__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Lead_notes__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Address Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Lead.field.Region__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Address
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Country_For_Salesloft__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Website Form"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Partner_Type__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.How_many_customers_do_you_have__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Average_Customer_Size__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Other_software_they_re_selling_Partner__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Do_you_provide_Professional_Services_Lic__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.How_did_you_hear_about_our_Partnership__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Website
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Lead.field.of_employees__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Is_Relevant_Potential_Partner__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Company data"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Lead.field.Industry__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Lead.field.Company_phone__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Company_Size__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Lead.field.Website_company__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Additional Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Manual_Trigger__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Lead.field.CreatedById
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Description
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Lead.field.Status
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.RecordTypeId
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Lead.field.LastModifiedById
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Next_activity__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Next_activity_date__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = false
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  platformActionList = {
+    actionListContext = "Record"
+    platformActionListItems = [
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 0
+      },
+      {
+        actionName = "Delete"
+        actionType = "StandardButton"
+        sortOrder = 1
+      },
+      {
+        actionName = "Clone"
+        actionType = "StandardButton"
+        sortOrder = 2
+      },
+      {
+        actionName = "Convert"
+        actionType = "StandardButton"
+        sortOrder = 3
+      },
+      {
+        actionName = "FeedItem.ContentNote"
+        actionType = "QuickAction"
+        sortOrder = 4
+      },
+      {
+        actionName = "NewTask"
+        actionType = "QuickAction"
+        sortOrder = 5
+      },
+      {
+        actionName = "LogACall"
+        actionType = "QuickAction"
+        sortOrder = 6
+      },
+      {
+        actionName = "FeedItem.TextPost"
+        actionType = "QuickAction"
+        sortOrder = 7
+      },
+      {
+        actionName = "FeedItem.ContentPost"
+        actionType = "QuickAction"
+        sortOrder = 8
+      },
+      {
+        actionName = "ChangeOwnerOne"
+        actionType = "StandardButton"
+        sortOrder = 9
+      },
+      {
+        actionName = "Follow_Up"
+        actionType = "QuickAction"
+        sortOrder = 10
+      },
+    ]
+  }
+  relatedLists = [
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "CORE.USERS.FULL_NAME",
+        "EVENT.LOCATION",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "EVENT.LOCATION",
+        "CORE.USERS.FULL_NAME",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+    {
+      relatedList = "RelatedContentNoteList"
+    },
+    {
+      relatedList = "RelatedEntityHistoryList"
+    },
+  ]
+  runAssignmentRulesDefault = false
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = true
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h1t000002ZcTa"
+    sizeX = 4
+    sizeY = 2
+    summaryLayoutItems = [
+      {
+        field = salesforce.Lead.field.Lead_name__c
+        posX = 0
+        posY = 0
+      },
+      {
+        field = salesforce.Lead.field.Email
+        posX = 1
+        posY = 0
+      },
+      {
+        field = salesforce.Lead.field.Phone
+        posX = 1
+        posY = 1
+      },
+      {
+        field = salesforce.Lead.field.Related_Company__c
+        posX = 2
+        posY = 0
+      },
+    ]
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,287 @@
+salesforce.GlobalValueSet Tools_in_Ecosystem {
+  fullName = "Tools_in_Ecosystem"
+  customValue = [
+    {
+      fullName = "Airtable"
+      default = false
+      label = "Airtable"
+    },
+    {
+      fullName = "Asana"
+      default = false
+      label = "Asana"
+    },
+    {
+      fullName = "Atlassian"
+      default = false
+      label = "Atlassian"
+    },
+    {
+      fullName = "AWS"
+      default = false
+      label = "AWS"
+    },
+    {
+      fullName = "Azure DevOps"
+      default = false
+      label = "Azure DevOps"
+    },
+    {
+      fullName = "Basecamp"
+      default = false
+      label = "Basecamp"
+    },
+    {
+      fullName = "Bitbucket"
+      default = false
+      label = "Bitbucket"
+    },
+    {
+      fullName = "Clarizen"
+      default = false
+      label = "Clarizen"
+    },
+    {
+      fullName = "Clickup"
+      default = false
+      label = "Clickup"
+    },
+    {
+      fullName = "Dropbox"
+      default = false
+      label = "Dropbox"
+    },
+    {
+      fullName = "Email"
+      default = false
+      label = "Email"
+    },
+    {
+      fullName = "Excel"
+      default = false
+      label = "Excel"
+    },
+    {
+      fullName = "Git"
+      default = false
+      label = "Git"
+    },
+    {
+      fullName = "GitHub"
+      default = false
+      label = "GitHub"
+    },
+    {
+      fullName = "GitLab"
+      default = false
+      label = "GitLab"
+    },
+    {
+      fullName = "Google Suite"
+      default = false
+      label = "Google Suite"
+    },
+    {
+      fullName = "Hubspot"
+      default = false
+      label = "Hubspot"
+    },
+    {
+      fullName = "Intellij"
+      default = false
+      label = "Intellij"
+    },
+    {
+      fullName = "Jira"
+      default = false
+      label = "Jira"
+    },
+    {
+      fullName = "Mailchimp"
+      default = false
+      label = "Mailchimp"
+    },
+    {
+      fullName = "MavenLink"
+      default = false
+      label = "MavenLink"
+    },
+    {
+      fullName = "Microsoft Suite"
+      default = false
+      label = "Microsoft Suite"
+    },
+    {
+      fullName = "Microsoft Teams"
+      default = false
+      label = "Microsoft Teams"
+    },
+    {
+      fullName = "Monday"
+      default = false
+      label = "Monday"
+    },
+    {
+      fullName = "MS Project"
+      default = false
+      label = "MS Project"
+    },
+    {
+      fullName = "NetSuite"
+      default = false
+      label = "NetSuite"
+    },
+    {
+      fullName = "Okta"
+      default = false
+      label = "Okta"
+    },
+    {
+      fullName = "One Note"
+      default = false
+      label = "One Note"
+    },
+    {
+      fullName = "Other"
+      default = false
+      label = "Other"
+    },
+    {
+      fullName = "Outlook"
+      default = false
+      label = "Outlook"
+    },
+    {
+      fullName = "Outreach"
+      default = false
+      label = "Outreach"
+    },
+    {
+      fullName = "Pen & Paper"
+      default = false
+      label = "Pen & Paper"
+    },
+    {
+      fullName = "Pipedrive"
+      default = false
+      label = "Pipedrive"
+    },
+    {
+      fullName = "PoliteMail"
+      default = false
+      label = "PoliteMail"
+    },
+    {
+      fullName = "Power BI"
+      default = false
+      label = "Power BI"
+    },
+    {
+      fullName = "Quickbase"
+      default = false
+      label = "Quickbase"
+    },
+    {
+      fullName = "Redhat"
+      default = false
+      label = "Redhat"
+    },
+    {
+      fullName = "Salesforce"
+      default = false
+      label = "Salesforce"
+    },
+    {
+      fullName = "Salesloft"
+      default = false
+      label = "Salesloft"
+    },
+    {
+      fullName = "Sharepoint"
+      default = false
+      label = "Sharepoint"
+    },
+    {
+      fullName = "Sitecore"
+      default = false
+      label = "Sitecore"
+    },
+    {
+      fullName = "Skype"
+      default = false
+      label = "Skype"
+    },
+    {
+      fullName = "Slack"
+      default = false
+      label = "Slack"
+    },
+    {
+      fullName = "Smartsheet"
+      default = false
+      label = "Smartsheet"
+    },
+    {
+      fullName = "TFS"
+      default = false
+      label = "TFS"
+    },
+    {
+      fullName = "Trello"
+      default = false
+      label = "Trello"
+    },
+    {
+      fullName = "Twilio"
+      default = false
+      label = "Twilio"
+    },
+    {
+      fullName = "Typeform"
+      default = false
+      label = "Typeform"
+    },
+    {
+      fullName = "VisualStudio"
+      default = false
+      label = "VisualStudio"
+    },
+    {
+      fullName = "Whiteboard"
+      default = false
+      label = "Whiteboard"
+    },
+    {
+      fullName = "Workfront"
+      default = false
+      label = "Workfront"
+    },
+    {
+      fullName = "Wrike"
+      default = false
+      label = "Wrike"
+    },
+    {
+      fullName = "Zapier"
+      default = false
+      label = "Zapier"
+    },
+    {
+      fullName = "Zendesk"
+      default = false
+      label = "Zendesk"
+    },
+    {
+      fullName = "Zoho"
+      default = false
+      label = "Zoho"
+    },
+    {
+      fullName = "Zoom"
+      default = false
+      label = "Zoom"
+    },
+  ]
+  masterLabel = "Tools in Ecosystem"
+  sorted = false
+}

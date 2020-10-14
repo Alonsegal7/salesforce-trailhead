@@ -1,0 +1,175 @@
+salesforce.Flow Opportunity_Name_by_product {
+  fullName = "Opportunity_Name_by_product"
+  decisions = [
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Product_Count__c"
+              operator = "GreaterThan"
+              rightValue = {
+                numberValue = 0
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_pmetdec"
+          }
+          label = "Opportunity has License Product"
+        },
+      ]
+    },
+    {
+      name = "myRule_1_pmetdec"
+      label = "Previously Met Decision"
+      locationX = 100
+      locationY = 100
+      defaultConnectorLabel = "Not Previously Met"
+      rules = [
+        {
+          name = "myRule_1_pmetnullrule"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          label = "Previously Met - Null"
+        },
+        {
+          name = "myRule_1_pmetrule"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Number"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_old.Product_Count__c"
+              operator = "GreaterThan"
+              rightValue = {
+                numberValue = 0
+              }
+            },
+          ]
+          label = "Previously Met - Prev"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Opportunity_Name_by_product-1_InterviewLabel"
+  label = "Opportunity Name by product"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Opportunity"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  startElementReference = "myDecision"
+  status = "Draft"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Opportunity
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Opportunity
+    },
+  ]
+}

@@ -1,0 +1,167 @@
+type salesforce.Lead {
+  salesforce.Text zisf__Person_Has_Moved__c {
+    apiName = "Lead.zisf__Person_Has_Moved__c"
+    label = "Person Has Moved"
+    _required = false
+    inlineHelpText = "Displays ZoomInfo Has Moved data point. Denotes whether the lead/contact has moved from the current company. Values are Yes, Uncertain, No."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Displays ZoomInfo Has Moved data point. Denotes whether the lead/contact has moved from the current company. Values are Yes, Uncertain, No."
+    externalId = false
+  }
+  salesforce.Text zisf__ZoomInfo_Complete_Status__c {
+    apiName = "Lead.zisf__ZoomInfo_Complete_Status__c"
+    label = "ZoomInfo Complete Status"
+    _required = false
+    defaultValueFormula = "\"Not Compared\""
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Email zisf__ZoomInfo_Email__c {
+    apiName = "Lead.zisf__ZoomInfo_Email__c"
+    label = "ZoomInfo Email"
+    _required = false
+    inlineHelpText = "ZoomInfo Email Address for the Lead record."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "ZoomInfo Email Address for the Lead record."
+    externalId = false
+  }
+  salesforce.Text zisf__ZoomInfo_Industry__c {
+    apiName = "Lead.zisf__ZoomInfo_Industry__c"
+    label = "ZoomInfo Industry"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "The Salesforce standard Industry field is only 40 characters in length. As ZoomInfo industries are sometimes longer than this, the ZoomInfo Industry field can hold up to 255 characters."
+    externalId = false
+  }
+  salesforce.DateTime zisf__ZoomInfo_Last_Clean_Run__c {
+    apiName = "Lead.zisf__ZoomInfo_Last_Clean_Run__c"
+    label = "ZoomInfo Last Clean Run"
+    _required = false
+    inlineHelpText = "Date/time refers to last time ZoomInfo Clean ran for record."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Date/time refers to last time ZoomInfo Clean ran for record."
+  }
+  salesforce.Text zisf__ZoomInfo_Phone__c {
+    apiName = "Lead.zisf__ZoomInfo_Phone__c"
+    label = "ZoomInfo Phone"
+    _required = false
+    inlineHelpText = "ZoomInfo Phone for the Lead record."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 30
+    queryable = true
+    description = "ZoomInfo Phone for the Lead record."
+    externalId = false
+  }
+  salesforce.Checkbox zisf__ZoomInfo_Trigger__c {
+    apiName = "Lead.zisf__ZoomInfo_Trigger__c"
+    label = "ZoomInfo Trigger"
+    defaultValue = false
+    inlineHelpText = "When this value is set to \"True\", an incoming Lead with blank fields will be automatically appended with available data by ZoomInfo."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "When this value is set to \"True\", an incoming Lead with blank fields will be automatically appended with available data by ZoomInfo."
+  }
+  salesforce.Picklist zisf__Zoom_Clean_Status__c {
+    apiName = "Lead.zisf__Zoom_Clean_Status__c"
+    label = "ZoomInfo Clean Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Clean"
+        color = "#009900"
+        default = false
+        label = "Clean"
+      },
+      {
+        fullName = "In Sync"
+        color = "#78C953"
+        default = false
+        label = "In Sync"
+      },
+      {
+        fullName = "Not Found"
+        color = "#EFAE73"
+        default = false
+        label = "Not Found"
+      },
+      {
+        fullName = "Not Compared"
+        color = "#AFCADF"
+        default = true
+        label = "Not Compared"
+      },
+      {
+        fullName = "Different"
+        color = "#F3D904"
+        default = false
+        label = "Different"
+      },
+      {
+        fullName = "Company Clean Only"
+        color = "#33CC00"
+        default = false
+        label = "Company Clean Only"
+      },
+      {
+        fullName = "Error"
+        color = "#CC0000"
+        default = false
+        label = "Error"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text zisf__zoom_id__c {
+    apiName = "Lead.zisf__zoom_id__c"
+    label = "ZoomInfo ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    description = '''
+ZoomInfo person id, if the data on this object has ever been imported from the ZIDB.
+Stored as Long on Solr.
+'''
+    externalId = false
+  }
+  salesforce.DateTime zisf__zoom_lastupdated__c {
+    apiName = "Lead.zisf__zoom_lastupdated__c"
+    label = "ZoomInfo Last Updated"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Last updated from ZoomInfo timestamp"
+  }
+}

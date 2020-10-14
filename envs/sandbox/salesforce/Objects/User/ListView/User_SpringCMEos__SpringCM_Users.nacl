@@ -1,0 +1,15 @@
+salesforce.ListView User_SpringCMEos__SpringCM_Users {
+  fullName = "User.SpringCMEos__SpringCM_Users"
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "SpringCMEos__SpringCM_User__c"
+      operation = "equals"
+      value = "1"
+    },
+  ]
+  label = "SpringCM Users"
+  _parent = [
+    salesforce.User,
+  ]
+}

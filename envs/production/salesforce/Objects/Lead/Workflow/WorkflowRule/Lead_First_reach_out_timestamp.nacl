@@ -1,0 +1,25 @@
+salesforce.WorkflowRule Lead_First_reach_out_timestamp {
+  fullName = "Lead.First reach out timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_First_reach_out_timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Reached_Out_To__c
+      operation = "equals"
+      value = "True"
+    },
+    {
+      field = salesforce.Lead.field.First_Reachout_Timestamp__c
+      operation = "equals"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

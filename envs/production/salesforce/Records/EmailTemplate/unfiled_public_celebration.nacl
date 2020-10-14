@@ -1,0 +1,31 @@
+salesforce.EmailTemplate unfiled_public_celebration {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "{!Sale__c.Owner__c} won a {!Sale__c.ARR__c} ARR opportunity with {!Sale__c.Company__c}"
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "Celebration"
+  style = "freeForm"
+  subject = "{!Sale__c.Owner__c} won a {!Sale__c.ARR__c} ARR opportunity with {!Sale__c.Company__c}"
+  textOnly = '''
+{!Sale__c.Owner__c} closed a deal with {!Sale__c.Company__c}
+
+From Plan - {!Sale__c.Current_Account_Plan__c}
+
+To Plan- {!Sale__c.Expected_Plan_Name__c}
+
+Green bucket ARR- {!Sale__c.ARR__c}
+
+Deal Age - {!Sale__c.Sale_Age__c}
+
+SDR Name - {!Sale__c.SDR_Name__c}
+
+CSM Name - {!Sale__c.CSM_Name__c}
+
+Link to Sale - {!Sale__c.Link}
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/celebration"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/celebration.email")
+}

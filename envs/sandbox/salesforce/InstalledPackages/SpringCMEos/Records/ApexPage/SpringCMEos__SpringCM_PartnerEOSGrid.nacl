@@ -1,0 +1,9 @@
+salesforce.ApexPage SpringCMEos__SpringCM_PartnerEOSGrid {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 31
+  availableInTouch = false
+  confirmationTokenRequired = false
+  label = "SpringCM_PartnerEOSGrid"
+  fullName = "SpringCMEos__SpringCM_PartnerEOSGrid"
+  content = file("salesforce/InstalledPackages/SpringCMEos/Records/ApexPage/SpringCMEos__SpringCM_PartnerEOSGrid.page")
+}

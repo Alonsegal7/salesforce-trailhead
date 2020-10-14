@@ -1,0 +1,1014 @@
+salesforce.SharingRules Account {
+  fullName = "Account"
+  sharingCriteriaRules = [
+    {
+      fullName = "Company_Accounts"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Company Accounts"
+      sharedTo = {
+        roleAndSubordinatesInternal = "Head_of_Sales"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Company"
+      }
+    },
+    {
+      fullName = "Company_Accounts_for_CS"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Company Accounts for CS"
+      sharedTo = {
+        roleAndSubordinatesInternal = "Head_of_CS"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Company"
+      }
+    },
+    {
+      fullName = "Company_Accounts_for_Product"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Company Accounts for Product"
+      sharedTo = {
+        roleAndSubordinatesInternal = "Marketing"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Company"
+      }
+    },
+    {
+      fullName = "Company_Accounts_for_Product2"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Company Accounts for Product"
+      sharedTo = {
+        roleAndSubordinatesInternal = "Product"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Company"
+      }
+    },
+    {
+      fullName = "Company_for_Trainer"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Company for Trainer"
+      sharedTo = {
+        roleAndSubordinatesInternal = "Trainer"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Company"
+      }
+    },
+    {
+      fullName = "Monday_Account"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Monday Account"
+      sharedTo = {
+        role = [
+          "SF_Mid_Market_Account_executive_Mitch_team",
+        ]
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Monday Account"
+      }
+    },
+    {
+      fullName = "Monday_Account_for_Head_of_CS"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Monday Account for Head of CS"
+      sharedTo = {
+        roleAndSubordinates = "Head_of_CS"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Monday Account"
+      }
+    },
+    {
+      fullName = "Monday_Account_for_Head_of_CS2"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Monday Account for Head of CS2"
+      sharedTo = {
+        roleAndSubordinatesInternal = "Head_of_CS"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Monday Account"
+      }
+    },
+    {
+      fullName = "Monday_Account_for_Product2"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Monday Account for Product2"
+      sharedTo = {
+        roleAndSubordinatesInternal = "Product"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Monday Account"
+      }
+    },
+    {
+      fullName = "Monday_Account_for_Sales2"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Monday Account for Sales2"
+      sharedTo = {
+        roleAndSubordinatesInternal = "Head_of_Sales"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Monday Account"
+      }
+    },
+    {
+      fullName = "Monday_Account_for_Trainer"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Monday Account for Trainer"
+      sharedTo = {
+        roleAndSubordinatesInternal = "Trainer"
+      }
+      criteriaItems = {
+        field = "RecordTypeId"
+        operation = "equals"
+        value = "Monday Account"
+      }
+    },
+  ]
+  sharingOwnerRules = [
+    {
+      fullName = "Clearvision_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Read"
+      }
+      label = "Clearvision Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "ClearvisionPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "ClearvisionPartnerUser"
+      }
+    },
+    {
+      fullName = "Communardo_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Read"
+      }
+      label = "Communardo Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "CommunardoSoftwareGmbHPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "CommunardoSoftwareGmbHPartnerUser"
+      }
+    },
+    {
+      fullName = "Devoteam_Scandinavia_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Read"
+      }
+      label = "Devoteam Scandinavia Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "DevoteamScandinaviaPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "DevoteamScandinaviaPartnerUser"
+      }
+    },
+    {
+      fullName = "Drew_Marketing_Partner_manager"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Drew Marketing Partner manager"
+      sharedTo = {
+        portalRole = "DrewMarketingPartnerManager"
+      }
+      sharedFrom = {
+        portalRole = "DrewMarketingPartnerManager"
+      }
+    },
+    {
+      fullName = "EDI_Indonesia_Partner_Manager"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "EDI Indonesia Partner Manager"
+      sharedTo = {
+        portalRoleAndSubordinates = "EDIIndonesiaPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "EDIIndonesiaPartnerManager"
+      }
+    },
+    {
+      fullName = "EDI_Indonesia_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "EDI Indonesia Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "EDIIndonesiaPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "EDIIndonesiaPartnerUser"
+      }
+    },
+    {
+      fullName = "ESL_Sharing"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "ESL Sharing"
+      sharedTo = {
+        portalRoleAndSubordinates = "ESLPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "ESLPartnerUser"
+      }
+    },
+    {
+      fullName = "Eligeo_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Eligeo Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "EligeoPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "EligeoPartnerUser"
+      }
+    },
+    {
+      fullName = "Galaxy_Software_Services_GSS_Partner_User_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Read"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Galaxy Software Services (GSS) Partner User Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "GalaxySoftwareServicesGSSPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "GalaxySoftwareServicesGSSPartnerUser"
+      }
+    },
+    {
+      fullName = "ITTICON_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Read"
+      }
+      label = "ITTICON Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "ITTICONPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "ITTICONPartnerUser"
+      }
+    },
+    {
+      fullName = "KPMG_Israel_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "KPMG Israel Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "KPMGIsraelPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "KPMGIsraelPartnerUser"
+      }
+    },
+    {
+      fullName = "Localyse_partner_user"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Read"
+      }
+      label = "Localyse partner user"
+      sharedTo = {
+        portalRoleAndSubordinates = "LocalysePartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "LocalysePartnerUser"
+      }
+    },
+    {
+      fullName = "NitroWorm_Asia_Limited_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "NitroWorm (Asia) Limited Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "NitroWormAsiaLimitedPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "NitroWormAsiaLimitedPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Avalon"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Avalon"
+      sharedTo = {
+        portalRoleAndSubordinates = "AvalonSolutionsSGPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "AvalonSolutionsSGPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Cartagon"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Cartagon"
+      sharedTo = {
+        portalRoleAndSubordinates = "CartagonPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "CartagonPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Cloud_Concept"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Cloud Concept"
+      sharedTo = {
+        portalRoleAndSubordinates = "CloudConceptPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "CloudConceptPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Cloud_Industry"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Cloud Industry"
+      sharedTo = {
+        portalRoleAndSubordinates = "CloudIndustryPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "CloudIndustryPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Cys"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Cys"
+      sharedTo = {
+        portalRoleAndSubordinates = "CySPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "CySPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Deviniti"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Deviniti"
+      sharedTo = {
+        portalRoleAndSubordinates = "DevinitiPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "DevinitiPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Eligeo"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Eligeo"
+      sharedTo = {
+        portalRoleAndSubordinates = "EligeoPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "EligeoPartnerManager"
+      }
+    },
+    {
+      fullName = "Owner_is_Enable"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Enable"
+      sharedTo = {
+        portalRoleAndSubordinates = "EnablePartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "EnablePartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Ergoman"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Ergoman"
+      sharedTo = {
+        portalRoleAndSubordinates = "ErgomanPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "ErgomanPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Fellow_Consulting"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Fellow Consulting"
+      sharedTo = {
+        portalRoleAndSubordinates = "FellowConsultingPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "FellowConsultingPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Gaprise"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Gaprise"
+      sharedTo = {
+        portalRoleAndSubordinates = "GaprisePartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "GaprisePartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_HorsePower"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is HorsePower"
+      sharedTo = {
+        portalRoleAndSubordinates = "HorsePowerPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "HorsePowerPartnerManager"
+      }
+    },
+    {
+      fullName = "Owner_is_JT_s_Cloud"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is JT's Cloud"
+      sharedTo = {
+        portalRoleAndSubordinates = "JTsCloudPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "JTsCloudPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Master_Concept"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Master Concept"
+      sharedTo = {
+        portalRoleAndSubordinates = "MasterConceptPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "MasterConceptPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Omnidea"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Omnidea"
+      sharedTo = {
+        portalRoleAndSubordinates = "OmnideaPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "OmnideaPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Omnitas"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Omnitas"
+      sharedTo = {
+        portalRoleAndSubordinates = "OmnitasPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "OmnitasPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_OpenSymbol"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is OpenSymbol"
+      sharedTo = {
+        portalRoleAndSubordinates = "OpenSymbolPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "OpenSymbolPartnerManager"
+      }
+    },
+    {
+      fullName = "Owner_is_Provident_CRM"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Provident CRM"
+      sharedTo = {
+        portalRoleAndSubordinates = "ProvidentCRMPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "ProvidentCRMPartnerManager"
+      }
+    },
+    {
+      fullName = "Owner_is_SPH"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is SPH"
+      sharedTo = {
+        portalRoleAndSubordinates = "SPHPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "SPHPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Seoseon"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Seoseon"
+      sharedTo = {
+        portalRoleAndSubordinates = "SEOSEONPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "SEOSEONPartnerManager"
+      }
+    },
+    {
+      fullName = "Owner_is_Simplifica"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Simplifica"
+      sharedTo = {
+        portalRoleAndSubordinates = "SimplificaPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "SimplificaPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Sinectica"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Sinectica"
+      sharedTo = {
+        portalRoleAndSubordinates = "SinecticaPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "SinecticaPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Sinergis"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Sinergis"
+      sharedTo = {
+        portalRoleAndSubordinates = "SinergisBRPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "SinergisBRPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Synolia"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Synolia"
+      sharedTo = {
+        portalRoleAndSubordinates = "SynoliaPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "SynoliaPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Takum"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Takum"
+      sharedTo = {
+        portalRoleAndSubordinates = "TakumPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "TakumPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_WTF"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is WTF"
+      sharedTo = {
+        portalRoleAndSubordinates = "WhatsTheFuturePartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "WhatsTheFuturePartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Weefer"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Weefer"
+      sharedTo = {
+        portalRoleAndSubordinates = "WeeferPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "WeeferPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_Your_IT"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is Your IT"
+      sharedTo = {
+        portalRoleAndSubordinates = "YourITPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "YourITPartnerUser"
+      }
+    },
+    {
+      fullName = "Owner_is_demicon"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner is demicon"
+      sharedTo = {
+        portalRoleAndSubordinates = "DemiconPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "DemiconPartnerManager"
+      }
+    },
+    {
+      fullName = "Owner_us_Aktienow"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Owner us Aktienow"
+      sharedTo = {
+        portalRoleAndSubordinates = "AktieNowPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "AktieNowPartnerUser"
+      }
+    },
+    {
+      fullName = "PDR_permissions"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Read"
+      }
+      label = "PDR permissions"
+      sharedTo = {
+        role = [
+          "PDR",
+        ]
+      }
+      sharedFrom = {
+        role = [
+          "Channel_Managers",
+        ]
+      }
+    },
+    {
+      fullName = "SeaHawk_Partner_Manager"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Read"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "SeaHawk Partner Manager"
+      sharedTo = {
+        portalRoleAndSubordinates = "SeaHawkPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "SeaHawkPartnerManager"
+      }
+    },
+    {
+      fullName = "SeaHawk_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Read"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Read"
+      }
+      label = "SeaHawk Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "SeaHawkPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "SeaHawkPartnerUser"
+      }
+    },
+    {
+      fullName = "Work_Perfect_Partner_Manager"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Read"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Work Perfect Partner Manager"
+      sharedTo = {
+        portalRoleAndSubordinates = "WorkPerfectPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "WorkPerfectPartnerManager"
+      }
+    },
+    {
+      fullName = "Work_Perfect_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Read"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Work Perfect Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "WorkPerfectPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "WorkPerfectPartnerUser"
+      }
+    },
+    {
+      fullName = "amrutsoftware_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "None"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "amrutsoftware Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "amrutsoftwarePartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "amrutsoftwarePartnerUser"
+      }
+    },
+    {
+      fullName = "i4Asia_Partner_Manager"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "i4Asia Partner Manager"
+      sharedTo = {
+        portalRoleAndSubordinates = "i4asiacorpPartnerManager"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "i4asiacorpPartnerManager"
+      }
+    },
+  ]
+  _parent = [
+    salesforce.Account,
+  ]
+}

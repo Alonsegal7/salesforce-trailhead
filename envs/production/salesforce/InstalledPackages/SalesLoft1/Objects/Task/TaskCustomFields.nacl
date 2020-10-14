@@ -1,0 +1,184 @@
+type salesforce.Task {
+  salesforce.Text SalesLoft1__Call_Disposition__c {
+    apiName = "Task.SalesLoft1__Call_Disposition__c"
+    label = "Call Disposition"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.FormulaNumber SalesLoft1__Call_Duration_in_Minutes__c {
+    apiName = "Task.SalesLoft1__Call_Duration_in_Minutes__c"
+    label = "Call Duration in Minutes"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "CallDurationInSeconds  / 60"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+  }
+  salesforce.Text SalesLoft1__Call_Sentiment__c {
+    apiName = "Task.SalesLoft1__Call_Sentiment__c"
+    label = "Call Sentiment"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.Text SalesLoft1__SalesLoft_Cadence_Name__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Cadence_Name__c"
+    label = "SalesLoft Cadence Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.Number SalesLoft1__SalesLoft_Clicked_Count__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Clicked_Count__c"
+    label = "SalesLoft Clicked Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+  salesforce.FormulaNumber SalesLoft1__SalesLoft_Connected_Count__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Connected_Count__c"
+    label = "SalesLoft Connected Count"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+IF( 
+CONTAINS( SalesLoft1__Call_Disposition__c , "Connected" ), 1, 
+NULL)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+  }
+  salesforce.Text SalesLoft1__SalesLoft_Email_Template_Title__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Email_Template_Title__c"
+    label = "SalesLoft Email Template Title"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.Number SalesLoft1__SalesLoft_Replies_Count__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Replies_Count__c"
+    label = "SalesLoft Replies Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+  salesforce.Number SalesLoft1__SalesLoft_Step_Day__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Step_Day__c"
+    label = "SalesLoft Step Day"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+  salesforce.FormulaText SalesLoft1__SalesLoft_Type__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Type__c"
+    label = "SalesLoft Type"
+    _required = false
+    formula = '''
+IF(BEGINS(Subject,'Email:'),'Email',
+IF(BEGINS(Subject,'Call'),'Call',
+IF(BEGINS(Subject,'LinkedIn Sales Navigator: InMail'),'LinkedIn - InMail',
+IF(BEGINS(Subject,'LinkedIn Sales Navigator: Research'),'LinkedIn - Research',
+IF(BEGINS(Subject,'LinkedIn Sales Navigator: Connection Request'),'LinkedIn - Connection Request',
+IF(BEGINS(Subject,'LinkedIn Sales Navigator: Ask for an Introduction'),'LinkedIn - Ask for an Introduction',
+IF(BEGINS(Subject,'Meeting Booked:'),'Meeting',
+IF(BEGINS(Subject,'Other:'),'Other',
+IF(BEGINS(Subject,'Reply:'),'Reply',
+IF(BEGINS(Subject,'Note'),'Note',
+NULL))))))))))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+  }
+  salesforce.FormulaNumber SalesLoft1__SalesLoft_Unique_Click_Count__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Unique_Click_Count__c"
+    label = "SalesLoft Unique Click Count"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+IF(
+SalesLoft1__SalesLoft_Clicked_Count__c>0,1,NULL)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+  }
+  salesforce.FormulaNumber SalesLoft1__SalesLoft_Unique_Reply_Count__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Unique_Reply_Count__c"
+    label = "SalesLoft Unique Reply Count"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+IF(
+SalesLoft1__SalesLoft_Replies_Count__c > 0, 1, NULL)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+  }
+  salesforce.FormulaNumber SalesLoft1__SalesLoft_Unique_View_Count__c {
+    apiName = "Task.SalesLoft1__SalesLoft_Unique_View_Count__c"
+    label = "SalesLoft Unique View Count"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF ( SalesLoft1__SalesLoft_View_Count__c  > 0, 1,NULL)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+  }
+  salesforce.Number SalesLoft1__SalesLoft_View_Count__c {
+    apiName = "Task.SalesLoft1__SalesLoft_View_Count__c"
+    label = "SalesLoft View Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+}

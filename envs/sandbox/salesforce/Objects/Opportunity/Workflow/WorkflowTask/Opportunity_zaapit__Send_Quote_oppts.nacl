@@ -1,0 +1,13 @@
+salesforce.WorkflowTask Opportunity_zaapit__Send_Quote_oppts {
+  fullName = "Opportunity.zaapit__Send_Quote_oppts"
+  assignedToType = "owner"
+  dueDateOffset = 1
+  notifyAssignee = true
+  priority = "Normal"
+  protected = false
+  status = "Not Started"
+  subject = "Send Quote"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

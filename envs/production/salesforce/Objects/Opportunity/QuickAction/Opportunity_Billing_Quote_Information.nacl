@@ -1,0 +1,115 @@
+salesforce.QuickAction Opportunity_Billing_Quote_Information {
+  fullName = "Opportunity.Billing_Quote_Information"
+  label = "Billing & Quote Information"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "CurrencyIsoCode"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Pricing_Version__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "USD_exchange_rate__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "DealRoom_Link__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Is_SO_Signed__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "DH_Date_of_Signature__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "DH_Signer_Name_c__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "DH_Signer_Title__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "DH_Dealroom_Status__c"
+            uiBehavior = "Readonly"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Billing_Entity__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Expected_ARR__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Claimed_ARR__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "ContractId"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Priority_Customer_Id__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Priority_Sales_Order_Id__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Billing_Entity_Address__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Billing_Entity_VAT_Number__c"
+            uiBehavior = "Readonly"
+          },
+        ]
+      },
+    ]
+  }
+  type = "Update"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

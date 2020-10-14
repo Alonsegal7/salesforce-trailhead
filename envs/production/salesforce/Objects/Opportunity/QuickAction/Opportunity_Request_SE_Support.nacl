@@ -1,0 +1,10 @@
+salesforce.QuickAction Opportunity_Request_SE_Support {
+  fullName = "Opportunity.Request_SE_Support"
+  flowDefinition = "SE_Request_from_opportunity"
+  label = "Request SE Support"
+  optionsCreateFeedItem = false
+  type = "Flow"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

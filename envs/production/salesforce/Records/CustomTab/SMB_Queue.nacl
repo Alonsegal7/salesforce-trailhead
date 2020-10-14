@@ -1,0 +1,10 @@
+salesforce.CustomTab SMB_Queue {
+  fullName = "SMB_Queue"
+  description = "Created by Lightning App Builder"
+  flexiPage = "SMB_Queue"
+  label = "SMB Queue"
+  motif = "Custom40: Credit card"
+  _generated_dependencies = [
+    salesforce.LightningPage.instance.SMB_Queue,
+  ]
+}

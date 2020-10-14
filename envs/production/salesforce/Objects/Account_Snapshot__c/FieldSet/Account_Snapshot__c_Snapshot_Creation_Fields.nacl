@@ -1,0 +1,190 @@
+salesforce.FieldSet Account_Snapshot__c_Snapshot_Creation_Fields {
+  fullName = "Account_Snapshot__c.Snapshot_Creation_Fields"
+  description = "Account Snapshot"
+  displayedFields = [
+    {
+      field = "ARR__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "WAPP__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Account_Members__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Account_Seats__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Guests__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Viewers__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Free_Users__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Allocated__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BigBrain_ID__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Company__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Country_Text__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CSM__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Second_CSM__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Next_Charge_Date__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "NPS_Score__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Owner__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Owner_s_Manager__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Owner_s_Function__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Plan_Name__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Plan_Period__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Parent_Account__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Plan_Start_Date__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Plan_Tier__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Pricing_Version__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Region__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SDR__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Partner__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MAPP__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "WAPP_From_Members__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MAPP_From_Members__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CS_Segment__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CSM_Function__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Prioritized_Account__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Health_Score_MA__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Health_Score_Bucket__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Partner_CSM__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Snapshot Creation Fields"
+  _parent = [
+    salesforce.Account_Snapshot__c,
+  ]
+}

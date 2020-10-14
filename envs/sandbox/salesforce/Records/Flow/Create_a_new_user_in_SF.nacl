@@ -1,0 +1,451 @@
+salesforce.Flow Create_a_new_user_in_SF {
+  fullName = "Create_a_new_user_in_SF"
+  dynamicChoiceSets = [
+    {
+      name = "Function"
+      dataType = "Picklist"
+      picklistField = salesforce.User.field.Function__c
+      picklistObject = salesforce.User
+    },
+    {
+      name = "Roles"
+      dataType = "Picklist"
+      picklistField = salesforce.User.field.UserType
+      picklistObject = salesforce.User
+    },
+  ]
+  interviewLabel = "Create a new user in SF {!$Flow.CurrentDateTime}"
+  label = "Create a new user in SF"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordCreates = [
+    {
+      name = "Create_User"
+      label = "Create User"
+      locationX = 558
+      locationY = 49
+      connector = {
+        targetReference = "End1"
+      }
+      faultConnector = {
+        targetReference = "End1"
+      }
+      inputAssignments = [
+        {
+          field = "CallCenterId"
+          value = {
+            elementReference = "Get_similar_user.CallCenterId"
+          }
+        },
+        {
+          field = "CommunityNickname"
+          value = {
+            elementReference = "FirstName"
+          }
+        },
+        {
+          field = "CompanyName"
+          value = {
+            stringValue = "monday.com"
+          }
+        },
+        {
+          field = "Created_date__c"
+          value = {
+            elementReference = "$Flow.CurrentDate"
+          }
+        },
+        {
+          field = "Dealhub_User__c"
+          value = {
+            elementReference = "Get_similar_user.Dealhub_User__c"
+          }
+        },
+        {
+          field = "Department"
+          value = {
+            elementReference = "Get_similar_user.Department"
+          }
+        },
+        {
+          field = "Division"
+          value = {
+            elementReference = "Get_similar_user.Division"
+          }
+        },
+        {
+          field = "Email"
+          value = {
+            elementReference = "Email"
+          }
+        },
+        {
+          field = "FirstName"
+          value = {
+            elementReference = "FirstName"
+          }
+        },
+        {
+          field = "Function__c"
+          value = {
+            elementReference = "Get_similar_user.Function__c"
+          }
+        },
+        {
+          field = "IsActive"
+          value = {
+            booleanValue = true
+          }
+        },
+        {
+          field = "LastName"
+          value = {
+            elementReference = "LastName"
+          }
+        },
+        {
+          field = "Office__c"
+          value = {
+            elementReference = "Get_similar_user.Office__c"
+          }
+        },
+        {
+          field = "ProfileId"
+          value = {
+            elementReference = "Get_similar_user.ProfileId"
+          }
+        },
+        {
+          field = "Title"
+          value = {
+            elementReference = "Get_similar_user.Title"
+          }
+        },
+        {
+          field = "UserPermissionsInteractionUser"
+          value = {
+            booleanValue = true
+          }
+        },
+        {
+          field = "Username"
+          value = {
+            elementReference = "Email"
+          }
+        },
+        {
+          field = "should_get_leads_from_BigBrain__c"
+          value = {
+            elementReference = "Get_similar_user.should_get_leads_from_BigBrain__c"
+          }
+        },
+      ]
+      object = salesforce.User
+    },
+  ]
+  recordLookups = [
+    {
+      name = "Get_similar_user"
+      label = "Get similar user"
+      locationX = 361
+      locationY = 48
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Create_User"
+      }
+      faultConnector = {
+        targetReference = "End1"
+      }
+      filters = [
+        {
+          field = "UserRoleId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RoleLookup.recordId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.User
+      storeOutputAutomatically = true
+    },
+  ]
+  screens = [
+    {
+      name = "End1"
+      label = "End"
+      locationX = 460
+      locationY = 248
+      allowBack = true
+      allowFinish = true
+      allowPause = true
+      fields = [
+        {
+          name = "End"
+          fieldText = "<p>{!$Flow.CurrentRecord}</p><p>{!$Flow.FaultMessage}</p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "New_User"
+      label = "New User"
+      locationX = 228
+      locationY = 49
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Get_similar_user"
+      }
+      fields = [
+        {
+          name = "Name"
+          extensionName = "flowruntime:name"
+          fieldType = "ComponentInstance"
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "FirstName"
+              name = "firstName"
+            },
+            {
+              assignToReference = "LastName"
+              name = "lastName"
+            },
+          ]
+        },
+        {
+          name = "EmailInput"
+          extensionName = "flowruntime:email"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "disabled"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "placeholder"
+              value = {
+                stringValue = "email@monday.com"
+              }
+            },
+            {
+              name = "required"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "value"
+              value = {
+                stringValue = "@monday.com"
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "Email"
+              name = "value"
+            },
+          ]
+        },
+        {
+          name = "RoleLookup"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "UserRoleId"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "User Role"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "User"
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Profile"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "ProfileId"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Profile"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "User"
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Manager"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "ManagerId"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Manager"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "User"
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Office"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "Office__c"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Office"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "User"
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "New_User"
+    }
+  }
+  status = "Draft"
+  variables = [
+    {
+      name = "CallCenter"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = "CallCenter"
+    },
+    {
+      name = "Email"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "FirstName"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "LastName"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "UserFunction"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      value = {
+        stringValue = "Manager"
+      }
+    },
+    {
+      name = "UserManager"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.User
+    },
+    {
+      name = "UserTitle"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      value = {
+        elementReference = "RoleLookup.recordName"
+      }
+    },
+  ]
+}

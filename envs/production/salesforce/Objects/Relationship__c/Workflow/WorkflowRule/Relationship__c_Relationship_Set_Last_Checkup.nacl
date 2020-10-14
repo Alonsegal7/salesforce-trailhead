@@ -1,0 +1,18 @@
+salesforce.WorkflowRule Relationship__c_Relationship_Set_Last_Checkup {
+  fullName = "Relationship__c.Relationship - Set Last Checkup"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Relationship__c_Relationship_Set_Last_Checkup
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = '''
+(isnew()||ischanged( Relationship_Level__c))&&
+not ispickval(Relationship_Level__c,"")
+'''
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Relationship__c,
+  ]
+}

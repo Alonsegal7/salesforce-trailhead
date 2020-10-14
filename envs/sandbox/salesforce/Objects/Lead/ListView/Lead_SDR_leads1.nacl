@@ -1,0 +1,31 @@
+salesforce.ListView Lead_SDR_leads1 {
+  fullName = "Lead.SDR_leads1"
+  columns = [
+    "FULL_NAME",
+    "SDR_Name__c",
+    "LEAD.STATUS",
+    "Lead_name__c",
+    "Related_Company__c",
+    "Date_of_Meeting__c",
+  ]
+  filterScope = "Mine"
+  filters = [
+    {
+      field = "SQL__c"
+      operation = "equals"
+      value = "1"
+    },
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Contacted"
+    },
+  ]
+  label = "SDR leads"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,4 @@
+<apex:page sidebar="true" title="Notes">
+
+    <c:zaapit_tables_v1 />
+</apex:page>

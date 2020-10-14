@@ -1,0 +1,38 @@
+type salesforce.zisf__Zoom_Scheduler__c {
+  salesforce.Text zisf__Account_Job_Cron_Expr__c {
+    apiName = "zisf__Zoom_Scheduler__c.zisf__Account_Job_Cron_Expr__c"
+    label = "Account Job Cron Expr"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 80
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zisf__Account_Job_Cron_ID__c {
+    apiName = "zisf__Zoom_Scheduler__c.zisf__Account_Job_Cron_ID__c"
+    label = "Account Job Cron ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 18
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zisf__CronJobList__c {
+    apiName = "zisf__Zoom_Scheduler__c.zisf__CronJobList__c"
+    label = "CronJobList"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+}

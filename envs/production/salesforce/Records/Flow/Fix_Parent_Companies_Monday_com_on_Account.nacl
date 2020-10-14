@@ -1,0 +1,265 @@
+salesforce.Flow Fix_Parent_Companies_Monday_com_on_Account {
+  fullName = "Fix_Parent_Companies_Monday_com_on_Account"
+  actionCalls = [
+    {
+      name = "Notification"
+      label = "Notification"
+      locationX = 335
+      locationY = 640
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "ProcessComplete"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "The parent account fix has been completed"
+          }
+        },
+      ]
+    },
+  ]
+  assignments = [
+    {
+      name = "Count_number_of_accounts"
+      label = "Count number of accounts"
+      locationX = 176
+      locationY = 428
+      assignmentItems = [
+        {
+          assignToReference = "AccountsCount"
+          operator = "AssignCount"
+          value = {
+            elementReference = "Get_Accounts_with_mis_matched_parent_company"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Loop_and_fix_parent_company_company"
+      }
+    },
+    {
+      name = "SetIterator"
+      label = "SetIterator"
+      locationX = 656
+      locationY = 591
+      assignmentItems = [
+        {
+          assignToReference = "Iterator"
+          operator = "Add"
+          value = {
+            numberValue = 1
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Reached_50_Iterations"
+      }
+    },
+  ]
+  decisions = [
+    {
+      name = "Reached_50_Iterations"
+      label = "Reached 50 Iterations"
+      locationX = 647
+      locationY = 439
+      defaultConnector = {
+        targetReference = "Set_Company_as_Parent_Account"
+      }
+      defaultConnectorLabel = "Under50Iterations"
+      rules = [
+        {
+          name = "Reached50Iterations"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Iterator"
+              operator = "EqualTo"
+              rightValue = {
+                numberValue = 50
+              }
+            },
+          ]
+          label = "Reached50Iterations"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Fix Parent Companies = Monday.com on Account {!$Flow.CurrentDateTime}"
+  label = "Fix Parent Companies = Monday.com on Account"
+  loops = [
+    {
+      name = "Loop_and_fix_parent_company_company"
+      label = "Loop and fix parent company = company"
+      locationX = 333
+      locationY = 429
+      collectionReference = "Get_Accounts_with_mis_matched_parent_company"
+      iterationOrder = "Asc"
+      nextValueConnector = {
+        targetReference = "SetIterator"
+      }
+      noMoreValuesConnector = {
+        targetReference = "Notification"
+      }
+    },
+  ]
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get_Accounts_with_mis_matched_parent_company"
+      label = "Get Accounts with mis-matched parent/company"
+      locationX = 177
+      locationY = 275
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Count_number_of_accounts"
+      }
+      faultConnector = {
+        targetReference = "Do_nothing"
+      }
+      filters = [
+        {
+          field = "Company__c"
+          operator = "IsNull"
+          value = {
+            booleanValue = false
+          }
+        },
+        {
+          field = "Company__c"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = "0011t00000cRhxiAAC"
+          }
+        },
+        {
+          field = "ParentId"
+          operator = "EqualTo"
+          value = {
+            stringValue = "0011t00000cRhxiAAC"
+          }
+        },
+      ]
+      getFirstRecordOnly = false
+      object = salesforce.Account
+      sortField = salesforce.Account.field.ARR__c
+      sortOrder = "Desc"
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Set_Company_as_Parent_Account"
+      label = "Set Company as Parent Account"
+      locationX = 656
+      locationY = 261
+      connector = {
+        targetReference = "Loop_and_fix_parent_company_company"
+      }
+      faultConnector = {
+        targetReference = "Loop_and_fix_parent_company_company"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Loop_and_fix_parent_company_company.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "ParentId"
+          value = {
+            elementReference = "Loop_and_fix_parent_company_company.Company__c"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "Get_Accounts_with_mis_matched_parent_company"
+    }
+  }
+  status = "Active"
+  subflows = [
+    {
+      name = "Do_nothing"
+      label = "Do nothing"
+      locationX = 339
+      locationY = 279
+      flowName = "Do_nothing"
+    },
+  ]
+  textTemplates = [
+    {
+      name = "ProcessComplete"
+      text = '''
+Hi,
+The parent company fix has been completed.
+{!Iterator} records have been updated.
+'''
+    },
+  ]
+  variables = [
+    {
+      name = "AccountsCount"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+    },
+    {
+      name = "GalOmerID"
+      dataType = "String"
+      isCollection = false
+      isInput = false
+      isOutput = false
+      value = {
+        stringValue = "0053X00000AWTJuQAP"
+      }
+    },
+    {
+      name = "Iterator"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+  ]
+}

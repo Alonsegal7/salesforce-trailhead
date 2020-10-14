@@ -1,0 +1,8 @@
+salesforce.ListView Team__c_All {
+  fullName = "Team__c.All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Team__c,
+  ]
+}

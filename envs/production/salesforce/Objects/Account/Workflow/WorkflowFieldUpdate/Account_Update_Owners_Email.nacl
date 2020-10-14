@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Update_Owners_Email {
+  fullName = "Account.Update_Owners_Email"
+  field = salesforce.Account.field.Owner_s_Email__c
+  formula = "Owner.Email"
+  name = "Update Owners Email"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

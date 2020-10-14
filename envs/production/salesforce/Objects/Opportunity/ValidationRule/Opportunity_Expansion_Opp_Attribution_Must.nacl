@@ -1,0 +1,18 @@
+salesforce.ValidationRule Opportunity_Expansion_Opp_Attribution_Must {
+  fullName = "Opportunity.Expansion_Opp_Attribution_Must"
+  active = false
+  errorConditionFormula = '''
+ISPICKVAL(Opportunity_Attribution__c ,"")&&  
+(ISPICKVAL(Type ,"Expansion")|| ISPICKVAL(Type ,"Cross sale"))&&
+$User.ProfileId <> '00e1t000001bu2u' &&
+(DATEVALUE(CreatedDate) >= DATE (2020,06,15)||isnew())
+'''
+  errorDisplayField = "Opportunity_Attribution__c"
+  errorMessage = '''
+Please fill in the opportunity attribution-
+what behaviours/ actions/ needs led you to speak about an expansion with the customer?
+'''
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

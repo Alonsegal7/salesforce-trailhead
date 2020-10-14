@@ -1,0 +1,24 @@
+salesforce.CustomApplication zaapit__Smart_Activity_Manager_Lightning {
+  fullName = "zaapit__Smart_Activity_Manager_Lightning"
+  brand = {
+    headerColor = "#0070D2"
+    logoVersion = 1
+    shouldOverrideOrgTheme = false
+  }
+  description = "Manage your tasks, events & projects with ZaapIT.com"
+  formFactors = [
+    "Large",
+  ]
+  isNavAutoTempTabsDisabled = false
+  isNavPersonalizationDisabled = false
+  label = "Smart Activity Manager™"
+  navType = "Standard"
+  tabs = [
+    salesforce.CustomTab.instance.zaapit__Overview,
+    salesforce.CustomTab.instance.zaapit__Tasks_Recent,
+    salesforce.CustomTab.instance.zaapit__Events_Recent,
+    salesforce.CustomTab.instance.zaapit__All_Tasks,
+    salesforce.CustomTab.instance.zaapit__All_Events,
+  ]
+  uiType = "Lightning"
+}

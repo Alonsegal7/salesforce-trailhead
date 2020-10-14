@@ -1,0 +1,6 @@
+salesforce.CustomTab zaapit__EventsWL {
+  fullName = "zaapit__EventsWL"
+  label = "Events"
+  motif = "Custom84: Presenter"
+  page = "zaapit__zaapit_tb_eventWL"
+}

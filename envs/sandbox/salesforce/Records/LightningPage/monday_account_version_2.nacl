@@ -1,0 +1,333 @@
+salesforce.LightningPage monday_account_version_2 {
+  fullName = "monday_account_version_2"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://new.bigbrain.me/crm/sales/account"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+      ]
+      name = "Facet-b3b13734-e4b2-4cea-9205-bc616078805b"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://bigbrain.me"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+      ]
+      name = "Facet-44d444a1-78d0-4388-8af8-09684c1b8f30"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-b3b13734-e4b2-4cea-9205-bc616078805b"
+            },
+            {
+              name = "title"
+              value = "Big Brain"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-44d444a1-78d0-4388-8af8-09684c1b8f30"
+            },
+            {
+              name = "title"
+              value = "Looker"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-4c23182c-7822-4486-9816-1421870602ef"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "decorate"
+              value = "true"
+            },
+            {
+              name = "richTextValue"
+              value = "<p><b style=\"color: rgb(228, 12, 12); font-size: 20px;\">Monday Account <span class=\"ql-cursor\">﻿</span></b></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideUpdateButton"
+              value = "false"
+            },
+            {
+              name = "variant"
+              value = "linear"
+            },
+          ]
+          componentName = "runtime_sales_pathassistant:pathAssistant"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!Record.CSM__r.Long_User_ID__c}"
+                operator = "NE"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideHeader"
+              value = "false"
+            },
+          ]
+          componentName = "force:relatedListQuickLinksContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-4c23182c-7822-4486-9816-1421870602ef"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      name = "header"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "runtime_sales_activities:activityPanel"
+        },
+      ]
+      name = "Facet-062c0972-1bf0-4f14-8440-75a5bb577353"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "forceChatter:recordFeedContainer"
+        },
+      ]
+      name = "Facet-58bc1206-a271-4192-807b-eadd1ddb0fb4"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-062c0972-1bf0-4f14-8440-75a5bb577353"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.activity"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-58bc1206-a271-4192-807b-eadd1ddb0fb4"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.collaborate"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-af8a2dcd-9cb0-4feb-9fce-620db5bdd2e3"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Teams__r"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "AttachedContentDocuments"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "GRID"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-af8a2dcd-9cb0-4feb-9fce-620db5bdd2e3"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      name = "leftcol"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+      ]
+      name = "Facet-666f0af0-be4b-4e7f-89a0-758b00b09b3e"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-666f0af0-be4b-4e7f-89a0-758b00b09b3e"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-976c2abf-5d0b-4cd1-8903-fd99f91bcd5f"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-976c2abf-5d0b-4cd1-8903-fd99f91bcd5f"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      name = "rightcol"
+      type = "Region"
+    },
+  ]
+  masterLabel = "monday account version 2"
+  sobjectType = "Account"
+  template = {
+    name = "flexipage:recordHomeTwoColEqualHeaderTemplateDesktop"
+  }
+  type = "RecordPage"
+}

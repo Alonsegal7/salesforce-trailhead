@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting mdapi {
+  fullName = "mdapi"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://monday--rh2.visualforce.com"
+}

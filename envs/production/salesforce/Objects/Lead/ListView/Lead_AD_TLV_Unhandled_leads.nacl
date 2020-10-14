@@ -1,0 +1,57 @@
+salesforce.ListView Lead_AD_TLV_Unhandled_leads {
+  fullName = "Lead.AD_TLV_Unhandled_leads"
+  columns = [
+    "Days_left_in_trial__c",
+    "SDR_Name_for_reports__c",
+    "CORE.USERS.FIRST_NAME",
+    "AE__c",
+    "Owner_s_Manager__c",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.COMPANY",
+    "LEAD.STATUS",
+    "LEAD.CREATED_DATE",
+    "LEAD.COUNTRY_CODE",
+    "Distributed_score__c",
+    "Engagement__c",
+    "Enabled_users__c",
+    "Channel__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Attempting"
+    },
+    {
+      field = "SDR_Function__c"
+      operation = "notEqual"
+      value = "BDR"
+    },
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead"
+    },
+    {
+      field = "Owner_Function__c"
+      operation = "equals"
+      value = "SDR"
+    },
+    {
+      field = "SDR_Office__c"
+      operation = "equals"
+      value = "Tel Aviv Office"
+    },
+    {
+      field = "Channel__c"
+      operation = "equals"
+      value = "Signup"
+    },
+  ]
+  label = "AD- TLV Unhandled leads"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

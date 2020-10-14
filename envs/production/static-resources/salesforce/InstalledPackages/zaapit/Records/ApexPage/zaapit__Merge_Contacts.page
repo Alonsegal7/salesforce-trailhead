@@ -1,0 +1,68 @@
+<apex:page standardController="contact" recordSetVar="contacts" extensions="zaapit.GenListController">
+
+<script>
+var  listView1='{!JSENCODE(LastListView)}';
+var gotoURL="/one/one.app#/sObject/{!JSENCODE(ObjectName)}/list?filterName="+listView1+"&t="+new Date().getTime();
+if(document.referrer.indexOf("lightning.force.")==-1){
+    gotoURL="/{!JSENCODE(ObjectPrefix)}?fcf="+listView1.substring(0,15);
+}
+
+
+var checkedIds=""; 
+var checkedId1=""; 
+var contOrg=""; 
+var acc1=""; 
+var contactCount=0; 
+ <apex:repeat var="a" value="{!cont.selected}">
+checkedId1="{!a.id}"; 
+contOrg=contOrg+",.RID"+checkedId1; 
+if(checkedId1!=null && checkedId1.length>15){ 
+checkedId1=checkedId1.substring(0,15); 
+} 
+checkedIds+="&cid="+checkedId1; 
+contactCount++; 
+
+if(acc1=="") acc1="{!a['accountid']}"; 
+
+</apex:repeat>
+
+
+if(contactCount>3){ 
+alert("Please select up to 3 Contacts to merge!"); 
+window.history.back();
+}else if(contactCount<2){ 
+alert("Please select at least 2 Contacts to merge!"); 
+window.history.back();
+}else{ 
+
+//alert(href1 + " "+contOrg); 
+if(acc1!=null && acc1!=""){ 
+
+var win1=window.open("/merge/conmergewizard.jsp?buttonPressed=0"+checkedIds+"&currentStage=0&goNext=Next&id="+acc1+"&retURL=%2Fapex%2Fzaapit__Merge_Completed&srch=&visited_0=1&isdtp=p1" ,"Merge_Contacts","height=800,width=800,top=100,left=100,fullscreen=0,scrollbars=yes"); 
+win1.focus(); 
+
+var timer = setInterval(function() { 
+if(win1.closed) { 
+clearInterval(timer); 
+window.top.location=gotoURL;
+
+} 
+}, 1000); 
+}else{/*account not found*/ 
+alert("Please assign one of the selected contacts to an account before merging the contacts!"); 
+
+} 
+} 
+</script>
+
+<style>
+.loading{height:125px;}
+.hd1{display:none;}
+</style>
+<div class="loading">
+<div style="font-size: 15px;text-align: center;display: inline-block;margin-top: 48px;background: url('/img/loading.gif') 0 0 no-repeat;padding-left:25px;">Running process...
+<div style="font-size: 10px;text-align: center;margin-top: 10px;font-weight:normal;">Make sure popups are enabled...</div>
+</div>
+</div>
+
+</apex:page>

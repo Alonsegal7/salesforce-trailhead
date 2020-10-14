@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Partner_Region__c_Set_UTM_Campaign {
+  fullName = "Partner_Region__c.Set_UTM_Campaign"
+  field = salesforce.Partner_Region__c.field.UTM_Campaign__c
+  formula = "lower(substitute(substitute(substitute(Name,\"(\",\"\"),\")\",\"\"),\" \",\"_\"))"
+  name = "Set UTM Campaign"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Partner_Region__c,
+  ]
+}

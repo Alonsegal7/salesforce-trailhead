@@ -1,0 +1,62 @@
+type salesforce.SpringCMEos__EOS_Type__c {
+  salesforce.Text SpringCMEos__Folder_Name_Format__c {
+    apiName = "SpringCMEos__EOS_Type__c.SpringCMEos__Folder_Name_Format__c"
+    label = "Folder Name Format"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SpringCMEos__Folder_Name__c {
+    apiName = "SpringCMEos__EOS_Type__c.SpringCMEos__Folder_Name__c"
+    label = "Folder Name"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SpringCMEos__Path_Format__c {
+    apiName = "SpringCMEos__EOS_Type__c.SpringCMEos__Path_Format__c"
+    label = "Path Format"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SpringCMEos__Path__c {
+    apiName = "SpringCMEos__EOS_Type__c.SpringCMEos__Path__c"
+    label = "Path"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SpringCMEos__Variables__c {
+    apiName = "SpringCMEos__EOS_Type__c.SpringCMEos__Variables__c"
+    label = "Variables"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+}

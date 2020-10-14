@@ -1,0 +1,1017 @@
+type salesforce.zaapit__zaapit_editable_table2__c {
+  salesforce.Checkbox zaapit__Advanced_Text_Search__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Advanced_Text_Search__c"
+    label = "Advanced Text Search"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Enable Advanced Text Search"
+  }
+  salesforce.Text zaapit__Amount_field_For_Graphs__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Amount_field_For_Graphs__c"
+    label = "Amount field For Graphs"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 150
+    queryable = true
+    externalId = false
+  }
+  salesforce.TextArea zaapit__CustomActionLink__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__CustomActionLink__c"
+    label = "CustomActionLink"
+    _required = false
+    inlineHelpText = '''
+format: link-Text~https://na14.salesforce.com/{0}/e?close=1~tool tip text(optional)
+{0} is the rowID
+'''
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__Custom_CSS__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Custom_CSS__c"
+    label = "Custom CSS"
+    _required = false
+    inlineHelpText = "Custom CSS  to control view / edit mode fields columns etc."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Custom CSS  to control view / edit mode fields columns etc."
+  }
+  salesforce.Checkbox zaapit__DisableGeoMaps__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__DisableGeoMaps__c"
+    label = "DisableGeoMaps"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable Geo Maps for smart Instant graphs"
+  }
+  salesforce.Checkbox zaapit__Disable_formula_fields_groupings__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Disable_formula_fields_groupings__c"
+    label = "Disable formula fields groupings"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text zaapit__DupeSettings__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__DupeSettings__c"
+    label = "DupeSettings"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox zaapit__EnableFieldValueCss__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__EnableFieldValueCss__c"
+    label = "EnableFieldValueCss"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Enable Field Value Css"
+  }
+  salesforce.Checkbox zaapit__EnableHorizontalScroll__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__EnableHorizontalScroll__c"
+    label = "EnableHorizontalScroll"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__Enable_Sort_Grouping2__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Enable_Sort_Grouping2__c"
+    label = "Enable Sort Grouping2"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__Enable_Sort_coloring__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Enable_Sort_coloring__c"
+    label = "Enable Sort coloring"
+    defaultValue = false
+    inlineHelpText = "Enable Sort coloring: use Sort_color1 & Sort_color2 custom labels to change the colors"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Enable Sort coloring: use Sort_color1 & Sort_color2 custom labels to change the colors"
+  }
+  salesforce.Checkbox zaapit__Enable_Sort_grouping__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Enable_Sort_grouping__c"
+    label = "Enable Sort Grouping"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Enable_Sort_grouping"
+  }
+  salesforce.Text zaapit__Exclude_Fields_From_Total__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Exclude_Fields_From_Total__c"
+    label = "Exclude Fields From Total"
+    _required = false
+    inlineHelpText = "Exclude Fields From Total - use # as a sepeartor"
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Exclude Fields From Total"
+    externalId = false
+  }
+  salesforce.TextArea zaapit__FilterReplaceLabelName__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__FilterReplaceLabelName__c"
+    label = "FilterReplaceLabelName"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+Use a label for substituting none-translated pulldowns
+Label format:pulldown value~translated value#pulldown value1~translated value1#
+'''
+  }
+  salesforce.Checkbox zaapit__Hide_Scroll_Buttons__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Hide_Scroll_Buttons__c"
+    label = "Hide Scroll Buttons"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide Scroll Buttons"
+  }
+  salesforce.Checkbox zaapit__Hide_graph_link_on_filter__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Hide_graph_link_on_filter__c"
+    label = "Hide graph link on filter"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide graph link on filter"
+  }
+  salesforce.TextArea zaapit__HierarchyRelation__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__HierarchyRelation__c"
+    label = "HierarchyRelation"
+    _required = false
+    inlineHelpText = '''
+Hierarchy Relation for {PID} parameter 
+Format: table~SON Field API FIELD NAME~Father Field API FIELD NAME
+Example: account~id~parentid
+'''
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+Hierarchy Relation for {PID} parameter 
+Format: table~SON Field API FIELD NAME~Father Field API FIELD NAME
+Example: account~id~parentid
+'''
+  }
+  salesforce.TextArea zaapit__LogicExtend__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__LogicExtend__c"
+    label = "LogicExtend"
+    _required = false
+    inlineHelpText = '''
+EventName~classNameSpace~ClassName#EventName2~classNameSpace2~ClassName2
+The Class must Implement ZPTableHandler
+'''
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number zaapit__Max_rows_for_formula_grouping__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Max_rows_for_formula_grouping__c"
+    label = "Max rows for formula grouping"
+    _required = false
+    defaultValueFormula = "10000"
+    precision = 10
+    scale = 0
+    inlineHelpText = "The maximum number of rows for calculating filter-groupings (large values may take more time to calculate)."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "The maximum number of rows for calculating filter-groupings (large values may take more time to calculate)."
+    externalId = false
+  }
+  salesforce.Number zaapit__MaximumRowsMassDeleteAll__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__MaximumRowsMassDeleteAll__c"
+    label = "MaximumRowsMassDeleteAll"
+    _required = false
+    defaultValueFormula = "5000"
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Maximum Rows for Mass Delete All (will delete the first x rows), this option is used for limiting the number of rows so when deleting the won't exceed Salesforc's limits."
+    externalId = false
+  }
+  salesforce.TextArea zaapit__More_Actions_Link__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__More_Actions_Link__c"
+    label = "More Actions Link"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number zaapit__More_Actions_win_width__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__More_Actions_win_width__c"
+    label = "More Actions win width"
+    _required = false
+    precision = 10
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "empty this field for auto-with"
+    externalId = false
+  }
+  salesforce.Number zaapit__NumberOfNewRows__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__NumberOfNewRows__c"
+    label = "NumberOfNewRows"
+    _required = false
+    defaultValueFormula = "10"
+    precision = 10
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "The number of new empty rows to add on default"
+    externalId = false
+  }
+  salesforce.Checkbox zaapit__Open_TextArea_in_a_dialog__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Open_TextArea_in_a_dialog__c"
+    label = "Open TextArea in a dialog"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Open Text Area in a dialog"
+  }
+  salesforce.TextArea zaapit__PutFieldOnRowCSSClass__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__PutFieldOnRowCSSClass__c"
+    label = "PutFieldOnRowCSSClass"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__ShowRefreshLink__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__ShowRefreshLink__c"
+    label = "ShowRefreshLink"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Show Refresh Link"
+  }
+  salesforce.Checkbox zaapit__Show_All_Rows_in_query__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Show_All_Rows_in_query__c"
+    label = "Show All Rows in query"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Show All Rows in query  includes archived and deleted rows (ALL ROWS)"
+  }
+  salesforce.Checkbox zaapit__Show_Hover_Preview_On_Name_Field__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Show_Hover_Preview_On_Name_Field__c"
+    label = "Show hover preview on name field"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Show hover preview on name field"
+  }
+  salesforce.Checkbox zaapit__Show_Mass_Updae_on_view_mode__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Show_Mass_Updae_on_view_mode__c"
+    label = "Show Mass Updae on view mode"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Show Mass Updae on view mode"
+  }
+  salesforce.Checkbox zaapit__Show_column_filter__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Show_column_filter__c"
+    label = "Show column filter"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text zaapit__SortBy3__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__SortBy3__c"
+    label = "Sort By #3"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__Using_Scope__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__Using_Scope__c"
+    label = "Using Scope"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    description = '''
+USING SCOPE:
+Delegated
+Filter for records delegated to another user for action. For example, a query could filter for only delegated Task records.
+Everything
+Filter for all records.
+Mine
+Filter for records owned by the user running the query.
+My_Territory
+Filter for records in the territory of the user running the query. This option is available if territory management is enabled for your organization.
+My_Team_Territory
+Filter for records in the territory of the team of the user running the query. This option is available if territory management is enabled for your organization.
+Team
+Filter for records assigned to a team, such as an Account team.
+'''
+    externalId = false
+  }
+  salesforce.TextArea zaapit__buttons2__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__buttons2__c"
+    label = "buttons2"
+    _required = false
+    inlineHelpText = "add custom javascript buttons"
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+add custom javascript buttons
+name~javascript#name~javascript#name~javascript#.....
+'''
+  }
+  salesforce.TextArea zaapit__buttons__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__buttons__c"
+    label = "buttons"
+    _required = false
+    inlineHelpText = "add custom javascript buttons"
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+add custom javascript buttons
+name~javascript#name~javascript#name~javascript#.....
+'''
+  }
+  salesforce.TextArea zaapit__columnsWidth__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__columnsWidth__c"
+    label = "columnsWidth"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__customLinksOnReadMode2__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__customLinksOnReadMode2__c"
+    label = "customLinksOnReadMode2"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__customLinksOnReadMode__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__customLinksOnReadMode__c"
+    label = "customLinksOnReadMode"
+    _required = false
+    inlineHelpText = '''
+Format: salesforce_field~salesforce_field_ID#salesforce_field~salesforce_field_ID..
+The "salesforce_field_ID" will be the link on the text of "salesforce_field"
+'''
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+Format: salesforce_field~salesforce_field_ID#salesforce_field~salesforce_field_ID..
+The "salesforce_field_ID" will be the link on the text of "salesforce_field"
+'''
+  }
+  salesforce.Checkbox zaapit__disable_autosave_views__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__disable_autosave_views__c"
+    label = "disable_autosave_views"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable auto save views"
+  }
+  salesforce.TextArea zaapit__export_to_url__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__export_to_url__c"
+    label = "export_to_url"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+export_to_url, empty is disable
+example: https://zaapit.xxx.visual.force.com
+Use this option only with custom developments / communities...
+'''
+  }
+  salesforce.TextArea zaapit__external_CSS_include__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__external_CSS_include__c"
+    label = "external_CSS_include"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__external_JS_include__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__external_JS_include__c"
+    label = "external_JS_include"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__extraConditionFilter2__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__extraConditionFilter2__c"
+    label = "extraConditionFilter2"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "extends extraConditionFilter"
+  }
+  salesforce.TextArea zaapit__extraConditionFilter__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__extraConditionFilter__c"
+    label = "extraConditionFilter"
+    _required = false
+    inlineHelpText = '''
+Write a SQL (SOQL) optional condition.
+Example: price>0
+'''
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__fields2__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__fields2__c"
+    label = "fields2"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "the second field the holds the fields"
+  }
+  salesforce.TextArea zaapit__fieldsHeaders2__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__fieldsHeaders2__c"
+    label = "fieldsHeaders2"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__fieldsHeaders__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__fieldsHeaders__c"
+    label = "fieldsHeaders"
+    _required = false
+    inlineHelpText = "Specify your own first row headers - leave empty to use the default, a must: number of fields=number of field headers. format: salesforce_field~new header#salesforce_field~new header#...."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Specify your own first row headers - leave empty to use the default, a must: number of fields=number of field headers. format: salesforce_field~new header#salesforce_field~new header#...."
+  }
+  salesforce.TextArea zaapit__fields__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__fields__c"
+    label = "fields"
+    _required = true
+    inlineHelpText = "The field to display in the editable table, use '#' as a field separator, use the original field API name"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "The field to display in the editable table, use '#' as a field separator, use the original field API name"
+  }
+  salesforce.Number zaapit__freezeColumnNum__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__freezeColumnNum__c"
+    label = "freezeColumnNum"
+    _required = false
+    defaultValueFormula = "1"
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox zaapit__freezeColumn__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__freezeColumn__c"
+    label = "freezeColumn"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__hideAddRow__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hideAddRow__c"
+    label = "hideAddRow"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide Add Row button on edit mode"
+  }
+  salesforce.Checkbox zaapit__hideChooseATableLink__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hideChooseATableLink__c"
+    label = "hideChooseATableLink"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide Choose A Table Link (on top right)"
+  }
+  salesforce.Checkbox zaapit__hideCustomizeLink__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hideCustomizeLink__c"
+    label = "hideCustomizeLink"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide Customize Link"
+  }
+  salesforce.Checkbox zaapit__hideEditButton__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hideEditButton__c"
+    label = "hideEditButton"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide Edit Button"
+  }
+  salesforce.Checkbox zaapit__hideEditDelColumn__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hideEditDelColumn__c"
+    label = "hideEditDelColumn"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide edit & delete links on read-only column"
+  }
+  salesforce.Checkbox zaapit__hideItemsPerPage__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hideItemsPerPage__c"
+    label = "hideItemsPerPage"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__hideNewAndDelete__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hideNewAndDelete__c"
+    label = "hideNewAndDelete"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide New & Delete Buttons on edit mode"
+  }
+  salesforce.Checkbox zaapit__hidePageNumberConfirm__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hidePageNumberConfirm__c"
+    label = "hidePageNumberConfirm"
+    defaultValue = false
+    inlineHelpText = "Hide page number confirm pop up when in related list mode"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide page number confirm pop up when in related list mode"
+  }
+  salesforce.Checkbox zaapit__hidePageNumbers__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hidePageNumbers__c"
+    label = "hidePageNumbers"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__hideTopFilterSave__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hideTopFilterSave__c"
+    label = "hideTopFilterSave"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__hideTotalsRow__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hideTotalsRow__c"
+    label = "hideTotalsRow"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Hide Totals Row"
+  }
+  salesforce.Checkbox zaapit__hide_chatter__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hide_chatter__c"
+    label = "hide_chatter"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__hide_multi_value_filters__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__hide_multi_value_filters__c"
+    label = "Hide multi value filters"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__include_page_load_params__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__include_page_load_params__c"
+    label = "include page load params"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "include page load prams separated by #."
+  }
+  salesforce.TextArea zaapit__include_page_name__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__include_page_name__c"
+    label = "include page name"
+    _required = false
+    inlineHelpText = "Page to include on the top of the table."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Page to include on the top of the table."
+  }
+  salesforce.Checkbox zaapit__isEdit__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__isEdit__c"
+    label = "Edit - Default"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number zaapit__loadfilter_maxResRows__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__loadfilter_maxResRows__c"
+    label = "loadfilter maxResRows"
+    _required = false
+    defaultValueFormula = "250"
+    precision = 6
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__mainFieldSubQueryPre__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__mainFieldSubQueryPre__c"
+    label = "mainFieldSubQueryPre"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number zaapit__maxRowToExport__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__maxRowToExport__c"
+    label = "maxRowToExport"
+    _required = false
+    defaultValueFormula = "2000"
+    precision = 10
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "The maximum amount of rows to export"
+    externalId = false
+  }
+  salesforce.Number zaapit__maxRowsOnPage__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__maxRowsOnPage__c"
+    label = "maxRowsOnPage"
+    _required = false
+    defaultValueFormula = "200"
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Max rows on page  - footer selector"
+    externalId = false
+  }
+  salesforce.Number zaapit__maxRowsPerPage__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__maxRowsPerPage__c"
+    label = "maxRowsPerPage"
+    _required = true
+    defaultValueFormula = "10"
+    precision = 10
+    scale = 0
+    inlineHelpText = "Maximum displayed rows"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Maximum displayed rows"
+    externalId = false
+  }
+  salesforce.TextArea zaapit__newRecordLinkNum__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__newRecordLinkNum__c"
+    label = "newRecordLinkNum"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+003 is for contact - newRecordLinkNum
+006 is for opportunity
+press a regular new and see
+'''
+  }
+  salesforce.TextArea zaapit__new_record_link__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__new_record_link__c"
+    label = "new record link"
+    _required = false
+    inlineHelpText = "use {ID} in the url for the current parentid (usefull for related lists)"
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__removeAutoNameFromExport__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__removeAutoNameFromExport__c"
+    label = "removeAutoNameFromExport"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Remove Auto Name field From Export (for no-name tables)"
+  }
+  salesforce.Checkbox zaapit__showCheckBoxes__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showCheckBoxes__c"
+    label = "showCheckBoxes"
+    defaultValue = false
+    inlineHelpText = "show Check Boxes next to the actions"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "show Check Boxes next to the actions"
+  }
+  salesforce.Checkbox zaapit__showCountOnExport__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showCountOnExport__c"
+    label = "showCountOnExport"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__showDeleteSelectedViewMode__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showDeleteSelectedViewMode__c"
+    label = "showDeleteSelectedViewMode"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Show Delete Selected on View Mode"
+  }
+  salesforce.Checkbox zaapit__showExport__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showExport__c"
+    label = "showExport"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Show Export button to Excel, pdf & word"
+  }
+  salesforce.Checkbox zaapit__showMassDeleteAll__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showMassDeleteAll__c"
+    label = "showMassDeleteAll"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Show mass delete all button"
+  }
+  salesforce.Checkbox zaapit__showMassDuplicate__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showMassDuplicate__c"
+    label = "showMassDuplicate"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text zaapit__showQuarterField__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showQuarterField__c"
+    label = "showQuarterField"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    description = "Show Quarter Field - of type date to show only the current/selected quarter"
+    externalId = false
+  }
+  salesforce.Checkbox zaapit__showRegButtons__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showRegButtons__c"
+    label = "showRegButtons"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__showTopTaskLinksSAM__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showTopTaskLinksSAM__c"
+    label = "showTopTaskLinksSAM"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__showUserGuideLink__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__showUserGuideLink__c"
+    label = "showUserGuideLink"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Show User Guide Link on the top of table"
+  }
+  salesforce.TextArea zaapit__soqlSubQueryPre__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__soqlSubQueryPre__c"
+    label = "soqlSubQueryPre"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Example: select email from leads group by email having count()>1"
+  }
+  salesforce.Text zaapit__sortBy2__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__sortBy2__c"
+    label = "Sort By #2"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__sortBy__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__sortBy__c"
+    label = "sortBy"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Sort By field name."
+    externalId = false
+  }
+  salesforce.Text zaapit__sortDir2__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__sortDir2__c"
+    label = "sortDir2"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__sortDir3__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__sortDir3__c"
+    label = "sortDir3"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__sortDir__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__sortDir__c"
+    label = "sortDir"
+    _required = false
+    inlineHelpText = '''
+Sort direction ascending / descending.
+Put asc/desc
+'''
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    description = "Sort direction ascending / descending"
+    externalId = false
+  }
+  salesforce.Text zaapit__table__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__table__c"
+    label = "table"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    description = "The real table to use"
+    externalId = false
+  }
+  salesforce.Text zaapit__table_ref__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__table_ref__c"
+    label = "table_ref"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.TextArea zaapit__title__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__title__c"
+    label = "title"
+    _required = true
+    inlineHelpText = "The table title"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "The table title"
+  }
+  salesforce.TextArea zaapit__tools_link__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__tools_link__c"
+    label = "tools link"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text zaapit__topChartsFields__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__topChartsFields__c"
+    label = "topChartsFields"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = '''
+Auto open the charts for the fields inside this fields.
+Example: field1#field2....
+'''
+    externalId = false
+  }
+  salesforce.Checkbox zaapit__turnOnScrollModeForRLNTabs__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__turnOnScrollModeForRLNTabs__c"
+    label = "turnOnScrollModeForRLNTabs"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Turn On Scroll Mode For related lists & Sub-Tabs"
+  }
+  salesforce.Checkbox zaapit__useSmallTableFont__c {
+    apiName = "zaapit__zaapit_editable_table2__c.zaapit__useSmallTableFont__c"
+    label = "useSmallTableFont"
+    defaultValue = false
+    inlineHelpText = "When \"marked\" that entire table will be displayed in small font (8pt)."
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+When "marked" that entire table will be displayed in small font (8pt).
+This feature will help you to display large amount of data
+'''
+  }
+}

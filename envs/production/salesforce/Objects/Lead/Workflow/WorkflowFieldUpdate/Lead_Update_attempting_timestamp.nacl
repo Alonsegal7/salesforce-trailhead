@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Update_attempting_timestamp {
+  fullName = "Lead.Update_attempting_timestamp"
+  field = salesforce.Lead.field.Attempting_timestamp__c
+  formula = "IF(NOT(ISBLANK( Contacted_timestamp__c )), Contacted_timestamp__c , ConvertedDate )"
+  name = "Update attempting timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

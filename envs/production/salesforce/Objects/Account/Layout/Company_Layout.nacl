@@ -1,0 +1,650 @@
+salesforce.Layout Company_Layout {
+  fullName = "Account-Company Layout"
+  excludeButtons = [
+    "DataDotComAccountInsights",
+    "DataDotComClean",
+    "DisableCustomerPortalAccount",
+    "DisablePartnerPortalAccount",
+    "IncludeOffline",
+    "Share",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Account Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Account.field.Name
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.ParentId
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Website
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Phone
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Industry_new__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Sub_Industry__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.NumberOfEmployees
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company_Size__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.PreviousOwner__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Description
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.partner_utm_banner__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company_NPS__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Sales_Engineer__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Account_Potential__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Account_Potential_Icon__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Has_ELA__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Legal_Agreement__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Security_Agreement__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Strategic__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Strategic_receiver__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Is_GSI__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Account_Domains__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.TickerSymbol
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Company Details"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company_ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company_Seats__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Company_PPU__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company_Members__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company_WAPP__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Sales_added_ARR__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Sales_Pipeline_ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company_Collection__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.of_open_opps__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Company_Upgrade_Potential_Score__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Departments"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Departments_Mapped__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Departments_Mapped_Potential_Seats__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Departments_Mapped_Seats__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Account Notes"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Account_Notes__c
+            },
+          ]
+        },
+      ]
+      style = "OneColumn"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Address Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.BillingAddress
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.Region__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.CreatedById
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company_Id__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Company__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Owner_s_Manager__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Owner_s_Email__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.primary_pulse_account_id__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Pulse_Account_Id__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Account.field.LastModifiedById
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.RecordTypeId
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Trigger_Company_Owner_Update__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Flow_Error_Handling_Message__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Transition_To_AM__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Accounts_transitioned__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      label = "Custom Links"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              customLink = salesforce.WebLink.instance.Account_GoogleNews
+            },
+          ]
+        },
+      ]
+      style = "CustomLinks"
+    },
+  ]
+  platformActionList = {
+    actionListContext = "Record"
+    platformActionListItems = [
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 0
+      },
+      {
+        actionName = "NewTask"
+        actionType = "QuickAction"
+        sortOrder = 1
+      },
+      {
+        actionName = "Account.Unassign_Myself"
+        actionType = "QuickAction"
+        sortOrder = 2
+      },
+      {
+        actionName = "Account.Account_Handover"
+        actionType = "QuickAction"
+        sortOrder = 3
+      },
+      {
+        actionName = "AccountHierarchy"
+        actionType = "StandardButton"
+        sortOrder = 4
+      },
+      {
+        actionName = "LogACall"
+        actionType = "QuickAction"
+        sortOrder = 5
+      },
+      {
+        actionName = "FeedItem.ContentNote"
+        actionType = "QuickAction"
+        sortOrder = 6
+      },
+      {
+        actionName = "Delete"
+        actionType = "StandardButton"
+        sortOrder = 7
+      },
+      {
+        actionName = "Account.Update_Company_Information"
+        actionType = "QuickAction"
+        sortOrder = 8
+      },
+    ]
+  }
+  quickActionList = {
+    quickActionListItems = [
+      {
+        quickActionName = "FeedItem.ContentPost"
+      },
+      {
+        quickActionName = "FeedItem.LinkPost"
+      },
+      {
+        quickActionName = "FeedItem.PollPost"
+      },
+      {
+        quickActionName = "FeedItem.TextPost"
+      },
+      {
+        quickActionName = "LogACall"
+      },
+      {
+        quickActionName = "NewEvent"
+      },
+      {
+        quickActionName = "NewTask"
+      },
+    ]
+  }
+  relatedLists = [
+    {
+      fields = [
+        "FULL_NAME",
+        "LEAD.TITLE",
+        "LEAD.COUNTRY_CODE",
+        "LEAD.EMAIL",
+        "LEAD.PHONE",
+        "LEAD.STATUS",
+        "CORE.USERS.FIRST_NAME",
+        "Lead_notes__c",
+        "monday_account_status__c",
+        "LEAD.CREATED_DATE",
+      ]
+      relatedList = salesforce.Lead.field.Related_Company__c
+      sortField = "LEAD.STATUS"
+      sortOrder = "Desc"
+    },
+    {
+      fields = [
+        "FULL_NAME",
+        "ACCOUNT.NAME",
+        "CONTACT.PHONE1",
+      ]
+      relatedList = salesforce.Contact.field.Company__c
+    },
+    {
+      fields = [
+        "OPPORTUNITY.NAME",
+        "OPPORTUNITY.CLOSE_DATE",
+        "OPPORTUNITY.STAGE_NAME",
+        "Green_Bucket_ARR__c",
+        "ACCOUNT.NAME",
+        "Expected_ARR__c",
+      ]
+      relatedList = salesforce.Opportunity.field.Company__c
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "CORE.USERS.FULL_NAME",
+        "EVENT.LOCATION",
+        "Attendees__c",
+        "Type_2__c",
+        "Short_Summary__c",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "EVENT.LOCATION",
+        "CORE.USERS.FULL_NAME",
+        "TASK.WHAT_NAME",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+    {
+      fields = [
+        "CONTACT.FULL_NAME",
+        "CONTACT.ACCOUNT_NAME",
+        "CONTACT.TITLE",
+        "ACCCONRELATION.IS_DIRECT",
+        "CONTACT.EMAIL",
+        "CONTACT.PHONE1",
+        "ACCCONRELATION.ROLES",
+      ]
+      relatedList = "RelatedAccountContactRelationList"
+    },
+    {
+      fields = [
+        "NAME",
+      ]
+      relatedList = salesforce.Company_Billing__c.field.Company__c
+    },
+    {
+      relatedList = "RelatedAccountContactRoleList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "Type_2__c",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "CORE.USERS.FULL_NAME",
+        "TASK.LAST_UPDATE",
+      ]
+      relatedList = salesforce.Activity.field.Company__c
+    },
+    {
+      excludeButtons = [
+        "New",
+      ]
+      fields = [
+        "CONTRACT.CONTRACT_NUMBER",
+        "CONTRACT.NAME",
+        "CONTRACT.START_DATE",
+        "CONTRACT.END_DATE",
+        "Status__c",
+        "Seats__c",
+        "Tier__c",
+        "Period__c",
+      ]
+      relatedList = "RelatedContractList"
+      sortField = "Status__c"
+      sortOrder = "Asc"
+    },
+    {
+      relatedList = "RelatedContentNoteList"
+    },
+    {
+      fields = [
+        "NAME",
+        "Owner__c",
+        "FinalSaleStatus__c",
+        "Sale_Status__c",
+        "ARR__c",
+        "Close_Date__c",
+        "Expected_Plan_Name__c",
+      ]
+      relatedList = salesforce.Sale__c.field.Company__c
+    },
+    {
+      relatedList = "RelatedFileList"
+    },
+    {
+      fields = [
+        "NAME",
+      ]
+      relatedList = salesforce.Handover__c.field.Company__c
+    },
+    {
+      fields = [
+        "NAME",
+      ]
+      relatedList = salesforce.Handover__c.field.Monday_Account__c
+    },
+    {
+      relatedList = "RelatedEntityHistoryList"
+    },
+    {
+      fields = [
+        "CAMPAIGN.NAME",
+        "CAMPAIGN.STATUS",
+        "CAMPAIGN.START_DATE",
+        "CAMPAIGN.NUM_CONTACTS",
+        "CAMPAIGN.NUM_CONVERTED_LEADS",
+        "CAMPAIGN.NUM_OPPORTUNITIES",
+      ]
+      relatedList = salesforce.Campaign.field.Account__c
+    },
+    {
+      fields = [
+        "ACCOUNT.NAME",
+        "ACCOUNT.ADDRESS1_COUNTRY_CODE",
+        "CORE.USERS.FIRST_NAME",
+        "of_open_opps__c",
+        "ARR__c",
+        "Members__c",
+        "WAPP_From_Members__c",
+        "Plan_Name__c",
+        "Sign_Up_Date__c",
+        "Days_Left_in_Plan__c",
+      ]
+      relatedList = salesforce.Account.field.Company__c
+      sortField = "ARR__c"
+      sortOrder = "Desc"
+    },
+    {
+      fields = [
+        "NAME",
+        "Employees__c",
+        "Relevant_Employees__c",
+        "Manager__c",
+        "Active_Seats__c",
+        "Department_PPU__c",
+        "Department_ARR__c",
+        "Department_Potential_Extra_ARR__c",
+        "Department_Capacity__c",
+        "Tech_Stack_List__c",
+      ]
+      relatedList = salesforce.Department__c.field.Company__c
+    },
+    {
+      fields = [
+        "ACCOUNT.NAME",
+        "CORE.USERS.ALIAS",
+        "ACCOUNT.PHONE1",
+        "ACCOUNT.URL",
+        "ACCOUNT.EMPLOYEES",
+      ]
+      relatedList = salesforce.Account.field.Regional_Company__c
+    },
+  ]
+  relatedObjects = [
+    "ParentId",
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h1t000003PF7s"
+    sizeX = 4
+    sizeY = 2
+    summaryLayoutItems = [
+      {
+        field = salesforce.Account.field.Name
+        posX = 0
+        posY = 0
+      },
+      {
+        field = salesforce.Account.field.Strategic__c
+        posX = 0
+        posY = 1
+      },
+      {
+        field = salesforce.Account.field.Sales_added_ARR__c
+        posX = 2
+        posY = 0
+      },
+      {
+        field = salesforce.Account.field.Sales_Pipeline_ARR__c
+        posX = 2
+        posY = 1
+      },
+    ]
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Account,
+  ]
+}

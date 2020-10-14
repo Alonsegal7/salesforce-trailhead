@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Task_Activity_done_timestamp {
+  fullName = "Task.Activity done timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Task_Activity_done_timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Task.field.Status
+      operation = "equals"
+      value = "Completed"
+    },
+  ]
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Task,
+  ]
+}

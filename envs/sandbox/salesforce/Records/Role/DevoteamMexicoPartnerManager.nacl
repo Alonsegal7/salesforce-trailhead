@@ -1,0 +1,10 @@
+salesforce.Role DevoteamMexicoPartnerManager {
+  fullName = "DevoteamMexicoPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Devoteam Mexico Partner Manager"
+  mayForecastManagerShare = false
+  name = "Devoteam Mexico Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

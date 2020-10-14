@@ -1,0 +1,16 @@
+salesforce.ValidationRule Opportunity_Deal_blockers_are_missing {
+  fullName = "Opportunity.Deal_blockers_are_missing"
+  active = false
+  errorConditionFormula = '''
+((ISBLANK( text(Deal_Blockers_1__c)) &&  
+ DATEVALUE(CreatedDate)>  DATE(2019,07,23)))
+&& text(StageName)="Closed Lost"
+&& ischanged(StageName)
+&&RecordType.DeveloperName = 'Internal_Opportunity'
+'''
+  errorDisplayField = "Deal_Blockers__c"
+  errorMessage = "Please enter deal's product blockers."
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

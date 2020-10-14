@@ -1,0 +1,12 @@
+salesforce.EmailTemplate unfiled_public_Partner_Pre_Sale_Survey_Opp {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  name = "Partner: Pre-Sale Survey Opp"
+  style = "none"
+  subject = "monday.com: rate your experience"
+  type = "custom"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Partner_Pre_Sale_Survey_Opp"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Partner_Pre_Sale_Survey_Opp.email")
+}

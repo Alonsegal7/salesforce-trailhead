@@ -1,0 +1,19 @@
+salesforce.EmailTemplate unfiled_public_GSI_Opp_Reached_the_Buying_Process_Stage {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "GSI Opp Reached the Buying Process Stage"
+  style = "products"
+  subject = "Opportunity with GSI Reached the Buying Process Stage ({!Opportunity.Company__c})"
+  textOnly = '''
+Opportunity Name: {!Opportunity.Name}
+Owner: {!Opportunity.OwnerFullName}
+ARR: {!Opportunity.ARR_For_Reports__c}
+Link: {!Opportunity.Link}
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/GSI_Opp_Reached_the_Buying_Process_Stage"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/GSI_Opp_Reached_the_Buying_Process_Stage.email")
+}

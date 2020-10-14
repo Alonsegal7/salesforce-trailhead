@@ -1,0 +1,8 @@
+salesforce.CustomTab zisf__zicCleanJob__c {
+  fullName = "zisf__zicCleanJob__c"
+  customObject = true
+  motif = "Custom9: Lightning"
+  _parent = [
+    salesforce.zisf__zicCleanJob__c,
+  ]
+}

@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting googleapis {
+  fullName = "googleapis"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://www.googleapis.com"
+}

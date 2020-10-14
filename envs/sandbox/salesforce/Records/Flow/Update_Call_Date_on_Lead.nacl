@@ -1,0 +1,598 @@
+salesforce.Flow Update_Call_Date_on_Lead {
+  fullName = "Update_Call_Date_on_Lead"
+  decisions = [
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "1 and 2 and (3 or 4 or 5 or 6 or 7 or 8 or 9)"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Contact;Lead"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Formula"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.WhoId"
+              operator = "StartsWith"
+              rightValue = {
+                elementReference = "formula_2_myRule_1_1024132157"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Status"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Completed"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Type"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Call"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Type"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Discovery call"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Type"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Exploratory call"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Type"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Negotiation Call"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Type"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "New Features Overview Call"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Type"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Growth Call"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Type"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Negotiation Call"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Is Lead and Meeting Complete"
+        },
+      ]
+    },
+  ]
+  formulas = [
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = "'00Q'"
+        }
+      }
+      name = "formula_2_myRule_1_1024132157"
+      dataType = "String"
+      expression = "'00Q'"
+    },
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = "now()"
+        }
+      }
+      name = "formula_3_myRule_1_A1_1068275196"
+      dataType = "DateTime"
+      expression = "now()"
+    },
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = "now()"
+        }
+      }
+      name = "formula_4_myRule_1_A1_7651096636"
+      dataType = "DateTime"
+      expression = "now()"
+    },
+  ]
+  interviewLabel = "Update_Call_Date_on_Lead-5_InterviewLabel"
+  label = "Update Call Date on Lead"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Task"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  recordUpdates = [
+    {
+      processMetadataValues = [
+        {
+          name = "evaluationType"
+          value = {
+            stringValue = "criteria"
+          }
+        },
+        {
+          name = "extraTypeInfo"
+        },
+        {
+          name = "isChildRelationship"
+          value = {
+            booleanValue = false
+          }
+        },
+        {
+          name = "reference"
+          value = {
+            stringValue = "[Task].Lead / Contact (Lead)"
+          }
+        },
+        {
+          name = "referenceTargetField"
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Update Meeting Date on Lead"
+      locationX = 100
+      locationY = 200
+      filters = [
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "myVariable_current.WhoId"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "inputDataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Long Lead ID"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "leftHandSideType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "operatorDataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          field = "Long_Lead_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "myVariable_current.WhoId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "DateTime"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Last Call Complete"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Formula"
+              }
+            },
+          ]
+          field = "Last_Call_Complete__c"
+          value = {
+            elementReference = "formula_3_myRule_1_A1_1068275196"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "DateTime"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Last SDR Call"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Formula"
+              }
+            },
+          ]
+          field = "Last_SDR_Call__c"
+          value = {
+            elementReference = "formula_4_myRule_1_A1_7651096636"
+          }
+        },
+      ]
+      object = salesforce.Lead
+    },
+  ]
+  startElementReference = "myDecision"
+  status = "Active"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Task
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Task
+    },
+  ]
+}

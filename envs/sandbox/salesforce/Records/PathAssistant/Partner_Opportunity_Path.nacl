@@ -1,0 +1,8 @@
+salesforce.PathAssistant Partner_Opportunity_Path {
+  fullName = "Partner_Opportunity_Path"
+  active = true
+  entityName = "Opportunity"
+  fieldName = "StageName"
+  masterLabel = "Partner Opportunity Path"
+  recordTypeName = "Partner_Opportunity"
+}

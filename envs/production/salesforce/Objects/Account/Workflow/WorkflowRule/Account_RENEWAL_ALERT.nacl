@@ -1,0 +1,41 @@
+salesforce.WorkflowRule Account_RENEWAL_ALERT {
+  fullName = "Account.RENEWAL ALERT"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Account_Renewal_Alert
+      type = "Alert"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.RecordTypeId
+      operation = "equals"
+      value = "Monday Account"
+    },
+    {
+      field = salesforce.Account.field.Days_Left_in_Plan__c
+      operation = "lessOrEqual"
+      value = "60"
+    },
+    {
+      field = salesforce.Account.field.Monday_Account_Status__c
+      operation = "equals"
+      value = "Paying Account"
+    },
+    {
+      field = salesforce.Account.field.Plan_Period__c
+      operation = "notEqual"
+      value = "monthly"
+    },
+    {
+      field = salesforce.Account.field.CreatedDate
+      operation = "greaterThan"
+      value = "TODAY"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Account,
+  ]
+}

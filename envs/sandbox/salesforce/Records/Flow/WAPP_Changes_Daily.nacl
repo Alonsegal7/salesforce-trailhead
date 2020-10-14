@@ -1,0 +1,256 @@
+salesforce.Flow WAPP_Changes_Daily {
+  fullName = "WAPP_Changes_Daily"
+  actionCalls = [
+    {
+      name = "WAPP_Drop_Email"
+      label = "WAPP Drop Email"
+      locationX = 593
+      locationY = 223
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      connector = {
+        targetReference = "Set_New_Relative_WAPP"
+      }
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            stringValue = "WAPP Drop"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "razbe@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "WAPP Drop on Account"
+          }
+        },
+      ]
+    },
+    {
+      name = "WAPP_Rise_Email"
+      label = "WAPP Rise Email"
+      locationX = 596
+      locationY = 53
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      connector = {
+        targetReference = "Set_New_Relative_WAPP"
+      }
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            stringValue = "WAPP Rise"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "razbe@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "WAPP Rise on Account"
+          }
+        },
+      ]
+    },
+  ]
+  assignments = [
+    {
+      name = "Set_New_Relative_WAPP"
+      label = "Set New Relative WAPP"
+      locationX = 831
+      locationY = 67
+      assignmentItems = [
+        {
+          assignToReference = "$Record.Relative_WAPP__c"
+          operator = "Assign"
+          value = {
+            elementReference = "$Record.WAPP__c"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Update_Account"
+      }
+    },
+  ]
+  constants = [
+    {
+      name = "DropPercent"
+      dataType = "Number"
+      value = {
+        numberValue = -0.15
+      }
+    },
+    {
+      name = "RisePercent"
+      dataType = "Number"
+      value = {
+        numberValue = 0.15
+      }
+    },
+  ]
+  decisions = [
+    {
+      name = "Is_WAPP_Drop"
+      label = "Is WAPP Drop"
+      locationX = 401
+      locationY = 220
+      defaultConnectorLabel = "No"
+      rules = [
+        {
+          name = "Yes_Drop"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "WAPP_Change"
+              operator = "LessThanOrEqualTo"
+              rightValue = {
+                elementReference = "DropPercent"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "WAPP_Drop_Email"
+          }
+          label = "Yes"
+        },
+      ]
+    },
+    {
+      name = "Is_WAPP_Rise"
+      label = "Is WAPP Rise?"
+      locationX = 399
+      locationY = 53
+      defaultConnector = {
+        targetReference = "Is_WAPP_Drop"
+      }
+      defaultConnectorLabel = "No"
+      rules = [
+        {
+          name = "Yes_Rise"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "WAPP_Change"
+              operator = "GreaterThanOrEqualTo"
+              rightValue = {
+                elementReference = "RisePercent"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "WAPP_Rise_Email"
+          }
+          label = "Yes"
+        },
+      ]
+    },
+  ]
+  formulas = [
+    {
+      name = "WAPP_Change"
+      dataType = "Number"
+      expression = "({!Get_Account_Details.WAPP__c}-{!Get_Account_Details.Relative_WAPP__c})/{!Get_Account_Details.Relative_WAPP__c}"
+      scale = 2
+    },
+  ]
+  interviewLabel = "WAPP Changes Daily {!$Flow.CurrentDateTime}"
+  label = "WAPP Changes Daily"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get_Account_Details"
+      label = "Get Account Details"
+      locationX = 231
+      locationY = 51
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Is_WAPP_Rise"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Id"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Account
+      queriedFields = [
+        salesforce.Account.field.Id,
+        salesforce.Account.field.WAPP__c,
+        salesforce.Account.field.Relative_WAPP__c,
+      ]
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_Account"
+      label = "Update Account"
+      locationX = 966
+      locationY = 72
+      inputReference = "$Record"
+    },
+  ]
+  start = {
+    locationX = 49
+    locationY = 50
+    connector = {
+      targetReference = "Get_Account_Details"
+    }
+    filters = [
+      {
+        field = "Is_Test_Account__c"
+        operator = "EqualTo"
+        value = {
+          booleanValue = true
+        }
+      },
+    ]
+    object = salesforce.Account
+    schedule = {
+      frequency = "Once"
+      startDate = "2020-06-15"
+      startTime = "13:00:00.000Z"
+    }
+    triggerType = "Scheduled"
+  }
+  status = "Obsolete"
+  variables = [
+    {
+      name = "recordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+    },
+  ]
+}

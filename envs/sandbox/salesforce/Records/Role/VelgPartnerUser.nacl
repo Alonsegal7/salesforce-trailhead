@@ -1,0 +1,10 @@
+salesforce.Role VelgPartnerUser {
+  fullName = "VelgPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Velg Partner User"
+  mayForecastManagerShare = false
+  name = "Velg Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

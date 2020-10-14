@@ -1,0 +1,11 @@
+type salesforce.yw__YeswareContactSync__c {
+  salesforce.Checkbox yw__EnableTrigger__c {
+    apiName = "yw__YeswareContactSync__c.yw__EnableTrigger__c"
+    label = "EnableTrigger"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Enable Yesware Contact Trigger execution. This field is no longer used."
+  }
+}

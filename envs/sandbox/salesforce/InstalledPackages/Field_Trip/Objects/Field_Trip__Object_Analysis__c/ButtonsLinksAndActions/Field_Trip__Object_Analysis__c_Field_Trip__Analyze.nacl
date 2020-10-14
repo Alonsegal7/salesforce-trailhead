@@ -1,0 +1,14 @@
+salesforce.WebLink Field_Trip__Object_Analysis__c_Field_Trip__Analyze {
+  fullName = "Field_Trip__Object_Analysis__c.Field_Trip__Analyze"
+  availability = "online"
+  displayType = "button"
+  height = 600
+  linkType = "page"
+  masterLabel = "Analyze"
+  openType = "sidebar"
+  page = "Field_Trip__analyzeLaunch"
+  protected = false
+  _parent = [
+    salesforce.Field_Trip__Object_Analysis__c,
+  ]
+}

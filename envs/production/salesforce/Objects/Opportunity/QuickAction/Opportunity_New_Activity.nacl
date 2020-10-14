@@ -1,0 +1,64 @@
+salesforce.QuickAction Opportunity_New_Activity {
+  fullName = "Opportunity.New_Activity"
+  label = "New Activity"
+  optionsCreateFeedItem = true
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Subject"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "ActivityDate"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "WhoId"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Status"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Priority"
+            uiBehavior = "Required"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "OwnerId"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "WhatId"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  targetObject = salesforce.Task
+  targetParentField = "What"
+  targetRecordType = salesforce.RecordType.instance.Task_monday_Task
+  type = "Create"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

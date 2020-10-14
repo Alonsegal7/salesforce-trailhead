@@ -1,0 +1,9 @@
+salesforce.ApexPage Mass_Delete_Asset {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 38
+  availableInTouch = false
+  confirmationTokenRequired = false
+  label = "Mass_Delete_Asset"
+  fullName = "Mass_Delete_Asset"
+  content = file("salesforce/Records/ApexPage/Mass_Delete_Asset.page")
+}

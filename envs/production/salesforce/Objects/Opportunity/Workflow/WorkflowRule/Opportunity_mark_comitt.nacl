@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Opportunity_mark_comitt {
+  fullName = "Opportunity.mark comitt"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_mark_comitt
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Opportunity.field.StageName
+      operation = "equals"
+      value = "Closed Won"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

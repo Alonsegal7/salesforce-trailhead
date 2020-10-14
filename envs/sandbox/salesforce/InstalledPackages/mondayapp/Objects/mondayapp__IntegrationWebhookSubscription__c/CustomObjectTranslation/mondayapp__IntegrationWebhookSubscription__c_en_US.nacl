@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation mondayapp__IntegrationWebhookSubscription__c_en_US {
+  fullName = "mondayapp__IntegrationWebhookSubscription__c-en_US"
+  _parent = [
+    salesforce.mondayapp__IntegrationWebhookSubscription__c,
+  ]
+}

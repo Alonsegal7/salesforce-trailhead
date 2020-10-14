@@ -1,0 +1,145 @@
+salesforce.Layout User_Layout_Main {
+  fullName = "User-User Layout Main"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Additional Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.User.field.Created_date__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.User.field.Function__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Office__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Team__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Start_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Job_End_Date__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Pod__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Language__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Use_my_photo_for_proposals__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Stats"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Agent_Code_Priority__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.User.field.Agent_Number__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Dealhub_User__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Dealhub_User_Since__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Admin"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.should_get_leads_from_BigBrain__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Virtual_Partner_Id__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = false
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  relatedObjects = [
+    "UserRoleId",
+    "ProfileId",
+    "DelegatedApproverId",
+    "ManagerId",
+    "ContactId",
+    "AccountId",
+    "CallCenterId",
+    "ProfilePhotoId",
+    "WorkspaceId",
+    "BannerPhotoId",
+    "IndividualId",
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h1t000003PF8G"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.User,
+  ]
+}

@@ -1,0 +1,17 @@
+salesforce.ConnectedApp DEVHUB_pelgjcmdh8kmqy5hhm45 {
+  fullName = "DEVHUB_pelgjcmdh8kmqy5hhm45"
+  contactEmail = "oran@monday.com"
+  description = "The Developer Hub lets you view, create and manage scratch orgs and namespace registries from one location."
+  iconUrl = "https://monday.my.salesforce.com/environmenthub/images/connected_app_logo.png"
+  label = "SalesforceDX Namespace Registry"
+  logoUrl = "https://monday.my.salesforce.com/environmenthub/images/connected_app_logo.png"
+  oauthConfig = {
+    callbackUrl = "https://monday.my.salesforce.com/environmenthub/soma-callback.apexp"
+    consumerKey = "3MVG9LzKxa43zqdKmeTTNjkqgD3jAowUnT9z8LRQS6rZtNJvwgDsm378c1FCact2m18XKqqy0PsqXZK9Qwbi2"
+    isAdminApproved = false
+    scopes = [
+      "Basic",
+      "Api",
+    ]
+  }
+}

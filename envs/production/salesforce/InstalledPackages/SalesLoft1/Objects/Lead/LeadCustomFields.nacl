@@ -1,0 +1,52 @@
+type salesforce.Lead {
+  salesforce.FormulaNumber SalesLoft1__Active_Lead__c {
+    apiName = "Lead.SalesLoft1__Active_Lead__c"
+    label = "Active Lead"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF( TODAY () - LastActivityDate <= 30, 1,0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    description = "If Lead has an activity logged within the last 30 days, this field will return a value of 1."
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text SalesLoft1__Most_Recent_Cadence_Name__c {
+    apiName = "Lead.SalesLoft1__Most_Recent_Cadence_Name__c"
+    label = "Most Recent Cadence - Cadence Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Most recent SalesLoft Cadence of Lead record."
+    externalId = false
+  }
+  salesforce.Date SalesLoft1__Most_Recent_Cadence_Next_Step_Due_Date__c {
+    apiName = "Lead.SalesLoft1__Most_Recent_Cadence_Next_Step_Due_Date__c"
+    label = "Most Recent Cadence - Next Step Due Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Next SalesLoft step due date."
+  }
+  salesforce.Number SalesLoft1__Most_Recent_Last_Completed_Step__c {
+    apiName = "Lead.SalesLoft1__Most_Recent_Last_Completed_Step__c"
+    label = "Most Recent Cadence - Last Step Number"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Number of most recently completed SalesLoft Cadence step."
+    externalId = false
+  }
+}

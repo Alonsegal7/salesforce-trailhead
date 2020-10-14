@@ -1,0 +1,7 @@
+salesforce.CustomTab zaapit__Opportunities {
+  fullName = "zaapit__Opportunities"
+  description = "Opportunities - mass update"
+  label = "Opportunities"
+  motif = "Custom42: Treasure chest"
+  page = "zaapit__zaapit_tb_OpportunityWL"
+}

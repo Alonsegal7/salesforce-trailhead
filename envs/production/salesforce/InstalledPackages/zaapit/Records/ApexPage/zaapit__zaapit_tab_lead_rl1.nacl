@@ -1,0 +1,10 @@
+salesforce.ApexPage zaapit__zaapit_tab_lead_rl1 {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  availableInTouch = true
+  confirmationTokenRequired = false
+  description = "ZaapIT's sub-tabs"
+  label = "Lead DeDup Tabs RL1"
+  fullName = "zaapit__zaapit_tab_lead_rl1"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tab_lead_rl1.page")
+}

@@ -1,0 +1,42 @@
+salesforce.ListView Lead_Contact_sales_Australia {
+  fullName = "Lead.Contact_sales_Australia"
+  columns = [
+    "MQL_Image__c",
+    "CORE.USERS.ALIAS",
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "Hubspot_Score__c",
+    "LEAD.CREATED_DATE",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.PHONE",
+    "LEAD.COUNTRY",
+    "Company_Size__c",
+    "LEAD.TITLE",
+    "How_many_users_do_you_want_to_start_with__c",
+    "Description_shortcut__c",
+  ]
+  filterScope = "Queue"
+  filters = [
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Received"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "notEqual"
+      value = "ChiliPiper,Event,Website - Request a Demo"
+    },
+    {
+      field = "LEAD.COUNTRY_CODE"
+      operation = "equals"
+      value = "AU,NZ"
+    },
+  ]
+  label = "Contact sales - ANZ"
+  queue = "Contact_sales"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

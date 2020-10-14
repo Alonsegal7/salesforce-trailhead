@@ -1,0 +1,10 @@
+type salesforce.yw__YeswareHistoricalSync__c {
+  salesforce.Checkbox yw__DisableSync__c {
+    apiName = "yw__YeswareHistoricalSync__c.yw__DisableSync__c"
+    label = "DisableSync"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

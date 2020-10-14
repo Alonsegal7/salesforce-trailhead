@@ -1,0 +1,191 @@
+type salesforce.Event {
+  salesforce.Checkbox yw__SyncedFromYesware__c {
+    apiName = "Event.yw__SyncedFromYesware__c"
+    label = "Synced From Yesware"
+    defaultValue = false
+    inlineHelpText = "Yesware will automatically update this field when creating or updating an activity. This field captures whether Yesware was used to automatically sync this activity."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number yw__YeswareAttachmentOpens__c {
+    apiName = "Event.yw__YeswareAttachmentOpens__c"
+    label = "Yesware Attachment Opens"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Yesware will automatically update this field every time an attachment is opened in the Yesware sent email represented by this Task. This field counts the total number of attachment opens, only for Yesware tracked attachments."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+  salesforce.Number yw__YeswareBounces__c {
+    apiName = "Event.yw__YeswareBounces__c"
+    label = "Yesware Bounces"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Yesware will automatically update this field every time a bounce is received in response to the Yesware sent email represented by this Task. This field counts the total number of bounces received."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareFirstAttachmentOpenAt__c {
+    apiName = "Event.yw__YeswareFirstAttachmentOpenAt__c"
+    label = "Yesware First Attachment Open At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field the first time an attachment is opened in the Yesware sent email represented by this Task. This field captures the date/time of the first attachment open, only for Yesware tracked attachments."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareFirstBounceAt__c {
+    apiName = "Event.yw__YeswareFirstBounceAt__c"
+    label = "Yesware First Bounce At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field the first time a bounce is received in response to the Yesware sent email represented by this Task. This field captures the date/time of the first bounce received."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareFirstLinkClickAt__c {
+    apiName = "Event.yw__YeswareFirstLinkClickAt__c"
+    label = "Yesware First Link Click At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field the first time a link click is registered for the Yesware sent email represented by this Task. This field captures the date/time of the first link click, only if Yesware link tracking was enabled."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareFirstOpenAt__c {
+    apiName = "Event.yw__YeswareFirstOpenAt__c"
+    label = "Yesware First Open At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field the first time an open is registered for the Yesware sent email represented by this Task. This field captures the date/time of the first open, only if Yesware tracking was enabled when the message was sent."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareFirstPresentationViewAt__c {
+    apiName = "Event.yw__YeswareFirstPresentationViewAt__c"
+    label = "Yesware First Presentation View At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field the first time a presentation is viewed in the Yesware sent email represented by this Task. This field captures the date/time of the first presentation view, only for Yesware tracked presentations."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareFirstReplyAt__c {
+    apiName = "Event.yw__YeswareFirstReplyAt__c"
+    label = "Yesware First Reply At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field the first time a reply is received for the Yesware sent email represented by this Task. This field captures the date/time of the first reply received."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareLastAttachmentOpenAt__c {
+    apiName = "Event.yw__YeswareLastAttachmentOpenAt__c"
+    label = "Yesware Last Attachment Open At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field every time an attachment is opened in the Yesware sent email represented by this Task. This field captures the date/time of the most recent attachment open, only for Yesware tracked attachments."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareLastBounceAt__c {
+    apiName = "Event.yw__YeswareLastBounceAt__c"
+    label = "Yesware Last Bounce At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field every time a bounce is received in response to the Yesware sent email represented by this Task. This field captures the date/time of the most recent bounce received."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareLastLinkClickAt__c {
+    apiName = "Event.yw__YeswareLastLinkClickAt__c"
+    label = "Yesware Last Link Click At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field every time a link click is registered for the Yesware sent email represented by this Task. This field captures the date/time of the most recent link click, only if Yesware link tracking was enabled."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareLastOpenAt__c {
+    apiName = "Event.yw__YeswareLastOpenAt__c"
+    label = "Yesware Last Open At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field every time an open is registered for the Yesware sent email represented by this Task. This field captures the date/time of the most recent open, only if Yesware tracking was enabled when the message was sent."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareLastPresentationViewAt__c {
+    apiName = "Event.yw__YeswareLastPresentationViewAt__c"
+    label = "Yesware Last Presentation View At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field every time a presentation is viewed in the Yesware sent email represented by this Task. This field captures the date/time of the most recent presentation view, only for Yesware tracked presentations."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime yw__YeswareLastReplyAt__c {
+    apiName = "Event.yw__YeswareLastReplyAt__c"
+    label = "Yesware Last Reply At"
+    _required = false
+    inlineHelpText = "Yesware will automatically update this field every time a reply is received for the Yesware sent email represented by this Task. This field captures the date/time of the most recent reply received."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number yw__YeswareLinkClicks__c {
+    apiName = "Event.yw__YeswareLinkClicks__c"
+    label = "Yesware Link Clicks"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Yesware will automatically update this field every time a link click is registered for the Yesware sent email represented by this Task. This field counts the total number of link clicks, only if Yesware link tracking was enabled."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+  salesforce.Number yw__YeswareOpens__c {
+    apiName = "Event.yw__YeswareOpens__c"
+    label = "Yesware Opens"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Yesware will automatically update this field every time an open is registered for the Yesware sent email represented by this Task. This field counts the total number of opens only for Yesware tracked emails."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+  salesforce.Number yw__YeswarePresentationViews__c {
+    apiName = "Event.yw__YeswarePresentationViews__c"
+    label = "Yesware Presentation Views"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Yesware will automatically update this field every time a presentation is viewed in the Yesware sent email represented by this Task. This field counts the total number presentation views only for Yesware tracked presentations."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+  salesforce.Number yw__YeswareReplies__c {
+    apiName = "Event.yw__YeswareReplies__c"
+    label = "Yesware Replies"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Yesware will automatically update this field every time a reply is received for the Yesware sent email represented by this Task. This field counts the total number of replies received in direct response to this Yesware sent email."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+}

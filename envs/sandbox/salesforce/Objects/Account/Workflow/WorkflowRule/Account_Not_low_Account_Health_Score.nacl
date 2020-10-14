@@ -1,0 +1,36 @@
+salesforce.WorkflowRule Account_Not_low_Account_Health_Score {
+  fullName = "Account.Not low Account Health Score"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_At_Risk_false
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Remove_Low_Healthscore_Timestamp_value
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  booleanFilter = "1 AND 2 AND 3"
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.RecordTypeId
+      operation = "equals"
+      value = "Monday Account"
+    },
+    {
+      field = salesforce.Account.field.Health_Score_Bucket__c
+      operation = "notEqual"
+      value = "Low"
+    },
+    {
+      field = salesforce.Account.field.Low_Health_Timestemp__c
+      operation = "notEqual"
+    },
+  ]
+  description = "Once the account HS isn't low- the value will be equal to blank"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Account,
+  ]
+}

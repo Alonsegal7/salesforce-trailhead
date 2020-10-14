@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Set_first_handover_timestamp_to_now {
+  fullName = "Opportunity.Set_first_handover_timestamp_to_now"
+  field = salesforce.Opportunity.field.Handover_Timestamp__c
+  formula = "now()"
+  name = "Set first handover timestamp to now"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

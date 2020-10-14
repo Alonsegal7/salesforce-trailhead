@@ -1,0 +1,86 @@
+salesforce.QuickAction Opportunity_Request_a_Sales_Engineer {
+  fullName = "Opportunity.Request_a_Sales_Engineer"
+  label = "Request a Sales Engineer"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Name"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Eligible_for_Sales_Engineer__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "SE_Effort_Start_Date__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SE_Support_Type__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SE_Use_Case__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SE_Request_Max_Potential_ARR__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Request_a_Sales_Engineer__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SE_Score__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "SE_Effort_End_Date__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SE_Department__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SE_Use_case_brief__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  successMessage = "Request submitted successfully!"
+  type = "Update"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,6 @@
+salesforce.CustomTab valt__Valooto {
+  fullName = "valt__Valooto"
+  label = "Valooto"
+  motif = "Custom80: Motorcycle"
+  page = "valt__info"
+}

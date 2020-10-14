@@ -1,0 +1,6 @@
+salesforce.LightningExperienceTheme Monday {
+  fullName = "Monday"
+  defaultBrandingSet = salesforce.BrandingSet.instance.LEXTHEMINGMonday
+  masterLabel = "Monday Theme"
+  shouldOverrideLoadingImage = false
+}

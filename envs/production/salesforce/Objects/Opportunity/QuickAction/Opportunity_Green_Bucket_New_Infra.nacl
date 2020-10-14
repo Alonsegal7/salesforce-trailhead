@@ -1,0 +1,76 @@
+salesforce.QuickAction Opportunity_Green_Bucket_New_Infra {
+  fullName = "Opportunity.Green_Bucket_New_Infra"
+  label = "Green Bucket New Infra"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Green_Bucket_ARR_V2__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Monday_Account_ARR__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Is_Account_Green_Bucket__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Is_Potential_GB_Opp__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "GB_Threshold__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "GB_New_Infra_Notes__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Expected_ARR__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Claimed_ARR__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Is_Potential_GB_Opp_Override__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Expected_Plan_Name__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  type = "Update"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

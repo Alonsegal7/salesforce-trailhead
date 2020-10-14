@@ -1,0 +1,305 @@
+salesforce.Layout Account_Snapshot_Layout {
+  fullName = "Account_Snapshot__c-Account Snapshot Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Account Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Account_Snapshot__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Account_Snapshot__c.field.Account__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.BigBrain_ID__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Company__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Parent_Account__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Test_Snapshot__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Health_Score_Bucket__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Weekly_Snapshot__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Start_of_Month__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.End_of_Month__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Account Team"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Owner__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Owner_s_Function__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Owner_s_Manager__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.SDR__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.CSM__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Second_CSM__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.CSM_Function__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Partner__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Partner_CSM__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Account Data"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Plan_Name__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Plan_Tier__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Account_Seats__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Plan_Period__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Viewers__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.MAPP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.WAPP_From_Members__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.MAPP_From_Members__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Plan_Start_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Next_Charge_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Pricing_Version__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Account_Members__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.WAPP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Guests__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Free_Users__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Country_Text__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Region__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.CS_Segment__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.NPS_Score__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Prioritized_Account__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account_Snapshot__c.field.Health_Score_MA__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Account_Snapshot__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Account_Snapshot__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "TASK.PRIORITY",
+        "CORE.USERS.FULL_NAME",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "CORE.USERS.FULL_NAME",
+        "TASK.LAST_UPDATE",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000jKU0L"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Account_Snapshot__c,
+  ]
+}

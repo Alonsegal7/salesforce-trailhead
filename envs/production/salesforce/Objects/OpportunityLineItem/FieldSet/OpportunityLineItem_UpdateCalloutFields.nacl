@@ -1,0 +1,15 @@
+salesforce.FieldSet OpportunityLineItem_UpdateCalloutFields {
+  fullName = "OpportunityLineItem.UpdateCalloutFields"
+  description = "UpdateCalloutFields"
+  displayedFields = [
+    {
+      field = "LastModifiedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "UpdateCalloutFields"
+  _parent = [
+    salesforce.OpportunityLineItem,
+  ]
+}

@@ -1,0 +1,24 @@
+salesforce.Layout Object_Territory_Assignment_Rule_Layout {
+  fullName = "ObjectTerritory2AssignmentRule-Object Territory Assignment Rule Layout"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      fields = [
+        "TERRITORY.NAME",
+        "PARENT_TERRITORY.NAME",
+        "RTA.IS_INHERITED",
+      ]
+      relatedList = "RuleTerritory2sRelatedList"
+    },
+  ]
+  showEmailCheckbox = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+}

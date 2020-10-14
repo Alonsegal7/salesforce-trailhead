@@ -1,0 +1,145 @@
+type salesforce.rh2__RH_Job__c {
+  salesforce.Checkbox rh2__Active__c {
+    apiName = "rh2__RH_Job__c.rh2__Active__c"
+    label = "Active"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text rh2__ApexClassName__c {
+    apiName = "rh2__RH_Job__c.rh2__ApexClassName__c"
+    label = "Class"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number rh2__BatchSize__c {
+    apiName = "rh2__RH_Job__c.rh2__BatchSize__c"
+    label = "Batch Size"
+    _required = false
+    defaultValueFormula = "5000"
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number rh2__Increment__c {
+    apiName = "rh2__RH_Job__c.rh2__Increment__c"
+    label = "Increment"
+    _required = false
+    defaultValueFormula = "3"
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime rh2__NextFireTime__c {
+    apiName = "rh2__RH_Job__c.rh2__NextFireTime__c"
+    label = "Next Run"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text rh2__Parent_Condition_Name__c {
+    apiName = "rh2__RH_Job__c.rh2__Parent_Condition_Name__c"
+    label = "Parent Condition Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 13
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime rh2__PreviousFireTime__c {
+    apiName = "rh2__RH_Job__c.rh2__PreviousFireTime__c"
+    label = "Last Run"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text rh2__Rollup_Name__c {
+    apiName = "rh2__RH_Job__c.rh2__Rollup_Name__c"
+    label = "Rollup Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox rh2__RunForAllRecords__c {
+    apiName = "rh2__RH_Job__c.rh2__RunForAllRecords__c"
+    label = "RunForAllRecords"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text rh2__Schedule_Name__c {
+    apiName = "rh2__RH_Job__c.rh2__Schedule_Name__c"
+    label = "Schedule Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 150
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist rh2__Unit__c {
+    apiName = "rh2__RH_Job__c.rh2__Unit__c"
+    label = "Unit"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Hours"
+        default = true
+        label = "Hours"
+      },
+      {
+        fullName = "Days"
+        default = false
+        label = "Days"
+      },
+      {
+        fullName = "Weeks"
+        default = false
+        label = "Weeks"
+      },
+      {
+        fullName = "Months"
+        default = false
+        label = "Months"
+      },
+      {
+        fullName = "Years"
+        default = false
+        label = "Years"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+}

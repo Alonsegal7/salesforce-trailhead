@@ -1,0 +1,285 @@
+type salesforce.zisf__ZoomInfo_Inbound_Settings__c {
+  salesforce.LongTextArea zisf__Account_Mapping__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Account_Mapping__c"
+    label = "Account Mapping"
+    _required = false
+    createable = true
+    updateable = true
+    length = 100000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number zisf__Account_Updated_Filter__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Account_Updated_Filter__c"
+    label = "Account Updated Filter"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea zisf__Contact_Mapping__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Contact_Mapping__c"
+    label = "Contact Mapping"
+    _required = false
+    createable = true
+    updateable = true
+    length = 100000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number zisf__Contact_Updated_Filter__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Contact_Updated_Filter__c"
+    label = "Contact Updated Filter"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea zisf__Lead_Mapping__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Lead_Mapping__c"
+    label = "Lead Mapping"
+    _required = false
+    createable = true
+    updateable = true
+    length = 100000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number zisf__Lead_Updated_Filter__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Lead_Updated_Filter__c"
+    label = "Lead Updated Filter"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox zisf__accounts_clean_active__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_clean_active__c"
+    label = "accounts clean active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist zisf__accounts_clean_filter__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_clean_filter__c"
+    label = "accounts clean filter"
+    _required = false
+    valueSet = [
+      {
+        fullName = "All records"
+        default = false
+        label = "All records"
+      },
+      {
+        fullName = "Filter by Report"
+        default = false
+        label = "Filter by Report"
+      },
+      {
+        fullName = "Filter by SOQL"
+        default = true
+        label = "Filter by SOQL"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text zisf__accounts_clean_report__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_clean_report__c"
+    label = "accounts clean report"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 32
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zisf__accounts_clean_rule__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_clean_rule__c"
+    label = "accounts clean rule"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox zisf__accounts_zoom_record_clean_active__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_zoom_record_clean_active__c"
+    label = "accounts zoom record clean active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zisf__contacts_clean_active__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_clean_active__c"
+    label = "contacts clean active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist zisf__contacts_clean_filter__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_clean_filter__c"
+    label = "contacts clean filter"
+    _required = false
+    valueSet = [
+      {
+        fullName = "All records"
+        default = false
+        label = "All records"
+      },
+      {
+        fullName = "Filter by Report"
+        default = false
+        label = "Filter by Report"
+      },
+      {
+        fullName = "Filter by SOQL"
+        default = true
+        label = "Filter by SOQL"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text zisf__contacts_clean_report__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_clean_report__c"
+    label = "contacts clean report"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 32
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zisf__contacts_clean_rule__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_clean_rule__c"
+    label = "contacts clean rule"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox zisf__contacts_zoom_record_clean_active__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_zoom_record_clean_active__c"
+    label = "contacts zoom record clean active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zisf__leads_clean_active__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_clean_active__c"
+    label = "leads clean active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist zisf__leads_clean_filter__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_clean_filter__c"
+    label = "leads clean filter"
+    _required = false
+    valueSet = [
+      {
+        fullName = "All records"
+        default = false
+        label = "All records"
+      },
+      {
+        fullName = "Filter by Report"
+        default = false
+        label = "Filter by Report"
+      },
+      {
+        fullName = "Filter by SOQL"
+        default = true
+        label = "Filter by SOQL"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text zisf__leads_clean_report__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_clean_report__c"
+    label = "leads clean report"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 32
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zisf__leads_clean_rule__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_clean_rule__c"
+    label = "leads clean rule"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox zisf__leads_zoom_record_clean_active__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_zoom_record_clean_active__c"
+    label = "leads zoom record clean active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zisf__token__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__token__c"
+    label = "token"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime zisf__token_expire_time__c {
+    apiName = "zisf__ZoomInfo_Inbound_Settings__c.zisf__token_expire_time__c"
+    label = "token expire time"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

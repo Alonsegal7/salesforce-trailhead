@@ -1,0 +1,6 @@
+salesforce.CustomTab yw__Yesware {
+  fullName = "yw__Yesware"
+  label = "Yesware"
+  motif = "Custom5: Leaf"
+  page = "yw__Yesware"
+}

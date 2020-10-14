@@ -1,0 +1,8 @@
+salesforce.Document Communities_Shared_Document_Folder_rsz_salesforce_logo_jpg_jpg {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  internalUseOnly = false
+  name = "rsz_salesforce_logo.jpg"
+  public = true
+  fullName = "Communities_Shared_Document_Folder/rsz_salesforce_logo_jpg.jpg"
+  content = file("salesforce/Records/Document/Communities_Shared_Document_Folder/rsz_salesforce_logo_jpg.jpg")
+}

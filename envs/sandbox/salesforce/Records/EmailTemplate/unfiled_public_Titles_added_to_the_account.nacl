@@ -1,0 +1,42 @@
+salesforce.EmailTemplate unfiled_public_Titles_added_to_the_account {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "Titles added to the account"
+  style = "freeForm"
+  subject = "Your Account Added Senior Users"
+  textOnly = '''
+Hi {!Account.CSM__c},
+
+Seems like your account WAPP has dropped to 30%
+
+INFORMATION:
+
+Account Name - {!Account.Name} 
+
+Company - {!Account.Company__c} 
+
+Members - {!Account.Members__c}
+
+WAPP - {!Account.WAPP__c}
+
+WAPP % (From Members) - {!Account.WAPP_From_Members__c}
+
+Plan Seats - {!Account.Plan_Seats__c}
+
+Plan Name - {!Account.Plan_Name__c}
+
+Next charge date - {!Account.Next_Charge_Date__c}
+
+ARR - {!Account.ARR__c}
+
+Last touch point date - {!Account.LastActivityDate}
+
+Link to the monday account - https://monday.lightning.force.com/lightning/r/Account/{!Account.Id}/view
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Titles_added_to_the_account"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Titles_added_to_the_account.email")
+}

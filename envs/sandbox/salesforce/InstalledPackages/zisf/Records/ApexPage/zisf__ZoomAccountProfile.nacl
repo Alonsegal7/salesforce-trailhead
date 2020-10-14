@@ -1,0 +1,9 @@
+salesforce.ApexPage zisf__ZoomAccountProfile {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 38
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "ZoomAccountProfile"
+  fullName = "zisf__ZoomAccountProfile"
+  content = file("salesforce/InstalledPackages/zisf/Records/ApexPage/zisf__ZoomAccountProfile.page")
+}

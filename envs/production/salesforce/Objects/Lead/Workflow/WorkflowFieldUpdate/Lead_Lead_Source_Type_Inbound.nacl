@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Lead_Source_Type_Inbound {
+  fullName = "Lead.Lead_Source_Type_Inbound"
+  field = salesforce.Lead.field.Lead_Source_Type__c
+  literalValue = "Inbound"
+  name = "Lead Source Type= Inbound"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

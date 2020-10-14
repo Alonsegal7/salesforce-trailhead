@@ -1,0 +1,9 @@
+salesforce.ApexPage LH__LH_ExportData {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 45
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "LH_ExportData"
+  fullName = "LH__LH_ExportData"
+  content = file("salesforce/InstalledPackages/LH/Records/ApexPage/LH__LH_ExportData.page")
+}

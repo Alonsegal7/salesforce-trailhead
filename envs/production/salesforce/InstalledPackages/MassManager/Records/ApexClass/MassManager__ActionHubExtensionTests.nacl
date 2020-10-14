@@ -1,0 +1,14 @@
+salesforce.ApexClass MassManager__ActionHubExtensionTests {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 40
+  packageVersions = [
+    {
+      majorNumber = 3
+      minorNumber = 3
+      namespace = "MassManager"
+    },
+  ]
+  status = "Active"
+  fullName = "MassManager__ActionHubExtensionTests"
+  content = "(hidden)"
+}

@@ -1,0 +1,441 @@
+salesforce.Flow Trigger_UpdateChannelOnLead_Flow {
+  fullName = "Trigger_UpdateChannelOnLead_Flow"
+  actionCalls = [
+    {
+      processMetadataValues = [
+        {
+          name = "ActionCallType"
+          value = {
+            stringValue = "flow"
+          }
+        },
+        {
+          name = "flowSelection"
+          value = {
+            stringValue = "UpdateChannelOnLead"
+          }
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Trigger Flow"
+      locationX = 100
+      locationY = 200
+      actionName = "OnLeadCreate"
+      actionType = "flow"
+      inputParameters = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "recordId"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          name = "recordId"
+          value = {
+            elementReference = "myVariable_current.Long_Lead_ID__c"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "LeadSource"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          name = "LeadSource"
+          value = {
+            elementReference = "myVariable_current.LeadSource"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "FirstLeadSource"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          name = "FirstLeadSource"
+          value = {
+            elementReference = "myVariable_current.First_Lead_Source__c"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      name = "isChangedDecision2_myRule_1_First_Lead_Source_c"
+      label = "isChangedDecision2_myRule_1_First_Lead_Source_c"
+      locationX = 0
+      locationY = 0
+      defaultConnector = {
+        targetReference = "isChangedDecision3_myRule_1_LeadSource"
+      }
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "isChangedRule_2_myRule_1_First_Lead_Source_c"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "myVariable_old.First_Lead_Source__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "myVariable_current.First_Lead_Source__c"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "isChangedDecision3_myRule_1_LeadSource"
+          }
+          label = "isChangedRule_2_myRule_1_First_Lead_Source_c"
+        },
+      ]
+    },
+    {
+      name = "isChangedDecision3_myRule_1_LeadSource"
+      label = "isChangedDecision3_myRule_1_LeadSource"
+      locationX = 0
+      locationY = 0
+      defaultConnector = {
+        targetReference = "myDecision"
+      }
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "isChangedRule_3_myRule_1_LeadSource"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "myVariable_old.LeadSource"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "myVariable_current.LeadSource"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myDecision"
+          }
+          label = "isChangedRule_3_myRule_1_LeadSource"
+        },
+      ]
+    },
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "(1 and 2) OR (3 and 4)"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "isChangedRule_2_myRule_1_First_Lead_Source_c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.First_Lead_Source__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "isChangedRule_3_myRule_1_LeadSource"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Picklist"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.LeadSource"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Lead source changes"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Trigger_UpdateChannelOnLead_Flow-1_InterviewLabel"
+  label = "Trigger_UpdateChannelOnLead_Flow"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Lead"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  startElementReference = "isChangedDecision2_myRule_1_First_Lead_Source_c"
+  status = "Obsolete"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Lead
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Lead
+    },
+  ]
+}

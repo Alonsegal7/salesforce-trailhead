@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Project__c_Set_WAPP_30_Days_Post_Close {
+  fullName = "Project__c.Set_WAPP_30_Days_Post_Close"
+  field = salesforce.Project__c.field.WAPP_30_Days_Post_Close__c
+  formula = "monday_Account__r.WAPP_From_Members__c"
+  name = "Set WAPP% 30 Days Post Close"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Project__c,
+  ]
+}

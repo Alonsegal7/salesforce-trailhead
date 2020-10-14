@@ -1,0 +1,30 @@
+salesforce.WorkflowRule Account_Account_WAPP_Change {
+  fullName = "Account.Account - WAPP Change"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Account_Last_Significant_WAPP_Change
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Account_Update_Relative_WAPP
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = '''
+RecordType.DeveloperName=='Monday_Account'&&
+ischanged( WAPP__c )&&
+WAPP__c!=0 && not isblank(WAPP__c)&&
+(
+    (not isblank(Relative_WAPP__c)&&
+        ((WAPP__c-Relative_WAPP__c>=min(max(0.15*Relative_WAPP__c,10),20))||
+        (Relative_WAPP__c-WAPP__c>=min(max(0.15*Relative_WAPP__c,5),20)))
+    )||
+    isblank(Relative_WAPP__c)
+)
+'''
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Account,
+  ]
+}

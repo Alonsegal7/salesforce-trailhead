@@ -1,0 +1,72 @@
+salesforce.QuickAction Kickoff__c_Kickoff_Details {
+  fullName = "Kickoff__c.Kickoff_Details"
+  label = "Kickoff Details"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Name"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Go_Live_Date__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Monday_Account__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Kickoff_meeting_date__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Success_Metrics__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Kickoff_Notes__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Use_Case__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "of_Users__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Main_Point_of_Contacts__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Plan_for_Training__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  type = "Update"
+  _parent = [
+    salesforce.Kickoff__c,
+  ]
+}

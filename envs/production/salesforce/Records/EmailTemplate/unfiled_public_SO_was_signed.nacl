@@ -1,0 +1,49 @@
+salesforce.EmailTemplate unfiled_public_SO_was_signed {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "SO was signed"
+  style = "freeForm"
+  subject = "{!Quote.OwnerFullName} received a *SIGNED SALES ORDER* from {!Quote.Company__c}!"
+  textOnly = '''
+Signed {!Quote.Document_Type__c} received from company: {!Quote.Company__c}
+
+{!Quote.Document_Type__c} Details:
+
+
+Tier {!Quote.DH_Tier__c}
+# of Seats {!Quote.Total_Seats__c}
+Price per seat {!Quote.Price_Per_Seat__c}
+Duration (months) {!Quote.Duration__c}
+Free months {!Quote.Total_Free_Months__c}
+Discount % {!Quote.Primary_Option_Discount__c} %
+CSM package {!Quote.CSM_Package__c}
+Total Net Price {!Quote.Total_Net_Price__c}
+
+
+Sales rep: {!Quote.OwnerFullName}
+
+ARR: USD {!Quote.ARR__c}
+
+Payment Terms: {!Quote.Payment_Terms__c}
+
+Engagement Type: {!Quote.Quote_Type__c}
+
+Expiration Date: {!Quote.ExpirationDate}
+
+Quote Status: {!Quote.DH_Quote_Status__c}
+
+Quote Name: {!Quote.Name}
+
+Link to signed DealRoom: {!Quote.DealRoom_Link__c}
+
+{!Quote.Link_to_Opportunity__c}
+
+You can Closed-Won the Opportunity and activate the plan! :)
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/SO_was_signed"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/SO_was_signed.email")
+}

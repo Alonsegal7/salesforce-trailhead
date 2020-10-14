@@ -1,0 +1,24 @@
+salesforce.ListView Lead_BB_revive_Campaign_AUZ {
+  fullName = "Lead.BB_revive_Campaign_AUZ"
+  columns = [
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "Distributed_score__c",
+    "LEAD.LEAD_SOURCE",
+    "LEAD.COMPANY",
+    "LEAD.STATE",
+    "LEAD.STATUS",
+    "LEAD.UNREAD",
+    "LEAD.CREATED_DATE",
+    "CORE.USERS.ALIAS",
+    "monday_account_status__c",
+  ]
+  filterScope = "Everything"
+  label = "BB revive Campaign - AUZ"
+  sharedTo = {
+    roleAndSubordinates = "AU_Site_Manager"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

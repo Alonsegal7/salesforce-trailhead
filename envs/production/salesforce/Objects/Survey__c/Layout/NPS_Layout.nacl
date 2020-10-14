@@ -1,0 +1,136 @@
+salesforce.Layout NPS_Layout {
+  fullName = "Survey__c-NPS Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Survey__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Survey__c.field.Account__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Survey__c.field.Survery_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Survey__c.field.Promoters__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Survey__c.field.Detractors__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Survey__c.field.Passives__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Survey__c.field.NPS__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Survey__c.field.Pulse_Account_Id__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Survey__c.field.NPS_Score__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Survey__c.field.CreatedById
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Survey__c.field.RecordTypeId
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Survey__c.field.LastModifiedById
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Survey__c.field.Updated_Date__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "TASK.PRIORITY",
+        "CORE.USERS.FULL_NAME",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "CORE.USERS.FULL_NAME",
+        "TASK.LAST_UPDATE",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000k8eS5"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Survey__c,
+  ]
+}

@@ -1,0 +1,102 @@
+salesforce.GlobalValueSet Functions {
+  fullName = "Functions"
+  customValue = [
+    {
+      fullName = "Accounting, tax and finance"
+      default = false
+      label = "Accounting, tax and finance"
+    },
+    {
+      fullName = "Creative, design and media"
+      default = false
+      label = "Creative, design and media"
+    },
+    {
+      fullName = "Customer support/success"
+      default = false
+      label = "Customer support/success"
+    },
+    {
+      fullName = "Digital"
+      default = false
+      label = "Digital"
+    },
+    {
+      fullName = "HR"
+      default = false
+      label = "HR"
+    },
+    {
+      fullName = "Information Technology"
+      default = false
+      label = "Information Technology"
+    },
+    {
+      fullName = "Innovation & Strategy"
+      default = false
+      label = "Innovation & Strategy"
+    },
+    {
+      fullName = "Legal"
+      default = false
+      label = "Legal"
+    },
+    {
+      fullName = "Marketing and communications"
+      default = false
+      label = "Marketing and communications"
+    },
+    {
+      fullName = "Operations, facilities and logistics"
+      default = false
+      label = "Operations, facilities and logistics"
+    },
+    {
+      fullName = "Procurement"
+      default = false
+      label = "Procurement"
+    },
+    {
+      fullName = "Production"
+      default = false
+      label = "Production"
+    },
+    {
+      fullName = "Product management"
+      default = false
+      label = "Product management"
+    },
+    {
+      fullName = "Sales and business development"
+      default = false
+      label = "Sales and business development"
+    },
+    {
+      fullName = "Security"
+      default = false
+      label = "Security"
+    },
+    {
+      fullName = "Senior Leadership"
+      default = false
+      label = "Senior Leadership"
+    },
+    {
+      fullName = "Software development and engineering"
+      default = false
+      label = "Software development and engineering"
+    },
+    {
+      fullName = "Supply chain"
+      default = false
+      label = "Supply chain"
+    },
+    {
+      fullName = "Other"
+      default = false
+      label = "Other"
+    },
+  ]
+  masterLabel = "Functions"
+  sorted = false
+}

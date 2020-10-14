@@ -1,0 +1,91 @@
+salesforce.RecordActionDeployment CompanyPage {
+  fullName = "CompanyPage"
+  channelConfigurations = [
+    {
+      channel = "Chat"
+      channelItems = [
+        {
+          action = "Account.Map_Department"
+          isMandatory = false
+          isUiRemoveHidden = false
+          pinned = "Top"
+          position = 0
+          type = "QuickAction"
+        },
+        {
+          action = "Account.New_Account_Task"
+          isMandatory = false
+          isUiRemoveHidden = false
+          pinned = "Top"
+          position = 1
+          type = "QuickAction"
+        },
+        {
+          action = "NewOpportunity"
+          isMandatory = false
+          isUiRemoveHidden = false
+          pinned = "Top"
+          position = 2
+          type = "QuickAction"
+        },
+        {
+          action = "Account.Un_assign_Myself"
+          isMandatory = false
+          isUiRemoveHidden = false
+          pinned = "Top"
+          position = 3
+          type = "QuickAction"
+        },
+      ]
+      isAutopopEnabled = false
+    },
+    {
+      channel = "Phone"
+      isAutopopEnabled = false
+    },
+    {
+      channel = "Other"
+      isAutopopEnabled = false
+    },
+  ]
+  deploymentContexts = {
+    entityName = "Account"
+  }
+  hasGuidedActions = true
+  hasRecommendations = false
+  masterLabel = "Company Page"
+  selectableItems = [
+    {
+      action = "Account.Account_Handover"
+      type = "QuickAction"
+    },
+    {
+      action = "LogACall"
+      type = "QuickAction"
+    },
+    {
+      action = "Account.Map_Department"
+      type = "QuickAction"
+    },
+    {
+      action = "NewContact"
+      type = "QuickAction"
+    },
+    {
+      action = "NewLead"
+      type = "QuickAction"
+    },
+    {
+      action = "NewOpportunity"
+      type = "QuickAction"
+    },
+    {
+      action = "Account.New_Account_Task"
+      type = "QuickAction"
+    },
+    {
+      action = "Account.Un_assign_Myself"
+      type = "QuickAction"
+    },
+  ]
+}

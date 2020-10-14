@@ -1,0 +1,795 @@
+salesforce.Flow Update_Parent_Account_and_Company_on_Monday_Account {
+  fullName = "Update_Parent_Account_and_Company_on_Monday_Account"
+  decisions = [
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnector = {
+        targetReference = "myDecision2"
+      }
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.RecordType.DeveloperName"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Monday_Account"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Account"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.ParentId"
+              operator = "EqualTo"
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Account"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Company__c"
+              operator = "NotEqualTo"
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_pmetdec"
+          }
+          label = "Parent Account is blank, but company not"
+        },
+      ]
+    },
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 1
+        }
+      }
+      name = "myDecision2"
+      label = "myDecision2"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_3"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.RecordType.DeveloperName"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Monday_Account"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Account"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.ParentId"
+              operator = "NotEqualTo"
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Account"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Company__c"
+              operator = "EqualTo"
+            },
+          ]
+          connector = {
+            targetReference = "myRule_3_pmetdec"
+          }
+          label = "Company is blank, but Parent Account not"
+        },
+      ]
+    },
+    {
+      name = "myRule_1_pmetdec"
+      label = "Previously Met Decision"
+      locationX = 100
+      locationY = 100
+      defaultConnector = {
+        targetReference = "myRule_1_A1"
+      }
+      defaultConnectorLabel = "Not Previously Met"
+      rules = [
+        {
+          name = "myRule_1_pmetnullrule"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Previously Met - Null"
+        },
+        {
+          name = "myRule_1_pmetrule"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_old.RecordType.DeveloperName"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Monday_Account"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Account"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_old.ParentId"
+              operator = "EqualTo"
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Account"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_old.Company__c"
+              operator = "NotEqualTo"
+            },
+          ]
+          label = "Previously Met - Prev"
+        },
+      ]
+    },
+    {
+      name = "myRule_3_pmetdec"
+      label = "Previously Met Decision"
+      locationX = 300
+      locationY = 100
+      defaultConnector = {
+        targetReference = "myRule_3_A1"
+      }
+      defaultConnectorLabel = "Not Previously Met"
+      rules = [
+        {
+          name = "myRule_3_pmetnullrule"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_3_A1"
+          }
+          label = "Previously Met - Null"
+        },
+        {
+          name = "myRule_3_pmetrule"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_old.RecordType.DeveloperName"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Monday_Account"
+              }
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Account"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_old.ParentId"
+              operator = "NotEqualTo"
+            },
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "leftHandSideReferenceTo"
+                  value = {
+                    stringValue = "Account"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "ID"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "GlobalConstant"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_old.Company__c"
+              operator = "EqualTo"
+            },
+          ]
+          label = "Previously Met - Prev"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Update_Parent_Account_and_Company_on_Monday_Account-2_InterviewLabel"
+  label = "Update Parent Account and Company on Monday Account"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Account"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "RecursiveCountVariable"
+      value = {
+        elementReference = "RecursiveCountVariable"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  recordUpdates = [
+    {
+      processMetadataValues = [
+        {
+          name = "evaluationType"
+          value = {
+            stringValue = "always"
+          }
+        },
+        {
+          name = "extraTypeInfo"
+        },
+        {
+          name = "isChildRelationship"
+          value = {
+            booleanValue = false
+          }
+        },
+        {
+          name = "reference"
+          value = {
+            stringValue = "[Account]"
+          }
+        },
+        {
+          name = "referenceTargetField"
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Update Parent account"
+      locationX = 100
+      locationY = 200
+      filters = [
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Parent Account ID"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = "Account"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          field = "ParentId"
+          value = {
+            elementReference = "myVariable_current.Company__c"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      processMetadataValues = [
+        {
+          name = "evaluationType"
+          value = {
+            stringValue = "always"
+          }
+        },
+        {
+          name = "extraTypeInfo"
+        },
+        {
+          name = "isChildRelationship"
+          value = {
+            booleanValue = false
+          }
+        },
+        {
+          name = "reference"
+          value = {
+            stringValue = "[Account]"
+          }
+        },
+        {
+          name = "referenceTargetField"
+        },
+      ]
+      name = "myRule_3_A1"
+      label = "Update Company on Monday Account"
+      locationX = 300
+      locationY = 200
+      filters = [
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Company"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = "Account"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          field = "Company__c"
+          value = {
+            elementReference = "myVariable_current.ParentId"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+  ]
+  startElementReference = "myDecision"
+  status = "Active"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Account
+    },
+    {
+      name = "RecursiveCountVariable"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      scale = 2
+    },
+  ]
+}

@@ -1,0 +1,10 @@
+salesforce.Role ClearvisionPartnerManager {
+  fullName = "ClearvisionPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Clearvision Partner Manager"
+  mayForecastManagerShare = false
+  name = "Clearvision Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

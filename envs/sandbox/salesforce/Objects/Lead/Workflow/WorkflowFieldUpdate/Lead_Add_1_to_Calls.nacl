@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Add_1_to_Calls {
+  fullName = "Lead.Add_1_to_Calls"
+  field = salesforce.Lead.field.of_Total_Calls__c
+  formula = "if(isnull(of_Total_Calls__c ),1, of_Total_Calls__c + 1)"
+  name = "Add 1 to Calls"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

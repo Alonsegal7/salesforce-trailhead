@@ -1,0 +1,89 @@
+<apex:page showChat="false" sidebar="false" tabStyle="Opportunities__tab">
+   <c:zaapit_tables_v1 />
+    <!-- Thank you for looking :) please contact us for customizing this application -->
+    
+    <script>
+        var autoFillX=".inpSt_unitprice~.oSt_unitprice .ost1I span~td.iTd.listprice~.oSt_unitprice .ost1I span~td.pricebookentry-productcode.iTd~.oSt_productcode .ost1I span~td.iTd.pricebookentry-productcode~.oSt_productcode .ost1I span";
+        var autoFillX2="";
+        var autoFillXAll="";
+        function addSeelctedProducts(){
+            var CBs=$(".lcbXRow:checked");
+            if(CBs.length==0){
+                alert("Please select at least 1 record");
+            }else{
+                //alert(CBs[0])
+                top.window.opener.$("body").bind("addNewRowsDone",function(){
+                    top.window.opener.filldus();
+                    var count1=0;
+                    autoFillXAll=autoFillX+autoFillX2;
+                    var autoFillXArr=autoFillXAll.split("~");
+                    top.window.opener.$(".lcbXRow.RID").each(function(){
+                        if(top.window.opener.$(this).parents("tr:first").find(".lookupInput input.iTb.inpSt_pricebookentryid").val()=="" && count1<CBs.length){
+                            //alert(1);
+                            var tr1=top.window.opener.$(this).parents("tr:first");
+                            var tr2=$(CBs[count1]).parents("tr:first");
+                            //alert(tr2.find(".name .oSt_name a[afld]").attr("afld"));
+                            tr1.find(".pricebookentryid.iTd input[name*='lkold']").val(tr2.find(".oSt_name a:first").text());
+                            tr1.find(".pricebookentryid.iTd input[name*='lkid']").val(tr2.find(".name .oSt_name a[afld]").attr("afld"));
+                            
+                            var nameXX1=tr2.find(".oSt_name a:first").text();
+                            tr1.find(".iTb.inpSt_pricebookentryid").val(nameXX1);
+                            var commandX1=new Array();
+                            top.window.opener.autoFillSpans.push(commandX1);
+                            //commandX1.push([".iTb.inpSt_pricebookentryid",nameXX1]);
+                            try{
+                                for(var i=0;i<autoFillXArr.length-1;i=i+2){
+                                    var p1=tr1.find(autoFillXArr[i]);
+                                    var p2=tr2.find(autoFillXArr[i+1]);
+                                    if(p1.length>0){
+                                        var val2=p2.text();
+                                        val2=$.trim(val2);
+                                        //alert(p1.length+" "+p1[0].tagName+" "+" "+val2+" " +autoFillXArr[i]+ " "+autoFillXArr[i+1]);
+                                        
+                                        if(p1[0].tagName!=null && p1[0].tagName=="INPUT"){
+                                            val2=$.trim(val2.replace("$","").replace("€","").replace("USD","").replace("SGD","").replace("CAD","").replace("AUD","").replace("ARS","").replace("MXN","").replace("EUR","").replace("GBP","").replace("JPY","").replace("KRW","").replace("CNY","").replace("BRL","").replace("ILS","").replace("RUB","").replace("INR",""));
+                                            if(p1[0].className.indexOf("price")>-1)val2=val2.replace(/\([^\)]+\)/ig,"")
+                                            p1.val(val2);
+                                        }else{
+                                            p1.html(val2);
+                                            commandX1.push([autoFillXArr[i],val2]);
+                                        }
+                                    }
+                                    
+                                }
+                            }catch(e){
+                                alert(e);
+                            }
+                            //alert(1);
+                            if(!top.window.opener.$(this).is(":checked")){
+                                top.window.opener.$(this).click();
+                            }
+                            count1++;
+                            
+                        }
+                    });
+                    CBs.click();
+                    
+                    top.window.opener.$("body").unbind("addNewRowsDone");
+                    
+                });
+                var old1NOR=top.window.opener.NumberOfNewRow;
+                top.window.opener.NumberOfNewRows=CBs.length;
+                top.window.opener.preAddRow();
+                top.window.opener.NumberOfNewRows=old1NOR;
+                
+                
+                
+                
+            }
+        }
+        
+       /* function selectObjAndFill(FormTag2,lkid2,TextBox2,mid,name1,cols){
+        //autoFill
+        //alert(FormTag2+"++ "+lkid2+" +++"+TextBox2+"   ++"+mid+"+ "+name1);
+        //alert(cols[0]);
+        top.window.opener.lookupPick2(FormTag2,lkid2,TextBox2,mid,name1, false);
+     }*/
+    </script>
+    
+</apex:page>

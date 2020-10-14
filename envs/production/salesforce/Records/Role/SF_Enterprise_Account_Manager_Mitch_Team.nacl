@@ -1,0 +1,9 @@
+salesforce.Role SF_Enterprise_Account_Manager_Mitch_Team {
+  fullName = "SF_Enterprise_Account_Manager_Mitch_Team"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "SF Enterprise Account Manager - Mitch Team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.SF_Team_Leader_Mitch_team
+}

@@ -1,0 +1,35 @@
+salesforce.WorkflowAlert Task_Contact_sales_from_Hubspot_Has_request {
+  fullName = "Task.Contact_sales_from_Hubspot_Has_request"
+  description = "Contact sales from Hubspot - Has request"
+  protected = false
+  recipients = [
+    {
+      field = salesforce.Task.field.Owner_Manager_Email__c
+      type = "email"
+    },
+    {
+      type = "owner"
+    },
+    {
+      recipient = "galom@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "oran@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "razbe@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "DefaultWorkflowUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Has_Request_Alert_from_hubspot
+  _parent = [
+    salesforce.Task,
+  ]
+}

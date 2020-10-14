@@ -1,0 +1,20 @@
+salesforce.RecordType StoryLogItemSetting__c_FieldUpdate {
+  fullName = "StoryLogItemSetting__c.FieldUpdate"
+  active = true
+  description = "Track changes of the target Object using a field sets"
+  label = "Field Update"
+  picklistValues = [
+    {
+      picklist = "FileTypesToTrack__c"
+      values = [
+        {
+          fullName = "SNOTE"
+          default = false
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.StoryLogItemSetting__c,
+  ]
+}

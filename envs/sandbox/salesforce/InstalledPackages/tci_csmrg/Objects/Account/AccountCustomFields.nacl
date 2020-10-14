@@ -1,0 +1,63 @@
+type salesforce.Account {
+  salesforce.Picklist tci_csmrg__Active__c {
+    apiName = "Account.tci_csmrg__Active__c"
+    label = "Active"
+    _required = false
+    valueSet = [
+      {
+        fullName = "No"
+        default = false
+        label = "No"
+      },
+      {
+        fullName = "Yes"
+        default = false
+        label = "Yes"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist tci_csmrg__CustomerPriority__c {
+    apiName = "Account.tci_csmrg__CustomerPriority__c"
+    label = "Customer Priority"
+    _required = false
+    valueSet = [
+      {
+        fullName = "High"
+        default = false
+        label = "High"
+      },
+      {
+        fullName = "Low"
+        default = false
+        label = "Low"
+      },
+      {
+        fullName = "Medium"
+        default = false
+        label = "Medium"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number tci_csmrg__NumberofLocations__c {
+    apiName = "Account.tci_csmrg__NumberofLocations__c"
+    label = "Number of Locations"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+}

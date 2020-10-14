@@ -1,0 +1,19 @@
+salesforce.WorkflowAlert Lead_New_GSI_Lead_Alert {
+  fullName = "Lead.New_GSI_Lead_Alert"
+  ccEmails = [
+    "naomida@monday.com",
+  ]
+  description = "New GSI Lead Alert"
+  protected = false
+  recipients = [
+    {
+      recipient = "eyalz@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_New_GSI_Lead_Alert
+  _parent = [
+    salesforce.Lead,
+  ]
+}

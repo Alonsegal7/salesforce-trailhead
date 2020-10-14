@@ -1,0 +1,10 @@
+salesforce.Role OmnitasPartnerUser {
+  fullName = "OmnitasPartnerUser"
+  caseAccessLevel = "Read"
+  contactAccessLevel = "Edit"
+  description = "Omnitas Partner User"
+  mayForecastManagerShare = false
+  name = "Omnitas Partner User"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

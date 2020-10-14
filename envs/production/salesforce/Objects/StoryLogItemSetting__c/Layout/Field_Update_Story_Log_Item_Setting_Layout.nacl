@@ -1,0 +1,131 @@
+salesforce.Layout Field_Update_Story_Log_Item_Setting_Layout {
+  fullName = "StoryLogItemSetting__c-Field Update Story Log Item Setting Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.StoryLogItemSetting__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.StoryLogItemSetting__c.field.StoryLogSetting__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogItemSetting__c.field.SourceLabel__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogItemSetting__c.field.IconName__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogItemSetting__c.field.CurrencyIsoCode
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              emptySpace = true
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogItemSetting__c.field.IsActive__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Track settings"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogItemSetting__c.field.FieldSetName__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.StoryLogItemSetting__c.field.GroupLogs__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.StoryLogItemSetting__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.StoryLogItemSetting__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      fields = [
+        "NAME",
+      ]
+      relatedList = salesforce.StoryLogSnapshot__c.field.StoryLogItemSetting__c
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h1j000000qgdL"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.StoryLogItemSetting__c,
+  ]
+}

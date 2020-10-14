@@ -1,0 +1,7 @@
+salesforce.CustomTab zisf__ZoomInfo {
+  fullName = "zisf__ZoomInfo"
+  description = "ZoomInfo Enhanced Search and List Load"
+  label = "ZoomInfo"
+  motif = "Custom67: Gears"
+  page = "zisf__ListLoadFrame"
+}

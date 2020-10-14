@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__Convert_Completed {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 34
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Convert Completed"
+  fullName = "zaapit__Convert_Completed"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__Convert_Completed.page")
+}

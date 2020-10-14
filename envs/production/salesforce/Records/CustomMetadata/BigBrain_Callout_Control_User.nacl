@@ -1,0 +1,23 @@
+salesforce.CustomMetadata BigBrain_Callout_Control_User {
+  fullName = "BigBrain_Callout_Control.User"
+  label = "User"
+  protected = false
+  values = [
+    {
+      field = "DELETE__c"
+      value = "true"
+    },
+    {
+      field = "Field_Set_Name__c"
+      value = "UpdateCalloutFields"
+    },
+    {
+      field = "INSERT__c"
+      value = "true"
+    },
+    {
+      field = "UPDATE__c"
+      value = "true"
+    },
+  ]
+}

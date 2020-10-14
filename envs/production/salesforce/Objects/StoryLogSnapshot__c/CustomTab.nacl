@@ -1,0 +1,8 @@
+salesforce.CustomTab StoryLogSnapshot__c {
+  fullName = "StoryLogSnapshot__c"
+  customObject = true
+  motif = "Custom81: Musical Note"
+  _parent = [
+    salesforce.StoryLogSnapshot__c,
+  ]
+}

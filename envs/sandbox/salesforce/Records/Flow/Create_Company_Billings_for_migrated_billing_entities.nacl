@@ -1,0 +1,270 @@
+salesforce.Flow Create_Company_Billings_for_migrated_billing_entities {
+  fullName = "Create_Company_Billings_for_migrated_billing_entities"
+  decisions = [
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Migrated__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_pmetdec"
+          }
+          label = "Migrated BE"
+        },
+      ]
+    },
+    {
+      name = "myRule_1_pmetdec"
+      label = "Previously Met Decision"
+      locationX = 100
+      locationY = 100
+      defaultConnector = {
+        targetReference = "myRule_1_A1"
+      }
+      defaultConnectorLabel = "Not Previously Met"
+      rules = [
+        {
+          name = "myRule_1_pmetnullrule"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Previously Met - Null"
+        },
+        {
+          name = "myRule_1_pmetrule"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_old.Migrated__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          label = "Previously Met - Prev"
+        },
+      ]
+    },
+  ]
+  description = "For BE's migration only"
+  formulas = [
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = "[Billing_Entity__c].Company_Id__c "
+        }
+      }
+      name = "formula_2_myRule_1_A1_0243747678"
+      dataType = "String"
+      expression = "{!myVariable_current.Company_Id__c}"
+    },
+  ]
+  interviewLabel = "Create_Company_Billings_for_migrated_billing_entities-2_InterviewLabel"
+  label = "Create Company Billings for migrated billing entities"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Billing_Entity__c"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  recordCreates = [
+    {
+      name = "myRule_1_A1"
+      label = "Create company billings"
+      locationX = 100
+      locationY = 200
+      inputAssignments = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Billing Entity"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          field = "Billing_Entity__c"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Company"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Formula"
+              }
+            },
+          ]
+          field = "Company__c"
+          value = {
+            elementReference = "formula_2_myRule_1_A1_0243747678"
+          }
+        },
+      ]
+      object = salesforce.Company_Billing__c
+    },
+  ]
+  startElementReference = "myDecision"
+  status = "Active"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Billing_Entity__c
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Billing_Entity__c
+    },
+  ]
+}

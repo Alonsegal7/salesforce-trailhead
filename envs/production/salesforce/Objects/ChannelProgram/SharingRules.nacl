@@ -1,0 +1,6 @@
+salesforce.SharingRules ChannelProgram {
+  fullName = "ChannelProgram"
+  _parent = [
+    salesforce.ChannelProgram,
+  ]
+}

@@ -1,0 +1,10 @@
+salesforce.Role SwedbytePartnerManager1 {
+  fullName = "SwedbytePartnerManager1"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Swedbyte Partner Manager"
+  mayForecastManagerShare = false
+  name = "Swedbyte Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

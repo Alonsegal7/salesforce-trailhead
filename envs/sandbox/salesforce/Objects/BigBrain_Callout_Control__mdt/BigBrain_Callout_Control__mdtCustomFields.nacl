@@ -1,0 +1,38 @@
+type salesforce.BigBrain_Callout_Control__mdt {
+  salesforce.Checkbox DELETE__c {
+    apiName = "BigBrain_Callout_Control__mdt.DELETE__c"
+    label = "DELETE"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+  }
+  salesforce.Text Field_Set_Name__c {
+    apiName = "BigBrain_Callout_Control__mdt.Field_Set_Name__c"
+    label = "Field Set Name"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox INSERT__c {
+    apiName = "BigBrain_Callout_Control__mdt.INSERT__c"
+    label = "INSERT"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+  }
+  salesforce.Checkbox UPDATE__c {
+    apiName = "BigBrain_Callout_Control__mdt.UPDATE__c"
+    label = "UPDATE"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+  }
+}

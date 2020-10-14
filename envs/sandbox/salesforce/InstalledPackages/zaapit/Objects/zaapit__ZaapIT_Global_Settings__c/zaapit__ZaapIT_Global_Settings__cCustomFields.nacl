@@ -1,0 +1,11 @@
+type salesforce.zaapit__ZaapIT_Global_Settings__c {
+  salesforce.Checkbox zaapit__showCustomizeLink__c {
+    apiName = "zaapit__ZaapIT_Global_Settings__c.zaapit__showCustomizeLink__c"
+    label = "Show Customize Link"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+    description = "showCustomizeLink - override other customize Link options"
+  }
+}

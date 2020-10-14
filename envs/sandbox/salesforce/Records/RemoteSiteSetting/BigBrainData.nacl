@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting BigBrainData {
+  fullName = "BigBrainData"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://data.bigbrain.me"
+}

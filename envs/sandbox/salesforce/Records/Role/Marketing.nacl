@@ -1,0 +1,8 @@
+salesforce.Role Marketing {
+  fullName = "Marketing"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "Marketing"
+  opportunityAccessLevel = "Edit"
+}

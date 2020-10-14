@@ -1,0 +1,9 @@
+salesforce.CustomTab Monday_Accounts {
+  fullName = "Monday_Accounts"
+  frameHeight = 600
+  hasSidebar = false
+  label = "Monday Accounts"
+  motif = "Custom36: Train"
+  url = "https://monday.lightning.force.com/lightning/o/Account/list?filterName=00B1t000007nsZJEAY"
+  urlEncodingKey = "UTF-8"
+}

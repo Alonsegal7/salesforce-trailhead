@@ -1,0 +1,27 @@
+<apex:page standardController="Contact" showHeader="false" sidebar="false"> 
+<c:zp_ifrm_helper />
+
+  <a href="/{!Contact.id}" target="_top"><div class="h1"><apex:outputText value="{!Contact.name}">
+    </apex:outputText></div></a>
+
+<apex:relatedList subject="{!Contact}" list="OpenActivities"/>
+<apex:relatedList subject="{!Contact}" list="ActivityHistories"/>
+
+  <script>
+     $(document).ready(function(){
+  	$("#mapIframe").attr("src","https://zaapitsc3.appspot.com/maps/maps1.html?userAddr1="+encodeURIComponent($("#userAddr").text())+"&Addr="+encodeURIComponent($("#mailingAddr").text()+"~"+$("#otherAddr").text())+"&Contact_address={!JSENCODE($Label.Mailing_Address)}~{!JSENCODE($Label.Other_Address)}&h1=400&v=61");
+  	
+  });
+   </script>
+     <apex:pageBlock title="{!$Label.zaapit__contact_address}">
+   <iframe scr="about:blank" id="mapIframe" width="100%;" height="400" frameborder="0"/>
+ <textarea id="mailingAddr" class="hd1">
+ {!contact.MailingStreet}, {!contact.MailingCity}, {!contact.MailingState}, {!contact.MailingCountry}
+ </textarea>
+ <textarea id="otherAddr"  class="hd1">
+ {!contact.OtherStreet}, {!contact.OtherCity}, {!contact.OtherState}, {!contact.OtherCountry}
+ </textarea> 
+
+ </apex:pageBlock>
+
+</apex:page>

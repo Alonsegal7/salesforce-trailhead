@@ -1,0 +1,9 @@
+salesforce.CustomTab Monday_Accounts_Dev {
+  fullName = "Monday_Accounts_Dev"
+  flexiPage = "Monday_Accounts"
+  label = "Monday Accounts1"
+  motif = "Custom44: Hammer"
+  _generated_dependencies = [
+    salesforce.LightningPage.instance.Monday_Accounts,
+  ]
+}

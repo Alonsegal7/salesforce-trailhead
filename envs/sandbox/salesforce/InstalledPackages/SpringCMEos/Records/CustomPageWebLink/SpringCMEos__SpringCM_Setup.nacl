@@ -1,0 +1,11 @@
+salesforce.CustomPageWebLink SpringCMEos__SpringCM_Setup {
+  fullName = "SpringCMEos__SpringCM_Setup"
+  availability = "online"
+  displayType = "link"
+  height = 600
+  linkType = "page"
+  masterLabel = "SpringCM Setup"
+  openType = "sidebar"
+  page = "SpringCMEos__SpringCM_Setup"
+  protected = false
+}

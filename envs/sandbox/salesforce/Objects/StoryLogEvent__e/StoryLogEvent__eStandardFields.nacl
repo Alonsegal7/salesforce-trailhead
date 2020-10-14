@@ -1,0 +1,35 @@
+type salesforce.StoryLogEvent__e {
+  salesforce.Text ReplayId {
+    apiName = "StoryLogEvent__e.ReplayId"
+    label = "Replay ID"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1000
+    queryable = true
+  }
+  salesforce.DateTime CreatedDate {
+    apiName = "StoryLogEvent__e.CreatedDate"
+    label = "Created Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup CreatedById {
+    apiName = "StoryLogEvent__e.CreatedById"
+    label = "Created By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+}

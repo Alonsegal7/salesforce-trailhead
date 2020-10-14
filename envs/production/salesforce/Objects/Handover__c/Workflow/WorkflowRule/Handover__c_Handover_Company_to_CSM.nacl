@@ -1,0 +1,35 @@
+salesforce.WorkflowRule Handover__c_Handover_Company_to_CSM {
+  fullName = "Handover__c.Handover Company to CSM"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Handover__c_Handover_Notification_to_CSM
+      type = "Alert"
+    },
+  ]
+  active = true
+  booleanFilter = "(1 AND 2 AND 4) OR 3"
+  criteriaItems = [
+    {
+      field = salesforce.Handover__c.field.CSM__c
+      operation = "notEqual"
+    },
+    {
+      field = salesforce.Handover__c.field.CSM__c
+      operation = "notEqual"
+      value = "Shahar Sason"
+    },
+    {
+      field = salesforce.Handover__c.field.Onboarding_Owner__c
+      operation = "notEqual"
+    },
+    {
+      field = salesforce.Handover__c.field.RecordTypeId
+      operation = "notEqual"
+      value = "CS"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Handover__c,
+  ]
+}

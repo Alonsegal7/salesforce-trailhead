@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Field_Trip__Object_Analysis__c_Field_Trip__Processing_Complete {
+  fullName = "Field_Trip__Object_Analysis__c.Field_Trip__Processing Complete"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Field_Trip__Object_Analysis__c_Field_Trip__Send_Processing_Complete_Notification2
+      type = "Alert"
+    },
+  ]
+  active = true
+  formula = "ISCHANGED( Field_Trip__Last_Analyzed__c )"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Field_Trip__Object_Analysis__c,
+  ]
+}

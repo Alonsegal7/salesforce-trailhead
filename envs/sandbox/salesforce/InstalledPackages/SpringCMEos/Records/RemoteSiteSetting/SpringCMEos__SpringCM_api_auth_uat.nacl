@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting SpringCMEos__SpringCM_api_auth_uat {
+  fullName = "SpringCMEos__SpringCM_api_auth_uat"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://authuat.springcm.com"
+}

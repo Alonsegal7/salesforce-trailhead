@@ -1,0 +1,66 @@
+<apex:page controller="LH.LH_ReferAFriend_Controller" title="Lookup Helper Invite A Friend" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+        <head>
+            <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+        </head>
+        
+        <style>
+            
+            [id$=heading] { padding-top:20px; padding-bottom:5px;}
+            .h_scroll {overflow-x:auto;}
+            .caption {font-size:smallest; padding-left:10px; padding-bottom:5px; padding-top:5px;}
+            .breadcrumb {font-size:small;}
+            
+            @media screen and (max-width: 1024px)
+            {
+            width:
+            }
+            
+            
+            #progressbar { height: 10px; margin-left:50px; margin-top: 10px; }
+            
+        </style>
+        
+        <apex:slds />
+        <div class="slds-scope" role="main">
+            <apex:form >
+                <apex:outputPanel >	
+                    <div class="slds-card">                        
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate" style="border-radius:4px !important;">
+                                <h3 class="slds-text-heading_small">Invite a friend to try Lookup Helper:</h3>
+                            </header>
+                        </div>
+                        
+                        <section class="slds-card__body slds-card__body_inner">
+                            <apex:pageMessages />  
+                            <div class="slds-m-left_medium">
+                                <apex:outputText style="padding-top:5px;" value="Email Address(es): "/> <br/>
+                                <apex:inputTextArea value="{!unsplitEmails}" rows="3" style="width:75%;"/>
+                                <br/>
+                                <apex:outputText value="*Accepts up to 10 email addresses, separated by commas."/>
+                            </div> <br/>
+                            <div class="slds-m-left_medium">
+                                <apex:outputText style="padding-top:5px;" value="Body:"/>
+                                <br/>
+                                <apex:inputTextarea value="{!body}" rows="15" style="width:75%;"/>						  		
+                            </div>
+
+                            <br/>
+                            <p class="slds-m-left_medium" style="width:75%;">By checking the checkbox below, you agree that we may contact you about products and services you may like. You may unsubscribe from communications at any time by 
+                            contacting marketing@passagetech.com. For more information on our privacy practices and our commitment to respecting your privacy, please review our <a href="https://www.passagetechnology.com/privacy-policy">Privacy Policy.</a></p>
+                            <br/>
+                            <p class="slds-m-left_medium">Consent: &nbsp; <apex:inputCheckbox value="{!emailConsent}"/></p>					  		
+                        </section>
+                        <footer class="slds-card__footer">
+                            <Apex:commandButton action="{!send}" Value="Send Email" styleClass="slds-button slds-button_brand slds-m-around_small"/>
+                        </footer>	 
+                    </div>   
+                     
+                </apex:outputPanel>
+            </apex:form>  
+        </div>
+        
+    </html>
+</apex:page>

@@ -1,0 +1,134 @@
+type salesforce.ARH__Configuration__c {
+  salesforce.Text ARH__Detail_Field_1__c {
+    apiName = "ARH__Configuration__c.ARH__Detail_Field_1__c"
+    label = "Detail Field 1"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text ARH__Detail_Field_2__c {
+    apiName = "ARH__Configuration__c.ARH__Detail_Field_2__c"
+    label = "Detail Field 2"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text ARH__Detail_Field_3__c {
+    apiName = "ARH__Configuration__c.ARH__Detail_Field_3__c"
+    label = "Detail Field 3"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text ARH__Detail_Field_4__c {
+    apiName = "ARH__Configuration__c.ARH__Detail_Field_4__c"
+    label = "Detail Field 4"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text ARH__Detail_Field_5__c {
+    apiName = "ARH__Configuration__c.ARH__Detail_Field_5__c"
+    label = "Detail Field 5"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text ARH__Object__c {
+    apiName = "ARH__Configuration__c.ARH__Object__c"
+    label = "Object"
+    _required = false
+    inlineHelpText = "Object Name"
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Object Name"
+    externalId = false
+  }
+  salesforce.Text ARH__Relationship_Field__c {
+    apiName = "ARH__Configuration__c.ARH__Relationship_Field__c"
+    label = "Relationship Field"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text ARH__Search_Field__c {
+    apiName = "ARH__Configuration__c.ARH__Search_Field__c"
+    label = "Search Field"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text ARH__Visual_Field__c {
+    apiName = "ARH__Configuration__c.ARH__Visual_Field__c"
+    label = "Visual Field"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist ARH__Visual_Type__c {
+    apiName = "ARH__Configuration__c.ARH__Visual_Type__c"
+    label = "Visual Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Image"
+        default = false
+        label = "Image"
+      },
+      {
+        fullName = "Abbreviation"
+        default = false
+        label = "Abbreviation"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+}

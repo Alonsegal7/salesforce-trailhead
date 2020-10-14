@@ -1,0 +1,20 @@
+salesforce.WorkflowRule Handover__c_Update_AM_Manager_Email {
+  fullName = "Handover__c.Update AM Manager Email"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Handover__c_Update_AM_Manager_Email
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Handover__c.field.AM__c
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Handover__c,
+  ]
+}

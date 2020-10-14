@@ -1,0 +1,14 @@
+salesforce.ApexClass squivr__MilestoneFlowTest {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 24
+      namespace = "squivr"
+    },
+  ]
+  status = "Active"
+  fullName = "squivr__MilestoneFlowTest"
+  content = "(hidden)"
+}

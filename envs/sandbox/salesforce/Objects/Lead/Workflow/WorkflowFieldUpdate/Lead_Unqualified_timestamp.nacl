@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Unqualified_timestamp {
+  fullName = "Lead.Unqualified_timestamp"
+  field = salesforce.Lead.field.unqualified_timestamp__c
+  formula = "today()"
+  name = "Unqualified timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

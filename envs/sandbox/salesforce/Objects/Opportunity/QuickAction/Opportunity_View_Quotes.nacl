@@ -1,0 +1,12 @@
+salesforce.QuickAction Opportunity_View_Quotes {
+  fullName = "Opportunity.View_Quotes"
+  height = 250
+  label = "View Quotes"
+  lightningComponent = "openQuotesInDealHub"
+  optionsCreateFeedItem = false
+  type = "LightningComponent"
+  width = -100
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

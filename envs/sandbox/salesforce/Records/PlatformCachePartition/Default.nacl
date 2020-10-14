@@ -1,0 +1,19 @@
+salesforce.PlatformCachePartition Default {
+  fullName = "Default"
+  isDefaultPartition = true
+  masterLabel = "Default"
+  platformCachePartitionTypes = [
+    {
+      allocatedCapacity = 5
+      allocatedPurchasedCapacity = 0
+      allocatedTrialCapacity = 0
+      cacheType = "Organization"
+    },
+    {
+      allocatedCapacity = 0
+      allocatedPurchasedCapacity = 0
+      allocatedTrialCapacity = 0
+      cacheType = "Session"
+    },
+  ]
+}

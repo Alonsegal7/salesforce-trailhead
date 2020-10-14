@@ -1,0 +1,14 @@
+salesforce.ApexClass LSNLY__DeleteLessonlyAssignmentBatchScheduler {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 38
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 2
+      namespace = "LSNLY"
+    },
+  ]
+  status = "Active"
+  fullName = "LSNLY__DeleteLessonlyAssignmentBatchScheduler"
+  content = file("salesforce/InstalledPackages/LSNLY/Records/ApexClass/LSNLY__DeleteLessonlyAssignmentBatchScheduler.cls")
+}

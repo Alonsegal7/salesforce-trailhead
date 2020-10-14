@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__zaapit_tb_eventWL {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "zaapit_tb_eventWL"
+  fullName = "zaapit__zaapit_tb_eventWL"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tb_eventWL.page")
+}

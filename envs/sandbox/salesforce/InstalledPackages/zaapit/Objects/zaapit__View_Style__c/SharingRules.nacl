@@ -1,0 +1,6 @@
+salesforce.SharingRules zaapit__View_Style__c {
+  fullName = "zaapit__View_Style__c"
+  _parent = [
+    salesforce.zaapit__View_Style__c,
+  ]
+}

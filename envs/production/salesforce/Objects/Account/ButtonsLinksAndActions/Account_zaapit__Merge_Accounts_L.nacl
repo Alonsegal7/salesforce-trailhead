@@ -1,0 +1,16 @@
+salesforce.WebLink Account_zaapit__Merge_Accounts_L {
+  fullName = "Account.zaapit__Merge_Accounts_L"
+  availability = "online"
+  description = "Merge Accounts in lists (works in lightning)"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Merge Accounts (L)"
+  openType = "sidebar"
+  page = "zaapit__Merge_Accounts"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Account,
+  ]
+}

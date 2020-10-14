@@ -1,0 +1,12 @@
+salesforce.EmailTemplate unfiled_public_Product_feedback {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  name = "Product feedback"
+  style = "none"
+  subject = "Product feedback from {!Opportunity.OwnerFullName}"
+  type = "text"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Product_feedback"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Product_feedback.email")
+}

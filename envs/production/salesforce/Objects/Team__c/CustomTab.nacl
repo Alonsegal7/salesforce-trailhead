@@ -1,0 +1,8 @@
+salesforce.CustomTab Team__c {
+  fullName = "Team__c"
+  customObject = true
+  motif = "Custom70: Handsaw"
+  _parent = [
+    salesforce.Team__c,
+  ]
+}

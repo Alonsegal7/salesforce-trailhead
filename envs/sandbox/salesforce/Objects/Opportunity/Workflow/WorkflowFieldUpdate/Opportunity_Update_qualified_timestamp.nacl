@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Update_qualified_timestamp {
+  fullName = "Opportunity.Update_qualified_timestamp"
+  field = salesforce.Opportunity.field.Qualified_timestamp__c
+  formula = "Evaluation_timestamp__c"
+  name = "Update qualified timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

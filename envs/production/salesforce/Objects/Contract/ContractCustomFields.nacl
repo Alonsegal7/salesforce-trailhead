@@ -1,0 +1,354 @@
+type salesforce.Contract {
+  salesforce.Percent Discount__c {
+    apiName = "Contract.Discount__c"
+    label = "Discount"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Currency List_Price__c {
+    apiName = "Contract.List_Price__c"
+    label = "List Price"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number Seats__c {
+    apiName = "Contract.Seats__c"
+    label = "Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Status__c {
+    apiName = "Contract.Status__c"
+    label = "Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Draft"
+        default = false
+        label = "Draft"
+      },
+      {
+        fullName = "Active"
+        default = false
+        label = "Active"
+      },
+      {
+        fullName = "Deactivated"
+        default = false
+        label = "Deactivated"
+      },
+      {
+        fullName = "Expired"
+        default = false
+        label = "Expired"
+      },
+      {
+        fullName = "Active - Not Connected"
+        default = false
+        label = "Active - Not Connected"
+      },
+      {
+        fullName = "Pending Activation"
+        default = false
+        label = "Pending Activation"
+      },
+      {
+        fullName = "Future (Early Renewal)"
+        default = false
+        label = "Future (Early Renewal)"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text Tier__c {
+    apiName = "Contract.Tier__c"
+    label = "Tier"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Currency Unit_Price__c {
+    apiName = "Contract.Unit_Price__c"
+    label = "Unit Price"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.FormulaText Long_Contract_Id__c {
+    apiName = "Contract.Long_Contract_Id__c"
+    label = "Long Contract Id"
+    _required = false
+    formula = "CASESAFEID(Id)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Period__c {
+    apiName = "Contract.Period__c"
+    label = "Period"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Monthly"
+        default = false
+        label = "Monthly"
+      },
+      {
+        fullName = "Yearly"
+        default = false
+        label = "Yearly"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.DateTime Deactivation_Date__c {
+    apiName = "Contract.Deactivation_Date__c"
+    label = "Deactivation Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "BigBrain - next charge date"
+  }
+  salesforce.Number Exchange_Rate__c {
+    apiName = "Contract.Exchange_Rate__c"
+    label = "Exchange Rate"
+    _required = false
+    precision = 18
+    scale = 6
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Free_Months__c {
+    apiName = "Contract.Free_Months__c"
+    label = "Free Months"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Percent Migrated_Discount__c {
+    apiName = "Contract.Migrated_Discount__c"
+    label = "Migrated Discount"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number Migrated_Free_Months__c {
+    apiName = "Contract.Migrated_Free_Months__c"
+    label = "Migrated Free Months"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Migrated_Paid_Months__c {
+    apiName = "Contract.Migrated_Paid_Months__c"
+    label = "Migrated Paid Months"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Migrated_Seats__c {
+    apiName = "Contract.Migrated_Seats__c"
+    label = "Migrated Seats"
+    _required = false
+    defaultValueFormula = "0"
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Amount of seats the account had prior to being handled on DealHub"
+    externalId = false
+  }
+  salesforce.Currency Migrated_Unit_Price__c {
+    apiName = "Contract.Migrated_Unit_Price__c"
+    label = "Migrated Unit Price"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 6
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number Paid_Months__c {
+    apiName = "Contract.Paid_Months__c"
+    label = "Paid Months"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Pricing_Version__c {
+    apiName = "Contract.Pricing_Version__c"
+    label = "Pricing Version"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Pulse_Account_Id__c {
+    apiName = "Contract.Pulse_Account_Id__c"
+    label = "Pulse Account Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Pulse_Contract_Id__c {
+    apiName = "Contract.Pulse_Contract_Id__c"
+    label = "Pulse Contract Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Source__c {
+    apiName = "Contract.Source__c"
+    label = "Source"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Migrated"
+        default = false
+        label = "Migrated"
+      },
+      {
+        fullName = "DealHub"
+        default = false
+        label = "DealHub"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number of_Connected_Monday_Accounts__c {
+    apiName = "Contract.of_Connected_Monday_Accounts__c"
+    label = "# of Connected Monday Accounts"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number of_Active_Subscriptions__c {
+    apiName = "Contract.of_Active_Subscriptions__c"
+    label = "# of Active Subscriptions"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Migrated_End_Date__c {
+    apiName = "Contract.Migrated_End_Date__c"
+    label = "Migrated End Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Migrated_Start_Date__c {
+    apiName = "Contract.Migrated_Start_Date__c"
+    label = "Migrated Start Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox Contract_In_Dates_Range__c {
+    apiName = "Contract.Contract_In_Dates_Range__c"
+    label = "Contract In Dates Range"
+    formula = "StartDate<=today()&&EndDate>=today()"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+}

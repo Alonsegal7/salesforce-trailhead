@@ -1,0 +1,37 @@
+salesforce.CustomObjectTranslation Allocation__c_en_US {
+  fullName = "Allocation__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Allocation"
+    },
+    {
+      plural = true
+      value = "Allocations"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Allocation__c.field.Current_Level__c
+    },
+    {
+      label = ""
+      name = salesforce.Allocation__c.field.Meetings_Scheduled__c
+    },
+    {
+      label = ""
+      name = salesforce.Allocation__c.field.Queue__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Allocation__c.field.Round_Robin__c
+      relationshipLabel = ""
+    },
+  ]
+  startsWith = "Vowel"
+  _parent = [
+    salesforce.Allocation__c,
+  ]
+}

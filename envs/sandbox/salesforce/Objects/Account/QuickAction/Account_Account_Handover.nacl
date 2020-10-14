@@ -1,0 +1,10 @@
+salesforce.QuickAction Account_Account_Handover {
+  fullName = "Account.Account_Handover"
+  flowDefinition = "Monday_Account_Handover"
+  label = "Account Handover"
+  optionsCreateFeedItem = false
+  type = "Flow"
+  _parent = [
+    salesforce.Account,
+  ]
+}

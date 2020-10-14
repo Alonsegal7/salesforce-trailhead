@@ -1,0 +1,37 @@
+salesforce.RecordType zisf__ZoomInfo__c_zisf__ZoomInfo_Person {
+  fullName = "zisf__ZoomInfo__c.zisf__ZoomInfo_Person"
+  active = true
+  description = "Use for ZoomInfo Person records"
+  label = "ZoomInfo Person"
+  picklistValues = [
+    {
+      picklist = "zisf__ZoomInfo_Source2__c"
+      values = [
+        {
+          fullName = "Clean"
+          default = false
+        },
+        {
+          fullName = "Complete"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "zisf__ZoomInfo_Source__c"
+      values = [
+        {
+          fullName = "Clean"
+          default = false
+        },
+        {
+          fullName = "Complete"
+          default = false
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.zisf__ZoomInfo__c,
+  ]
+}

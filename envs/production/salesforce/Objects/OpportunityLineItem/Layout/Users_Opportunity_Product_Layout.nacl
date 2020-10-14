@@ -1,0 +1,174 @@
+salesforce.Layout Users_Opportunity_Product_Layout {
+  fullName = "OpportunityLineItem-Users Opportunity Product Layout"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Product Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.OpportunityLineItem.field.OpportunityId
+            },
+            {
+              behavior = "Required"
+              field = salesforce.OpportunityLineItem.field.Product2Id
+            },
+            {
+              behavior = "Required"
+              field = salesforce.OpportunityLineItem.field.UnitPrice
+            },
+            {
+              behavior = "Required"
+              field = salesforce.OpportunityLineItem.field.Quantity
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.Discount
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.ARR__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.Quote_Line_Item__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.Tier__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.Contract__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.OpportunityLineItem.field.Seats__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.OpportunityLineItem.field.Plan_Period__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.OpportunityLineItem.field.CC_Claim_Product__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.ServiceDate
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.ProductCode
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.ListPrice
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.Subtotal
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.TotalPrice
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.Product_Type__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.OpportunityLineItem.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      label = "Description Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.OpportunityLineItem.field.Description
+            },
+          ]
+        },
+      ]
+      style = "OneColumn"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  multilineLayoutFields = [
+    "UnitPrice",
+    "Quantity",
+    "Product2Id",
+    "ARR__c",
+    "Contract__c",
+    "ServiceDate",
+    "Discount",
+    "Description",
+    "ListPrice",
+    "Plan_Period__c",
+    "ProductCode",
+    "Product_Type__c",
+    "Quote_Line_Item__c",
+    "Seats__c",
+    "Tier__c",
+    "TotalPrice",
+    "OpportunityId",
+  ]
+  showEmailCheckbox = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000jKTWB"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.OpportunityLineItem,
+  ]
+}

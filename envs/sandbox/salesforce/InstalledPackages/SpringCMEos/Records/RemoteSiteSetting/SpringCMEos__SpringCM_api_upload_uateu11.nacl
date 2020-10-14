@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting SpringCMEos__SpringCM_api_upload_uateu11 {
+  fullName = "SpringCMEos__SpringCM_api_upload_uateu11"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://apiuploaduateu11.springcm.com"
+}

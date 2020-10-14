@@ -1,0 +1,15 @@
+salesforce.WebLink Contact_MassManager__Mass_Delete {
+  fullName = "Contact.MassManager__Mass_Delete"
+  availability = "online"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Mass Delete"
+  openType = "sidebar"
+  page = "MassManager__ContactsMassDelete"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Contact,
+  ]
+}

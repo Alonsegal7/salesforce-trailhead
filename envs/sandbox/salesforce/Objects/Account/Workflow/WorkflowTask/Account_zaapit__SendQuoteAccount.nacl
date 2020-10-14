@@ -1,0 +1,13 @@
+salesforce.WorkflowTask Account_zaapit__SendQuoteAccount {
+  fullName = "Account.zaapit__SendQuoteAccount"
+  assignedToType = "owner"
+  dueDateOffset = 1
+  notifyAssignee = true
+  priority = "Normal"
+  protected = false
+  status = "Not Started"
+  subject = "Send Quote"
+  _parent = [
+    salesforce.Account,
+  ]
+}

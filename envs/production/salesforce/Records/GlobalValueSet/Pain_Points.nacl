@@ -1,0 +1,62 @@
+salesforce.GlobalValueSet Pain_Points {
+  fullName = "Pain_Points"
+  customValue = [
+    {
+      fullName = "Ease of use"
+      default = false
+      label = "Ease of use"
+    },
+    {
+      fullName = "Efficiency & Productivity"
+      default = false
+      label = "Efficiency & Productivity"
+    },
+    {
+      fullName = "No defined processes"
+      default = false
+      label = "No defined processes"
+    },
+    {
+      fullName = "No existing tool"
+      default = false
+      label = "No existing tool"
+    },
+    {
+      fullName = "Organization"
+      default = false
+      label = "Organization"
+    },
+    {
+      fullName = "Reporting"
+      default = false
+      label = "Reporting"
+    },
+    {
+      fullName = "Resource Allocation"
+      default = false
+      label = "Resource Allocation"
+    },
+    {
+      fullName = "Team Visibility"
+      default = false
+      label = "Team Visibility"
+    },
+    {
+      fullName = "Too many tools"
+      default = false
+      label = "Too many tools"
+    },
+    {
+      fullName = "Transparency"
+      default = false
+      label = "Transparency"
+    },
+    {
+      fullName = "Unhappy with current tool"
+      default = false
+      label = "Unhappy with current tool"
+    },
+  ]
+  masterLabel = "Pain Points"
+  sorted = false
+}

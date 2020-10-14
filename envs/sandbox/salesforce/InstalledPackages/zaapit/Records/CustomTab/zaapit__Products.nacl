@@ -1,0 +1,6 @@
+salesforce.CustomTab zaapit__Products {
+  fullName = "zaapit__Products"
+  label = "Products"
+  motif = "Custom50: Big top"
+  page = "zaapit__zaapit_tb_Products"
+}

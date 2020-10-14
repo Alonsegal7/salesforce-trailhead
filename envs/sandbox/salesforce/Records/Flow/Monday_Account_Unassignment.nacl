@@ -1,0 +1,1642 @@
+salesforce.Flow Monday_Account_Unassignment {
+  fullName = "Monday_Account_Unassignment"
+  actionCalls = [
+    {
+      name = "Unassignment_Email"
+      label = "Unassignment Email"
+      locationX = 1584
+      locationY = 719
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      connector = {
+        targetReference = "Unassignment_Email_0"
+      }
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "EmailBody"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            elementReference = "GetCurrentUserData.Manager.Email"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            elementReference = "GetCurrentUserData.Email"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "{!GetCurrentUserData.Name} has been un-assigned from {!Get_Current_Account.Name}"
+          }
+        },
+      ]
+    },
+    {
+      name = "Unassignment_Email_0"
+      label = "Unassignment Email"
+      locationX = 1782
+      locationY = 719
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "EmailBody"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            elementReference = "GetCurrentUserData.Email"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "{!GetCurrentUserData.Name} has been un-assigned from {!Get_Current_Account.Name}"
+          }
+        },
+      ]
+    },
+  ]
+  assignments = [
+    {
+      name = "Set_Current_Record"
+      label = "Set Current Record"
+      locationX = 321
+      locationY = 170
+      assignmentItems = [
+        {
+          assignToReference = "CurrentUserId"
+          operator = "Assign"
+          value = {
+            elementReference = "UserFormula"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Get_Current_Account"
+      }
+    },
+  ]
+  decisions = [
+    {
+      name = "Account_has_open_opp"
+      label = "Account has open opp?"
+      locationX = 752
+      locationY = 59
+      defaultConnector = {
+        targetReference = "Unassign_Yourself"
+      }
+      defaultConnectorLabel = "No Open Opp"
+      rules = [
+        {
+          name = "Has_Open_Opp"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.of_open_opps__c"
+              operator = "GreaterThan"
+              rightValue = {
+                numberValue = 0
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Close_all_opportunities_first"
+          }
+          label = "Has Open Opp"
+        },
+      ]
+    },
+    {
+      name = "Active_user_is_account_owner"
+      label = "Active user is account owner"
+      locationX = 637
+      locationY = 51
+      defaultConnector = {
+        targetReference = "Unassign_Yourself_0"
+      }
+      defaultConnectorLabel = "Not the owner, check in roles"
+      rules = [
+        {
+          name = "Owner_is_Current_User"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.Owner.Id"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Account_has_open_opp"
+          }
+          label = "Owner is Current User"
+        },
+      ]
+    },
+    {
+      name = "Owners_Role_on_Account"
+      label = "Owners Role on Account"
+      locationX = 1192
+      locationY = 59
+      defaultConnector = {
+        targetReference = "Update_Owner"
+      }
+      defaultConnectorLabel = "Default"
+      rules = [
+        {
+          name = "AM"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.AM__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Account.AE__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Owner_0"
+          }
+          label = "AM"
+        },
+        {
+          name = "AE"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.AE__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Account.AM__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Owner_0_0"
+          }
+          label = "AE"
+        },
+        {
+          name = "CSM"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.CSM__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Owner_0_0_0"
+          }
+          label = "CSM"
+        },
+        {
+          name = "AM_AE"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.AM__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Account.AE__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Owner_0_0_0_0"
+          }
+          label = "AM + AE"
+        },
+      ]
+    },
+    {
+      name = "Owners_Role_on_Account_0"
+      label = "Owners Role on Account"
+      locationX = 378
+      locationY = 341
+      defaultConnector = {
+        targetReference = "You_re_not_the_owner_of_this_account"
+      }
+      defaultConnectorLabel = "Default"
+      rules = [
+        {
+          name = "AM_0"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.AM__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Account.AE__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Owner_0_0_0_0_0_0"
+          }
+          label = "AM"
+        },
+        {
+          name = "AE_0"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.AE__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Account.AM__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Owner_0_0_0_0_0_0_0"
+          }
+          label = "AE"
+        },
+        {
+          name = "CSM_0"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.CSM__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "CSM_Contact_Manager"
+          }
+          label = "CSM"
+        },
+        {
+          name = "AM_AE_0"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Account.AM__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Account.AE__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "CurrentUserId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Owner_0_0_0_0_0_0_0_0_0"
+          }
+          label = "AM + AE"
+        },
+      ]
+    },
+    {
+      name = "Unassign"
+      label = "Unassign?"
+      locationX = 1012
+      locationY = 59
+      defaultConnector = {
+        targetReference = "NoChange"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Yes"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "OwnershipDecision"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Why_Un_assign"
+          }
+          label = "Yes"
+        },
+        {
+          name = "No"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "OwnershipDecision"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "No"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "NoChange"
+          }
+          label = "No"
+        },
+      ]
+    },
+    {
+      name = "Unassign_0"
+      label = "Unassign?"
+      locationX = 571
+      locationY = 346
+      defaultConnector = {
+        targetReference = "NoChange"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Yes_0"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "OwnershipDecision"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Owners_Role_on_Account_0"
+          }
+          label = "Yes"
+        },
+        {
+          name = "No_0"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "OwnershipDecision"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "No"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "NoChange"
+          }
+          label = "No"
+        },
+      ]
+    },
+  ]
+  dynamicChoiceSets = [
+    {
+      name = "why_unassign_picklist_choices"
+      dataType = "Picklist"
+      picklistField = salesforce.Account.field.Why_Unassigned__c
+      picklistObject = salesforce.Account
+    },
+  ]
+  formulas = [
+    {
+      name = "UserFormula"
+      dataType = "String"
+      expression = "{!$User.Long_User_ID__c}"
+    },
+  ]
+  interviewLabel = "Monday Account Unassignment {!$Flow.CurrentDateTime}"
+  label = "Monday Account Unassignment"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordLookups = [
+    {
+      name = "Get_Current_Account"
+      label = "Get Current Account"
+      locationX = 375
+      locationY = 56
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "GetCurrentUserData"
+      }
+      faultConnector = {
+        targetReference = "Something_Went_Wrong"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Account
+      storeOutputAutomatically = true
+    },
+    {
+      name = "GetCurrentUserData"
+      label = "GetCurrentUserData"
+      locationX = 515
+      locationY = 48
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Active_user_is_account_owner"
+      }
+      faultConnector = {
+        targetReference = "Something_Went_Wrong"
+      }
+      filters = [
+        {
+          field = "Long_User_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "CurrentUserId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.User
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_Owner"
+      label = "Update Owner"
+      locationX = 1569
+      locationY = 503
+      connector = {
+        targetReference = "Ownership_Transferred"
+      }
+      faultConnector = {
+        targetReference = "Something_Went_Wrong"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Last_Ownership_Update__c"
+          value = {
+            elementReference = "$Flow.CurrentDate"
+          }
+        },
+        {
+          field = "Long_Term_Growth_AM__c"
+          value = {
+            elementReference = "Longtermupgradepotential"
+          }
+        },
+        {
+          field = "OwnerId"
+          value = {
+            stringValue = "0053X00000Bo8ZZQAZ"
+          }
+        },
+        {
+          field = "Owner_s_Email__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "PreviousOwner__c"
+          value = {
+            elementReference = "Get_Current_Account.OwnerId"
+          }
+        },
+        {
+          field = "Retention_Score_AM__c"
+          value = {
+            elementReference = "RetentionPotential"
+          }
+        },
+        {
+          field = "Short_Term_Growth_AM__c"
+          value = {
+            elementReference = "ShortTermPotential"
+          }
+        },
+        {
+          field = "Unassignment_Reason__c"
+          value = {
+            elementReference = "Reasons_for_unassignment"
+          }
+        },
+        {
+          field = "Unassignment_Timestamp__c"
+          value = {
+            elementReference = "$Flow.CurrentDateTime"
+          }
+        },
+        {
+          field = "Why_Unassigned__c"
+          value = {
+            elementReference = "Why_un_assign_picklist"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      name = "Update_Owner_0"
+      label = "Update Owner"
+      locationX = 1257
+      locationY = 496
+      connector = {
+        targetReference = "Ownership_Transferred"
+      }
+      faultConnector = {
+        targetReference = "Update_Owner"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "AM__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "Last_Ownership_Update__c"
+          value = {
+            elementReference = "$Flow.CurrentDate"
+          }
+        },
+        {
+          field = "Long_Term_Growth_AM__c"
+          value = {
+            elementReference = "Longtermupgradepotential"
+          }
+        },
+        {
+          field = "OwnerId"
+          value = {
+            stringValue = "0053X00000Bo8ZZQAZ"
+          }
+        },
+        {
+          field = "Owner_s_Email__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "PreviousOwner__c"
+          value = {
+            elementReference = "Get_Current_Account.OwnerId"
+          }
+        },
+        {
+          field = "Retention_Score_AM__c"
+          value = {
+            elementReference = "RetentionPotential"
+          }
+        },
+        {
+          field = "Short_Term_Growth_AM__c"
+          value = {
+            elementReference = "ShortTermPotential"
+          }
+        },
+        {
+          field = "Unassignment_Reason__c"
+          value = {
+            elementReference = "Reasons_for_unassignment"
+          }
+        },
+        {
+          field = "Unassignment_Timestamp__c"
+          value = {
+            elementReference = "$Flow.CurrentDateTime"
+          }
+        },
+        {
+          field = "Why_Unassigned__c"
+          value = {
+            elementReference = "Why_un_assign_picklist"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      name = "Update_Owner_0_0"
+      label = "Update Owner"
+      locationX = 1156
+      locationY = 497
+      connector = {
+        targetReference = "Ownership_Transferred"
+      }
+      faultConnector = {
+        targetReference = "Update_Owner"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "AE__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "Last_Ownership_Update__c"
+          value = {
+            elementReference = "$Flow.CurrentDate"
+          }
+        },
+        {
+          field = "Long_Term_Growth_AE__c"
+          value = {
+            elementReference = "Longtermupgradepotential"
+          }
+        },
+        {
+          field = "OwnerId"
+          value = {
+            stringValue = "0053X00000Bo8ZZQAZ"
+          }
+        },
+        {
+          field = "Owner_s_Email__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "PreviousOwner__c"
+          value = {
+            elementReference = "Get_Current_Account.OwnerId"
+          }
+        },
+        {
+          field = "Retention_Score_AE__c"
+          value = {
+            elementReference = "RetentionPotential"
+          }
+        },
+        {
+          field = "Short_Term_Growth_AE__c"
+          value = {
+            elementReference = "ShortTermPotential"
+          }
+        },
+        {
+          field = "Unassignment_Reason__c"
+          value = {
+            elementReference = "Reasons_for_unassignment"
+          }
+        },
+        {
+          field = "Unassignment_Timestamp__c"
+          value = {
+            elementReference = "$Flow.CurrentDateTime"
+          }
+        },
+        {
+          field = "Why_Unassigned__c"
+          value = {
+            elementReference = "Why_un_assign_picklist"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      name = "Update_Owner_0_0_0"
+      label = "Update Owner"
+      locationX = 1339
+      locationY = 501
+      connector = {
+        targetReference = "CSM_Contact_Manager_0"
+      }
+      faultConnector = {
+        targetReference = "Update_Owner"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Last_Ownership_Update__c"
+          value = {
+            elementReference = "$Flow.CurrentDate"
+          }
+        },
+        {
+          field = "Long_Term_Growth_CSM__c"
+          value = {
+            elementReference = "Longtermupgradepotential"
+          }
+        },
+        {
+          field = "OwnerId"
+          value = {
+            stringValue = "0053X00000Bo8ZZQAZ"
+          }
+        },
+        {
+          field = "Owner_s_Email__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "PreviousOwner__c"
+          value = {
+            elementReference = "Get_Current_Account.OwnerId"
+          }
+        },
+        {
+          field = "Retention_Score_CSM__c"
+          value = {
+            elementReference = "RetentionPotential"
+          }
+        },
+        {
+          field = "Short_Term_Growth_CSM__c"
+          value = {
+            elementReference = "ShortTermPotential"
+          }
+        },
+        {
+          field = "Unassignment_Reason__c"
+          value = {
+            elementReference = "Reasons_for_unassignment"
+          }
+        },
+        {
+          field = "Unassignment_Timestamp__c"
+          value = {
+            elementReference = "$Flow.CurrentDateTime"
+          }
+        },
+        {
+          field = "Why_Unassigned__c"
+          value = {
+            elementReference = "Why_un_assign_picklist"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      name = "Update_Owner_0_0_0_0"
+      label = "Update Owner"
+      locationX = 1445
+      locationY = 503
+      connector = {
+        targetReference = "Ownership_Transferred"
+      }
+      faultConnector = {
+        targetReference = "Update_Owner"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "AE__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "AM__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "Last_Ownership_Update__c"
+          value = {
+            elementReference = "$Flow.CurrentDate"
+          }
+        },
+        {
+          field = "Long_Term_Growth_AM__c"
+          value = {
+            elementReference = "Longtermupgradepotential"
+          }
+        },
+        {
+          field = "OwnerId"
+          value = {
+            stringValue = "0053X00000Bo8ZZQAZ"
+          }
+        },
+        {
+          field = "Owner_s_Email__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "PreviousOwner__c"
+          value = {
+            elementReference = "Get_Current_Account.OwnerId"
+          }
+        },
+        {
+          field = "Retention_Score_AM__c"
+          value = {
+            elementReference = "RetentionPotential"
+          }
+        },
+        {
+          field = "Short_Term_Growth_AM__c"
+          value = {
+            elementReference = "ShortTermPotential"
+          }
+        },
+        {
+          field = "Unassignment_Reason__c"
+          value = {
+            elementReference = "Reasons_for_unassignment"
+          }
+        },
+        {
+          field = "Unassignment_Timestamp__c"
+          value = {
+            elementReference = "$Flow.CurrentDateTime"
+          }
+        },
+        {
+          field = "Why_Unassigned__c"
+          value = {
+            elementReference = "Why_un_assign_picklist"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      name = "Update_Owner_0_0_0_0_0_0"
+      label = "Update Owner"
+      locationX = 424
+      locationY = 606
+      connector = {
+        targetReference = "Ownership_Transferred_0"
+      }
+      faultConnector = {
+        targetReference = "Something_Went_Wrong"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "AM__c"
+          value = {
+            stringValue = ""
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      name = "Update_Owner_0_0_0_0_0_0_0"
+      label = "Update Owner"
+      locationX = 267
+      locationY = 608
+      connector = {
+        targetReference = "Ownership_Transferred_0"
+      }
+      faultConnector = {
+        targetReference = "Something_Went_Wrong"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "AE__c"
+          value = {
+            stringValue = ""
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+    {
+      name = "Update_Owner_0_0_0_0_0_0_0_0_0"
+      label = "Update Owner"
+      locationX = 343
+      locationY = 606
+      connector = {
+        targetReference = "Ownership_Transferred_0"
+      }
+      faultConnector = {
+        targetReference = "Something_Went_Wrong"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "AE__c"
+          value = {
+            stringValue = ""
+          }
+        },
+        {
+          field = "AM__c"
+          value = {
+            stringValue = ""
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+  ]
+  screens = [
+    {
+      name = "Close_all_opportunities_first"
+      label = "Close all opportunities first"
+      locationX = 763
+      locationY = 200
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "TextOpenOpps"
+          fieldText = "<p>Hi,</p><p><br></p><p>This account still has {!Get_Current_Account.of_open_opps__c} open opportunities.</p><p>These opportunities need to be closed before un-assigning yourself from the account.</p><p><br></p><p>Please contact the BizOps team for more information.</p><p><br></p><p>Thanks!</p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "CSM_Contact_Manager"
+      label = "CSM_Contact_Manager"
+      locationX = 546
+      locationY = 696
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "YouDontOwn_0"
+          fieldText = "<p>In order to remove yourself as the CSM, please contact your manager.</p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "CSM_Contact_Manager_0"
+      label = "CSM_Contact_Manager"
+      locationX = 1412
+      locationY = 696
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Unassignment_Email"
+      }
+      fields = [
+        {
+          name = "CSM_Contact_Manager_Screen2"
+          fieldText = "<p>You've been removed as the owner of this account.</p><p>In order to remove yourself as the CSM, please contact your manager.</p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "NoChange"
+      label = "No Ownership Change"
+      locationX = 1023
+      locationY = 339
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "NoOwnershipChange"
+          fieldText = "<p>No changes have been made.</p><p>Have a great day!</p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Ownership_Transferred"
+      label = "Ownership Transferred"
+      locationX = 1349
+      locationY = 786
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Unassignment_Email_0"
+      }
+      fields = [
+        {
+          name = "Success"
+          fieldText = "<p>Success!</p><p><br></p><p>You've been unassigned from {!Get_Current_Account.Name}.</p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Ownership_Transferred_0"
+      label = "Ownership Transferred"
+      locationX = 342
+      locationY = 780
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "Success_0"
+          fieldText = "<p>Success!</p><p><br></p><p>You've been unassigned from {!Get_Current_Account.Name}.</p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Something_Went_Wrong"
+      label = "Something Went Wrong"
+      locationX = 933
+      locationY = 499
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "ErrorScreen"
+          fieldText = "<p>Something went wrong.</p><p>Please give your administrator the following details:</p><p><span style=\"color: rgb(255, 0, 0);\">{!$Flow.FaultMessage}</span></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      description = "Used by AM/AE to remove ownership of an account."
+      name = "Unassign_Yourself"
+      label = "Unassign Yourself"
+      locationX = 897
+      locationY = 57
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Unassign"
+      }
+      fields = [
+        {
+          name = "First_Screen"
+          fieldText = "<p>Hey {!GetCurrentUserData.FirstName},</p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);\"> </span></p><p>Are you sure you want to un-assign yourself from {!Get_Current_Account.Name}?</p><p>This will un-assign you from all roles on this account, and the account will become available for others to work on.</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "UnassignToggle"
+          extensionName = "flowruntime:toggle"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "messageToggleInactive"
+              value = {
+                stringValue = "No"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Unassign yourself"
+              }
+            },
+            {
+              name = "messageToggleActive"
+              value = {
+                stringValue = "Yes"
+              }
+            },
+            {
+              name = "disabled"
+              value = {
+                booleanValue = false
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "OwnershipDecision"
+              name = "value"
+            },
+          ]
+        },
+      ]
+      helpText = "<p>This process will make you the owner of this company</p>"
+      showFooter = true
+      showHeader = true
+    },
+    {
+      description = "Used by AM/AE to remove ownership of an account."
+      name = "Unassign_Yourself_0"
+      label = "Unassign Yourself"
+      locationX = 574
+      locationY = 233
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Unassign_0"
+      }
+      fields = [
+        {
+          name = "First_Screen_0"
+          fieldText = "<p>Hey {!GetCurrentUserData.FirstName},</p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);\"> </span></p><p>Are you sure you want to un-assign yourself from {!Get_Current_Account.Name}?</p><p>This will un-assign you from all roles on this account.</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "UnassignToggle_0"
+          extensionName = "flowruntime:toggle"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "messageToggleInactive"
+              value = {
+                stringValue = "No"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Unassign yourself"
+              }
+            },
+            {
+              name = "messageToggleActive"
+              value = {
+                stringValue = "Yes"
+              }
+            },
+            {
+              name = "disabled"
+              value = {
+                booleanValue = false
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "OwnershipDecision"
+              name = "value"
+            },
+          ]
+        },
+      ]
+      helpText = "<p>This process will make you the owner of this company</p>"
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Why_Un_assign"
+      label = "Why Un-assign"
+      locationX = 1111
+      locationY = 148
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Owners_Role_on_Account"
+      }
+      fields = [
+        {
+          name = "Why_un_assign_picklist"
+          choiceReferences = [
+            "why_unassign_picklist_choices",
+          ]
+          dataType = "String"
+          fieldText = "Why un-assign?"
+          fieldType = "DropdownBox"
+          isRequired = true
+        },
+        {
+          name = "Reasons_for_unassignment"
+          fieldText = "Reasons for unassignment"
+          fieldType = "LargeTextArea"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Why_un_assign_picklist"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "Other (please explain)"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Notes"
+          fieldText = "<p>Please let others know what is the potential of this account (you might be leaving it behind, but others might be able to work with it):</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "ShortTerm"
+          extensionName = "flowruntime:slider"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Short term upgrade potential"
+              }
+            },
+            {
+              name = "max"
+              value = {
+                numberValue = 10
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "ShortTermPotential"
+              name = "value"
+            },
+          ]
+        },
+        {
+          name = "Long_term_upgrade_potential"
+          extensionName = "flowruntime:slider"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Long term upgrade potential"
+              }
+            },
+            {
+              name = "max"
+              value = {
+                numberValue = 10
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "Longtermupgradepotential"
+              name = "value"
+            },
+          ]
+        },
+        {
+          name = "retentionpotentialslider"
+          extensionName = "flowruntime:slider"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Retention potential (0 - very likely to churn, 10 - very likely to renew)"
+              }
+            },
+            {
+              name = "max"
+              value = {
+                numberValue = 10
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "RetentionPotential"
+              name = "value"
+            },
+          ]
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "You_re_not_the_owner_of_this_account"
+      label = "You're not the owner of this account"
+      locationX = 491
+      locationY = 789
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "YouDontOwn"
+          fieldText = "<p>You can only un-assign yourself from accounts that you own or have a role in.</p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  start = {
+    locationX = 34
+    locationY = 46
+    connector = {
+      targetReference = "Set_Current_Record"
+    }
+  }
+  status = "Active"
+  textTemplates = [
+    {
+      name = "EmailBody"
+      text = '''
+Hi {!GetCurrentUserData.Manager.FirstName},
+
+{!GetCurrentUserData.Name} has been un-assigned from {!Get_Current_Account.Name}.
+
+This means that this account is now available for others to work on.
+
+The following information was passed:
+
+Why un-assign: {!Why_un_assign_picklist}
+{!Reasons_for_unassignment}
+
+Short term upgrade potential: {!ShortTermPotential}
+Long term upgrade potential: {!Longtermupgradepotential}
+Retention potential: {!RetentionPotential}
+
+https://monday.lightning.force.com/lightning/r/Account/{!Get_Current_Account.Long_Account_ID__c}/view
+'''
+    },
+  ]
+  variables = [
+    {
+      name = "CompaniesARR"
+      dataType = "Currency"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 2
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      name = "CompaniesCount"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      name = "CurrCompanyId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "CurrentCompany"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "CurrentUserId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "EmailAddresses"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      value = {
+        stringValue = "{!GetCurrentUserData.Manager.Email}, galom@monday.com"
+      }
+    },
+    {
+      name = "EmailsToSend"
+      dataType = "String"
+      isCollection = true
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "Longtermupgradepotential"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+    },
+    {
+      name = "OwnershipDecision"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      value = {
+        stringValue = ""
+      }
+    },
+    {
+      name = "recordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "RetentionPotential"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+    },
+    {
+      name = "ShortTermPotential"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+    },
+  ]
+}

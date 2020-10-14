@@ -1,0 +1,14 @@
+salesforce.EmailTemplate unfiled_public_ARR_change_for_partners {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "Sent out to partners when the account ARR is changed"
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "ARR change for partners"
+  style = "formalLetter"
+  subject = "{!Account.OwnerFullName} - you have new added ARR to claim!"
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/ARR_change_for_partners"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/ARR_change_for_partners.email")
+}

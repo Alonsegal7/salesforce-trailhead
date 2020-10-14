@@ -1,0 +1,130 @@
+salesforce.CustomObjectTranslation Professional_Service_Request__c_en_US {
+  fullName = "Professional_Service_Request__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Professional Service"
+    },
+    {
+      plural = true
+      value = "Professional Service"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.Delivery_Amount__c
+    },
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.Delivery_of_Hours__c
+    },
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.Opportunity_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.Opportunity__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.PO_Amount__c
+    },
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.PO_of_Hours__c
+    },
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.Partner_Company__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.Service_Type__c
+      picklistValues = [
+        {
+          masterLabel = "App"
+          translation = ""
+        },
+        {
+          masterLabel = "Consulting"
+          translation = ""
+        },
+        {
+          masterLabel = "Integration"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.Status__c
+      picklistValues = [
+        {
+          masterLabel = "Delivered"
+          translation = ""
+        },
+        {
+          masterLabel = "Initial Discovery"
+          translation = ""
+        },
+        {
+          masterLabel = "Lost"
+          translation = ""
+        },
+        {
+          masterLabel = "PO"
+          translation = ""
+        },
+        {
+          masterLabel = "Partner Discovery"
+          translation = ""
+        },
+        {
+          masterLabel = "SOW"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Professional_Service_Request__c.field.Why_Lost__c
+      picklistValues = [
+        {
+          masterLabel = "Pricing"
+          translation = ""
+        },
+        {
+          masterLabel = "Timeline"
+          translation = ""
+        },
+      ]
+    },
+  ]
+  layouts = [
+    {
+      layout = "Professional Service Request Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+        {
+          label = ""
+          section = "Delivery"
+        },
+        {
+          label = ""
+          section = "PO"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Professional_Service_Request__c,
+  ]
+}

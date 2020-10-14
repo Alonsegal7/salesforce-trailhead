@@ -1,0 +1,10 @@
+salesforce.QuickAction Department__c_Persona_Mapping {
+  fullName = "Department__c.Persona_Mapping"
+  flowDefinition = "Map_Contacts_for_Department"
+  label = "Persona Mapping"
+  optionsCreateFeedItem = false
+  type = "Flow"
+  _parent = [
+    salesforce.Department__c,
+  ]
+}

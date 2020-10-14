@@ -1,0 +1,5 @@
+{!Opportunity.OwnerFullName} won an opportunity with {!Opportunity.Company__c} for {!Opportunity.Amount} added ARR.
+
+ Plan - {!Opportunity.Expected_Plan_Name__c}
+
+Link to opportunity - https://monday.lightning.force.com/lightning/r/Opportunity/{!Opportunity.Id}/view?0.source=alohaHeader

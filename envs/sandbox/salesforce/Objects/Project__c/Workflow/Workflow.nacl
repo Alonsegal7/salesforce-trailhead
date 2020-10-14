@@ -1,0 +1,15 @@
+salesforce.Workflow Project__c {
+  fullName = "Project__c"
+  fieldUpdates = [
+    salesforce.WorkflowFieldUpdate.instance.Project__c_Set_WAPP,
+    salesforce.WorkflowFieldUpdate.instance.Project__c_Set_WAPP_30_Days_Post_Close,
+    salesforce.WorkflowFieldUpdate.instance.Project__c_Set_WAPP_90_Days_Post_Close,
+    salesforce.WorkflowFieldUpdate.instance.Project__c_Update_project_close_date,
+  ]
+  rules = [
+    salesforce.WorkflowRule.instance.Project__c_Upon_Project_Close,
+  ]
+  _parent = [
+    salesforce.Project__c,
+  ]
+}

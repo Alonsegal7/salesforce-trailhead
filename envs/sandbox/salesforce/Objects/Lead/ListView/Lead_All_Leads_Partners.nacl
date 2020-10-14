@@ -1,0 +1,35 @@
+salesforce.ListView Lead_All_Leads_Partners {
+  fullName = "Lead.All_Leads_Partners"
+  columns = [
+    "CORE.USERS.FIRST_NAME",
+    "LEAD.CREATED_DATE",
+    "FULL_NAME",
+    "LEAD.LEAD_SOURCE",
+    "LEAD.STATUS",
+    "Related_Company__c",
+    "Website_company__c",
+    "LEAD.COUNTRY",
+    "LEAD.TITLE",
+    "Seniority__c",
+    "Engagement__c",
+    "Company_Size__c",
+    "Sign_up_date__c",
+    "primary_pulse_account_id__c",
+    "Next_activity__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Partner_Lead"
+    },
+  ]
+  label = "All Leads (Partners)"
+  sharedTo = {
+    allPartnerUsers = ""
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,413 @@
+<apex:page controller="LH.LH_All_Settings_Controller" title="Lookup Helper" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <apex:includeScript value="{! URLFOR($Resource.PT_Resources_v1, '/js/UI_Utilities.js') }" />
+    <apex:stylesheet value="{! URLFOR($Resource.PT_Resources_v1, '/css/customMessage.css') }" />
+
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    </head>
+    
+    <style>
+        .message .messageText a{
+        margin: 0;
+        font-size: 100%
+        }    
+    </style>
+ 
+    <script>
+        sessionStorage.setItem('rootPage','settings');
+    
+		function confirmActive(Disabled, fieldName, hitFreeLimits)  
+		{  
+			if(Disabled == "false")
+			{
+				return confirm("Are you sure you would like to disable automatic population for the " + fieldName + " field?");
+			}
+			else if (!hitFreeLimits) 
+			{
+				return confirm("Are you sure you would like to activate automatic population for the " + fieldName + " field?");
+			}
+			else 
+			{
+				return confirm("Please Note: You are only allowed to have two active settings concurrently, and are allowed to activate up to three different settings in a month. Given these limits you may be unable to activate this setting.");
+			}
+		}
+    
+    
+		var prevValue;
+		function showOrHideDropdown(dropDownId){
+			var dropdownClassList = document.getElementById(dropDownId).classList;
+			
+			if(dropdownClassList.contains('slds-is-open')){
+				dropdownClassList.remove('slds-is-open');
+			}
+			
+			else{
+				if (prevValue != null) {
+					var prevClassList = document.getElementById(prevValue).classList;
+					prevClassList.remove('slds-is-open');
+				}
+				
+				dropdownClassList.add('slds-is-open');
+				
+				if(dropDownId != prevValue)
+					prevValue = dropDownId;
+			}
+		}
+		
+		function closeCouponCodeModal(emailError, consentError){
+			if(!emailError && !consentError){
+				document.getElementById('nfpDiscount').style.display = 'none';
+			}
+		}
+
+        function createNewAgent(){
+            newAgent();
+        }
+
+		function openCouponCodeModal(){
+			document.getElementById('nfpDiscount').style.display = 'block';
+		}
+
+		window.onload = function() {
+
+            checkLicenseStatusOnLoad(); 
+		}
+    </script>
+    
+ 
+<div class="slds-scope" role="main" style="width:95%; margin-left:auto; margin-right:auto;">		        
+	<c:LH_Nav_Bar />
+ 
+	<apex:form >
+	<apex:slds />
+        
+	<apex:actionFunction name="checkLicenseStatusOnLoad" action="{!checkLicenseStatusOnLoad}" rerender="false" />
+    <apex:actionFunction action="{!newAgent}" name="newAgent" rerender="false"/>
+	
+	<apex:outputPanel rendered="{!settingCount != 0}"> 
+		<div class="slds-card">
+			<header class="slds-card__header slds-grid">
+    			<div class="slds-media slds-media_center slds-has-flexi-truncate">
+     				<div class="slds-media__body">
+            			<h3 class="slds-text-heading_medium slds-truncate" style="padding-right: 6px;">Lookup Helper Settings</h3>           
+            		</div>
+            	</div>
+            	
+            	<div class="slds-no-flex">
+                    <apex:outputPanel rendered="{!OR(usageTracking.LH__Package_Namespace__c == 'LH', usageTracking.LH__Package_Namespace__c == null)}">
+                		<a onclick="navigateToURL('{!URLFOR($Page.LH_NewSetting_ChildObject)}');" class="slds-button slds-button_neutral slds-button_small slds-m-bottom_x-small">
+                            Create Lookup Helper Setting
+                        </a>
+                    </apex:outputPanel>&nbsp;&nbsp;
+                    
+                    <apex:commandLink value="Set {!$User.FirstName + ' ' + $User.LastName} As Running User" styleClass="slds-button slds-button_neutral slds-button_small slds-m-bottom_x-small" onclick="createNewAgent();" rendered="{!NOT(isRunningUserCurrentUser)}" /> 
+                    
+                    <a onclick="navigateToURL('{!URLFOR($Page.LH_ExportData)}');" class="slds-button slds-button_neutral slds-button_small slds-m-bottom_x-small">
+                        Export Lookup Helper Settings
+                    </a>
+                    <apex:outputPanel rendered="{!AND(nfpController.isNonprofit, hasSettingLimit)}">
+                        <button type="button" class="slds-button slds-button_neutral slds-button_small slds-m-bottom_x-small" onclick="openCouponCodeModal();">
+                          Get Nonprofit Coupon Code 
+                        </button>
+                    </apex:outputPanel>
+            	</div>		 
+       			
+        		
+        	</header> 
+            <apex:outputPanel rendered="{!hasHitFreeUserLimits}">
+                <center>
+                <div class="slds-notify slds-notify_toast slds-theme_warning" style="max-width:700px;">
+                    <b>
+                    You have activated three different Lookup Helper settings this month. In order to activate more than three Lookup Helper settings in a month the premium edition of Lookup Helper is required.
+                    <br/>
+                    <center>
+                    <apex:outputLink onclick="window.open('http://www.passagetechnology.com/lookup-helper-order')">Click here</apex:outputLink> to upgrade to the premium edition.
+                    </center>
+                    </b>
+                </div><br/>
+                </center>
+            </apex:outputPanel>
+
+			<apex:outputPanel rendered="{!AND(thirdLookupActiveFreeEdition, hasSettingLimit)}">
+                <center>
+                <div class="slds-notify slds-notify_toast slds-theme_error" style="max-width:700px;">
+                    <b>
+                    You have attempted to activate a third Lookup Helper Setting. In order to activate more than three Lookup Helper settings at once, the premium edition of Lookup Helper is required.
+                    <br/>
+                    <center>
+                    <apex:outputLink onclick="window.open('http://www.passagetechnology.com/lookup-helper-order')">Click here</apex:outputLink> to upgrade to the premium edition.
+                    </center>
+                    </b>
+                </div><br/>
+                </center>
+            </apex:outputPanel>
+            
+            <apex:pageMessages escape="false"/>
+            
+        	<section id="settingtable" class="slds-card__body slds-grid">
+ 
+				<table class="slds-table slds-table_bordered slds-max-medium-table_stacked"> 
+                    
+                    <thead>
+                    	<tr style="width:100%;">
+                    		<th class="slds-text-heading_label slds-cell-wrap" style="width:20%;">Setting Name</th>
+                    		<th class="slds-text-heading_label slds-cell-wrap slds-text-align_center" style="width:5%;">Run Mode</th> 
+                    		<th class="slds-text-heading_label slds-cell-wrap" style="width:15%;">Parent Object</th>
+                    		<th class="slds-text-heading_label slds-cell-wrap" style="width:15%;">Child Object</th>
+                    		<th class="slds-text-heading_label slds-cell-wrap" style="width:20%;">Lookup Field Being Updated</th>
+                    		<th class="slds-text-heading_label slds-cell-wrap" style="width:15%;">Lookup Source</th>
+                    		<th class="slds-text-heading_label slds-cell-wrap slds-text-align_center" style="width:5%;">Active</th>
+                    		<th class="slds-text-heading_label slds-cell-wrap slds-text-align_center" style="width:5%;">Action</th>
+                    	</tr>	
+                    </thead>
+                    <tbody>
+                    	<apex:repeat value="{!settings}" var="item">
+                    		<tr>
+                    			<td style="width:20%; word-break: break-all;" class="slds-cell-wrap">{!item.Name}</td>
+                    			<td style="width:5%; word-break: break-all;" class="slds-text-align_center">
+                    				<apex:repeat value="{!realtimeInfo}" var="realtime">
+                    					<apex:outputText rendered="{!AND(IF(realtime.settingId == item.Id, true, false),item.LH__Active__c)}">
+                                            <apex:outputPanel rendered="{!AND(realTime.deployed, realtime.enabled)}"> 
+                                                <span class="slds-icon_container slds-icon-utility-check" title="Realtime Trigger is Deployed and Enabled">
+                                                    <svg class="slds-icon slds-icon-text-default slds-icon_x-small" aria-hidden="true">
+                                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                                                    </svg>
+                                                </span>
+                                            </apex:outputPanel>
+                                                
+                                            <apex:outputPanel rendered="{!AND(realTime.deployed, NOT(realtime.enabled))}"> 
+                                                <span class="slds-icon_container slds-icon-utility-check" title="Realtime Trigger is Deployed and Disabled">
+                                                    <svg class="slds-icon slds-icon-text-default slds-icon_x-small" aria-hidden="true">
+                                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                                    </svg>
+                                                 </span>  
+                                            </apex:outputPanel>
+
+                                            <apex:outputPanel rendered="{!realTime.isScheduled}">
+                                                <span class="slds-icon_container slds-icon-event" title="This Setting is Scheduled to Run">
+                                                    <svg class="slds-icon slds-icon-text-default slds-icon_x-small" aria-hidden="true">
+                                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#event')}"></use>
+                                                    </svg>
+                                                </span>
+                                            </apex:outputPanel>
+                    					</apex:outputText>
+                    				</apex:repeat>
+                    			</td>
+                    			<td style="width:15%; word-break: break-all;" class="slds-cell-wrap"> {!item.Parent_Object__c} </td>
+                    			<td style="width:15%; word-break: break-all;" class="slds-cell-wrap"> {!item.Child_Object__c} </td>
+                    			<td style="width:20%; word-break: break-all;" class="slds-cell-wrap"> {!item.Lookup_Field__c} </td>
+                    			<td style="width:15%; word-break: break-all;" class="slds-cell-wrap"> {!item.Lookup_Source__c} </td>
+                    			<td style="width:5%;" class="slds-text-align_center"> 
+                    				<apex:commandLink onClick="if (!confirmActive('{!!item.LH__Active__c}', '{!item.LH__Lookup_Field__c}', {!AND(HasHitFreeUserLimits, hasSettingLimit)})) return false;" action="{!setActive}"> 		
+                                        
+                                        <label class="slds-checkbox">
+                                            <apex:inputCheckBox styleclass="slds-input" value="{!item.LH__Active__c}" id="activeCheckBox"/>
+                                            <span class="slds-checkbox_faux"></span>
+                                        </label>
+                                        
+                    					<apex:param name="LookupId" value="{!item.name}"/> 
+                    				</apex:commandLink>
+                    			</td>
+                    			<td style="width:5%;" class="slds-text-align_center">
+                    			<div class="slds-dropdown-trigger slds-dropdown-trigger_click" id="{!item}">
+                                    
+                    				<button class="slds-button slds-button_icon slds-button_icon-border-filled" type="button" onClick="showOrHideDropdown('{!JSENCODE(item.id)}');">
+                                        <svg class="slds-button__icon" aria-hidden="true">
+                                            <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Icon Assistive Text</span>
+                    				</button>
+                                    
+                    				<div class="slds-dropdown slds-dropdown_left slds-dropdown_actions slds-dropdown_menu hideDropdown">
+                    					<ul id="menu" class="slds-dropdown__list hideDropdown" role="menu">
+                    				
+                    						<apex:outputPanel rendered="{!item.LH__Active__c}">
+                    							<li class="slds-dropdown__item">
+                    								<apex:commandLink reRender="" action="{!prepareRun}">
+                    								<apex:param name="setting" value="{!item.Id}"/>
+                    								Run
+                    								</apex:commandLink>
+                    							</li>
+                    						</apex:outputPanel>
+                    			
+                                            <li class="slds-dropdown__item">
+												<apex:commandLink action="{!prepareSchedule}">
+												<apex:param name="setting" value="{!item.Id}"/>
+                    								Schedule
+                    							</apex:commandLink>
+                    						</li>
+                                            
+                    						<li class="slds-dropdown__item">
+                                                <apex:outputLink value="{!URLFOR($Page.LH__LH_NewSetting_SettingType, null, [s=item.id])}">Edit</apex:outputLink>
+                    						</li>
+                    				
+                    						<li class="slds-dropdown__item">
+                    							<apex:commandLink value="Del" reRender="" action="{!deleteSetting}" styleClass="slds-truncate">
+                    							<apex:param name="setting" value="{!item.Id}"/>
+                    							</apex:commandLink>
+                    						</li>
+                    					</ul>
+                    				</div>    
+                    			</div>
+                    			</td>
+                    		
+                    			            			
+                    		</tr>
+                    	</apex:repeat>
+                    </tbody>
+          	 </table>
+	         </section>	 
+            <footer class="slds-card__footer">                 
+                <apex:outputText id="running_user" value="Running As {!runningUser}." rendered="{!isBatchActive}" style="float:left;" />          
+                <br/>
+            </footer>
+	     </div>       	 
+	 </apex:outputPanel> 	 
+						
+	 <apex:outputPanel rendered="{!AND(settingCount == 0, OR(usageTracking.LH__Package_Namespace__c == 'LH', usageTracking.LH__Package_Namespace__c == null))}">
+	 	<div class="slds-card slds-card_empty">
+	 		<header class="slds-card__header">
+	 			<h3 class="slds-text-heading_small">Lookup Helper Settings</h3>
+	 		</header>
+	 		<section class="slds-card__body slds-card__body_inner">
+		        <center>
+		                 <apex:outputPanel rendered="{!hasHitFreeUserLimits}">
+                    
+		                    <div class="slds-notify slds-notify_toast slds-theme_warning" style="max-width:700px;">
+		                        <b>
+		                        You have activated three different Lookup Helper settings this month. In order to activate more than three Lookup Helper settings in a month the premium edition of Lookup Helper is required.
+		                        <br/>
+		                        <center>
+		                        <apex:outputLink onclick="window.open('http://www.passagetechnology.com/lookup-helper-order')">Click here</apex:outputLink> to upgrade to the premium edition.
+		                        </center>
+		                        </b>
+		                    </div><br/>
+                    
+		                </apex:outputPanel>
+
+	 			<apex:outputText value="No settings currently exist. Please click the button below to create one."/> <br/>
+	 			<apex:commandButton styleclass="slds-button slds-button_neutral" value="Create Lookup Helper Setting" action="{!createNewSetting}"/>
+                </center>
+	 		</section>      
+	 	</div>								
+	</apex:outputPanel>
+								
+							
+						
+	<br/>
+	<c:LH_additionalInformation />
+		
+    <apex:outputPanel id="confirmRunModal">
+        <apex:outputPanel rendered="{!showConfirmRunModal}" >
+            <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 class="slds-text-heading_small">Run the setting {!settingName}?</h1> 
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium">	
+                        <center>
+                            <p>
+                                By running this lookup setting, any existing information on the <b>"{!lookupFieldToUpdate}"</b> lookup field <b>{!willOverwrite}</b> be overwritten 
+                                <apex:outputText value="{! IF(willClear == willOverwrite, ' and', ' but')}"/>
+                                <b>{!willClear}</b> be cleared out 
+                                <apex:outputText rendered="{! IF(willClear == 'will', true, false)}"  value=" if necessary"/>.
+                            </p>
+                            <br/> 
+                            <p> To run the "<b>{!settingName}</b>" setting, press "Run".</p>                                                                               
+                            <p> To cancel without making any changes, press "Cancel".</p>                                        
+                        </center>
+                    </div>  
+                    <div class="slds-modal__footer">
+                        <apex:commandButton styleClass="slds-button slds-button_neutral" action="{!closeConfirmRunModal}"  rerender="confirmRunModal" value="Cancel"/>
+                        <apex:commandButton styleClass="slds-button slds-button_brand" action="{!runSetting}" rerender="" value="Run"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </apex:outputPanel>	
+    </apex:outputPanel>
+        
+
+
+    <div id="nfpDiscount" style="display:none">
+        <c:NFPDiscountForm pageController="{!nfpController}"/>
+    </div>
+        
+        <apex:outputPanel id="scheduleModal">
+            <apex:outputPanel rendered="{!showScheduleModal}" >
+                <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__header">
+                            <h1 class="slds-text-heading_medium">Schedule the Setting to Run: {!settingName} </h1> 
+                        </div>
+                        <div class="slds-modal__content slds-p-around_medium">	
+      
+                            <br/>
+ 
+                            <div class="slds-grid">
+                                <div class="slds-col_padded slds-text-align_right slds-size_3-of-12">
+                                    Run Every
+                                </div>
+ 
+                                <div class="slds-col slds-size_3-of-12 " id="runTime">
+                                    <apex:inputField value="{!selectedSetting.LH__Schedule_Increment__c}" style="width:95%;"/>                    			                  
+                                </div>
+                                <div class="slds-col slds-size_1-of-12">
+                                    <apex:inputField value="{!selectedSetting.LH__Schedule_Unit__c}"/> 
+                                </div>         
+                                <div class="slds-col slds-size_9-of-12"></div>
+                                
+                            </div>
+ 
+                            <br/>
+ 
+                            <div class="slds-grid">          		
+                                <div class="slds-col_padded slds-size_2-of-12 slds-text-align_right" >
+                                    <span>Last Run</span>
+                                </div>
+                                <div class="slds-col slds-grow slds-size_4-of-12"> 
+                                    <apex:outputField rendered="{!IF(selectedSetting.LH__Schedule_PreviousFireTime__c = '', false, true)}" value="{!selectedSetting.LH__Schedule_PreviousFireTime__c}"/>
+                                    <apex:outputText rendered="{!IF(selectedSetting.LH__Schedule_PreviousFireTime__c = '', true, false)}"  value="Never"/>
+                                </div>
+                                <div class="slds-col slds-size_5-of-12"></div> 
+                            </div>
+                            
+                            <br/>
+ 
+                            
+                            <div class="slds-grid">
+                                
+                                <div class="slds-col_padded slds-size_2-of-12 slds-text-align_right" >
+                                    Next Run
+                                </div>
+                                <div class="slds-col slds-size_3-of-12 " >
+                                    <apex:inputField value="{!selectedSetting.LH__Schedule_NextFireTime__c}"  />
+                                </div>
+                                
+                                <div class="slds-col slds-size_6-of-12"></div>
+                            </div>
+                            
+                            <br/>
+  
+                        </div>  
+                        <div class="slds-modal__footer">
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" action="{!closeShowScheduleModal}"  rerender="scheduleModal" value="Cancel"/>
+                            <apex:commandButton styleClass="slds-button slds-button_brand" action="{!saveSchedule}" rerender="scheduleModal, settingtable" value="Save Schedule"/>
+                        </div>
+                    </div>
+                </div>
+                            <div class="slds-backdrop slds-backdrop_open"></div> 
+            </apex:outputPanel>	
+        </apex:outputPanel>
+        
+</apex:form>
+</div>
+    
+  <script>
+    overridePageMessages();
+  </script>
+    
+</html>
+
+</apex:page>

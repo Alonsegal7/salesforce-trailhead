@@ -1,0 +1,26 @@
+salesforce.WorkflowRule Task_CS_Pass_for_Sales {
+  fullName = "Task.CS Pass for Sales"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Task_CS_Pass_for_Sales
+      type = "Alert"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Task.field.Type
+      operation = "equals"
+      value = "CS Pass"
+    },
+    {
+      field = salesforce.Task.field.OwnerId
+      operation = "notContain"
+      value = "Oran Akron,BigBrain Bot"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Task,
+  ]
+}

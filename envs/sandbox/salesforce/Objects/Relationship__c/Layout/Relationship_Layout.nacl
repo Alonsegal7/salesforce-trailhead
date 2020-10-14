@@ -1,0 +1,143 @@
+salesforce.Layout Relationship_Layout {
+  fullName = "Relationship__c-Relationship Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Relationship__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Relationship__c.field.Contact__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Relationship__c.field.Relationship_Level__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Relationship__c.field.Status__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Relationship__c.field.Last_Checkup__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Relationship__c.field.No_Verbal_Communication_Flag__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Relationship__c.field.OwnerId
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Relationship__c.field.monday_Account__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Relationship__c.field.Last_Verbal_Communication__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Relationship__c.field.Last_Email_Communication__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Relationship__c.field.Comments__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Relationship__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Relationship__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "TASK.PRIORITY",
+        "CORE.USERS.FULL_NAME",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "CORE.USERS.FULL_NAME",
+        "TASK.LAST_UPDATE",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+    {
+      relatedList = "RelatedEntityHistoryList"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000jKV9W"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Relationship__c,
+  ]
+}

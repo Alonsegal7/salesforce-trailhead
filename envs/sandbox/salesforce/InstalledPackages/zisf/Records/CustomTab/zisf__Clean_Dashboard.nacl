@@ -1,0 +1,7 @@
+salesforce.CustomTab zisf__Clean_Dashboard {
+  fullName = "zisf__Clean_Dashboard"
+  description = "Created by Lightning App Builder"
+  flexiPage = "zisf__Clean_Dashboard"
+  label = "ZoomInfo Clean Dashboard"
+  motif = "Custom95: Stopwatch"
+}

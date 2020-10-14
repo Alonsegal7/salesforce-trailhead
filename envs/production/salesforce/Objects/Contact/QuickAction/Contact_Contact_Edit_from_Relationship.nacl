@@ -1,0 +1,62 @@
+salesforce.QuickAction Contact_Contact_Edit_from_Relationship {
+  fullName = "Contact.Contact_Edit_from_Relationship"
+  label = "Contact Edit from Relationship"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Name"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Email"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Phone"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "AccountId"
+            uiBehavior = "Readonly"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Title"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Seniority__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Decision_Maker__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Department"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  type = "Update"
+  _parent = [
+    salesforce.Contact,
+  ]
+}

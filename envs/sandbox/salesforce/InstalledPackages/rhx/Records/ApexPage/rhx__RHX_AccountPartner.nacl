@@ -1,0 +1,16 @@
+salesforce.ApexPage rhx__RHX_AccountPartner {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 32
+  availableInTouch = false
+  confirmationTokenRequired = false
+  label = "RHX_AccountPartner"
+  packageVersions = [
+    {
+      majorNumber = 7
+      minorNumber = 13
+      namespace = "rh2"
+    },
+  ]
+  fullName = "rhx__RHX_AccountPartner"
+  content = file("salesforce/InstalledPackages/rhx/Records/ApexPage/rhx__RHX_AccountPartner.page")
+}

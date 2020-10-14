@@ -1,0 +1,282 @@
+salesforce.Flow Business_Review_Record_Screen_Floww {
+  fullName = "Business_Review_Record_Screen_Floww"
+  assignments = [
+    {
+      name = "Nothing"
+      label = "Nothing"
+      locationX = 416
+      locationY = 577
+      assignmentItems = [
+        {
+          assignToReference = "noth"
+          operator = "Add"
+          value = {
+            stringValue = "1"
+          }
+        },
+      ]
+    },
+  ]
+  formulas = [
+    {
+      name = "TWO_YEARS_AGO"
+      dataType = "Date"
+      expression = "TODAY() - 731"
+    },
+  ]
+  interviewLabel = "Business Review Record Screen Floww {!$Flow.CurrentDateTime}"
+  label = "Previous Business Reviews"
+  loops = [
+    {
+      name = "Loop_through_business_reviews"
+      label = "Loop through business reviews"
+      locationX = 519
+      locationY = 468
+      collectionReference = "Get_Previous_BRs"
+      iterationOrder = "Asc"
+      nextValueConnector = {
+        targetReference = "Related_Business_Review"
+      }
+      noMoreValuesConnector = {
+        targetReference = "Get_Previous_BRs"
+      }
+    },
+  ]
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordLookups = [
+    {
+      name = "Get_Current_BR"
+      label = "Get Current BR"
+      locationX = 177
+      locationY = 235
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Get_Previous_BRs"
+      }
+      faultConnector = {
+        targetReference = "Error"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "CurrentRecordID"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Business_Review__c
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_Previous_BRs"
+      label = "Get Previous BRs"
+      locationX = 177
+      locationY = 379
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Loop_through_business_reviews"
+      }
+      faultConnector = {
+        targetReference = "Error"
+      }
+      filters = [
+        {
+          field = "Company__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Current_BR.Company__c"
+          }
+        },
+        {
+          field = "CreatedDate"
+          operator = "GreaterThanOrEqualTo"
+          value = {
+            elementReference = "TWO_YEARS_AGO"
+          }
+        },
+        {
+          field = "Status__c"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Complete"
+          }
+        },
+      ]
+      getFirstRecordOnly = false
+      object = salesforce.Business_Review__c
+      sortField = salesforce.Business_Review__c.field.Start_Date__c
+      sortOrder = "Desc"
+      storeOutputAutomatically = true
+    },
+  ]
+  screens = [
+    {
+      name = "Error"
+      label = "Error"
+      locationX = 523
+      locationY = 253
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "ErrorMessage"
+          fieldText = "<p>Something went wrong.</p><p>Please send the following error message to your administrator:</p><p><span style=\"color: rgb(253, 0, 0);\">{!$Flow.FaultMessage}</span></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Related_Business_Review"
+      label = "Related Business Review"
+      locationX = 176
+      locationY = 519
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Loop_through_business_reviews"
+      }
+      fields = [
+        {
+          name = "RelatedBusinessReview"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Related Business Review"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "Business_Review__c"
+              }
+            },
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "Business_Review__c"
+              }
+            },
+            {
+              name = "recordId"
+              value = {
+                elementReference = "Loop_through_business_reviews.Id"
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Date_and_Time"
+          dataType = "DateTime"
+          defaultValue = {
+            elementReference = "Loop_through_business_reviews.Start_Date__c"
+          }
+          fieldText = "Date and Time"
+          fieldType = "InputField"
+          isRequired = false
+        },
+        {
+          name = "Location"
+          fieldText = "<p>Location: {!Loop_through_business_reviews.Location__c}</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Attendees"
+          defaultValue = {
+            stringValue = "{!Loop_through_business_reviews.Attendees__c}"
+          }
+          fieldText = "Attendees"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
+        {
+          name = "Previous_Meeting_Notes"
+          defaultValue = {
+            stringValue = "{!Loop_through_business_reviews.Meeting_Notes__c}"
+          }
+          fieldText = "Previous Meeting Notes"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
+        {
+          name = "Business_Review_Preparation_Notes"
+          defaultValue = {
+            stringValue = "{!Loop_through_business_reviews.Preparation_Notes__c}"
+          }
+          fieldText = "Business Review Preparation Notes"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "Get_Current_BR"
+    }
+  }
+  status = "Active"
+  variables = [
+    {
+      name = "CurrentBR"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Business_Review__c
+    },
+    {
+      name = "CurrentRecordID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "LatestBusinessReview"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Business_Review__c
+    },
+    {
+      name = "noth"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      value = {
+        stringValue = "1"
+      }
+    },
+  ]
+}

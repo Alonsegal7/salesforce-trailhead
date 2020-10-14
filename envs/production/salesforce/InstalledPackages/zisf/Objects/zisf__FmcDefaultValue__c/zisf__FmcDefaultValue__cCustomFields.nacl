@@ -1,0 +1,56 @@
+type salesforce.zisf__FmcDefaultValue__c {
+  salesforce.LongTextArea zisf__Job_function__c {
+    apiName = "zisf__FmcDefaultValue__c.zisf__Job_function__c"
+    label = "Job function"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 2
+  }
+  salesforce.LongTextArea zisf__LocationTree__c {
+    apiName = "zisf__FmcDefaultValue__c.zisf__LocationTree__c"
+    label = "LocationTree"
+    _required = false
+    createable = true
+    updateable = true
+    length = 10000
+    queryable = true
+    visibleLines = 2
+  }
+  salesforce.Text zisf__Location__c {
+    apiName = "zisf__FmcDefaultValue__c.zisf__Location__c"
+    label = "Location"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea zisf__Management_Level__c {
+    apiName = "zisf__FmcDefaultValue__c.zisf__Management_Level__c"
+    label = "Management Level"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 2
+  }
+  salesforce.Text zisf__job_title__c {
+    apiName = "zisf__FmcDefaultValue__c.zisf__job_title__c"
+    label = "job title"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+}

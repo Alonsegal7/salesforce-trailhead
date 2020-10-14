@@ -1,0 +1,15 @@
+salesforce.WebLink Account_MassManager__Mass_Edit_Standard_Fields {
+  fullName = "Account.MassManager__Mass_Edit_Standard_Fields"
+  availability = "online"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Mass Edit"
+  openType = "sidebar"
+  page = "MassManager__AccountsMassEdit"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Account,
+  ]
+}

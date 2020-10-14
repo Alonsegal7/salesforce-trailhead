@@ -1,0 +1,49 @@
+salesforce.QuickAction Account_Create_PS_Request {
+  fullName = "Account.Create_PS_Request"
+  label = "Create PS Request"
+  optionsCreateFeedItem = true
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Partner_Company__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Status__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Service_Type__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "PO_Amount__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "PO_of_Hours__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  targetObject = salesforce.Professional_Service_Request__c
+  targetParentField = "Partner_Company__c"
+  type = "Create"
+  _parent = [
+    salesforce.Account,
+  ]
+}

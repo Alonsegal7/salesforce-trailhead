@@ -1,0 +1,6 @@
+salesforce.Territory2Type LATAM {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  name = "LATAM"
+  priority = 4
+  fullName = "LATAM"
+}

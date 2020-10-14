@@ -1,0 +1,10 @@
+salesforce.Role SEOSEONPartnerManager {
+  fullName = "SEOSEONPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "SEOSEON Partner Manager"
+  mayForecastManagerShare = false
+  name = "SEOSEON Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

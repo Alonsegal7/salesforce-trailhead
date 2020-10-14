@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation zaapit__ZaapIT_Table_user_configuration__c_en_US {
+  fullName = "zaapit__ZaapIT_Table_user_configuration__c-en_US"
+  _parent = [
+    salesforce.zaapit__ZaapIT_Table_user_configuration__c,
+  ]
+}

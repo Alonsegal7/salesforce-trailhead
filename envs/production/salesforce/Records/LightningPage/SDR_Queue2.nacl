@@ -1,0 +1,249 @@
+salesforce.LightningPage SDR_Queue2 {
+  fullName = "SDR_Queue2"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "kRMWXPDSyEVBVUJXSoSaNBAugtNmfx1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            booleanFilter = "(1 AND 2) OR (3 AND 4 AND 5)"
+            criteria = [
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "EQUAL"
+                rightValue = "SDR"
+              },
+              {
+                leftValue = "{!$User.Office__c}"
+                operator = "EQUAL"
+                rightValue = "Tel Aviv Office"
+              },
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "NE"
+                rightValue = "SDR"
+              },
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "NE"
+                rightValue = "Qesari"
+              },
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "NE"
+                rightValue = "Powell"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "Contact_sales_Lead"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "30"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+          visibilityRule = {
+            booleanFilter = "(1 AND 2) OR (3 AND 4 AND 5)"
+            criteria = [
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "EQUAL"
+                rightValue = "SDR"
+              },
+              {
+                leftValue = "{!$User.Office__c}"
+                operator = "EQUAL"
+                rightValue = "Tel Aviv Office"
+              },
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "NE"
+                rightValue = "SDR"
+              },
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "NE"
+                rightValue = "Qesari"
+              },
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "NE"
+                rightValue = "Powell"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "kRMWXPDSyEVBVUJXSoSaNBAugtNmfx11"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            booleanFilter = "(1 AND 2) OR (3 AND 4 AND 5)"
+            criteria = [
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "EQUAL"
+                rightValue = "SDR"
+              },
+              {
+                leftValue = "{!$User.Office__c}"
+                operator = "EQUAL"
+                rightValue = "NY Office"
+              },
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "NE"
+                rightValue = "SDR"
+              },
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "NE"
+                rightValue = "Donio"
+              },
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "NE"
+                rightValue = "Goldstein"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "USA_Contact_Sales"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "30"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+          visibilityRule = {
+            booleanFilter = "(1 AND 2) OR (3 AND 4 AND 5)"
+            criteria = [
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "EQUAL"
+                rightValue = "SDR"
+              },
+              {
+                leftValue = "{!$User.Office__c}"
+                operator = "EQUAL"
+                rightValue = "NY Office"
+              },
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "NE"
+                rightValue = "SDR"
+              },
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "NE"
+                rightValue = "Donio"
+              },
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "NE"
+                rightValue = "Goldstein"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "New_Leads"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "30"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+      ]
+      name = "main"
+      type = "Region"
+    },
+  ]
+  masterLabel = "SDR Queue"
+  template = {
+    name = "flexipage:defaultAppHomeTemplate"
+  }
+  type = "AppPage"
+}

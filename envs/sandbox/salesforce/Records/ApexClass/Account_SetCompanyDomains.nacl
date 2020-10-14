@@ -1,0 +1,7 @@
+salesforce.ApexClass Account_SetCompanyDomains {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  status = "Active"
+  fullName = "Account_SetCompanyDomains"
+  content = file("salesforce/Records/ApexClass/Account_SetCompanyDomains.cls")
+}

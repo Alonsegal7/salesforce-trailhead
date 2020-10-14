@@ -1,0 +1,340 @@
+<apex:page controller="SpringCMEos.SetupSpringCMController" extensions="SpringCMEos.SetupEnvironment,SpringCMEos.SetupDynamicSearchWidget" action="{!Setup}">
+       <style> 
+        .setupPage table div {padding-bottom:2px;}
+        .eosTd { float:left;
+            width:500px;
+            padding-bottom:4px;
+            }
+            .eosTdSmall { float:left;
+            width:150px;
+            padding-bottom:4px;
+            }
+         .searchTd {float:left;
+            width:300px;
+            padding-bottom:4px;}
+         .eosIcons { float:left;
+            width:100px;
+            padding-bottom:4px;
+            padding-left:8px;
+            }
+        .eosRow {padding-bottom:2px;}
+        .header { font-family: Arial;
+            color: #E68E26;
+            font-size: 24px; 
+            font-weight: bold;
+            padding-bottom: 7px; 
+            padding-top:15px;
+        }
+        .inputField { width: 275px;}
+        .subHeader
+        {
+            font-family: Arial;
+            color:  #666666;
+            font-size: 18px;
+            padding-top:15px;
+        }
+         .SearchSubHeader
+        {
+            font-family: Arial;
+            color:  #666666;
+            font-size: 14px;
+            padding-bottom: 15px;
+            padding-top: 15px;
+        }
+        .tableLabel
+        {
+            font-family: Arial;
+            color:  #666666;
+            font-size: 12px;
+            padding-bottom: 15px;
+            padding-top: 15px;
+        }
+        .addButton
+        {
+            padding-left:10px;
+            font-size: 12px;
+            
+        }
+        .tableHeader
+        {
+            font-family: Arial;
+            color: #222222;
+            font-size: 14px;
+            float: left;
+            width: 270px;
+            font-weight: bold;
+        }
+        .spanHeader
+        {
+            font-family: Arial;
+            color: #222222;
+            font-size: 12px;
+            float: left;
+            width: 125px;
+        }
+        .inputField { width: 275px;}
+        
+        .setupPage a:hover
+        {
+            color:#d13393;
+        } 
+        .setupPage a
+        {
+            color:#29bdbe;
+        }
+        .searchFields
+        {
+            
+        } 
+        .searchConfig
+        {
+            
+        }
+        #dsws
+        {
+           
+        }
+        .subTableHeaders
+        {
+            clear:both;
+        }
+        .help
+        {
+            float:right;
+        }
+        .eostable
+        {
+        	clear:both;
+        }
+   </style>
+
+    <apex:form styleClass="setupPage">
+    <apex:outputPanel id="msgs" >
+        <apex:pageMessages />
+    </apex:outputPanel>
+    <div class="help"><a onclick="javascript:window.open('https://knowledge.springcm.com/configuring-get-it-in-salesforce');">Help</a></div>
+    <div id="dsws"> 
+    <div class="header" >Configure</div>
+	<div class="subHeader">Get It! Apps</div>
+        <div>
+            <span class="tableHeader" style="width:500px">Salesforce Object</span>
+            <span class="tableHeader">Search Name</span>
+        </div>
+        <apex:dataTable id="existingDSWs" value="{!dswList}" var="d" styleClass="eostable" rowClasses="eosRow" width="100%">
+            <apex:column styleClass="eosTd">
+               <apex:outputPanel rendered="{!NOT(d.disabled)}">
+                <apex:selectList required="false" id="selectFields" size="1" value="{!d.dsw.SpringCMEos__Types__c}" title="Types"  >
+                    <apex:selectOptions id="objectType" value="{!ObjectTypes}" />   
+                </apex:selectList>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!d.disabled}"> 
+                    {!d.dsw.SpringCMEos__Types__c}
+                </apex:outputPanel>  
+            </apex:column>
+            <apex:column styleClass="eosTdSmall" >
+                <apex:outputPanel rendered="{!NOT(d.disabled)}">
+                    <apex:inputField id="dswName"  value="{!d.dsw.SpringCMEos__DSWName__c}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!d.disabled}"> 
+                    {!d.dsw.SpringCMEos__DSWName__c}
+                </apex:outputPanel>
+            </apex:column>
+            <apex:column styleClass="eosIcons">
+                <apex:commandLink action="{!editDsw}" rendered="{!d.disabled}" reRender="existingDSWs,searchConfiguration,msgs" >
+                    <apex:param name="editId" value="{!d.id}" assignTo="{!editId}" />
+                    <apex:image url="{!$Resource.SpringCMEos__scmPencil}"/>
+                </apex:commandLink> 
+                 <apex:commandLink action="{!saveDsw}" rendered="{!NOT(d.disabled)}" reRender="existingDSWs,msgs,searchConfiguration" >
+                    <apex:param name="saveId" value="{!d.id}" assignTo="{!editId}" />
+                    <apex:image url="{!$Resource.SpringCMEos__scmDisk}"/> 
+                </apex:commandLink>   
+                <apex:commandLink action="{!cancelDsw}" rendered="{!NOT(d.disabled)}"  reRender="existingDSWs,searchConfiguration,msgs" >
+                    <apex:param name="cancelId" value="{!d.id}" assignTo="{!editId}" />
+                    <apex:image url="{!$Resource.SpringCMEos__scmGrayx}"/>
+                </apex:commandLink> 
+                <apex:commandLink action="{!deleteDsw}" rendered="{!d.disabled}" reRender="existingDSWs,searchConfiguration,msgs" onclick="if(!confirm('Are you sure wish to delete this configuration?')){return};">
+                    <apex:param name="deleteId" value="{!d.id}" assignTo="{!editId}" />
+                    <apex:image url="{!$Resource.SpringCMEos__scmRedx}" />
+                </apex:commandLink>
+            </apex:column>
+        </apex:dataTable>
+        
+        </div>
+        <div class="searchConfig">
+        <apex:outputPanel id="searchConfiguration" >
+        <apex:outputPanel rendered="{!editDswSearch}">
+        <div class="subHeader">{!sfType} Search Configuration</div>
+       <br></br>
+        <table cellspacing="0" cellpadding="0" border="0" >
+        <tr>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="All Words:" for="allWords" /></td>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Without Words:" for="withoutWords" /></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="allWords"  value="{!dsc.SpringCMEos__All_Words__c}"/></td>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="withoutWords"  value="{!dsc.SpringCMEos__Without_Words__c}"/></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Any Words:" for="anyWords" /></td>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Phrase:" for="phrase" /></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="anyWords"  value="{!dsc.SpringCMEos__Any_Words__c}"/></td>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="phrase"  value="{!dsc.SpringCMEos__Phrase__c}"/></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Document Name:" for="title" /></td>
+            <td class="searchTd"  ><apex:outputLabel styleClass="tableLabel" value="Updated By (email):" for="updatedBy" /></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="title" value="{!dsc.SpringCMEos__Title__c}"/></td>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="updatedBy"  value="{!dsc.SpringCMEos__UpdatedBy__c}"/></td>
+        </tr>
+        <tr>
+            <td class="searchTd"  ><apex:outputLabel styleClass="tableLabel" value="Content:" for="content" /></td>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Description:" for="description" /></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:inputTextArea rows="1" cols="47" id="content" value="{!dsc.SpringCMEos__Content__c}"/></td>
+            <td class="searchTd" ><apex:inputTextArea rows="1" cols="47" id="description" value="{!dsc.SpringCMEos__Description__c}"/></td>
+        </tr>
+         <tr>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Updated on or Before (yyyy-mm-dd):" for="updatedBefore" /></td>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Updated on or After (yyyy-mm-dd):" for="updatedAfter" /></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="updatedBefore" value="{!dsc.SpringCMEos__Updated_On_Or_Before__c}"/></td>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="updatedAfter"  value="{!dsc.SpringCMEos__UpdatedOnOrAfter__c}"/></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="In Folder:" for="infolder" /></td>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Include Sub Folders:" for="infolder" /></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="infolder" value="{!dsc.SpringCMEos__In_Folder__c}"/></td>
+            <td class="searchTd" ><apex:inputCheckbox id="includeSubfolders" value="{!dsc.SpringCMEos__Include_Sub_Folders__c}"/></td>
+        </tr>
+         <tr>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Salesforce Object Type:" for="salesforceType" /></td>
+            <td class="searchTd" ><apex:outputLabel styleClass="tableLabel" value="Salesforce Object Id:" for="salesforceId" /></td>
+        </tr>
+        <tr>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="salesforceType" value="{!dsc.SpringCMEos__EOS_Object_Type__c}"/></td>
+            <td class="searchTd" ><apex:inputField styleClass="inputField" id="salesforceId"  value="{!dsc.SpringCMEos__EOS_Object_Id__c}"/></td>
+        </tr>
+    </table>
+    <div class="SearchSubHeader">Attributes <span class="addButton"><apex:commandButton action="{!addSCMGroup}" value="Add Group" reRender="existingGroups,msgs"></apex:commandButton></span></div>
+     <apex:outputLabel styleClass="tableLabel" value="In Any Attribute Field:" for="anyAttribute" /><apex:outputPanel id="existingGroups" ><br></br>
+     <apex:inputField styleClass="inputField" id="anyAttribute"  value="{!dsc.SpringCMEos__Any_Attribute_Field__c}"/>
+        <table width="100%" >
+            <apex:repeat value="{!groupList}" var="g" >
+            <tr>
+                <td class="searchTd">
+                    <span class="SearchSubHeader">Group</span>
+                </td>
+                <td class="eosTdSmall">
+                    <span class="SearchSubHeader">Add Field</span>
+                </td>
+                <td class="eosTdSmall">
+                    <span class="SearchSubHeader">Exclude Group</span>
+                </td>
+                <td class="eosTdSmall">
+                    <span class="SearchSubHeader">Remove</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="searchTd">
+                    <apex:selectList required="false" id="selectGroups" size="1" value="{!g.grp.SpringCMEos__Group__c}" title="GroupTypes"  >
+                        <apex:selectOptions id="groupname" value="{!scmGroupNames}" />   
+                    </apex:selectList>
+                </td>
+                <td class="eosTdSmall">
+                    <apex:commandButton action="{!addSCMField}" value="Add Field" reRender="existingGroups,msgs">
+                        <apex:param name="deleteId" value="{!g.id}" assignTo="{!groupEditId}" />
+                    </apex:commandButton>
+                </td>
+                <td class="eosTdSmall">
+                        <apex:inputCheckbox value="{!g.grp.SpringCMEos__ExcludeGroup__c}" ></apex:inputCheckbox>
+                </td>
+                <td class="eosTdSmall">
+                    <apex:commandLink action="{!deleteGroup}"  reRender="existingGroups,msgs" >
+                        <apex:param name="deleteId" value="{!g.id}" assignTo="{!groupEditId}" />
+                        <apex:image url="{!$Resource.SpringCMEos__scmRedx}" />
+                    </apex:commandLink>
+                </td>   
+            </tr>
+            <apex:repeat var="f" value="{!g.attributes}" id="fieldList">
+            <tr>
+                <td class="searchTd">
+                    <span class="SearchSubHeader">Attribute Name</span>
+                </td>
+                 <td class="searchTd">
+                    <span class="SearchSubHeader">Attribute Value</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="searchTd">
+                 <apex:selectList required="false" id="selectField" size="1" value="{!f.field.SpringCMEos__Field__c}" title="GroupTypes"  >
+                     <apex:actionSupport event="onchange" action="{!onSCMFieldChange}" rerender="existingGroups" >
+                         <apex:param name="fieldId" value="{!f.id}" assignTo="{!fieldEditId}" />
+                          <apex:param name="groupId" value="{!f.groupId}" assignTo="{!groupEditId}" />
+                     </apex:actionSupport>
+                    <apex:selectOptions id="fieldname" value="{!f.fieldNames}" />   
+                </apex:selectList>  
+                </td>
+                <td class="searchTd"> 
+                    <apex:outputPanel rendered="{!f.field.SpringCMEos__DataType__c='String'}">
+                        <apex:inputField styleClass="inputField" value="{!f.field.SpringCMEos__Value__c}" />
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!f.field.SpringCMEos__DataType__c='Number'}">
+                        <apex:inputField styleClass="shortInputField" value="{!f.field.SpringCMEos__Min_Value__c}" /> - <apex:inputField styleClass="shortInputField" value="{!f.field.SpringCMEos__Max_Value__c}" /> 
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!f.field.SpringCMEos__DataType__c='Decimal'}">
+                        <apex:inputField styleClass="shortInputField" value="{!f.field.SpringCMEos__Min_Value__c}" /> - <apex:inputField styleClass="shortInputField" value="{!f.field.SpringCMEos__Max_Value__c}" /> 
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!f.field.SpringCMEos__DataType__c='DropDown'}">
+                        <apex:inputField styleClass="inputField" value="{!f.field.SpringCMEos__Value__c}" />
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!f.field.SpringCMEos__DataType__c='MagicDropDown'}">
+                        <apex:inputField styleClass="inputField" value="{!f.field.SpringCMEos__Value__c}" /> 
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!f.field.SpringCMEos__DataType__c='Cascade'}">
+                        <apex:inputField styleClass="inputField" value="{!f.field.SpringCMEos__Value__c}" />
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!f.field.SpringCMEos__DataType__c='Date'}">
+                        <apex:inputField styleClass="inputField" value="{!f.field.SpringCMEos__Value__c}" />
+                    </apex:outputPanel>
+                </td>
+                 <td class="eosTdSmall">
+                    <apex:commandLink action="{!deleteField}"  reRender="existingGroups,msgs" >
+                        <apex:param name="deleteFieldId" value="{!f.id}" assignTo="{!fieldEditId}" />
+                        <apex:param name="groupFieldId" value="{!f.groupId}" assignTo="{!groupEditId}" />
+                        <apex:image url="{!$Resource.SpringCMEos__scmRedx}" />
+                    </apex:commandLink>
+                </td>   
+            </tr>
+            </apex:repeat>
+            </apex:repeat>
+        </table>
+      </apex:outputPanel>
+       
+        
+      <!--  <apex:commandButton action="{!saveDsw}" value="Save" onclick="hideSearchConfig()">
+        <apex:param name="saveId" value="{!d.dsw.id}" assignTo="{!editId}" />
+       </apex:commandButton>-->
+   
+    </apex:outputPanel>
+    
+  </apex:outputPanel>
+  
+   <apex:actionFunction name="addRow" action="{!addNewDSW}" rerender="existingDSWs,msgs,searchConfiguration" ></apex:actionFunction>
+        <br></br>
+		<a id="link" onclick="addRow()" href="#">Add New Get It! App</a><br></br><br></br>
+          <apex:commandButton action="{!back}" value="Back"  immediate="true" title="Back to page 1."/>
+  </div>
+
+    
+    </apex:form>
+
+    
+</apex:page>

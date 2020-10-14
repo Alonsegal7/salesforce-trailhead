@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Update_handover_timestamp {
+  fullName = "Account.Update_handover_timestamp"
+  field = salesforce.Account.field.Handover_Timestamp__c
+  formula = "today()"
+  name = "Update handover timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

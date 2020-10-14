@@ -1,0 +1,24 @@
+salesforce.WorkflowAlert Opportunity_New_SQL_Opportunity_is_Closed_Won {
+  fullName = "Opportunity.New_SQL_Opportunity_is_Closed_Won"
+  description = "New SQL Opportunity is Closed Won"
+  protected = false
+  recipients = [
+    {
+      recipient = "galom@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      field = salesforce.Opportunity.field.SDR_Name__c
+      type = "userLookup"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_SQL_Opportunity_is_Won
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

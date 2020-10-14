@@ -1,0 +1,304 @@
+salesforce.Flow Contact_When_DM_Joins_set_lookup_in_account_and_send_notification {
+  fullName = "Contact_When_DM_Joins_set_lookup_in_account_and_send_notification"
+  actionCalls = [
+    {
+      name = "Send"
+      label = "Send"
+      locationX = 599
+      locationY = 600
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "NotificationMessage"
+          }
+        },
+        {
+          name = "emailAddressesArray"
+          value = {
+            elementReference = "EmailAddresses"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            elementReference = "SubjectEmail"
+          }
+        },
+      ]
+    },
+  ]
+  assignments = [
+    {
+      name = "Create_addresses_collection"
+      label = "Create addresses collection"
+      locationX = 212
+      locationY = 383
+      assignmentItems = [
+        {
+          assignToReference = "EmailAddresses"
+          operator = "AddAtStart"
+          value = {
+            elementReference = "get_account.Owner_s_Email__c"
+          }
+        },
+        {
+          assignToReference = "EmailAddresses"
+          operator = "Add"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          assignToReference = "EmailAddresses"
+          operator = "Add"
+          value = {
+            elementReference = "get_account.CSM_Email__c"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Is_monday_account"
+      }
+    },
+    {
+      name = "Do_Nothing"
+      label = "Do Nothing"
+      locationX = 677
+      locationY = 298
+      assignmentItems = [
+        {
+          assignToReference = "Nothing"
+          operator = "Assign"
+          value = {
+            stringValue = "1"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      name = "Created_By_BB_and_is_DM"
+      label = "Created By BB and is DM"
+      locationX = 413
+      locationY = 117
+      defaultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Created_by_Bot"
+          conditionLogic = "1 AND (2 OR 3)"
+          conditions = [
+            {
+              leftValueReference = "$Record.CreatedById"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "0051t000003OiHnAAK"
+              }
+            },
+            {
+              leftValueReference = "$Record.Seniority__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Director"
+              }
+            },
+            {
+              leftValueReference = "$Record.Seniority__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Executive"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "get_account"
+          }
+          label = "Created by Bot and is DM"
+        },
+      ]
+    },
+    {
+      name = "Is_monday_account"
+      label = "Is monday account?"
+      locationX = 415
+      locationY = 451
+      defaultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Record_type_is_monday_account"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "get_account.RecordTypeId"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "0121t000000IQTnAAO"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Last_Joined_Senior_Contact"
+          }
+          label = "Record type is monday account"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Contact - When DM Joins, set lookup in account and send notification {!$Flow.CurrentDateTime}"
+  label = "Contact - When DM Joins, set lookup in account and send notification"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "get_account"
+      label = "get account"
+      locationX = 423
+      locationY = 293
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Create_addresses_collection"
+      }
+      faultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.AccountId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Account
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_Last_Joined_Senior_Contact"
+      label = "Update Last Joined Senior Contact"
+      locationX = 429
+      locationY = 600
+      connector = {
+        targetReference = "Send"
+      }
+      faultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.AccountId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Last_Joined_Senior_Contact__c"
+          value = {
+            elementReference = "$Record.Id"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+  ]
+  start = {
+    locationX = 23
+    locationY = 50
+    connector = {
+      targetReference = "Created_By_BB_and_is_DM"
+    }
+    object = salesforce.Contact
+    triggerType = "RecordAfterSave"
+  }
+  status = "Active"
+  textTemplates = [
+    {
+      name = "NotificationMessage"
+      text = '''
+{!get_account.Owner_Name__c},
+A new {!$Record.Seniority__c} has been added to your account - {!get_account.Name}.
+
+Contact: https://monday.lightning.force.com/lightning/r/Contact/{!$Record.Id}/view
+Title: {!$Record.Title}
+Email: {!$Record.Email}
+
+Account: https://monday.lightning.force.com/lightning/r/Account/{!$Record.AccountId}/View
+Account Status: {!get_account.Monday_Account_Status__c}
+Account Plan: {!get_account.Plan_Name__c}
+Account Country: {!get_account.BillingCountry}
+Company Size: {!get_account.Company_Size__c}
+Senior titles in the account: {!get_account.Number_of_titles_added__c}
+'''
+    },
+  ]
+  variables = [
+    {
+      name = "EmailAddresses"
+      dataType = "String"
+      isCollection = true
+      isInput = true
+      isOutput = false
+    },
+    {
+      name = "Nothing"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      value = {
+        stringValue = "0"
+      }
+    },
+    {
+      name = "recordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+    },
+    {
+      name = "SubjectEmail"
+      dataType = "String"
+      isCollection = false
+      isInput = false
+      isOutput = false
+      value = {
+        stringValue = "A new {!$Record.Seniority__c} has been added to your account!"
+      }
+    },
+  ]
+}

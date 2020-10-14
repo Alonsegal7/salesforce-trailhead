@@ -1,0 +1,6 @@
+salesforce.CustomTab zaapit__Grid_Manager {
+  fullName = "zaapit__Grid_Manager"
+  label = "Grid Manager"
+  motif = "Custom57: Building Block"
+  page = "zaapit__zaapit_tb_swap_table"
+}

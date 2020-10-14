@@ -1,0 +1,19 @@
+salesforce.WorkflowRule Quote_Signed_SO_Received_Partners {
+  fullName = "Quote.Signed SO Received- Partners"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Quote_Notification_when_Sales_Oder_is_signed_Partners
+      type = "Alert"
+    },
+  ]
+  active = true
+  formula = '''
+IsSyncing = TRUE &&  Is_Published__c = TRUE &&  
+ischanged(DH_Quote_Status__c)&&
+ISPICKVAL(DH_Quote_Status__c , 'Won') && CreatedBy.Profile.Name <> 'System Administrator' &&  ISPICKVAL(CreatedBy.Function__c ,"Partners- Channel Manager")
+'''
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Quote,
+  ]
+}

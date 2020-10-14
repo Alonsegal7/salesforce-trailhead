@@ -1,0 +1,31 @@
+salesforce.CustomObjectTranslation ExchangeRate__c_en_US {
+  fullName = "ExchangeRate__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "ExchangeRate"
+    },
+    {
+      plural = true
+      value = "ExchangeRates"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.ExchangeRate__c.field.Currency__c
+    },
+    {
+      label = ""
+      name = salesforce.ExchangeRate__c.field.Date__c
+    },
+    {
+      label = ""
+      name = salesforce.ExchangeRate__c.field.Rate__c
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.ExchangeRate__c,
+  ]
+}

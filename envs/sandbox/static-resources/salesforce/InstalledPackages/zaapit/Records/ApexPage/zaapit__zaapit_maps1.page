@@ -1,0 +1,251 @@
+<apex:page applyHtmlTag="false" applyBodyTag="false" showHeader="false">
+
+<html>
+<head>
+<title>Maps</title>
+ <link rel="stylesheet" href="{!URLFOR($Resource.ZPmaps,'mapos.css')}" />
+<style>
+.leaflet-control-layers-toggle {
+    background-image: url({!URLFOR($Resource.ZPmaps,'/images/layers.png')});
+    width: 36px;
+    height: 36px;
+    }
+.leaflet-retina .leaflet-control-layers-toggle {
+    background-image: url({!URLFOR($Resource.ZPmaps,'/images/layers-2x.png')});
+    background-size: 26px 26px;
+    }
+    /* Default icon URLs */
+.leaflet-default-icon-path {
+    background-image: url({!URLFOR($Resource.ZPmaps,'/images/marker-icon.png')});
+    }
+</style>
+
+<script type="text/javascript" src="{!$Resource.zp_jquery172}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.ZPmaps,'mapos.js')}"></script>
+
+
+  <script>
+  
+  
+    function getParam(param){
+        var res = "";
+        try{
+            res=decodeURIComponent((self.location+"").split(param+'=')[1].split("&")[0]);
+            res=res.replace(/\n|\r| \, |\, \,|\'|\<|\>|\"/ig," ");
+        }catch(e){res="";}
+        return res;
+    }
+    var userAddr = getParam("userAddr1");
+    
+
+ var map =null;
+ var iX=0
+ var LXM=null;
+ var countrysX=new Array();
+    //request data using jsonP
+    $(document).ready(function(){
+        if(LXM!=null) return;
+			var height=$(self).height();
+	        if(height!=null && height!=""){
+	            $("#mapid").height(height-15);
+	            $("#loadingx2").height(height-15).fadeTo(0.1);
+	        }
+	        LXM=L;
+	   //alert($("#countrys").html());
+		var countryLL=$("#countrys").text().split(/\n|\\n/);
+	//$("#countrys").html("");
+		
+			for(var i=0;i<countryLL.length;i++){
+				var countryz=countryLL[i].split("\t");
+				//alert(countryz);
+				if(countryz.length==3){
+					countrysX[$.trim(countryz[1].toLowerCase())]=countryz[0];
+					countrysX[$.trim(countryz[2].toLowerCase())]=countryz[0];
+				}
+			}
+			//alert(countrysX.length);
+			var plotOnMapSets=parent.plotOnMapSets;
+			initMap(plotOnMapSets.records,plotOnMapSets.latField,plotOnMapSets.longField, plotOnMapSets.add1F, plotOnMapSets.add2F, plotOnMapSets.add3F, plotOnMapSets.add4F, plotOnMapSets.add5F,plotOnMapSets.objectName);
+		
+      });
+      
+    
+      
+      function getLocations(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName,index){
+if(index<records.length){
+	iX=index; 
+	
+	if((records[iX][latField]==null || records[iX][latField]=="") && add5F!=null && $.trim(add5F)!=''){
+		getLocationX(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName,index);
+		//alert(iX +" " +records[iX][latField]+" " +records[iX][longField]);
+	}else{
+		getLocations(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName,index+1);
+	}
+}else{
+	contMap(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName);
+}
+
+      }
+function getLocationX(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName,index){
+	var i=index;
+	if(records[i][add2F]==null) records[i][add2F]="";
+	if(records[i][add3F]==null) records[i][add3F]="";
+	if(records[i][add4F]==null) records[i][add4F]="";
+	if(records[i][add5F]==null) records[i][add5F]="";
+	var AddrArr_i=records[i][add2F]+', '+records[i][add3F]+', '+records[i][add5F]+'';//, '+records[i][add4F]+'
+    AddrArr_i=AddrArr_i.replace(", , ",", ").replace(", , ",", ").replace(", , ",", ");
+    if(AddrArr_i.indexOf(", ")==0){
+        AddrArr_i=AddrArr_i.substring(2);
+    }
+    var country2Char=(records[i][add5F].length==2?records[i][add5F]:countrysX[$.trim(records[i][add5F].toLowerCase())]);
+    if(AddrArr_i==""){
+    		getLocations(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName,index+1);
+        }else{
+	    $.ajax({
+	        url:'https://nominatim.openstreetmap.org/search?format=json&polygon=0&addressdetails=0&q='+escape(AddrArr_i)+'&countrycodes='+(country2Char==null?"null":country2Char), 
+	        type:"GET",
+	        async:'true',
+	        success:function (data) {
+	            try{
+	                //alert(data[0].lon + data[0].lat);
+	                if(data.length>0 ){
+	                    var g1=data[0];
+	                    records[index][latField]=g1.lat;
+	                    records[index][longField]=g1.lon;
+	                    //alert((Number(g1[0])+Number(g1[1]))/2.0);
+	                    //initMap([(Number(g1[0])+Number(g1[1]))/2.0,(Number(g1[2])+Number(g1[3]))/2.0],iX,Contact_addressArr[iX],AddrArr[iX]);
+	                    //getLocations(iX+1);
+	                }
+	            }catch(e){
+	                
+	            }
+	            //getLocations(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName,index+1);
+	          },complete: function(){
+	          	//alert("next location");
+	 			 getLocations(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName,index+1);
+	             }
+	    		
+	        });
+       }
+}
+      
+      var lastcoordinates=null;
+ function initMap(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName){
+
+     getLocations(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName,0);
+     
+ }
+
+ function  contMap(records,latField,longField, add1F, add2F, add3F, add4F, add5F,objectName) {
+	 $("#mapid").html("");
+     map = LXM.map('mapid');
+     
+     LXM.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	//   attribution: '&copy; <a href="http://www.zaapit.com" target="_blank" style="font-style:italic;">ZaapIT Software Technologies</a>'
+	}).addTo(map);
+	
+	    	     
+	 var zoomFactor=13;
+    if(records.length>0){
+        var maxLat=0;//Number(records[0][latField]);
+        var minLat=0;//Number(records[0][latField]);
+        var maxLong=0;//Number(records[0][longField]);
+        var minLong=0;//Number(records[0][longField]);
+        
+        for(var i=0;i<records.length;i++){
+            //alert(records[0][latField]+" "+records[0][longField]);
+            if(records[i][latField]!=null){
+				if(maxLat==0 && minLat==0){
+	            	 maxLat=Number(records[i][latField]);
+	                 minLat=Number(records[i][latField]);
+	                 maxLong=Number(records[i][longField]);
+	                 minLong=Number(records[i][longField]);
+				}
+                 
+	            maxLat=Math.max(maxLat,Number(records[i][latField]));
+	            
+	            
+	            minLat=Math.min(minLat,Number(records[i][latField]));
+	            
+	            maxLong=Math.max(maxLong,Number(records[i][longField]));
+	            
+	            minLong=Math.min(minLong,Number(records[i][longField]));
+	            
+	            
+	            if(records[i][add2F]==null){
+	                records[i][add2F]="";
+	            }
+	            if(records[i][add3F]==null){
+	                records[i][add3F]="";
+	            }
+	            if(records[i][add4F]==null){
+	                records[i][add4F]="";
+	            }
+	            if(records[i][add5F]==null){
+	                records[i][add5F]="";
+            } 
+            }          
+        }
+        console.log(maxLong+" "+minLong+ " "+maxLat+" "+minLat);
+             var dist0=maxLong-minLong;
+            var dist1=maxLat-minLat;
+            //alert(dist0+ " "+dist1);
+            var sub1=Math.max(Math.abs(dist1),Math.abs(dist0))/13;
+            if(sub1<=13){
+                zoomFactor=zoomFactor-sub1;
+            }else{
+                zoomFactor=2;
+            }
+     
+   var coordinates=[records[0][latField], records[0][longField]];
+  
+
+ for(var i=0;i<records.length;i++){
+	 if(records[i][latField]!=null){
+	     coordinates=[records[i][latField], records[i][longField]];
+	    
+	    var AddrArr_i=records[i][add2F]+', '+records[i][add3F]+', '+records[i][add4F]+', '+records[i][add5F];
+	    AddrArr_i=AddrArr_i.replace(", , ",", ").replace(", , ",", ").replace(", , ",", ");
+	    if(AddrArr_i.indexOf(", ")==0){
+	        AddrArr_i=AddrArr_i.substring(2);
+	    }
+	    var AddrArr_iVis=AddrArr_i.replace(/\, /ig,"<br/> ");
+	    //https://www.google.com/maps/?q=
+	    var userAddr="";
+	    
+	    LXM.marker(coordinates).addTo(map).bindPopup('<b style="font-size:11pt;">'+(objectName.indexOf('__c')>-1?'':objectName+': ')+records[i][add1F]+'</b><div style="padding:7px 0px;"> '+AddrArr_iVis+'</div><a href="javascript:void(0);" onclick="parent.omActF1(\''+records[i]['Id']+'\',null,\''+records[i][add1F].replace(/'/ig,'')+'\');">View Details</a>, <a href="/'+records[i]['Id']+'" target="_blank">Open Record</a>, <a href="https://www.google.co.il/maps/dir/'+encodeURIComponent(userAddr)+'/'+encodeURIComponent(AddrArr_i)+'/" target="_blank"> Get Directions</a>, <a href="https://www.google.com/maps/?q='+encodeURIComponent(AddrArr_i)+'" target="_blank">Google Map</a>');
+	 }    
+    }
+
+}
+    if(minLat==0 && minLong==0){
+    	$("#mapid").html("<div style='padding:35px;'><div style='font-size:13pt;font-weight:bold;color:#696969;'>Found 0 records with valid geo location / traceable address!</div></div>");
+     }else{
+		// map.setView(coordinates, zoomFactor);
+		map.fitBounds([
+		    [minLat, minLong],
+		    [maxLat, maxLong]
+		    
+		],{"padding":[5,5]});
+
+     }
+}
+
+   </script>
+   <style>
+   #loadingx2Anchor{position:relative;}
+#loadingx2{z-index:9;position:absolute;background:#E5E5E5 url('/img/loading.gif') 45% 45% no-repeat;width:100%;height:400px;opacity:0.3;}
+.hd1{display:none;}
+   </style>
+</head><body style="margin:0px;padding:5px 0px;">
+   <div id="mapid" style="width:100%;height:400px;">
+   <div id="loadingx2Anchor"><div id="loadingx2" ></div></div>
+   <div style="padding:35px;"><b style="font-size:11pt;"> Calculating GEO locations... </b><div style="margin-top:10px;color:#696969;">To improve performance: Go to setup &gt; search &gt; data &gt; Data Integration Rules &gt; activate all GEO calculation</div>
+   </div></div>
+   
+   <pre class="hd1" id="countrys" >{!HTMLENCODE($label.countryCodes1+'\n'+$label.countryCodes2+'\n'+$label.countryCodes3+'\n'+$label.countryCodes4+'\n'+$label.countryCodes5+'\n'+$label.countryCodes6)}</pre>
+ </body>
+ </html>
+ 
+   
+</apex:page>

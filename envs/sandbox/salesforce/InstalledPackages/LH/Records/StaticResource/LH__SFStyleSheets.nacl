@@ -1,0 +1,7 @@
+salesforce.StaticResource LH__SFStyleSheets {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "application/x-zip-compressed"
+  fullName = "LH__SFStyleSheets"
+  content = file("salesforce/InstalledPackages/LH/Records/StaticResource/LH__SFStyleSheets.resource")
+}

@@ -1,0 +1,366 @@
+<apex:page controller="LH.LH_New_Setting_Controller" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0"> 
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head> 
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <apex:includeScript value="{! URLFOR($Resource.HS_Jquery, 'jquery-1.12.1.min.js')}" />
+    <apex:includeScript value="{! URLFOR($Resource.HS_Jquery, 'jquery-ui.min.js')}" />  
+    <style>
+        .slds-card.grayBlock, .slds-modal__content.grayBlock {
+            background-color: #f4f6f9; 
+        }
+    </style>
+</head>
+<script>
+    var lh = lh || {};
+    var overwriteFlag;
+
+    lh.j$ = jQuery.noConflict();
+    lh.j$(document).ready(function() {
+        if(!{!HasRemoteSite}){
+            createRemoteSite();                
+        }
+    });
+
+    function createRemoteSite(){ 
+        // Calls the Metdata API from JavaScript to create the Remote Site Setting to permit Apex callouts
+        var binding = new XMLHttpRequest();
+        var request = 
+            '<?xml version="1.0" encoding="utf-8"?>' + 
+            '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
+            '<env:Header>' + 
+                '<urn:SessionHeader xmlns:urn="http://soap.sforce.com/2006/04/metadata">' + 
+                '<urn:sessionId>{!$Api.Session_ID}</urn:sessionId>' + 
+                '</urn:SessionHeader>' + 
+            '</env:Header>' + 
+            '<env:Body>' +
+                '<upsertMetadata xmlns="http://soap.sforce.com/2006/04/metadata">' + 
+                '<metadata xsi:type="RemoteSiteSetting">' + 
+                    '<fullName>mdapi</fullName>' +  + 
+                    '<disableProtocolSecurity>false</disableProtocolSecurity>' + 
+                    '<isActive>true</isActive>' + 
+                    '<url>https://{!host}</url>' +
+                '</metadata>' +
+                '</upsertMetadata>' +
+            '</env:Body>' + 
+            '</env:Envelope>';
+        binding.open('POST', 'https://{!JSENCODE(host)}/services/Soap/m/28.0');
+        binding.setRequestHeader('SOAPAction','""');
+        binding.setRequestHeader('Content-Type', 'text/xml');
+        binding.onreadystatechange = 
+            function() { 
+                if(this.readyState==4) {
+                    var parser = new DOMParser();
+                    var doc  = parser.parseFromString(this.response, 'application/xml');
+                    var errors = doc.getElementsByTagName('errors');
+                    var messageText = '';
+
+                    for(var errorIdx = 0; errorIdx < errors.length; errorIdx++)
+                        messageText+= errors.item(errorIdx).getElementsByTagName('message').item(0).innerHTML + '\n';
+                } 
+            }
+        binding.send(request);
+    }
+
+    function loading(val) {
+        if(val){
+            document.getElementById('loading').style.display = 'block';
+        }else{
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
+
+    function debounce(func, wait, inputId, immediate) {
+        var input = lh.j$("[id$='" + inputId + "']");
+        var len = input.val().length;
+        input[0].focus();
+        input[0].setSelectionRange(len, len);
+
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+</script>
+    
+<apex:slds />
+<apex:form >
+    <apex:actionFunction action="{!checkValidLookupName}" name="checkValidLookupName" oncomplete="checkValidRelationshipName();" reRender="newRelationshipNameInput" status="loading"/>
+    <apex:actionFunction action="{!checkValidRelationshipName}" name="checkValidRelationshipName" rerender="relNameContainer, invalidFieldContainer, createFieldButton" status="loading"/>
+    <apex:actionFunction action="{!validateCustomLookupField}" name="validateCustomLookupField" rerender="fieldCreationErrors"/>
+    <apex:actionStatus id="loading" onstart="loading(true)" onstop="loading(false)" />
+
+    <div class="slds slds-p-around_medium slds-size--10-of-12 slds-container--center" role="main">
+        <div class="slds-card slds-m-bottom--medium grayBlock" style="height: auto;">
+            <div class="slds-scope" style="margin-top: 10px; margin-left: 5px; margin-right: 5px;">
+                <div class="slds-grid">
+                    <div class="slds-tabs--path" role="application">
+                        <ul class="slds-tabs--path__nav" role="tablist">
+                            
+                            <li class="slds-tabs--path__item slds-is-complete" role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-99" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="/apex/LH_LandingPage" aria-live="assertive">
+                                    <span class="slds-tabs--path__stage">Home</span>
+                                    <span class="slds-tabs--path__title">Home</span>
+                                </a>
+                            </li>
+
+                            <li class="slds-tabs--path__item slds-is-complete" role="presentation">
+                                <apex:commandLink action="{!goToPreviousStep}" styleClass="slds-tabs--path__link" id="tabs-path-96">
+                                    <apex:param value="lh_newsetting_childobject" assignTo="{!previousStepPage}"></apex:param>
+                                    <apex:outputPanel rendered="{!ISBLANK(selectedChildObject )}">
+                                        <span class="slds-tabs--path__stage">Select Child Object</span>
+                                        <span class="slds-tabs--path__title">Select Child Object</span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!NOT(ISBLANK(selectedChildObject ))}">
+                                        <span class="slds-tabs--path__stage">Child Object is {!ChildObjLabel }</span>
+                                        <span class="slds-tabs--path__title">Child Object is {!ChildObjLabel }</span>
+                                    </apex:outputPanel>
+                                </apex:commandLink>
+                            </li>
+            
+                            <li class="slds-tabs--path__item slds-is-current" role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-97" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                    <span class="slds-tabs--path__stage">Select or Create Lookup Field</span>
+                                    <span class="slds-tabs--path__title">Select or Create Lookup Field</span>
+                                </a>
+                            </li>
+            
+                            <li class="slds-tabs--path__item slds-is-incomplete" role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-98" aria-controls="content-path-1" aria-selected="true" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                    <span class="slds-tabs--path__stage">Lookup Helper Setting Type</span>
+                                    <span class="slds-tabs--path__title">Lookup Helper Setting Type</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <header class="slds-card__header slds-grid">
+                <div class="slds-media__body">
+                    <h3 class="slds-text-heading--small slds-truncate">Select or Create Lookup Field to be Used</h3>        
+                </div>
+            </header>
+            <section class="slds-card__body slds-grid slds-p-top_medium slds-p-bottom_large">
+                <div style="width:95%; height: auto; margin-left:auto; margin-right:auto;">
+                    <apex:outputPanel rendered="{! childObjectNotUpdateable}">
+                        <apex:outputPanel id="invalidChildObject" styleclass="slds-col slds-align-middle" rendered="{! !isValidChildObjectNameLength}"> 
+                            <div class="slds-box slds-theme_warning">
+                                Warning: The custom object API name {!selectedChildObject} must be less than 40 characters in order to create a
+                                new lookup relationship. A new lookup relationship can be created by going to Setup and adding the lookup field manually on the selected child object.
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel id="fieldCreationUnavailableMessage" rendered="{!isValidChildObjectNameLength}">
+                            <div class="slds-box slds-theme_warning">
+                                Field creation is not available on {!selectedChildObject}.
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! !childObjectNotUpdateable}">
+                        <apex:commandButton styleClass="slds-button slds-button_neutral" action="{!openNewLookupFieldModal}" rerender="newLookupFieldContainer" style="margin-left: auto; margin-right: auto;" value="Create New Lookup Field" status="loading"/>
+                        <br/><br/>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="noLookupRelationships" rendered="{!childRelationshipListIsEmpty}">
+                        <div class="slds-box slds-theme_warning">
+                            No relationships available on {!selectedChildObject}.
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="nonVisibleLookupFields" rendered="{!hasRelationshipsNotVisible}">
+                        <div style="margin-top:5px;">
+                            Please note: Lookup fields not listed below may not appear unless field level security and page layout settings are adjusted.
+                        </div><br/>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="lookupFieldSelection" rendered="{! !childRelationshipListIsEmpty}">
+                        <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+                            <thead>
+                                <tr>
+                                    <th class="slds-size_1-of-4 slds-text-heading--label" scope="col">Action</th>
+                                    <th class="slds-size_1-of-4 slds-text-heading--label" scope="col">Label</th>
+                                    <th class="slds-size_1-of-4 slds-text-heading--label" scope="col">API Name</th>
+                                    <th class="slds-size_1-of-4 slds-text-heading--label" scope="col">Data Type</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="slds-scrollable--y" style="width:100%; margin-left:auto; margin-right:auto;">
+                            <apex:outputPanel id="lookupFieldsTable">
+                                <apex:outputPanel > 
+                                    <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+                                        <tbody>
+                                            <apex:repeat value="{!lookupFieldListEntries}" var="relationship">
+                                                <tr>
+                                                    <td class="slds-size_1-of-4">
+                                                        <apex:commandLink action="{!proceedToSettingTypePage}" value="Select">
+                                                            <apex:param assignTo="{!childRelationship}" name="childRelationship" value="{!relationship.apiName}" />
+                                                            <apex:param assignTo="{!parentObjectName}" name="parentObjectName" value="{!relationship.parentObject}" />
+                                                            <apex:param assignTo="{!childRelationshipFieldIsPolymorphic}" name="childRelationshipFieldIsPolymorphic" value="{!relationship.isPolymorphic}" />
+                                                        </apex:commandLink>
+                                                    </td>
+                                                    <td class="slds-size_1-of-4">
+                                                        {!relationship.label}
+                                                    </td>
+                                                    <td class="slds-size_1-of-4">
+                                                        {!relationship.apiName}
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputPanel rendered="{!relationship.isPolymorphic}">
+                                                            <apex:selectList size="1" value="{!relationship.parentObject}">
+                                                                <apex:selectOptions value="{!relationship.fieldObjects}"/>
+                                                                <apex:actionSupport event="onchange" rerender="lookupFieldsTable"/>
+                                                            </apex:selectList>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!NOT(relationship.isPolymorphic)}">
+                                                            {!relationship.parentObject}
+                                                        </apex:outputPanel>
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+            </section>
+            <footer class="slds-card__footer">
+                <center>
+                    <apex:commandLink action="{!goToPreviousStep}" styleclass="slds-button slds-button--neutral" value="Previous">
+                        <apex:param value="lh_newsetting_childobject" assignTo="{!previousStepPage}"></apex:param>
+                    </apex:commandLink>
+                    <apex:commandButton action="{!doCancel}" styleclass="slds-button slds-button--neutral" value="Cancel"/>
+                </center>
+            </footer>
+        </div>
+        <c:LH_additionalInformation />
+    </div>
+    <apex:outputPanel id="newLookupFieldContainer">
+        <apex:outputPanel rendered="{!showNewLookupFieldModal}">
+            <div id='newLookupField'>
+                <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container" style="width:760px !important;">
+                        <div class="slds-modal__header">
+                            <h2 class="slds-text-heading_medium">Create New Lookup Field</h2>
+                            <apex:commandLink action="{!clearAllNewLookupInfo}" styleclass="slds-button slds-button_icon-inverse slds-modal__close" reRender="newLookupFieldContainer" status="loading">
+                                <svg aria-hidden="true" class="slds-button__icon slds-button__icon_large">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{! URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                </svg>
+                            </apex:commandLink>
+                        </div>
+                        <div class="slds-modal__content grayBlock" style="padding-left:28px; padding-right:28px; padding-top:15px; padding-bottom:15px;">
+                            <apex:outputPanel id="fieldCreationErrors">
+                                <apex:outputPanel >
+                                    <div style="slds-notify slds-notify_toast slds-theme_warning">
+                                        <apex:pageMessages escape="false"/>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                            <section class="slds-card__body">
+                                <table>
+                                <tr>
+                                    <td>  
+                                    <div class="slds-box slds-box--x-small slds-theme--alt-inverse" style="width:90%; margin-left:auto; margin-right:auto;">
+                                        <span class="slds-align_absolute-center">
+                                            Please Note: If creating a new lookup field, field level security and page layouts will need to be adjusted to make the new lookup field visible.
+                                        </span>
+                                    </div>
+                                    </td>
+                                </tr>
+                                </table>
+                            </section>
+                            <section class="slds-card__body slds-grid slds-p-top_large" style="padding-left:12px;">
+                                <table>
+                                <tr>
+                                    <td>  
+                                        <label class="slds-form-element__label">Parent Object </label>
+                                        <apex:selectList value="{!parentObjectName}" size="1">
+                                            <apex:actionSupport action="{!clearLookupFieldModal}" event="onchange" rerender="newLookupFieldNameInputs, createFieldButton, invalidFieldContainer, fieldCreationErrors" focus="fieldNameInput" />
+                                            <apex:selectOptions value="{!ParentList.0}"/>
+                                        </apex:selectList>
+                                    </td>
+                                </tr>
+                                </table>
+                            </section>
+                            <section class="slds-card__body">
+                                <apex:outputPanel id="newLookupFieldNameInputs">
+                                <table>
+                                <tr>
+                                    <td width="50%;">  
+                                        <div class="slds-col slds-col--padded">
+                                            <apex:outputPanel id="newLookupNameInput" rendered="{! AND( NOT(ISBLANK(selectedChildObject)), NOT(ISBLANK(parentObjectName)))}">
+                                                <label class="slds-form-element__label">Field Name</label><br/>
+                                                <apex:inputText id="fieldNameInput" styleclass="slds-input slds-input--small" value="{!newLookupName}"/>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </td>
+                                    <td width="50%;">
+                                        <div class="slds-col slds-col--padded">
+                                            <apex:outputPanel id="relNameContainer">
+                                                <apex:outputPanel id="newRelationshipNameInput" rendered="{! AND( !invalidFieldName, NOT(ISBLANK(newLookupName)), NOT(ISBLANK(selectedChildObject)), NOT(ISBLANK(parentObjectName)))}">
+                                                    <label class="slds-form-element__label">Child Relationship Name</label><br/>
+                                                    <apex:inputText id="childRelNameInput" styleclass="slds-input slds-input--small" value="{!newRelationshipName}"/>
+                                                </apex:outputPanel>
+                                                <script>
+                                                    lh.j$("[id$='childRelNameInput']").on('keyup', debounce(function() {
+                                                        checkValidRelationshipName();
+                                                        lh.j$('.content').text($(this).val());
+                                                    }, 750, 'childRelNameInput'));
+                                                </script>
+                                            </apex:outputPanel>
+                                            <script>
+                                                lh.j$("[id$='fieldNameInput']").on('keyup', debounce(function() {
+                                                    checkValidLookupName();
+                                                    lh.j$('.content').text($(this).val());
+                                                }, 500, 'fieldNameInput'));
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </table>
+                                </apex:outputPanel>
+                            </section>
+                            <apex:outputPanel id="invalidFieldContainer">
+                                <apex:outputPanel styleclass="slds-col slds-align-middle" id="invalidField" rendered="{!OR(invalidFieldName, !validRelationshipName)}">
+                                    <br/>
+                                    <font style="color:red; !important;"> Error: The custom field name and / or the child relationship name on object {!selectedChildObject}
+                                        can only contain alphanumeric characters, must begin with a letter, cannot end with an underscore or contain two consecutive underscore
+                                        characters, and must be unique across all {!selectedChildObject} fields. 
+                                    </font>
+                                </apex:outputPanel> 
+                            </apex:outputPanel>
+                        </div>
+                        <div class="slds-modal__footer">
+                            <div class="slds-x-small-buttons_horizontal">
+                                <apex:commandButton id="createFieldButton" action="{!validateCustomLookupField}" disabled="{! !canCreateNewField}" styleclass="slds-button slds-button_brand slds-button_small slds-m-bottom_x-small" value="Create" status="loading"/>
+                                <apex:commandButton action="{!clearAllNewLookupInfo}" styleclass="slds-button slds-button_neutral slds-button_small slds-m-bottom_x-small" value="Close" reRender="newLookupFieldContainer" status="loading"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </apex:outputPanel>
+    </apex:outputPanel>
+    <div id="loading" style="display:none">
+        <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" style="min-width: 50px; width: 100px;">
+                <div class="slds-modal__header" style="border-bottom: 0 none; height:20px; important!">
+                    <center>
+                        <div class="slds-spinner_large" background="#16325c">
+                            <img src="/apexpages/slds/latest/assets/images/spinners/slds_spinner_brand.gif" alt="Loading..." />
+                        </div>
+                    </center>
+                </div>
+                <div class="slds-modal__content slds-p-around_small" style="height:46px;"/>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</apex:form>
+</html>
+</apex:page>

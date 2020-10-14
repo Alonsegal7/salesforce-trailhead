@@ -1,0 +1,34 @@
+salesforce.ListView Opportunity_All_Opportunities {
+  fullName = "Opportunity.All_Opportunities"
+  columns = [
+    "CORE.USERS.FULL_NAME",
+    "OPPORTUNITY.NAME",
+    "ACCOUNT.NAME",
+    "OPPORTUNITY.STAGE_NAME",
+    "Lost_Reason__c",
+    "Pipeline__c",
+    "Current_tools__c",
+    "Other_tools_they_re_using__c",
+    "Main_tool_we_re_replacing__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "OPPORTUNITY.STAGE_NAME"
+      operation = "equals"
+      value = "Qualified,Evaluation,Validation,Buying process,Negotiation"
+    },
+    {
+      field = "OPPORTUNITY.RECORDTYPE"
+      operation = "equals"
+      value = "Opportunity.Internal_Opportunity"
+    },
+  ]
+  label = "All Opportunities"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

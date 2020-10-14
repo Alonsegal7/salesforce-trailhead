@@ -1,0 +1,212 @@
+type salesforce.Network {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  boolean allowInternalUserLogin {
+    _required = false
+  }
+  boolean allowMembersToFlag {
+    _required = false
+  }
+  string allowedExtensions {
+    _required = false
+  }
+  string caseCommentEmailTemplate {
+    _required = false
+    foreignKeyDomain = [
+      salesforce.EmailTemplate,
+    ]
+  }
+  string changePasswordTemplate {
+    _required = false
+  }
+  salesforce.CommunityRoles communityRoles {
+    _required = false
+  }
+  string description {
+    _required = false
+  }
+  boolean disableReputationRecordConversations {
+    _required = false
+  }
+  string emailFooterLogo {
+    _required = false
+    foreignKeyDomain = [
+      salesforce.Document,
+    ]
+  }
+  string emailFooterText {
+    _required = false
+  }
+  string emailSenderAddress {
+    _required = false
+  }
+  string emailSenderName {
+    _required = false
+  }
+  boolean enableCustomVFErrorPageOverrides {
+    _required = false
+  }
+  boolean enableDirectMessages {
+    _required = false
+  }
+  boolean enableGuestChatter {
+    _required = false
+  }
+  boolean enableGuestFileAccess {
+    _required = false
+  }
+  boolean enableGuestMemberVisibility {
+    _required = false
+  }
+  boolean enableInvitation {
+    _required = false
+  }
+  boolean enableKnowledgeable {
+    _required = false
+  }
+  boolean enableMemberVisibility {
+    _required = false
+  }
+  boolean enableNicknameDisplay {
+    _required = false
+  }
+  boolean enablePrivateMessages {
+    _required = false
+  }
+  boolean enableReputation {
+    _required = false
+  }
+  boolean enableShowAllNetworkSettings {
+    _required = false
+  }
+  boolean enableSiteAsContainer {
+    _required = false
+  }
+  boolean enableTalkingAboutStats {
+    _required = false
+  }
+  boolean enableTopicAssignmentRules {
+    _required = false
+  }
+  boolean enableTopicSuggestions {
+    _required = false
+  }
+  boolean enableUpDownVote {
+    _required = false
+  }
+  string feedChannel {
+    _required = false
+    foreignKeyDomain = [
+      "FeedChannel",
+    ]
+  }
+  string forgotPasswordTemplate {
+    _required = false
+  }
+  serviceid fullName {
+    _required = false
+  }
+  boolean gatherCustomerSentimentData {
+    _required = false
+  }
+  string lockoutTemplate {
+    _required = false
+  }
+  string logoutUrl {
+    _required = false
+  }
+  number maxFileSizeKb {
+    _required = false
+  }
+  salesforce.NavigationLinkSet navigationLinkSet {
+    _required = false
+  }
+  salesforce.NetworkMemberGroup networkMemberGroups {
+    _required = false
+  }
+  salesforce.NetworkPageOverride networkPageOverrides {
+    _required = false
+  }
+  string newSenderAddress {
+    _required = false
+  }
+  string picassoSite {
+    _required = false
+    foreignKeyDomain = [
+      salesforce.CustomSite,
+    ]
+  }
+  salesforce.RecommendationAudience recommendationAudience {
+    _required = false
+  }
+  salesforce.RecommendationDefinition recommendationDefinition {
+    _required = false
+  }
+  salesforce.ReputationLevelDefinitions reputationLevels {
+    _required = false
+  }
+  salesforce.ReputationPointsRules reputationPointsRules {
+    _required = false
+  }
+  string selfRegProfile {
+    _required = false
+    foreignKeyDomain = [
+      "Profile",
+    ]
+  }
+  boolean selfRegistration {
+    _required = false
+  }
+  boolean sendWelcomeEmail {
+    _required = false
+  }
+  string site {
+    _required = false
+    foreignKeyDomain = [
+      salesforce.CustomSite,
+    ]
+  }
+  string status {
+    _required = false
+    _restriction = {
+      enforce_value = false
+      values = [
+        "DownForMaintenance",
+        "Live",
+        "UnderConstruction",
+      ]
+    }
+  }
+  salesforce.NetworkTabSet tabs {
+    _required = false
+  }
+  string urlPathPrefix {
+    _required = false
+  }
+  string verificationTemplate {
+    _required = false
+  }
+  string welcomeTemplate {
+    _required = false
+  }
+  string internalId {
+    _required = false
+    _hidden = true
+    localOnly = true
+  }
+  suffix = "network"
+  dirName = "networks"
+  metadataType = "Network"
+}

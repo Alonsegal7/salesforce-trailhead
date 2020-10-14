@@ -1,0 +1,10 @@
+salesforce.ApexPage SiteTemplate {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  availableInTouch = false
+  confirmationTokenRequired = false
+  description = "Default Lightning Platform template for site pages"
+  label = "SiteTemplate"
+  fullName = "SiteTemplate"
+  content = file("salesforce/Records/ApexPage/SiteTemplate.page")
+}

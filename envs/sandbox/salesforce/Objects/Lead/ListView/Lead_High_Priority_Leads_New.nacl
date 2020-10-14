@@ -1,0 +1,63 @@
+salesforce.ListView Lead_High_Priority_Leads_New {
+  fullName = "Lead.High_Priority_Leads_New"
+  booleanFilter = "1 AND 2 AND 3 AND (4 OR 5) AND 6"
+  columns = [
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "Distribution_reason__c",
+    "LEAD.COMPANY",
+    "LEAD.COUNTRY",
+    "LEAD.PHONE",
+    "Enriched_phone__c",
+    "Current_score__c",
+    "Days_left_in_trial__c",
+    "Enabled_users__c",
+    "Engagement__c",
+    "Related_Company__c",
+    "LEAD.STATUS",
+    "Sign_up_date__c",
+    "Company_phone__c",
+  ]
+  filterScope = "Mine"
+  filters = [
+    {
+      field = "Days_left_in_trial__c"
+      operation = "lessOrEqual"
+      value = "12"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "equals"
+      value = "Big Brain - Signup"
+    },
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Received"
+    },
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "equals"
+      value = "THIS_MONTH"
+    },
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "equals"
+      value = "LAST_MONTH"
+    },
+    {
+      field = "Current_score__c"
+      operation = "greaterOrEqual"
+      value = "60"
+    },
+  ]
+  label = "High Priority Leads"
+  sharedTo = {
+    role = [
+      "IL_Enterprise_SDR_Nir_Team",
+    ]
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

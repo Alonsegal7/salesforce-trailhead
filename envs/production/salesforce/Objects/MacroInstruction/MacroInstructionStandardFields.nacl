@@ -1,0 +1,4870 @@
+type salesforce.MacroInstruction {
+  serviceid Id {
+    apiName = "MacroInstruction.Id"
+    label = "Macro Instruction ID"
+    _required = false
+    queryable = true
+    _hidden = true
+    updateable = false
+    createable = false
+  }
+  salesforce.Checkbox IsDeleted {
+    apiName = "MacroInstruction.IsDeleted"
+    label = "Deleted"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+    _required = false
+  }
+  salesforce.AutoNumber Name {
+    apiName = "MacroInstruction.Name"
+    label = "Macro Instruction Name"
+    _required = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Picklist CurrencyIsoCode {
+    apiName = "MacroInstruction.CurrencyIsoCode"
+    label = "Currency ISO Code"
+    _required = false
+    valueSet = [
+      {
+        fullName = "AUD"
+        default = false
+        label = "Australian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "BRL"
+        default = false
+        label = "Brazilian Real"
+        isActive = true
+      },
+      {
+        fullName = "GBP"
+        default = false
+        label = "British Pound"
+        isActive = true
+      },
+      {
+        fullName = "CAD"
+        default = false
+        label = "Canadian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "DKK"
+        default = false
+        label = "Danish Krone"
+        isActive = true
+      },
+      {
+        fullName = "EUR"
+        default = false
+        label = "Euro"
+        isActive = true
+      },
+      {
+        fullName = "ILS"
+        default = false
+        label = "Israeli Shekel"
+        isActive = true
+      },
+      {
+        fullName = "MXN"
+        default = false
+        label = "Mexican Peso"
+        isActive = true
+      },
+      {
+        fullName = "SEK"
+        default = false
+        label = "Swedish Krona"
+        isActive = true
+      },
+      {
+        fullName = "USD"
+        default = true
+        label = "U.S. Dollar"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime CreatedDate {
+    apiName = "MacroInstruction.CreatedDate"
+    label = "Created Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup CreatedById {
+    apiName = "MacroInstruction.CreatedById"
+    label = "Created By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime LastModifiedDate {
+    apiName = "MacroInstruction.LastModifiedDate"
+    label = "Last Modified Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup LastModifiedById {
+    apiName = "MacroInstruction.LastModifiedById"
+    label = "Last Modified By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime SystemModstamp {
+    apiName = "MacroInstruction.SystemModstamp"
+    label = "System Modstamp"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup MacroId {
+    apiName = "MacroInstruction.MacroId"
+    label = "Macro ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Macro,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Picklist Operation {
+    apiName = "MacroInstruction.Operation"
+    label = "Operation"
+    _required = true
+    valueSet = [
+      {
+        fullName = "Select"
+        default = false
+        label = "select"
+        isActive = true
+      },
+      {
+        fullName = "Set"
+        default = false
+        label = "set"
+        isActive = true
+      },
+      {
+        fullName = "Insert"
+        default = false
+        label = "insert"
+        isActive = true
+      },
+      {
+        fullName = "Submit"
+        default = false
+        label = "submit"
+        isActive = true
+      },
+      {
+        fullName = "Close"
+        default = false
+        label = "close"
+        isActive = true
+      },
+      {
+        fullName = "If"
+        default = false
+        label = "if"
+        isActive = true
+      },
+      {
+        fullName = "ElseIf"
+        default = false
+        label = "elseif"
+        isActive = true
+      },
+      {
+        fullName = "Else"
+        default = false
+        label = "else"
+        isActive = true
+      },
+      {
+        fullName = "EndIf"
+        default = false
+        label = "endif"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Target {
+    apiName = "MacroInstruction.Target"
+    label = "Target"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Field.Account.AE__c"
+        default = false
+        label = "AE"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.AM__c"
+        default = false
+        label = "AM"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.AccountSource"
+        default = false
+        label = "Account Source"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Account_Domains__c"
+        default = false
+        label = "Account Domains"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Account_Domains__c.begin"
+        default = false
+        label = "Account Domains"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Account_Domains__c.cursor"
+        default = false
+        label = "Account Domains"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Account_Domains__c.end"
+        default = false
+        label = "Account Domains"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Account_First_Channel__c"
+        default = false
+        label = "Account First Channel"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Account_Last_Channel__c"
+        default = false
+        label = "Account Last Channel"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Account_Potential__c"
+        default = false
+        label = "Account Potential"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Account_Sentiment__c"
+        default = false
+        label = "Account Sentiment"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Account_Territory__c"
+        default = false
+        label = "Account Territory"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Action_Plan__c"
+        default = false
+        label = "Action Plan"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Active_Contract__c"
+        default = false
+        label = "Active Contract"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Agreement_Type__c"
+        default = false
+        label = "Agreement Info"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Agreement_Type__c.begin"
+        default = false
+        label = "Agreement Info"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Agreement_Type__c.cursor"
+        default = false
+        label = "Agreement Info"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Agreement_Type__c.end"
+        default = false
+        label = "Agreement Info"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Annual_Revenue__c"
+        default = false
+        label = "Annual Revenue"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BDR__c"
+        default = false
+        label = "BDR"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingCity"
+        default = false
+        label = "Account City"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingCity.begin"
+        default = false
+        label = "Account City"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingCity.end"
+        default = false
+        label = "Account City"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingCountry"
+        default = false
+        label = "Account Country"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingCountryCode"
+        default = false
+        label = "Account Country Code"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingGeocodeAccuracy"
+        default = false
+        label = "Billing Geocode Accuracy"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingLatitude"
+        default = false
+        label = "Billing Latitude"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingLongitude"
+        default = false
+        label = "Billing Longitude"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingPostalCode"
+        default = false
+        label = "Account Zip/Postal Code"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingPostalCode.begin"
+        default = false
+        label = "Account Zip/Postal Code"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingPostalCode.end"
+        default = false
+        label = "Account Zip/Postal Code"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingState"
+        default = false
+        label = "Account State/Province"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingStateCode"
+        default = false
+        label = "Account State/Province Code"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingStreet"
+        default = false
+        label = "Account Street"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingStreet.begin"
+        default = false
+        label = "Account Street"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingStreet.cursor"
+        default = false
+        label = "Account Street"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.BillingStreet.end"
+        default = false
+        label = "Account Street"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Business_Risks_Mitigation__c"
+        default = false
+        label = "Business Risks & Mitigation"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Business_Risks_Mitigation__c.begin"
+        default = false
+        label = "Business Risks & Mitigation"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Business_Risks_Mitigation__c.cursor"
+        default = false
+        label = "Business Risks & Mitigation"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Business_Risks_Mitigation__c.end"
+        default = false
+        label = "Business Risks & Mitigation"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.CSM__c"
+        default = false
+        label = "CSM"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Company_ARR__c"
+        default = false
+        label = "Company ARR"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Company_Open_Trials_Count__c"
+        default = false
+        label = "Company Open Trials Count (DEV)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Company_Paying_Accounts__c"
+        default = false
+        label = "Company Paying Accounts (DEV)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Company_Seats__c"
+        default = false
+        label = "Company Seats"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Company_Size__c"
+        default = false
+        label = "Company Size"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Company_Trials_Count__c"
+        default = false
+        label = "Company Trials Count (DEV)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Company_Trials_This_Week__c"
+        default = false
+        label = "Company Trials This Week (DEV)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Company_WAPP__c"
+        default = false
+        label = "Company WAPP"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Description"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Description.begin"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Description.cursor"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Description.end"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Has_ELA__c"
+        default = false
+        label = "Has ELA?"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Identified_Opportunities__c"
+        default = false
+        label = "Business Opportunities"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Identified_Opportunities__c.begin"
+        default = false
+        label = "Business Opportunities"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Identified_Opportunities__c.cursor"
+        default = false
+        label = "Business Opportunities"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Identified_Opportunities__c.end"
+        default = false
+        label = "Business Opportunities"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Industry"
+        default = false
+        label = "Industry"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Keep_this_account__c"
+        default = false
+        label = "Keep this account?"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Last_Joined_Senior_Contact__c"
+        default = false
+        label = "Last Joined Senior Contact"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Last_Touched_by_Sales__c"
+        default = false
+        label = "Last Touched by Sales"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Latest_Billing_Entity__c"
+        default = false
+        label = "Latest Billing Entity"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Legal_Agreement__c"
+        default = false
+        label = "Legal Agreement"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Long_Term_Growth_AM__c"
+        default = false
+        label = "Long Term Growth (AM)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Market_Cap__c"
+        default = false
+        label = "Market Cap"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Name"
+        default = false
+        label = "Account Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Name.begin"
+        default = false
+        label = "Account Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Name.end"
+        default = false
+        label = "Account Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.NumberOfEmployees"
+        default = false
+        label = "Employees"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Owner_s_Manager__c"
+        default = false
+        label = "Owner's Manager"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.ParentId"
+        default = false
+        label = "Parent Account"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Partner__c"
+        default = false
+        label = "Partner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Phone"
+        default = false
+        label = "Account Phone"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Plan_Seats__c"
+        default = false
+        label = "Plan Seats"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Previous_Month_ARR__c"
+        default = false
+        label = "Previous Month ARR"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Previous_Month_Collection__c"
+        default = false
+        label = "Previous Month Collection"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Prioritized_Account__c"
+        default = false
+        label = "Prioritized Account"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Priority_Reason__c"
+        default = false
+        label = "Priority Reason"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Related_Accounts_In_Last_7_Days__c"
+        default = false
+        label = "Related Accounts In Last 7 Days"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Related_Accounts_Total__c"
+        default = false
+        label = "Related Accounts Total"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Related_Accounts_in_Trial__c"
+        default = false
+        label = "Related Accounts in Trial"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Related_Paying_Accounts__c"
+        default = false
+        label = "Related Paying Accounts"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Relative_WAPP__c"
+        default = false
+        label = "Relative WAPP"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Renewal_Certainty__c"
+        default = false
+        label = "Renewal Certainty"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Retention_Score_AM__c"
+        default = false
+        label = "Retention Score AM"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Scale_Account_Status__c"
+        default = false
+        label = "Scale Account Status"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Second_CSM__c"
+        default = false
+        label = "Second CSM"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Security_Agreement__c"
+        default = false
+        label = "Security Agreement"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Short_Term_Growth_AM__c"
+        default = false
+        label = "Short Term Growth (AM)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Strategic__c"
+        default = false
+        label = "Allocated"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Strategic_receiver__c"
+        default = false
+        label = "Lead Receiver"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Sub_Industry__c"
+        default = false
+        label = "Sub Industry"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Sub_Industry__c.begin"
+        default = false
+        label = "Sub Industry"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Sub_Industry__c.end"
+        default = false
+        label = "Sub Industry"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Synced_By__c"
+        default = false
+        label = "Synced By"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Synced_By__c.begin"
+        default = false
+        label = "Synced By"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Synced_By__c.end"
+        default = false
+        label = "Synced By"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Type"
+        default = false
+        label = "Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Unassignment_Reason__c"
+        default = false
+        label = "Unassignment Reason"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Unassignment_Reason__c.begin"
+        default = false
+        label = "Unassignment Reason"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Unassignment_Reason__c.cursor"
+        default = false
+        label = "Unassignment Reason"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Unassignment_Reason__c.end"
+        default = false
+        label = "Unassignment Reason"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.WAPP_Goal_For_Adoption__c"
+        default = false
+        label = "WAPP Goal For Adoption"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.WAPP_Goal_For_Engagement__c"
+        default = false
+        label = "WAPP Goal For Engagement"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Website"
+        default = false
+        label = "Website"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Why_Unassigned__c"
+        default = false
+        label = "Why Unassigned"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.Why_unqualified__c"
+        default = false
+        label = "Why unqualified"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.of_Active_Relationships__c"
+        default = false
+        label = "# of Active Relationships"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.of_Won_Opportunities__c"
+        default = false
+        label = "# of Won Opps"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.partner_utm_banner__c"
+        default = false
+        label = "Partner utm_banner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.partner_utm_banner__c.begin"
+        default = false
+        label = "Partner utm_banner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.partner_utm_banner__c.end"
+        default = false
+        label = "Partner utm_banner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.partner_utm_campaign__c"
+        default = false
+        label = "Partner utm_campaign"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.partner_utm_campaign__c.begin"
+        default = false
+        label = "Partner utm_campaign"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.partner_utm_campaign__c.end"
+        default = false
+        label = "Partner utm_campaign"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.utm_banner__c"
+        default = false
+        label = "utm_banner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.utm_banner__c.begin"
+        default = false
+        label = "utm_banner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Account.utm_banner__c.end"
+        default = false
+        label = "utm_banner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.ContactId"
+        default = false
+        label = "Contact Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.Description"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.Description.begin"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.Description.cursor"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.Description.end"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.OwnerId"
+        default = false
+        label = "Case Owner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.ParentId"
+        default = false
+        label = "Parent Case"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.Priority"
+        default = false
+        label = "Priority"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.Status"
+        default = false
+        label = "Status"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.Subject"
+        default = false
+        label = "Subject"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.Subject.begin"
+        default = false
+        label = "Subject"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.Subject.end"
+        default = false
+        label = "Subject"
+        isActive = true
+      },
+      {
+        fullName = "Field.Case.SuppliedEmail"
+        default = false
+        label = "Web Email"
+        isActive = true
+      },
+      {
+        fullName = "Field.CaseComment.CommentBody"
+        default = false
+        label = "Body"
+        isActive = true
+      },
+      {
+        fullName = "Field.CaseComment.CommentBody.begin"
+        default = false
+        label = "Body"
+        isActive = true
+      },
+      {
+        fullName = "Field.CaseComment.CommentBody.cursor"
+        default = false
+        label = "Body"
+        isActive = true
+      },
+      {
+        fullName = "Field.CaseComment.CommentBody.end"
+        default = false
+        label = "Body"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroup.CanHaveGuests"
+        default = false
+        label = "Allow customers"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroup.CollaborationType"
+        default = false
+        label = "Access Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroup.Description"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroup.Description.begin"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroup.Description.cursor"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroup.Description.end"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroup.Name"
+        default = false
+        label = "Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroup.Name.begin"
+        default = false
+        label = "Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroup.Name.end"
+        default = false
+        label = "Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroupMember.CollaborationGroupId"
+        default = false
+        label = "Group"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroupMember.CollaborationRole"
+        default = false
+        label = "Group Member Role"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroupMember.MemberId"
+        default = false
+        label = "Member"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroupRecord.CollaborationGroupId"
+        default = false
+        label = "Group"
+        isActive = true
+      },
+      {
+        fullName = "Field.CollaborationGroupRecord.RecordId"
+        default = false
+        label = "Record"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.AccountId"
+        default = false
+        label = "Account Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Company__c"
+        default = false
+        label = "Company"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Decision_Maker__c"
+        default = false
+        label = "Decision Maker"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Department"
+        default = false
+        label = "Department"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Department.begin"
+        default = false
+        label = "Department"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Department.end"
+        default = false
+        label = "Department"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Department_Lookup__c"
+        default = false
+        label = "Department (Lookup)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Description"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Description.begin"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Description.cursor"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Description.end"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Email"
+        default = false
+        label = "Email"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.FirstName"
+        default = false
+        label = "First Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.FirstName.begin"
+        default = false
+        label = "First Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.FirstName.end"
+        default = false
+        label = "First Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.LastName"
+        default = false
+        label = "Last Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.LastName.begin"
+        default = false
+        label = "Last Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.LastName.end"
+        default = false
+        label = "Last Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Phone"
+        default = false
+        label = "Contact phone"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Salutation"
+        default = false
+        label = "Salutation"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Seniority__c"
+        default = false
+        label = "Seniority"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Seniority__c.begin"
+        default = false
+        label = "Seniority"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Seniority__c.end"
+        default = false
+        label = "Seniority"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Title"
+        default = false
+        label = "Title"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Title.begin"
+        default = false
+        label = "Title"
+        isActive = true
+      },
+      {
+        fullName = "Field.Contact.Title.end"
+        default = false
+        label = "Title"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Active_Seats__c"
+        default = false
+        label = "Active Seats"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Company__c"
+        default = false
+        label = "Company"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Department_Notes__c"
+        default = false
+        label = "Department Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Department_Notes__c.begin"
+        default = false
+        label = "Department Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Department_Notes__c.cursor"
+        default = false
+        label = "Department Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Department_Notes__c.end"
+        default = false
+        label = "Department Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Department_PPU__c"
+        default = false
+        label = "Department PPU"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Departments__c"
+        default = false
+        label = "Departments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Employees__c"
+        default = false
+        label = "Department Employees"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Influencer__c"
+        default = false
+        label = "Influencer"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Manager__c"
+        default = false
+        label = "Manager"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Name"
+        default = false
+        label = "Department Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Name.begin"
+        default = false
+        label = "Department Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Name.end"
+        default = false
+        label = "Department Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Relevant_Employees__c"
+        default = false
+        label = "Relevant Employees"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Tech_Stack_Details__c"
+        default = false
+        label = "Tech Stack Details"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Tech_Stack_Details__c.begin"
+        default = false
+        label = "Tech Stack Details"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Tech_Stack_Details__c.cursor"
+        default = false
+        label = "Tech Stack Details"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Tech_Stack_Details__c.end"
+        default = false
+        label = "Tech Stack Details"
+        isActive = true
+      },
+      {
+        fullName = "Field.Department__c.Tech_Stack_List__c"
+        default = false
+        label = "Tech Stack List"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.Description"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.Description.begin"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.Description.cursor"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.Description.end"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.EndDateTime"
+        default = false
+        label = "End"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.Location"
+        default = false
+        label = "Location"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.Location.begin"
+        default = false
+        label = "Location"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.Location.end"
+        default = false
+        label = "Location"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.StartDateTime"
+        default = false
+        label = "Start"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.Subject"
+        default = false
+        label = "Subject"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.WhatId"
+        default = false
+        label = "Opportunity / Company"
+        isActive = true
+      },
+      {
+        fullName = "Field.Event.WhoId"
+        default = false
+        label = "Lead / Contact"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Go_Live_Date__c"
+        default = false
+        label = "Go Live Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Kickoff_Notes__c"
+        default = false
+        label = "Kickoff Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Kickoff_Notes__c.begin"
+        default = false
+        label = "Kickoff Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Kickoff_Notes__c.cursor"
+        default = false
+        label = "Kickoff Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Kickoff_Notes__c.end"
+        default = false
+        label = "Kickoff Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Kickoff_meeting_date__c"
+        default = false
+        label = "Kickoff meeting date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Main_Point_of_Contacts__c"
+        default = false
+        label = "Main Point of Contacts"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Monday_Account__c"
+        default = false
+        label = "Monday Account"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Name"
+        default = false
+        label = "Kickoff  Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Name.begin"
+        default = false
+        label = "Kickoff  Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Name.end"
+        default = false
+        label = "Kickoff  Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Plan_for_Training__c"
+        default = false
+        label = "Plan for Training"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Plan_for_Training__c.begin"
+        default = false
+        label = "Plan for Training"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Plan_for_Training__c.cursor"
+        default = false
+        label = "Plan for Training"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Plan_for_Training__c.end"
+        default = false
+        label = "Plan for Training"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Success_Metrics__c"
+        default = false
+        label = "Success Metrics"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Success_Metrics__c.begin"
+        default = false
+        label = "Success Metrics"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Success_Metrics__c.cursor"
+        default = false
+        label = "Success Metrics"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Success_Metrics__c.end"
+        default = false
+        label = "Success Metrics"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Use_Case__c"
+        default = false
+        label = "Use Case"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Use_Case__c.begin"
+        default = false
+        label = "Use Case"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Use_Case__c.cursor"
+        default = false
+        label = "Use Case"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.Use_Case__c.end"
+        default = false
+        label = "Use Case"
+        isActive = true
+      },
+      {
+        fullName = "Field.Kickoff__c.of_Users__c"
+        default = false
+        label = "# of Users"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Account_ARR__c"
+        default = false
+        label = "Account ARR"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Account_Disabled_Timestamp__c"
+        default = false
+        label = "Account Disabled Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Account_Domains__c"
+        default = false
+        label = "Account Domains"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Account_Domains__c.begin"
+        default = false
+        label = "Account Domains"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Account_Domains__c.cursor"
+        default = false
+        label = "Account Domains"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Account_Domains__c.end"
+        default = false
+        label = "Account Domains"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Account_was_disabled__c"
+        default = false
+        label = "Account was disabled?"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Amount_Raised__c"
+        default = false
+        label = "Amount Raised"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Attempting_Timestamp_DT__c"
+        default = false
+        label = "Attempting Timestamp (DT)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Attempting_timestamp__c"
+        default = false
+        label = "Attempting timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Channel_Lead_Source__c"
+        default = false
+        label = "Channel (Lead Source)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Channel__c"
+        default = false
+        label = "Channel (First Lead Source)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Cluster__c"
+        default = false
+        label = "Cluster"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Cluster__c.begin"
+        default = false
+        label = "Cluster"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Cluster__c.end"
+        default = false
+        label = "Cluster"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Company"
+        default = false
+        label = "Company"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Company.begin"
+        default = false
+        label = "Company"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Company.end"
+        default = false
+        label = "Company"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Company_Type__c"
+        default = false
+        label = "Company Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Company_Type__c.begin"
+        default = false
+        label = "Company Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Company_Type__c.end"
+        default = false
+        label = "Company Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Contacted_Timestamp_DT__c"
+        default = false
+        label = "Contacted Timestamp (DT)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Contacted_timestamp__c"
+        default = false
+        label = "Contacted timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Converted_Timestamp_DT__c"
+        default = false
+        label = "Converted Timestamp (DT)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Date_of_Meeting__c"
+        default = false
+        label = "Date of Meeting"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Distributed_as_Free_Tier__c"
+        default = false
+        label = "Distributed as Free Tier"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Email_Bounced__c"
+        default = false
+        label = "Email Bounced"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Estimated_Annual_Revenue__c"
+        default = false
+        label = "Estimated Annual Revenue"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Estimated_Annual_Revenue__c.begin"
+        default = false
+        label = "Estimated Annual Revenue"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Estimated_Annual_Revenue__c.end"
+        default = false
+        label = "Estimated Annual Revenue"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Feedback_on_SDR_Call__c"
+        default = false
+        label = "Feedback (Why unqualified?)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Feedback_on_SDR_Call__c.begin"
+        default = false
+        label = "Feedback (Why unqualified?)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Feedback_on_SDR_Call__c.cursor"
+        default = false
+        label = "Feedback (Why unqualified?)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Feedback_on_SDR_Call__c.end"
+        default = false
+        label = "Feedback (Why unqualified?)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.First_Contact_Sales_timestamp__c"
+        default = false
+        label = "First Contact Sales timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.First_Reachout_Timestamp__c"
+        default = false
+        label = "First Reachout Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Founded_Year__c"
+        default = false
+        label = "Founded Year"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Has_request__c"
+        default = false
+        label = "Has request"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Industry"
+        default = false
+        label = "Industry"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Industry_Group__c"
+        default = false
+        label = "Industry Group"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Industry_Group__c.begin"
+        default = false
+        label = "Industry Group"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Industry_Group__c.end"
+        default = false
+        label = "Industry Group"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Last_Call_Complete__c"
+        default = false
+        label = "Last Call Complete"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Last_Contact_Sales_Timestamp__c"
+        default = false
+        label = "Last Contact Sales Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Last_Demo_Complete__c"
+        default = false
+        label = "Last Demo Complete"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Last_Exploratory_Call__c"
+        default = false
+        label = "Last Exploratory Call"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Last_Meeting_Complete__c"
+        default = false
+        label = "Last Meeting Complete"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Last_SDR_Call__c"
+        default = false
+        label = "Last SDR Call"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Last_seen__c"
+        default = false
+        label = "Last Seen"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Lead_Source_Type__c"
+        default = false
+        label = "Lead Source Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Lead_created_date__c"
+        default = false
+        label = "Lead created date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Leftover_Timestamp__c"
+        default = false
+        label = "Leftover Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Leftover__c"
+        default = false
+        label = "Leftover"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Logo__c"
+        default = false
+        label = "Logo"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Logo__c.begin"
+        default = false
+        label = "Logo"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Logo__c.end"
+        default = false
+        label = "Logo"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.MQL_Timestamp__c"
+        default = false
+        label = "MQL Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Market_Cap__c"
+        default = false
+        label = "Market Cap"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Marketing_Source__c"
+        default = false
+        label = "Marketing Source"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Marketing_Source__c.begin"
+        default = false
+        label = "Marketing Source"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Marketing_Source__c.end"
+        default = false
+        label = "Marketing Source"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Meeting_Type_CP__c"
+        default = false
+        label = "Meeting Type CP"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Meeting_Type_CP__c.begin"
+        default = false
+        label = "Meeting Type CP"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Meeting_Type_CP__c.end"
+        default = false
+        label = "Meeting Type CP"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.No_Show_CP__c"
+        default = false
+        label = "No Show CP"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.NumberOfEmployees"
+        default = false
+        label = "No. of Employees"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Number_of_titles_added__c"
+        default = false
+        label = "Number of titles added"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Nurturing_Timestamp__c"
+        default = false
+        label = "Nurturing Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Owner_edit_time__c"
+        default = false
+        label = "Owner edit time"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Owner_s_Manager__c"
+        default = false
+        label = "Owner's Manager"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Parent_Domain__c"
+        default = false
+        label = "Parent Domain"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Qualified_Timestamp_DT__c"
+        default = false
+        label = "Qualified Timestamp (DT)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Qualified_timestamp__c"
+        default = false
+        label = "Qualified timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Received_Timestamp_DT__c"
+        default = false
+        label = "Received Timestamp (DT)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Received_timestamp__c"
+        default = false
+        label = "Received timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.SQL_Timestamp__c"
+        default = false
+        label = "SQL Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.SalesLoft1__Most_Recent_Cadence_Name__c"
+        default = false
+        label = "Most Recent Cadence - Cadence Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.SalesLoft1__Most_Recent_Cadence_Name__c.begin"
+        default = false
+        label = "Most Recent Cadence - Cadence Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.SalesLoft1__Most_Recent_Cadence_Name__c.end"
+        default = false
+        label = "Most Recent Cadence - Cadence Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.SalesLoft1__Most_Recent_Cadence_Next_Step_Due_Date__c"
+        default = false
+        label = "Most Recent Cadence - Next Step Due Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.SalesLoft1__Most_Recent_Last_Completed_Step__c"
+        default = false
+        label = "Most Recent Cadence - Last Step Number"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Salesloft_Owner__c"
+        default = false
+        label = "Salesloft Owner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Salesloft_Owner__c.begin"
+        default = false
+        label = "Salesloft Owner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Salesloft_Owner__c.end"
+        default = false
+        label = "Salesloft Owner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Sector__c"
+        default = false
+        label = "Sector"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Sector__c.begin"
+        default = false
+        label = "Sector"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Sector__c.end"
+        default = false
+        label = "Sector"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Send_back_to_queue__c"
+        default = false
+        label = "Send back to queue"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Sent_to_Hubspot_Timestamp__c"
+        default = false
+        label = "Sent to Hubspot Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Sign_up_date__c"
+        default = false
+        label = "Sign up date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Slug__c"
+        default = false
+        label = "Slug"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Slug__c.begin"
+        default = false
+        label = "Slug"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Slug__c.end"
+        default = false
+        label = "Slug"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Status"
+        default = false
+        label = "Lead Status"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Sub_Industry__c"
+        default = false
+        label = "Sub Industry"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Sub_Industry__c.begin"
+        default = false
+        label = "Sub Industry"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Sub_Industry__c.end"
+        default = false
+        label = "Sub Industry"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Tags__c"
+        default = false
+        label = "Tags"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Tags__c.begin"
+        default = false
+        label = "Tags"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Tags__c.cursor"
+        default = false
+        label = "Tags"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Tags__c.end"
+        default = false
+        label = "Tags"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Team_Survey_Size__c"
+        default = false
+        label = "Team Size Survey"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Team_Survey_Size__c.begin"
+        default = false
+        label = "Team Size Survey"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Team_Survey_Size__c.end"
+        default = false
+        label = "Team Size Survey"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Tech_Stack__c"
+        default = false
+        label = "Tech Stack"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Tech_Stack__c.begin"
+        default = false
+        label = "Tech Stack"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Tech_Stack__c.cursor"
+        default = false
+        label = "Tech Stack"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Tech_Stack__c.end"
+        default = false
+        label = "Tech Stack"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Ticker__c"
+        default = false
+        label = "Ticker"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Ticker__c.begin"
+        default = false
+        label = "Ticker"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Ticker__c.end"
+        default = false
+        label = "Ticker"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Time_to_Attempting__c"
+        default = false
+        label = "Time to Attempting (Mins)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Timeline_to_Reengage__c"
+        default = false
+        label = "Timeline to Re-engage"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Trial_end__c"
+        default = false
+        label = "Trial End"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Trial_start__c"
+        default = false
+        label = "Trial Start"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Ultimate_Parent_Domain__c"
+        default = false
+        label = "Ultimate Parent Domain"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Unqualified_Timestamp_DT__c"
+        default = false
+        label = "Unqualified Timestamp (DT)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Why_unqualified__c"
+        default = false
+        label = "Why unqualified?"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.monday_account_status__c"
+        default = false
+        label = "Monday Account Status"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.of_Demos__c"
+        default = false
+        label = "# of Demos Done"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.of_Emails_Received_from_Them__c"
+        default = false
+        label = "# of Emails Received from Them"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.of_Emails_Sent_to_Them__c"
+        default = false
+        label = "# of Emails Sent to Them"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.of_Meetings__c"
+        default = false
+        label = "# of Meetings"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.of_Total_Calls__c"
+        default = false
+        label = "# of Total Calls"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.of_calls_by_SDR__c"
+        default = false
+        label = "# of calls (by SDR)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.time_zone_offset__c"
+        default = false
+        label = "Time Zone Offset"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.unqualified_timestamp__c"
+        default = false
+        label = "unqualified timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Amount"
+        default = false
+        label = "Actual Added ARR"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Billing_Ids__c"
+        default = false
+        label = "Billing Ids"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Billing_Ids__c.begin"
+        default = false
+        label = "Billing Ids"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Billing_Ids__c.end"
+        default = false
+        label = "Billing Ids"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Buying_process_timestamp__c"
+        default = false
+        label = "Buying process timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.CampaignId"
+        default = false
+        label = "Primary Campaign Source"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Claimed_ARR__c"
+        default = false
+        label = "Claimed ARR"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.CloseDate"
+        default = false
+        label = "Close Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Closed_Lost_timestamp__c"
+        default = false
+        label = "Closed Lost timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Closed_Opportunity_Summary__c"
+        default = false
+        label = "Closed Opportunity Summary"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Closed_Opportunity_Summary__c.begin"
+        default = false
+        label = "Closed Opportunity Summary"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Closed_Opportunity_Summary__c.cursor"
+        default = false
+        label = "Closed Opportunity Summary"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Closed_Opportunity_Summary__c.end"
+        default = false
+        label = "Closed Opportunity Summary"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Country__c"
+        default = false
+        label = "Country"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Country__c.begin"
+        default = false
+        label = "Country"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Country__c.end"
+        default = false
+        label = "Country"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.CurrencyIsoCode"
+        default = false
+        label = "Opportunity Currency"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Currency__c"
+        default = false
+        label = "Currency"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.DH_Date_of_Signature__c"
+        default = false
+        label = "Date of Signature"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.DH_Expected_Plan_Period__c"
+        default = false
+        label = "DH Expected Plan Period"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.DH_Expected_Plan_Tier__c"
+        default = false
+        label = "DH Expected Plan Tier"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.DH_Signer_Name_c__c"
+        default = false
+        label = "Signer Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.DH_Signer_Name_c__c.begin"
+        default = false
+        label = "Signer Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.DH_Signer_Name_c__c.end"
+        default = false
+        label = "Signer Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.DH_Signer_Title__c"
+        default = false
+        label = "Signer Title"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.DH_Signer_Title__c.begin"
+        default = false
+        label = "Signer Title"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.DH_Signer_Title__c.end"
+        default = false
+        label = "Signer Title"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Description"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Description.begin"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Description.cursor"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Description.end"
+        default = false
+        label = "Description"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Evaluation_timestamp__c"
+        default = false
+        label = "Evaluation Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_ARR__c"
+        default = false
+        label = "Added ARR"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Id__c"
+        default = false
+        label = "Expected Plan Id"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Name__c"
+        default = false
+        label = "Expected Plan Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Name__c.begin"
+        default = false
+        label = "Expected Plan Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Name__c.end"
+        default = false
+        label = "Expected Plan Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Period__c"
+        default = false
+        label = "Expected Plan Period"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Period__c.begin"
+        default = false
+        label = "Expected Plan Period"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Period__c.end"
+        default = false
+        label = "Expected Plan Period"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Seats__c"
+        default = false
+        label = "Expected Plan Seats"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Tier__c"
+        default = false
+        label = "Expected Plan Tier"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Tier__c.begin"
+        default = false
+        label = "Expected Plan Tier"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Expected_Plan_Tier__c.end"
+        default = false
+        label = "Expected Plan Tier"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.ForecastCategoryName"
+        default = false
+        label = "Forecast Category"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.GB_New_Infra_Notes__c"
+        default = false
+        label = "GB New Infra - Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.GB_New_Infra_Notes__c.begin"
+        default = false
+        label = "GB New Infra - Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.GB_New_Infra_Notes__c.cursor"
+        default = false
+        label = "GB New Infra - Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.GB_New_Infra_Notes__c.end"
+        default = false
+        label = "GB New Infra - Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.GB_Threshold__c"
+        default = false
+        label = "GB Threshold"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Is_Potential_GB_Opp_Override__c"
+        default = false
+        label = "Is Potential GB Opp - Override"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Is_SO_Signed__c"
+        default = false
+        label = "Is SO Manually Signed?"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Lead_Contacted_Date__c"
+        default = false
+        label = "Lead Contacted Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Lead_created_date__c"
+        default = false
+        label = "Lead created date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Legal_Security_Issues__c"
+        default = false
+        label = "(Obsolete) Legal/Security Issues"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Legal_Security_Issues__c.begin"
+        default = false
+        label = "(Obsolete) Legal/Security Issues"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Legal_Security_Issues__c.cursor"
+        default = false
+        label = "(Obsolete) Legal/Security Issues"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Legal_Security_Issues__c.end"
+        default = false
+        label = "(Obsolete) Legal/Security Issues"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Lessons_and_Insights__c"
+        default = false
+        label = "Lessons and Insights"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Lessons_and_Insights__c.begin"
+        default = false
+        label = "Lessons and Insights"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Lessons_and_Insights__c.cursor"
+        default = false
+        label = "Lessons and Insights"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Lessons_and_Insights__c.end"
+        default = false
+        label = "Lessons and Insights"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Monday_Account_ARR__c"
+        default = false
+        label = "Monday Account Claimed ARR - New"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Monday_Account__c"
+        default = false
+        label = "Monday Account"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Monday_Solutions_Offered__c"
+        default = false
+        label = "Monday Solution Offered"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Name"
+        default = false
+        label = "Opportunity Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Name.begin"
+        default = false
+        label = "Opportunity Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Name.end"
+        default = false
+        label = "Opportunity Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Owner_s_Manager__c"
+        default = false
+        label = "Owner's Manager"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Pricing_Version__c"
+        default = false
+        label = "Pricing Version"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Qualified_timestamp__c"
+        default = false
+        label = "Qualified timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Request_a_Sales_Engineer__c"
+        default = false
+        label = "Request a Sales Engineer"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SDR_Name__c"
+        default = false
+        label = "SDR Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SDR_Name_for_reports__c"
+        default = false
+        label = "SDR Name (for reports)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SDR_Name_for_reports__c.begin"
+        default = false
+        label = "SDR Name (for reports)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SDR_Name_for_reports__c.end"
+        default = false
+        label = "SDR Name (for reports)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Department__c"
+        default = false
+        label = "SE Department"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Effort_End_Date__c"
+        default = false
+        label = "SE Effort End Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Effort_Start_Date__c"
+        default = false
+        label = "SE Effort Start Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Request_Max_Potential_ARR__c"
+        default = false
+        label = "SE Request Max Potential ARR"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Support_Type__c"
+        default = false
+        label = "SE Support Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Use_Case__c"
+        default = false
+        label = "SE Use Case"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Use_case_brief__c"
+        default = false
+        label = "SE Use case brief"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Use_case_brief__c.begin"
+        default = false
+        label = "SE Use case brief"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Use_case_brief__c.cursor"
+        default = false
+        label = "SE Use case brief"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.SE_Use_case_brief__c.end"
+        default = false
+        label = "SE Use case brief"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Sale__c"
+        default = false
+        label = "Sale"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Send_Summary_Email_Trigger__c"
+        default = false
+        label = "Send Summary Email Trigger"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Send_to__c"
+        default = false
+        label = "Send to"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Subscription_Ids__c"
+        default = false
+        label = "Subscription Ids"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Subscription_Ids__c.begin"
+        default = false
+        label = "Subscription Ids"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Subscription_Ids__c.cursor"
+        default = false
+        label = "Subscription Ids"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Subscription_Ids__c.end"
+        default = false
+        label = "Subscription Ids"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Summary_Email_Timestamp__c"
+        default = false
+        label = "Summary Email Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Sync_to_BB__c"
+        default = false
+        label = "Sync to BB"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Utm_campaign__c"
+        default = false
+        label = "Utm_campaign"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Utm_campaign__c.begin"
+        default = false
+        label = "Utm_campaign"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Utm_campaign__c.end"
+        default = false
+        label = "Utm_campaign"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Utm_source__c"
+        default = false
+        label = "Utm_source"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Utm_source__c.begin"
+        default = false
+        label = "Utm_source"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Utm_source__c.end"
+        default = false
+        label = "Utm_source"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Validation_Timestamp__c"
+        default = false
+        label = "Validation Timestamp"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.primary_pulse_account_id__c"
+        default = false
+        label = "primary pulse account id"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.primary_pulse_account_id__c.begin"
+        default = false
+        label = "primary pulse account id"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.primary_pulse_account_id__c.end"
+        default = false
+        label = "primary pulse account id"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.pulse_account_ids__c"
+        default = false
+        label = "Pulse_Account_IDs"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.pulse_account_ids__c.begin"
+        default = false
+        label = "Pulse_Account_IDs"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.pulse_account_ids__c.end"
+        default = false
+        label = "Pulse_Account_IDs"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.time_zone_offset__c"
+        default = false
+        label = "Time Zone Offset"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.AttachmentIds.end"
+        default = false
+        label = "Attachments"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.BccAddress"
+        default = false
+        label = "BCC"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.BccAddress.begin"
+        default = false
+        label = "BCC"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.BccAddress.end"
+        default = false
+        label = "BCC"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.CcAddress"
+        default = false
+        label = "CC"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.CcAddress.begin"
+        default = false
+        label = "CC"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.CcAddress.end"
+        default = false
+        label = "CC"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.ContentDocumentIds.end"
+        default = false
+        label = "Attachments"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.EmailTemplateId"
+        default = false
+        label = "Email Template"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.HtmlBody"
+        default = false
+        label = "HTML Body"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.HtmlBody.begin"
+        default = false
+        label = "HTML Body"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.HtmlBody.cursor"
+        default = false
+        label = "HTML Body"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.HtmlBody.end"
+        default = false
+        label = "HTML Body"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.RelatedToId"
+        default = false
+        label = "Opportunity / Company"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.Subject"
+        default = false
+        label = "Subject"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.Subject.begin"
+        default = false
+        label = "Subject"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.Subject.end"
+        default = false
+        label = "Subject"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.ToAddress"
+        default = false
+        label = "To"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.ToAddress.begin"
+        default = false
+        label = "To"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.ToAddress.end"
+        default = false
+        label = "To"
+        isActive = true
+      },
+      {
+        fullName = "Field.OutgoingEmail.ValidatedFromAddress"
+        default = false
+        label = "From"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Addendum_to_SO__c"
+        default = false
+        label = "Addendum to SO"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Additional_Commercial_Comments__c"
+        default = false
+        label = "Additional Commercial Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Additional_Commercial_Comments__c.begin"
+        default = false
+        label = "Additional Commercial Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Additional_Commercial_Comments__c.cursor"
+        default = false
+        label = "Additional Commercial Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Additional_Commercial_Comments__c.end"
+        default = false
+        label = "Additional Commercial Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Balance_carry_over__c"
+        default = false
+        label = "Balance Carry Over"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Billing_City__c"
+        default = false
+        label = "Billing City"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Billing_City__c.begin"
+        default = false
+        label = "Billing City"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Billing_City__c.end"
+        default = false
+        label = "Billing City"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Billing_Country__c"
+        default = false
+        label = "Billing Country"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Billing_Street__c"
+        default = false
+        label = "Billing Street"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Billing_Street__c.begin"
+        default = false
+        label = "Billing Street"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Billing_Street__c.end"
+        default = false
+        label = "Billing Street"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.CurrencyIsoCode"
+        default = false
+        label = "Currency"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Customer_Success_Package__c"
+        default = false
+        label = "Customer Success Package"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Customer_payed_by_wire_transfer_before__c"
+        default = false
+        label = "Customer payed by wire transfer before?"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.End_Date__c"
+        default = false
+        label = "End Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Finance_Contact_Email__c"
+        default = false
+        label = "Finance Contact Email"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Finance_Contact_Phone__c"
+        default = false
+        label = "Finance Contact Phone"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Financial_Customer_Name__c"
+        default = false
+        label = "Financial Customer Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Financial_Customer_Name__c.begin"
+        default = false
+        label = "Financial Customer Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Financial_Customer_Name__c.end"
+        default = false
+        label = "Financial Customer Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.NGO__c"
+        default = false
+        label = "NGO"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Partner_Opportunity__c"
+        default = false
+        label = "Partner Opportunity"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Period__c"
+        default = false
+        label = "Period"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Seats_v8__c"
+        default = false
+        label = "Seats (v8)"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Start_Date__c"
+        default = false
+        label = "Start Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Tier__c"
+        default = false
+        label = "Tier"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Type_of_Engagement__c"
+        default = false
+        label = "Type of Engagement"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.VAT__c"
+        default = false
+        label = "VAT #"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Zip_Postal_Code__c"
+        default = false
+        label = "Zip/Postal Code"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Zip_Postal_Code__c.begin"
+        default = false
+        label = "Zip/Postal Code"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.Zip_Postal_Code__c.end"
+        default = false
+        label = "Zip/Postal Code"
+        isActive = true
+      },
+      {
+        fullName = "Field.Partner_SO_Request__c.of_Free_Months__c"
+        default = false
+        label = "# of Free Months"
+        isActive = true
+      },
+      {
+        fullName = "Field.Professional_Service_Request__c.PO_Amount__c"
+        default = false
+        label = "PO $ Amount"
+        isActive = true
+      },
+      {
+        fullName = "Field.Professional_Service_Request__c.PO_of_Hours__c"
+        default = false
+        label = "PO # of Hours"
+        isActive = true
+      },
+      {
+        fullName = "Field.Professional_Service_Request__c.Partner_Company__c"
+        default = false
+        label = "Partner Company"
+        isActive = true
+      },
+      {
+        fullName = "Field.Professional_Service_Request__c.Service_Type__c"
+        default = false
+        label = "Service Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Professional_Service_Request__c.Status__c"
+        default = false
+        label = "Status"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Current_Milestone_Type__c"
+        default = false
+        label = "Current Milestone Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Current_Milestone_Type__c.begin"
+        default = false
+        label = "Current Milestone Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Current_Milestone_Type__c.end"
+        default = false
+        label = "Current Milestone Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Current_Milestone__c"
+        default = false
+        label = "Current Milestone"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Current_Milestone__c.begin"
+        default = false
+        label = "Current Milestone"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Current_Milestone__c.end"
+        default = false
+        label = "Current Milestone"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Milestone_Type__c"
+        default = false
+        label = "Milestone Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Milestone_Type__c.begin"
+        default = false
+        label = "Milestone Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Milestone_Type__c.end"
+        default = false
+        label = "Milestone Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Milestone__c"
+        default = false
+        label = "Milestone"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Name"
+        default = false
+        label = "Project Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Name.begin"
+        default = false
+        label = "Project Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Name.end"
+        default = false
+        label = "Project Name"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Postponed_Cancel_reasson__c"
+        default = false
+        label = "Postponed/Cancel reason"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Project_Closed_Date__c"
+        default = false
+        label = "Project Closed Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Project_Owner_Notes__c"
+        default = false
+        label = "Project Owner Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Project_Owner_Notes__c.begin"
+        default = false
+        label = "Project Owner Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Project_Owner_Notes__c.cursor"
+        default = false
+        label = "Project Owner Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Project_Owner_Notes__c.end"
+        default = false
+        label = "Project Owner Notes"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Project_Status__c"
+        default = false
+        label = "Project Status"
+        isActive = true
+      },
+      {
+        fullName = "Field.Project__c.Project_Type__c"
+        default = false
+        label = "Project Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Relationship__c.Comments__c"
+        default = false
+        label = "Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Relationship__c.Comments__c.begin"
+        default = false
+        label = "Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Relationship__c.Comments__c.cursor"
+        default = false
+        label = "Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Relationship__c.Comments__c.end"
+        default = false
+        label = "Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Relationship__c.Contact__c"
+        default = false
+        label = "Contact"
+        isActive = true
+      },
+      {
+        fullName = "Field.Relationship__c.OwnerId"
+        default = false
+        label = "Owner"
+        isActive = true
+      },
+      {
+        fullName = "Field.Relationship__c.Relationship_Level__c"
+        default = false
+        label = "Relationship Level"
+        isActive = true
+      },
+      {
+        fullName = "Field.Relationship__c.Status__c"
+        default = false
+        label = "Status"
+        isActive = true
+      },
+      {
+        fullName = "Field.Relationship__c.monday_Account__c"
+        default = false
+        label = "monday Account"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.ActivityDate"
+        default = false
+        label = "Due Date"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Attendees__c"
+        default = false
+        label = "Attendees"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Attendees__c.begin"
+        default = false
+        label = "Attendees"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Attendees__c.cursor"
+        default = false
+        label = "Attendees"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Attendees__c.end"
+        default = false
+        label = "Attendees"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Description"
+        default = false
+        label = "Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Description.begin"
+        default = false
+        label = "Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Description.cursor"
+        default = false
+        label = "Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Description.end"
+        default = false
+        label = "Comments"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.OwnerId"
+        default = false
+        label = "Assigned To"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Priority"
+        default = false
+        label = "Priority"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Short_Summary__c"
+        default = false
+        label = "Short Summary"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Short_Summary__c.begin"
+        default = false
+        label = "Short Summary"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Short_Summary__c.cursor"
+        default = false
+        label = "Short Summary"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Short_Summary__c.end"
+        default = false
+        label = "Short Summary"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Status"
+        default = false
+        label = "Status"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Subject"
+        default = false
+        label = "Subject"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Task_Time_Zone__c"
+        default = false
+        label = "Task Time Zone"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Time__c"
+        default = false
+        label = "Time"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.Type"
+        default = false
+        label = "Type"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.WhatId"
+        default = false
+        label = "Opportunity / Company"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.WhoId"
+        default = false
+        label = "Lead / Contact"
+        isActive = true
+      },
+      {
+        fullName = "Field.Task.aircall__Call_Recording__c"
+        default = false
+        label = "Call Recording"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.Address_and_Others"
+        default = false
+        label = "Address and Others Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.BB_Related_Accounts_Data"
+        default = false
+        label = "BB Related Accounts Data Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.BI_and_Admin"
+        default = false
+        label = "BI and Admin Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.Business_Opportunities_Risks"
+        default = false
+        label = "Business Opportunities & Risks Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.CSM_Update"
+        default = false
+        label = "CSM Update Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.Commercial_Agreement"
+        default = false
+        label = "Commercial & Agreement Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.Company_Team"
+        default = false
+        label = "Company Team Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.Create_PS_Request"
+        default = false
+        label = "Create PS Request Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.Map_Department"
+        default = false
+        label = "Map Department Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.New_Account_Task"
+        default = false
+        label = "New Task Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.Scaled_Touch_Section"
+        default = false
+        label = "Scaled Touch Section Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.Update_Company_Information"
+        default = false
+        label = "Update Company Information Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Account.Update_Project"
+        default = false
+        label = "Update Project Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Case.CaseComment"
+        default = false
+        label = "Community Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Case.NewChildCase"
+        default = false
+        label = "New Child Case Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Case._LightningUpdateCase"
+        default = false
+        label = "Update Case Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.CollaborationGroup.NewGroupMember"
+        default = false
+        label = "New Group Member Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.CollaborationGroup.NewGroupRecord"
+        default = false
+        label = "Add Record Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Contact.Contact_Edit_from_Relationship"
+        default = false
+        label = "Contact Edit from Relationship Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Contact.Create_Relationship"
+        default = false
+        label = "Create Relationship Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Contact._LightningRelatedContact"
+        default = false
+        label = "Update Contact Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Contract.Contract_High_Level"
+        default = false
+        label = "Contract High Level Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Department__c.New_Department_Persona"
+        default = false
+        label = "New Department Persona Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Department__c.Update_Department"
+        default = false
+        label = "Update Department Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.GuestCommunityCase"
+        default = false
+        label = "Guest Community Case Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Kickoff__c.Kickoff_Details"
+        default = false
+        label = "Kickoff Details Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Lead.Change_Status"
+        default = false
+        label = "Change Status Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Lead.Company_Fields"
+        default = false
+        label = "Company Fields Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Lead.Relationship_Fields"
+        default = false
+        label = "Relationship Fields Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Lead.Reporting_Fields"
+        default = false
+        label = "Reporting Fields Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.LogACall"
+        default = false
+        label = "Log a Call Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.NewCase"
+        default = false
+        label = "New Case Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.NewCommunityCase"
+        default = false
+        label = "New Community Case Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.NewContact"
+        default = false
+        label = "New Contact Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.NewEvent"
+        default = false
+        label = "New Event Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.NewGroup"
+        default = false
+        label = "New Group Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.NewTask"
+        default = false
+        label = "New Task Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Opportunity.BI_Admin"
+        default = false
+        label = "BI Admin Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Opportunity.Billing_Quote_Information"
+        default = false
+        label = "Billing & Quote Information Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Opportunity.Create_Partner_SO_Request"
+        default = false
+        label = "Create Partner SO Request Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Opportunity.Green_Bucket_New_Infra"
+        default = false
+        label = "Green Bucket New Infra Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Opportunity.Request_a_Sales_Engineer"
+        default = false
+        label = "Request a Sales Engineer Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Opportunity.Send_Opportunity_Summary"
+        default = false
+        label = "Send Opportunity Summary Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Opportunity.System_Info"
+        default = false
+        label = "System Info Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Opportunity.Time_and_Date_Fields"
+        default = false
+        label = "Time and Date Fields Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Project__c.Update_Project"
+        default = false
+        label = "Update Project Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Quote.SendEmail"
+        default = false
+        label = "Email Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.SendEmail"
+        default = false
+        label = "Email Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.Defer"
+        default = false
+        label = "Change Date Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.Defer_0"
+        default = false
+        label = "Change Date Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.Defer_1"
+        default = false
+        label = "Change Date Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.Defer_2"
+        default = false
+        label = "Change Date Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.Defer_3"
+        default = false
+        label = "Change Date Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.Defer_4"
+        default = false
+        label = "Change Date Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.Defer_5"
+        default = false
+        label = "Change Date Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.EditDescription"
+        default = false
+        label = "Edit Comments Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.EditDescription_0"
+        default = false
+        label = "Edit Comments Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.EditDescription_1"
+        default = false
+        label = "Edit Comments Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.EditDescription_2"
+        default = false
+        label = "Edit Comments Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.EditDescription_3"
+        default = false
+        label = "Edit Comments Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.EditDescription_4"
+        default = false
+        label = "Edit Comments Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.EditDescription_5"
+        default = false
+        label = "Edit Comments Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdatePriority"
+        default = false
+        label = "Change Priority Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdatePriority_0"
+        default = false
+        label = "Change Priority Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdatePriority_1"
+        default = false
+        label = "Change Priority Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdatePriority_2"
+        default = false
+        label = "Change Priority Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdatePriority_3"
+        default = false
+        label = "Change Priority Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdatePriority_4"
+        default = false
+        label = "Change Priority Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdatePriority_5"
+        default = false
+        label = "Change Priority Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdateStatus"
+        default = false
+        label = "Change Status Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdateStatus_0"
+        default = false
+        label = "Change Status Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdateStatus_1"
+        default = false
+        label = "Change Status Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdateStatus_2"
+        default = false
+        label = "Change Status Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdateStatus_3"
+        default = false
+        label = "Change Status Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdateStatus_4"
+        default = false
+        label = "Change Status Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Task.UpdateStatus_5"
+        default = false
+        label = "Change Status Action"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Account"
+        default = false
+        label = "Active Account Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.AccountContactRelation"
+        default = false
+        label = "Active Account Contact Relationship Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Account_Activity__c"
+        default = false
+        label = "Active Account Activity Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Account_Snapshot__c"
+        default = false
+        label = "Active Account Snapshot Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.ActiveScratchOrg"
+        default = false
+        label = "Active Active Scratch Org Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Allocation__c"
+        default = false
+        label = "Active Allocation Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Asset"
+        default = false
+        label = "Active Asset Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.AssetRelationship"
+        default = false
+        label = "Active Asset Relationship Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Billing_Entity__c"
+        default = false
+        label = "Active Billing Entity Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Business_Review__c"
+        default = false
+        label = "Active Business Review Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.CalendlyAction__c"
+        default = false
+        label = "Active CalendlyAction Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Case"
+        default = false
+        label = "Active Case Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.ChannelProgram"
+        default = false
+        label = "Active Channel Program Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.ChannelProgramLevel"
+        default = false
+        label = "Active Channel Program Level Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.ChannelProgramMember"
+        default = false
+        label = "Active Channel Program Member Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.CollaborationGroup"
+        default = false
+        label = "Active Group Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.CommSubscription"
+        default = false
+        label = "Active Communication Subscription Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.CommSubscriptionChannelType"
+        default = false
+        label = "Active Communication Subscription Channel Type Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.CommSubscriptionConsent"
+        default = false
+        label = "Active Communication Subscription Consent Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.CommSubscriptionTiming"
+        default = false
+        label = "Active Communication Subscription Timing Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Company_Billing__c"
+        default = false
+        label = "Active Company Billing Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Contact"
+        default = false
+        label = "Active Contact Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Contract"
+        default = false
+        label = "Active Contract Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Department__c"
+        default = false
+        label = "Active Department Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.EngagementChannelType"
+        default = false
+        label = "Active Engagement Channel Type Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Event"
+        default = false
+        label = "Active Event Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.ExchangeRate__c"
+        default = false
+        label = "Active ExchangeRate Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.FeedItem"
+        default = false
+        label = "Active Feed Item Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Field_Trip__Field_Analysis__c"
+        default = false
+        label = "Active Field Analysis Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Field_Trip__Field_Analytic_Config__c"
+        default = false
+        label = "Active Field Analytic Config Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Field_Trip__Object_Analysis__c"
+        default = false
+        label = "Active Field Trip Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.GB_Threshold__c"
+        default = false
+        label = "Active GB Threshold Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Handover__c"
+        default = false
+        label = "Active Handover Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Individual"
+        default = false
+        label = "Active Individual Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Kickoff__c"
+        default = false
+        label = "Active Kickoff Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LH__LH_Export_Lookups__c"
+        default = false
+        label = "Active Lookup Export Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LH__LH_Queue__c"
+        default = false
+        label = "Active Lookup Queue Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LH__Lookup_Helper_Error__c"
+        default = false
+        label = "Active Lookup Helper Error Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LH__Lookup_Helper_Filter_Group__c"
+        default = false
+        label = "Active Lookup Helper Filter Group Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LH__Lookup_Helper_Filter__c"
+        default = false
+        label = "Active Lookup Helper Filter Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LH__Lookup_Helper_Record_Creation__c"
+        default = false
+        label = "Active Lookup Helper Record Creation Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LH__Lookup_Helper_Setting_Filter_Association__c"
+        default = false
+        label = "Active Lookup Helper Setting Filter Association Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LH__Lookup_Helper_Setting__c"
+        default = false
+        label = "Active Lookup Helper Setting Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Job__c"
+        default = false
+        label = "Active Job Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_Assignment__c"
+        default = false
+        label = "Active Lessonly Assignment Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_Content_Tag__c"
+        default = false
+        label = "Active Lessonly Content Tag Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_Content__c"
+        default = false
+        label = "Active Lessonly Content Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_Custom_Field_Mapping__c"
+        default = false
+        label = "Active Lessonly Custom Field Mapping Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_Group_Member__c"
+        default = false
+        label = "Active Lessonly Group Member Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_Group__c"
+        default = false
+        label = "Active Lessonly Group Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_Library_Attempt__c"
+        default = false
+        label = "Active Lessonly Library Attempt Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_Settings__c"
+        default = false
+        label = "Active Lessonly Settings Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_Tag__c"
+        default = false
+        label = "Active Lessonly Tag Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LSNLY__Lessonly_User__c"
+        default = false
+        label = "Active Lessonly User Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Lead"
+        default = false
+        label = "Active Lead Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Lead_Registration__c"
+        default = false
+        label = "Active Lead Registration Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Milestone__c"
+        default = false
+        label = "Active Milestone Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Monday_Account__c"
+        default = false
+        label = "Active Monday Account Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.NamespaceRegistry"
+        default = false
+        label = "Active Namespace Registry Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.OpportunitiesMondayAccountsLink__c"
+        default = false
+        label = "Active OpportunitiesMondayAccountsLink Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Opportunity"
+        default = false
+        label = "Active Opportunity Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.OpportunityContactRole"
+        default = false
+        label = "Active Opportunity Contact Role Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Opportunity_Snapshot__c"
+        default = false
+        label = "Active Opportunity Snapshot Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Order"
+        default = false
+        label = "Active Order Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Partner_Region__c"
+        default = false
+        label = "Active Partner Region Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Partner_SO_Request__c"
+        default = false
+        label = "Active Partner SO Request Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.PartyConsent"
+        default = false
+        label = "Active Party Consent Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Product2"
+        default = false
+        label = "Active Product Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Professional_Service_Request__c"
+        default = false
+        label = "Active Professional Service Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Project__c"
+        default = false
+        label = "Active Project Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Queue__c"
+        default = false
+        label = "Active Queue Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Quote"
+        default = false
+        label = "Active Quote Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Relationship__c"
+        default = false
+        label = "Active Relationship Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Round_Robin__c"
+        default = false
+        label = "Active Round Robin Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Sale_Snapshot__c"
+        default = false
+        label = "Active Sale Snapshot Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Sale__c"
+        default = false
+        label = "Active Sale Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.ScratchOrgInfo"
+        default = false
+        label = "Active Scratch Org Info Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.SocialPost"
+        default = false
+        label = "Active Social Post Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.StoryLogItemSetting__c"
+        default = false
+        label = "Active Story Log Item Setting Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.StoryLogSetting__c"
+        default = false
+        label = "Active Story Log Setting Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.StoryLogSnapshot__c"
+        default = false
+        label = "Active Story Log Snapshot Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Subscription__c"
+        default = false
+        label = "Active Subscription Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Survey__c"
+        default = false
+        label = "Active Survey Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Target__c"
+        default = false
+        label = "Active Target Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Task"
+        default = false
+        label = "Active Task Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Team__c"
+        default = false
+        label = "Active Team Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.User"
+        default = false
+        label = "Active User Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.mondayapp__IntegrationWebhookSubscription__c"
+        default = false
+        label = "Active IntegrationWebhookSubscription Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.rh2__Filter__c"
+        default = false
+        label = "Active Filter Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.rh2__PS_Describe__c"
+        default = false
+        label = "Active Describe Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.rh2__PS_Exception__c"
+        default = false
+        label = "Active Rollup Helper Exception Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.rh2__PS_Export_Rollups__c"
+        default = false
+        label = "Active Rollup Export Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.rh2__PS_Queue__c"
+        default = false
+        label = "Active Rollup Queue Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.rh2__PS_Rollup_Conditions__c"
+        default = false
+        label = "Active Describe Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.rh2__PS_Rollup_Dummy__c"
+        default = false
+        label = "Active Rollup Dummy Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.rh2__RH_Job__c"
+        default = false
+        label = "Active Rollup Job Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.valt__Valooto_Opportunity_Answer__c"
+        default = false
+        label = "Active Valooto Opportunity Answer Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.valt__Valooto_Quote_Answer__c"
+        default = false
+        label = "Active Valooto Quote Answer Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.valt__Valooto_Quote_Workflow__c"
+        default = false
+        label = "Active Valooto Quote Workflow Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.valt__Valooto_Workflow__c"
+        default = false
+        label = "Active Valooto Workflow Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.zisf__FmcDefaultValue__c"
+        default = false
+        label = "Active FmcDefaultValue Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.zisf__ZoomInfo_Clean_Settings__c"
+        default = false
+        label = "Active ZoomInfo Clean Setting Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.zisf__ZoomInfo_Custom_Settings__c"
+        default = false
+        label = "Active ZoomInfo Custom Setting Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.zisf__ZoomInfo_Inbound_Settings__c"
+        default = false
+        label = "Active ZoomInfo Inbound Setting Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.zisf__ZoomInfo__c"
+        default = false
+        label = "Active ZoomInfo Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.zisf__ZoomSessions__c"
+        default = false
+        label = "Active ZoomSessions Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.zisf__Zoom_Scheduler__c"
+        default = false
+        label = "Active Zoom Scheduler Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.zisf__zicCleanJob__c"
+        default = false
+        label = "Active Clean Job Tab"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Value {
+    apiName = "MacroInstruction.Value"
+    label = "Value"
+    _required = false
+    createable = true
+    updateable = true
+    length = 4000
+    queryable = true
+  }
+  salesforce.Text ValueRecord {
+    apiName = "MacroInstruction.ValueRecord"
+    label = "Value Record ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 15
+    queryable = true
+  }
+  salesforce.Number SortOrder {
+    apiName = "MacroInstruction.SortOrder"
+    label = "Sort Order"
+    _required = true
+    precision = 9
+    createable = true
+    updateable = true
+    scale = 0
+    unique = false
+    queryable = true
+  }
+}

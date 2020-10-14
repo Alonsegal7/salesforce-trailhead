@@ -1,0 +1,122 @@
+salesforce.RecordType Task_LID__Message {
+  fullName = "Task.LID__Message"
+  active = false
+  compactLayoutAssignment = "LID__Tasks"
+  description = "Record type for LinkedIn messages (sent to connections)"
+  label = "LinkedIn Message"
+  picklistValues = [
+    {
+      picklist = "Call_Sentiment__c"
+      values = [
+        {
+          fullName = "Demo Scheduled"
+          default = false
+        },
+        {
+          fullName = "Gatekeeper - No contact with prospect"
+          default = false
+        },
+        {
+          fullName = "No Answer"
+          default = false
+        },
+        {
+          fullName = "No Interest"
+          default = false
+        },
+        {
+          fullName = "Not Relevant- Timeline"
+          default = false
+        },
+        {
+          fullName = "Reassigned to Partner"
+          default = false
+        },
+        {
+          fullName = "Referred to Other Contact"
+          default = false
+        },
+        {
+          fullName = "Rescheduling"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Call_Source__c"
+      values = [
+        {
+          fullName = "Aircall"
+          default = false
+        },
+        {
+          fullName = "Salesloft"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Priority"
+      values = [
+        {
+          fullName = "High"
+          default = false
+        },
+        {
+          fullName = "Low"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Status"
+      values = [
+        {
+          fullName = "Completed"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Subject"
+      values = [
+        {
+          fullName = "New Task"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Type"
+      values = [
+        {
+          fullName = "Call"
+          default = false
+        },
+        {
+          fullName = "Demo"
+          default = false
+        },
+        {
+          fullName = "Email"
+          default = false
+        },
+        {
+          fullName = "Exploratory call"
+          default = false
+        },
+        {
+          fullName = "Meeting"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.Task,
+  ]
+}

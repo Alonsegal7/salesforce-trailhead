@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Update_Enterprise_Pricing_Factor_for_38 {
+  fullName = "Opportunity.Update_Enterprise_Pricing_Factor_for_38"
+  field = salesforce.Opportunity.field.Enterprise_Pricing_Factor__c
+  formula = "1.1875"
+  name = "Update Enterprise Pricing Factor for $38"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

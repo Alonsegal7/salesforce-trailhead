@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Update_first_owner_name {
+  fullName = "Lead.Update_first_owner_name"
+  field = salesforce.Lead.field.Distributed_to_First__c
+  formula = "Owner:User.FirstName +' '+ Owner:User.LastName"
+  name = "Update first owner name"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

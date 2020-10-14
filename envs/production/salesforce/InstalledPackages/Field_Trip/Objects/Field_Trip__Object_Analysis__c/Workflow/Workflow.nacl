@@ -1,0 +1,12 @@
+salesforce.Workflow Field_Trip__Object_Analysis__c {
+  fullName = "Field_Trip__Object_Analysis__c"
+  alerts = [
+    salesforce.WorkflowAlert.instance.Field_Trip__Object_Analysis__c_Field_Trip__Send_Processing_Complete_Notification2,
+  ]
+  rules = [
+    salesforce.WorkflowRule.instance.Field_Trip__Object_Analysis__c_Field_Trip__Processing_Complete,
+  ]
+  _parent = [
+    salesforce.Field_Trip__Object_Analysis__c,
+  ]
+}

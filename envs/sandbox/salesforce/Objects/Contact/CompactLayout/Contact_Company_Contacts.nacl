@@ -1,0 +1,19 @@
+salesforce.CompactLayout Contact_Company_Contacts {
+  fullName = "Contact.Company_Contacts"
+  fields = [
+    "Name",
+    "Met_by_AM__c",
+    "Department__c",
+    "rh2__Describe__c",
+    "Email",
+    "Phone",
+    "Title",
+    "DM_Role__c",
+    "Company__c",
+    "MailingAddress",
+  ]
+  label = "Company Contacts"
+  _parent = [
+    salesforce.Contact,
+  ]
+}

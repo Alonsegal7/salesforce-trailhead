@@ -1,0 +1,46 @@
+<apex:page standardController="Lead" recordSetVar="Leads" extensions="zaapit.GenListController">
+
+<script>
+var  listView1='{!JSENCODE(LastListView)}';
+var gotoURL="/one/one.app#/sObject/{!JSENCODE(ObjectName)}/list?filterName="+listView1+"&t="+new Date().getTime();
+if(document.referrer.indexOf("lightning.force.")==-1){
+    gotoURL="/{!JSENCODE(ObjectPrefix)}?fcf="+listView1.substring(0,15);
+}
+
+
+var checkedIds=""; 
+var checkedId1=""; 
+var leadCount=0; 
+ <apex:repeat var="a" value="{!cont.selected}">
+checkedId1="{!a.id}";
+checkedIds+="~"+checkedId1; 
+leadCount++; 
+</apex:repeat>
+
+if(leadCount<1){ 
+alert("Please select at least 1 lead to Convert!"); 
+window.history.back();
+}else{ 
+var win1=window.open("/apex/zaapit__zaapit_tb_zpMassConvert1?id="+escape(checkedIds.substring(1))+"","Convert_Leads","height=800,width=1200,top=100,left=100,fullscreen=0,scrollbars=yes");
+
+var timer = setInterval(function() { 
+if(win1.closed) { 
+clearInterval(timer); 
+window.top.location=gotoURL;
+} 
+}, 1000); 
+} 
+
+</script>
+
+<style>
+.loading{height:125px;}
+.hd1{display:none;}
+</style>
+<div class="loading">
+<div style="font-size: 15px;text-align: center;display: inline-block;margin-top: 48px;background: url('/img/loading.gif') 0 0 no-repeat;padding-left:25px;">Running process...
+<div style="font-size: 10px;text-align: center;margin-top: 10px;font-weight:normal;">Make sure popups are enabled...</div>
+</div>
+</div>
+
+</apex:page>

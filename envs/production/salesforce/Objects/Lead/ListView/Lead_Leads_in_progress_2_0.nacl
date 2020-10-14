@@ -1,0 +1,42 @@
+salesforce.ListView Lead_Leads_in_progress_2_0 {
+  fullName = "Lead.Leads_in_progress_2_0"
+  columns = [
+    "LEAD.COMPANY",
+    "FULL_NAME",
+    "LEAD.TITLE",
+    "LEAD.PHONE",
+    "LEAD.COUNTRY",
+    "LEAD.STATUS",
+    "Days_left_in_trial__c",
+    "Engagement__c",
+    "Enabled_users__c",
+    "Current_score__c",
+    "Distribution_reason__c",
+    "Next_activity_date__c",
+    "Next_activity__c",
+  ]
+  filterScope = "Mine"
+  filters = [
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Attempting,Contacted"
+    },
+    {
+      field = "LEAD.PHONE"
+      operation = "notEqual"
+    },
+    {
+      field = "Next_activity_date__c"
+      operation = "lessThan"
+      value = "TOMORROW"
+    },
+  ]
+  label = "Leads in progress - Call List"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

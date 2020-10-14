@@ -1,0 +1,50 @@
+type salesforce.AudienceCriteriaValue {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  string city {
+    _required = false
+  }
+  string country {
+    _required = false
+  }
+  string domain {
+    _required = false
+  }
+  string entityField {
+    _required = false
+  }
+  string entityType {
+    _required = false
+  }
+  string fieldValue {
+    _required = false
+  }
+  string isEnabled {
+    _required = false
+  }
+  string permissionName {
+    _required = false
+  }
+  string permissionType {
+    _required = false
+  }
+  string profile {
+    _required = false
+  }
+  string subdivision {
+    _required = false
+  }
+  metadataType = "AudienceCriteriaValue"
+}

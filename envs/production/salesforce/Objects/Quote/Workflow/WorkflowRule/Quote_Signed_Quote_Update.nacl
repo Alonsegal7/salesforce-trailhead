@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Quote_Signed_Quote_Update {
+  fullName = "Quote.Signed Quote Update"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Quote_Update_DH_Quote_Status_to_Won
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Quote.field.DH_Date_of_Signature__c
+      operation = "notEqual"
+    },
+  ]
+  description = "Proposal Management"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Quote,
+  ]
+}

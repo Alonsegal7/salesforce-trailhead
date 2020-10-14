@@ -1,0 +1,6 @@
+salesforce.SharingRules LH__LH_Export_Lookups__c {
+  fullName = "LH__LH_Export_Lookups__c"
+  _parent = [
+    salesforce.LH__LH_Export_Lookups__c,
+  ]
+}

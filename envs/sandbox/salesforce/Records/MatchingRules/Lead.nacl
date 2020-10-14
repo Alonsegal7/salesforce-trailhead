@@ -1,0 +1,25 @@
+salesforce.MatchingRules Lead {
+  fullName = "Lead"
+  matchingRules = [
+    {
+      fullName = "Same_BB_ID"
+      label = "Same BB ID"
+      matchingRuleItems = {
+        blankValueBehavior = "NullNotAllowed"
+        fieldName = "primary_pulse_account_id__c"
+        matchingMethod = "Exact"
+      }
+      ruleStatus = "Active"
+    },
+    {
+      fullName = "Same_Lead_Email"
+      label = "Same Lead Email"
+      matchingRuleItems = {
+        blankValueBehavior = "NullNotAllowed"
+        fieldName = "Email"
+        matchingMethod = "Exact"
+      }
+      ruleStatus = "Active"
+    },
+  ]
+}

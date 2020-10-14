@@ -1,0 +1,34 @@
+salesforce.ListView Account_All_Monday_Accounts {
+  fullName = "Account.All_Monday_Accounts"
+  columns = [
+    "ACCOUNT.NAME",
+    "Company__c",
+    "PARENT_NAME",
+    "Company_Size__c",
+    "of_Employees__c",
+    "Plan_Seats__c",
+    "CORE.USERS.FIRST_NAME",
+    "Owner_s_Manager__c",
+    "ARR__c",
+    "ACCOUNT.LAST_UPDATE",
+    "AM__c",
+    "Low_Touch_CS__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "ACCOUNT.RECORDTYPE"
+      operation = "equals"
+      value = "Account.Monday_Account"
+    },
+    {
+      field = "Company__c"
+      operation = "contains"
+      value = "Johnson & johnson"
+    },
+  ]
+  label = "All Monday Accounts"
+  _parent = [
+    salesforce.Account,
+  ]
+}

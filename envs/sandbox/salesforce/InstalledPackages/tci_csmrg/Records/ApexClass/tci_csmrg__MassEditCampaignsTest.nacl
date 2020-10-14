@@ -1,0 +1,14 @@
+salesforce.ApexClass tci_csmrg__MassEditCampaignsTest {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 32
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 7
+      namespace = "tci_csmrg"
+    },
+  ]
+  status = "Active"
+  fullName = "tci_csmrg__MassEditCampaignsTest"
+  content = "(hidden)"
+}

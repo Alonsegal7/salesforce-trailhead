@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_X1500 {
+  fullName = "Lead.X1500"
+  field = salesforce.Lead.field.Company_Size__c
+  literalValue = "1500+"
+  name = "1500+"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

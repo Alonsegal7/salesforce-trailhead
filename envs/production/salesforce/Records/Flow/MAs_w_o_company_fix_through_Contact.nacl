@@ -1,0 +1,323 @@
+salesforce.Flow MAs_w_o_company_fix_through_Contact {
+  fullName = "MAs_w_o_company_fix_through_Contact"
+  decisions = [
+    {
+      name = "NoCompany"
+      label = "NoCompany"
+      locationX = 240
+      locationY = 311
+      defaultConnector = {
+        targetReference = "Nothing"
+      }
+      defaultConnectorLabel = "Has Company"
+      rules = [
+        {
+          name = "No"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Account.Company__c"
+              operator = "EqualTo"
+            },
+            {
+              leftValueReference = "Get_Account.ParentId"
+              operator = "EqualTo"
+            },
+          ]
+          connector = {
+            targetReference = "Get_Contact"
+          }
+          label = "Doesn't have Company"
+        },
+      ]
+    },
+  ]
+  formulas = [
+    {
+      name = "ContactDomain"
+      dataType = "String"
+      expression = '''
+MID( {!Get_Contact.Email},
+FIND( "@",  {!Get_Contact.Email}) + 1 ,
+LEN({!Get_Contact.Email}) - FIND( "@", {!Get_Contact.Email})
+)
+'''
+    },
+  ]
+  interviewLabel = "MAs w/o company - fix through Contact {!$Flow.CurrentDateTime}"
+  label = "MAs w/o company - fix through Contact"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordCreates = [
+    {
+      name = "Create_company_with_website_domain"
+      label = "Create company with website = domain"
+      locationX = 563
+      locationY = 549
+      connector = {
+        targetReference = "Get_Company_with_domain_contact_domain"
+      }
+      faultConnector = {
+        targetReference = "Nothing"
+      }
+      inputAssignments = [
+        {
+          field = "AE__c"
+          value = {
+            elementReference = "Get_Account.AE__c"
+          }
+        },
+        {
+          field = "AM__c"
+          value = {
+            elementReference = "Get_Account.AM__c"
+          }
+        },
+        {
+          field = "BillingCountryCode"
+          value = {
+            elementReference = "Get_Account.BillingCountryCode"
+          }
+        },
+        {
+          field = "BillingStateCode"
+          value = {
+            elementReference = "Get_Account.BillingStateCode"
+          }
+        },
+        {
+          field = "Company_Size__c"
+          value = {
+            elementReference = "Get_Account.Company_Size__c"
+          }
+        },
+        {
+          field = "Name"
+          value = {
+            elementReference = "ContactDomain"
+          }
+        },
+        {
+          field = "Partner__c"
+          value = {
+            elementReference = "Get_Account.Partner__c"
+          }
+        },
+        {
+          field = "RecordTypeId"
+          value = {
+            stringValue = "0121t000000IQTiAAO"
+          }
+        },
+        {
+          field = "SDR__c"
+          value = {
+            elementReference = "Get_Account.SDR__c"
+          }
+        },
+        {
+          field = "Website"
+          value = {
+            elementReference = "ContactDomain"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+  ]
+  recordLookups = [
+    {
+      name = "Get_Account"
+      label = "Get Account"
+      locationX = 423
+      locationY = 231
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "NoCompany"
+      }
+      faultConnector = {
+        targetReference = "Nothing"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RecordId"
+          }
+        },
+        {
+          field = "RecordTypeId"
+          operator = "EqualTo"
+          value = {
+            stringValue = "0121t000000IQTnAAO"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Account
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_Company_with_domain_contact_domain"
+      label = "Get Company with domain = contact domain"
+      locationX = 415
+      locationY = 549
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Update_account_with_company_and_parent"
+      }
+      faultConnector = {
+        targetReference = "Create_company_with_website_domain"
+      }
+      filters = [
+        {
+          field = "RecordTypeId"
+          operator = "EqualTo"
+          value = {
+            stringValue = "0121t000000IQTiAAO"
+          }
+        },
+        {
+          field = "Website"
+          operator = "EqualTo"
+          value = {
+            elementReference = "ContactDomain"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Account
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_Contact"
+      label = "Get Contact"
+      locationX = 413
+      locationY = 364
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Get_Company_with_domain_contact_domain"
+      }
+      faultConnector = {
+        targetReference = "Nothing"
+      }
+      filters = [
+        {
+          field = "AccountId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RecordId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Contact
+      sortField = salesforce.Contact.field.CreatedDate
+      sortOrder = "Desc"
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_account_with_company_and_parent"
+      label = "Update account with company and parent"
+      locationX = 417
+      locationY = 715
+      faultConnector = {
+        targetReference = "Nothing"
+      }
+      filters = [
+        {
+          field = "Company__c"
+          operator = "IsNull"
+          value = {
+            booleanValue = true
+          }
+        },
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RecordId"
+          }
+        },
+        {
+          field = "ParentId"
+          operator = "IsNull"
+          value = {
+            booleanValue = true
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Company__c"
+          value = {
+            elementReference = "Get_Company_with_domain_contact_domain.Id"
+          }
+        },
+        {
+          field = "ParentId"
+          value = {
+            elementReference = "Get_Company_with_domain_contact_domain.Id"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "Get_Account"
+    }
+  }
+  status = "Draft"
+  subflows = [
+    {
+      name = "Nothing"
+      label = "Nothing"
+      locationX = 860
+      locationY = 303
+      flowName = "Do_nothing"
+    },
+  ]
+  variables = [
+    {
+      name = "CountCompanies"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      name = "RecordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      value = {
+        elementReference = "$Flow.CurrentRecord"
+      }
+    },
+  ]
+}

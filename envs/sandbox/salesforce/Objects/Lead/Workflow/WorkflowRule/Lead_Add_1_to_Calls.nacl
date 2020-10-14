@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Lead_Add_1_to_Calls {
+  fullName = "Lead.Add 1 to Calls"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Add_1_to_Calls
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "ischanged( Last_Call_Complete__c ) && not(isnull(Last_Call_Complete__c))"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

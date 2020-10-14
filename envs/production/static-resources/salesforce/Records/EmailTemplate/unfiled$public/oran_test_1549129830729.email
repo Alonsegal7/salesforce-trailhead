@@ -1,0 +1,7 @@
+dear&nbsp;{{{Recipient.FirstName}}},<br />
+<br />
+your company&nbsp;{{{Organization.Name}}} -&nbsp;<br />
+<br />
+<br />
+thanks,<br />
+{{{Sender.Name}}}

@@ -1,0 +1,241 @@
+type salesforce.zisf__ZoomInfo_Custom_Settings__c {
+  salesforce.Checkbox zisf__Account_FMC_Persist_Search__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Account_FMC_Persist_Search__c"
+    label = "Account FMC Persist Search"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+    description = "a field to define is search persistance will exist between searches in FMC"
+  }
+  salesforce.Checkbox zisf__Account_FMC_Tab_Disable__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Account_FMC_Tab_Disable__c"
+    label = "Account FMC Tab Disable"
+    defaultValue = false
+    inlineHelpText = "Disable Find More Contacts Tab on Account Panel"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable Find More Contacts Tab on Account Panel"
+  }
+  salesforce.LongTextArea zisf__Account_Mapping__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Account_Mapping__c"
+    label = "Account_Mapping"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Checkbox zisf__Account_Overview_Tab_Disable__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Account_Overview_Tab_Disable__c"
+    label = "Account Overview Tab Disable"
+    defaultValue = false
+    inlineHelpText = "Disable Overview Tab on Account Panel"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable Overview Tab on Account Panel"
+  }
+  salesforce.LongTextArea zisf__Contact_Mapping__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Contact_Mapping__c"
+    label = "Contact_Mapping"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Checkbox zisf__Contact_Overview_Tab_Disable__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Contact_Overview_Tab_Disable__c"
+    label = "Contact Overview Tab Disable"
+    defaultValue = false
+    inlineHelpText = "Disable Overview Tab on Contact Panel"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable Overview Tab on Contact Panel"
+  }
+  salesforce.Checkbox zisf__Contact_Web_Mentions_Tab_Disable__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Contact_Web_Mentions_Tab_Disable__c"
+    label = "Contact Web Mentions Tab Disable"
+    defaultValue = false
+    inlineHelpText = "Disable Web Mentions Tab on Contact Panel"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable Web Mentions Tab on Contact Panel"
+  }
+  salesforce.Checkbox zisf__Contact_Web_Mentions_as_Default__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Contact_Web_Mentions_as_Default__c"
+    label = "Contact Web Mentions as Default"
+    defaultValue = false
+    inlineHelpText = "Make Web Mentions the Default Tab on Contact Panel"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Make Web Mentions the Default Tab on Contact Panel"
+  }
+  salesforce.Checkbox zisf__Enable_Check_For_Duplicated_Option__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Enable_Check_For_Duplicated_Option__c"
+    label = "Disable Check for Potential Duplicates"
+    defaultValue = false
+    inlineHelpText = "Check this checkbox to disable check for potential duplicates when importing Accounts, Contacts and Leads. Only applies to records imported through ZoomInfo Salesforce Application."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Check this checkbox to disable check for potential duplicates when importing Accounts, Contacts and Leads. Only applies to records imported through ZoomInfo Salesforce Application."
+  }
+  salesforce.Checkbox zisf__Find_More_Contacts_as_Default__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Find_More_Contacts_as_Default__c"
+    label = "Account Find More Contacts as Default"
+    defaultValue = false
+    inlineHelpText = "Make Find More Contacts the Default Tab on Account Panel"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Make Find More Contacts the Default Tab on Account Panel"
+  }
+  salesforce.LongTextArea zisf__Lead_Mapping__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Lead_Mapping__c"
+    label = "Lead_Mapping"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Checkbox zisf__Lead_Overview_Tab_Disable__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Lead_Overview_Tab_Disable__c"
+    label = "Lead Overview Tab Disable"
+    defaultValue = false
+    inlineHelpText = "Disable Overview Tab on Lead Panel"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable Overview Tab on Lead Panel"
+  }
+  salesforce.Checkbox zisf__Lead_Web_Mentions_Tab_Disable__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Lead_Web_Mentions_Tab_Disable__c"
+    label = "Lead Web Mentions Tab Disable"
+    defaultValue = false
+    inlineHelpText = "Disable Web Mentions Tab on Lead Panel"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable Web Mentions Tab on Lead Panel"
+  }
+  salesforce.Checkbox zisf__Lead_Web_Mentions_as_Default__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Lead_Web_Mentions_as_Default__c"
+    label = "Lead Web Mentions as Default"
+    defaultValue = false
+    inlineHelpText = "Make Web Mentions the Default Tab on Lead Panel"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Make Web Mentions the Default Tab on Lead Panel"
+  }
+  salesforce.LongTextArea zisf__Mapping__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Mapping__c"
+    label = "Mapping"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Checkbox zisf__Match_Duplicate_Leads_in_FMC__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Match_Duplicate_Leads_in_FMC__c"
+    label = "Match Duplicate Leads in FMC"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text zisf__Profile_ID__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__Profile_ID__c"
+    label = "Profile ID or Global"
+    _required = true
+    inlineHelpText = "Enter 18 character Profile ID to set preferences for a specific profile. Enter Global to set preferences for everyone. Profile level preferences will overwrite Global preferences."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 18
+    queryable = true
+    description = "Enter 18 character Profile ID to set preferences for a specific profile. Enter Global to set preferences for everyone. Profile level preferences will overwrite Global preferences."
+    externalId = false
+  }
+  salesforce.LongTextArea zisf__SSO_url__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__SSO_url__c"
+    label = "SSO url"
+    _required = false
+    createable = true
+    updateable = true
+    length = 2083
+    queryable = true
+    visibleLines = 2
+  }
+  salesforce.Checkbox zisf__ZoomInfo_Tab_Company_Search_Disable__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__ZoomInfo_Tab_Company_Search_Disable__c"
+    label = "ZoomInfo Tab Company Search Disable"
+    defaultValue = false
+    inlineHelpText = "Disable Company Search Option on ZoomInfo Tab"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable Company Search Option on ZoomInfo Tab"
+  }
+  salesforce.Checkbox zisf__ZoomInfo_Tab_Company_Search_as_Default__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__ZoomInfo_Tab_Company_Search_as_Default__c"
+    label = "ZoomInfo Tab Company Search as Default"
+    defaultValue = false
+    inlineHelpText = "Make Company Search the Default on ZoomInfo Tab"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Make Company Search the Default on ZoomInfo Tab"
+  }
+  salesforce.Checkbox zisf__ZoomInfo_Tab_People_Search_Disable__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__ZoomInfo_Tab_People_Search_Disable__c"
+    label = "ZoomInfo Tab People Search Disable"
+    defaultValue = false
+    inlineHelpText = "Disable People Search Option on ZoomInfo Tab"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Disable People Search Option on ZoomInfo Tab"
+  }
+  salesforce.Checkbox zisf__contributer__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__contributer__c"
+    label = "contributer"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text zisf__token__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__token__c"
+    label = "token"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime zisf__token_expire_time__c {
+    apiName = "zisf__ZoomInfo_Custom_Settings__c.zisf__token_expire_time__c"
+    label = "token expire time"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

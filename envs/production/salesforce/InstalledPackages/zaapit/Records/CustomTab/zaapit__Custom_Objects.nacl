@@ -1,0 +1,7 @@
+salesforce.CustomTab zaapit__Custom_Objects {
+  fullName = "zaapit__Custom_Objects"
+  description = "Custom object explorer tab"
+  label = "Explorer 2"
+  motif = "Custom82: Whistle"
+  page = "zaapit__zaapit_tb_customObj1"
+}

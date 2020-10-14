@@ -1,0 +1,75 @@
+.THIS .slds-icon {
+  height: 0.75rem;
+  cursor: pointer;
+}
+
+.THIS .slds-tree__item {
+  cursor: default;
+  padding-left: 0;
+}
+
+.THIS ul ul {
+  position: relative;
+}
+.THIS ul ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15px;
+  bottom: 5px;
+  width: 1px;
+  background: #ccc;
+}
+.THIS li ul {
+  padding-left: 30px;
+}
+.THIS li ul li {
+  /* padding-left: 10px; */
+}
+.THIS .slds-tree__item .slds-truncate {
+  overflow: visible;
+  text-overflow: unset;
+}
+.THIS a {
+     padding-right: 0.65rem;
+}
+.THIS .tree-icon {
+  transition: transform 0.1s ease;
+}
+.THIS .tree-icon.is-expanded {
+  transform: rotate(90deg);
+}
+.THIS .highlight-item {
+}
+.THIS .highlight-item_opportunity {
+  color: rgb(206, 79, 47);
+}
+.THIS .highlight-item_contacts {
+  color: rgb(37, 53, 201);
+}
+.THIS .highlight-item_accounts {
+}
+.THIS .is-underlined {
+  font-weight: bold;
+}
+.THIS .slds-button__icon {
+    transform: rotate(0deg) !important;
+    height: 1rem;
+    padding-bottom: 0.3rem;
+}
+.THIS .slds-button {
+    height: 1rem;
+    padding-bottom: 0.3rem;
+}
+
+.THIS .description {
+    color: gray;
+}
+
+.THIS .stage-name {
+    color: #db2cdf;
+}
+
+.THIS .billing-country {
+    color: #ff9200;
+}

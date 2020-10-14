@@ -1,0 +1,8 @@
+salesforce.StaticResource zaapit__filter_lm {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "image/png"
+  description = "smart tables filter lm"
+  fullName = "zaapit__filter_lm"
+  content = file("salesforce/InstalledPackages/zaapit/Records/StaticResource/zaapit__filter_lm.png")
+}

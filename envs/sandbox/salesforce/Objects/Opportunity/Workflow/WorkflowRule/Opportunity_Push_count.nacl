@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Opportunity_Push_count {
+  fullName = "Opportunity.Push count"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Push_Count
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "IF( CloseDate > PRIORVALUE( CloseDate ), IF( MONTH(CloseDate) <> MONTH(PRIORVALUE( CloseDate )) , TRUE, FALSE), FALSE)"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

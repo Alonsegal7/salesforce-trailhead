@@ -1,0 +1,275 @@
+type salesforce.zaapit__zaapit_editable_tb__c {
+  salesforce.LongTextArea zaapit__Columns_Filters2__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__Columns_Filters2__c"
+    label = "Columns Filters2"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea zaapit__Columns_Filters3__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__Columns_Filters3__c"
+    label = "Columns Filters3"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea zaapit__Columns_Filters__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__Columns_Filters__c"
+    label = "Columns Filters"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea zaapit__DupeSettings__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__DupeSettings__c"
+    label = "DupeSettings"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Checkbox zaapit__Enable_Sort_Grouping2__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__Enable_Sort_Grouping2__c"
+    label = "Enable Sort Grouping2"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__Enable_Sort_coloring__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__Enable_Sort_coloring__c"
+    label = "Enable sort coloring"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox zaapit__Enable_Sort_grouping__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__Enable_Sort_grouping__c"
+    label = "Enable sort grouping"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea zaapit__Extra_Condition_Filter__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__Extra_Condition_Filter__c"
+    label = "Extra Condition Filter"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Checkbox zaapit__Show_as_default__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__Show_as_default__c"
+    label = "Show as default"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text zaapit__View_Name__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__View_Name__c"
+    label = "View Name"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea zaapit__columnsWidth__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__columnsWidth__c"
+    label = "columnsWidth"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number zaapit__currPage__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__currPage__c"
+    label = "Current Page"
+    _required = false
+    precision = 10
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Current Page"
+    externalId = false
+  }
+  salesforce.LongTextArea zaapit__customLinksOnReadMode__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__customLinksOnReadMode__c"
+    label = "customLinksOnReadMode"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.LongTextArea zaapit__fieldsHeaders__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__fieldsHeaders__c"
+    label = "fieldsHeaders"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.LongTextArea zaapit__fields__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__fields__c"
+    label = "fields"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.Number zaapit__maxRowsPerPage__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__maxRowsPerPage__c"
+    label = "maxRowsPerPage"
+    _required = false
+    precision = 10
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Max Rows Per Page"
+    externalId = false
+  }
+  salesforce.Text zaapit__searchSTR__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__searchSTR__c"
+    label = "searchSTR"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__sortBy2__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__sortBy2__c"
+    label = "sortBy2"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__sortBy3__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__sortBy3__c"
+    label = "sortBy3"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__sortBy__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__sortBy__c"
+    label = "sortBy"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__sortDir2__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__sortDir2__c"
+    label = "sortDir2"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__sortDir3__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__sortDir3__c"
+    label = "sortDir3"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__sortDir__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__sortDir__c"
+    label = "sortDir"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zaapit__table__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__table__c"
+    label = "Table For Object"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "The view's table for object"
+    externalId = false
+  }
+  salesforce.Text zaapit__topChartsFields__c {
+    apiName = "zaapit__zaapit_editable_tb__c.zaapit__topChartsFields__c"
+    label = "topChartsFields"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = '''
+Auto open the charts for the fields inside this fields.
+Example: field1#field2....
+'''
+    externalId = false
+  }
+}

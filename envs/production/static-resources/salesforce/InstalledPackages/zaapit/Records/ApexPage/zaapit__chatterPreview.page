@@ -1,0 +1,47 @@
+<apex:page sidebar="false" showHeader="false" >
+<script type="text/javascript" src="{!$Resource.zp_jquery172}"></script>
+<script>
+function srcUp(t){
+    window.open((t.replace("isdtp=vw","aaa=aa1")),"_blank");
+}
+function navigateToUrl(t){
+    var sfd="salesforce.com/";
+    if(t.indexOf(sfd)>-1 && t.indexOf(sfd)<50){
+        t=t.substring(t.indexOf(sfd)+sfd.length-1);
+    }
+    self.location=t;
+}
+
+function lnkFx1(){
+    $("a[href]").each(function(){
+        var href1=$(this).attr("href");
+        if(href1.indexOf("http")==0){
+           $(this).attr("onclick","srcUp($(this).attr('href'));return false;");
+        }
+    });
+}
+$(document).ready(function(){
+    lnkFx1();
+    $(document).click(function(){setTimeout("lnkFx1()",1000);});
+    $(document).resize(function(){lnkFx1();});
+});
+</script>
+<chatter:feedWithFollowers entityId="{!$CurrentPage.parameters.id}" showHeader="false"/>
+
+<div style="display:none;font-size:13px;" id="mainErrormsg">
+Chatter is not available for the view object, to enable: go to setup>search>Feed Tracking>zaapit table> enable tracking>save 
+</div>
+<div style="display:none;font-size:13px;" id="mainErrormsg2">
+Chatter is not available for this object, to enable: go to setup>search>Feed Tracking>choose object> enable tracking>save 
+</div>
+<script>
+$(document).ready(function(){
+	var ele1=document.getElementById("j_id0:j_id2");
+	if(ele1!=null && ele1.innerHTML.indexOf("ZaapIT Tables do not have feeds enabled")>-1){
+		$("#mainErrormsg").show();
+	}else if(ele1!=null && ele1.innerHTML.indexOf("do not have feeds enabled")>-1){
+		$("#mainErrormsg2").show();
+	}
+});
+</script>
+</apex:page>

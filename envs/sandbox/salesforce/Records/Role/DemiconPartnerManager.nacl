@@ -1,0 +1,10 @@
+salesforce.Role DemiconPartnerManager {
+  fullName = "DemiconPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Demicon Partner Manager"
+  mayForecastManagerShare = false
+  name = "Demicon Partner Manager"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

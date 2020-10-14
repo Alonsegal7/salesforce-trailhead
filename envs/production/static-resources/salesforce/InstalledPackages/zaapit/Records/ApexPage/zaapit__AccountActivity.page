@@ -1,0 +1,29 @@
+<apex:page standardController="Account" showHeader="false" sidebar="false" > 
+<c:zp_ifrm_helper />
+
+  <a href="/{!Account.id}" target="_top"><div class="h1"><apex:outputText value="{!Account.name}">
+    </apex:outputText></div></a>
+    
+<apex:relatedList subject="{!Account}" list="OpenActivities"/>
+<apex:relatedList subject="{!Account}" list="Opportunities"/>
+<apex:relatedList subject="{!Account}" list="ActivityHistories"/>
+
+
+
+<script>
+   $(document).ready(function(){
+  	$("#mapIframe").attr("src","https://zaapitsc3.appspot.com/maps/maps1.html?userAddr1="+encodeURIComponent($("#userAddr").text())+"&Addr="+encodeURIComponent($("#billingAddr").text()+"~"+$("#shippingAddr").text())+"&Contact_address={!JSENCODE($Label.Billing_Address)}~{!JSENCODE($Label.Shipping_Address)}&h1=400&v=61");
+  	
+  });
+   </script>
+     <apex:pageBlock title="{!$Label.zaapit__contact_address}">
+     <iframe scr="about:blank" id="mapIframe" width="100%;" height="400" frameborder="0"/>
+ <textarea id="shippingAddr" class="hd1">
+ {!account.shippingStreet}, {!account.shippingCity}, {!account.shippingState}, {!account.shippingCountry}
+ </textarea>
+ <textarea id="billingAddr"  class="hd1">
+ {!account.billingStreet}, {!account.billingCity}, {!account.billingState}, {!account.billingCountry}
+ </textarea> 
+
+ </apex:pageBlock>
+</apex:page>

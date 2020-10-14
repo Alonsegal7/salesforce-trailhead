@@ -1,0 +1,10 @@
+salesforce.Role RefreshNetworksPartnerManager {
+  fullName = "RefreshNetworksPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Refresh Networks Partner Manager"
+  mayForecastManagerShare = false
+  name = "Refresh Networks Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

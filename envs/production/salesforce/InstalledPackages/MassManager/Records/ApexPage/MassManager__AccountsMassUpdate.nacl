@@ -1,0 +1,9 @@
+salesforce.ApexPage MassManager__AccountsMassUpdate {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 40
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Accounts Mass Update"
+  fullName = "MassManager__AccountsMassUpdate"
+  content = file("salesforce/InstalledPackages/MassManager/Records/ApexPage/MassManager__AccountsMassUpdate.page")
+}

@@ -1,0 +1,17 @@
+salesforce.WebLink Lead_zaapit__Mass_Emails {
+  fullName = "Lead.zaapit__Mass_Emails"
+  availability = "online"
+  description = "Send email in mass to selected/all leads used inside zaapit's apps"
+  displayType = "massActionButton"
+  encodingKey = "UTF-8"
+  height = 600
+  linkType = "url"
+  masterLabel = "Mass Emails"
+  openType = "sidebar"
+  protected = false
+  requireRowSelection = true
+  url = "/**/sendMassEMailStart(\"Leads\");"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Opportunity_Opportunity_Created_from_SQL {
+  fullName = "Opportunity.Opportunity Created from SQL"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Opportunity_Opportunity_Created_from_SQL
+      type = "Alert"
+    },
+  ]
+  active = true
+  formula = "NOT(ISBLANK(SDR_Name_for_reports__c )) &&  RecordType.DeveloperName ='Internal_Opportunity'"
+  triggerType = "onCreateOnly"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

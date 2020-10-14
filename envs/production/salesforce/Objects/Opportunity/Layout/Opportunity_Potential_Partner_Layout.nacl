@@ -1,0 +1,248 @@
+salesforce.Layout Opportunity_Potential_Partner_Layout {
+  fullName = "Opportunity-Potential Partner Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = false
+      label = "Fields"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.Name
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.AccountId
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.About_Company__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Company__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.LeadSource
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Region__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Zone__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Country__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.IqScore
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Account_Region__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.OwnerId
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.StageName
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.CloseDate
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Probability
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Lost_Reason__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Opportunity_Attribution__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Sub_Attribution__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Key Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Main_Point_of_Contacts__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Core_Business__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Use_cases__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Pains__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Workflow__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Selling_competing_products__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Other_software_they_re_selling__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.DM_process__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.DM_Details__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Success_Metrics__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Timeline__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Benefits__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Risks__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Opportunity_Source_Type__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Opportunity Notes"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Extra_Information__c
+            },
+          ]
+        },
+      ]
+      style = "OneColumn"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Manager Section"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Push_Count__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Opportunity_Age__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Manager_s_notes__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = false
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  relatedContent = {
+    relatedContentItems = [
+      {
+        layoutItem = {
+          behavior = "Readonly"
+          field = salesforce.Opportunity.field.AccountId
+        }
+      },
+      {
+        layoutItem = {
+          behavior = "Readonly"
+          field = salesforce.Opportunity.field.OwnerId
+        }
+      },
+    ]
+  }
+  relatedObjects = [
+    "AccountId",
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000k8NoF"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

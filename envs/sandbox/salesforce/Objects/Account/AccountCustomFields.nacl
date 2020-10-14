@@ -1,0 +1,7740 @@
+type salesforce.Account {
+  salesforce.Checkbox Strategic__c {
+    apiName = "Account.Strategic__c"
+    label = "Allocated"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Industry_new__c {
+    apiName = "Account.Industry_new__c"
+    label = "Industry New"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    description = "Source: company enrichment"
+    externalId = false
+  }
+  salesforce.Summary of_open_opps__c {
+    apiName = "Account.of_open_opps__c"
+    label = "# of open opps"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Opportunity.StageName"
+        operation = "notEqual"
+        value = "Closed Won, Closed Lost"
+      },
+    ]
+    summaryForeignKey = "Opportunity.AccountId"
+    summaryOperation = "count"
+  }
+  salesforce.Summary of_lost_opps__c {
+    apiName = "Account.of_lost_opps__c"
+    label = "# of lost opps"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Opportunity.StageName"
+        operation = "equals"
+        value = "Closed Lost"
+      },
+    ]
+    summaryForeignKey = "Opportunity.AccountId"
+    summaryOperation = "count"
+  }
+  salesforce.Summary of_won_opps__c {
+    apiName = "Account.of_won_opps__c"
+    label = "# of Won Opportunities (Customers)"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Opportunity.StageName"
+        operation = "equals"
+        value = "Closed Won"
+      },
+    ]
+    summaryForeignKey = "Opportunity.AccountId"
+    summaryOperation = "count"
+  }
+  salesforce.Number of_emails__c {
+    apiName = "Account.of_emails__c"
+    label = "# of emails"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number of_calls__c {
+    apiName = "Account.of_calls__c"
+    label = "# of calls"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number of_tickets__c {
+    apiName = "Account.of_tickets__c"
+    label = "# of tickets"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Vendor__c {
+    apiName = "Account.Vendor__c"
+    label = "Vendor"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Security__c {
+    apiName = "Account.Security__c"
+    label = "Security"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Company_Id__c {
+    apiName = "Account.Company_Id__c"
+    label = "Company Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 150
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Long_Account_ID__c {
+    apiName = "Account.Long_Account_ID__c"
+    label = "Long Account ID"
+    _required = false
+    formula = "CASESAFEID(Id)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary Sales_added_ARR__c {
+    apiName = "Account.Sales_added_ARR__c"
+    label = "Sales added ARR"
+    _required = false
+    precision = 18
+    scale = 1
+    inlineHelpText = "The data is accurate from March 2019"
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Sale__c.ARR__c"
+    summaryFilterItems = [
+      {
+        field = "Sale__c.FinalSaleStatus__c"
+        operation = "equals"
+        value = "Complete"
+      },
+    ]
+    summaryForeignKey = "Sale__c.Company__c"
+    summaryOperation = "sum"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.FinalSaleStatus__c,
+    ]
+  }
+  salesforce.Summary Sales_Pipeline_ARR__c {
+    apiName = "Account.Sales_Pipeline_ARR__c"
+    label = "Sales Pipeline ARR"
+    _required = false
+    precision = 18
+    scale = 1
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Sale__c.ARR__c"
+    summaryFilterItems = [
+      {
+        field = "Sale__c.FinalSaleStatus__c"
+        operation = "equals"
+        value = "Expected Partial, Partial, Expected Complete"
+      },
+    ]
+    summaryForeignKey = "Sale__c.Company__c"
+    summaryOperation = "sum"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.FinalSaleStatus__c,
+    ]
+  }
+  salesforce.Text Pulse_Account_Id__c {
+    apiName = "Account.Pulse_Account_Id__c"
+    label = "Pulse Account Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Phone HQ_Phone__c {
+    apiName = "Account.HQ_Phone__c"
+    label = "HQ Phone"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Account_Ownership_Correct__c {
+    apiName = "Account.Account_Ownership_Correct__c"
+    label = "Account Ownership- Correct?"
+    _required = false
+    formula = '''
+if(
+ NOT(ispickval( Owner.Function__c ,'Enterprise AE')) && NOT( ispickval( Owner.Function__c ,'Mid-Market AE'))&& NOT(ISBLANK( AE__c )), "AE ISSUE",
+
+
+
+
+if( 
+NOT(ispickval( Owner.Function__c ,'Enterprise AM')) || NOT(ispickval( Owner.Function__c ,'Mid-Market AM')), "AM ISSUE","Correct"))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Company_Website__c {
+    apiName = "Account.Company_Website__c"
+    label = "Company: Website"
+    _required = false
+    formula = "Company__r.Website"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.MultiselectPicklist Department_Function__c {
+    apiName = "Account.Department_Function__c"
+    label = "Department/Function"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Functions
+  }
+  salesforce.Number Health_Score__c {
+    apiName = "Account.Health_Score__c"
+    label = "Health Score (MA)"
+    _required = false
+    precision = 5
+    scale = 2
+    inlineHelpText = "This field is updated every Sunday at 5pm EST."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "This represents the health score of the account."
+    externalId = false
+  }
+  salesforce.FormulaNumber Current_Lifecycle_Age__c {
+    apiName = "Account.Current_Lifecycle_Age__c"
+    label = "Current Lifecycle Age"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+if(ispickval( Monday_Account_Status__c ,"Paying Account"),
+ 
+  CASE( text(Monday_Account_Lifecycle__c) , 
+      "Handover", Today() - Handover_Timestamp__c,
+      "Onboarding", Today() - Onboarding_Timestamp__c,
+      "Adoption", Today() - Adoption_Timestamp__c,
+      "Engagement", Today() - Engagement_Timestamp__c,
+      "Renewal / Expansion", Today() - Renewal_Timestamp__c,
+      0)
+,0)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Plan_Bucket__c {
+    apiName = "Account.Plan_Bucket__c"
+    label = "Plan Bucket"
+    _required = false
+    formula = '''
+if( ISPICKVAL(Plan_Tier__c ,'Enterprise')&&  Plan_Seats__c  >= 25 && Plan_Seats__c <=100&& Plan_Period__c ='yearly', 'Enterprise, 25-100, Yearly',if( ISPICKVAL(Plan_Tier__c ,'Enterprise')&&  Plan_Seats__c  >= 100&& Plan_Period__c ='yearly', 'Enterprise, 100+ , Yearly',
+
+
+if(ISPICKVAL(Plan_Tier__c ,'Enterprise')&& Plan_Period__c ='monthly', 'Enterprise, Monthly',if(ISPICKVAL(Plan_Tier__c ,'Enterprise')&& Plan_Period__c ='two_yearly', 'Enterprise, Two-Yearly',if( ISPICKVAL(Plan_Tier__c ,'Pro')&&  Plan_Seats__c  >= 25 && Plan_Seats__c <=100&& Plan_Period__c ='yearly', 'Pro, 25-100, Yearly',if( ISPICKVAL(Plan_Tier__c ,'Pro')&&  Plan_Seats__c  >= 100&& Plan_Period__c ='yearly', 'Pro, 100+ , Yearly',
+
+
+if(ISPICKVAL(Plan_Tier__c ,'Pro')&& Plan_Period__c ='monthly', 'Pro, Monthly',if(ISPICKVAL(Plan_Tier__c ,'Pro')&& Plan_Period__c ='two_yearly', 'Pro, Two-Yearly',"")))
+))))
+)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Owner_is_Active_reports__c {
+    apiName = "Account.Owner_is_Active_reports__c"
+    label = "Owner is Active (reports)"
+    formula = "Owner.IsActive"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Checkbox Account_was_disabled__c {
+    apiName = "Account.Account_was_disabled__c"
+    label = "Account was disabled?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Account was disabled (from BB)"
+  }
+  salesforce.Lookup Company__c {
+    apiName = "Account.Company__c"
+    label = "Company"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup AE__c {
+    apiName = "Account.AE__c"
+    label = "AE"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Sync_status__c {
+    apiName = "Account.Sync_status__c"
+    label = "Sync status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Ready for sync"
+        default = false
+        label = "Ready for sync"
+      },
+      {
+        fullName = "Succeed"
+        default = false
+        label = "Succeed"
+      },
+      {
+        fullName = "Failed"
+        default = false
+        label = "Failed"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number ARR__c {
+    apiName = "Account.ARR__c"
+    label = "Current ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Active_Users__c {
+    apiName = "Account.Active_Users__c"
+    label = "Active Users"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Enabled members who use the system within the last 14 days."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup CSM__c {
+    apiName = "Account.CSM__c"
+    label = "CSM"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Collection__c {
+    apiName = "Account.Collection__c"
+    label = "Collection"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Currency__c {
+    apiName = "Account.Currency__c"
+    label = "Currency"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Currency
+  }
+  salesforce.Number Current_Score__c {
+    apiName = "Account.Current_Score__c"
+    label = "Current Score"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber Days_Left_in_Plan__c {
+    apiName = "Account.Days_Left_in_Plan__c"
+    label = "Days Left in Plan"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "Next_Charge_Date__c-today()"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Next_Charge_Date__c,
+    ]
+  }
+  salesforce.Number Distributed_Score__c {
+    apiName = "Account.Distributed_Score__c"
+    label = "Distributed Score"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Enabled_Users__c {
+    apiName = "Account.Enabled_Users__c"
+    label = "Enabled Users"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Engagement__c {
+    apiName = "Account.Engagement__c"
+    label = "Engagement"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Guests__c {
+    apiName = "Account.Guests__c"
+    label = "Guests"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Members__c {
+    apiName = "Account.Members__c"
+    label = "Members"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Enabled non pending users."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Next_Charge_Date__c {
+    apiName = "Account.Next_Charge_Date__c"
+    label = "Next Charge Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Partner__c {
+    apiName = "Account.Partner__c"
+    label = "Partner"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Plan_Id__c {
+    apiName = "Account.Plan_Id__c"
+    label = "Plan Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Plan_Name__c {
+    apiName = "Account.Plan_Name__c"
+    label = "Plan Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Plan_Period__c {
+    apiName = "Account.Plan_Period__c"
+    label = "Plan Period"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 15
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Plan_Seats__c {
+    apiName = "Account.Plan_Seats__c"
+    label = "Plan Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Plan_Start_Date__c {
+    apiName = "Account.Plan_Start_Date__c"
+    label = "Plan Start Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Plan_Tier__c {
+    apiName = "Account.Plan_Tier__c"
+    label = "Plan Tier"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Basic"
+        default = false
+        label = "Basic"
+      },
+      {
+        fullName = "Standard"
+        default = false
+        label = "Standard"
+      },
+      {
+        fullName = "Pro"
+        default = false
+        label = "Pro"
+      },
+      {
+        fullName = "Enterprise"
+        default = false
+        label = "Enterprise"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Lookup SDR__c {
+    apiName = "Account.SDR__c"
+    label = "SDR"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Sign_Up_Date__c {
+    apiName = "Account.Sign_Up_Date__c"
+    label = "Sign Up Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Slug__c {
+    apiName = "Account.Slug__c"
+    label = "Slug"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 150
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Time_Zone_Offset__c {
+    apiName = "Account.Time_Zone_Offset__c"
+    label = "Time Zone Offset"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Viewers__c {
+    apiName = "Account.Viewers__c"
+    label = "Viewers"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text primary_pulse_account_id__c {
+    apiName = "Account.primary_pulse_account_id__c"
+    label = "BigBrain ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    caseSensitive = true
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Account_Source_Type__c {
+    apiName = "Account.Account_Source_Type__c"
+    label = "Account Source Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Inbound"
+        default = false
+        label = "Inbound"
+      },
+      {
+        fullName = "Outbound"
+        default = false
+        label = "Outbound"
+      },
+      {
+        fullName = "Outreach"
+        default = false
+        label = "Outreach"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Monday_Account_Status__c {
+    apiName = "Account.Monday_Account_Status__c"
+    label = "Monday Account Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Trial Account"
+        default = false
+        label = "Trial Account"
+      },
+      {
+        fullName = "Paying Account"
+        default = false
+        label = "Paying Account"
+      },
+      {
+        fullName = "Churned"
+        default = false
+        label = "Churned"
+      },
+      {
+        fullName = "Canceled"
+        default = false
+        label = "Canceled"
+      },
+      {
+        fullName = "Free Tier"
+        default = false
+        label = "Free Tier"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Monday_Account_Lifecycle__c {
+    apiName = "Account.Monday_Account_Lifecycle__c"
+    label = "Monday Account Lifecycle"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Handover"
+        default = false
+        label = "Handover"
+      },
+      {
+        fullName = "Onboarding"
+        default = false
+        label = "Onboarding"
+      },
+      {
+        fullName = "Adoption"
+        default = false
+        label = "Adoption"
+      },
+      {
+        fullName = "Engagement"
+        default = false
+        label = "Engagement"
+      },
+      {
+        fullName = "Renewal / Expansion"
+        default = false
+        label = "Renewal / Expansion"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    businessStatus = "Active"
+    sorted = false
+  }
+  salesforce.FormulaPercent BWAPP__c {
+    apiName = "Account.BWAPP__c"
+    label = "BWAPP"
+    _required = false
+    formula = "Active_Users__c / Members__c"
+    inlineHelpText = "Bi Weekly Active Paying People"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Active_Users__c,
+      salesforce.Account.field.Members__c,
+    ]
+  }
+  salesforce.Date Go_live_date__c {
+    apiName = "Account.Go_live_date__c"
+    label = "Go Live Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Company_ARR__c {
+    apiName = "Account.Company_ARR__c"
+    label = "Company ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime Trial_Start__c {
+    apiName = "Account.Trial_Start__c"
+    label = "Trial Start"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Trial_End__c {
+    apiName = "Account.Trial_End__c"
+    label = "Trial End"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup AM__c {
+    apiName = "Account.AM__c"
+    label = "AM"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox AM_i_the_CSM__c {
+    apiName = "Account.AM_i_the_CSM__c"
+    label = "AM I the CSM?"
+    formula = '''
+if(CSM__c = $User.Id ,true,
+if(Second_CSM__c =$User.Id, true,
+false))
+'''
+    createable = false
+    updateable = false
+    queryable = true
+    description = "Changed from AM_i_the_CSM"
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.CSM__c,
+      salesforce.Account.field.Second_CSM__c,
+    ]
+  }
+  salesforce.Summary of_Kickoffs__c {
+    apiName = "Account.of_Kickoffs__c"
+    label = "# of Kickoffs"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryForeignKey = "Kickoff__c.Monday_Account__c"
+    summaryOperation = "count"
+  }
+  salesforce.Checkbox At_Risk__c {
+    apiName = "Account.At_Risk__c"
+    label = "At Risk"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber Power_of_1__c {
+    apiName = "Account.Power_of_1__c"
+    label = "Power of 1"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if( RecordType.DeveloperName = 'Company', 1 ,0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Migration_Id__c {
+    apiName = "Account.Migration_Id__c"
+    label = "Migration Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Summary Open_opps_ARR__c {
+    apiName = "Account.Open_opps_ARR__c"
+    label = "Total Open Opps ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Opportunity.Expected_ARR__c"
+    summaryFilterItems = [
+      {
+        field = "Opportunity.StageName"
+        operation = "notEqual"
+        value = "Closed Won, Closed Lost"
+      },
+    ]
+    summaryForeignKey = "Opportunity.AccountId"
+    summaryOperation = "sum"
+  }
+  salesforce.FormulaCheckbox Owner_is_Partner__c {
+    apiName = "Account.Owner_is_Partner__c"
+    label = "Owner is Partner"
+    formula = "Owner.Profile.Name = 'Partner Community Custom'"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Owner_is_BDR__c {
+    apiName = "Account.Owner_is_BDR__c"
+    label = "Owner is BDR"
+    formula = "ISPICKVAL( Owner.Function__c , 'BDR')"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.User.field.Function__c,
+    ]
+  }
+  salesforce.Text Cluster__c {
+    apiName = "Account.Cluster__c"
+    label = "Cluster"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 150
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Previous_Month_ARR__c {
+    apiName = "Account.Previous_Month_ARR__c"
+    label = "Previous Month ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Pricing_Version__c {
+    apiName = "Account.Pricing_Version__c"
+    label = "Pricing Version"
+    _required = false
+    valueSet = [
+      {
+        fullName = "3"
+        default = false
+        label = "Pricing V3"
+      },
+      {
+        fullName = "5"
+        default = false
+        label = "Pricing V5"
+      },
+      {
+        fullName = "6"
+        default = false
+        label = "Pricing V6"
+      },
+      {
+        fullName = "7"
+        default = false
+        label = "Pricing V7"
+      },
+      {
+        fullName = "8"
+        default = false
+        label = "Pricing V8"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Previous_Month_Collection__c {
+    apiName = "Account.Previous_Month_Collection__c"
+    label = "Previous Month Collection"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaCurrency Current_Month_ARR_Change__c {
+    apiName = "Account.Current_Month_ARR_Change__c"
+    label = "Current Month ARR Change"
+    _required = false
+    formula = "ARR__c - Previous_Month_ARR__c"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.ARR__c,
+      salesforce.Account.field.Previous_Month_ARR__c,
+    ]
+  }
+  salesforce.Lookup Owner_s_Manager__c {
+    apiName = "Account.Owner_s_Manager__c"
+    label = "Owner's Manager"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number WAPP__c {
+    apiName = "Account.WAPP__c"
+    label = "WAPP"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Weekly Active Paying People- Syncs daily"
+    externalId = false
+  }
+  salesforce.FormulaCheckbox members_exceeding_Seats__c {
+    apiName = "Account.members_exceeding_Seats__c"
+    label = "Members Exceeding Seats"
+    formula = "Members__c - Free_Users__c > Plan_Seats__c &&   ARR__c > 0"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.ARR__c,
+      salesforce.Account.field.Members__c,
+      salesforce.Account.field.Plan_Seats__c,
+      salesforce.Account.field.Free_Users__c,
+    ]
+  }
+  salesforce.Number Free_Users__c {
+    apiName = "Account.Free_Users__c"
+    label = "Free Users"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaPercent WAPP_From_Members__c {
+    apiName = "Account.WAPP_From_Members__c"
+    label = "WAPP % (From Members)"
+    _required = false
+    formula = "WAPP__c / Members__c"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Members__c,
+      salesforce.Account.field.WAPP__c,
+    ]
+  }
+  salesforce.FormulaCheckbox WAPP_Drop__c {
+    apiName = "Account.WAPP_Drop__c"
+    label = "WAPP Drop"
+    formula = "WAPP_From_Members__c <=0.3"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.WAPP_From_Members__c,
+    ]
+  }
+  salesforce.FormulaCheckbox X60_D_after_plan_started_date__c {
+    apiName = "Account.X60_D_after_plan_started_date__c"
+    label = "60 D after plan started date"
+    formula = "Plan_Start_Date__c +60 < today()"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Plan_Start_Date__c,
+    ]
+  }
+  salesforce.Picklist Company_Size__c {
+    apiName = "Account.Company_Size__c"
+    label = "Company Size"
+    _required = false
+    valueSet = [
+      {
+        fullName = "1-50"
+        default = false
+        label = "1-50"
+      },
+      {
+        fullName = "50-99"
+        default = false
+        label = "50-99"
+      },
+      {
+        fullName = "100-250"
+        default = false
+        label = "100-250"
+      },
+      {
+        fullName = "251-1500"
+        default = false
+        label = "251-1500"
+      },
+      {
+        fullName = "1500+"
+        default = false
+        label = "1500+"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaNumber of_Employees__c {
+    apiName = "Account.of_Employees__c"
+    label = "Company: # of Employees"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Company__r.NumberOfEmployees"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Company__c,
+    ]
+  }
+  salesforce.Text Partner_Id__c {
+    apiName = "Account.Partner_Id__c"
+    label = "Partner Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaPercent Capacity__c {
+    apiName = "Account.Capacity__c"
+    label = "Capacity"
+    _required = false
+    formula = "Members__c /  Plan_Seats__c"
+    inlineHelpText = "Total members from plan seats"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Members__c,
+      salesforce.Account.field.Plan_Seats__c,
+    ]
+  }
+  salesforce.FormulaPercent Potential__c {
+    apiName = "Account.Potential__c"
+    label = "Potential"
+    _required = false
+    formula = "Members__c /  of_Employees__c"
+    inlineHelpText = "Members out of number of employees"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Members__c,
+      salesforce.Account.field.of_Employees__c,
+    ]
+  }
+  salesforce.Lookup Strategic_receiver__c {
+    apiName = "Account.Strategic_receiver__c"
+    label = "Lead Receiver"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Handover_Timestamp__c {
+    apiName = "Account.Handover_Timestamp__c"
+    label = "Handover Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Low_Touch_CS__c {
+    apiName = "Account.Low_Touch_CS__c"
+    label = "Onboarding Owner"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    inlineHelpText = "Onboarding Owner from the Scaled touch that will manage the on-boarding"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Onboarding Owner from the Scaled touch that will manage the on-boarding. Used to be 'Low Touch CSM' field"
+  }
+  salesforce.Number Number_of_titles_added__c {
+    apiName = "Account.Number_of_titles_added__c"
+    label = "Number of titles added"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "How many directors/executives joined the account? (from BB)"
+    externalId = false
+  }
+  salesforce.Date Account_Disabled_Timestamp__c {
+    apiName = "Account.Account_Disabled_Timestamp__c"
+    label = "Account Disabled Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number of_Won_Opportunities__c {
+    apiName = "Account.of_Won_Opportunities__c"
+    label = "# of Won Opps"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Onboarding_Timestamp__c {
+    apiName = "Account.Onboarding_Timestamp__c"
+    label = "Onboarding Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Adoption_Timestamp__c {
+    apiName = "Account.Adoption_Timestamp__c"
+    label = "Adoption Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Engagement_Timestamp__c {
+    apiName = "Account.Engagement_Timestamp__c"
+    label = "Engagement Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Renewal_Timestamp__c {
+    apiName = "Account.Renewal_Timestamp__c"
+    label = "Renewal Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number of_meetings_in_Onboarding__c {
+    apiName = "Account.of_meetings_in_Onboarding__c"
+    label = "# of meetings in Onboarding"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number WAPP_Goal_For_Adoption__c {
+    apiName = "Account.WAPP_Goal_For_Adoption__c"
+    label = "WAPP Goal For Adoption"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Of_Champions__c {
+    apiName = "Account.Of_Champions__c"
+    label = "# Of Champions"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number WAPP_Goal_For_Engagement__c {
+    apiName = "Account.WAPP_Goal_For_Engagement__c"
+    label = "WAPP Goal For Engagement"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number of_QBR_EBR__c {
+    apiName = "Account.of_QBR_EBR__c"
+    label = "# of QBR / EBR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Summary Kickoff_Date__c {
+    apiName = "Account.Kickoff_Date__c"
+    label = "Kickoff Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Kickoff__c.Kickoff_meeting_date__c"
+    summaryFilterItems = [
+      {
+        field = "Kickoff__c.Kickoff_meeting_date__c"
+        operation = "notEqual"
+        value = ""
+      },
+    ]
+    summaryForeignKey = "Kickoff__c.Monday_Account__c"
+    summaryOperation = "max"
+  }
+  salesforce.Picklist Renewal_Certainty__c {
+    apiName = "Account.Renewal_Certainty__c"
+    label = "Renewal Certainty"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Informed Churn (0%)"
+        default = false
+        label = "Informed Churn (0%)"
+      },
+      {
+        fullName = "Low (1% - 30%)"
+        default = false
+        label = "Low (1% - 30%)"
+      },
+      {
+        fullName = "Medium (31%- 75%)"
+        default = false
+        label = "Medium (31%- 75%)"
+      },
+      {
+        fullName = "High (76% - 94%)"
+        default = false
+        label = "High (76% - 94%)"
+      },
+      {
+        fullName = "Confirm (95% - 100%)"
+        default = false
+        label = "Confirm (95% - 100%)"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Company_WAPP__c {
+    apiName = "Account.Company_WAPP__c"
+    label = "Company WAPP"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Company_Members__c {
+    apiName = "Account.Company_Members__c"
+    label = "Company Members"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Company_Collection__c {
+    apiName = "Account.Company_Collection__c"
+    label = "Company Collection"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Link_to_BB_Account__c {
+    apiName = "Account.Link_to_BB_Account__c"
+    label = "Link to BB Account"
+    _required = false
+    formula = '''
+if( primary_pulse_account_id__c <>'',
+HYPERLINK("https://bigbrain.me/accounts/"&  primary_pulse_account_id__c &"'/profile",
+primary_pulse_account_id__c,'BLANK')
+,'')
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Health_Score_Bucket__c {
+    apiName = "Account.Health_Score_Bucket__c"
+    label = "Health Score Bucket"
+    _required = false
+    formula = "IF(Health_Score__c <=5 && Health_Score__c>=0 && ISBLANK(Health_Score__c)=FALSE || (WAPP__c / Members__c<=0.15), \"Low\",IF((Health_Score__c <=8 && Health_Score__c>=6 && (WAPP__c / Members__c>0.15))|| (Health_Score__c <=12 && Health_Score__c>=9 && (WAPP__c / Members__c<=0.3)&&(WAPP__c / Members__c>0.15)),\"Medium\",IF(Health_Score__c <=12 && Health_Score__c>=9 && (WAPP__c / Members__c>0.3), \"High\",\"\")))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    description = "0-5 : Low, 6-8: Medium, 9-12: High"
+    externalId = false
+  }
+  salesforce.Lookup Main_Partner_User__c {
+    apiName = "Account.Main_Partner_User__c"
+    label = "Main Partner User"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Main partner user that will get leads every day"
+  }
+  salesforce.FormulaCheckbox Has_Dedicated_CSM__c {
+    apiName = "Account.Has_Dedicated_CSM__c"
+    label = "Has Dedicated CSM?"
+    formula = "if(isnull( CSM__c ),False,if(ispickval(CSM__r.Function__c , \"Enterprise CSM\") || ISPICKVAL(CSM__r.Function__c , \"Mid-Market CSM\"),True,False))"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Health_Score_Flag__c {
+    apiName = "Account.Health_Score_Flag__c"
+    label = "Health Score Flag"
+    _required = false
+    formula = '''
+if(Health_Score_Bucket__c = "High", image("http://icons.iconarchive.com/icons/icojam/blueberry-basic/32/flag-mark-green-icon.png","High",30,30),
+if(Health_Score_Bucket__c = "Medium", image("http://icons.iconarchive.com/icons/icojam/blueberry-basic/32/flag-mark-yellow-icon.png","Medium",30,30),
+if(Health_Score_Bucket__c = "Low", image("http://icons.iconarchive.com/icons/icojam/blueberry-basic/32/flag-mark-red-icon.png","Low",30,30),"")))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary of_won_opportunities2__c {
+    apiName = "Account.of_won_opportunities2__c"
+    label = "# of won opportunities"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Opportunity.Won__c"
+    summaryForeignKey = "Opportunity.AccountId"
+    summaryOperation = "sum"
+  }
+  salesforce.Date Low_Health_Timestemp__c {
+    apiName = "Account.Low_Health_Timestemp__c"
+    label = "Low Health Timestamp"
+    _required = false
+    inlineHelpText = "Capture the date once the account turned into Low health score"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Capture the date once the account turned into Low health score"
+  }
+  salesforce.DateTime Last_Touched_by_Sales__c {
+    apiName = "Account.Last_Touched_by_Sales__c"
+    label = "Last Touched by Sales"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Last_Touched_by_CSM__c {
+    apiName = "Account.Last_Touched_by_CSM__c"
+    label = "Last Touched by CSM"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Company_Seats__c {
+    apiName = "Account.Company_Seats__c"
+    label = "Company Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date AM_Assignment_Timestamp__c {
+    apiName = "Account.AM_Assignment_Timestamp__c"
+    label = "AM Assignment Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber Sales_Touched_Age__c {
+    apiName = "Account.Sales_Touched_Age__c"
+    label = "Sales Touched Age"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "today() - datevalue(Last_Touched_by_Sales__c )"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber AM_Assigned_Age__c {
+    apiName = "Account.AM_Assigned_Age__c"
+    label = "AM Assigned Age"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "today() -  AM_Assignment_Timestamp__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Synced_By__c {
+    apiName = "Account.Synced_By__c"
+    label = "Synced By"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Region__c {
+    apiName = "Account.Region__c"
+    label = "Region"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Region
+  }
+  salesforce.Picklist Zone__c {
+    apiName = "Account.Zone__c"
+    label = "Zone"
+    _required = false
+    restricted = true
+    fieldDependency = {
+      controllingField = "Region__c"
+      valueSettings = [
+        {
+          valueName = "East Asia"
+          controllingFieldValue = [
+            "APAC",
+          ]
+        },
+        {
+          valueName = "Oceania"
+          controllingFieldValue = [
+            "APAC",
+          ]
+        },
+        {
+          valueName = "Southeast Asia"
+          controllingFieldValue = [
+            "APAC",
+          ]
+        },
+        {
+          valueName = "Africa"
+          controllingFieldValue = [
+            "EMEA",
+          ]
+        },
+        {
+          valueName = "Eastern_Europe"
+          controllingFieldValue = [
+            "EMEA",
+          ]
+        },
+        {
+          valueName = "Middle East"
+          controllingFieldValue = [
+            "EMEA",
+          ]
+        },
+        {
+          valueName = "UK + Ireland"
+          controllingFieldValue = [
+            "EMEA",
+          ]
+        },
+        {
+          valueName = "Caribbean"
+          controllingFieldValue = [
+            "LATAM",
+          ]
+        },
+        {
+          valueName = "Central America"
+          controllingFieldValue = [
+            "LATAM",
+          ]
+        },
+        {
+          valueName = "South America"
+          controllingFieldValue = [
+            "LATAM",
+          ]
+        },
+      ]
+    }
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Sub_Region
+  }
+  salesforce.MultiselectPicklist Selling_competing_products__c {
+    apiName = "Account.Selling_competing_products__c"
+    label = "Selling competing products?"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Competitors
+  }
+  salesforce.MultiselectPicklist Other_software_they_re_selling__c {
+    apiName = "Account.Other_software_they_re_selling__c"
+    label = "Other software they're selling"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Tools_in_Ecosystem
+  }
+  salesforce.Picklist Partner_Company_Status__c {
+    apiName = "Account.Partner_Company_Status__c"
+    label = "Partner Company Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Nurturing"
+        default = false
+        label = "Nurturing"
+      },
+      {
+        fullName = "Unqualified"
+        default = false
+        label = "Unqualified"
+      },
+      {
+        fullName = "New"
+        default = true
+        label = "New"
+      },
+      {
+        fullName = "Attempting"
+        default = false
+        label = "Attempting"
+      },
+      {
+        fullName = "Contacted"
+        default = false
+        label = "Contacted"
+      },
+      {
+        fullName = "Qualified"
+        default = false
+        label = "Qualified"
+      },
+      {
+        fullName = "Program Overview"
+        default = false
+        label = "Evaluation"
+      },
+      {
+        fullName = "Signed"
+        default = false
+        label = "Signed"
+      },
+      {
+        fullName = "Active"
+        default = false
+        isActive = false
+        label = "Active"
+      },
+      {
+        fullName = "Lead"
+        default = false
+        isActive = false
+        label = "Lead"
+      },
+      {
+        fullName = "Negotiations"
+        default = false
+        isActive = false
+        label = "Negotiations"
+      },
+      {
+        fullName = "Trial"
+        default = false
+        isActive = false
+        label = "Trial"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Summary of_Opportunities_Won__c {
+    apiName = "Account.of_Opportunities_Won__c"
+    label = "# of Opportunities Won (Partners)"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Opportunity.StageName"
+        operation = "equals"
+        value = "Closed Won"
+      },
+      {
+        field = "Opportunity.RecordTypeId"
+        operation = "equals"
+        value = "Potential Partner Opportunity"
+      },
+    ]
+    summaryForeignKey = "Opportunity.AccountId"
+    summaryOperation = "count"
+  }
+  salesforce.Number ARR_Temp__c {
+    apiName = "Account.ARR_Temp__c"
+    label = "(Obsolete) ARR Temp"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Collection_Temp__c {
+    apiName = "Account.Collection_Temp__c"
+    label = "Collection Temp"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Previous_Month_ARR_Temp__c {
+    apiName = "Account.Previous_Month_ARR_Temp__c"
+    label = "Previous Month ARR Temp"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Previous_Month_Collection_Temp__c {
+    apiName = "Account.Previous_Month_Collection_Temp__c"
+    label = "Previous Month Collection Temp"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Is_GSI__c {
+    apiName = "Account.Is_GSI__c"
+    label = "IS GSI?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup GSI__c {
+    apiName = "Account.GSI__c"
+    label = "GSI"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    lookupFilter = {
+      active = true
+      filterItems = [
+        {
+          field = "Account.Is_GSI__c"
+          operation = "equals"
+          value = "True"
+        },
+      ]
+      isOptional = false
+    }
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Latest_Billing_Entity__c {
+    apiName = "Account.Latest_Billing_Entity__c"
+    label = "Latest Billing Entity"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Billing_Entity__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Active_Contract__c {
+    apiName = "Account.Active_Contract__c"
+    label = "Active Contract"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contract,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Company_Owner__c {
+    apiName = "Account.Company_Owner__c"
+    label = "Company Owner"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Company_Owner_Name__c {
+    apiName = "Account.Company_Owner_Name__c"
+    label = "Company: Owner Name"
+    _required = false
+    formula = "Company__r.Owner.Full_Name__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Account_Focus__c {
+    apiName = "Account.Account_Focus__c"
+    label = "Account Focus"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Strategic"
+        default = false
+        label = "Strategic"
+      },
+      {
+        fullName = "Growth"
+        default = false
+        label = "Growth"
+      },
+      {
+        fullName = "Low Touch"
+        default = false
+        label = "Low Touch"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.LongTextArea Account_Notes__c {
+    apiName = "Account.Account_Notes__c"
+    label = "Account Notes"
+    _required = false
+    createable = true
+    updateable = true
+    length = 50000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.FormulaCheckbox Strategic_MA__c {
+    apiName = "Account.Strategic_MA__c"
+    label = "Allocated MA"
+    formula = "Parent.Strategic__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Owner_s_Function__c {
+    apiName = "Account.Owner_s_Function__c"
+    label = "Owner's Function"
+    _required = false
+    formula = "TEXT(Owner.Function__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.DateTime Trigger_Company_Owner_Update__c {
+    apiName = "Account.Trigger_Company_Owner_Update__c"
+    label = "Trigger Company Owner Update"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number of_Survey_Contacts__c {
+    apiName = "Account.of_Survey_Contacts__c"
+    label = "# of Survey Contacts"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Company_Long_ID__c {
+    apiName = "Account.Company_Long_ID__c"
+    label = "Company: Long ID"
+    _required = false
+    formula = "Company__r.Long_Account_ID__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Company_Owner_ID__c {
+    apiName = "Account.Company_Owner_ID__c"
+    label = "Company: Owner ID"
+    _required = false
+    formula = "Company__r.Owner.Long_User_ID__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Company_Owner_Function__c {
+    apiName = "Account.Company_Owner_Function__c"
+    label = "Company: Owner Function"
+    _required = false
+    formula = "text(Company__r.Owner.Function__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Checkbox Corona_Campaign_Pilot__c {
+    apiName = "Account.Corona_Campaign_Pilot__c"
+    label = "Corona Campaign - Pilot"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Has_Sales_and_Partners_Ownership__c {
+    apiName = "Account.Has_Sales_and_Partners_Ownership__c"
+    label = "Has Sales and Partners Owners"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+True if related to this company are Monday Accounts or Opportunities with both Sales and Partner owners.
+False if there's only one record type.
+'''
+  }
+  salesforce.Text utm_banner__c {
+    apiName = "Account.utm_banner__c"
+    label = "utm_banner"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 200
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup PreviousOwner__c {
+    apiName = "Account.PreviousOwner__c"
+    label = "Previous Owner"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Flow_Error_Handling_Message__c {
+    apiName = "Account.Flow_Error_Handling_Message__c"
+    label = "Flow Error Handling Message"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    description = "Field to hold error messages from flows"
+    visibleLines = 3
+  }
+  salesforce.DateTime Unassignment_Timestamp__c {
+    apiName = "Account.Unassignment_Timestamp__c"
+    label = "Unassignment Timestamp"
+    _required = false
+    defaultValueFormula = "DATETIMEVALUE(\"01-01-2014 00:00:00\")"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "When did the account owner get un-assigned?"
+  }
+  salesforce.Email Owner_s_Email__c {
+    apiName = "Account.Owner_s_Email__c"
+    label = "Owner's Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime Ownership_Claimed_Timestamp__c {
+    apiName = "Account.Ownership_Claimed_Timestamp__c"
+    label = "Ownership Claimed Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "When did the account owner actively claim this account"
+  }
+  salesforce.Date Last_Ownership_Update__c {
+    apiName = "Account.Last_Ownership_Update__c"
+    label = "Last Ownership Update"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox Account_is_Claimed__c {
+    apiName = "Account.Account_is_Claimed__c"
+    label = "Account is Claimed"
+    formula = "if( not(isblank( Ownership_Claimed_Timestamp__c )) && Ownership_Claimed_Timestamp__c > Unassignment_Timestamp__c, TRUE, FALSE)"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Unassignment_Timestamp__c,
+      salesforce.Account.field.Ownership_Claimed_Timestamp__c,
+    ]
+  }
+  salesforce.FormulaCheckbox Belongs_to_viewed_company__c {
+    apiName = "Account.Belongs_to_viewed_company__c"
+    label = "Belongs to viewed company"
+    formula = "Long_Account_ID__c = LEFT($Setup.Last_Viewed_Account__c.AccountId__c, 18)"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Long_Account_ID__c,
+      salesforce.Last_Viewed_Account__c.field.AccountId__c,
+    ]
+  }
+  salesforce.Checkbox Is_Test_Account__c {
+    apiName = "Account.Is_Test_Account__c"
+    label = "Is Test Account"
+    defaultValue = false
+    inlineHelpText = "This account won't be updated by ownership rules and won't be counted for ARR and other metrics"
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaPercent Upgrade_Potential_Score_MA__c {
+    apiName = "Account.Upgrade_Potential_Score_MA__c"
+    label = "WAPP/Seats"
+    _required = false
+    formula = "(WAPP__c / Plan_Seats__c)"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary of_Complete_Sale__c {
+    apiName = "Account.of_Complete_Sale__c"
+    label = "# of 'Complete' Sales"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Sale__c.FinalSaleStatus__c"
+        operation = "equals"
+        value = "Complete"
+      },
+    ]
+    summaryForeignKey = "Sale__c.Company__c"
+    summaryOperation = "count"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.FinalSaleStatus__c,
+    ]
+  }
+  salesforce.MultiselectPicklist Professional_Service_Capabilities__c {
+    apiName = "Account.Professional_Service_Capabilities__c"
+    label = "Professional Service Capabilities"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Consultancy"
+        default = false
+        label = "Consultancy"
+      },
+      {
+        fullName = "Custom Development"
+        default = false
+        label = "Custom Development"
+      },
+      {
+        fullName = "Implementation"
+        default = false
+        label = "Implementation"
+      },
+      {
+        fullName = "Integrations"
+        default = false
+        label = "Integrations"
+      },
+      {
+        fullName = "Localisation"
+        default = false
+        label = "Localisation"
+      },
+      {
+        fullName = "Deployment"
+        default = false
+        label = "Deployment"
+      },
+      {
+        fullName = "Managed Services"
+        default = false
+        label = "Managed Services"
+      },
+      {
+        fullName = "Design"
+        default = false
+        label = "Design"
+      },
+      {
+        fullName = "Hosting"
+        default = false
+        label = "Hosting"
+      },
+      {
+        fullName = "Data migration"
+        default = false
+        label = "Data migration"
+      },
+      {
+        fullName = "Training"
+        default = false
+        label = "Training"
+      },
+      {
+        fullName = "Onboarding"
+        default = false
+        label = "Onboarding"
+      },
+      {
+        fullName = "Onboarding & Training"
+        default = false
+        isActive = false
+        label = "Onboarding & Training"
+      },
+    ]
+    restricted = true
+    fieldDependency = {
+      controllingField = "Partner_Type__c"
+      valueSettings = [
+        {
+          valueName = "Consultancy"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Custom Development"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Implementation"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Integrations"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Localisation"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Deployment"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Managed Services"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Design"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Hosting"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Data migration"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Training"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Onboarding"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+      ]
+    }
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaCheckbox Green_Bucket_Company__c {
+    apiName = "Account.Green_Bucket_Company__c"
+    label = "Green Bucket Company"
+    formula = "if(of_Complete_Sale__c >0 &&  Company_ARR__c > 0 && Id <> \"0011t00000Lup6fAAB\" ,True,if(Company_ARR__c > 6900 &&  of_Partial_Sale__c =0 && Id <> \"0011t00000Lup6fAAB\",True,False))"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.of_Complete_Sale__c,
+      salesforce.Account.field.of_Partial_Sale__c,
+      salesforce.Account.field.Company_ARR__c,
+    ]
+  }
+  salesforce.Date Orange_Bucket_Timestamp__c {
+    apiName = "Account.Orange_Bucket_Timestamp__c"
+    label = "Orange Bucket Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Green_Bucket_Timestamp__c {
+    apiName = "Account.Green_Bucket_Timestamp__c"
+    label = "Green Bucket Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "When did the account become a green bucket account?"
+  }
+  salesforce.Summary of_Partial_Sale__c {
+    apiName = "Account.of_Partial_Sale__c"
+    label = "# of 'Partial' Sales"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Sale__c.FinalSaleStatus__c"
+        operation = "equals"
+        value = "Partial"
+      },
+    ]
+    summaryForeignKey = "Sale__c.Company__c"
+    summaryOperation = "count"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.FinalSaleStatus__c,
+    ]
+  }
+  salesforce.FormulaCheckbox Orange_Bucket_Company__c {
+    apiName = "Account.Orange_Bucket_Company__c"
+    label = "Orange Bucket Company"
+    formula = "if( of_Partial_Sale__c  >0 &&  Green_Bucket_Company__c=False && Company_ARR__c >0,True,if(Green_Bucket_Company__c=False && Company_ARR__c>0,True,False))"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Green_Bucket_Company__c,
+      salesforce.Account.field.of_Partial_Sale__c,
+      salesforce.Account.field.Company_ARR__c,
+    ]
+  }
+  salesforce.FormulaCheckbox Needs_Ownership_Update__c {
+    apiName = "Account.Needs_Ownership_Update__c"
+    label = "Needs Ownership Update"
+    formula = "(Last_Ownership_Update__c < Today() || isblank(Last_Ownership_Update__c)) &&  Strategic__c = False && Account_is_Claimed__c = False"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Strategic__c,
+    ]
+  }
+  salesforce.Checkbox Uses_monday_com__c {
+    apiName = "Account.Uses_monday_com__c"
+    label = "Uses monday.com"
+    defaultValue = false
+    inlineHelpText = "Do they use monday.com?"
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Sales_Reps_Partner_Company__c {
+    apiName = "Account.Sales_Reps_Partner_Company__c"
+    label = "# Sales Reps (Partner Company)"
+    _required = false
+    precision = 6
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number of_Clients_Partner_Company__c {
+    apiName = "Account.of_Clients_Partner_Company__c"
+    label = "# of Clients (Partner Company)"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Currency Company_Yearly_Turnover__c {
+    apiName = "Account.Company_Yearly_Turnover__c"
+    label = "Company Yearly Turnover"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.Date Partnership_Start_Date_Partner_Company__c {
+    apiName = "Account.Partnership_Start_Date_Partner_Company__c"
+    label = "Partnership Start Date (Partner Company)"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Percent Enterprise_Ratio_Partner_Company__c {
+    apiName = "Account.Enterprise_Ratio_Partner_Company__c"
+    label = "Enterprise Ratio (Partner Company)"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 1
+    precision = 4
+    queryable = true
+  }
+  salesforce.LongTextArea Account_Domains__c {
+    apiName = "Account.Account_Domains__c"
+    label = "Account Domains"
+    _required = false
+    inlineHelpText = '''
+Please enter the related account domains, separated by commas:
+domain.co, domain2.in, domain3.com
+**This is relevant to strategic companies only**
+'''
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    description = "New domains from this list will be connected to the main company record."
+    visibleLines = 5
+  }
+  salesforce.Lookup Second_CSM__c {
+    apiName = "Account.Second_CSM__c"
+    label = "Second CSM"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Url Company_LinkedIn__c {
+    apiName = "Account.Company_LinkedIn__c"
+    label = "Company LinkedIn"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Has_ELA__c {
+    apiName = "Account.Has_ELA__c"
+    label = "Has ELA?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber Days_since_last_activity__c {
+    apiName = "Account.Days_since_last_activity__c"
+    label = "Days since last activity"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "today() -  LastActivityDate"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Green_Bucket_Company_MA__c {
+    apiName = "Account.Green_Bucket_Company_MA__c"
+    label = "Company: Green Bucket Company"
+    formula = "Company__r.Green_Bucket_Company__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Orange_Bucket_Company_MA__c {
+    apiName = "Account.Orange_Bucket_Company_MA__c"
+    label = "Company: Orange Bucket Company"
+    formula = "Company__r.Orange_Bucket_Company__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Owner_Type__c {
+    apiName = "Account.Owner_Type__c"
+    label = "Owner Type"
+    _required = false
+    formula = "if( Owner_is_Partner__c || Owner_s_Function__c = \"Partners- Channel Manager\", \"Partner\",  if(Owner_s_Function__c = \"Bot\" || Owner_s_Function__c = \"Ops\", \"Pool\", \"Sales\"))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Company_Upgrade_Potential_Score__c {
+    apiName = "Account.Company_Upgrade_Potential_Score__c"
+    label = "Company: Upgrade Potential Score"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "(Company_WAPP__c / Company_Members__c) / (Company_Members__c / Company_Seats__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Company_Upgrade_Potential_MA__c {
+    apiName = "Account.Company_Upgrade_Potential_MA__c"
+    label = "Company: Upgrade Potential"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "Company__r.Company_Upgrade_Potential_Score__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Percent in_Licenses__c {
+    apiName = "Account.in_Licenses__c"
+    label = "Revenue in Licenses (%)"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.MultiselectPicklist Other_software_they_re_selling_partners__c {
+    apiName = "Account.Other_software_they_re_selling_partners__c"
+    label = "Other software they're selling (Partner)"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Adobe"
+        default = false
+        label = "Adobe"
+      },
+      {
+        fullName = "Airtable"
+        default = false
+        label = "Airtable"
+      },
+      {
+        fullName = "Alibaba cloud"
+        default = false
+        label = "Alibaba cloud"
+      },
+      {
+        fullName = "Asana"
+        default = false
+        label = "Asana"
+      },
+      {
+        fullName = "Atlassian"
+        default = false
+        label = "Atlassian"
+      },
+      {
+        fullName = "AWS"
+        default = false
+        label = "AWS"
+      },
+      {
+        fullName = "Basecamp"
+        default = false
+        label = "Basecamp"
+      },
+      {
+        fullName = "Cisco"
+        default = false
+        label = "Cisco"
+      },
+      {
+        fullName = "Dell Technologies"
+        default = false
+        label = "Dell Technologies"
+      },
+      {
+        fullName = "DocuSign"
+        default = false
+        label = "DocuSign"
+      },
+      {
+        fullName = "Dropbox"
+        default = false
+        label = "Dropbox"
+      },
+      {
+        fullName = "Freshworks"
+        default = false
+        label = "Freshworks"
+      },
+      {
+        fullName = "GitHub"
+        default = false
+        label = "GitHub"
+      },
+      {
+        fullName = "GitLab"
+        default = false
+        label = "GitLab"
+      },
+      {
+        fullName = "Google"
+        default = false
+        label = "Google"
+      },
+      {
+        fullName = "Google Cloud"
+        default = false
+        label = "Google Cloud"
+      },
+      {
+        fullName = "Google Maps"
+        default = false
+        label = "Google Maps"
+      },
+      {
+        fullName = "Google Suite"
+        default = false
+        label = "Google Suite"
+      },
+      {
+        fullName = "HPE"
+        default = false
+        label = "HPE"
+      },
+      {
+        fullName = "Hubspot"
+        default = false
+        label = "Hubspot"
+      },
+      {
+        fullName = "IBM"
+        default = false
+        label = "IBM"
+      },
+      {
+        fullName = "Intellij"
+        default = false
+        label = "Intellij"
+      },
+      {
+        fullName = "LumApps"
+        default = false
+        label = "LumApps"
+      },
+      {
+        fullName = "Magento"
+        default = false
+        label = "Magento"
+      },
+      {
+        fullName = "Mailchimp"
+        default = false
+        label = "Mailchimp"
+      },
+      {
+        fullName = "Marketo"
+        default = false
+        label = "Marketo"
+      },
+      {
+        fullName = "MavenLink"
+        default = false
+        label = "MavenLink"
+      },
+      {
+        fullName = "Microsoft"
+        default = false
+        label = "Microsoft"
+      },
+      {
+        fullName = "Microsoft Azure"
+        default = false
+        label = "Microsoft Azure"
+      },
+      {
+        fullName = "Microsoft Dynamics 365"
+        default = false
+        label = "Microsoft Dynamics 365"
+      },
+      {
+        fullName = "Microsoft Office"
+        default = false
+        label = "Microsoft Office"
+      },
+      {
+        fullName = "Microsoft Project"
+        default = false
+        label = "Microsoft Project"
+      },
+      {
+        fullName = "Microsoft Sharepoint"
+        default = false
+        label = "Microsoft Sharepoint"
+      },
+      {
+        fullName = "Microsoft Teams"
+        default = false
+        label = "Microsoft Teams"
+      },
+      {
+        fullName = "MuleSoft"
+        default = false
+        label = "MuleSoft"
+      },
+      {
+        fullName = "Okta"
+        default = false
+        label = "Okta"
+      },
+      {
+        fullName = "Oracle"
+        default = false
+        label = "Oracle"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+      {
+        fullName = "Qlik"
+        default = false
+        label = "Qlik"
+      },
+      {
+        fullName = "Quickbase"
+        default = false
+        label = "Quickbase"
+      },
+      {
+        fullName = "Redhat"
+        default = false
+        label = "Redhat"
+      },
+      {
+        fullName = "Salesforce"
+        default = false
+        label = "Salesforce"
+      },
+      {
+        fullName = "Salesloft"
+        default = false
+        label = "Salesloft"
+      },
+      {
+        fullName = "SAP"
+        default = false
+        label = "SAP"
+      },
+      {
+        fullName = "ServiceNow"
+        default = false
+        label = "ServiceNow"
+      },
+      {
+        fullName = "Slack"
+        default = false
+        label = "Slack"
+      },
+      {
+        fullName = "Smartsheet"
+        default = false
+        label = "Smartsheet"
+      },
+      {
+        fullName = "Splunk"
+        default = false
+        label = "Splunk"
+      },
+      {
+        fullName = "SugarCRM"
+        default = false
+        label = "SugarCRM"
+      },
+      {
+        fullName = "Twilio"
+        default = false
+        label = "Twilio"
+      },
+      {
+        fullName = "Typeform"
+        default = false
+        label = "Typeform"
+      },
+      {
+        fullName = "VisualStudio"
+        default = false
+        label = "VisualStudio"
+      },
+      {
+        fullName = "VMware"
+        default = false
+        label = "VMware"
+      },
+      {
+        fullName = "Whiteboard"
+        default = false
+        label = "Whiteboard"
+      },
+      {
+        fullName = "Workday"
+        default = false
+        label = "Workday"
+      },
+      {
+        fullName = "Workfront"
+        default = false
+        label = "Workfront"
+      },
+      {
+        fullName = "Wrike"
+        default = false
+        label = "Wrike"
+      },
+      {
+        fullName = "Zapier"
+        default = false
+        label = "Zapier"
+      },
+      {
+        fullName = "Zendesk"
+        default = false
+        label = "Zendesk"
+      },
+      {
+        fullName = "Zimbra"
+        default = false
+        label = "Zimbra"
+      },
+      {
+        fullName = "Zoho"
+        default = false
+        label = "Zoho"
+      },
+      {
+        fullName = "Atlassian - Bitbucket"
+        default = false
+        isActive = false
+        label = "Atlassian - Bitbucket"
+      },
+      {
+        fullName = "Atlassian - Confluence"
+        default = false
+        isActive = false
+        label = "Atlassian - Confluence"
+      },
+      {
+        fullName = "Atlassian - Jira"
+        default = false
+        isActive = false
+        label = "Atlassian - Jira"
+      },
+      {
+        fullName = "Atlassian - Jira Server"
+        default = false
+        isActive = false
+        label = "Atlassian - Jira Server"
+      },
+      {
+        fullName = "Atlassian - Trello"
+        default = false
+        isActive = false
+        label = "Atlassian - Trello"
+      },
+      {
+        fullName = "Bitbucket"
+        default = false
+        isActive = false
+        label = "Bitbucket"
+      },
+      {
+        fullName = "Bitrix24"
+        default = false
+        isActive = false
+        label = "Bitrix24"
+      },
+      {
+        fullName = "Clarizen"
+        default = false
+        isActive = false
+        label = "Clarizen"
+      },
+      {
+        fullName = "Clickup"
+        default = false
+        isActive = false
+        label = "Clickup"
+      },
+      {
+        fullName = "Confluence"
+        default = false
+        isActive = false
+        label = "Confluence"
+      },
+      {
+        fullName = "Excel"
+        default = false
+        isActive = false
+        label = "Excel"
+      },
+      {
+        fullName = "Git"
+        default = false
+        isActive = false
+        label = "Git"
+      },
+      {
+        fullName = "Jira"
+        default = false
+        isActive = false
+        label = "Jira"
+      },
+      {
+        fullName = "Microsoft Suite"
+        default = false
+        isActive = false
+        label = "Microsoft Suite"
+      },
+      {
+        fullName = "Outreach"
+        default = false
+        isActive = false
+        label = "Outreach"
+      },
+      {
+        fullName = "Pen & Paper"
+        default = false
+        isActive = false
+        label = "Pen & Paper"
+      },
+      {
+        fullName = "Trello"
+        default = false
+        isActive = false
+        label = "Trello"
+      },
+    ]
+    restricted = true
+    fieldDependency = {
+      controllingField = "Partner_Type__c"
+      valueSettings = [
+        {
+          valueName = "Adobe"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Airtable"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Alibaba cloud"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Asana"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Atlassian"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "AWS"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Basecamp"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Cisco"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Dell Technologies"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "DocuSign"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Dropbox"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Freshworks"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "GitHub"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "GitLab"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Google"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Google Cloud"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Google Maps"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Google Suite"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "HPE"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Hubspot"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "IBM"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Intellij"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "LumApps"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Magento"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Mailchimp"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Marketo"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "MavenLink"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Microsoft"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Microsoft Azure"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Microsoft Dynamics 365"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Microsoft Office"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Microsoft Project"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Microsoft Sharepoint"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Microsoft Teams"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "MuleSoft"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Okta"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Oracle"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Qlik"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Quickbase"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Redhat"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Salesforce"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Salesloft"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "SAP"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "ServiceNow"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Slack"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Smartsheet"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Splunk"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "SugarCRM"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Twilio"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Typeform"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "VisualStudio"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "VMware"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Whiteboard"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Workday"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Workfront"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Wrike"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Zapier"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Zendesk"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Zimbra"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Zoho"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+      ]
+    }
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.MultiselectPicklist Main_GEO__c {
+    apiName = "Account.Main_GEO__c"
+    label = "Main Business GEOs"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Afghanistan"
+        default = false
+        label = "Afghanistan"
+      },
+      {
+        fullName = "Africa"
+        default = false
+        label = "Africa"
+      },
+      {
+        fullName = "Albania"
+        default = false
+        label = "Albania"
+      },
+      {
+        fullName = "Algeria"
+        default = false
+        label = "Algeria"
+      },
+      {
+        fullName = "Andorra"
+        default = false
+        label = "Andorra"
+      },
+      {
+        fullName = "Angola"
+        default = false
+        label = "Angola"
+      },
+      {
+        fullName = "ANZ"
+        default = false
+        label = "ANZ"
+      },
+      {
+        fullName = "APAC"
+        default = false
+        label = "APAC"
+      },
+      {
+        fullName = "Argentina"
+        default = false
+        label = "Argentina"
+      },
+      {
+        fullName = "Armenia"
+        default = false
+        label = "Armenia"
+      },
+      {
+        fullName = "Australia"
+        default = false
+        label = "Australia"
+      },
+      {
+        fullName = "Austria"
+        default = false
+        label = "Austria"
+      },
+      {
+        fullName = "Azerbaijan"
+        default = false
+        label = "Azerbaijan"
+      },
+      {
+        fullName = "Bahamas"
+        default = false
+        label = "Bahamas"
+      },
+      {
+        fullName = "Bahrain"
+        default = false
+        label = "Bahrain"
+      },
+      {
+        fullName = "Bangladesh"
+        default = false
+        label = "Bangladesh"
+      },
+      {
+        fullName = "Barbados"
+        default = false
+        label = "Barbados"
+      },
+      {
+        fullName = "Belarus"
+        default = false
+        label = "Belarus"
+      },
+      {
+        fullName = "Belgium"
+        default = false
+        label = "Belgium"
+      },
+      {
+        fullName = "Belize"
+        default = false
+        label = "Belize"
+      },
+      {
+        fullName = "Bhutan"
+        default = false
+        label = "Bhutan"
+      },
+      {
+        fullName = "Bolivia"
+        default = false
+        label = "Bolivia"
+      },
+      {
+        fullName = "Bosnia"
+        default = false
+        label = "Bosnia"
+      },
+      {
+        fullName = "Brazil"
+        default = false
+        label = "Brazil"
+      },
+      {
+        fullName = "Bulgaria"
+        default = false
+        label = "Bulgaria"
+      },
+      {
+        fullName = "Cambodia"
+        default = false
+        label = "Cambodia"
+      },
+      {
+        fullName = "Cameroon"
+        default = false
+        label = "Cameroon"
+      },
+      {
+        fullName = "Canada"
+        default = false
+        label = "Canada"
+      },
+      {
+        fullName = "Chad"
+        default = false
+        label = "Chad"
+      },
+      {
+        fullName = "Chile"
+        default = false
+        label = "Chile"
+      },
+      {
+        fullName = "China"
+        default = false
+        label = "China"
+      },
+      {
+        fullName = "Colombia"
+        default = false
+        label = "Colombia"
+      },
+      {
+        fullName = "Congo"
+        default = false
+        label = "Congo"
+      },
+      {
+        fullName = "Costa Rica"
+        default = false
+        label = "Costa Rica"
+      },
+      {
+        fullName = "Croatia"
+        default = false
+        label = "Croatia"
+      },
+      {
+        fullName = "Cuba"
+        default = false
+        label = "Cuba"
+      },
+      {
+        fullName = "Cyprus"
+        default = false
+        label = "Cyprus"
+      },
+      {
+        fullName = "Czechia"
+        default = false
+        label = "Czechia"
+      },
+      {
+        fullName = "Denmark"
+        default = false
+        label = "Denmark"
+      },
+      {
+        fullName = "Dominican Republic"
+        default = false
+        label = "Dominican Republic"
+      },
+      {
+        fullName = "Ecuador"
+        default = false
+        label = "Ecuador"
+      },
+      {
+        fullName = "Egypt"
+        default = false
+        label = "Egypt"
+      },
+      {
+        fullName = "El Salvador"
+        default = false
+        label = "El Salvador"
+      },
+      {
+        fullName = "Eritrea"
+        default = false
+        label = "Eritrea"
+      },
+      {
+        fullName = "Estonia"
+        default = false
+        label = "Estonia"
+      },
+      {
+        fullName = "Ethiopia"
+        default = false
+        label = "Ethiopia"
+      },
+      {
+        fullName = "Europe"
+        default = false
+        label = "Europe"
+      },
+      {
+        fullName = "Fiji"
+        default = false
+        label = "Fiji"
+      },
+      {
+        fullName = "Finland"
+        default = false
+        label = "Finland"
+      },
+      {
+        fullName = "France"
+        default = false
+        label = "France"
+      },
+      {
+        fullName = "Gambia"
+        default = false
+        label = "Gambia"
+      },
+      {
+        fullName = "Georgia"
+        default = false
+        label = "Georgia"
+      },
+      {
+        fullName = "Germany"
+        default = false
+        label = "Germany"
+      },
+      {
+        fullName = "Ghana"
+        default = false
+        label = "Ghana"
+      },
+      {
+        fullName = "Greece"
+        default = false
+        label = "Greece"
+      },
+      {
+        fullName = "Grenada"
+        default = false
+        label = "Grenada"
+      },
+      {
+        fullName = "Guatemala"
+        default = false
+        label = "Guatemala"
+      },
+      {
+        fullName = "Haiti"
+        default = false
+        label = "Haiti"
+      },
+      {
+        fullName = "Honduras"
+        default = false
+        label = "Honduras"
+      },
+      {
+        fullName = "Hong Kong"
+        default = false
+        label = "Hong Kong"
+      },
+      {
+        fullName = "Hungary"
+        default = false
+        label = "Hungary"
+      },
+      {
+        fullName = "Iceland"
+        default = false
+        label = "Iceland"
+      },
+      {
+        fullName = "India"
+        default = false
+        label = "India"
+      },
+      {
+        fullName = "Indonesia"
+        default = false
+        label = "Indonesia"
+      },
+      {
+        fullName = "Iran"
+        default = false
+        label = "Iran"
+      },
+      {
+        fullName = "Iraq"
+        default = false
+        label = "Iraq"
+      },
+      {
+        fullName = "Ireland"
+        default = false
+        label = "Ireland"
+      },
+      {
+        fullName = "Israel"
+        default = false
+        label = "Israel"
+      },
+      {
+        fullName = "Italy"
+        default = false
+        label = "Italy"
+      },
+      {
+        fullName = "Jamaica"
+        default = false
+        label = "Jamaica"
+      },
+      {
+        fullName = "Japan"
+        default = false
+        label = "Japan"
+      },
+      {
+        fullName = "Jordan"
+        default = false
+        label = "Jordan"
+      },
+      {
+        fullName = "Kazakhstan"
+        default = false
+        label = "Kazakhstan"
+      },
+      {
+        fullName = "Kenya"
+        default = false
+        label = "Kenya"
+      },
+      {
+        fullName = "Kosovo"
+        default = false
+        label = "Kosovo"
+      },
+      {
+        fullName = "Kuwait"
+        default = false
+        label = "Kuwait"
+      },
+      {
+        fullName = "Kyrgyzstan"
+        default = false
+        label = "Kyrgyzstan"
+      },
+      {
+        fullName = "Laos"
+        default = false
+        label = "Laos"
+      },
+      {
+        fullName = "LATAM"
+        default = false
+        label = "LATAM"
+      },
+      {
+        fullName = "Latvia"
+        default = false
+        label = "Latvia"
+      },
+      {
+        fullName = "Lebanon"
+        default = false
+        label = "Lebanon"
+      },
+      {
+        fullName = "Lesotho"
+        default = false
+        label = "Lesotho"
+      },
+      {
+        fullName = "Liberia"
+        default = false
+        label = "Liberia"
+      },
+      {
+        fullName = "Libya"
+        default = false
+        label = "Libya"
+      },
+      {
+        fullName = "Liechtenstein"
+        default = false
+        label = "Liechtenstein"
+      },
+      {
+        fullName = "Lithuania"
+        default = false
+        label = "Lithuania"
+      },
+      {
+        fullName = "Luxembourg"
+        default = false
+        label = "Luxembourg"
+      },
+      {
+        fullName = "Macedonia"
+        default = false
+        label = "Macedonia"
+      },
+      {
+        fullName = "Madagascar"
+        default = false
+        label = "Madagascar"
+      },
+      {
+        fullName = "Malaysia"
+        default = false
+        label = "Malaysia"
+      },
+      {
+        fullName = "Maldives"
+        default = false
+        label = "Maldives"
+      },
+      {
+        fullName = "Malta"
+        default = false
+        label = "Malta"
+      },
+      {
+        fullName = "Mauritius"
+        default = false
+        label = "Mauritius"
+      },
+      {
+        fullName = "Mexico"
+        default = false
+        label = "Mexico"
+      },
+      {
+        fullName = "Micronesia"
+        default = false
+        label = "Micronesia"
+      },
+      {
+        fullName = "Middle East"
+        default = false
+        label = "Middle East"
+      },
+      {
+        fullName = "Moldova"
+        default = false
+        label = "Moldova"
+      },
+      {
+        fullName = "Monaco"
+        default = false
+        label = "Monaco"
+      },
+      {
+        fullName = "Mongolia"
+        default = false
+        label = "Mongolia"
+      },
+      {
+        fullName = "Montenegro"
+        default = false
+        label = "Montenegro"
+      },
+      {
+        fullName = "Morocco"
+        default = false
+        label = "Morocco"
+      },
+      {
+        fullName = "Mozambique"
+        default = false
+        label = "Mozambique"
+      },
+      {
+        fullName = "Myanmar (Burma)"
+        default = false
+        label = "Myanmar (Burma)"
+      },
+      {
+        fullName = "Namibia"
+        default = false
+        label = "Namibia"
+      },
+      {
+        fullName = "Nepal"
+        default = false
+        label = "Nepal"
+      },
+      {
+        fullName = "Netherlands"
+        default = false
+        label = "Netherlands"
+      },
+      {
+        fullName = "New Zealand"
+        default = false
+        label = "New Zealand"
+      },
+      {
+        fullName = "Nicaragua"
+        default = false
+        label = "Nicaragua"
+      },
+      {
+        fullName = "Nigeria"
+        default = false
+        label = "Nigeria"
+      },
+      {
+        fullName = "North America"
+        default = false
+        label = "North America"
+      },
+      {
+        fullName = "North Korea"
+        default = false
+        label = "North Korea"
+      },
+      {
+        fullName = "Norway"
+        default = false
+        label = "Norway"
+      },
+      {
+        fullName = "Oman"
+        default = false
+        label = "Oman"
+      },
+      {
+        fullName = "Pakistan"
+        default = false
+        label = "Pakistan"
+      },
+      {
+        fullName = "Panama"
+        default = false
+        label = "Panama"
+      },
+      {
+        fullName = "Papua New Guinea"
+        default = false
+        label = "Papua New Guinea"
+      },
+      {
+        fullName = "Paraguay"
+        default = false
+        label = "Paraguay"
+      },
+      {
+        fullName = "Peru"
+        default = false
+        label = "Peru"
+      },
+      {
+        fullName = "Philippines"
+        default = false
+        label = "Philippines"
+      },
+      {
+        fullName = "Poland"
+        default = false
+        label = "Poland"
+      },
+      {
+        fullName = "Portugal"
+        default = false
+        label = "Portugal"
+      },
+      {
+        fullName = "Qatar"
+        default = false
+        label = "Qatar"
+      },
+      {
+        fullName = "Romania"
+        default = false
+        label = "Romania"
+      },
+      {
+        fullName = "Russia"
+        default = false
+        label = "Russia"
+      },
+      {
+        fullName = "San Marino"
+        default = false
+        label = "San Marino"
+      },
+      {
+        fullName = "Saudi Arabia"
+        default = false
+        label = "Saudi Arabia"
+      },
+      {
+        fullName = "Senegal"
+        default = false
+        label = "Senegal"
+      },
+      {
+        fullName = "Serbia"
+        default = false
+        label = "Serbia"
+      },
+      {
+        fullName = "Sierra Leone"
+        default = false
+        label = "Sierra Leone"
+      },
+      {
+        fullName = "Singapore"
+        default = false
+        label = "Singapore"
+      },
+      {
+        fullName = "Slovakia"
+        default = false
+        label = "Slovakia"
+      },
+      {
+        fullName = "Slovenia"
+        default = false
+        label = "Slovenia"
+      },
+      {
+        fullName = "Somalia"
+        default = false
+        label = "Somalia"
+      },
+      {
+        fullName = "South Africa"
+        default = false
+        label = "South Africa"
+      },
+      {
+        fullName = "South Korea"
+        default = false
+        label = "South Korea"
+      },
+      {
+        fullName = "Spain"
+        default = false
+        label = "Spain"
+      },
+      {
+        fullName = "Sri Lanka"
+        default = false
+        label = "Sri Lanka"
+      },
+      {
+        fullName = "Sudan"
+        default = false
+        label = "Sudan"
+      },
+      {
+        fullName = "Sweden"
+        default = false
+        label = "Sweden"
+      },
+      {
+        fullName = "Switzerland"
+        default = false
+        label = "Switzerland"
+      },
+      {
+        fullName = "Syria"
+        default = false
+        label = "Syria"
+      },
+      {
+        fullName = "Taiwan"
+        default = false
+        label = "Taiwan"
+      },
+      {
+        fullName = "Tajikistan"
+        default = false
+        label = "Tajikistan"
+      },
+      {
+        fullName = "Tanzania"
+        default = false
+        label = "Tanzania"
+      },
+      {
+        fullName = "Thailand"
+        default = false
+        label = "Thailand"
+      },
+      {
+        fullName = "Togo"
+        default = false
+        label = "Togo"
+      },
+      {
+        fullName = "Tonga"
+        default = false
+        label = "Tonga"
+      },
+      {
+        fullName = "Trinidad"
+        default = false
+        label = "Trinidad"
+      },
+      {
+        fullName = "Tunisia"
+        default = false
+        label = "Tunisia"
+      },
+      {
+        fullName = "Turkey"
+        default = false
+        label = "Turkey"
+      },
+      {
+        fullName = "Turkmenistan"
+        default = false
+        label = "Turkmenistan"
+      },
+      {
+        fullName = "Uganda"
+        default = false
+        label = "Uganda"
+      },
+      {
+        fullName = "Ukraine"
+        default = false
+        label = "Ukraine"
+      },
+      {
+        fullName = "United Arab Emirates"
+        default = false
+        label = "United Arab Emirates"
+      },
+      {
+        fullName = "United Kingdom"
+        default = false
+        label = "United Kingdom"
+      },
+      {
+        fullName = "United States"
+        default = false
+        label = "United States"
+      },
+      {
+        fullName = "Uruguay"
+        default = false
+        label = "Uruguay"
+      },
+      {
+        fullName = "Uzbekistan"
+        default = false
+        label = "Uzbekistan"
+      },
+      {
+        fullName = "Vatican City"
+        default = false
+        label = "Vatican City"
+      },
+      {
+        fullName = "Venezuela"
+        default = false
+        label = "Venezuela"
+      },
+      {
+        fullName = "Vietnam"
+        default = false
+        label = "Vietnam"
+      },
+      {
+        fullName = "Yemen"
+        default = false
+        label = "Yemen"
+      },
+      {
+        fullName = "Zambia"
+        default = false
+        label = "Zambia"
+      },
+      {
+        fullName = "Zimbabwe"
+        default = false
+        label = "Zimbabwe"
+      },
+    ]
+    restricted = true
+    fieldDependency = {
+      controllingField = "Partner_Type__c"
+      valueSettings = [
+        {
+          valueName = "Afghanistan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Africa"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Albania"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Algeria"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Andorra"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Angola"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "ANZ"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "APAC"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Argentina"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Armenia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Australia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Austria"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Azerbaijan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Bahamas"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Bahrain"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Bangladesh"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Barbados"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Belarus"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Belgium"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Belize"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Bhutan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Bolivia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Bosnia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Brazil"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Bulgaria"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Cambodia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Cameroon"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Canada"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Chad"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Chile"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "China"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Colombia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Congo"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Costa Rica"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Croatia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Cuba"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Cyprus"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Czechia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Denmark"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Dominican Republic"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Ecuador"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Egypt"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "El Salvador"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Eritrea"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Estonia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Ethiopia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Europe"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Fiji"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Finland"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "France"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Gambia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Georgia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Germany"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Ghana"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Greece"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Grenada"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Guatemala"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Haiti"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Honduras"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Hong Kong"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Hungary"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Iceland"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "India"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Indonesia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Iran"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Iraq"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Ireland"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Israel"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Italy"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Jamaica"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Japan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Jordan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Kazakhstan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Kenya"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Kosovo"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Kuwait"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Kyrgyzstan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Laos"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "LATAM"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Latvia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Lebanon"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Lesotho"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Liberia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Libya"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Liechtenstein"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Lithuania"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Luxembourg"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Macedonia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Madagascar"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Malaysia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Maldives"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Malta"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Mauritius"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Mexico"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Micronesia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Middle East"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Moldova"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Monaco"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Mongolia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Montenegro"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Morocco"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Mozambique"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Myanmar (Burma)"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Namibia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Nepal"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Netherlands"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "New Zealand"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Nicaragua"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Nigeria"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "North America"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "North Korea"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Norway"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Oman"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Pakistan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Panama"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Papua New Guinea"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Paraguay"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Peru"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Philippines"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Poland"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Portugal"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Qatar"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Romania"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Russia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "San Marino"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Saudi Arabia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Senegal"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Serbia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Sierra Leone"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Singapore"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Slovakia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Slovenia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Somalia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "South Africa"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "South Korea"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Spain"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Sri Lanka"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Sudan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Sweden"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Switzerland"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Syria"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Taiwan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Tajikistan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Tanzania"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Thailand"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Togo"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Tonga"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Trinidad"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Tunisia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Turkey"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Turkmenistan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Uganda"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Ukraine"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "United Arab Emirates"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "United Kingdom"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "United States"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Uruguay"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Uzbekistan"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Vatican City"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Venezuela"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Vietnam"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Yemen"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Zambia"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Zimbabwe"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+      ]
+    }
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaText Account_Focus_MA__c {
+    apiName = "Account.Account_Focus_MA__c"
+    label = "Company: Account Focus"
+    _required = false
+    formula = "if(isblank(text(Company__r.Account_Focus__c )),text(Account_Focus__c),text(Company__r.Account_Focus__c))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.MultiselectPicklist Business_Verticals__c {
+    apiName = "Account.Business_Verticals__c"
+    label = "Business Verticals"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Accounting"
+        default = false
+        label = "Accounting"
+      },
+      {
+        fullName = "Automotive"
+        default = false
+        label = "Automotive"
+      },
+      {
+        fullName = "Aviation"
+        default = false
+        label = "Aviation"
+      },
+      {
+        fullName = "Banking"
+        default = false
+        label = "Banking"
+      },
+      {
+        fullName = "Construction"
+        default = false
+        label = "Construction"
+      },
+      {
+        fullName = "Consumer Goods"
+        default = false
+        label = "Consumer Goods"
+      },
+      {
+        fullName = "Defence"
+        default = false
+        label = "Defence"
+      },
+      {
+        fullName = "Design"
+        default = false
+        label = "Design"
+      },
+      {
+        fullName = "Education"
+        default = false
+        label = "Education"
+      },
+      {
+        fullName = "Electronics"
+        default = false
+        label = "Electronics"
+      },
+      {
+        fullName = "Emergency Services"
+        default = false
+        label = "Emergency Services"
+      },
+      {
+        fullName = "Energy"
+        default = false
+        label = "Energy"
+      },
+      {
+        fullName = "Engineering"
+        default = false
+        label = "Engineering"
+      },
+      {
+        fullName = "Fashion"
+        default = false
+        label = "Fashion"
+      },
+      {
+        fullName = "Financial Services"
+        default = false
+        label = "Financial Services"
+      },
+      {
+        fullName = "FinTech"
+        default = false
+        label = "FinTech"
+      },
+      {
+        fullName = "Food & Beverage"
+        default = false
+        label = "Food & Beverage"
+      },
+      {
+        fullName = "Government"
+        default = false
+        label = "Government"
+      },
+      {
+        fullName = "Healthcare"
+        default = false
+        label = "Healthcare"
+      },
+      {
+        fullName = "Hospitality"
+        default = false
+        label = "Hospitality"
+      },
+      {
+        fullName = "Human Resources"
+        default = false
+        label = "Human Resources"
+      },
+      {
+        fullName = "Insurance"
+        default = false
+        label = "Insurance"
+      },
+      {
+        fullName = "IT & Technology"
+        default = false
+        label = "IT & Technology"
+      },
+      {
+        fullName = "Legal"
+        default = false
+        label = "Legal"
+      },
+      {
+        fullName = "Logistics"
+        default = false
+        label = "Logistics"
+      },
+      {
+        fullName = "Manufacturing"
+        default = false
+        label = "Manufacturing"
+      },
+      {
+        fullName = "Marketing"
+        default = false
+        label = "Marketing"
+      },
+      {
+        fullName = "Media"
+        default = false
+        label = "Media"
+      },
+      {
+        fullName = "Non profit"
+        default = false
+        label = "Non profit"
+      },
+      {
+        fullName = "Oil & Gas"
+        default = false
+        label = "Oil & Gas"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+      {
+        fullName = "Pharmaceutical"
+        default = false
+        label = "Pharmaceutical"
+      },
+      {
+        fullName = "Public Sector"
+        default = false
+        label = "Public Sector"
+      },
+      {
+        fullName = "Raw materials"
+        default = false
+        label = "Raw materials"
+      },
+      {
+        fullName = "Real estate"
+        default = false
+        label = "Real estate"
+      },
+      {
+        fullName = "Retail"
+        default = false
+        label = "Retail"
+      },
+      {
+        fullName = "Services"
+        default = false
+        label = "Services"
+      },
+      {
+        fullName = "Sports & eSports"
+        default = false
+        label = "Sports & eSports"
+      },
+      {
+        fullName = "Telecommunications"
+        default = false
+        label = "Telecommunications"
+      },
+      {
+        fullName = "Trade"
+        default = false
+        label = "Trade"
+      },
+      {
+        fullName = "Transportation & Travel"
+        default = false
+        label = "Transportation & Travel"
+      },
+      {
+        fullName = "Utilities"
+        default = false
+        label = "Utilities"
+      },
+    ]
+    restricted = true
+    fieldDependency = {
+      controllingField = "Partner_Type__c"
+      valueSettings = [
+        {
+          valueName = "Accounting"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Automotive"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Aviation"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Banking"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Construction"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Consumer Goods"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Defence"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Design"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Education"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Electronics"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Emergency Services"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Energy"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Engineering"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Fashion"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Financial Services"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "FinTech"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Food & Beverage"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Government"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Healthcare"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Hospitality"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Human Resources"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Insurance"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "IT & Technology"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Legal"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Logistics"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Manufacturing"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Marketing"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Media"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Non profit"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Oil & Gas"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Pharmaceutical"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Public Sector"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Raw materials"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Real estate"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Retail"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Services"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Sports & eSports"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Telecommunications"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Trade"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Transportation & Travel"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Utilities"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+      ]
+    }
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Why_unqualified__c {
+    apiName = "Account.Why_unqualified__c"
+    label = "Why unqualified"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Referral"
+        default = false
+        label = "Referral"
+      },
+      {
+        fullName = "Too small in size"
+        default = false
+        label = "Too small"
+      },
+      {
+        fullName = "Not sales focused"
+        default = false
+        label = "Not sales focused"
+      },
+      {
+        fullName = "Not enough clients"
+        default = false
+        label = "Not enough clients"
+      },
+      {
+        fullName = "Focusing on existing solution portfolio"
+        default = false
+        label = "Focusing on existing solution portfolio"
+      },
+      {
+        fullName = "Bad timing"
+        default = false
+        label = "Bad timing"
+      },
+      {
+        fullName = "Not interested"
+        default = false
+        label = "Not interested"
+      },
+      {
+        fullName = "COVID-19"
+        default = false
+        label = "COVID-19"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+    ]
+    restricted = false
+    fieldDependency = {
+      controllingField = "Partner_Company_Status__c"
+      valueSettings = [
+        {
+          valueName = "Referral"
+          controllingFieldValue = [
+            "Unqualified",
+          ]
+        },
+        {
+          valueName = "Too small in size"
+          controllingFieldValue = [
+            "Unqualified",
+          ]
+        },
+        {
+          valueName = "Not sales focused"
+          controllingFieldValue = [
+            "Unqualified",
+          ]
+        },
+        {
+          valueName = "Not enough clients"
+          controllingFieldValue = [
+            "Unqualified",
+          ]
+        },
+        {
+          valueName = "Focusing on existing solution portfolio"
+          controllingFieldValue = [
+            "Unqualified",
+          ]
+        },
+        {
+          valueName = "Bad timing"
+          controllingFieldValue = [
+            "Unqualified",
+          ]
+        },
+        {
+          valueName = "Not interested"
+          controllingFieldValue = [
+            "Unqualified",
+          ]
+        },
+        {
+          valueName = "COVID-19"
+          controllingFieldValue = [
+            "Unqualified",
+          ]
+        },
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Unqualified",
+          ]
+        },
+      ]
+    }
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaCheckbox Room_for_growth__c {
+    apiName = "Account.Room_for_growth__c"
+    label = "Room for growth?"
+    formula = "if( of_Employees__c -  Plan_Seats__c >= 50, true, False)"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Partner_s_Role__c {
+    apiName = "Account.Partner_s_Role__c"
+    label = "Partner's Role"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Short_Term_Growth_AM__c {
+    apiName = "Account.Short_Term_Growth_AM__c"
+    label = "Short Term Growth (AM)"
+    _required = false
+    precision = 5
+    scale = 2
+    inlineHelpText = "How much potential does this account have for near future growth?"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Gut score for near future growth potential by the Account Owner"
+    externalId = false
+  }
+  salesforce.Number Long_Term_Growth_AM__c {
+    apiName = "Account.Long_Term_Growth_AM__c"
+    label = "Long Term Growth (AM)"
+    _required = false
+    precision = 5
+    scale = 2
+    inlineHelpText = "How much potential does this account have for long term growth?"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Gut score for how much potential does this account have for growth in the long term"
+    externalId = false
+  }
+  salesforce.LongTextArea Account_Info_AM__c {
+    apiName = "Account.Account_Info_AM__c"
+    label = "Account Info AM"
+    _required = false
+    createable = true
+    updateable = true
+    length = 4000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number Account_Potential_Seats__c {
+    apiName = "Account.Account_Potential_Seats__c"
+    label = "Account Potential Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "How many employees is monday.com relevant for in this organization?"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Partner_s_Company__c {
+    apiName = "Account.Partner_s_Company__c"
+    label = "Partner's Company"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Previous_Heal_Score_Bucket__c {
+    apiName = "Account.Previous_Heal_Score_Bucket__c"
+    label = "Previous Health Score Bucket"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Monday_Account_Team_Score__c {
+    apiName = "Account.Monday_Account_Team_Score__c"
+    label = "Monday Account Team Score"
+    _required = false
+    precision = 5
+    scale = 2
+    inlineHelpText = "Monday account score, entered manually - to indicate if this is an influential account with a strong team/champions/authority in the account, on a scale of 1-10"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Monday account score, entered manually - to indicate if this is an influential account with a strong team/champions/authority in the account, on a scale of 1-10"
+    externalId = false
+  }
+  salesforce.Picklist Security_Passed__c {
+    apiName = "Account.Security_Passed__c"
+    label = "Security Passed"
+    _required = false
+    valueSet = [
+      {
+        fullName = "None"
+        default = true
+        label = "None"
+      },
+      {
+        fullName = "Regional"
+        default = false
+        label = "Regional"
+      },
+      {
+        fullName = "Global"
+        default = false
+        label = "Global"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Legal_Passed__c {
+    apiName = "Account.Legal_Passed__c"
+    label = "Legal Passed"
+    _required = false
+    valueSet = [
+      {
+        fullName = "None"
+        default = true
+        label = "None"
+      },
+      {
+        fullName = "Regional"
+        default = false
+        label = "Regional"
+      },
+      {
+        fullName = "Global"
+        default = false
+        label = "Global"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Date Partner_Unqualified_Timestamp__c {
+    apiName = "Account.Partner_Unqualified_Timestamp__c"
+    label = "Partner Unqualified Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Partner_New_Timestamp__c {
+    apiName = "Account.Partner_New_Timestamp__c"
+    label = "Partner New Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Partner_Attempting_ttimestamp__c {
+    apiName = "Account.Partner_Attempting_ttimestamp__c"
+    label = "Partner Attempting Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Partner_Contacted_Timestamp__c {
+    apiName = "Account.Partner_Contacted_Timestamp__c"
+    label = "Partner Contacted Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Partner_Qualified_Timestamp__c {
+    apiName = "Account.Partner_Qualified_Timestamp__c"
+    label = "Partner Qualified Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Partner_Program_Overview_Timestamp__c {
+    apiName = "Account.Partner_Program_Overview_Timestamp__c"
+    label = "Partner Evaluation Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Partner_Signed_Timestamp__c {
+    apiName = "Account.Partner_Signed_Timestamp__c"
+    label = "Partner Signed Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox Am_I_the_Onboarding_Owner__c {
+    apiName = "Account.Am_I_the_Onboarding_Owner__c"
+    label = "Am I the Onboarding Owner?"
+    formula = "if(Low_Touch_CS__c = $User.Id ,true, false)"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Partner_Type__c {
+    apiName = "Account.Partner_Type__c"
+    label = "Partner Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Channel"
+        default = false
+        label = "Channel"
+      },
+      {
+        fullName = "Fulfillment"
+        default = false
+        label = "Fulfillment"
+      },
+      {
+        fullName = "GSI"
+        default = false
+        label = "GSI"
+      },
+      {
+        fullName = "Tech"
+        default = false
+        label = "Tech"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Checkbox Account_Recycling_Account__c {
+    apiName = "Account.Account_Recycling_Account__c"
+    label = "Account Recycling Account"
+    defaultValue = false
+    inlineHelpText = "Account created/managed from the account recycling effort"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Account created/managed from the account recycling effort"
+  }
+  salesforce.Checkbox Free_Tier__c {
+    apiName = "Account.Free_Tier__c"
+    label = "Free Tier"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number MAPP__c {
+    apiName = "Account.MAPP__c"
+    label = "MAPP"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Covid_Risk__c {
+    apiName = "Account.Covid_Risk__c"
+    label = "Covid Risk"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Company_Type_Formula__c {
+    apiName = "Account.Company_Type_Formula__c"
+    label = "Company: Record Type"
+    _required = false
+    formula = "Company__r.RecordType.Name"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Am_I_the_CSM_Manager__c {
+    apiName = "Account.Am_I_the_CSM_Manager__c"
+    label = "Am I the CSM Manager?"
+    formula = "if((CSM__r.ManagerId=$User.Id || Second_CSM__r.ManagerId=$User.Id) ,true, if((CSM__r.Manager.ManagerId = $User.Id || Second_CSM__r.Manager.ManagerId = $User.Id) ,true, false))"
+    inlineHelpText = "Indicates true if you are the CSM manager"
+    createable = false
+    updateable = false
+    queryable = true
+    description = "Indicates true if you are the CSM manager"
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Long_Term_Growth_AE__c {
+    apiName = "Account.Long_Term_Growth_AE__c"
+    label = "Long Term Growth (AE)"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Short_Term_Growth_AE__c {
+    apiName = "Account.Short_Term_Growth_AE__c"
+    label = "Short Term Growth (AE)"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Account_Notes_AE__c {
+    apiName = "Account.Account_Notes_AE__c"
+    label = "Handover Notes"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number Retention_Score_AM__c {
+    apiName = "Account.Retention_Score_AM__c"
+    label = "Retention Score AM"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Retention_Score_AE__c {
+    apiName = "Account.Retention_Score_AE__c"
+    label = "Retention Score AE"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Retention_Score_CSM__c {
+    apiName = "Account.Retention_Score_CSM__c"
+    label = "Retention Score CSM"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaCheckbox Current_User_is_the_AM__c {
+    apiName = "Account.Current_User_is_the_AM__c"
+    label = "Current User is the AM"
+    formula = "AM__c = $User.Id"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Current_User_is_the_AE__c {
+    apiName = "Account.Current_User_is_the_AE__c"
+    label = "Current User is the AE"
+    formula = "AE__c = $User.Id"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Current_User_is_the_Owner__c {
+    apiName = "Account.Current_User_is_the_Owner__c"
+    label = "Current User is the Owner"
+    formula = "$User.Id =  OwnerId"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.LongTextArea Account_Info_CSM__c {
+    apiName = "Account.Account_Info_CSM__c"
+    label = "Account Info CSM"
+    _required = false
+    createable = true
+    updateable = true
+    length = 4000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number Short_Term_Growth_CSM__c {
+    apiName = "Account.Short_Term_Growth_CSM__c"
+    label = "Short Term Growth (CSM)"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Long_Term_Growth_CSM__c {
+    apiName = "Account.Long_Term_Growth_CSM__c"
+    label = "Long Term Growth (CSM)"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Account_Notes_CSM__c {
+    apiName = "Account.Account_Notes_CSM__c"
+    label = "Account Notes CSM"
+    _required = false
+    createable = true
+    updateable = true
+    length = 4000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.FormulaCheckbox Current_User_is_Ops__c {
+    apiName = "Account.Current_User_is_Ops__c"
+    label = "Current User is Ops"
+    formula = "Text($User.Function__c) = \"Ops\""
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Company_Health_Score__c {
+    apiName = "Account.Company_Health_Score__c"
+    label = "Company Health Score"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber ARR_Weight_from_Company__c {
+    apiName = "Account.ARR_Weight_from_Company__c"
+    label = "Company: ARR Weight"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "round(ARR__c /  Company__r.Company_ARR__c ,2)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Average_Growth_Gut_Score__c {
+    apiName = "Account.Average_Growth_Gut_Score__c"
+    label = "Average Growth Gut Score"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "ROUND(( Long_Term_Growth_AM__c + Long_Term_Growth_CSM__c +  Short_Term_Growth_AM__c + Short_Term_Growth_CSM__c )/4,2)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Average_Retention_Gut_Score__c {
+    apiName = "Account.Average_Retention_Gut_Score__c"
+    label = "Average Retention Gut Score"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "round((Retention_Score_AM__c + Retention_Score_CSM__c )/2,2)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Distributed_Score_Scaled__c {
+    apiName = "Account.Distributed_Score_Scaled__c"
+    label = "Distributed Score Scaled"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "round( Distributed_Score__c / 10,2)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Original_Budget_MA__c {
+    apiName = "Account.Original_Budget_MA__c"
+    label = "Original Budget (MA)"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber Is_Partner_Company_Contacted__c {
+    apiName = "Account.Is_Partner_Company_Contacted__c"
+    label = "Is Partner Company Contacted"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(NOT(ISBLANK(Partner_Contacted_Timestamp__c)),1,0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Is_Partner_Company_Qualified__c {
+    apiName = "Account.Is_Partner_Company_Qualified__c"
+    label = "Is Partner Company Qualified"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(NOT(ISBLANK(Partner_Qualified_Timestamp__c)),1,0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist PDR__c {
+    apiName = "Account.PDR__c"
+    label = "PDR"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Roey Halbfinger"
+        default = false
+        label = "Roey Halbfinger"
+      },
+      {
+        fullName = "Stephanie Elek"
+        default = false
+        label = "Stephanie Elek"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Date Partner_Nurturing_Timestamp__c {
+    apiName = "Account.Partner_Nurturing_Timestamp__c"
+    label = "Partner Nurturing Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber Company_ARR_for_reports__c {
+    apiName = "Account.Company_ARR_for_reports__c"
+    label = "Company: Company ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Company__r.Company_ARR__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text partner_utm_campaign__c {
+    apiName = "Account.partner_utm_campaign__c"
+    label = "Partner utm_campaign"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text partner_utm_banner__c {
+    apiName = "Account.partner_utm_banner__c"
+    label = "Partner utm_banner"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Summary Partner_Regions__c {
+    apiName = "Account.Partner_Regions__c"
+    label = "Partner Regions"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryForeignKey = "Partner_Region__c.Partner_Company__c"
+    summaryOperation = "count"
+  }
+  salesforce.LongTextArea Unassignment_Reason__c {
+    apiName = "Account.Unassignment_Reason__c"
+    label = "Unassignment Reason"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 4
+  }
+  salesforce.Number Relative_WAPP__c {
+    apiName = "Account.Relative_WAPP__c"
+    label = "Relative WAPP"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number of_Active_Relationships__c {
+    apiName = "Account.of_Active_Relationships__c"
+    label = "# of Active Relationships"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber Is_Partner_Company_Signed__c {
+    apiName = "Account.Is_Partner_Company_Signed__c"
+    label = "Is Partner Company Signed"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(NOT(ISBLANK(Partner_Signed_Timestamp__c)),1,0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Last_Significant_WAPP_Change__c {
+    apiName = "Account.Last_Significant_WAPP_Change__c"
+    label = "Last Significant WAPP  Change"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text State_Temp__c {
+    apiName = "Account.State_Temp__c"
+    label = "State Temp"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Active_Partner__c {
+    apiName = "Account.Active_Partner__c"
+    label = "Active Partner"
+    defaultValue = false
+    inlineHelpText = "The partner is signed and actively working with us (not terminated)"
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Account_Status_Notes__c {
+    apiName = "Account.Account_Status_Notes__c"
+    label = "Account Status Notes"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Team_Size_Survey__c {
+    apiName = "Account.Team_Size_Survey__c"
+    label = "Team Size Survey"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber Is_Partner_Company_Nurturing__c {
+    apiName = "Account.Is_Partner_Company_Nurturing__c"
+    label = "Is Partner Company Nurturing"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(NOT(ISBLANK(Partner_Nurturing_Timestamp__c)),1,0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary NPS_Survey_Count__c {
+    apiName = "Account.NPS_Survey_Count__c"
+    label = "NPS Survey Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Survey__c.RecordTypeId"
+        operation = "equals"
+        value = "NPS"
+      },
+    ]
+    summaryForeignKey = "Survey__c.Account__c"
+    summaryOperation = "count"
+  }
+  salesforce.FormulaNumber NPS_Score_Average__c {
+    apiName = "Account.NPS_Score_Average__c"
+    label = "NPS Score Average"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "round( MA_NPS__c  /  nullvalue(NPS_Survey_Count__c,1) , 2)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Company_NPS__c {
+    apiName = "Account.Company_NPS__c"
+    label = "Company NPS"
+    _required = false
+    precision = 6
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber NPS_Normalized__c {
+    apiName = "Account.NPS_Normalized__c"
+    label = "NPS (Normalized)"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "round(nullvalue(Company_NPS__c,0) /10,2)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Shipping_State_Temp__c {
+    apiName = "Account.Shipping_State_Temp__c"
+    label = "Shipping State Temp"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Account_First_Channel__c {
+    apiName = "Account.Account_First_Channel__c"
+    label = "Account First Channel"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Signup"
+        default = false
+        label = "Signup"
+      },
+      {
+        fullName = "Contact Sales"
+        default = false
+        label = "Contact Sales"
+      },
+      {
+        fullName = "Download"
+        default = false
+        label = "Download"
+      },
+      {
+        fullName = "Event"
+        default = false
+        label = "Event"
+      },
+      {
+        fullName = "Outreach"
+        default = false
+        label = "Outreach"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Account_Last_Channel__c {
+    apiName = "Account.Account_Last_Channel__c"
+    label = "Account Last Channel"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Signup"
+        default = false
+        label = "Signup"
+      },
+      {
+        fullName = "Contact Sales"
+        default = false
+        label = "Contact Sales"
+      },
+      {
+        fullName = "Download"
+        default = false
+        label = "Download"
+      },
+      {
+        fullName = "Event"
+        default = false
+        label = "Event"
+      },
+      {
+        fullName = "Outreach"
+        default = false
+        label = "Outreach"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Date Next_Activity_Date__c {
+    apiName = "Account.Next_Activity_Date__c"
+    label = "Next Activity Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Country_For_Salesloft__c {
+    apiName = "Account.Country_For_Salesloft__c"
+    label = "Country For Salesloft"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Next_Steps_for_CPM__c {
+    apiName = "Account.Next_Steps_for_CPM__c"
+    label = "Next Steps for CPM"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 6
+  }
+  salesforce.Number MA_NPS__c {
+    apiName = "Account.MA_NPS__c"
+    label = "NPS"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaPercent MAPP_From_Members__c {
+    apiName = "Account.MAPP_From_Members__c"
+    label = "MAPP % (From Members)"
+    _required = false
+    formula = "MAPP__c / Members__c"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup CSM_Manager__c {
+    apiName = "Account.CSM_Manager__c"
+    label = "CSM Manager"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Why_Unassigned__c {
+    apiName = "Account.Why_Unassigned__c"
+    label = "Why Unassigned"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Redistribution to different owner"
+        default = true
+        label = "Redistribution to different owner"
+      },
+      {
+        fullName = "Account reached full potential"
+        default = false
+        label = "Account reached full potential"
+      },
+      {
+        fullName = "Small company size"
+        default = false
+        label = "Small company size"
+      },
+      {
+        fullName = "I don't have the capacity"
+        default = false
+        label = "I don't have the capacity"
+      },
+      {
+        fullName = "No short term potential"
+        default = false
+        label = "No short term potential"
+      },
+      {
+        fullName = "Customer request"
+        default = false
+        label = "Customer request"
+      },
+      {
+        fullName = "Account Churned"
+        default = false
+        label = "Account Churned"
+      },
+      {
+        fullName = "Opportunity Lost"
+        default = false
+        label = "Opportunity Lost"
+      },
+      {
+        fullName = "Other (please explain)"
+        default = false
+        label = "Other (please explain)"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text Unknown_Country_Code__c {
+    apiName = "Account.Unknown_Country_Code__c"
+    label = "Unknown Country Code"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Unknown_State_Code__c {
+    apiName = "Account.Unknown_State_Code__c"
+    label = "Unknown State Code"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number HS_Capacity__c {
+    apiName = "Account.HS_Capacity__c"
+    label = "HS-Capacity"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "#Members / Seats"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "#Members / Seats"
+    externalId = false
+  }
+  salesforce.Picklist Keep_this_account__c {
+    apiName = "Account.Keep_this_account__c"
+    label = "Keep this account?"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Redistribute if needed"
+        default = false
+        label = "Redistribute if needed"
+      },
+      {
+        fullName = "Keep"
+        default = false
+        label = "Keep"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaText Company_Size_from_Company__c {
+    apiName = "Account.Company_Size_from_Company__c"
+    label = "Company: Company Size"
+    _required = false
+    formula = "text( Company__r.Company_Size__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Seats_from_Company__c {
+    apiName = "Account.Seats_from_Company__c"
+    label = "Company: Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Company__r.Company_Seats__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number HS_Wapp_Members__c {
+    apiName = "Account.HS_Wapp_Members__c"
+    label = "HS-Wapp / Members (%)"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Wapp / Members (%)"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Wapp / Members (%)"
+    externalId = false
+  }
+  salesforce.Number HS_Avg_days_a_week_per_user__c {
+    apiName = "Account.HS_Avg_days_a_week_per_user__c"
+    label = "HS-Avg days a week per user"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Avg days a week per user."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Avg days a week per user."
+    externalId = false
+  }
+  salesforce.Number HS_Avg_Wapp_events_per_user__c {
+    apiName = "Account.HS_Avg_Wapp_events_per_user__c"
+    label = "HS-Avg Wapp events per user"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Avg Wapp events per user"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Avg Wapp events per user"
+    externalId = false
+  }
+  salesforce.FormulaNumber Relevant_for_Sales__c {
+    apiName = "Account.Relevant_for_Sales__c"
+    label = "Relevant for Sales"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+Case( BillingCountryCode ,"IL",1,
+"FR",1,
+"ES",1,
+"GB",1,
+"IE",1,
+"BE",1,
+"NL",1,
+"DE",1,
+"AT",1,
+"PL",1,
+"CH",1,
+"SE",1,
+"NO",1,
+"FI",1,
+"DK",1,
+"IS",1,
+"CZ",1,
+"HK",1,
+"SG",1,
+"TW",1,
+"AE",1,
+"TR",1,
+"QA",1,
+"BH",1,
+"KW",1,
+"ZA",1,
+"US",1,
+"CA",1,
+"NZ",1,
+"AU",1,
+"HK",1,0)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Manual_Trigger__c {
+    apiName = "Account.Manual_Trigger__c"
+    label = "Manual Trigger"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Match Regions"
+        default = false
+        label = "Match Regions"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Checkbox Distributed_As_Free_Tier__c {
+    apiName = "Account.Distributed_As_Free_Tier__c"
+    label = "Distributed As Free Tier"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Secondary_Industry__c {
+    apiName = "Account.Secondary_Industry__c"
+    label = "Secondary Industry"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Restaurants"
+        default = false
+        label = "Restaurants"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Currency Revenue_in_Licenses__c {
+    apiName = "Account.Revenue_in_Licenses__c"
+    label = "Revenue in Licenses ($)"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number MA_Promoters__c {
+    apiName = "Account.MA_Promoters__c"
+    label = "MA Promoters"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "showing the last record promoters from the NPS survey"
+    externalId = false
+  }
+  salesforce.Number MA_Passive__c {
+    apiName = "Account.MA_Passive__c"
+    label = "MA Passive"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "showing the last record passives from the NPS survey"
+    externalId = false
+  }
+  salesforce.Number MA_Detractor__c {
+    apiName = "Account.MA_Detractor__c"
+    label = "MA Detractor"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "showing the last record detractors from the NPS survey"
+    externalId = false
+  }
+  salesforce.Checkbox Partner_is_CPM__c {
+    apiName = "Account.Partner_is_CPM__c"
+    label = "Partner is CPM"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Last_Handover_Timestamp__c {
+    apiName = "Account.Last_Handover_Timestamp__c"
+    label = "Last Handover Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Summary Company_Handovers_Count__c {
+    apiName = "Account.Company_Handovers_Count__c"
+    label = "Company Handovers Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryForeignKey = "Handover__c.Company__c"
+    summaryOperation = "count"
+  }
+  salesforce.Summary Company_Handover_ARR__c {
+    apiName = "Account.Company_Handover_ARR__c"
+    label = "Company Handover ARR"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Handover__c.ARR__c"
+    summaryForeignKey = "Handover__c.Company__c"
+    summaryOperation = "sum"
+  }
+  salesforce.Lookup Transition_To_AM__c {
+    apiName = "Account.Transition_To_AM__c"
+    label = "Transition To AM"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+    description = "For the accounts transition on Sep. 1st"
+  }
+  salesforce.Picklist Handover_Type_Required__c {
+    apiName = "Account.Handover_Type_Required__c"
+    label = "Handover Type Required"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Warm Handoff (Meeting)"
+        default = false
+        label = "Warm Handoff (Meeting)"
+      },
+      {
+        fullName = "Called Handoff (Email)"
+        default = false
+        label = "Called Handoff (Email)"
+      },
+      {
+        fullName = "No Handoff"
+        default = false
+        label = "No Handoff"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "For the accounts transition on Sep. 1st"
+    sorted = false
+  }
+  salesforce.Currency Annual_Revenue__c {
+    apiName = "Account.Annual_Revenue__c"
+    label = "Annual Revenue"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number Company_Trials_Count__c {
+    apiName = "Account.Company_Trials_Count__c"
+    label = "Company Trials Count (DEV)"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Company_Open_Trials_Count__c {
+    apiName = "Account.Company_Open_Trials_Count__c"
+    label = "Company Open Trials Count (DEV)"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Company_Trials_This_Week__c {
+    apiName = "Account.Company_Trials_This_Week__c"
+    label = "Company Trials This Week (DEV)"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Company_Paying_Accounts__c {
+    apiName = "Account.Company_Paying_Accounts__c"
+    label = "Company Paying Accounts (DEV)"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText CSM_Function__c {
+    apiName = "Account.CSM_Function__c"
+    label = "CSM Function"
+    _required = false
+    formula = "Text(CSM__r.Function__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Checkbox Accounts_transitioned__c {
+    apiName = "Account.Accounts_transitioned__c"
+    label = "Accounts transitioned"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Used to determine which accounts have actually been transitioned or assigned on Sept. 1st 2020"
+  }
+  salesforce.FormulaNumber Owner_s_Function_Score__c {
+    apiName = "Account.Owner_s_Function_Score__c"
+    label = "Owner's Function Score"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "$User.Function_Ownership_Score__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Company_Account_Transitioned__c {
+    apiName = "Account.Company_Account_Transitioned__c"
+    label = "Company: Account Transitioned"
+    formula = "Company__r.Accounts_transitioned__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Related_Paying_Accounts__c {
+    apiName = "Account.Related_Paying_Accounts__c"
+    label = "Related Paying Accounts"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Related_Accounts_In_Last_7_Days__c {
+    apiName = "Account.Related_Accounts_In_Last_7_Days__c"
+    label = "Related Accounts In Last 7 Days"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Related_Accounts_Total__c {
+    apiName = "Account.Related_Accounts_Total__c"
+    label = "Related Accounts Total"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Related_Accounts_in_Trial__c {
+    apiName = "Account.Related_Accounts_in_Trial__c"
+    label = "Related Accounts in Trial"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Tech_Stack__c {
+    apiName = "Account.Tech_Stack__c"
+    label = "Tech Stack"
+    _required = false
+    createable = true
+    updateable = true
+    length = 130000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number Founded_Year__c {
+    apiName = "Account.Founded_Year__c"
+    label = "Founded Year"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Sub_Industry__c {
+    apiName = "Account.Sub_Industry__c"
+    label = "Sub Industry"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Sector__c {
+    apiName = "Account.Sector__c"
+    label = "Sector"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Industry_Group__c {
+    apiName = "Account.Industry_Group__c"
+    label = "Industry Group"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Company_Type__c {
+    apiName = "Account.Company_Type__c"
+    label = "Company Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 200
+    queryable = true
+    description = "Enriched by CB/ZI"
+    externalId = false
+  }
+  salesforce.Number Amount_Raised__c {
+    apiName = "Account.Amount_Raised__c"
+    label = "Amount Raised"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Enriched by CB/ZI"
+    externalId = false
+  }
+  salesforce.Summary Account_Claimed_ARR__c {
+    apiName = "Account.Account_Claimed_ARR__c"
+    label = "Account Claimed ARR"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Opportunity.Claimed_ARR__c"
+    summaryFilterItems = [
+      {
+        field = "Opportunity.StageName"
+        operation = "equals"
+        value = "Closed Won"
+      },
+    ]
+    summaryForeignKey = "Opportunity.AccountId"
+    summaryOperation = "sum"
+  }
+  salesforce.Picklist Account_Territory__c {
+    apiName = "Account.Account_Territory__c"
+    label = "Account Territory"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Local"
+        default = false
+        label = "Local"
+      },
+      {
+        fullName = "Regional"
+        default = false
+        label = "Regional"
+      },
+      {
+        fullName = "Global"
+        default = false
+        label = "Global"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Checkbox Prioritized_Account__c {
+    apiName = "Account.Prioritized_Account__c"
+    label = "Prioritized Account"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Market_Cap__c {
+    apiName = "Account.Market_Cap__c"
+    label = "Market Cap"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Estimated_Annual_Revenue__c {
+    apiName = "Account.Estimated_Annual_Revenue__c"
+    label = "Estimated Annual Revenue"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 200
+    queryable = true
+    externalId = false
+  }
+  salesforce.Url Parent_Domain__c {
+    apiName = "Account.Parent_Domain__c"
+    label = "Parent Domain"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Url Ultimate_Parent_Domain__c {
+    apiName = "Account.Ultimate_Parent_Domain__c"
+    label = "Ultimate Parent Domain"
+    _required = false
+    inlineHelpText = "Ultimate Parent Company - Enriched"
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Tags__c {
+    apiName = "Account.Tags__c"
+    label = "Tags"
+    _required = false
+    inlineHelpText = "Enriched from BB"
+    createable = true
+    updateable = true
+    length = 5000
+    queryable = true
+    description = "Enriched from BB"
+    visibleLines = 3
+  }
+  salesforce.Text Ticker__c {
+    apiName = "Account.Ticker__c"
+    label = "Ticker"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Latest_Shipping_Address__c {
+    apiName = "Account.Latest_Shipping_Address__c"
+    label = "Latest Shipping Address"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Customer_Address__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Lead_Unqualified_timestamp {
+  fullName = "Lead.Unqualified timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Unqualified_timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Status
+      operation = "equals"
+      value = "Unqualified"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

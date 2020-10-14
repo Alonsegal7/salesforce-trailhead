@@ -1,0 +1,11 @@
+salesforce.AuraDefinitionBundle zaapit__Smart_Related_List {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  description = "Smart Related List for any object"
+  fullName = "zaapit__Smart_Related_List"
+  type = "Component"
+  SVGContent = "(hidden)"
+  designContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

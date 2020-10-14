@@ -1,0 +1,42 @@
+salesforce.ListView Opportunity_San_Francisco_Opportunities_Current_Q {
+  fullName = "Opportunity.San_Francisco_Opportunities_Current_Q"
+  columns = [
+    "ACCOUNT.NAME",
+    "Expected_Plan_Name__c",
+    "Pipeline__c",
+    "CORE.USERS.FIRST_NAME",
+    "Expected_ARR__c",
+    "OPPORTUNITY.STAGE_NAME",
+    "OPPORTUNITY.NAME",
+    "OPPORTUNITY.CLOSE_DATE",
+    "OPPORTUNITY_SCORE",
+    "Next_activity_date__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "OPPORTUNITY.STAGE_NAME"
+      operation = "equals"
+      value = "Qualified,Evaluation,Validation,Buying process,Negotiation,Closed Won"
+    },
+    {
+      field = "OPPORTUNITY.CLOSE_DATE"
+      operation = "equals"
+      value = "THIS_QUARTER"
+    },
+    {
+      field = "Owner_s_Team__c"
+      operation = "contains"
+      value = "mitch"
+    },
+    {
+      field = "GB_opp__c"
+      operation = "equals"
+      value = "1"
+    },
+  ]
+  label = "San Francisco Opportunities_ Current Q"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,26 @@
+salesforce.ListView Target__c_CPM_Targets {
+  fullName = "Target__c.CPM_Targets"
+  columns = [
+    "NAME",
+    "Period__c",
+    "User__c",
+    "Amount__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "CREATEDBY_USER"
+      operation = "contains"
+      value = "naomi"
+    },
+    {
+      field = "NAME"
+      operation = "contains"
+      value = "8-2020"
+    },
+  ]
+  label = "CPM Targets -Aug 2020"
+  _parent = [
+    salesforce.Target__c,
+  ]
+}

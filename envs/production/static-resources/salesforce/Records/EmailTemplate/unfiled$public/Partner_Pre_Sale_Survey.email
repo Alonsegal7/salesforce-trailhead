@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Сlient survey</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="margin: 0; padding: 0; font-size:16px; font-family:sans-serif; line-height: 1.8; color:#4A4A4A;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+ <tr>
+  <td align="center" style="padding: 40px 0 30px 0;">
+    <img src="http://monday.my.salesforce.com/servlet/servlet.ImageServer?id=0153X0000062znj&oid= 00D1t000000uChP" alt="logo" width="137" height="25">
+  </td>
+</tr>
+<tr>
+  <td>
+<img src="http://monday.my.salesforce.com/servlet/servlet.ImageServer?id=0153X0000062znt&oid= 00D1t000000uChP" alt="Hero" width="650" height="432">
+<p>Hey <strong>{!Lead.FirstName},</strong></p><br>
+<p>We’re monday.com - nice to e-meet you!
+You recently spoke with one of our certified partners, {!Lead.Owner_Company_Name__c}, and we wanted to make sure that your experience was a pleasant one! We’d appreciate your help by filling out  this short 2-minute survey rating your experience.</p>
+  </td>
+</tr>
+<tr>
+  <td align="center" style="padding: 20px 0 30px 0;">
+<a href="https://forms.monday.com/forms/cfa264ac2fef2f36a3502a7eb387af1e" target="_blank">
+         <img alt="button" src="http://monday.my.salesforce.com/servlet/servlet.ImageServer?id=0153X0000062zno&oid= 00D1t000000uChP" alt="button" width="272" height="66">
+</a>
+</tr>
+</td>
+<tr>
+  <td>
+<div style="border: 1px solid #E6E9EF; margin: 20px 0 40px 0;"></div>
+<p>You can fill out the survey at any point during your ongoing experience and even submit it multiple times if anything changes. 
+With any more thoughts, comments, or requests, please feel free to contact us directly at CustomerExperience@monday.com.</p><br>
+<p>Thanks for your help!<br>
+The monday.com team</p>
+   </td>
+  </tr>
+</table>
+</body>
+</html>

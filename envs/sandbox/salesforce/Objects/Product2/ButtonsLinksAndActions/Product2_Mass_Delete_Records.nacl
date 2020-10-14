@@ -1,0 +1,18 @@
+salesforce.WebLink Product2_Mass_Delete_Records {
+  fullName = "Product2.Mass_Delete_Records"
+  availability = "online"
+  description = "Mass delete records"
+  displayType = "massActionButton"
+  linkType = "page"
+  masterLabel = "Mass Delete"
+  openType = "replace"
+  page = "Mass_Delete_Product2"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Product2,
+  ]
+  _generated_dependencies = [
+    salesforce.ApexPage.instance.Mass_Delete_Product2,
+  ]
+}

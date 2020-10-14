@@ -1,0 +1,10 @@
+salesforce.Role HorsePowerPartnerUser {
+  fullName = "HorsePowerPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "HorsePower Partner User"
+  mayForecastManagerShare = false
+  name = "HorsePower Partner User"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.HorsePowerPartnerManager
+}

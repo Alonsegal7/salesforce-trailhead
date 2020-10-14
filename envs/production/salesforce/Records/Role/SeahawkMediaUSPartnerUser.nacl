@@ -1,0 +1,10 @@
+salesforce.Role SeahawkMediaUSPartnerUser {
+  fullName = "SeahawkMediaUSPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Seahawk Media (US) Partner User"
+  mayForecastManagerShare = false
+  name = "Seahawk Media (US) Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.SeahawkMediaUSPartnerManager
+}

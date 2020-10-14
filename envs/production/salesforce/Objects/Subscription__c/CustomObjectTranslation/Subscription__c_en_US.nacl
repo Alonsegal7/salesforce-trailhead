@@ -1,0 +1,206 @@
+salesforce.CustomObjectTranslation Subscription__c_en_US {
+  fullName = "Subscription__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Subscription"
+    },
+    {
+      plural = true
+      value = "Subscriptions"
+    },
+  ]
+  fieldSets = [
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Subscription__c_UpdateCalloutFields
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.ARR_Gain__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Activation_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.BigBrain_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Billing_Ids__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Claimed_On_Opportunity__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Collection__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Contract__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Deactivation_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Discount__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Exchange_Rate__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Expiration_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Free_Months__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Include_in_CC_Claim__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Is_Active__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Is_Claimed__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.List_Price__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Long_Subscription_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Migrated_Discount__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Migrated_Free_Months__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Migrated_Paid_Months__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Migrated_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Migrated_Unit_Price__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Monday_Account__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Name_for_CC_Claim__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Opportunity_Product_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Paid_Months__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Payment_Method__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Period__c
+      picklistValues = [
+        {
+          masterLabel = "monthly"
+          translation = ""
+        },
+        {
+          masterLabel = "two_yearly"
+          translation = ""
+        },
+        {
+          masterLabel = "yearly"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Pricing_Version__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Product_Code__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Pulse_Account_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Pulse_Contract_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Source_Sales_Order__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Status__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Tier__c
+    },
+    {
+      label = ""
+      name = salesforce.Subscription__c.field.Unit_Price__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Subscription Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Subscription__c,
+  ]
+}

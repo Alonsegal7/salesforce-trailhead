@@ -1,0 +1,204 @@
+salesforce.Flow Feedback_for_product {
+  fullName = "Feedback_for_product"
+  actionCalls = [
+    {
+      processMetadataValues = [
+        {
+          name = "emailAlertSelection"
+          value = {
+            stringValue = "Feedbaco_for_product"
+          }
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "send email"
+      locationX = 100
+      locationY = 200
+      actionName = salesforce.WorkflowAlert.instance.Opportunity_Feedbaco_for_product
+      actionType = "emailAlert"
+      inputParameters = [
+        {
+          name = "SObjectRowId"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+      ]
+    },
+  ]
+  assignments = [
+    {
+      name = "myVariable_waitStartTimeAssignment"
+      label = "myVariable_waitStartTimeAssignment"
+      locationX = 0
+      locationY = 0
+      assignmentItems = [
+        {
+          assignToReference = "myVariable_waitStartTimeVariable"
+          operator = "Assign"
+          value = {
+            elementReference = "$Flow.CurrentDateTime"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "isChangedDecision2_myRule_1_Feedback_for_product_c"
+      }
+    },
+  ]
+  decisions = [
+    {
+      name = "isChangedDecision2_myRule_1_Feedback_for_product_c"
+      label = "isChangedDecision2_myRule_1_Feedback_for_product_c"
+      locationX = 0
+      locationY = 0
+      defaultConnector = {
+        targetReference = "myDecision"
+      }
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "isChangedRule_2_myRule_1_Feedback_for_product_c"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "myVariable_old"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "myVariable_old.Feedback_for_product__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "myVariable_current.Feedback_for_product__c"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myDecision"
+          }
+          label = "isChangedRule_2_myRule_1_Feedback_for_product_c"
+        },
+      ]
+    },
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "Boolean"
+                  }
+                },
+              ]
+              leftValueReference = "isChangedRule_2_myRule_1_Feedback_for_product_c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "feedback"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Feedback_for_product-1_InterviewLabel"
+  label = "Feedback for product"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Opportunity"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  startElementReference = "myVariable_waitStartTimeAssignment"
+  status = "Obsolete"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Opportunity
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Opportunity
+    },
+    {
+      name = "myVariable_waitStartTimeVariable"
+      dataType = "DateTime"
+      isCollection = false
+      isInput = false
+      isOutput = false
+      value = {
+        elementReference = "$Flow.CurrentDateTime"
+      }
+    },
+  ]
+}

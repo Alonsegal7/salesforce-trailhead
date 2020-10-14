@@ -1,0 +1,46 @@
+.THIS:hover {    
+    background: #f9f9f9;
+}
+
+.THIS .wrapper {
+    min-height: 70px;
+    width: 100%;
+}
+
+.THIS .block {
+    display: inline-block;
+    border-bottom: 1px solid #cccccc;
+}
+
+.THIS .block:first-child {
+    border-bottom: none;
+}
+
+.THIS .table-block {
+    display: table;    
+    position: relative;
+    height: 100%;
+}
+
+.THIS .table-cell-block {
+    display: table-cell;
+    word-break: break-word;
+}
+
+.THIS .icon-background {
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    top: 0;
+    left: 32px;
+    background: #ffffff;
+    z-index: 2;
+    border-radius: 50%;
+}
+
+.THIS .icon {
+    box-shadow: 1px 0px 0px 4px #fff;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+}

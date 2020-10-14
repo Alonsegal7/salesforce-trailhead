@@ -1,0 +1,370 @@
+type salesforce.Account_Snapshot__c {
+  salesforce.MasterDetail Account__c {
+    apiName = "Account_Snapshot__c.Account__c"
+    label = "Monday Account"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.Date Date__c {
+    apiName = "Account_Snapshot__c.Date__c"
+    label = "Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Status__c {
+    apiName = "Account_Snapshot__c.Status__c"
+    label = "Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Immature"
+        default = false
+        label = "Immature"
+      },
+      {
+        fullName = "Mature"
+        default = false
+        label = "Mature"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaText Pulse_Account_Id__c {
+    apiName = "Account_Snapshot__c.Pulse_Account_Id__c"
+    label = "Pulse Account Id"
+    _required = false
+    formula = "Account__r.primary_pulse_account_id__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Snapshot_Unique_Id__c {
+    apiName = "Account_Snapshot__c.Snapshot_Unique_Id__c"
+    label = "Snapshot Unique Id"
+    _required = false
+    formula = "Pulse_Account_Id__c&text(month(Date__c))&text(year(Date__c))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number ARR__c {
+    apiName = "Account_Snapshot__c.ARR__c"
+    label = "ARR"
+    _required = false
+    precision = 18
+    scale = 4
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Total_Churn__c {
+    apiName = "Account_Snapshot__c.Total_Churn__c"
+    label = "Total Churn"
+    _required = false
+    precision = 18
+    scale = 4
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Company__c {
+    apiName = "Account_Snapshot__c.Company__c"
+    label = "Company"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Owner__c {
+    apiName = "Account_Snapshot__c.Owner__c"
+    label = "Owner"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Account_Seats__c {
+    apiName = "Account_Snapshot__c.Account_Seats__c"
+    label = "Account Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Members__c {
+    apiName = "Account_Snapshot__c.Members__c"
+    label = "Members"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number WAPP__c {
+    apiName = "Account_Snapshot__c.WAPP__c"
+    label = "WAPP"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Prioritized_Account__c {
+    apiName = "Account_Snapshot__c.Prioritized_Account__c"
+    label = "Prioritized Account"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Weekly_Snapshot__c {
+    apiName = "Account_Snapshot__c.Weekly_Snapshot__c"
+    label = "Weekly Snapshot"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox End_of_Month__c {
+    apiName = "Account_Snapshot__c.End_of_Month__c"
+    label = "End of Month"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Start_of_Month__c {
+    apiName = "Account_Snapshot__c.Start_of_Month__c"
+    label = "Start of Month"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup CSM__c {
+    apiName = "Account_Snapshot__c.CSM__c"
+    label = "CSM"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Plan_Period__c {
+    apiName = "Account_Snapshot__c.Plan_Period__c"
+    label = "Plan Period"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 15
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Partner_Type__c {
+    apiName = "Account_Snapshot__c.Partner_Type__c"
+    label = "Partner Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Channel"
+        default = false
+        label = "Channel"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Checkbox Green_Bucket_Company__c {
+    apiName = "Account_Snapshot__c.Green_Bucket_Company__c"
+    label = "Green Bucket Company"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Test_Snapshot__c {
+    apiName = "Account_Snapshot__c.Test_Snapshot__c"
+    label = "Test Snapshot"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Free_Users__c {
+    apiName = "Account_Snapshot__c.Free_Users__c"
+    externalId = false
+    label = "Free Users"
+    precision = 18
+    _required = false
+    scale = 0
+    unique = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.Number Guests__c {
+    apiName = "Account_Snapshot__c.Guests__c"
+    externalId = false
+    label = "Guests"
+    precision = 18
+    _required = false
+    scale = 0
+    unique = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.Number NPS_Score__c {
+    apiName = "Account_Snapshot__c.NPS_Score__c"
+    externalId = false
+    label = "NPS Score"
+    precision = 3
+    _required = false
+    scale = 0
+    unique = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.Lookup Owner_s_Manager__c {
+    apiName = "Account_Snapshot__c.Owner_s_Manager__c"
+    label = "Owner's Manager"
+    referenceTo = [
+      salesforce.User,
+    ]
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.Lookup Parent_Account__c {
+    apiName = "Account_Snapshot__c.Parent_Account__c"
+    label = "Parent Account"
+    referenceTo = [
+      salesforce.Account,
+    ]
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.Text Plan_Name__c {
+    apiName = "Account_Snapshot__c.Plan_Name__c"
+    externalId = false
+    label = "Plan Name"
+    length = 100
+    _required = false
+    unique = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.Picklist Plan_Tier__c {
+    apiName = "Account_Snapshot__c.Plan_Tier__c"
+    label = "Plan Tier"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Basic"
+        default = false
+        label = "Basic"
+      },
+      {
+        fullName = "Standard"
+        default = false
+        label = "Standard"
+      },
+      {
+        fullName = "Pro"
+        default = false
+        label = "Pro"
+      },
+      {
+        fullName = "Enterprise"
+        default = false
+        label = "Enterprise"
+      },
+    ]
+    sorted = false
+    restricted = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.Lookup SDR__c {
+    apiName = "Account_Snapshot__c.SDR__c"
+    label = "SDR"
+    referenceTo = [
+      salesforce.User,
+    ]
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.Lookup Second_CSM__c {
+    apiName = "Account_Snapshot__c.Second_CSM__c"
+    label = "Second CSM"
+    referenceTo = [
+      salesforce.User,
+    ]
+    _required = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+}

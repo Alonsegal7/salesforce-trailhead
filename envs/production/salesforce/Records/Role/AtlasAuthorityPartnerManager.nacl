@@ -1,0 +1,10 @@
+salesforce.Role AtlasAuthorityPartnerManager {
+  fullName = "AtlasAuthorityPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Atlas Authority Partner Manager"
+  mayForecastManagerShare = false
+  name = "Atlas Authority Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Partner_s_Company {
+  fullName = "Account.Partner_s_Company"
+  field = salesforce.Account.field.Partner_s_Company__c
+  formula = "Partner__r.CompanyName"
+  name = "Partner's Company"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

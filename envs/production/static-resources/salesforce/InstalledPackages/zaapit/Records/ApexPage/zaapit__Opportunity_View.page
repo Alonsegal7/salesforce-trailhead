@@ -1,0 +1,11 @@
+<apex:page standardController="opportunity">
+
+<apex:detail subject="{!opportunity.id}" relatedList="true" title="true" showChatter="true" inlineEdit="true"/> 
+
+<style>body table.detailList .data2Col[colspan="4"]{padding:3px 0px;
+ margin:0px} div.bPageBlock.brandSecondaryBrd.bDetailBlock.secondaryPalette 
+ .pbBottomButtons{margin-top:30px}
+ </style>
+ 
+<c:resize_include />
+</apex:page>

@@ -1,0 +1,18 @@
+<apex:page showHeader="false" sidebar="false" controller="SpringCMEos.SpringCMTrackerController">
+	<form id="authForm" method="post">
+		<input type="hidden" name="accessToken" value="{!AccessToken}" />
+		<input type="hidden" id="ru" name="ru" />
+		<input type="submit" style="display:none;" id="springCMAuthentication_submit" value="submit" />
+	</form>
+	<script type="text/javascript">
+		var redirectURI = decodeURIComponent('{!JSENCODE($CurrentPage.parameters.redirectURI)}');
+		document.getElementById('ru').value = redirectURI;
+		var apiDomain = redirectURI.split('/')[2];
+		var apiRootDomain = "springcm.com";
+		if (apiDomain.substr(-apiRootDomain.length) === apiRootDomain) {
+			var authForm = document.getElementById('authForm');
+			authForm.setAttribute('action', 'https://'+apiDomain+'/atlas/AuthenticateWithToken');
+			document.getElementById('springCMAuthentication_submit').click();
+		}
+	</script>
+</apex:page>

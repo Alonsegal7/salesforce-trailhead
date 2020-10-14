@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Task_Set_Partner_s_Tasks_as_Public {
+  fullName = "Task.Set Partner%27s Tasks as Public"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Task_Public_True
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "Owner:User.Profile.Name = 'Partner Community Custom'"
+  triggerType = "onCreateOnly"
+  _parent = [
+    salesforce.Task,
+  ]
+}

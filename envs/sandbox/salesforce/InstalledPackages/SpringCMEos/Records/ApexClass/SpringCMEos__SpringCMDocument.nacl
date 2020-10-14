@@ -1,0 +1,7 @@
+salesforce.ApexClass SpringCMEos__SpringCMDocument {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 37
+  status = "Active"
+  fullName = "SpringCMEos__SpringCMDocument"
+  content = "(hidden)"
+}

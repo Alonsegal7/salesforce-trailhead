@@ -1,0 +1,140 @@
+salesforce.QuickAction Opportunity_Create_Partner_SO_Request {
+  fullName = "Opportunity.Create_Partner_SO_Request"
+  label = "Create Partner SO Request"
+  optionsCreateFeedItem = true
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Customer_payed_by_wire_transfer_before__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Financial_Customer_Name__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Finance_Contact_Email__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Finance_Contact_Phone__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "VAT__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "CurrencyIsoCode"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Addendum_to_SO__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Billing_Country__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Billing_Street__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Billing_City__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Zip_Postal_Code__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Additional_Commercial_Comments__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Partner_Opportunity__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Type_of_Engagement__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Tier__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Seats_v8__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Period__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "of_Free_Months__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Start_Date__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "End_Date__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Balance_carry_over__c"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "NGO__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Customer_Success_Package__c"
+            uiBehavior = "Required"
+          },
+        ]
+      },
+    ]
+  }
+  successMessage = "Thank you! We received your SO request"
+  targetObject = salesforce.Partner_SO_Request__c
+  targetParentField = "Partner_Opportunity__c"
+  type = "Create"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

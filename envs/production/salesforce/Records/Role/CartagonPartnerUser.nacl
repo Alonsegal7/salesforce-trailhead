@@ -1,0 +1,10 @@
+salesforce.Role CartagonPartnerUser {
+  fullName = "CartagonPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Cartagon Partner User"
+  mayForecastManagerShare = false
+  name = "Cartagon Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

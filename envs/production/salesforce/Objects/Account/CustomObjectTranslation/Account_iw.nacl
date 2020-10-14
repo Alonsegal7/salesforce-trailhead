@@ -1,0 +1,3691 @@
+salesforce.CustomObjectTranslation Account_iw {
+  fullName = "Account-iw"
+  fieldSets = [
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Account_Account_Snapshot_Fields
+    },
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Account_MassManager__AccountsMassEditFieldSet
+    },
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Account_UpdateCalloutFields
+    },
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Account_tci_csmrg__Accont_Field_Set
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Account.field.AE__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.AM_Assigned_Age__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.AM_Assignment_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.AM__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.AM_i_the_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.ARR_Temp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.ARR_Weight_from_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Claimed_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Country__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Disabled_Timestamp__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Account_Domains__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_First_Channel__c
+      picklistValues = [
+        {
+          masterLabel = "Application"
+          translation = ""
+        },
+        {
+          masterLabel = "Contact Sales"
+          translation = ""
+        },
+        {
+          masterLabel = "Download"
+          translation = ""
+        },
+        {
+          masterLabel = "Event"
+          translation = ""
+        },
+        {
+          masterLabel = "Other"
+          translation = ""
+        },
+        {
+          masterLabel = "Outreach"
+          translation = ""
+        },
+        {
+          masterLabel = "Signup"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Focus_MA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Info_AM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Info_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Last_Channel__c
+      picklistValues = [
+        {
+          masterLabel = "Application"
+          translation = ""
+        },
+        {
+          masterLabel = "Contact Sales"
+          translation = ""
+        },
+        {
+          masterLabel = "Download"
+          translation = ""
+        },
+        {
+          masterLabel = "Event"
+          translation = ""
+        },
+        {
+          masterLabel = "Other"
+          translation = ""
+        },
+        {
+          masterLabel = "Outreach"
+          translation = ""
+        },
+        {
+          masterLabel = "Signup"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Link__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Notes_AE__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Notes_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Notes__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Ownership_Correct__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Potential_Icon__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Account_Potential_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Potential__c
+      picklistValues = [
+        {
+          masterLabel = "Growth"
+          translation = ""
+        },
+        {
+          masterLabel = "Low Touch"
+          translation = ""
+        },
+        {
+          masterLabel = "Other"
+          translation = ""
+        },
+        {
+          masterLabel = "Scale"
+          translation = ""
+        },
+        {
+          masterLabel = "Strategic"
+          translation = ""
+        },
+      ]
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Account_Recycling_Account__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Sentiment__c
+      picklistValues = [
+        {
+          masterLabel = "Detractor"
+          translation = ""
+        },
+        {
+          masterLabel = "Passive"
+          translation = ""
+        },
+        {
+          masterLabel = "Promoter"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Source_Type__c
+      picklistValues = [
+        {
+          masterLabel = "Inbound"
+          translation = ""
+        },
+        {
+          masterLabel = "Outbound"
+          translation = ""
+        },
+        {
+          masterLabel = "Outreach"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Status_Notes__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_Territory__c
+      picklistValues = [
+        {
+          masterLabel = "Global"
+          translation = ""
+        },
+        {
+          masterLabel = "Local"
+          translation = ""
+        },
+        {
+          masterLabel = "Regional"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_is_Claimed__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Account_was_disabled__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Accounts_transitioned__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Action_Plan__c
+      picklistValues = [
+        {
+          masterLabel = "P1 - Improve Usage/WAPP"
+          translation = ""
+        },
+        {
+          masterLabel = "P2 - Increase Capacity"
+          translation = ""
+        },
+        {
+          masterLabel = "P3 - Improve Feature Adoption"
+          translation = ""
+        },
+        {
+          masterLabel = "P4 - Improve Engagement"
+          translation = ""
+        },
+        {
+          masterLabel = "P5 - Secure Renewal"
+          translation = ""
+        },
+        {
+          masterLabel = "P6 - Non-Tech POC"
+          translation = ""
+        },
+        {
+          masterLabel = "P7 - Loss Key User"
+          translation = ""
+        },
+        {
+          masterLabel = "P8 - Onboarding Incomplete"
+          translation = ""
+        },
+        {
+          masterLabel = "P9 - Account Review"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Active_Contract__c
+      relationshipLabel = ""
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Active_Partner__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Active_Users__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Adoption_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Agreement_Type__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Am_I_the_CSM_Manager__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Am_I_the_Onboarding_Owner__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Amount_Raised__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Annual_Revenue__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.At_Risk__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Average_Growth_Gut_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Average_Retention_Gut_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.BDR__c
+      relationshipLabel = ""
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.BWAPP__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Belongs_to_viewed_company__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Business_Risks_Mitigation__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Business_Verticals__c
+      picklistValues = [
+        {
+          masterLabel = "Accounting"
+          translation = ""
+        },
+        {
+          masterLabel = "Agriculture"
+          translation = ""
+        },
+        {
+          masterLabel = "Automotive"
+          translation = ""
+        },
+        {
+          masterLabel = "Aviation"
+          translation = ""
+        },
+        {
+          masterLabel = "Banking"
+          translation = ""
+        },
+        {
+          masterLabel = "CRM"
+          translation = ""
+        },
+        {
+          masterLabel = "Construction"
+          translation = ""
+        },
+        {
+          masterLabel = "Consumer Goods"
+          translation = ""
+        },
+        {
+          masterLabel = "Customer Support"
+          translation = ""
+        },
+        {
+          masterLabel = "Defence"
+          translation = ""
+        },
+        {
+          masterLabel = "Design"
+          translation = ""
+        },
+        {
+          masterLabel = "Education"
+          translation = ""
+        },
+        {
+          masterLabel = "Electronics"
+          translation = ""
+        },
+        {
+          masterLabel = "Emergency Services"
+          translation = ""
+        },
+        {
+          masterLabel = "Energy"
+          translation = ""
+        },
+        {
+          masterLabel = "Engineering"
+          translation = ""
+        },
+        {
+          masterLabel = "Fashion"
+          translation = ""
+        },
+        {
+          masterLabel = "FinTech"
+          translation = ""
+        },
+        {
+          masterLabel = "Finance"
+          translation = ""
+        },
+        {
+          masterLabel = "Food & Beverage"
+          translation = ""
+        },
+        {
+          masterLabel = "Government"
+          translation = ""
+        },
+        {
+          masterLabel = "Healthcare"
+          translation = ""
+        },
+        {
+          masterLabel = "Hospitality"
+          translation = ""
+        },
+        {
+          masterLabel = "Human Resources"
+          translation = ""
+        },
+        {
+          masterLabel = "IT & Technology"
+          translation = ""
+        },
+        {
+          masterLabel = "Insurance"
+          translation = ""
+        },
+        {
+          masterLabel = "Legal"
+          translation = ""
+        },
+        {
+          masterLabel = "Logistics"
+          translation = ""
+        },
+        {
+          masterLabel = "Manufacturing"
+          translation = ""
+        },
+        {
+          masterLabel = "Marketing"
+          translation = ""
+        },
+        {
+          masterLabel = "Media"
+          translation = ""
+        },
+        {
+          masterLabel = "Natural Resources"
+          translation = ""
+        },
+        {
+          masterLabel = "Non profit"
+          translation = ""
+        },
+        {
+          masterLabel = "Oil & Gas"
+          translation = ""
+        },
+        {
+          masterLabel = "Operations"
+          translation = ""
+        },
+        {
+          masterLabel = "Other"
+          translation = ""
+        },
+        {
+          masterLabel = "Pharmaceutical"
+          translation = ""
+        },
+        {
+          masterLabel = "Public Sector"
+          translation = ""
+        },
+        {
+          masterLabel = "R&D"
+          translation = ""
+        },
+        {
+          masterLabel = "Raw materials"
+          translation = ""
+        },
+        {
+          masterLabel = "Real estate"
+          translation = ""
+        },
+        {
+          masterLabel = "Retail"
+          translation = ""
+        },
+        {
+          masterLabel = "Sales"
+          translation = ""
+        },
+        {
+          masterLabel = "Services"
+          translation = ""
+        },
+        {
+          masterLabel = "Sports & eSports"
+          translation = ""
+        },
+        {
+          masterLabel = "Telecommunications"
+          translation = ""
+        },
+        {
+          masterLabel = "Trade"
+          translation = ""
+        },
+        {
+          masterLabel = "Transportation & Travel"
+          translation = ""
+        },
+        {
+          masterLabel = "Utilities"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.CSM_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.CSM_Function__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.CSM_Manager__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.CSM__c
+      relationshipLabel = ""
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.CS_Segment__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Capacity__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Cluster__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Collection_Temp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Collection__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_ARR_for_reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Account_Transitioned__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Capacity__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Collection__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Company_Capacity__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Handover_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Handovers_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Health_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_LinkedIn__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Long_ID__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Members__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_NPS__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Open_Trials_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Owner_Function__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Owner_ID__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Owner_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Owner__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_PPU__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Paying_Accounts__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Size__c
+      picklistValues = [
+        {
+          masterLabel = "1-50"
+          translation = ""
+        },
+        {
+          masterLabel = "100-250"
+          translation = ""
+        },
+        {
+          masterLabel = "1500+"
+          translation = ""
+        },
+        {
+          masterLabel = "251-1500"
+          translation = ""
+        },
+        {
+          masterLabel = "50-99"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Size_from_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Trials_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Trials_This_Week__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Type_Formula__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Upgrade_Potential_MA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Upgrade_Potential_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_WAPP__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Website__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company_Yearly_Turnover__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Company__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Corona_Campaign_Pilot__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Country_For_Salesloft__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Covid_Risk__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Currency__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Current_Lifecycle_Age__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Current_Month_ARR_Change__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Current_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Current_User_is_Ops__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Current_User_is_the_AE__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Current_User_is_the_AM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Current_User_is_the_Owner__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.DMR__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.DOZISF__ZoomInfo_First_Updated__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.DOZISF__ZoomInfo_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.DOZISF__ZoomInfo_Last_Updated__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Days_Left_in_Plan__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Days_since_last_activity__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Department_Function__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Departments_Mapped_Potential_Seats__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Departments_Mapped_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Departments_Mapped__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Discount_Type__c
+      picklistValues = [
+        {
+          masterLabel = "Education"
+          translation = ""
+        },
+        {
+          masterLabel = "NGO"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Distributed_As_Free_Tier__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Distributed_Score_Scaled__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Distributed_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Enabled_Users__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Engagement_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Engagement__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Enterprise_Ratio_Partner_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Estimated_Annual_Revenue__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Experience_with_Tenders_Info__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Experience_with_Tenders__c
+      picklistValues = [
+        {
+          masterLabel = "No"
+          translation = ""
+        },
+        {
+          masterLabel = "Yes"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Flow_Error_Handling_Message__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Founded_Year__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Free_Tier__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Free_Users__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.GSI__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.GSI_user__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Go_live_date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Green_Bucket_Company_MA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Green_Bucket_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Green_Bucket_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Guests__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.HQ_Phone__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.HS_Avg_Wapp_events_per_user__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.HS_Avg_days_a_week_per_user__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.HS_Capacity__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.HS_Wapp_Members__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Handover_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Handover_Type_Required__c
+      picklistValues = [
+        {
+          masterLabel = "Called Handoff (Email)"
+          translation = ""
+        },
+        {
+          masterLabel = "No Handoff"
+          translation = ""
+        },
+        {
+          masterLabel = "Warm Handoff (Meeting)"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Has_Dedicated_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Has_ELA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Has_Sales_and_Partners_Ownership__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Health_Score_Bucket__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Health_Score_Flag__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Health_Score__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Identified_Opportunities__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Industry_Group__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Industry_new__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Is_GSI__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Is_Partner_Company_Contacted__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Is_Partner_Company_Nurturing__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Is_Partner_Company_Qualified__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Is_Partner_Company_Signed__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Is_Test_Account__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Keep_this_account__c
+      picklistValues = [
+        {
+          masterLabel = "Keep"
+          translation = ""
+        },
+        {
+          masterLabel = "Redistribute if needed"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Kickoff_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.LID__LinkedIn_Company_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Last_Handover_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Last_Joined_Senior_Contact__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Last_Ownership_Update__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Last_Significant_WAPP_Change__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Last_Touched_by_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Last_Touched_by_Sales__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Latest_Billing_Entity__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Legal_Agreement__c
+      picklistValues = [
+        {
+          masterLabel = "Global"
+          translation = ""
+        },
+        {
+          masterLabel = "Local"
+          translation = ""
+        },
+        {
+          masterLabel = "Regional"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Link_to_BB_Account__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Long_Account_ID__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Long_Term_Growth_AM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Long_Term_Growth_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Long_Term_Growth_Handover__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Low_Health_Timestemp__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Low_Touch_CS__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.MAPP_From_Members__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.MAPP__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.MA_Detractor__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.MA_NPS__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.MA_Passive__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.MA_Promoters__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Main_GEO__c
+      picklistValues = [
+        {
+          masterLabel = "ANZ"
+          translation = ""
+        },
+        {
+          masterLabel = "APAC"
+          translation = ""
+        },
+        {
+          masterLabel = "Afghanistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Africa"
+          translation = ""
+        },
+        {
+          masterLabel = "Albania"
+          translation = ""
+        },
+        {
+          masterLabel = "Algeria"
+          translation = ""
+        },
+        {
+          masterLabel = "Andorra"
+          translation = ""
+        },
+        {
+          masterLabel = "Angola"
+          translation = ""
+        },
+        {
+          masterLabel = "Argentina"
+          translation = ""
+        },
+        {
+          masterLabel = "Armenia"
+          translation = ""
+        },
+        {
+          masterLabel = "Australia"
+          translation = ""
+        },
+        {
+          masterLabel = "Austria"
+          translation = ""
+        },
+        {
+          masterLabel = "Azerbaijan"
+          translation = ""
+        },
+        {
+          masterLabel = "Bahamas"
+          translation = ""
+        },
+        {
+          masterLabel = "Bahrain"
+          translation = ""
+        },
+        {
+          masterLabel = "Bangladesh"
+          translation = ""
+        },
+        {
+          masterLabel = "Barbados"
+          translation = ""
+        },
+        {
+          masterLabel = "Belarus"
+          translation = ""
+        },
+        {
+          masterLabel = "Belgium"
+          translation = ""
+        },
+        {
+          masterLabel = "Belize"
+          translation = ""
+        },
+        {
+          masterLabel = "Bhutan"
+          translation = ""
+        },
+        {
+          masterLabel = "Bolivia"
+          translation = ""
+        },
+        {
+          masterLabel = "Bosnia"
+          translation = ""
+        },
+        {
+          masterLabel = "Brazil"
+          translation = ""
+        },
+        {
+          masterLabel = "Bulgaria"
+          translation = ""
+        },
+        {
+          masterLabel = "Cambodia"
+          translation = ""
+        },
+        {
+          masterLabel = "Cameroon"
+          translation = ""
+        },
+        {
+          masterLabel = "Canada"
+          translation = ""
+        },
+        {
+          masterLabel = "Chad"
+          translation = ""
+        },
+        {
+          masterLabel = "Chile"
+          translation = ""
+        },
+        {
+          masterLabel = "China"
+          translation = ""
+        },
+        {
+          masterLabel = "Colombia"
+          translation = ""
+        },
+        {
+          masterLabel = "Congo"
+          translation = ""
+        },
+        {
+          masterLabel = "Costa Rica"
+          translation = ""
+        },
+        {
+          masterLabel = "Croatia"
+          translation = ""
+        },
+        {
+          masterLabel = "Cuba"
+          translation = ""
+        },
+        {
+          masterLabel = "Cyprus"
+          translation = ""
+        },
+        {
+          masterLabel = "Czechia"
+          translation = ""
+        },
+        {
+          masterLabel = "Denmark"
+          translation = ""
+        },
+        {
+          masterLabel = "Dominican Republic"
+          translation = ""
+        },
+        {
+          masterLabel = "Ecuador"
+          translation = ""
+        },
+        {
+          masterLabel = "Egypt"
+          translation = ""
+        },
+        {
+          masterLabel = "El Salvador"
+          translation = ""
+        },
+        {
+          masterLabel = "Eritrea"
+          translation = ""
+        },
+        {
+          masterLabel = "Estonia"
+          translation = ""
+        },
+        {
+          masterLabel = "Ethiopia"
+          translation = ""
+        },
+        {
+          masterLabel = "Europe"
+          translation = ""
+        },
+        {
+          masterLabel = "Fiji"
+          translation = ""
+        },
+        {
+          masterLabel = "Finland"
+          translation = ""
+        },
+        {
+          masterLabel = "France"
+          translation = ""
+        },
+        {
+          masterLabel = "Gambia"
+          translation = ""
+        },
+        {
+          masterLabel = "Georgia"
+          translation = ""
+        },
+        {
+          masterLabel = "Germany"
+          translation = ""
+        },
+        {
+          masterLabel = "Ghana"
+          translation = ""
+        },
+        {
+          masterLabel = "Greece"
+          translation = ""
+        },
+        {
+          masterLabel = "Grenada"
+          translation = ""
+        },
+        {
+          masterLabel = "Guatemala"
+          translation = ""
+        },
+        {
+          masterLabel = "Haiti"
+          translation = ""
+        },
+        {
+          masterLabel = "Honduras"
+          translation = ""
+        },
+        {
+          masterLabel = "Hong Kong"
+          translation = ""
+        },
+        {
+          masterLabel = "Hungary"
+          translation = ""
+        },
+        {
+          masterLabel = "Iceland"
+          translation = ""
+        },
+        {
+          masterLabel = "India"
+          translation = ""
+        },
+        {
+          masterLabel = "Indonesia"
+          translation = ""
+        },
+        {
+          masterLabel = "Iran"
+          translation = ""
+        },
+        {
+          masterLabel = "Iraq"
+          translation = ""
+        },
+        {
+          masterLabel = "Ireland"
+          translation = ""
+        },
+        {
+          masterLabel = "Israel"
+          translation = ""
+        },
+        {
+          masterLabel = "Italy"
+          translation = ""
+        },
+        {
+          masterLabel = "Jamaica"
+          translation = ""
+        },
+        {
+          masterLabel = "Japan"
+          translation = ""
+        },
+        {
+          masterLabel = "Jordan"
+          translation = ""
+        },
+        {
+          masterLabel = "Kazakhstan"
+          translation = ""
+        },
+        {
+          masterLabel = "Kenya"
+          translation = ""
+        },
+        {
+          masterLabel = "Kosovo"
+          translation = ""
+        },
+        {
+          masterLabel = "Kuwait"
+          translation = ""
+        },
+        {
+          masterLabel = "Kyrgyzstan"
+          translation = ""
+        },
+        {
+          masterLabel = "LATAM"
+          translation = ""
+        },
+        {
+          masterLabel = "Laos"
+          translation = ""
+        },
+        {
+          masterLabel = "Latvia"
+          translation = ""
+        },
+        {
+          masterLabel = "Lebanon"
+          translation = ""
+        },
+        {
+          masterLabel = "Lesotho"
+          translation = ""
+        },
+        {
+          masterLabel = "Liberia"
+          translation = ""
+        },
+        {
+          masterLabel = "Libya"
+          translation = ""
+        },
+        {
+          masterLabel = "Liechtenstein"
+          translation = ""
+        },
+        {
+          masterLabel = "Lithuania"
+          translation = ""
+        },
+        {
+          masterLabel = "Luxembourg"
+          translation = ""
+        },
+        {
+          masterLabel = "Macedonia"
+          translation = ""
+        },
+        {
+          masterLabel = "Madagascar"
+          translation = ""
+        },
+        {
+          masterLabel = "Malaysia"
+          translation = ""
+        },
+        {
+          masterLabel = "Maldives"
+          translation = ""
+        },
+        {
+          masterLabel = "Malta"
+          translation = ""
+        },
+        {
+          masterLabel = "Mauritius"
+          translation = ""
+        },
+        {
+          masterLabel = "Mexico"
+          translation = ""
+        },
+        {
+          masterLabel = "Micronesia"
+          translation = ""
+        },
+        {
+          masterLabel = "Middle East"
+          translation = ""
+        },
+        {
+          masterLabel = "Moldova"
+          translation = ""
+        },
+        {
+          masterLabel = "Monaco"
+          translation = ""
+        },
+        {
+          masterLabel = "Mongolia"
+          translation = ""
+        },
+        {
+          masterLabel = "Montenegro"
+          translation = ""
+        },
+        {
+          masterLabel = "Morocco"
+          translation = ""
+        },
+        {
+          masterLabel = "Mozambique"
+          translation = ""
+        },
+        {
+          masterLabel = "Myanmar (Burma)"
+          translation = ""
+        },
+        {
+          masterLabel = "Namibia"
+          translation = ""
+        },
+        {
+          masterLabel = "Nepal"
+          translation = ""
+        },
+        {
+          masterLabel = "Netherlands"
+          translation = ""
+        },
+        {
+          masterLabel = "New Zealand"
+          translation = ""
+        },
+        {
+          masterLabel = "Nicaragua"
+          translation = ""
+        },
+        {
+          masterLabel = "Nigeria"
+          translation = ""
+        },
+        {
+          masterLabel = "North America"
+          translation = ""
+        },
+        {
+          masterLabel = "North Korea"
+          translation = ""
+        },
+        {
+          masterLabel = "Norway"
+          translation = ""
+        },
+        {
+          masterLabel = "Oman"
+          translation = ""
+        },
+        {
+          masterLabel = "Pakistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Panama"
+          translation = ""
+        },
+        {
+          masterLabel = "Papua New Guinea"
+          translation = ""
+        },
+        {
+          masterLabel = "Paraguay"
+          translation = ""
+        },
+        {
+          masterLabel = "Peru"
+          translation = ""
+        },
+        {
+          masterLabel = "Philippines"
+          translation = ""
+        },
+        {
+          masterLabel = "Poland"
+          translation = ""
+        },
+        {
+          masterLabel = "Portugal"
+          translation = ""
+        },
+        {
+          masterLabel = "Qatar"
+          translation = ""
+        },
+        {
+          masterLabel = "Romania"
+          translation = ""
+        },
+        {
+          masterLabel = "Russia"
+          translation = ""
+        },
+        {
+          masterLabel = "San Marino"
+          translation = ""
+        },
+        {
+          masterLabel = "Saudi Arabia"
+          translation = ""
+        },
+        {
+          masterLabel = "Senegal"
+          translation = ""
+        },
+        {
+          masterLabel = "Serbia"
+          translation = ""
+        },
+        {
+          masterLabel = "Sierra Leone"
+          translation = ""
+        },
+        {
+          masterLabel = "Singapore"
+          translation = ""
+        },
+        {
+          masterLabel = "Slovakia"
+          translation = ""
+        },
+        {
+          masterLabel = "Slovenia"
+          translation = ""
+        },
+        {
+          masterLabel = "Somalia"
+          translation = ""
+        },
+        {
+          masterLabel = "South Africa"
+          translation = ""
+        },
+        {
+          masterLabel = "South Korea"
+          translation = ""
+        },
+        {
+          masterLabel = "Spain"
+          translation = ""
+        },
+        {
+          masterLabel = "Sri Lanka"
+          translation = ""
+        },
+        {
+          masterLabel = "Sudan"
+          translation = ""
+        },
+        {
+          masterLabel = "Sweden"
+          translation = ""
+        },
+        {
+          masterLabel = "Switzerland"
+          translation = ""
+        },
+        {
+          masterLabel = "Syria"
+          translation = ""
+        },
+        {
+          masterLabel = "Taiwan"
+          translation = ""
+        },
+        {
+          masterLabel = "Tajikistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Tanzania"
+          translation = ""
+        },
+        {
+          masterLabel = "Thailand"
+          translation = ""
+        },
+        {
+          masterLabel = "Togo"
+          translation = ""
+        },
+        {
+          masterLabel = "Tonga"
+          translation = ""
+        },
+        {
+          masterLabel = "Trinidad"
+          translation = ""
+        },
+        {
+          masterLabel = "Tunisia"
+          translation = ""
+        },
+        {
+          masterLabel = "Turkey"
+          translation = ""
+        },
+        {
+          masterLabel = "Turkmenistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Uganda"
+          translation = ""
+        },
+        {
+          masterLabel = "Ukraine"
+          translation = ""
+        },
+        {
+          masterLabel = "United Arab Emirates"
+          translation = ""
+        },
+        {
+          masterLabel = "United Kingdom"
+          translation = ""
+        },
+        {
+          masterLabel = "United States"
+          translation = ""
+        },
+        {
+          masterLabel = "Uruguay"
+          translation = ""
+        },
+        {
+          masterLabel = "Uzbekistan"
+          translation = ""
+        },
+        {
+          masterLabel = "Vatican City"
+          translation = ""
+        },
+        {
+          masterLabel = "Venezuela"
+          translation = ""
+        },
+        {
+          masterLabel = "Vietnam"
+          translation = ""
+        },
+        {
+          masterLabel = "Yemen"
+          translation = ""
+        },
+        {
+          masterLabel = "Zambia"
+          translation = ""
+        },
+        {
+          masterLabel = "Zimbabwe"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Main_Partner_User__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Manual_Trigger__c
+      picklistValues = [
+        {
+          masterLabel = "Match Regions"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Market_Cap__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Members__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Migration_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Monday_Account_Lifecycle__c
+      picklistValues = [
+        {
+          masterLabel = "Adoption"
+          translation = ""
+        },
+        {
+          masterLabel = "Engagement"
+          translation = ""
+        },
+        {
+          masterLabel = "Handover"
+          translation = ""
+        },
+        {
+          masterLabel = "Onboarding"
+          translation = ""
+        },
+        {
+          masterLabel = "Renewal / Expansion"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Monday_Account_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Canceled"
+          translation = ""
+        },
+        {
+          masterLabel = "Churned"
+          translation = ""
+        },
+        {
+          masterLabel = "Free Tier"
+          translation = ""
+        },
+        {
+          masterLabel = "Paying Account"
+          translation = ""
+        },
+        {
+          masterLabel = "Trial Account"
+          translation = ""
+        },
+      ]
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Monday_Account_Team_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.NPS_Normalized__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.NPS_Score_Average__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.NPS_Survey_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Needs_Ownership_Update__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Next_Activity_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Next_Charge_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Next_Steps_for_CPM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Number_of_titles_added__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Of_Champions__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Onboarding_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Open_opps_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Orange_Bucket_Company_MA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Orange_Bucket_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Orange_Bucket_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Original_Budget_MA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Other_software_they_re_selling__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Other_software_they_re_selling_partners__c
+      picklistValues = [
+        {
+          masterLabel = "AWS"
+          translation = ""
+        },
+        {
+          masterLabel = "Adobe"
+          translation = ""
+        },
+        {
+          masterLabel = "Aircall"
+          translation = ""
+        },
+        {
+          masterLabel = "Airtable"
+          translation = ""
+        },
+        {
+          masterLabel = "Alibaba cloud"
+          translation = ""
+        },
+        {
+          masterLabel = "Asana"
+          translation = ""
+        },
+        {
+          masterLabel = "Atlassian"
+          translation = ""
+        },
+        {
+          masterLabel = "Basecamp"
+          translation = ""
+        },
+        {
+          masterLabel = "Cisco"
+          translation = ""
+        },
+        {
+          masterLabel = "Citrix"
+          translation = ""
+        },
+        {
+          masterLabel = "Dell Technologies"
+          translation = ""
+        },
+        {
+          masterLabel = "DocuSign"
+          translation = ""
+        },
+        {
+          masterLabel = "Dropbox"
+          translation = ""
+        },
+        {
+          masterLabel = "Freshworks"
+          translation = ""
+        },
+        {
+          masterLabel = "GitHub"
+          translation = ""
+        },
+        {
+          masterLabel = "GitLab"
+          translation = ""
+        },
+        {
+          masterLabel = "Google"
+          translation = ""
+        },
+        {
+          masterLabel = "Google Cloud"
+          translation = ""
+        },
+        {
+          masterLabel = "Google Maps"
+          translation = ""
+        },
+        {
+          masterLabel = "Google Suite"
+          translation = ""
+        },
+        {
+          masterLabel = "HPE"
+          translation = ""
+        },
+        {
+          masterLabel = "Hubspot"
+          translation = ""
+        },
+        {
+          masterLabel = "IBM"
+          translation = ""
+        },
+        {
+          masterLabel = "Intellij"
+          translation = ""
+        },
+        {
+          masterLabel = "Kissflow"
+          translation = ""
+        },
+        {
+          masterLabel = "LS Retail"
+          translation = ""
+        },
+        {
+          masterLabel = "Looker"
+          translation = ""
+        },
+        {
+          masterLabel = "LumApps"
+          translation = ""
+        },
+        {
+          masterLabel = "Magento"
+          translation = ""
+        },
+        {
+          masterLabel = "Mailchimp"
+          translation = ""
+        },
+        {
+          masterLabel = "Marketo"
+          translation = ""
+        },
+        {
+          masterLabel = "MavenLink"
+          translation = ""
+        },
+        {
+          masterLabel = "Microsoft"
+          translation = ""
+        },
+        {
+          masterLabel = "Microsoft Azure"
+          translation = ""
+        },
+        {
+          masterLabel = "Microsoft Dynamics 365"
+          translation = ""
+        },
+        {
+          masterLabel = "Microsoft Office / Microsoft 365"
+          translation = ""
+        },
+        {
+          masterLabel = "Microsoft Project"
+          translation = ""
+        },
+        {
+          masterLabel = "Microsoft Sharepoint"
+          translation = ""
+        },
+        {
+          masterLabel = "Microsoft Teams"
+          translation = ""
+        },
+        {
+          masterLabel = "MuleSoft"
+          translation = ""
+        },
+        {
+          masterLabel = "NetSuite (by Oracle)"
+          translation = ""
+        },
+        {
+          masterLabel = "Okta"
+          translation = ""
+        },
+        {
+          masterLabel = "Oracle"
+          translation = ""
+        },
+        {
+          masterLabel = "Other"
+          translation = ""
+        },
+        {
+          masterLabel = "Qlik"
+          translation = ""
+        },
+        {
+          masterLabel = "Quickbase"
+          translation = ""
+        },
+        {
+          masterLabel = "Redhat"
+          translation = ""
+        },
+        {
+          masterLabel = "SAP"
+          translation = ""
+        },
+        {
+          masterLabel = "Sage"
+          translation = ""
+        },
+        {
+          masterLabel = "Salesforce"
+          translation = ""
+        },
+        {
+          masterLabel = "Salesloft"
+          translation = ""
+        },
+        {
+          masterLabel = "ServiceNow"
+          translation = ""
+        },
+        {
+          masterLabel = "Slack"
+          translation = ""
+        },
+        {
+          masterLabel = "Smartsheet"
+          translation = ""
+        },
+        {
+          masterLabel = "Splunk"
+          translation = ""
+        },
+        {
+          masterLabel = "SugarCRM"
+          translation = ""
+        },
+        {
+          masterLabel = "Twilio"
+          translation = ""
+        },
+        {
+          masterLabel = "Typeform"
+          translation = ""
+        },
+        {
+          masterLabel = "VMware"
+          translation = ""
+        },
+        {
+          masterLabel = "VisualStudio"
+          translation = ""
+        },
+        {
+          masterLabel = "Whiteboard"
+          translation = ""
+        },
+        {
+          masterLabel = "Workday"
+          translation = ""
+        },
+        {
+          masterLabel = "Workfront"
+          translation = ""
+        },
+        {
+          masterLabel = "Workplace (by Facebook)"
+          translation = ""
+        },
+        {
+          masterLabel = "Wrike"
+          translation = ""
+        },
+        {
+          masterLabel = "Zapier"
+          translation = ""
+        },
+        {
+          masterLabel = "Zendesk"
+          translation = ""
+        },
+        {
+          masterLabel = "Zimbra"
+          translation = ""
+        },
+        {
+          masterLabel = "Zoho"
+          translation = ""
+        },
+        {
+          masterLabel = "Zoom"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Owner_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Owner_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Owner_is_Active_reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Owner_is_BDR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Owner_is_Partner__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Owner_s_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Owner_s_Function_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Owner_s_Function__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Owner_s_Manager__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Ownership_Claimed_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.PDR__c
+      picklistValues = [
+        {
+          masterLabel = "Roey Halbfinger"
+          translation = ""
+        },
+        {
+          masterLabel = "Stephanie Elek"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.PPU__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Packaging_Offer__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Parent_Domain__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Attempting_ttimestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_CSM__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Company_Status_Change_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Company_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Attempting"
+          translation = ""
+        },
+        {
+          masterLabel = "Contacted"
+          translation = ""
+        },
+        {
+          masterLabel = "Evaluation"
+          translation = ""
+        },
+        {
+          masterLabel = "New"
+          translation = ""
+        },
+        {
+          masterLabel = "Nurturing"
+          translation = ""
+        },
+        {
+          masterLabel = "Qualified"
+          translation = ""
+        },
+        {
+          masterLabel = "Signed"
+          translation = ""
+        },
+        {
+          masterLabel = "Unqualified"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Contacted_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Languages__c
+      picklistValues = [
+        {
+          masterLabel = "Arabic"
+          translation = ""
+        },
+        {
+          masterLabel = "Chinese"
+          translation = ""
+        },
+        {
+          masterLabel = "Danish"
+          translation = ""
+        },
+        {
+          masterLabel = "English"
+          translation = ""
+        },
+        {
+          masterLabel = "Finnish"
+          translation = ""
+        },
+        {
+          masterLabel = "French"
+          translation = ""
+        },
+        {
+          masterLabel = "German"
+          translation = ""
+        },
+        {
+          masterLabel = "Hebrew"
+          translation = ""
+        },
+        {
+          masterLabel = "Hindi"
+          translation = ""
+        },
+        {
+          masterLabel = "Italian"
+          translation = ""
+        },
+        {
+          masterLabel = "Korean"
+          translation = ""
+        },
+        {
+          masterLabel = "Polish"
+          translation = ""
+        },
+        {
+          masterLabel = "Portuguese"
+          translation = ""
+        },
+        {
+          masterLabel = "Russian"
+          translation = ""
+        },
+        {
+          masterLabel = "Spanish"
+          translation = ""
+        },
+        {
+          masterLabel = "Swedish"
+          translation = ""
+        },
+        {
+          masterLabel = "Turkish"
+          translation = ""
+        },
+        {
+          masterLabel = "Vietnamese"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_New_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Nurturing_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Program_Overview_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Qualified_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Regions__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Signed_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Type__c
+      picklistValues = [
+        {
+          masterLabel = "Channel"
+          translation = ""
+        },
+        {
+          masterLabel = "DMR"
+          translation = ""
+        },
+        {
+          masterLabel = "GSI"
+          translation = ""
+        },
+        {
+          masterLabel = "Tech"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_Unqualified_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_is_CPM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_s_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_s_Role__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partner_with_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Partnership_Start_Date_Partner_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Plan_Bucket__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Plan_End_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Plan_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Plan_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Plan_Period__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Plan_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Plan_Start_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Plan_Tier__c
+      picklistValues = [
+        {
+          masterLabel = "Basic"
+          translation = ""
+        },
+        {
+          masterLabel = "Enterprise"
+          translation = ""
+        },
+        {
+          masterLabel = "Pro"
+          translation = ""
+        },
+        {
+          masterLabel = "Standard"
+          translation = ""
+        },
+      ]
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Potential__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Power_of_1__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.PreviousOwner__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Previous_Heal_Score_Bucket__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Previous_Month_ARR_Temp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Previous_Month_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Previous_Month_Collection_Temp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Previous_Month_Collection__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Pricing_Version__c
+      picklistValues = [
+        {
+          masterLabel = "Pricing V3"
+          translation = ""
+        },
+        {
+          masterLabel = "Pricing V5"
+          translation = ""
+        },
+        {
+          masterLabel = "Pricing V6"
+          translation = ""
+        },
+        {
+          masterLabel = "Pricing V7"
+          translation = ""
+        },
+        {
+          masterLabel = "Pricing V8"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Prioritized_Account__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Priority_Reason__c
+      picklistValues = [
+        {
+          masterLabel = "Growth Opportunity"
+          translation = ""
+        },
+        {
+          masterLabel = "Onboarding Risk"
+          translation = ""
+        },
+        {
+          masterLabel = "Y/R Renewal 1-3"
+          translation = ""
+        },
+        {
+          masterLabel = "Y/R Renewal 3-6"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Professional_Service_Capabilities__c
+      picklistValues = [
+        {
+          masterLabel = "Business Consulting"
+          translation = ""
+        },
+        {
+          masterLabel = "Custom Development & Apps"
+          translation = ""
+        },
+        {
+          masterLabel = "Customer Success"
+          translation = ""
+        },
+        {
+          masterLabel = "Data migration"
+          translation = ""
+        },
+        {
+          masterLabel = "Deployment"
+          translation = ""
+        },
+        {
+          masterLabel = "Design"
+          translation = ""
+        },
+        {
+          masterLabel = "Hosting"
+          translation = ""
+        },
+        {
+          masterLabel = "Implementation Services"
+          translation = ""
+        },
+        {
+          masterLabel = "Integrations"
+          translation = ""
+        },
+        {
+          masterLabel = "Localisation"
+          translation = ""
+        },
+        {
+          masterLabel = "Managed Services"
+          translation = ""
+        },
+        {
+          masterLabel = "Onboarding"
+          translation = ""
+        },
+        {
+          masterLabel = "Training Program"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Pulse_Account_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Region__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Regional_Company__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Related_Accounts_In_Last_7_Days__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Related_Accounts_Total__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Related_Accounts_in_Trial__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Related_Paying_Accounts__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Relative_WAPP__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Relevant_for_Sales__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Renewal_Certainty__c
+      picklistValues = [
+        {
+          masterLabel = "Confirm (95% - 100%)"
+          translation = ""
+        },
+        {
+          masterLabel = "High (76% - 94%)"
+          translation = ""
+        },
+        {
+          masterLabel = "Informed Churn (0%)"
+          translation = ""
+        },
+        {
+          masterLabel = "Low (1% - 30%)"
+          translation = ""
+        },
+        {
+          masterLabel = "Medium (31%- 75%)"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Renewal_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Retention_Score_AM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Retention_Score_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Retention_Score_Handover__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Revenue_in_Licenses__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Room_for_growth__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.SDR__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.SalesLoft1__Active_Account__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Sales_Engineer__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Sales_Pipeline_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Sales_Reps_Partner_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Sales_Touched_Age__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Sales_added_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Scale_Account_Status__c
+      picklistValues = [
+        {
+          masterLabel = "1:1 Scheduled"
+          translation = ""
+        },
+        {
+          masterLabel = "AR Complete"
+          translation = ""
+        },
+        {
+          masterLabel = "AR Outreach"
+          translation = ""
+        },
+        {
+          masterLabel = "AR Scheduled"
+          translation = ""
+        },
+        {
+          masterLabel = "AR Sent"
+          translation = ""
+        },
+        {
+          masterLabel = "Complete"
+          translation = ""
+        },
+        {
+          masterLabel = "Email Outreach"
+          translation = ""
+        },
+        {
+          masterLabel = "In Progress/Monitoring"
+          translation = ""
+        },
+        {
+          masterLabel = "Office Hours"
+          translation = ""
+        },
+        {
+          masterLabel = "Prep AR"
+          translation = ""
+        },
+        {
+          masterLabel = "Scale Outreach"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Seats_from_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Second_CSM__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Sector__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Security_Agreement__c
+      picklistValues = [
+        {
+          masterLabel = "Global"
+          translation = ""
+        },
+        {
+          masterLabel = "Local"
+          translation = ""
+        },
+        {
+          masterLabel = "Regional"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Selling_competing_products__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Shipping_State_Temp__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Short_Term_Growth_AM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Short_Term_Growth_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Short_Term_Growth_Handover__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Sign_Up_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Slug__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.State_Temp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Strategic_MA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Strategic__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Strategic_receiver__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Sub_Industry__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Sync_status__c
+      picklistValues = [
+        {
+          masterLabel = "Failed"
+          translation = ""
+        },
+        {
+          masterLabel = "Ready for sync"
+          translation = ""
+        },
+        {
+          masterLabel = "Succeed"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Synced_By__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Tags__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Team_Size_Survey__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Tech_Stack__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Ticker__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Time_Zone_Offset__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Transition_To_AM__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Trial_End__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Trial_Start__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Trigger_Company_Owner_Update__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Ultimate_Parent_Domain__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Unassignment_Reason__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Unassignment_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Unknown_Country_Code__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Unknown_State_Code__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Upgrade_Potential_Score_MA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Use_Cases__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.Uses_monday_com__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Vendor__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Viewers__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.WAPP_Drop__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.WAPP_From_Members__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.WAPP_Goal_For_Adoption__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.WAPP_Goal_For_Engagement__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.WAPP__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Why_Unassigned__c
+      picklistValues = [
+        {
+          masterLabel = "Account Churned"
+          translation = ""
+        },
+        {
+          masterLabel = "Account reached full potential"
+          translation = ""
+        },
+        {
+          masterLabel = "Customer request"
+          translation = ""
+        },
+        {
+          masterLabel = "I don't have the capacity"
+          translation = ""
+        },
+        {
+          masterLabel = "No short term potential"
+          translation = ""
+        },
+        {
+          masterLabel = "Opportunity Lost"
+          translation = ""
+        },
+        {
+          masterLabel = "Other (please explain)"
+          translation = ""
+        },
+        {
+          masterLabel = "Redistribution to different owner"
+          translation = ""
+        },
+        {
+          masterLabel = "Small company size"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Why_unqualified__c
+      picklistValues = [
+        {
+          masterLabel = "Bad timing"
+          translation = ""
+        },
+        {
+          masterLabel = "COVID-19"
+          translation = ""
+        },
+        {
+          masterLabel = "Focusing on existing solution portfolio"
+          translation = ""
+        },
+        {
+          masterLabel = "Not enough clients"
+          translation = ""
+        },
+        {
+          masterLabel = "Not interested"
+          translation = ""
+        },
+        {
+          masterLabel = "Not sales focused"
+          translation = ""
+        },
+        {
+          masterLabel = "Other"
+          translation = ""
+        },
+        {
+          masterLabel = "Referral"
+          translation = ""
+        },
+        {
+          masterLabel = "Too small"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.X60_D_after_plan_started_date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Zone__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.in_Licenses__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.members_exceeding_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Active_Relationships_DMs__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Active_Relationships__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_CSM__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Clients_Partner_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Complete_Sale__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Complete_Sales_MA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Developers__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Employees__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Kickoffs__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Opportunities_Won__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Partial_Sale__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_QBR_EBR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Survey_Contacts__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Trainers__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_Won_Opportunities__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_calls__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_emails__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_lost_opps__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_meetings_in_Onboarding__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_open_opps__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_tickets__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_won_opportunities2__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.of_won_opps__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.partner_utm_banner__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.partner_utm_campaign__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.primary_pulse_account_id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.utm_banner__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.zisf__Company_ID__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.zisf__ZoomInfo_Complete_Status__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.zisf__ZoomInfo_Industry__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Account.field.zisf__ZoomInfo_Last_Clean_Run__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.zisf__Zoom_Clean_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Clean"
+          translation = ""
+        },
+        {
+          masterLabel = "Different"
+          translation = ""
+        },
+        {
+          masterLabel = "Error"
+          translation = ""
+        },
+        {
+          masterLabel = "In Sync"
+          translation = ""
+        },
+        {
+          masterLabel = "Not Compared"
+          translation = ""
+        },
+        {
+          masterLabel = "Not Found"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.zisf__zoom_id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.zisf__zoom_lastupdated__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Company Layout"
+      sections = [
+        {
+          label = ""
+          section = "Account Notes"
+        },
+        {
+          label = ""
+          section = "Company Details"
+        },
+        {
+          label = ""
+          section = "Departments"
+        },
+      ]
+    },
+    {
+      layout = "monday Account Layout"
+      sections = [
+        {
+          label = ""
+          section = "Account Team"
+        },
+        {
+          label = ""
+          section = "CS Inputs"
+        },
+        {
+          label = ""
+          section = "Monday Account Info"
+        },
+      ]
+    },
+    {
+      layout = "monday Account Layout - CS"
+      sections = [
+        {
+          label = ""
+          section = "Account Team"
+        },
+        {
+          label = ""
+          section = "Monday Account Info"
+        },
+        {
+          label = ""
+          section = "Scaled Touch info"
+        },
+        {
+          label = ""
+          section = "Top Information"
+        },
+      ]
+    },
+  ]
+  quickActions = [
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Account_Handover
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Address_and_Others
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_BB_Related_Accounts_Data
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_BI_and_Admin
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Business_Opportunities_Risks
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_CSM_Update
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Child_Account
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Commercial_Agreement
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Company_Team
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Create_PS_Request
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Handover_Account
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Map_Department
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_New_Account_Task
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Scaled_Touch_Section
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Take_Ownership
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Un_assign_Myself
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Unassign_Myself
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Update_Company_Information
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Account_Update_Project
+    },
+  ]
+  recordTypes = [
+    {
+      label = ""
+      name = salesforce.RecordType.instance.Account_Company
+    },
+    {
+      label = ""
+      name = salesforce.RecordType.instance.Account_Monday_Account
+    },
+    {
+      label = ""
+      name = salesforce.RecordType.instance.Account_Partner_Company
+    },
+  ]
+  validationRules = [
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Account_Cant_Change_Account_Owner_to_Partner
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Account_Cant_change_BB_id_for_MA_with_contract
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Account_Go_live_date_is_mandatory
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Account_Kickoff_is_must_before_onboarding_stage
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Account_LID__Check_CompanyId_Value
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Account_Main_partner_user_is_must_for_partner
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Account_Partner_Company_mandatory_fields
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Account_Partner_id_mandatory_for_partner_account
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Account_renewal_certainty_is_mandatory
+    },
+  ]
+  webLinks = [
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_GoogleMaps
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_GoogleNews
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_GoogleSearch
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_MassManager__Mass_Delete
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_MassManager__Mass_Edit_Standard_Fields
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_MassManager__Mass_Update
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_Mass_Delete_Records
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_tci_csmrg__Mass_Edit
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_zaapit__Auto_Mark
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_zaapit__Mass_Merge
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_zaapit__Merge_Accounts
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_zaapit__Merge_Accounts_L
+    },
+  ]
+  workflowTasks = [
+    {
+      name = salesforce.WorkflowTask.instance.Account_zaapit__Call
+      subject = ""
+    },
+    {
+      name = salesforce.WorkflowTask.instance.Account_zaapit__Email
+      subject = ""
+    },
+    {
+      name = salesforce.WorkflowTask.instance.Account_zaapit__SendLetterAccount
+      subject = ""
+    },
+    {
+      name = salesforce.WorkflowTask.instance.Account_zaapit__SendQuoteAccount
+      subject = ""
+    },
+  ]
+  _parent = [
+    salesforce.Account,
+  ]
+}

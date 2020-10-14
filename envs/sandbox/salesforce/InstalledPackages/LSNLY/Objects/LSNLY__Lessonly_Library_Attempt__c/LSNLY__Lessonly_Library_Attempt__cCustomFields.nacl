@@ -1,0 +1,174 @@
+type salesforce.LSNLY__Lessonly_Library_Attempt__c {
+  salesforce.MasterDetail LSNLY__Lessonly_User__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Lessonly_User__c"
+    label = "Lessonly User"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.LSNLY__Lessonly_User__c,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.MasterDetail LSNLY__Lessonly_Content__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Lessonly_Content__c"
+    label = "Lessonly Content"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.LSNLY__Lessonly_Content__c,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 1
+    queryable = true
+  }
+  salesforce.Text LSNLY__Completed_At__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Completed_At__c"
+    label = "Completed At"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Content_Type__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Content_Type__c"
+    label = "Content Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Ext_UID__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Ext_UID__c"
+    label = "Ext UID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Lessonly_Content_Id__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Lessonly_Content_Id__c"
+    label = "Lessonly Content Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Lessonly_Id__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Lessonly_Id__c"
+    label = "Lessonly Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Lessonly_User_Id__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Lessonly_User_Id__c"
+    label = "Lessonly User Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Resource_Type__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Resource_Type__c"
+    label = "Resource Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number LSNLY__Score__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Score__c"
+    label = "Score"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Started_At__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Started_At__c"
+    label = "Started At"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Status__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Status__c"
+    label = "Status"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Updated_At__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Updated_At__c"
+    label = "Updated At"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Via_Path_Id__c {
+    apiName = "LSNLY__Lessonly_Library_Attempt__c.LSNLY__Via_Path_Id__c"
+    label = "Via Path Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+}

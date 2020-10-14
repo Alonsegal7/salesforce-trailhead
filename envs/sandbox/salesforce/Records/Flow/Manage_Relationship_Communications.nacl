@@ -1,0 +1,301 @@
+salesforce.Flow Manage_Relationship_Communications {
+  fullName = "Manage_Relationship_Communications"
+  assignments = [
+    {
+      name = "Set_Last_Email_Communication"
+      label = "Set Last Email Communication"
+      locationX = 877
+      locationY = 48
+      assignmentItems = [
+        {
+          assignToReference = "$Record.Last_Email_Communication__c"
+          operator = "Assign"
+          value = {
+            elementReference = "Get_Last_Email.ActivityDate"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Verbal_Communication_Found"
+      }
+    },
+    {
+      name = "Set_Last_Verbal_Communication"
+      label = "Set Last Verbal Communication"
+      locationX = 805
+      locationY = 372
+      assignmentItems = [
+        {
+          assignToReference = "$Record.Last_Verbal_Communication__c"
+          operator = "Assign"
+          value = {
+            elementReference = "Get_Last_Verbal_Communication.ActivityDate"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      name = "Last_Email_Found"
+      label = "Last Email Found?"
+      locationX = 707
+      locationY = 49
+      defaultConnector = {
+        targetReference = "Verbal_Communication_Found"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "email_found"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Last_Email"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Last_Email_Communication"
+          }
+          label = "email found"
+        },
+      ]
+    },
+    {
+      name = "Verbal_Communication_Found"
+      label = "Verbal Communication Found?"
+      locationX = 790
+      locationY = 222
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Verbal_Found"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Last_Verbal_Communication"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Last_Verbal_Communication"
+          }
+          label = "Verbal Found"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Manage Relationship Communications {!$Flow.CurrentDateTime}"
+  label = "Manage Relationship Communications"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get_Last_Email"
+      label = "Get Last Email"
+      locationX = 298
+      locationY = 54
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Get_Last_Verbal_Communication"
+      }
+      filters = [
+        {
+          field = "OwnerId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.OwnerId"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Email"
+          }
+        },
+        {
+          field = "WhatId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.monday_Account__c"
+          }
+        },
+        {
+          field = "WhoId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Contact__c"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Task
+      queriedFields = [
+        salesforce.Task.field.Id,
+        salesforce.Task.field.ActivityDate,
+      ]
+      sortField = salesforce.Task.field.ActivityDate
+      sortOrder = "Desc"
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_Last_Verbal_Communication"
+      label = "Get Last Verbal Communication"
+      locationX = 523
+      locationY = 54
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Last_Email_Found"
+      }
+      filters = [
+        {
+          field = "OwnerId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.OwnerId"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Call"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Demo"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Meeting"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Exploratory call"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Advanced Training"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Basic Training"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Process / Boards Optimisation"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Webinar"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Strategic Session"
+          }
+        },
+        {
+          field = "Type"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Process / Boards Optimisation"
+          }
+        },
+        {
+          field = "WhatId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.monday_Account__c"
+          }
+        },
+        {
+          field = "WhoId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Contact__c"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Task
+      queriedFields = [
+        salesforce.Task.field.Id,
+        salesforce.Task.field.ActivityDate,
+      ]
+      sortField = salesforce.Task.field.ActivityDate
+      sortOrder = "Desc"
+      storeOutputAutomatically = true
+    },
+  ]
+  start = {
+    locationX = 67
+    locationY = 54
+    connector = {
+      targetReference = "Get_Last_Email"
+    }
+    object = salesforce.Relationship__c
+    triggerType = "RecordBeforeSave"
+  }
+  status = "Active"
+  variables = [
+    {
+      name = "recordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+    },
+    {
+      name = "relnamevar"
+      dataType = "String"
+      isCollection = false
+      isInput = false
+      isOutput = false
+    },
+  ]
+}

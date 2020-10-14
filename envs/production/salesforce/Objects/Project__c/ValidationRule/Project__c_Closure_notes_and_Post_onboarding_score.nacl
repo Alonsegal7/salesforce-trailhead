@@ -1,0 +1,14 @@
+salesforce.ValidationRule Project__c_Closure_notes_and_Post_onboarding_score {
+  fullName = "Project__c.Closure_notes_and_Post_onboarding_score"
+  active = true
+  description = "Once the project is closed the Project owner should fill the Post onboarding readiness and the project closure notes."
+  errorConditionFormula = '''
+ischanged( Project_Status__c ) &&
+ispickval(Project_Status__c,'Closed')&&
+(ISBLANK(TEXT(Post_Onboarding_Readiness__c))||isblank(Project_Closure_Notes__c))
+'''
+  errorMessage = "Please make sure you insert the ' Project closure notes' and the 'Post onboarding score'"
+  _parent = [
+    salesforce.Project__c,
+  ]
+}

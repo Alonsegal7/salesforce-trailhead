@@ -1,0 +1,56 @@
+<apex:page controller="SpringCMEos.SetupSpringCMViewModel" showHeader="true" sidebar="true" standardStylesheets="false" cache="false" expires="0">
+
+    <html class="no-js">
+
+    <head>
+
+
+        <base href="/SpringCM_Setup"/>
+        <meta charset="utf-8" />
+        <!-- <title>spa</title> -->
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width" />
+        <script type="text/javascript">
+        var path = window.location.pathname;
+        var page = path.split("/").pop();
+        if (document.URL.indexOf("force") > 0) {
+            staticURL = "{!$Resource.SpringCM_Setup}";
+        } else {
+            staticURL = "";
+        }
+        configSettings = {
+            staticPath: staticURL,
+            config: {},
+            accessToken: '{!$API.Session_Id}',
+            remoteActions: {
+                getModel: '{!$RemoteAction.SetupSpringCMViewModel.getModel}',
+                getMappings: '{!$RemoteAction.SetupSpringCMViewModel.getMappings}',
+                getTypes: '{!$RemoteAction.SetupSpringCMViewModel.getTypes}',
+                getEosTypes: '{!$RemoteAction.SetupSpringCMViewModel.getEosTypes}',
+                saveMapping: '{!$RemoteAction.SetupSpringCMViewModel.updateEosType}',
+                removeEosType: '{!$RemoteAction.SetupSpringCMViewModel.removeEosType}',
+                getFields: '{!$RemoteAction.SetupSpringCMViewModel.getFields}',
+                getEnvironments: '{!$RemoteAction.SetupSpringCMViewModel.getEnvironments}',
+                getEndpoints: '{!$RemoteAction.SetupSpringCMViewModel.getEndpoints}',
+                checkTrackItInstalled: '{!$RemoteAction.SetupSpringCMViewModel.checkTrackItInstalled}',
+                checkIsManagedPackage: '{!$RemoteAction.SetupSpringCMViewModel.checkIsManagedPackage}',
+                createEnvironmentPushTopic: '{!$RemoteAction.SetupSpringCMViewModel.createEnvironmentPushTopic}',
+                createIntegrationUserPushTopic: '{!$RemoteAction.SetupSpringCMViewModel.createIntegrationUserPushTopic}',
+                getPackages: '{!$RemoteAction.SetupSpringCMViewModel.getPackages}',
+                salesforceUrl: '{!$RemoteAction.SetupSpringCMViewModel.salesforceUrl}',
+                checkIsScratchOrPackageOrg: '{!$RemoteAction.SetupSpringCMViewModel.checkIsScratchOrPackageOrg}'
+            },
+            baseName: page
+        };
+        </script>
+        <apex:includeScript value="{!URLFOR($Resource.SpringCMEos__SpringCM_Setup,'bundle.js')}" />
+    </head>
+
+
+    <body ng-app="app">
+            <ui-view>
+            </ui-view>
+    </body>
+
+    </html>
+</apex:page>

@@ -1,0 +1,26 @@
+salesforce.WorkflowRule Account_Update_Engagement_Timestamp {
+  fullName = "Account.Update Engagement Timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Update_Engagement_Timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.Monday_Account_Lifecycle__c
+      operation = "equals"
+      value = "Engagement"
+    },
+    {
+      field = salesforce.Account.field.Engagement_Timestamp__c
+      operation = "equals"
+    },
+  ]
+  description = "When 'Monday Account Lifecycle' changes to 'Engagement', change Engagement Timestamp to 'TODAY()'"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Account,
+  ]
+}

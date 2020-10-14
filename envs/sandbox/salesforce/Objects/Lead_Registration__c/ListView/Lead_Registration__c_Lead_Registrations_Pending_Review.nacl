@@ -1,0 +1,27 @@
+salesforce.ListView Lead_Registration__c_Lead_Registrations_Pending_Review {
+  fullName = "Lead_Registration__c.Lead_Registrations_Pending_Review"
+  columns = [
+    "NAME",
+    "Registering_Partner__c",
+    "CPM__c",
+    "Registered_Email__c",
+    "Company__c",
+    "Title__c",
+    "Relationship__c",
+    "Comments__c",
+    "Status__c",
+    "Status_Reason__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Status__c"
+      operation = "notEqual"
+      value = "Approved,Denied"
+    },
+  ]
+  label = "Lead Registrations Pending Review"
+  _parent = [
+    salesforce.Lead_Registration__c,
+  ]
+}

@@ -1,0 +1,15 @@
+salesforce.ValidationRule Account_Main_partner_user_is_must_for_partner {
+  fullName = "Account.Main_partner_user_is_must_for_partner"
+  active = false
+  description = "Each partner account must have a main user defined for leads distribution from BB."
+  errorConditionFormula = '''
+((RecordType.DeveloperName ='Partner_Company'&&  ISBLANK(Main_Partner_User__c )  || 
+RecordType.DeveloperName ='Partner_Company'&&  NOT(ISPICKVAL(Main_Partner_User__r.Function__c ,'Partner')))
+&& $Profile.Name <> 'Integration Administrator') &&   not( ISNEW() )
+'''
+  errorDisplayField = "Main_Partner_User__c"
+  errorMessage = "You must define the main partner user for partner account."
+  _parent = [
+    salesforce.Account,
+  ]
+}

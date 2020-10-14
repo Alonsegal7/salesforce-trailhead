@@ -1,0 +1,34 @@
+salesforce.ListView Account_Paying_companies_w_o_employees {
+  fullName = "Account.Paying_companies_w_o_employees"
+  columns = [
+    "ACCOUNT.NAME",
+    "Company__c",
+    "Company_ARR_for_reports__c",
+    "Company_ARR__c",
+    "Company_Size__c",
+    "ACCOUNT.URL",
+    "Company_Seats__c",
+    "Company_WAPP__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Company_Seats__c"
+      operation = "greaterThan"
+      value = "20"
+    },
+    {
+      field = "ACCOUNT.RECORDTYPE"
+      operation = "equals"
+      value = "Account.Company"
+    },
+    {
+      field = "ACCOUNT.EMPLOYEES"
+      operation = "equals"
+    },
+  ]
+  label = "Paying companies w/o employees"
+  _parent = [
+    salesforce.Account,
+  ]
+}

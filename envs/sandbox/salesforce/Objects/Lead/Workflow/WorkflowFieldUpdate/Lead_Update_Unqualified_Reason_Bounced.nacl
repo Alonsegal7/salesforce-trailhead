@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Update_Unqualified_Reason_Bounced {
+  fullName = "Lead.Update_Unqualified_Reason_Bounced"
+  field = salesforce.Lead.field.Why_unqualified__c
+  literalValue = "Bounced"
+  name = "Update Unqualified Reason = Bounced"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

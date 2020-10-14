@@ -1,0 +1,65 @@
+salesforce.FieldSet Partner_Region__c_UpdateCalloutFields {
+  fullName = "Partner_Region__c.UpdateCalloutFields"
+  description = "UpdateCalloutFields"
+  displayedFields = [
+    {
+      field = "Is_Leadpool_Priority__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastReferencedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Country__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Daily_Leads_Quota__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CurrencyIsoCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BigBrain_Id__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Name"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastModifiedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Partner_Company__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastViewedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Main_User__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "UpdateCalloutFields"
+  _parent = [
+    salesforce.Partner_Region__c,
+  ]
+}

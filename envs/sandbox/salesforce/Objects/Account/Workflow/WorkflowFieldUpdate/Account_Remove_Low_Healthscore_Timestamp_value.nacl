@@ -1,0 +1,11 @@
+salesforce.WorkflowFieldUpdate Account_Remove_Low_Healthscore_Timestamp_value {
+  fullName = "Account.Remove_Low_Healthscore_Timestamp_value"
+  field = salesforce.Account.field.Low_Health_Timestemp__c
+  name = "Remove Low Healthscore Timestamp value"
+  notifyAssignee = false
+  operation = "Null"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

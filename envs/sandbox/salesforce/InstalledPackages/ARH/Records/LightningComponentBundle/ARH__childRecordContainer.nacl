@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle ARH__childRecordContainer {
+  fullName = "ARH__childRecordContainer"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/childRecordContainer/childRecordContainer.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/childRecordContainer/childRecordContainer.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/childRecordContainer/childRecordContainer.js"
+      },
+    ]
+  }
+}

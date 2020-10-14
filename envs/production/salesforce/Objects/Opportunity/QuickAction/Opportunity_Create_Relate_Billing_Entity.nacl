@@ -1,0 +1,12 @@
+salesforce.QuickAction Opportunity_Create_Relate_Billing_Entity {
+  fullName = "Opportunity.Create_Relate_Billing_Entity"
+  height = 420
+  label = "Create/Relate Billing Entity"
+  lightningComponent = "BillingEntityRelate"
+  optionsCreateFeedItem = false
+  type = "LightningComponent"
+  width = -100
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

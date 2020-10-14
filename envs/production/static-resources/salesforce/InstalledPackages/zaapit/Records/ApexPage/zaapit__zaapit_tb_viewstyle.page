@@ -1,0 +1,311 @@
+<apex:page controller="zaapit.JSZTableAction" showHeader="false" >
+<script>
+ var remotequeryAjax2GetTbFields='{!$RemoteAction.JSZTableAction.queryAjax2GetTbFields}';
+  var remoteQueryAjax2SC='{!$RemoteAction.JSZTableAction.queryAjax2SC}';
+  
+  var boldtxt="{!$Label.zaapit__bold}";
+  var underlinetxt="{!$Label.zaapit__underlinetxt}";
+  var italictxt="{!$Label.zaapit__italictxt}";
+  var textcolortxt="{!$Label.zaapit__textcolortxt}";
+  var backgroundcolortxt="{!$Label.zaapit__backgroundcolortxt}";
+  
+ </script>
+    <c:zaapit_tables_v1 />
+    <!-- Thank you for looking :) please contact us for customizing this application -->
+
+<!--     <script type="text/javascript" src="{!URLFOR($Resource.jscolor, 'jQueryColorPicker.min.js')}"/>
+          <script type="text/javascript" src="{!URLFOR($Resource.jscolor, 'jqColor.js')}" />-->
+          <script type="text/javascript" src="{!$Resource.jscolor}" />
+          
+          <script >
+          colorPickerEnable=false;
+          function addStylePicker(className){
+              var elemA=$(""+className);
+              elemA.each(function(){
+                  var elem=$(this);
+                  if(elem.attr("SP1")==null){
+                      elem.attr("SP1","1");
+                      var css="";
+                      if(elem[0].tagName=="INPUT"){
+                          css=elem.val();
+                      }else{
+                          css=elem.text();
+                      }
+                      css=css.replace(/[ \n\r\t]+/ig,"");
+                      
+                      
+                      var cssArr1=css.split(/\;|\:/);
+                      var cssEl={"background-color":"","color":"#000000","font-weight":"","font-style":"","text-decoration":""};
+                      for(var i=0;i < cssArr1.length-1;i=i+2){
+                          
+                          cssEl[cssArr1[i]]=cssArr1[i+1];
+                          //alert(cssEl[cssArr1[i]]+" "+cssArr1[i]+" "+cssArr1[i+1]);
+                      }
+                      elem.css(cssEl);
+                      //alert(cssEl["background-color"]);
+                      var ui1="<div class='stylePicker' onclick='selectStyle(this);'><input onclick='toggleM(this);' type='text' class='pi bgcolor' style='background-color:"+cssEl["background-color"]+";' value='"+cssEl["background-color"]+"' title='"+backgroundcolortxt+"'/><input onclick='toggleM(this);' type='text' class='pi color' style='background-color:"+cssEl["color"]+";' value='"+cssEl["color"]+"' title='"+textcolortxt+"'/><div onclick='toggleM(this);' class='pi bold  "+(cssEl["font-weight"]!=""?"m":"")+"' title='"+boldtxt+"'/><div onclick='toggleM(this);' class='pi italic  "+(cssEl["font-style"]!=""?"m":"")+"' title='"+italictxt+"'/><div onclick='toggleM(this);' class='pi underline  "+(cssEl["text-decoration"]!=""?"m":"")+"' title='"+underlinetxt+"'/></div>";
+                      $(ui1).insertAfter(elem);
+                  }
+              });
+          }
+          function toggleM(obj,e){
+              if(isEditMode1){
+                  $(obj).toggleClass("m");
+                  $(obj).parents(".stylePicker:first").click();
+                  $(obj).removeClass('mFu1');
+              }else{
+                  loadingSH();filpEditModeJS();
+                  stopProp1(e);
+              }
+              
+          }
+          function selectStyle(obj){
+
+              var inp=$(obj).prev();
+              var val1="";
+              var bgcolor =$(obj).find(".bgcolor");
+              //alert(bgcolor.length);
+              if(bgcolor.val()!=""){
+                  val1=val1+"background-color:"+bgcolor.val()+";";
+              }
+              var color1=$(obj).find(".color");
+              //alert(color1.length);
+              if(color1.val()!=""){
+                  val1=val1+"color:"+color1.val()+";";
+              }
+              var bold=$(obj).find(".bold");
+              if(bold.hasClass("m")){
+                  val1=val1+"font-weight:bold;";
+              }
+              var italic=$(obj).find(".italic");
+              if(italic.hasClass("m")){
+                  val1=val1+"font-style:italic;";
+              }
+              var underline=$(obj).find(".underline");
+              if(underline.hasClass("m")){
+                  val1=val1+"text-decoration:underline;";
+              }
+              //alert(val1);
+              inp.val(val1).attr("style",val1).change();
+          }
+          function setColorPickers(){
+               
+                  addStylePicker(".dataRow .oSt_row_style__c:visible, .dataRow .iTb.inpSt_row_style__c:visible, .dataRow .oSt_field_style__c:visible, .dataRow .iTb.inpSt_field_style__c:visible");
+                  
+               if(isEditMode1){
+                   $("input.inpSt_field_to_color__c").click(function(){
+                       selectSoqlField(this);
+                   });
+                   // $("textarea.inpSt_zaapit__soql__c").click(function(){
+                   //    selectSoqlFieldCon(this);
+                  // });
+
+                  $(".stylePicker .bgcolor,.stylePicker .color").each(function(){
+                  var el1=$(this);
+                  el1.colorPicker({
+                  actionCallback: function(event, type) {
+                  if (type === 'changeXYValue') {
+                      $(this.input).click();
+                      //alert(el1.parents("tr:first").find(".stylePicker").length);
+                      //alert(elm.value);
+                  }else{
+                      //alert(type);
+                  }
+                 }
+                 
+                 });
+                     
+                  });
+              }
+            
+          }
+          var OnGetTotalDone0=0;
+          $(document).ready(function(){
+        	  conditionPickX_tableName="{!JSENCODE($currentpage.parameters.tbname)}";
+              setColorPickers();
+              $("body").bind("OnRenderDone",setColorPickers);
+              $("body").bind("OnGetTotalDone",function(){
+                  if(OnGetTotalDone0==0){
+                  OnGetTotalDone0=1;
+                  if(totalCountAjx==0){
+                      preAddRow();
+                  }
+              }
+              });
+              
+          });
+          
+          
+ 
+    
+        var enhanceFuncInpOld=enhanceFuncInp;
+        enhanceFuncInp=function (o1,o2){
+            if(!$(o1).hasClass("inpSt_zaapit__soql__c")){
+                return enhanceFuncInpOld(o1,o2);
+            }else{
+                return selectSoqlFieldCon(o1);
+            }
+        }
+        
+        
+          </script >
+          
+          
+          <style>
+          .RLRF-TA{    width: 99%;
+    height: 69px;}
+          .stylePicker{ white-space: nowrap;border:1px solid #aaaaaa;padding: 5px 5px 5px 0px;
+                  width: 118px;
+            height: 19px;    position: relative;
+            }
+          .stylePicker .bgcolor,.stylePicker .color{font-size: 0px;
+            width: 17px;
+            height:19px;
+              border:0px;
+              margin-left:5px;
+            }
+         
+            
+            .stylePicker .bold,.stylePicker .italic ,.stylePicker .underline{
+               border:0px;
+                width:17px;
+                height:17px;
+                display:inline-block;
+                border:1px solid #a6acb3;
+                margin-left:5px;
+            }
+            
+            .stylePicker .bgcolor{background:url('{!$Resource.zp_sfdc}') 0px -579px no-repeat;    position: absolute;left: 72px;
+    top: 5px;}
+            .stylePicker .color{background:url('{!$Resource.zp_sfdc}') 0px -556px no-repeat;    position: absolute;left: 93px;
+    top: 5px;}
+            .stylePicker .bold{background:url('{!$Resource.zp_sfdc}') 1px -602px no-repeat;}
+            .stylePicker .italic {background:url('{!$Resource.zp_sfdc}') 1px -620px no-repeat;}
+            .stylePicker .underline{background:url('{!$Resource.zp_sfdc}') 1px -639px no-repeat;}
+            .stylePicker .m{border:1px solid #333333;}
+            .oSt_row_style__c .ost1I {max-width:150px;}
+            td.row_style__c .pi.color{display:none;}
+             td.row_style__c .stylePicker{   width: 95px;}
+              #multiSelFlds{position:relative;border: 1px solid #919191;white-space:nowrap;overflow-x:scroll;overflow-y:none;min-height:170px;width:99%; vertical-align: top;}
+   #multiSelFlds select{vertical-align: top;min-width:150px;max-height:148px;}
+   #multiSelFlds div{vertical-align: top;}
+   
+     .Youhaveselected{text-align:center;border:1px solid #aaaaaa;background:#fafafa;margin-left:0px;display:inline-block;min-width:150px;min-height:148px;height:100%;margin-right:3px;}
+  .Youhaveselected .i{padding:10px;}
+  .Youhaveselected .g{color:#666666;margin-bottom:7px;}
+  .Youhaveselected .l{text-align:center;font-weight:bold;padding:10px 0px;}
+
+  input.inpSt_field_to_color__c{background:url('{!$Resource.lookup1}') top right no-repeat;border:1px solid #A9A9A9;width:150px;}
+  textarea.inpSt_zaapit__soql__c{background:url('{!$Resource.lookup1}') top right no-repeat ;border:1px solid #A9A9A9;width: 183px;
+    height: 25px;}
+  
+  input.RLRF{width:132px;background:#efefef url('{!$Resource.lookup1}') top right no-repeat;border:1px solid #A9A9A9;padding:1px 20px 1px 0px;cursor:pointer;}
+  input.marked{background:yellow url('{!$Resource.lookup1}') top right no-repeat;}
+  textarea.marked{background:yellow url('{!$Resource.lookup1}') top right no-repeat;}
+  #multiSelFlds .loadingx1{z-index:9;position:absolute;background:#E5E5E5 url('/img/loading.gif') 45% 45% no-repeat;width: 100%; height: 100%; opacity: 0.5;}
+  
+  #ValidIssue{
+  padding:5px;display:none;border:1px solid #eeeeee;margin-bottom:10px; background-image: url(/img/msg_icons/error24.png);    background-color: #ffc;
+    border-style: solid;
+    border-width: 1px;
+    color: #000;
+    padding: 7px 7px 7px 35px;
+    background-repeat: no-repeat;
+    background-position: 4px 2px;
+  }
+  a.colorRowsSel{display:none;}
+          </style>
+         
+         <div id="multiSelFldsWRp2" title="Choose a Field"></div>
+         
+          <div id="multiSelFldsWRp3" class="hd1" title="Add a Condition">
+           <div style="padding:5px;display:block;border:1px solid #eeeeee;margin-bottom:10px;">
+           1) Select a Field:
+           </div>
+            <div id="multiSelFldsWRp3in" />
+            
+           <div style="padding:5px;display:block;border:1px solid #eeeeee;margin-bottom:10px;margin-top:10px;">
+     <span> 2) Add Condition: </span>
+     <select name="RLRFAndOr1" id="RLRFAndOr1">
+     <option value=" ">-</option>
+        <option value="AND">AND</option>
+        <option value="OR">OR</option>
+     </select>
+<!--      <apex:selectList label="Related List Reference Field" styleClass="RLRF" size="1" >
+        <apex:selectOption itemValue="" itemLabel="Select a Field"/>
+        <apex:selectOptions value="{!availFieldsSort}"/>
+        </apex:selectList>  
+      -->
+      
+        <input tyle="text" value="Select a Field" id="RLRF" class="RLRF" style="" onclick="initFieldPicker(this);"/>
+        <select name="RLRFOp1" id="RLRFOp1" onchange="RLRFOp1Change();" style="width: 171px;">
+        
+        <optgroup label="Texts" typeValid="text">
+        <option value="{0}='{1}'">equals</option>
+        <option value="{0}!='{1}'">not equal to</option>
+        <option value="{0} like '{1}%'">starts with</option>
+        <option value="{0} like '%{1}%'">contains</option>
+        <option value="(not {0} like '%{1}%')">does not contain</option>
+        <option value="{0} < '{1}'">less than</option>
+        <option value="{0} > '{1}'">greater than</option>
+        <option value="{0} <= '{1}'">less or equal</option>
+        <option value="{0} >= '{1}'">greater or equal</option>
+        <option value="{0} in ('{1}')">includes</option>
+        <option value="(not {0} in ('{1}'))">excludes</option>
+        </optgroup>
+        
+        <optgroup label="Numbers" typeValid="number">
+        
+        <option value="{0}={1}">equals</option>
+        <option value="{0}!={1}">not equal to</option>
+        <option value="{0} < {1}">less than</option>
+        <option value="{0} > {1}">greater than</option>
+        <option value="{0} <= {1}">less or equal</option>
+        <option value="{0} >= {1}">greater or equal</option>
+        <option value="{0} in ({1})">includes</option>
+        <option value="(not {0} in ({1}))">excludes</option>
+        </optgroup>
+        
+        <optgroup label="Dates" typeValid="date">
+        
+        
+        <option value="{0}={1}">equals</option>
+        <option value="{0}!={1}">not equal to</option>
+        <option value="{0} < {1}">less than</option>
+        <option value="{0} > {1}">greater than</option>
+        <option value="{0} <= {1}">less or equal</option>
+        <option value="{0} >= {1}">greater or equal</option>
+        <option value="{0} = TODAY">equals today</option>
+        <option value="{0} = LAST_N_DAYS:{1}">equals last n days</option>
+        <option value="{0} = NEXT_N_DAYS:{1}">equals next n days</option>
+        <option value="{0} = LAST_N_QUARTERS:{1}">equals last n quarters</option>
+        <option value="{0} = NEXT_N_QUARTERS:{1}">equals next n quarters</option>
+        <option value="{0} = LAST_N_YEARS:{1}">equals last n years</option>
+        <option value="{0} = NEXT_N_YEARS:{1}">equals next n years</option>
+        </optgroup>
+        
+        <optgroup label="Multi Picklists" typeValid="multiPL">
+        <option value="{0} includes ('{1}')">includes</option>
+        <option value="{0} excludes ('{1}')">excludes</option>
+        <option value="{0}='{1}'">equals</option>
+        <option value="{0}!='{1}'">not equal to</option>
+        </optgroup>
+        <optgroup label="Check Boxes" typeValid="checkbox">
+        <option value="{0}={1}">equals</option>
+        <option value="{0}!={1}">not equal to</option>
+        </optgroup>
+        
+        </select>
+        <input type="text" name="condvalue" id="condvalue" value="" style="width:138px;" autocomplete="off"/>
+        <button id="mainPAdvanceFilter" disabled="disabled" onclick="appendToFieldVal('RLRF','RLRF-TA');" type="button" class="btnDisabled" style="font-size:13pt;line-height: 13px;vertical-align: -2px;">+</button>
+                </div>
+                <div style="padding:5px;display:block;border:1px solid #eeeeee;margin-bottom:10px;">
+           3) Edit Condition:
+           </div>
+                <textarea id="RLRF-TA" class="RLRF-TA"/>
+               <div style="" id="ValidIssue">
+           
+           </div>
+                </div>
+                
+</apex:page>

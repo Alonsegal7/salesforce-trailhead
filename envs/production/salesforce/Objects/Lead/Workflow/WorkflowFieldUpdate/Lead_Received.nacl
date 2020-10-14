@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Received {
+  fullName = "Lead.Received"
+  field = salesforce.Lead.field.Received_timestamp__c
+  formula = "Attempting_timestamp__c"
+  name = "Received"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

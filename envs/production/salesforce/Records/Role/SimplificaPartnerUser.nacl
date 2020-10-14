@@ -1,0 +1,10 @@
+salesforce.Role SimplificaPartnerUser {
+  fullName = "SimplificaPartnerUser"
+  caseAccessLevel = "Read"
+  contactAccessLevel = "Edit"
+  description = "simplifica.biz Partner User"
+  mayForecastManagerShare = false
+  name = "simplifica.biz Partner User"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

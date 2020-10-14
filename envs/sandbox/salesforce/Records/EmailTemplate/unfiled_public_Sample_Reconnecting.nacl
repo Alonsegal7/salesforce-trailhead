@@ -1,0 +1,14 @@
+salesforce.EmailTemplate unfiled_public_Sample_Reconnecting {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "Not taking no for an answer"
+  encodingKey = "UTF-8"
+  name = "SAMPLE: Reconnecting"
+  relatedEntityType = "Lead"
+  style = "none"
+  subject = "Timing is everything"
+  type = "custom"
+  uiType = "SFX_Sample"
+  fullName = "unfiled$public/Sample_Reconnecting"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Sample_Reconnecting.email")
+}

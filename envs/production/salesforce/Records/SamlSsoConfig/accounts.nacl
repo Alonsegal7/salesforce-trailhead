@@ -1,0 +1,17 @@
+salesforce.SamlSsoConfig accounts {
+  fullName = "accounts"
+  identityLocation = "SubjectNameId"
+  identityMapping = "Username"
+  issuer = "https://accounts.google.com/o/saml2?idpid=C01sw7c5m"
+  loginUrl = "https://accounts.google.com/o/saml2/idp?idpid=C01sw7c5m"
+  name = "Google"
+  oauthTokenEndpoint = "https://monday.my.salesforce.com/services/oauth2/token?so=00D1t000000uChP"
+  redirectBinding = true
+  requestSignatureMethod = "1"
+  requestSigningCertId = "0P11t000003a3t6"
+  salesforceLoginUrl = "https://monday.my.salesforce.com?so=00D1t000000uChP"
+  samlEntityId = "https://monday.my.salesforce.com/"
+  samlVersion = "SAML2_0"
+  userProvisioning = false
+  validationCert = "MIIDdDCCAlygAwIBAgIGAWkburjXMA0GCSqGSIb3DQEBCwUAMHsxFDASBgNVBAoTC0dvb2dsZSBJbmMuMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MQ8wDQYDVQQDEwZHb29nbGUxGDAWBgNVBAsTD0dvb2dsZSBGb3IgV29yazELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWEwHhcNMTkwMjIzMTkwMDE0WhcNMjQwMjIyMTkwMDE0WjB7MRQwEgYDVQQKEwtHb29nbGUgSW5jLjEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEPMA0GA1UEAxMGR29vZ2xlMRgwFgYDVQQLEw9Hb29nbGUgRm9yIFdvcmsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvsEpA6KmSk5jl4RI2JieR+GOsdd3DbrEnB+B22vG4ucC29ImBGOPamuWVlZlKtKMpPCpdPQ3DPHx54LDvBvhXKkIicUE7RjhR0qBPXITYW4cqJaJerFFqHwebSK54K6NeRvt5QM6HiotSBU9QyWvIYbw9Hh+LI/0GZeBxM4PDCr41i3LSu2FsGdlue0smiHj2k2GyF5IXQAwoaumBoVgJqHW6dj1k8J5ZH0Ba83hzXX4R9ayEWKg7QoYSGwR3nv9QapEK/TFWfNpbgu/XMn+b8QS4WZvqxkFQIoQR6qwYjXqSfz04I7qpjwAmhol0slnrv54pPw26AwiNPraRCAGHwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQCCbW1AsOEBp6I+hdfbztu30+6B5cOb0A/JaobojjQNrmq0TvSifTvBX9CXS+olmyadnGBDp6Yeks1ri+zccZp37NiKr/L8HR8yhyTE2WKVyhiBlb+79Vn2I7cQ6ShPH1XKlTYgtfY49XosN6ANwTSJoIsdrKFARViSFiogJI1jYdw2UABmm9Qpa/+FHZi5yEeaagMytnC70fqSN47ZpZW6y3qH9yzNVr1e4naX1dvTVpHmoYucEZlgonEhAb7UO/2ioMgwQBxTSjDkVdiqp9VzC8EN1TIyWz1uvew0yTFycAJbB9pP9AAE/WKqAv+l8ZLmodJjdXmD2X4rqUrD9KOo"
+}

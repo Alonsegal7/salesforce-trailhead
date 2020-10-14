@@ -1,0 +1,10 @@
+salesforce.Role Trainer {
+  fullName = "Trainer"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  description = "Trainer"
+  mayForecastManagerShare = false
+  name = "Trainer"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.Head_of_Sales
+}

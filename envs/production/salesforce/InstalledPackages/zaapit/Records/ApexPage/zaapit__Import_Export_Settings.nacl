@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__Import_Export_Settings {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 35
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Import Export Settings"
+  fullName = "zaapit__Import_Export_Settings"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__Import_Export_Settings.page")
+}

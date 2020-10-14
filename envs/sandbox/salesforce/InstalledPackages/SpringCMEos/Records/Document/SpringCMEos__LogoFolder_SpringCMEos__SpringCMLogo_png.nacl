@@ -1,0 +1,8 @@
+salesforce.Document SpringCMEos__LogoFolder_SpringCMEos__SpringCMLogo_png {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  internalUseOnly = false
+  name = "SpringCMLogo"
+  public = true
+  fullName = "SpringCMEos__LogoFolder/SpringCMEos__SpringCMLogo.png"
+  content = file("salesforce/InstalledPackages/SpringCMEos/Records/Document/SpringCMEos__LogoFolder/SpringCMEos__SpringCMLogo.png")
+}

@@ -1,0 +1,23 @@
+salesforce.CustomObjectTranslation Last_Viewed_Account__c_en_US {
+  fullName = "Last_Viewed_Account__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Last Viewed Account"
+    },
+    {
+      plural = true
+      value = "Last Viewed Account"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Last_Viewed_Account__c.field.AccountId__c
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Last_Viewed_Account__c,
+  ]
+}

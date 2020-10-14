@@ -1,0 +1,157 @@
+salesforce.CustomObjectTranslation Round_Robin__c_en_US {
+  fullName = "Round_Robin__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Round Robin"
+    },
+    {
+      plural = true
+      value = "Round Robins"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Absent_Days__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Calibration__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Current_Level__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.End_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Languages__c
+      picklistValues = [
+        {
+          masterLabel = "English"
+          translation = ""
+        },
+        {
+          masterLabel = "French"
+          translation = ""
+        },
+        {
+          masterLabel = "German"
+          translation = ""
+        },
+        {
+          masterLabel = "Hebrew"
+          translation = ""
+        },
+        {
+          masterLabel = "Spanish"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Limit__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Meetings_Cancelled__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Month_Ratio__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Office__c
+      picklistValues = [
+        {
+          masterLabel = "London Office"
+          translation = ""
+        },
+        {
+          masterLabel = "NY Office"
+          translation = ""
+        },
+        {
+          masterLabel = "Remote"
+          translation = ""
+        },
+        {
+          masterLabel = "SF Office"
+          translation = ""
+        },
+        {
+          masterLabel = "Sydney Office"
+          translation = ""
+        },
+        {
+          masterLabel = "Tel Aviv Office"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Referenced_Month__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Region__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.SQLs_Converted__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.SQLs_Received__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Schedule_Link__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Should_Receive_SDR_Passes__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Start_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Total_Passes__c
+    },
+    {
+      label = ""
+      name = salesforce.Round_Robin__c.field.Zone__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "SDR Pass Round Robin Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  recordTypes = [
+    {
+      description = ""
+      label = ""
+      name = salesforce.RecordType.instance.Round_Robin__c_SDR_Pass
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Round_Robin__c,
+  ]
+}

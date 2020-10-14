@@ -1,0 +1,14 @@
+salesforce.EmailTemplate unfiled_public_oran_test_1549129830729 {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "dddd"
+  encodingKey = "ISO-8859-1"
+  name = "oran test"
+  relatedEntityType = "Contact"
+  style = "none"
+  subject = "test"
+  type = "custom"
+  uiType = "SFX"
+  fullName = "unfiled$public/oran_test_1549129830729"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/oran_test_1549129830729.email")
+}

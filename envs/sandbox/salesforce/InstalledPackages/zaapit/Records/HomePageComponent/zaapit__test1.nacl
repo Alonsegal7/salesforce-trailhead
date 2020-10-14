@@ -1,0 +1,6 @@
+salesforce.HomePageComponent zaapit__test1 {
+  fullName = "zaapit__test1"
+  body = "<br>"
+  pageComponentType = "htmlArea"
+  width = "narrow"
+}

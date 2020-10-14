@@ -1,0 +1,37 @@
+salesforce.ListView Lead_Copy_of_Scale_Up_EMEA_June_20 {
+  fullName = "Lead.Copy_of_Scale_Up_EMEA_June_20"
+  columns = [
+    "LEAD.STATUS",
+    "Company_Size__c",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.PHONE",
+    "Related_Company__c",
+    "LEAD.COUNTRY",
+    "CORE.USERS.FIRST_NAME",
+    "Strategic_Company__c",
+    "Strategic_Company_Owner__c",
+    "Distribution_reason__c",
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "Event_Name__c",
+    "LEAD.CREATED_DATE",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead"
+    },
+    {
+      field = "Region__c"
+      operation = "equals"
+      value = "EMEA"
+    },
+  ]
+  label = "Scale Up (EMEA) - June 20"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

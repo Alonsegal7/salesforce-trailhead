@@ -1,0 +1,215 @@
+type salesforce.Lead_Registration__c {
+  salesforce.Lookup CPM__c {
+    apiName = "Lead_Registration__c.CPM__c"
+    label = "CPM"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Comments__c {
+    apiName = "Lead_Registration__c.Comments__c"
+    label = "Comments"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Picklist Company_Size__c {
+    apiName = "Lead_Registration__c.Company_Size__c"
+    label = "Company Size"
+    _required = false
+    valueSet = [
+      {
+        fullName = "1-50"
+        default = false
+        label = "1-50"
+      },
+      {
+        fullName = "50-99"
+        default = false
+        label = "50-99"
+      },
+      {
+        fullName = "100-250"
+        default = false
+        label = "100-250"
+      },
+      {
+        fullName = "251-1500"
+        default = false
+        label = "251-1500"
+      },
+      {
+        fullName = "1500+"
+        default = false
+        label = "1500+"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.TextArea Company__c {
+    apiName = "Lead_Registration__c.Company__c"
+    label = "Company"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Location__c {
+    apiName = "Lead_Registration__c.Location__c"
+    label = "Location"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Country
+  }
+  salesforce.Number Potential_Deal_Size__c {
+    apiName = "Lead_Registration__c.Potential_Deal_Size__c"
+    label = "Potential Deal Size"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Email Registered_Email__c {
+    apiName = "Lead_Registration__c.Registered_Email__c"
+    label = "Registered Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Registering_Partner__c {
+    apiName = "Lead_Registration__c.Registering_Partner__c"
+    label = "Registering Partner"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Registration_Expiration_Date__c {
+    apiName = "Lead_Registration__c.Registration_Expiration_Date__c"
+    label = "Registration Expiration Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Relationship__c {
+    apiName = "Lead_Registration__c.Relationship__c"
+    label = "Relationship"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Former Customer"
+        default = false
+        label = "Former Customer"
+      },
+      {
+        fullName = "Mutual Connections"
+        default = false
+        label = "Mutual Connections"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Status__c {
+    apiName = "Lead_Registration__c.Status__c"
+    label = "Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Pending Review"
+        default = false
+        label = "Pending Review"
+      },
+      {
+        fullName = "Approved"
+        default = false
+        label = "Approved"
+      },
+      {
+        fullName = "Denied"
+        default = false
+        label = "Denied"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.TextArea Title__c {
+    apiName = "Lead_Registration__c.Title__c"
+    label = "Title"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Status_Reason__c {
+    apiName = "Lead_Registration__c.Status_Reason__c"
+    label = "Status Reason"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Example"
+        default = false
+        label = "Example"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text Name__c {
+    apiName = "Lead_Registration__c.Name__c"
+    label = "Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Found_in_BB__c {
+    apiName = "Lead_Registration__c.Found_in_BB__c"
+    label = "Found in BB"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

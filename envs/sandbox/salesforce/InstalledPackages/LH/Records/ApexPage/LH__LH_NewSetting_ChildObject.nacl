@@ -1,0 +1,9 @@
+salesforce.ApexPage LH__LH_NewSetting_ChildObject {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 45
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "LH_NewSetting_ChildObject"
+  fullName = "LH__LH_NewSetting_ChildObject"
+  content = file("salesforce/InstalledPackages/LH/Records/ApexPage/LH__LH_NewSetting_ChildObject.page")
+}

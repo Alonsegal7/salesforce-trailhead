@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Quote_New_Quote_SO_was_sent_to_a_customer_Partners {
+  fullName = "Quote.New Quote%2F SO was sent to a customer- Partners"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Quote_Notification_when_new_quote_Sales_order_is_created_Partners
+      type = "Alert"
+    },
+  ]
+  active = true
+  formula = '''
+IsSyncing = TRUE &&  
+Is_Published__c = TRUE && 
+ischanged(Is_Published__c)&&
+not ispickval( Document_Type__c,'Forecast')&&
+NOT(ISPICKVAL( DH_Quote_Status__c , 'Won'))&& CreatedBy.Profile.Name <> 'System Administrator' &&  ISPICKVAL(CreatedBy.Function__c ,"Partners- Channel Manager")
+'''
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Quote,
+  ]
+}

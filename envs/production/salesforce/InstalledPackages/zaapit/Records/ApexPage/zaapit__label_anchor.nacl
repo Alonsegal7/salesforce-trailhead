@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__label_anchor {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 34
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "label_anchor"
+  fullName = "zaapit__label_anchor"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__label_anchor.page")
+}

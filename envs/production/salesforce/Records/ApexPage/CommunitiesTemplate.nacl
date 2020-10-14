@@ -1,0 +1,10 @@
+salesforce.ApexPage CommunitiesTemplate {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  availableInTouch = false
+  confirmationTokenRequired = false
+  description = "Default template for communities pages"
+  label = "CommunitiesTemplate"
+  fullName = "CommunitiesTemplate"
+  content = file("salesforce/Records/ApexPage/CommunitiesTemplate.page")
+}

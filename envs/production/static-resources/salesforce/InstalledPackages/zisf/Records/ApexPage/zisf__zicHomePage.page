@@ -1,0 +1,87 @@
+<apex:page controller="zisf.zicJobController" docType="html-5.0">
+
+    <!--<style type="text/css">-->
+		<!--table.jobTable {-->
+		    <!--border-collapse: collapse;-->
+		    <!--border: 1px solid gray;-->
+		<!--}-->
+        <!--.jobTable th,-->
+        <!--.jobTable td-->
+        <!--{-->
+        	<!--border: 1px solid gray;-->
+        	<!--padding: 5px;-->
+    		<!--text-align: left;-->
+        <!--}-->
+        <!--.odd {-->
+        	<!--background-color: #f5f5f5;-->
+        <!--}-->
+    <!--</style>-->
+
+    <apex:outputPanel layout="block" rendered="true"><apex:image style="width:100%" styleClass="PinWheelIcon"
+                url="{!URLFOR($Resource.zisf__cleanBundle, 'bundle/images/CleanCompleteHome.png')}"/>
+    <apex:form >
+    <div align="center" draggable="false">
+        <a href="http://www.zoominfo.com/business/clean-complete" target="_blank" style="
+    width: 250px;
+    height: 49px;
+    border-radius: 6px;
+    font-size: 21px;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    background-color: #eb672f;
+    font-weight: 400;
+    display: flex;
+    font-family: 'Open sans';
+    align-items: center;
+    justify-content: center;">Contact Sales</a>
+    </div>
+
+    </apex:form>
+    </apex:outputPanel>
+    <!--<apex:form >-->
+
+        <!--&lt;!&ndash;<apex:pageblock title="Clean Jobs History">&ndash;&gt;-->
+            <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<apex:dataTable value="{!jobs}" var="job" rowClasses="odd,even" rows="10" styleClass="jobTable">&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<apex:column >&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:facet name="header">DateTime</apex:facet>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:outputText value="{!job.DateTime_Submitted__c}"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</apex:column>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<apex:column >&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:facet name="header">Job Type</apex:facet>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:outputText value="{!job.Job_Type__c}"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</apex:column>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<apex:column >&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:facet name="header">Job Status</apex:facet>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:outputText value="{!job.Job_Status__c}"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</apex:column>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<apex:column >&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:facet name="header">Records</apex:facet>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:outputText value="{!job.Records__c}"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</apex:column>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<apex:column >&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:facet name="header">Matched</apex:facet>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:outputText value="{!job.Matched__c}"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</apex:column>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<apex:column >&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:facet name="header">Unmatched</apex:facet>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:outputText value="{!job.Unmatched__c}"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</apex:column>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<apex:column >&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:facet name="header">Matched Only Company</apex:facet>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:outputText value="{!job.Matched_Only_Company__c}"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</apex:column>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<apex:column >&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:facet name="header">Inactive</apex:facet>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:outputText value="{!job.Inactive__c}"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</apex:column>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<apex:column >&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:facet name="header">Errors</apex:facet>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<apex:outputText value="{!job.Errors__c}"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</apex:column>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</apex:dataTable>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;</apex:pageblock>&ndash;&gt;-->
+    <!--</apex:form>-->
+</apex:page>

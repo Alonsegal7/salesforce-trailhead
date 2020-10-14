@@ -1,0 +1,14 @@
+salesforce.WorkflowFieldUpdate Survey__c_Update_NPS_on_MA {
+  fullName = "Survey__c.Update_NPS_on_MA"
+  description = "Take the most recent score from the NPS record type, and updates it within the account"
+  field = "MA_NPS__c"
+  formula = "NPS_Score__c"
+  name = "Update NPS on MA"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  targetObject = "Account__c"
+  _parent = [
+    salesforce.Survey__c,
+  ]
+}

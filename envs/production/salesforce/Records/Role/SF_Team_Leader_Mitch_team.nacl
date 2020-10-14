@@ -1,0 +1,9 @@
+salesforce.Role SF_Team_Leader_Mitch_team {
+  fullName = "SF_Team_Leader_Mitch_team"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "SF Team Leader - Mitch team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.US_VP_Sales
+}

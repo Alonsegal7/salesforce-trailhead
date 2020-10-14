@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Qualified_timestamp {
+  fullName = "Lead.Qualified_timestamp"
+  field = salesforce.Lead.field.Qualified_timestamp__c
+  formula = "today()"
+  name = "Qualified timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

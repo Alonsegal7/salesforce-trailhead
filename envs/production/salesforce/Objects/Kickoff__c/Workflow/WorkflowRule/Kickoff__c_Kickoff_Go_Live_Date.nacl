@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Kickoff__c_Kickoff_Go_Live_Date {
+  fullName = "Kickoff__c.Kickoff Go Live Date"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Kickoff__c_Update_MA_Go_Live_Date
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "NOT(ISBLANK( Go_Live_Date__c ))  || ISCHANGED(Go_Live_Date__c)"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Kickoff__c,
+  ]
+}

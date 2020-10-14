@@ -1,0 +1,1028 @@
+salesforce.Flow Partner_SO_Request_new {
+  fullName = "Partner_SO_Request_new"
+  decisions = [
+    {
+      name = "I_SO_Created"
+      label = "I SO Created?"
+      locationX = 753
+      locationY = 438
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Yes"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "SOID"
+              operator = "NotEqualTo"
+              rightValue = {
+                stringValue = ""
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Success_Message"
+          }
+          label = "Yes"
+        },
+        {
+          name = "No"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "SOID"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = ""
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Error_Message"
+          }
+          label = "No"
+        },
+      ]
+    },
+  ]
+  dynamicChoiceSets = [
+    {
+      name = "AddendumtoSO"
+      dataType = "Multipicklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Addendum_to_SO__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "AddiotnalSeatsv7"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Additional_Seats_v7__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "AdditionalSeatsv8"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Additional_Seats_v8__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "BillingCountry"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Billing_Country__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "BillingState"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Billing_State__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "CustomerSuccessPlan"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Customer_Success_Package__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "FreeMonths"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.of_Free_Months__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "PaymentTerm"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Payment_Term__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "Plan_Period"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Period__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "Seats"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Seats_v8__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "Seats_v7"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Seats_v7__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "Tier"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Tier__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+    {
+      name = "Type_of_Engagement"
+      dataType = "Picklist"
+      picklistField = salesforce.Partner_SO_Request__c.field.Type_of_Engagement__c
+      picklistObject = salesforce.Partner_SO_Request__c
+    },
+  ]
+  interviewLabel = "Partner SO Request (new) {!$Flow.CurrentDateTime}"
+  label = "Partners SO Request"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordCreates = [
+    {
+      name = "Create_SO_Request_Object"
+      label = "Create SO Request Object"
+      locationX = 138
+      locationY = 599
+      assignRecordIdToReference = "SOID"
+      connector = {
+        targetReference = "I_SO_Created"
+      }
+      inputAssignments = [
+        {
+          field = "Additional_Commercial_Comments__c"
+          value = {
+            elementReference = "Additional_Commercial_Comments"
+          }
+        },
+        {
+          field = "Additional_Seats_v7__c"
+          value = {
+            elementReference = "Additional_Seats_v7"
+          }
+        },
+        {
+          field = "Additional_Seats_v8__c"
+          value = {
+            elementReference = "Additional_Seats_v8"
+          }
+        },
+        {
+          field = "Balance_carry_over__c"
+          value = {
+            elementReference = "Balance_Carry_over"
+          }
+        },
+        {
+          field = "Billing_City__c"
+          value = {
+            elementReference = "Billing_City"
+          }
+        },
+        {
+          field = "Billing_Country__c"
+          value = {
+            elementReference = "Billing_Country"
+          }
+        },
+        {
+          field = "Billing_State__c"
+          value = {
+            elementReference = "Billing_State"
+          }
+        },
+        {
+          field = "Billing_Street__c"
+          value = {
+            elementReference = "Billing_Street"
+          }
+        },
+        {
+          field = "Discount__c"
+          value = {
+            elementReference = "Discount"
+          }
+        },
+        {
+          field = "Duration__c"
+          value = {
+            elementReference = "Plan_Duration"
+          }
+        },
+        {
+          field = "End_Date__c"
+          value = {
+            elementReference = "End_Date"
+          }
+        },
+        {
+          field = "Finance_Contact_Email__c"
+          value = {
+            elementReference = "Finance_Customer_Email.value"
+          }
+        },
+        {
+          field = "Finance_Contact_Phone__c"
+          value = {
+            elementReference = "Finance_Customer_phone.value"
+          }
+        },
+        {
+          field = "Financial_Customer_Name__c"
+          value = {
+            elementReference = "Finance_Customer_Name"
+          }
+        },
+        {
+          field = "NGO__c"
+          value = {
+            elementReference = "NGO.value"
+          }
+        },
+        {
+          field = "Owner_s_Manager_Email__c"
+          value = {
+            elementReference = "Get_Opp.Owner_s_Manager__r.Email"
+          }
+        },
+        {
+          field = "Partner_Opportunity__c"
+          value = {
+            elementReference = "Get_Opp.Id"
+          }
+        },
+        {
+          field = "Payment_Term__c"
+          value = {
+            elementReference = "PaymentTerm"
+          }
+        },
+        {
+          field = "Period__c"
+          value = {
+            elementReference = "Plan_Period"
+          }
+        },
+        {
+          field = "Price_per_Seat__c"
+          value = {
+            elementReference = "Price_per_Seat"
+          }
+        },
+        {
+          field = "Seats_v7__c"
+          value = {
+            elementReference = "of_Seats_v7"
+          }
+        },
+        {
+          field = "Seats_v8__c"
+          value = {
+            elementReference = "of_Seats_v8"
+          }
+        },
+        {
+          field = "Start_Date__c"
+          value = {
+            elementReference = "Start_Date"
+          }
+        },
+        {
+          field = "Tier__c"
+          value = {
+            elementReference = "Tier_1"
+          }
+        },
+        {
+          field = "Type_of_Engagement__c"
+          value = {
+            elementReference = "Type_of_Engagement_1"
+          }
+        },
+        {
+          field = "VAT__c"
+          value = {
+            elementReference = "Vat_Number"
+          }
+        },
+        {
+          field = "Zip_Postal_Code__c"
+          value = {
+            elementReference = "Zip_Postal_Code"
+          }
+        },
+        {
+          field = "of_Free_Months__c"
+          value = {
+            elementReference = "Free_Months"
+          }
+        },
+      ]
+      object = salesforce.Partner_SO_Request__c
+    },
+  ]
+  recordLookups = [
+    {
+      name = "Get_Opp"
+      label = "Get Opp"
+      locationX = 388
+      locationY = 214
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Billing_Info"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RecordID"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Opportunity
+      storeOutputAutomatically = true
+    },
+  ]
+  screens = [
+    {
+      name = "Billing_Info"
+      label = "Billing Information"
+      locationX = 143
+      locationY = 219
+      allowBack = true
+      allowFinish = true
+      allowPause = true
+      connector = {
+        targetReference = "SO_Details"
+      }
+      fields = [
+        {
+          name = "Is_New_Customer"
+          extensionName = "flowruntime:toggle"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Is New Cutstomer?"
+              }
+            },
+            {
+              name = "messageToggleActive"
+              value = {
+                stringValue = "Yes"
+              }
+            },
+            {
+              name = "messageToggleInactive"
+              value = {
+                stringValue = "No"
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Finance_Customer_Name"
+          dataType = "String"
+          fieldText = "Finance Customer Name"
+          fieldType = "InputField"
+          isRequired = true
+        },
+        {
+          name = "Finance_Customer_Email"
+          extensionName = "flowruntime:email"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Finance Customer Email"
+              }
+            },
+            {
+              name = "required"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Is_New_Customer.value"
+                operator = "EqualTo"
+                rightValue = {
+                  booleanValue = true
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Finance_Customer_phone"
+          extensionName = "flowruntime:phone"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Finance Customer Phone"
+              }
+            },
+            {
+              name = "required"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Is_New_Customer.value"
+                operator = "EqualTo"
+                rightValue = {
+                  booleanValue = true
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Billing_Country"
+          choiceReferences = [
+            "BillingCountry",
+          ]
+          dataType = "String"
+          fieldText = "Billing Country"
+          fieldType = "DropdownBox"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Is_New_Customer.value"
+                operator = "EqualTo"
+                rightValue = {
+                  booleanValue = true
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Billing_State"
+          choiceReferences = [
+            "BillingState",
+          ]
+          dataType = "String"
+          fieldText = "Billing State"
+          fieldType = "DropdownBox"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Is_New_Customer.value"
+                operator = "EqualTo"
+                rightValue = {
+                  booleanValue = true
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Billing_City"
+          dataType = "String"
+          fieldText = "Billing City"
+          fieldType = "InputField"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Is_New_Customer.value"
+                operator = "EqualTo"
+                rightValue = {
+                  booleanValue = true
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Billing_Street"
+          dataType = "String"
+          fieldText = "Billing Street"
+          fieldType = "InputField"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Is_New_Customer.value"
+                operator = "EqualTo"
+                rightValue = {
+                  booleanValue = true
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Zip_Postal_Code"
+          dataType = "String"
+          fieldText = "Zip/Postal Code"
+          fieldType = "InputField"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Is_New_Customer.value"
+                operator = "EqualTo"
+                rightValue = {
+                  booleanValue = true
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Vat_Number"
+          dataType = "Number"
+          fieldText = "VAT #"
+          fieldType = "InputField"
+          helpText = "<p>Put 0 if there is no need for VAT #.</p>"
+          isRequired = true
+          scale = 0
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Is_New_Customer.value"
+                operator = "EqualTo"
+                rightValue = {
+                  booleanValue = true
+                }
+              },
+            ]
+          }
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Error_Message"
+      label = "ErrorMessage"
+      locationX = 656
+      locationY = 703
+      allowBack = false
+      allowFinish = true
+      allowPause = true
+      fields = [
+        {
+          name = "ErrorMessage"
+          fieldText = "<p><b style=\"color: rgb(208, 54, 54);\">There was an error in your SO request. Please fill the information again or reach out to your CPM.</b></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "SO_Details"
+      label = "SO Details"
+      locationX = 138
+      locationY = 408
+      allowBack = true
+      allowFinish = true
+      allowPause = true
+      connector = {
+        targetReference = "Create_SO_Request_Object"
+      }
+      fields = [
+        {
+          name = "Type_of_Engagement_1"
+          choiceReferences = [
+            "Type_of_Engagement",
+          ]
+          dataType = "String"
+          fieldText = "Type of Engagement"
+          fieldType = "DropdownBox"
+          helpText = "<p><b>New Contract </b>- for existing or new customer, when we sell a deal with new terms, tier, time period, etc.</p><p><br></p><p><b>Pro-Rate - Additional seats</b> - when we just want to add more seats to an existing contract w/o any other changes.</p><p><br></p><p><b>Change Tier in the Same Term</b> - when we just want to change the tier to an existing contract w/o any other changes.</p>"
+          isRequired = true
+        },
+        {
+          name = "NGO"
+          extensionName = "flowruntime:toggle"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Is NGO?"
+              }
+            },
+            {
+              name = "messageToggleActive"
+              value = {
+                stringValue = "Yes"
+              }
+            },
+            {
+              name = "messageToggleInactive"
+              value = {
+                stringValue = "No"
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Tier_1"
+          choiceReferences = [
+            "Tier",
+          ]
+          dataType = "String"
+          fieldText = "Tier"
+          fieldType = "DropdownBox"
+          isRequired = true
+        },
+        {
+          name = "of_Seats_v8"
+          choiceReferences = [
+            "Seats",
+          ]
+          dataType = "String"
+          fieldText = "# of Seats"
+          fieldType = "DropdownBox"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "(1 or 3) AND 2"
+            conditions = [
+              {
+                leftValueReference = "Get_Opp.Pricing_Version__c"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "8"
+                }
+              },
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+              {
+                leftValueReference = "Get_Opp.Pricing_Version__c"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "6"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "of_Seats_v7"
+          choiceReferences = [
+            "Seats_v7",
+          ]
+          dataType = "String"
+          fieldText = "# of Seats"
+          fieldType = "DropdownBox"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "(1 or 3) AND 2"
+            conditions = [
+              {
+                leftValueReference = "Get_Opp.Pricing_Version__c"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "7"
+                }
+              },
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+              {
+                leftValueReference = "Get_Opp.Pricing_Version__c"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "3"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Additional_Seats_v8"
+          choiceReferences = [
+            "AdditionalSeatsv8",
+          ]
+          dataType = "String"
+          fieldText = "Additional Seats"
+          fieldType = "DropdownBox"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "(1 or 3) AND 2"
+            conditions = [
+              {
+                leftValueReference = "Get_Opp.Pricing_Version__c"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "8"
+                }
+              },
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "NotEqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+              {
+                leftValueReference = "Get_Opp.Pricing_Version__c"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "6"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Additional_Seats_v7"
+          choiceReferences = [
+            "AddiotnalSeatsv7",
+          ]
+          dataType = "String"
+          fieldText = "Additional Seats"
+          fieldType = "DropdownBox"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "(1 or 3) AND 2"
+            conditions = [
+              {
+                leftValueReference = "Get_Opp.Pricing_Version__c"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "7"
+                }
+              },
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "NotEqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+              {
+                leftValueReference = "Get_Opp.Pricing_Version__c"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "3"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Price_per_Seat"
+          dataType = "Number"
+          fieldText = "Price per Seat (not discounted)"
+          fieldType = "InputField"
+          isRequired = true
+          scale = 0
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Discount"
+          dataType = "Number"
+          fieldText = "Discount"
+          fieldType = "InputField"
+          isRequired = false
+          scale = 0
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Balance_Carry_over"
+          dataType = "Number"
+          fieldText = "Balance Carry-over"
+          fieldType = "InputField"
+          isRequired = false
+          scale = 0
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Plan_Preiod"
+          choiceReferences = [
+            "Plan_Period",
+          ]
+          dataType = "String"
+          fieldText = "Plan Preiod"
+          fieldType = "DropdownBox"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Start_Date"
+          dataType = "Date"
+          fieldText = "Start Date"
+          fieldType = "InputField"
+          isRequired = true
+        },
+        {
+          name = "Plan_Duration"
+          dataType = "Number"
+          defaultValue = {
+            numberValue = 12
+          }
+          fieldText = "Plan Duration"
+          fieldType = "InputField"
+          isRequired = true
+          scale = 0
+          validationRule = {
+            errorMessage = "<p><span style=\"color: rgb(205, 20, 20);\">Plan period cannot be more than 12 months.</span></p>"
+            formulaExpression = "{!Plan_Duration}<13"
+          }
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "Free_Months"
+          choiceReferences = [
+            "FreeMonths",
+          ]
+          dataType = "String"
+          fieldText = "Free Months"
+          fieldType = "DropdownBox"
+          isRequired = true
+          visibilityRule = {
+            conditionLogic = "and"
+            conditions = [
+              {
+                leftValueReference = "Type_of_Engagement_1"
+                operator = "EqualTo"
+                rightValue = {
+                  stringValue = "New Contract"
+                }
+              },
+            ]
+          }
+        },
+        {
+          name = "End_Date"
+          dataType = "Date"
+          fieldText = "End Date"
+          fieldType = "InputField"
+          isRequired = true
+        },
+        {
+          name = "Payment_Terms"
+          choiceReferences = [
+            "PaymentTerm",
+          ]
+          dataType = "String"
+          fieldText = "Payment Terms"
+          fieldType = "DropdownBox"
+          isRequired = true
+        },
+        {
+          name = "Additional_Commercial_Comments"
+          fieldText = "Additional Commercial Comments"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Success_Message"
+      label = "Success Message"
+      locationX = 854
+      locationY = 696
+      allowBack = false
+      allowFinish = true
+      allowPause = true
+      fields = [
+        {
+          name = "SuccessMessage"
+          fieldText = "<p><b style=\"color: rgb(23, 199, 20);\">Your request has been submitted successfully. Your CPM will review the SO details and reach out to you.</b></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "Get_Opp"
+    }
+  }
+  status = "Active"
+  variables = [
+    {
+      name = "New_Customer"
+      dataType = "Boolean"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "RecordID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+    },
+    {
+      name = "SOID"
+      dataType = "String"
+      isCollection = false
+      isInput = false
+      isOutput = false
+    },
+  ]
+}

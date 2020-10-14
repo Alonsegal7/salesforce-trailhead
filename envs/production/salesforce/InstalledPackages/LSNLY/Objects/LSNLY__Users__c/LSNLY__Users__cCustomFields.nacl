@@ -1,0 +1,26 @@
+type salesforce.LSNLY__Users__c {
+  salesforce.Text LSNLY__Label__c {
+    apiName = "LSNLY__Users__c.LSNLY__Label__c"
+    label = "Label"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Type__c {
+    apiName = "LSNLY__Users__c.LSNLY__Type__c"
+    label = "Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+}

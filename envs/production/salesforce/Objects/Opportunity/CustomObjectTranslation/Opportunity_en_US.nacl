@@ -1,0 +1,2314 @@
+salesforce.CustomObjectTranslation Opportunity_en_US {
+  fullName = "Opportunity-en_US"
+  fieldSets = [
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Opportunity_Key_Information
+    },
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Opportunity_Key_info
+    },
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Opportunity_MassManager__OpportunitiesMassEditFieldSet
+    },
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Opportunity_Next_Strategy
+    },
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Opportunity_UpdateCalloutFields
+    },
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Opportunity_tci_csmrg__Opportunity_Field_Set
+    },
+  ]
+  fields = [
+    {
+      caseValues = {
+        plural = "false"
+        value = "Actual Added ARR"
+      }
+      name = "amount_opportunity"
+      startsWith = "Vowel"
+    },
+    {
+      caseValues = {
+        plural = "false"
+        value = "Next Strategic Step"
+      }
+      name = "next_step_opportunity"
+      startsWith = "Consonant"
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.AM_I_the_CPM__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.ARR_For_Reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.About_Company__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Account_Recycling_Opportunity__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Account_Region__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Account_Source_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Account_User_Potential__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Authority_SDR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Benefits__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Billing_Entity_Address__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Billing_Entity_Billing_Country__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Billing_Entity_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Billing_Entity_VAT_Number__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Billing_Entity__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Billing_Ids__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Budget_Confirmed__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Budget_Text__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Budget__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Buying_Process_Timestamp_DT__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Buying_process__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Buying_process_timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.CSM_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.CSM_Package__c
+      picklistValues = [
+        {
+          masterLabel = "Bronze"
+          translation = ""
+        },
+        {
+          masterLabel = "Gold"
+          translation = ""
+        },
+        {
+          masterLabel = "Silver"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Claimed_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Close_date_In_This_Quarter_for_reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Close_date_Today__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Closed_Lost_timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Closed_Month__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Closed_Opportunity_Summary__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Closed_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Closed_Won_timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Cluster__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Company_ARR_for_reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Company_MA_Discrepancy__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Company_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Company__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Competition_AE__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Competition_They_re_Evaluating__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Competition__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Contract_Type__c
+      picklistValues = [
+        {
+          masterLabel = "Change Existing Contract (Pro-rated)"
+          translation = ""
+        },
+        {
+          masterLabel = "New Contract"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Core_Business__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Country__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Created_Date_4_9_20__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Currency__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Current_Tool__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Current_tools_SDR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Current_tools__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.DH_Date_of_Signature__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.DH_Dealroom_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Won"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.DH_Expected_Plan_Period__c
+      picklistValues = [
+        {
+          masterLabel = "Monthly"
+          translation = ""
+        },
+        {
+          masterLabel = "Yearly"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.DH_Expected_Plan_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.DH_Expected_Plan_Tier__c
+      picklistValues = [
+        {
+          masterLabel = "Enterprise"
+          translation = ""
+        },
+        {
+          masterLabel = "Pro"
+          translation = ""
+        },
+        {
+          masterLabel = "Standard"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.DH_Signer_Name_c__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.DH_Signer_Title__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.DM_Details__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.DM_process__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.DealRoom_Link__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Blockers_1_Info__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Blockers_1__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Blockers_2_Info__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Blockers_2__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Blockers__c
+      picklistValues = [
+        {
+          masterLabel = "API"
+          translation = ""
+        },
+        {
+          masterLabel = "Admin"
+          translation = ""
+        },
+        {
+          masterLabel = "Automations"
+          translation = ""
+        },
+        {
+          masterLabel = "Board_linkage"
+          translation = ""
+        },
+        {
+          masterLabel = "Calendar"
+          translation = ""
+        },
+        {
+          masterLabel = "Communication"
+          translation = ""
+        },
+        {
+          masterLabel = "Dependencies"
+          translation = ""
+        },
+        {
+          masterLabel = "Forms"
+          translation = ""
+        },
+        {
+          masterLabel = "Gantt/timeline"
+          translation = ""
+        },
+        {
+          masterLabel = "Integrations"
+          translation = ""
+        },
+        {
+          masterLabel = "KanBan"
+          translation = ""
+        },
+        {
+          masterLabel = "Multiple_accounts"
+          translation = ""
+        },
+        {
+          masterLabel = "My_week"
+          translation = ""
+        },
+        {
+          masterLabel = "N/A"
+          translation = ""
+        },
+        {
+          masterLabel = "Permissions"
+          translation = ""
+        },
+        {
+          masterLabel = "Reporting"
+          translation = ""
+        },
+        {
+          masterLabel = "Resource_allocation"
+          translation = ""
+        },
+        {
+          masterLabel = "Security"
+          translation = ""
+        },
+        {
+          masterLabel = "Sub_folders"
+          translation = ""
+        },
+        {
+          masterLabel = "Sub_tasks"
+          translation = ""
+        },
+        {
+          masterLabel = "Time_tracking"
+          translation = ""
+        },
+        {
+          masterLabel = "Workspaces"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Enabler__c
+      picklistValues = [
+        {
+          masterLabel = "API"
+          translation = ""
+        },
+        {
+          masterLabel = "Admin"
+          translation = ""
+        },
+        {
+          masterLabel = "Automations"
+          translation = ""
+        },
+        {
+          masterLabel = "Board_linkage"
+          translation = ""
+        },
+        {
+          masterLabel = "Calendar"
+          translation = ""
+        },
+        {
+          masterLabel = "Communication"
+          translation = ""
+        },
+        {
+          masterLabel = "Dependencies"
+          translation = ""
+        },
+        {
+          masterLabel = "Forms"
+          translation = ""
+        },
+        {
+          masterLabel = "Gantt/timeline"
+          translation = ""
+        },
+        {
+          masterLabel = "Integrations"
+          translation = ""
+        },
+        {
+          masterLabel = "KanBan"
+          translation = ""
+        },
+        {
+          masterLabel = "Multiple_accounts"
+          translation = ""
+        },
+        {
+          masterLabel = "My_week"
+          translation = ""
+        },
+        {
+          masterLabel = "N/A"
+          translation = ""
+        },
+        {
+          masterLabel = "Permissions"
+          translation = ""
+        },
+        {
+          masterLabel = "Reporting"
+          translation = ""
+        },
+        {
+          masterLabel = "Resource_allocation"
+          translation = ""
+        },
+        {
+          masterLabel = "Security"
+          translation = ""
+        },
+        {
+          masterLabel = "Sub_folders"
+          translation = ""
+        },
+        {
+          masterLabel = "Sub_tasks"
+          translation = ""
+        },
+        {
+          masterLabel = "Time_tracking"
+          translation = ""
+        },
+        {
+          masterLabel = "Workspaces"
+          translation = ""
+        },
+      ]
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Enablers_1_Info__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Enablers_1__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Enablers_2_Info__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Enablers_2__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Size__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Deal_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Complete"
+          translation = ""
+        },
+        {
+          masterLabel = "Expected"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Deal__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Dedicated_CSM_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Demo_Notes__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.DepartmentFunction__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Departments_AE__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Departments__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Discovery_Completed__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Discovery_Timestamp_DT__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Discovery_timestamp__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Eligible_for_Sales_Engineer__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Enterprise_38__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Enterprise_Pricing_Factor__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Evaluation_Timestamp_DT__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Evaluation__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Evaluation_timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Expected_ARR_Temp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Expected_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Expected_Discount__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Expected_Monthly_PPU__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Expected_Plan_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Expected_Plan_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Expected_Plan_Period__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Expected_Plan_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Expected_Plan_Tier__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Extra_Information__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Feedback_for_product__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Feedback_on_SDR_Call__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Final_Sale_Status__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.First_Lead_Source__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Forecast_ARR__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Forecast_Added_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Forecasted_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Forecasted__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Full_of_opportunity_size__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.GB_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.GB_New_Infra_Notes__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.GB_Threshold__c
+      relationshipLabel = ""
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.GB_Won__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.GB_opp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Green_Bucket_ARR_V2__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Green_Bucket_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Handed_Over__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Handover_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Has_Sales_Engineer_Assigned__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Industry__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Is_Account_Green_Bucket__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Is_BDR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Is_Dealroom_Signed__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Is_Finalized__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Is_Potential_GB_Opp_Override__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Is_Potential_GB_Opp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Is_SO_Signed__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Is_Syncing_SO__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Key_Deal__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.LH__LH_Test_1__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.LH__LH_Test_2__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.LID__Is_Influenced__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.LID__LinkedIn_Company_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Lead_Contacted_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Lead_Notes__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Lead_created_date__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Legal_Involved__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Legal_Security_Issues__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Lessons_and_Insights__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.License_Product_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.License_Product__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Link_to_BB_Account__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Link_to_Call__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Long_Opportunity_ID__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Long_Term_Growth_AE__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Lost_Reason__c
+      picklistValues = [
+        {
+          masterLabel = "COVID-19"
+          translation = ""
+        },
+        {
+          masterLabel = "Couldn't get to decision maker"
+          translation = ""
+        },
+        {
+          masterLabel = "Data Residency"
+          translation = ""
+        },
+        {
+          masterLabel = "Duplicate Opportunity"
+          translation = ""
+        },
+        {
+          masterLabel = "Legal"
+          translation = ""
+        },
+        {
+          masterLabel = "Lost to Competitor"
+          translation = ""
+        },
+        {
+          masterLabel = "Missing features"
+          translation = ""
+        },
+        {
+          masterLabel = "No Budget / Lost Funding"
+          translation = ""
+        },
+        {
+          masterLabel = "No Decision / Non-Responsive"
+          translation = ""
+        },
+        {
+          masterLabel = "No growth potential"
+          translation = ""
+        },
+        {
+          masterLabel = "Other"
+          translation = ""
+        },
+        {
+          masterLabel = "Price"
+          translation = ""
+        },
+        {
+          masterLabel = "Security"
+          translation = ""
+        },
+        {
+          masterLabel = "Sticking with internal tool"
+          translation = ""
+        },
+        {
+          masterLabel = "Timeline Too Long"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Lost_Timestamp_DT__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Lost__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.MA_Discount_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Main_Point_of_Contacts__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Managed_By_Dealhub__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Manager_s_notes__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Mapped_type__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Migration_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Monday_Account_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Monday_Account__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Monday_Solutions_Offered__c
+      picklistValues = [
+        {
+          masterLabel = "Creative"
+          translation = ""
+        },
+        {
+          masterLabel = "Marketing"
+          translation = ""
+        },
+        {
+          masterLabel = "Project Management"
+          translation = ""
+        },
+        {
+          masterLabel = "Sales Operations"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Negotiation_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Next_Step_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Next_Strategic_Step_History__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Next_activity__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Next_activity_date__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Notes_from_Lead__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.OB_Opp__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.OPP_Qualified__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Opp_Owner_is_Partner__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Opportunity_Age__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Opportunity_Attribution__c
+      picklistValues = [
+        {
+          masterLabel = "Account Engagement - Guest Abuse"
+          translation = ""
+        },
+        {
+          masterLabel = "Account Engagement - High WAPP"
+          translation = ""
+        },
+        {
+          masterLabel = "ENT Upgrade offering"
+          translation = ""
+        },
+        {
+          masterLabel = "Elevate Conference"
+          translation = ""
+        },
+        {
+          masterLabel = "G-Suite Integration offering"
+          translation = ""
+        },
+        {
+          masterLabel = "M&C Use Case offering"
+          translation = ""
+        },
+        {
+          masterLabel = "Microsoft Integration offering"
+          translation = ""
+        },
+        {
+          masterLabel = "Monday One offering"
+          translation = ""
+        },
+        {
+          masterLabel = "New team opened a trial account"
+          translation = ""
+        },
+        {
+          masterLabel = "Organic growth"
+          translation = ""
+        },
+        {
+          masterLabel = "Reach out due to high usage (High capacity, WAPP, Guest Abuse)"
+          translation = ""
+        },
+        {
+          masterLabel = "Reach out due to product improvements"
+          translation = ""
+        },
+        {
+          masterLabel = "Resurrect activities"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Opportunity_Reseller__c
+      picklistValues = [
+        {
+          masterLabel = "729"
+          translation = ""
+        },
+        {
+          masterLabel = "Babel"
+          translation = ""
+        },
+        {
+          masterLabel = "ESL"
+          translation = ""
+        },
+        {
+          masterLabel = "Eligeo"
+          translation = ""
+        },
+        {
+          masterLabel = "Entrypoint"
+          translation = ""
+        },
+        {
+          masterLabel = "Not a Reseller"
+          translation = ""
+        },
+        {
+          masterLabel = "Refresh Networks (ZA)"
+          translation = ""
+        },
+        {
+          masterLabel = "Right Decision  (ES)"
+          translation = ""
+        },
+        {
+          masterLabel = "SEOSEON (FI)"
+          translation = ""
+        },
+        {
+          masterLabel = "Soluma (SR)"
+          translation = ""
+        },
+        {
+          masterLabel = "Soluware (CH)"
+          translation = ""
+        },
+        {
+          masterLabel = "g-company"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Opportunity_Size__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Opportunity_Source_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Opportunity_status__c
+      picklistValues = [
+        {
+          masterLabel = "1"
+          translation = ""
+        },
+        {
+          masterLabel = "2"
+          translation = ""
+        },
+        {
+          masterLabel = "3"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Other_software_they_re_selling__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Other_tools_they_re_using__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Out_of_Forecast__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Owner_Company_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Owner_Is_Partner__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Owner_Role__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Owner_s_Function__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Owner_s_Manager__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Owner_s_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Owner_s_Office__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Owner_s_Team__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Owners_Team_on_Won__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.PS_Request_Provider__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Pains_PL__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Pains_SDR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Pains__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Pipeline__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Power_of_1__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Predicted_Collection__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Pricing_Version__c
+      picklistValues = [
+        {
+          masterLabel = "Pricing V3"
+          translation = ""
+        },
+        {
+          masterLabel = "Pricing V5"
+          translation = ""
+        },
+        {
+          masterLabel = "Pricing V6"
+          translation = ""
+        },
+        {
+          masterLabel = "Pricing V7"
+          translation = ""
+        },
+        {
+          masterLabel = "Pricing V8"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Primary_Contact_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Primary_Contact_Role_First_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Primary_Contact_Role__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Priority_Customer_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Priority_Sales_Order_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Product_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Product_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Product_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Professional_Service__c
+      picklistValues = [
+        {
+          masterLabel = "Delivered"
+          translation = ""
+        },
+        {
+          masterLabel = "Received"
+          translation = ""
+        },
+        {
+          masterLabel = "SO Signed"
+          translation = ""
+        },
+      ]
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Push_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Qualified_Timestamp_DT__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Qualified_timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Quote_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Quote_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.ROI_Analysis_Completed__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Record_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Region__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Request_a_Sales_Engineer__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Reseller__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Retention_Score_AE__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Revived_Timestamp_DT__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Revived__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Revived_timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Risks__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SDR_Name__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SDR_Name_for_reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SDR_Notes__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SE_Department__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SE_Effort_End_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SE_Effort_Start_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SE_Request_Max_Potential_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SE_Request_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SE_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SE_Support_Type__c
+      picklistValues = [
+        {
+          masterLabel = "Complex board implementation"
+          translation = ""
+        },
+        {
+          masterLabel = "Custom App"
+          translation = ""
+        },
+        {
+          masterLabel = "Custom automation"
+          translation = ""
+        },
+        {
+          masterLabel = "Custom integration"
+          translation = ""
+        },
+        {
+          masterLabel = "RFx"
+          translation = ""
+        },
+        {
+          masterLabel = "Use case analysis"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SE_Use_Case__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.SE_Use_case_brief__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Sale__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Sale_has_Monday_Account__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Sale_status__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SalesLoft1__Most_Recent_Cadence_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SalesLoft1__Most_Recent_Last_Completed_Step__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.SalesLoft1__Primary_Contact__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Sales_Engineer__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Sales_Orders_Count__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Seats_GB__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Selling_competing_products__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Send_Summary_Email_Trigger__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Send_to__c
+      picklistValues = [
+        {
+          masterLabel = "Preview to Myself"
+          translation = ""
+        },
+        {
+          masterLabel = "Sales Team"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Short_Term_Growth_AE__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Stamped_as_GB_opp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Sub_Attribution__c
+      picklistValues = [
+        {
+          masterLabel = "Account Recycling"
+          translation = ""
+        },
+        {
+          masterLabel = "Guest Abuse"
+          translation = ""
+        },
+        {
+          masterLabel = "High WAPP"
+          translation = ""
+        },
+        {
+          masterLabel = "Marketing Creative Campaign"
+          translation = ""
+        },
+        {
+          masterLabel = "Microsoft Integration"
+          translation = ""
+        },
+        {
+          masterLabel = "MondayOne"
+          translation = ""
+        },
+        {
+          masterLabel = "Platform Features"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Subscription_Ids__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Success_Metrics__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Summary_Email_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Summary_Sent_to_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Sync_to_BB__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.TLV_Office_Temp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Test_number__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Test_picklist__c
+      picklistValues = [
+        {
+          masterLabel = "A"
+          translation = ""
+        },
+        {
+          masterLabel = "B"
+          translation = ""
+        },
+        {
+          masterLabel = "C"
+          translation = ""
+        },
+        {
+          masterLabel = "D"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Time_to_Buying_Process__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Time_to_Close_Reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Time_to_Evaluation_Reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Time_to_Validation_Reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Timeline_SDR__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Timeline__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Top_Opportunity__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.USD_exchange_rate__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Unique_Opp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Use_Case_SDR__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Use_Cases_PL__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Use_Photo_on_Proposal__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Use_cases__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Utm_banner__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Utm_campaign__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Utm_source__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.VP_Notes__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Validation_Timestamp_DT__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Validation_Timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Validation__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Week_Created_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Which_competitor__c
+      picklistValues = [
+        {
+          masterLabel = "Airtable"
+          translation = ""
+        },
+        {
+          masterLabel = "Asana"
+          translation = ""
+        },
+        {
+          masterLabel = "Basecamp"
+          translation = ""
+        },
+        {
+          masterLabel = "Clarizen"
+          translation = ""
+        },
+        {
+          masterLabel = "ClickUp"
+          translation = ""
+        },
+        {
+          masterLabel = "Float"
+          translation = ""
+        },
+        {
+          masterLabel = "Freshworks"
+          translation = ""
+        },
+        {
+          masterLabel = "G-Suite"
+          translation = ""
+        },
+        {
+          masterLabel = "Google Suite"
+          translation = ""
+        },
+        {
+          masterLabel = "Hubspot"
+          translation = ""
+        },
+        {
+          masterLabel = "Jira"
+          translation = ""
+        },
+        {
+          masterLabel = "LeadSquared"
+          translation = ""
+        },
+        {
+          masterLabel = "MS Project"
+          translation = ""
+        },
+        {
+          masterLabel = "MavenLink"
+          translation = ""
+        },
+        {
+          masterLabel = "Notion"
+          translation = ""
+        },
+        {
+          masterLabel = "Other"
+          translation = ""
+        },
+        {
+          masterLabel = "Pipedrive"
+          translation = ""
+        },
+        {
+          masterLabel = "Quickbase"
+          translation = ""
+        },
+        {
+          masterLabel = "Salesforce"
+          translation = ""
+        },
+        {
+          masterLabel = "Service now"
+          translation = ""
+        },
+        {
+          masterLabel = "Sitecore"
+          translation = ""
+        },
+        {
+          masterLabel = "Smartsheet"
+          translation = ""
+        },
+        {
+          masterLabel = "Teamwork"
+          translation = ""
+        },
+        {
+          masterLabel = "Trello"
+          translation = ""
+        },
+        {
+          masterLabel = "Unknown"
+          translation = ""
+        },
+        {
+          masterLabel = "Workday"
+          translation = ""
+        },
+        {
+          masterLabel = "Workfront"
+          translation = ""
+        },
+        {
+          masterLabel = "Wrike"
+          translation = ""
+        },
+        {
+          masterLabel = "Zendesk"
+          translation = ""
+        },
+        {
+          masterLabel = "Zoho"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Which_features_were_missing__c
+      picklistValues = [
+        {
+          masterLabel = "Automation"
+          translation = ""
+        },
+        {
+          masterLabel = "Communication"
+          translation = ""
+        },
+        {
+          masterLabel = "Cross board"
+          translation = ""
+        },
+        {
+          masterLabel = "Dependencies"
+          translation = ""
+        },
+        {
+          masterLabel = "Integration"
+          translation = ""
+        },
+        {
+          masterLabel = "Notification"
+          translation = ""
+        },
+        {
+          masterLabel = "Organization"
+          translation = ""
+        },
+        {
+          masterLabel = "Other"
+          translation = ""
+        },
+        {
+          masterLabel = "Permissions"
+          translation = ""
+        },
+        {
+          masterLabel = "Reporting"
+          translation = ""
+        },
+        {
+          masterLabel = "Security"
+          translation = ""
+        },
+        {
+          masterLabel = "Time Management"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Won_SO_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Won_Timestamp_DT__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Won__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Workflow__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.Wrong_Pulse_Account_Id__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.X1st_cycle_period__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Zone__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.help_for_data_loader__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Opportunity.field.migrated_from_BB_as_won__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.primary_pulse_account_id__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.pulse_account_ids__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.skip_sales_state__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.time_zone_offset__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Internal Opportunity Layout"
+      sections = [
+        {
+          label = ""
+          section = "Basic Information"
+        },
+        {
+          label = ""
+          section = "Key Information"
+        },
+        {
+          label = ""
+          section = "Lost / Won feedback"
+        },
+        {
+          label = ""
+          section = "Manager Section"
+        },
+        {
+          label = ""
+          section = "New Key Information"
+        },
+        {
+          label = ""
+          section = "Notes"
+        },
+        {
+          label = ""
+          section = "SDR Handover"
+        },
+        {
+          label = ""
+          section = "To Be Removed"
+        },
+      ]
+    },
+    {
+      layout = "Opportunity Layout"
+      sections = [
+        {
+          label = ""
+          section = "Basic Information"
+        },
+        {
+          label = ""
+          section = "Closed Lost Information"
+        },
+        {
+          label = ""
+          section = "Key Information"
+        },
+        {
+          label = ""
+          section = "Manager Section"
+        },
+        {
+          label = ""
+          section = "New Key Information"
+        },
+        {
+          label = ""
+          section = "Notes"
+        },
+        {
+          label = ""
+          section = "Old Key Info Fields"
+        },
+        {
+          label = ""
+          section = "Quotes & Billing Information"
+        },
+        {
+          label = ""
+          section = "SDR Handover"
+        },
+      ]
+    },
+    {
+      layout = "Partner Opportunity Layout"
+      sections = [
+        {
+          label = ""
+          section = "Basic Information"
+        },
+        {
+          label = ""
+          section = "Key Information"
+        },
+        {
+          label = ""
+          section = "Lost / Won Feedback"
+        },
+        {
+          label = ""
+          section = "Manager Section"
+        },
+        {
+          label = ""
+          section = "New Key Information"
+        },
+      ]
+    },
+    {
+      layout = "Potential Partner Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+        {
+          label = ""
+          section = "Fields"
+        },
+        {
+          label = ""
+          section = "Key Information"
+        },
+        {
+          label = ""
+          section = "Manager Section"
+        },
+        {
+          label = ""
+          section = "Opportunity Notes"
+        },
+      ]
+    },
+  ]
+  quickActions = [
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_BI_Admin
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Billing_Quote_Information
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Clone_with_Products
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Create_Partner_SO_Request
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Create_Quote
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Create_Relate_Billing_Entity
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Green_Bucket_New_Infra
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Handover
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_New_Activity
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_OldHandover
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Request_SE_Support
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Request_a_Sales_Engineer
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Send_Opportunity_Summary
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_System_Info
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Time_and_Date_Fields
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_View_Quotes
+    },
+  ]
+  recordTypes = [
+    {
+      label = ""
+      name = salesforce.RecordType.instance.Opportunity_Internal_Opportunity
+    },
+    {
+      label = ""
+      name = salesforce.RecordType.instance.Opportunity_Partner_Opportunity
+    },
+    {
+      label = ""
+      name = salesforce.RecordType.instance.Opportunity_Potential_Partner
+    },
+  ]
+  validationRules = [
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Cant_Change_Opp_Owner_to_Partner_User
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Cant_Closed_Won_Opp_without_Signed_Quote
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Competitor_or_Current_Tools
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Deal_Enablers_are_missing
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Deal_blockers_are_missing
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Expansion_Opp_Attribution_Must
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_KEY_INFORMATION_REQUIRED
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Key_Information_Required_Buying_Process
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Key_Information_Required_Evaluation
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Key_Information_Required_Qualification
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Key_Information_Required_Validation
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_LID__Check_CompanyId_Value
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Lost_reason
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Missing_opp_reseller_for_partner_opp
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Opp_Account_must_be_MA
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Partner_Evaluation_Stage
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Prevent_Changing_Closed_Opportunity
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Requires_SE_above_25k
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_SO_Manually_Signed_Signer_Details
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Opportunity_Set_SE_only_if_checkbox_is_ticked
+    },
+  ]
+  webLinks = [
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Opportunity_MassManager__Mass_Delete
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Opportunity_MassManager__Mass_Edit_Standard_Fields
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Opportunity_MassManager__Mass_Update
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Opportunity_Mass_Delete_Records
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Opportunity_tci_csmrg__Mass_Edit
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Opportunity_valt__View_Quotes
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Opportunity_valt__valooto_prod
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Opportunity_zaapit__zp_actions
+    },
+  ]
+  workflowTasks = [
+    {
+      name = salesforce.WorkflowTask.instance.Opportunity_zaapit__Call_oppts
+      subject = ""
+    },
+    {
+      name = salesforce.WorkflowTask.instance.Opportunity_zaapit__Email_oppts
+      subject = ""
+    },
+    {
+      name = salesforce.WorkflowTask.instance.Opportunity_zaapit__Send_Letter_oppts
+      subject = ""
+    },
+    {
+      name = salesforce.WorkflowTask.instance.Opportunity_zaapit__Send_Quote_oppts
+      subject = ""
+    },
+  ]
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

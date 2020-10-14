@@ -1,0 +1,26 @@
+type salesforce.NetworkTabSet {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  "List<string>" customTab {
+    _required = false
+  }
+  string defaultTab {
+    _required = false
+  }
+  "List<string>" standardTab {
+    _required = false
+  }
+  metadataType = "NetworkTabSet"
+}

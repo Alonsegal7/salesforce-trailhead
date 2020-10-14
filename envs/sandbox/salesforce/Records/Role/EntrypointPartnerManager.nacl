@@ -1,0 +1,10 @@
+salesforce.Role EntrypointPartnerManager {
+  fullName = "EntrypointPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Entrypoint Partner Manager"
+  mayForecastManagerShare = false
+  name = "Entrypoint Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

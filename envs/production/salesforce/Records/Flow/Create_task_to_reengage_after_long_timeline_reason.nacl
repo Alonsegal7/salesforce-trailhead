@@ -1,0 +1,454 @@
+salesforce.Flow Create_task_to_reengage_after_long_timeline_reason {
+  fullName = "Create_task_to_reengage_after_long_timeline_reason"
+  actionCalls = [
+    {
+      processMetadataValues = [
+        {
+          name = "filterType"
+          value = {
+            stringValue = "globalType"
+          }
+        },
+        {
+          name = "quickActionSelection"
+          value = {
+            stringValue = "New Task"
+          }
+        },
+        {
+          name = "quickActionSelectionType"
+          value = {
+            stringValue = "Task"
+          }
+        },
+        {
+          name = "quickActionType"
+          value = {
+            stringValue = "create"
+          }
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Create Task"
+      locationX = 100
+      locationY = 200
+      actionName = salesforce.QuickAction.instance.NewTask
+      actionType = "quickAction"
+      inputParameters = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "Date"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Due Date Only"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Formula"
+              }
+            },
+          ]
+          name = "ActivityDate"
+          value = {
+            elementReference = "formula_2_myRule_1_A1_2363193470"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Assigned To ID"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          name = "OwnerId"
+          value = {
+            elementReference = "myVariable_current.OwnerId"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Related Record ID"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          name = "contextId"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Subject"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Formula"
+              }
+            },
+          ]
+          name = "Subject"
+          value = {
+            elementReference = "formula_3_myRule_1_A1_7862360913"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "Picklist"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Status"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Picklist"
+              }
+            },
+          ]
+          name = "Status"
+          value = {
+            stringValue = "Open"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "Picklist"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Priority"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Picklist"
+              }
+            },
+          ]
+          name = "Priority"
+          value = {
+            stringValue = "Normal"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "formula_myRule_1"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "Time to reengage = today"
+        },
+      ]
+    },
+  ]
+  formulas = [
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = '''
+case([Lead].Timeline_to_Reengage__c,
+"3 Months",90 + today(),
+"6 Months",180 + today(),
+"9 Months", 270 + today(),
+"12 Months",365 + today(),
+Null)
+'''
+        }
+      }
+      name = "formula_2_myRule_1_A1_2363193470"
+      dataType = "Date"
+      expression = '''
+case({!myVariable_current.Timeline_to_Reengage__c},
+"3 Months",90 + today(),
+"6 Months",180 + today(),
+"9 Months", 270 + today(),
+"12 Months",365 + today(),
+Null)
+'''
+    },
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = "\"Reminder to re-engage with lead from \" + [Lead].Company + \" after it was unqualified due to 'Long Timeline'\""
+        }
+      }
+      name = "formula_3_myRule_1_A1_7862360913"
+      dataType = "String"
+      expression = "\"Reminder to re-engage with lead from \" + {!myVariable_current.Company} + \" after it was unqualified due to 'Long Timeline'\""
+    },
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = '''
+AND(
+   NOT(ISNEW()),
+   ISCHANGED([Lead].Timeline_to_Reengage__c),
+   ISPICKVAL([Lead].Status,"Unqualified"),
+   ISPICKVAL([Lead].Why_unqualified__c ,"Long Timeline"),
+   not(isblank(text([Lead].Timeline_to_Reengage__c))),
+   not(ispickval([Lead].Timeline_to_Reengage__c,"Other")))
+
+'''
+        }
+      }
+      name = "formula_myRule_1"
+      dataType = "Boolean"
+      expression = '''
+AND(
+   NOT(ISNEW()),
+   ISCHANGED({!myVariable_current.Timeline_to_Reengage__c}),
+   ISPICKVAL({!myVariable_current.Status},"Unqualified"),
+   ISPICKVAL({!myVariable_current.Why_unqualified__c} ,"Long Timeline"),
+   not(isblank(text({!myVariable_current.Timeline_to_Reengage__c}))),
+   not(ispickval({!myVariable_current.Timeline_to_Reengage__c},"Other")))
+'''
+    },
+  ]
+  interviewLabel = "Create_task_to_reengage_after_long_timeline_reason-6_InterviewLabel"
+  label = "Create task to reengage after long timeline reason"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "Lead"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onAllChanges"
+      }
+    },
+  ]
+  processType = "Workflow"
+  startElementReference = "myDecision"
+  status = "Active"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Lead
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Lead
+    },
+  ]
+}

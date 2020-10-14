@@ -1,0 +1,7 @@
+salesforce.StaticResource rh2__PT_TimePicker_CSS {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "text/css"
+  fullName = "rh2__PT_TimePicker_CSS"
+  content = file("salesforce/InstalledPackages/rh2/Records/StaticResource/rh2__PT_TimePicker_CSS.css")
+}

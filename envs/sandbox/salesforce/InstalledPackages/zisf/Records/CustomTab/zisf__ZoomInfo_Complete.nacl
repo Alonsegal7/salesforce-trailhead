@@ -1,0 +1,7 @@
+salesforce.CustomTab zisf__ZoomInfo_Complete {
+  fullName = "zisf__ZoomInfo_Complete"
+  description = "ZoomInfo Complete admin settings page."
+  label = "ZoomInfo Complete"
+  motif = "Custom15: People"
+  page = "zisf__ZoomInboundMappingPage"
+}

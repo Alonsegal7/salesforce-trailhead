@@ -1,0 +1,10 @@
+salesforce.Role GalaxySoftwareServicesGSSPartnerManager {
+  fullName = "GalaxySoftwareServicesGSSPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Galaxy Software Services (GSS) Partner Manager"
+  mayForecastManagerShare = false
+  name = "Galaxy Software Services (GSS) Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

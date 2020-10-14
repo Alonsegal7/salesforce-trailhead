@@ -1,0 +1,22 @@
+salesforce.CustomMetadata BigBrain_Callout_Control_Quote {
+  fullName = "BigBrain_Callout_Control.Quote"
+  label = "Quote"
+  protected = false
+  values = [
+    {
+      field = "DELETE__c"
+      value = "true"
+    },
+    {
+      field = "Field_Set_Name__c"
+    },
+    {
+      field = "INSERT__c"
+      value = "true"
+    },
+    {
+      field = "UPDATE__c"
+      value = "true"
+    },
+  ]
+}

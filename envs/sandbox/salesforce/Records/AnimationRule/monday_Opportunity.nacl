@@ -1,0 +1,12 @@
+salesforce.AnimationRule monday_Opportunity {
+  fullName = "monday_Opportunity"
+  animationFrequency = "always"
+  developerName = "monday_Opportunity"
+  isActive = true
+  masterLabel = "monday Opportunity"
+  recordTypeContext = "Custom"
+  recordTypeName = "Internal_Opportunity"
+  sobjectType = "Opportunity"
+  targetField = "StageName"
+  targetFieldChangeToValues = "Closed Won"
+}

@@ -1,0 +1,14 @@
+salesforce.ApexClass SpringCMEos__SpringCMDocumentCollection {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 37
+  packageVersions = [
+    {
+      majorNumber = 5
+      minorNumber = 56
+      namespace = "SpringCMEos"
+    },
+  ]
+  status = "Active"
+  fullName = "SpringCMEos__SpringCMDocumentCollection"
+  content = "(hidden)"
+}

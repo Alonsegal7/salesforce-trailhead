@@ -1,0 +1,176 @@
+salesforce.CustomObjectTranslation Monday_Account__c_en_US {
+  fullName = "Monday_Account__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Monday Account"
+    },
+    {
+      plural = true
+      value = "Monday Accounts"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.ARR__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Monday_Account__c.field.Active_users__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Ad_group__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.BB_id__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.BB_link__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Banner__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Campaign__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Cluster__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Company__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Current_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Distributed_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Engagment__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Max_team_size__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Members__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Period__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Plan_name__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Pricing_version__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Pulse_account_id__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Sign_up_date__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Source__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Status__c
+      picklistValues = [
+        {
+          masterLabel = "Canceled"
+          translation = ""
+        },
+        {
+          masterLabel = "Churned"
+          translation = ""
+        },
+        {
+          masterLabel = "Paying account"
+          translation = ""
+        },
+        {
+          masterLabel = "Trial account"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Survey_size__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Sync_status__c
+      picklistValues = [
+        {
+          masterLabel = "Failed"
+          translation = ""
+        },
+        {
+          masterLabel = "Ready for sync"
+          translation = ""
+        },
+        {
+          masterLabel = "Succeed"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.Tier__c
+    },
+    {
+      label = ""
+      name = salesforce.Monday_Account__c.field.monday_account_scoring__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Big Brain Account Layout"
+      sections = [
+        {
+          label = ""
+          section = "Commercial data"
+        },
+        {
+          label = ""
+          section = "Custom Links"
+        },
+        {
+          label = ""
+          section = "Marketing attribution"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Monday_Account__c,
+  ]
+}

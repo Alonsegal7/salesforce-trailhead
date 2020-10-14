@@ -1,0 +1,9 @@
+Pre-Sale email has been sent.
+
+Details:
+
+Lead name: {!Lead.Name}
+Owner Name: {!Lead.OwnerFullName}
+Partner Name: {!Lead.Owner_Company_Name__c}
+
+Link: {!Lead.Link}

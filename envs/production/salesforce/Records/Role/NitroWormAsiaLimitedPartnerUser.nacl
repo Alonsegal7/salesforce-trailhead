@@ -1,0 +1,10 @@
+salesforce.Role NitroWormAsiaLimitedPartnerUser {
+  fullName = "NitroWormAsiaLimitedPartnerUser"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  description = "NitroWorm (Asia) Limited Partner User"
+  mayForecastManagerShare = false
+  name = "NitroWorm (Asia) Limited Partner User"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.NitroWormAsiaLimitedPartnerManager
+}

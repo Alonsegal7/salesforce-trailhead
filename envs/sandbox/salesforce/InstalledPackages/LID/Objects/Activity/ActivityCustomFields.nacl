@@ -1,0 +1,12 @@
+type salesforce.Activity {
+  salesforce.DateTime LID__Date_Sent__c {
+    apiName = "Activity.LID__Date_Sent__c"
+    label = "Date Sent"
+    _required = false
+  }
+  salesforce.Url LID__URL__c {
+    apiName = "Activity.LID__URL__c"
+    label = "URL"
+    _required = false
+  }
+}

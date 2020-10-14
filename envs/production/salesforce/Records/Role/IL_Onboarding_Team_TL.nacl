@@ -1,0 +1,10 @@
+salesforce.Role IL_Onboarding_Team_TL {
+  fullName = "IL_Onboarding_Team_TL"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "IL Onboarding Team TL"
+  mayForecastManagerShare = false
+  name = "IL Onboarding Team TL"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.Head_of_CS
+}

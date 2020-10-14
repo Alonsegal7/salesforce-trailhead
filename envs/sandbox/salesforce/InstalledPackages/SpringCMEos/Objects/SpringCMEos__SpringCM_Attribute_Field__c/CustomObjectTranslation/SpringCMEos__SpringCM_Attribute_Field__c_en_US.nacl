@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation SpringCMEos__SpringCM_Attribute_Field__c_en_US {
+  fullName = "SpringCMEos__SpringCM_Attribute_Field__c-en_US"
+  _parent = [
+    salesforce.SpringCMEos__SpringCM_Attribute_Field__c,
+  ]
+}

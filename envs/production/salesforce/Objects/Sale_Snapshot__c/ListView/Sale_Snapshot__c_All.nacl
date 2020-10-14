@@ -1,0 +1,13 @@
+salesforce.ListView Sale_Snapshot__c_All {
+  fullName = "Sale_Snapshot__c.All"
+  columns = [
+    "NAME",
+    "CREATED_DATE",
+    "CREATEDBY_USER",
+  ]
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Sale_Snapshot__c,
+  ]
+}

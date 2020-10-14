@@ -1,0 +1,6 @@
+salesforce.CustomTab zaapit__Custom_Sub_Demo {
+  fullName = "zaapit__Custom_Sub_Demo"
+  label = "Explorer Sub Tabs"
+  motif = "Custom86: Red Cross"
+  page = "zaapit__zaapit_tab_general1"
+}

@@ -1,0 +1,151 @@
+salesforce.Layout Kickoff_Layout {
+  fullName = "Kickoff__c-Kickoff Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Kickoff__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Kickoff__c.field.Kickoff_meeting_date__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Kickoff__c.field.Monday_Account__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Kickoff__c.field.of_Users__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Kickoff__c.field.Success_Metrics__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Kickoff__c.field.CurrencyIsoCode
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Kickoff__c.field.Go_Live_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Kickoff__c.field.Main_Point_of_Contacts__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Kickoff__c.field.Kickoff_Notes__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Kickoff__c.field.Use_Case__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Kickoff__c.field.Plan_for_Training__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Kickoff__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Kickoff__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "TASK.PRIORITY",
+        "CORE.USERS.FULL_NAME",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      relatedList = "RelatedFileList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "CORE.USERS.FULL_NAME",
+        "TASK.LAST_UPDATE",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+    {
+      fields = [
+        "FULL_NAME",
+        "ACCOUNT.NAME",
+        "CONTACT.PHONE1",
+      ]
+      relatedList = salesforce.Contact.field.Kickoff__c
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h1t000002aIbZ"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Kickoff__c,
+  ]
+}

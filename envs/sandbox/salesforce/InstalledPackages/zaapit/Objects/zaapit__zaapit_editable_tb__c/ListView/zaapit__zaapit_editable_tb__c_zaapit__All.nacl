@@ -1,0 +1,23 @@
+salesforce.ListView zaapit__zaapit_editable_tb__c_zaapit__All {
+  fullName = "zaapit__zaapit_editable_tb__c.zaapit__All"
+  columns = [
+    "zaapit__View_Name__c",
+    "NAME",
+    "UPDATEDBY_USER",
+    "LAST_UPDATE",
+    "CREATED_DATE",
+    "zaapit__Show_as_default__c",
+    "zaapit__sortBy__c",
+    "zaapit__sortBy2__c",
+    "zaapit__sortBy3__c",
+    "zaapit__sortDir__c",
+    "zaapit__sortDir2__c",
+    "zaapit__sortDir3__c",
+  ]
+  filterScope = "Everything"
+  label = "All"
+  language = "en_US"
+  _parent = [
+    salesforce.zaapit__zaapit_editable_tb__c,
+  ]
+}

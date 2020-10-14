@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__ContactActivity {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 31
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "ContactActivity"
+  fullName = "zaapit__ContactActivity"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__ContactActivity.page")
+}

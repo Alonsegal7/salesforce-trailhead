@@ -1,0 +1,10 @@
+salesforce.ValidationRule Opportunity_Set_SE_only_if_checkbox_is_ticked {
+  fullName = "Opportunity.Set_SE_only_if_checkbox_is_ticked"
+  active = true
+  errorConditionFormula = "(Request_a_Sales_Engineer__c = False) &&  not(isblank( Sales_Engineer__c ))"
+  errorDisplayField = "Sales_Engineer__c"
+  errorMessage = "You can only add an SE if 'Requires Sales Engineer' is checked"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

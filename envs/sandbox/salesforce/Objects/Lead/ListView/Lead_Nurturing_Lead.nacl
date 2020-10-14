@@ -1,0 +1,12 @@
+salesforce.ListView Lead_Nurturing_Lead {
+  fullName = "Lead.Nurturing_Lead"
+  filterScope = "Queue"
+  label = "Nurturing"
+  queue = "Nurturing"
+  sharedTo = {
+    allInternalUsers = ""
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

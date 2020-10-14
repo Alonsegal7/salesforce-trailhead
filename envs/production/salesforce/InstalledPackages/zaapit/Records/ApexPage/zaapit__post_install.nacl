@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__post_install {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 31
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "post_install"
+  fullName = "zaapit__post_install"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__post_install.page")
+}

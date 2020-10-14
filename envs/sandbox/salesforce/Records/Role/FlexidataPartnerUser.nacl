@@ -1,0 +1,10 @@
+salesforce.Role FlexidataPartnerUser {
+  fullName = "FlexidataPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Flexidata Partner User"
+  mayForecastManagerShare = false
+  name = "Flexidata Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.FlexidataPartnerManager
+}

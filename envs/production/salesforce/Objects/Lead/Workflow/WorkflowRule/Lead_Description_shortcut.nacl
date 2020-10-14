@@ -1,0 +1,20 @@
+salesforce.WorkflowRule Lead_Description_shortcut {
+  fullName = "Lead.Description shortcut"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Description_shortcut
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Description
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

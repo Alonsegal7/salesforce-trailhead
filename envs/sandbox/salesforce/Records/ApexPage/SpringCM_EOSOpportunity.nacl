@@ -1,0 +1,16 @@
+salesforce.ApexPage SpringCM_EOSOpportunity {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 38
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "SpringCM EOSOpportunity"
+  packageVersions = [
+    {
+      majorNumber = 5
+      minorNumber = 56
+      namespace = "SpringCMEos"
+    },
+  ]
+  fullName = "SpringCM_EOSOpportunity"
+  content = file("salesforce/Records/ApexPage/SpringCM_EOSOpportunity.page")
+}

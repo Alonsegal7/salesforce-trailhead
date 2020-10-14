@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Contract_Calculate_Contract_Term {
+  fullName = "Contract.Calculate Contract Term"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Contract_Calculate_Contract_Term
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "(ISBLANK(ContractTerm) &&  (Paid_Months__c>0  ||  Free_Months__c >0))   ||    (ISCHANGED(Paid_Months__c)&& NOT(ISBLANK(Paid_Months__c))  || ISCHANGED(Free_Months__c)&& NOT(ISBLANK(Free_Months__c)))"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Contract,
+  ]
+}

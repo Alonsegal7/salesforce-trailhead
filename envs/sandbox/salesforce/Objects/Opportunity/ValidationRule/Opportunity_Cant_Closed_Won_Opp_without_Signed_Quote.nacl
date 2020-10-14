@@ -1,0 +1,18 @@
+salesforce.ValidationRule Opportunity_Cant_Closed_Won_Opp_without_Signed_Quote {
+  fullName = "Opportunity.Cant_Closed_Won_Opp_without_Signed_Quote"
+  active = true
+  errorConditionFormula = '''
+ischanged(StageName)&&
+(ISPICKVAL(StageName,"Closed Won")&& 
+Is_Dealroom_Signed__c = False &&  Is_SO_Signed__c = False) &&  ISBLANK(Billing_Ids__c )
+&&
+$Profile.Name!="Channel Managers"&&
+$Profile.Name!="System Administrator"&&
+$Profile.Name!="Integration Administrator"&&
+$Profile.Name!="Managers monday sales"
+'''
+  errorMessage = "You Can't Closed-Won the Opportunity without a Signed SO or a CC payment claim"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

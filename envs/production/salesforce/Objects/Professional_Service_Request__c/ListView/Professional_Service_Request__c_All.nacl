@@ -1,0 +1,8 @@
+salesforce.ListView Professional_Service_Request__c_All {
+  fullName = "Professional_Service_Request__c.All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Professional_Service_Request__c,
+  ]
+}

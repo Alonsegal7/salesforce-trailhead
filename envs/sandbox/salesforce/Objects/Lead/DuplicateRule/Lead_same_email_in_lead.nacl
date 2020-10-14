@@ -1,0 +1,33 @@
+salesforce.DuplicateRule Lead_same_email_in_lead {
+  fullName = "Lead.same_email_in_lead"
+  actionOnInsert = "Allow"
+  actionOnUpdate = "Allow"
+  alertText = "Duplicate Email, can't create new Lead with this email"
+  duplicateRuleFilter = {
+    duplicateRuleFilterItems = {
+      field = "CreatedByID"
+      operation = "notEqual"
+      value = "0051t000001zkfRAAQ"
+      sortOrder = "1"
+      table = "Lead"
+    }
+  }
+  duplicateRuleMatchRules = [
+    {
+      matchRuleSObjectType = "Lead"
+      matchingRule = "Standard_Lead_Match_Rule_v1_0"
+    },
+  ]
+  isActive = false
+  masterLabel = "same email in lead"
+  operationsOnInsert = [
+    "Alert",
+    "Report",
+  ]
+  operationsOnUpdate = "Report"
+  securityOption = "EnforceSharingRules"
+  sortOrder = 4
+  _parent = [
+    salesforce.Lead,
+  ]
+}

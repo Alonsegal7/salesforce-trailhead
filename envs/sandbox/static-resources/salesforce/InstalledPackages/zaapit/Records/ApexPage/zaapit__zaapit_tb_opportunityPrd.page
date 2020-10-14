@@ -1,0 +1,352 @@
+<apex:page standardController="Opportunity" extensions="zaapit.zp_OpportunityPrd" id="pgblckPRD"> 
+    <apex:form >
+<apex:pageMessages id="pgblckPRDMsg"/>
+<apex:actionFunction action="{!updatePriceBook}" name="updatePriceBook" reRender="pgblckPRDMsg" oncomplete="onpricebookChangeComplete();">
+<apex:param name="opptyID" assignTo="{!opptyID}" value=""></apex:param>
+        <apex:param name="pricebookid" assignTo="{!pricebookid}" value="" />  
+                      
+        </apex:actionFunction>
+        </apex:form>
+    <c:zaapit_tables_v1 />
+    <!-- Thank you for looking :) please contact us for customizing this application -->
+
+   <div class="extraDescTitle hd1">
+   {!IF(Opportunity['Pricebook2']!=null,'('+Opportunity['Pricebook2.Name']+')','')}
+   </div>
+   <div class="Pricebook2ID hd1">{!IF(Opportunity['Pricebook2Id']!=null,Opportunity['Pricebook2Id'],'')}</div>
+  <!--  <script src="{!$Resource.pricebooksenter_lookup}"></script> -->
+
+<style>
+@media screen and (min-width: 721px){
+    .pricebookentryid.iTd .posRel{left: -195px;     display: inline-block;position:absolute;top:1px;}
+    /*.pricebookentryid.iTd input.iTb.inpSt_pricebookentryid,*/
+    .totalprice.iTd input.iTb.inpSt_totalprice{border:1px solid #aaaaaa;background:#e5e5e5}
+    .pricebookentryid.iTd .copyCell,.totalprice.iTd .copyCell{display:none;}
+    .ost1X.oSt_pricebookentryid,#mainTBX1 table.list tr.headerRow th span.thw.pricebookentryid{display:none;}
+    th.thw.pricebookentry-name{min-width:210px}
+    body .lookupIconOn,body .lookupIcon{min-width:20px;}
+    .dataRow[rowid*='00'] .pricebookentryid .requiredBlock{display:none;}
+    /*.dataRow .pricebookentryid .requiredBlock{height: 19px;}*/
+}
+#choosePriceBooksZZW{
+width: 98%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    height: 35px;
+    display: block;
+}
+#choosePriceBooksZZW select{    height: 30px;
+    width: 98%;}
+</style>
+<script>
+function onpricebookChangeComplete(){
+	var confirmM3=$(".confirmM3 img[alt='CONFIRM']");
+	//hideSuccess();
+	loadingSH();
+	if(confirmM3.length>0)refershForParent();//self.location.reload();
+}
+
+var autoFillSpans=new Array();
+
+$(document).ready(function(){
+	if(isSF1() || isSFLight1XV){
+        $("button.btn:contains('Add Product (std)'),button.btn:contains('Edit All')").hide();
+    }
+    $("body").bind("OnLoadDone",function(){
+        if(isSF1() || isSFLight1XV){
+            $("button.btn:contains('Add Product (std)'),button.btn:contains('Edit All')").hide();
+        }
+        $(".inpSt_totalprice").attr("readonly","readonly");//.inpSt_pricebookentryid,
+        if(!isEditMode1){
+            autoFillSpans=new Array(); 
+        }else{//fill the france
+            //filldus();
+        
+        $("body").bind("addNewRowsDone",function(){
+            if(isEditMode1) filldus();
+        });
+        
+        $( ".inpSt_pricebookentryid").keyup(function(){
+            //alert(1);
+            $(this).attr("keyUp1","1");
+        });
+        $( ".inpSt_quantity").change(function(){
+            calculateTotals(this);
+        });
+        $( ".inpSt_unitprice").change(function(){
+            //alert(1);
+        	calculateTotals(this);
+        });
+        $( ".inpSt_discount").change(function(){
+            //alert(1);
+        	calculateTotals(this);
+        });
+
+        $(".inpSt_pricebookentryid").change(function(){
+            if($(this).attr("keyUp1")!=null){
+                var rowCell1=$(this);
+                //var lnk1=(self.location+'').split(".com")[0]+".com/apex/GenericLookupControl?"+"&frm="+escape(rowCell1.attr("id"))+"&txt="+escape(rowCell1.text())+"&conf="+overwriteObjConf+"&ext1="+escape($(".Pricebook2ID").text())+'&hideNewObjTab=1';
+                //openSearchLUDL2("Product Selector",rowCell1[0],lnk1);
+                setTimeout(function(){rowCell1.val("");rowCell1.removeAttr("keyUp1");},150);
+                
+            }
+        });
+        }
+    });
+    
+});
+
+var autoCalSums="tfoot .listprice .ost1X.oSt_listprice~.dataRow .listprice.iTd:visible~0~tfoot .totalRow .ost1X.oSt_totalprice~.dataRow .inpSt_totalprice:visible,.dataRow .dvSt_totalprice~0~tfoot .totalRow .ost1X.oSt_quantity~.dataRow .inpSt_quantity~1~tfoot .totalRow .ost1X.oSt_unitprice~.dataRow .inpSt_unitprice~0";
+function calculateTotals(obj){
+	var formatterInt = new google.visualization.NumberFormat({
+        pattern: '#,###,##0.00'
+    });
+    var symbol="{!if(isMultiCurrencyEnabled && opportunity['CurrencyIsoCode']!=null,''+opportunity['CurrencyIsoCode']+' ','')}";
+    if(symbol=="") symbol=orgDefCurrency;
+    var formatterPrice = new google.visualization.NumberFormat({
+    	prefix: symbol,
+        pattern: '#,###,##0.00'
+    });
+	var mainRow=$(obj).parents("tr:first");
+	var unitprice=mainRow.find(".inpSt_unitprice");
+	var quantity=mainRow.find(".inpSt_quantity");
+	var totalprice=mainRow.find(".inpSt_totalprice");
+	var discount=mainRow.find(".inpSt_discount");
+
+	if(totalprice.length==0){
+		totalprice=mainRow.find("td.totalprice .posRel span:first");
+	}
+	if(unitprice.length>0 && quantity.length>0 && totalprice.length>0  && !isNaN(unitprice.val().replace(/[^0-9.-]+/g,"")) && !isNaN(quantity.val().replace(/[^0-9.-]+/g,""))){
+		//alert(unitprice.val() + " "+quantity.val()+ " "+totalprice.val()+" "+totalprice.attr("class") + " "+Number(unitprice.val().replace(/[^0-9.-]+/g,""))*Number(quantity.val().replace(/[^0-9.-]+/g,"")));
+		var newTotalPrice=Number(unitprice.val().replace(/[^0-9.-]+/g,""))*Number(quantity.val().replace(/[^0-9.-]+/g,""));
+		if(discount.length>0 && !isNaN(discount.val().replace(/[^0-9.-]+/g,"")) && Number(discount.val())!=0){
+			newTotalPrice=newTotalPrice*(1-Number(discount.val().replace(/[^0-9.-]+/g,""))/100.0);
+		}else{
+			//discount.val(0);
+		}
+		var lastVal=0;
+		if((totalprice.attr("class")+'').indexOf("inpSt_totalprice")>-1){
+			lastVal=totalprice.val();
+			if(lastVal==""){
+				lastVal=0;
+			}else{
+				lastVal=Number(lastVal.replace(/[^0-9.-]+/g,""));
+			}
+			totalprice.hide();
+			totalprice.prev().html(formatterPrice.formatValue(newTotalPrice)).attr("value",newTotalPrice).css({ "font-size":"13.33px","padding": "2px","border": "1px solid #aaaaaa","background": "#e5e5e5"}).addClass("dvSt_totalprice");
+		}else{
+			if(totalprice.attr("lastVal")==null){
+				totalprice.attr("lastVal",$.trim(totalprice.text()));	
+				lastVal=totalprice.attr("lastVal");
+			}else{
+				lastVal=totalprice.attr("lastVal");
+			}
+			lastVal=Number(lastVal.replace(/[^0-9.-]+/g,""));
+			totalprice.html(formatterPrice.formatValue(newTotalPrice)).addClass("dvSt_totalprice");
+		}
+		var autoCalSumsArrs=autoCalSums.split("~");
+		for(var i=0;i<autoCalSumsArrs.length;i=i+3){
+			var formater1=(autoCalSumsArrs[i+2]==0?formatterPrice:formatterInt);
+			var gtotalprice=$(autoCalSumsArrs[i]);//."tfoot .totalRow .ost1X.oSt_totalprice"
+			if(gtotalprice.length>0){
+				gtotalprice.text(formater1.formatValue(sumInputs(autoCalSumsArrs[i+1])));//".dataRow .inpSt_totalprice"
+			}
+		}
+
+		
+	}
+}
+function sumInputs(jq1){
+	var sum1=0;
+	$(jq1).each(function(){
+		if($(this).hasClass("dvSt_totalprice") ||this.tagName!="INPUT"){
+			sum1+=getNum($(this).text());
+		}else{
+			sum1+=getNum($(this).val());
+		}
+	});
+	return sum1;
+}
+function getNum(v1){
+	if(v1==null ||v1=="" || isNaN(v1.replace(/[^0-9.-]+/g,""))){
+		v1=0;
+	}else{
+		v1=Number(v1.replace(/[^0-9.-]+/g,""));
+	}
+	return v1;
+}
+function filldus(){
+    try{
+    if(autoFillSpans.length>0){
+                //alert(autoFillSpans);
+                var i1=0;
+                $(".lcbXRow.RID").each(function(){
+                    var row1=autoFillSpans[i1];
+                    if(row1!=null && row1.length!=null){
+                        for(var i2=0;i2<row1.length;i2++){
+                            var x1=row1[i2][0];
+                            $(this).parents("tr:first").find(x1).html(row1[i2][1]);
+                        }
+                    }
+                    i1++;
+                });
+            }
+            }catch(e){
+                alert(e);
+            }
+}
+function isPricebookselected(){
+    return !($.trim($(".extraDescTitle").text())=="");
+}
+ function smartProductAdd(width1,height1){
+        if(!isPricebookselected()){
+            alert("Please select a pricebook first!"); 
+        }else{
+            if(width1==null) width1=1100;
+            if(height1==null) height1=690;
+            var url1="/apex/zaapit__zaapit_tb_pricebookEntrySearchPRD?isdtp=p1&id="+escape($(".Pricebook2ID").text()+"~{!opportunity['Id']}");
+    //        lookupPickOrig(ax, b,c, d,e,f,g,l);
+            window.open(url1,"productSelectorSearchPRD","width="+width1+",height="+height1);
+        }
+ }
+ 
+ 
+  var overwriteObj3="01u";
+var overwriteObjConf="pricebookentry";
+
+function getParameterByNameLUOV( name ,url){
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( url );
+  if( results == null )
+    return "";
+  else
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+var lookupPickOrig=null;
+
+    if(lookupPickOrig==null){
+        lookupPickOrig= openLookup;//save old function if needed
+    }
+    openLookup=function(a, b,c, d,e,f,g,l){//overwrite with your custom code
+    if(!isPricebookselected()){
+            alert("Please select a pricebook first!"); 
+        }else{
+    //alert(a+"~"+b+"~"+c+"~"+d+"~"+e+"~"+f+"~"+g+"~"+l);
+    var ax=a;
+    if(ax.indexOf("lktp="+overwriteObj3)>-1){
+        var lknm=getParameterByNameLUOV("lknm",ax);
+        var lkfm=getParameterByNameLUOV("lkfm",ax);
+        var lksrch=getParameterByNameLUOV("lksrch",ax);
+        //alert(b+"~"+c+"~"+d+"~"+e+"~"+f+"~"+g+"~"+l);
+        ax="/apex/GenericLookupControl?"+(ax.split("?")[1]+"&frm="+escape(lkfm)+"&txt="+escape(lknm)+d)+"&conf="+overwriteObjConf+"&ext1="+escape($(".Pricebook2ID").text()+"{!if(isMultiCurrencyEnabled && opportunity['CurrencyIsoCode']!=null,'\' and currencyisocode=\''+opportunity['CurrencyIsoCode'],'')}")+'&hideNewObjTab=1';
+//        lookupPickOrig(ax, b,c, d,e,f,g,l);
+        window.open(ax,"_blank","width=690,height=735");
+    }else{
+        lookupPickOrig(ax, b,c, d,e,f,g,l);
+    }
+    //put your code here
+    }
+    }
+
+
+    function choosePriceBooks(){
+		trackEventX('choosePriceBooks');
+		
+	
+		$('#choosePriceBooksZ').remove(); 
+
+		$('body').append( 
+		'<div id="choosePriceBooksZ" title="Select Price Book">' + 
+		'<div style="margin:10px;font-weight:bold;">Select a price book for this opportunity. You can add products only from a single price book. Changing a selected price book will delete all existing products from this opportunity.'+ 
+		''+
+		'<span id="choosePriceBooksZZW"><select name="PriceBooksSelZ" id="PriceBooksSelZ"><option value="">Loading options...</option></select><br></span>' +
+
+		'<div id="descPB1"></div></div></div>' + 
+		'' 
+
+		); 
+		
+		//open window
+		 var buttons1=new Array();
+			
+		buttons1.push({
+		text: "Select Price Book", 
+		click: function() {
+			var rtID=$("#PriceBooksSelZ").val(); 
+			  if(rtID==""){
+			  	alert("Please select a pricebook!");
+			  }else{
+			  	//var url=newlink+"&RecordType="+rtID+"&ent="+tb1;//"/"+key3+"/e?
+			  	//newObjZPCont1(tbName,url,win1,rtID,defVals);
+			  	if(confirm("You have changed the price book for this opportunity. This action permanently deletes all products from the opportunity. Continue?")){
+				  updatePriceBook("{!Opportunity['Id']}",rtID);
+			  	}
+			  }
+		
+		jQuery( this ).dialog( "close" ); 
+		} 
+		});
+		
+		
+		buttons1.push({
+		text: "Cancel", 
+		click: function() { 
+		jQuery( this ).dialog( "close" ); 
+		} 
+		});
+		
+		$( "#choosePriceBooksZ" ).dialog({ 
+		resizable: false, 
+		width: (isSF1()?($("body").width()-10):490), 
+		height:(isSFLight1XV?275:260), 
+		//modal: true, 
+		buttons: buttons1
+		}); 
+			fixIfmHegt();
+		
+		//fetch data
+		//var queryZZZ="SELECT Id,Name,isactive,SobjectType,DeveloperName,Description  FROM recordtype WHERE isactive=true and SobjectType='"+tb1+"' order by name asc"; 
+		Visualforce.remoting.Manager.invokeAction( 
+				remoteQueryAjax2, 
+		'SELECT Name,Id,Description FROM pricebook2 where isactive=true order by Name asc', 
+		function(result, event){ 
+
+		if (event.status && result!=null) { 
+
+		var innerHtml = ''; 
+		var records=result; 
+		for(var i=0; i<records.length; i++){ 
+		innerHtml += 
+		'<option value="' + records[i]["Id"] + '" desc="'+(records[i]['Description']!=null && records[i]['Description']!=""? (records[i]["Name"] +': '+records[i]["Description"]).replace(/\"/ig,""):"")+'" '+(records[i]["Id"]=='{!Opportunity['Pricebook2Id']}'?'selected':'')+'>'+records[i]["Name"] +'</option>'; 
+		}
+
+		$('#choosePriceBooksZZW').html('<select name="PriceBooksSelZ" id="PriceBooksSelZ">'+innerHtml+'</select>');
+		$("#PriceBooksSelZ").change(function(){$("#descPB1").html($(this[this.selectedIndex]).attr("desc"));});
+		var PriceBooksSelZ=$("#PriceBooksSelZ")[0]; 
+		$("#descPB1").html($(PriceBooksSelZ.options[PriceBooksSelZ.selectedIndex]).attr("desc"));
+		} else if (event.type === 'exception') { 
+		if(event.message!=null && ((event.message+"").indexOf("Logged in")>-1 || (event.message+"").indexOf("Refresh page")>-1)){ 
+		self.location=self.location; 
+		}else if(event.message!=null && (event.message+"").indexOf("Unable to connect")==-1){ 
+		if($("body:visible").length>0)alert("An error has occurred: "+event.message); 
+		} 
+		} else { 
+		//self.location=self.location; 
+		// $("#"+filterIdSpan+" .availVals").html(""); 
+		//alert(1); 
+		} 
+
+		}, 
+		{escape: true,buffer:true,timeout: 90000} 
+		); 
+		
+		
+		
+		
+}
+</script>
+
+</apex:page>

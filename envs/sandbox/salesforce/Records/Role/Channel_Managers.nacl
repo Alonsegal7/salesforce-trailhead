@@ -1,0 +1,9 @@
+salesforce.Role Channel_Managers {
+  fullName = "Channel_Managers"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "Channel Managers"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.Head_of_Sales
+}

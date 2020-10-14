@@ -1,0 +1,8 @@
+salesforce.Document LSNLY__Lessonly_LSNLY__Lessonly_Logo_png {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  internalUseOnly = false
+  name = "Lessonly Logo"
+  public = true
+  fullName = "LSNLY__Lessonly/LSNLY__Lessonly_Logo.png"
+  content = file("salesforce/InstalledPackages/LSNLY/Records/Document/LSNLY__Lessonly/LSNLY__Lessonly_Logo.png")
+}

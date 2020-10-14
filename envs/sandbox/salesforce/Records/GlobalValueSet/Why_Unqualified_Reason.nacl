@@ -1,0 +1,235 @@
+salesforce.GlobalValueSet Why_Unqualified_Reason {
+  fullName = "Why_Unqualified_Reason"
+  customValue = [
+    {
+      fullName = "Wrong Lead Information"
+      default = false
+      label = "Wrong Lead Information"
+    },
+    {
+      fullName = "Fake Lead"
+      default = false
+      label = "Fake Lead"
+    },
+    {
+      fullName = "Bad Geo"
+      default = false
+      label = "Bad Geo"
+    },
+    {
+      fullName = "Bad timing"
+      default = false
+      label = "Bad timing"
+    },
+    {
+      fullName = "Chose Competitor"
+      default = false
+      label = "Chose Competitor"
+    },
+    {
+      fullName = "COVID-19"
+      default = false
+      label = "COVID-19"
+    },
+    {
+      fullName = "Duplicate Lead"
+      default = false
+      label = "Duplicate Lead"
+    },
+    {
+      fullName = "Duplicate - same lead"
+      default = false
+      label = "Duplicate - same lead"
+    },
+    {
+      fullName = "Focusing on existing solution portfolio"
+      default = false
+      label = "Focusing on existing solution portfolio"
+    },
+    {
+      fullName = "Long Timeline"
+      default = false
+      label = "Long Timeline"
+    },
+    {
+      fullName = "Low Growth Potential"
+      default = false
+      label = "Low Growth Potential"
+    },
+    {
+      fullName = "Missing Features"
+      default = false
+      label = "Missing Features"
+    },
+    {
+      fullName = "Mistake Trial"
+      default = false
+      label = "Mistake Trial"
+    },
+    {
+      fullName = "No Authority"
+      default = false
+      label = "No Authority"
+    },
+    {
+      fullName = "No budget"
+      default = false
+      label = "No budget"
+    },
+    {
+      fullName = "No Product Fit"
+      default = false
+      label = "No Product Fit"
+    },
+    {
+      fullName = "No Show"
+      default = false
+      label = "No Show"
+    },
+    {
+      fullName = "Not a relevant person"
+      default = false
+      label = "Not a relevant person"
+    },
+    {
+      fullName = "Not enough clients"
+      default = false
+      label = "Not enough clients"
+    },
+    {
+      fullName = "Not Interested"
+      default = false
+      label = "Not Interested"
+    },
+    {
+      fullName = "Not sales focused"
+      default = false
+      label = "Not sales focused"
+    },
+    {
+      fullName = "Not working in the company anymore"
+      default = false
+      label = "Not working in the company anymore"
+    },
+    {
+      fullName = "Opt Out"
+      default = false
+      label = "Opt Out"
+    },
+    {
+      fullName = "Other"
+      default = false
+      label = "Other"
+    },
+    {
+      fullName = "Referral"
+      default = false
+      label = "Referral"
+    },
+    {
+      fullName = "Request not for Sales/Support"
+      default = false
+      label = "Request not for Sales/Support"
+    },
+    {
+      fullName = "Security"
+      default = false
+      label = "Security"
+    },
+    {
+      fullName = "Sent to Partner"
+      default = false
+      label = "Sent to Partner"
+    },
+    {
+      fullName = "Sent to partner to handle"
+      default = false
+      label = "Sent to partner to handle"
+    },
+    {
+      fullName = "Student"
+      default = false
+      label = "Student"
+    },
+    {
+      fullName = "Support Request - Sent to CS"
+      default = false
+      label = "Support Request - Sent to CS"
+    },
+    {
+      fullName = "Test Lead"
+      default = false
+      label = "Test Lead"
+    },
+    {
+      fullName = "Too small"
+      default = false
+      label = "Too small"
+    },
+    {
+      fullName = "Bounced"
+      default = false
+      label = "Bounced"
+    },
+    {
+      fullName = "Never replied"
+      default = false
+      label = "Never replied"
+    },
+    {
+      fullName = "For CS to handle"
+      default = false
+      label = "For CS to handle"
+    },
+    {
+      fullName = "Low Growth Potential - Sent to CS"
+      default = false
+      isActive = false
+      label = "Low Growth Potential - Sent to CS"
+    },
+    {
+      fullName = "Did not reach out"
+      default = false
+      isActive = false
+      label = "Did not reach out"
+    },
+    {
+      fullName = "Not a decision maker / No access to DM"
+      default = false
+      isActive = false
+      label = "Not a decision maker / No access to DM"
+    },
+    {
+      fullName = "Timeline too long"
+      default = false
+      isActive = false
+      label = "Timeline too long"
+    },
+    {
+      fullName = "Duplicate - Already working with the company"
+      default = false
+      isActive = false
+      label = "Duplicate - Already working with the company"
+    },
+    {
+      fullName = "Mistake trial - tried to login"
+      default = false
+      isActive = false
+      label = "Mistake trial - tried to login"
+    },
+    {
+      fullName = "The product doesn't fit their needs"
+      default = false
+      isActive = false
+      label = "The product doesn't fit their needs"
+    },
+    {
+      fullName = "Too small growth potential"
+      default = false
+      isActive = false
+      label = "Too small growth potential"
+    },
+  ]
+  masterLabel = "Why Unqualified"
+  sorted = false
+}

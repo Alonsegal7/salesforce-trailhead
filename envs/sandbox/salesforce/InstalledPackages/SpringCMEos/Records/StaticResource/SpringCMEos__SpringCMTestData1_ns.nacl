@@ -1,0 +1,7 @@
+salesforce.StaticResource SpringCMEos__SpringCMTestData1_ns {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Private"
+  contentType = "application/octet-stream"
+  fullName = "SpringCMEos__SpringCMTestData1_ns"
+  content = file("salesforce/InstalledPackages/SpringCMEos/Records/StaticResource/SpringCMEos__SpringCMTestData1_ns.bin")
+}

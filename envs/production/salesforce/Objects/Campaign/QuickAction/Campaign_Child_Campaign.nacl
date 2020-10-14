@@ -1,0 +1,60 @@
+salesforce.QuickAction Campaign_Child_Campaign {
+  fullName = "Campaign.Child_Campaign"
+  description = "Create a child campaign."
+  label = "Child Campaign"
+  optionsCreateFeedItem = true
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Name"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "ParentId"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "StartDate"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Description"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "IsActive"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Type"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "EndDate"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  targetObject = salesforce.Campaign
+  targetParentField = "Parent"
+  type = "Create"
+  _parent = [
+    salesforce.Campaign,
+  ]
+}

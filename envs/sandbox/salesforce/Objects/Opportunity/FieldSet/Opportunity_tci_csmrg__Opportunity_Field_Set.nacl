@@ -1,0 +1,102 @@
+salesforce.FieldSet Opportunity_tci_csmrg__Opportunity_Field_Set {
+  fullName = "Opportunity.tci_csmrg__Opportunity_Field_Set"
+  availableFields = [
+    {
+      field = "Amount"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CampaignId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Description"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ExpectedRevenue"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "IsPrivate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "IsWon"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LeadSource"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  description = "Mass Edit Opportunitys VF Page"
+  displayedFields = [
+    {
+      field = "Name"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AccountId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Type"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "TotalOpportunityQuantity"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Probability"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "StageName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CloseDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "NextStep"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Test_number__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Test_picklist__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Opportunity Field Set"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

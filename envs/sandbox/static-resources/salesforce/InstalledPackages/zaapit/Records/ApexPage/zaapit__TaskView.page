@@ -1,0 +1,9 @@
+<apex:page standardController="task" >
+<style>
+body .btn[value='Delete']{display:none;}
+</style>
+<c:zp_ifrm_helper />
+ <apex:form id="theForm"> 
+<apex:detail subject="{!task.id}"/> 
+</apex:form>
+</apex:page>

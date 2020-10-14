@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation SpringCMEos__EOS_Type__c_en_US {
+  fullName = "SpringCMEos__EOS_Type__c-en_US"
+  _parent = [
+    salesforce.SpringCMEos__EOS_Type__c,
+  ]
+}

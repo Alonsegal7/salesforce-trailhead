@@ -1,0 +1,23 @@
+salesforce.ListView Lead_KPMG_Israel_Leads {
+  fullName = "Lead.KPMG_Israel_Leads"
+  columns = [
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.COMPANY",
+    "LEAD.STATUS",
+    "LEAD.CREATED_DATE",
+    "CORE.USERS.ALIAS",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Owner_Role__c"
+      operation = "contains"
+      value = "KPMG"
+    },
+  ]
+  label = "KPMG Israel Leads"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

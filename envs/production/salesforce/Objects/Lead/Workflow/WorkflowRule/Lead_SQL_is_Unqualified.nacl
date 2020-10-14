@@ -1,0 +1,31 @@
+salesforce.WorkflowRule Lead_SQL_is_Unqualified {
+  fullName = "Lead.SQL is Unqualified"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Lead_SQL_is_Unqualified
+      type = "Alert"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.SQL__c
+      operation = "equals"
+      value = "True"
+    },
+    {
+      field = salesforce.Lead.field.Status
+      operation = "equals"
+      value = "Unqualified"
+    },
+    {
+      field = salesforce.Lead.field.RecordTypeId
+      operation = "equals"
+      value = "Internal Lead"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

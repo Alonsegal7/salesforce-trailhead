@@ -1,0 +1,10 @@
+salesforce.Role TakumPartnerUser {
+  fullName = "TakumPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Takum Partner User"
+  mayForecastManagerShare = false
+  name = "Takum Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

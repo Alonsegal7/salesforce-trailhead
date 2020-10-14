@@ -1,0 +1,76 @@
+type salesforce.CampaignMember {
+  salesforce.Checkbox SQL__c {
+    apiName = "CampaignMember.SQL__c"
+    label = "SQL"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox MQL__c {
+    apiName = "CampaignMember.MQL__c"
+    label = "MQL"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox MQL_2__c {
+    apiName = "CampaignMember.MQL_2__c"
+    label = "MQL 2"
+    formula = "Lead.MQL_for_reports__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Company_Size__c {
+    apiName = "CampaignMember.Company_Size__c"
+    label = "Company Size"
+    _required = false
+    valueSet = [
+      {
+        fullName = "1-50"
+        default = false
+        label = "1-50"
+      },
+      {
+        fullName = "51-99"
+        default = false
+        label = "51-99"
+      },
+      {
+        fullName = "100-250"
+        default = false
+        label = "100-250"
+      },
+      {
+        fullName = "251-1500"
+        default = false
+        label = "251-1500"
+      },
+      {
+        fullName = "1500+"
+        default = false
+        label = "1500+"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Lookup Company__c {
+    apiName = "CampaignMember.Company__c"
+    label = "Company"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

@@ -1,0 +1,9 @@
+salesforce.Role AU_Mid_Market_Account_Executive_Dean_Team {
+  fullName = "AU_Mid_Market_Account_Executive_Dean_Team"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "AU Mid Market Account Executive - Dean Team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.AU_Site_Manager
+}

@@ -1,0 +1,13 @@
+salesforce.EmailTemplate unfiled_public_CommunityWelcomeEmailTemplate {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "Notification that user has been added to a community."
+  encodingKey = "UTF-8"
+  name = "Communities: New Member Welcome Email"
+  style = "none"
+  subject = "Welcome to {!Community_Name}"
+  type = "text"
+  uiType = "Aloha"
+  fullName = "unfiled$public/CommunityWelcomeEmailTemplate"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/CommunityWelcomeEmailTemplate.email")
+}

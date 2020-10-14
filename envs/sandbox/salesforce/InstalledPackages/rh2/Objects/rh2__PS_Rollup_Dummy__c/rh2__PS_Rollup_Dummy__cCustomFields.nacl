@@ -1,0 +1,36 @@
+type salesforce.rh2__PS_Rollup_Dummy__c {
+  salesforce.Lookup rh2__Account__c {
+    apiName = "rh2__PS_Rollup_Dummy__c.rh2__Account__c"
+    label = "Account"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup rh2__Parent_Dummy__c {
+    apiName = "rh2__PS_Rollup_Dummy__c.rh2__Parent_Dummy__c"
+    label = "Parent Dummy"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.rh2__PS_Rollup_Dummy__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Currency rh2__Test_Numeric__c {
+    apiName = "rh2__PS_Rollup_Dummy__c.rh2__Test_Numeric__c"
+    label = "Test Numeric"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 8
+    queryable = true
+  }
+}

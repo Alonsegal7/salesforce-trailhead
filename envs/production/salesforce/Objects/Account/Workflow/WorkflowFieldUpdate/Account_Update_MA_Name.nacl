@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Update_MA_Name {
+  fullName = "Account.Update_MA_Name"
+  field = salesforce.Account.field.Name
+  formula = "Company__r.Name +\" \"+\"(\"+primary_pulse_account_id__c+\")\""
+  name = "Update MA Name"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

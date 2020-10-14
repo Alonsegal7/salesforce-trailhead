@@ -1,0 +1,11 @@
+salesforce.StandardValueSet TaskSubject {
+  fullName = "TaskSubject"
+  sorted = false
+  standardValue = [
+    {
+      fullName = "New Task"
+      default = false
+      label = "New Task"
+    },
+  ]
+}

@@ -1,0 +1,13 @@
+salesforce.Queue Potential_Partner {
+  fullName = "Potential_Partner"
+  doesSendEmailToMembers = false
+  name = "Potential Partner"
+  queueMembers = {
+    roles = {
+      role = "Channel_Managers"
+    }
+  }
+  queueSobject = {
+    sobjectType = "Lead"
+  }
+}

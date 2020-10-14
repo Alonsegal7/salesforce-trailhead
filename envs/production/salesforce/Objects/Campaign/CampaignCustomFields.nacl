@@ -1,0 +1,176 @@
+type salesforce.Campaign {
+  salesforce.Picklist DB_Campaign_Tactic__c {
+    apiName = "Campaign.DB_Campaign_Tactic__c"
+    label = "DB Campaign Tactic"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Print Advertisement"
+        default = false
+        label = "Print Advertisement"
+      },
+      {
+        fullName = "Email"
+        default = false
+        label = "Email"
+      },
+      {
+        fullName = "Employment Seminars"
+        default = false
+        label = "Employment Seminars"
+      },
+      {
+        fullName = "Webinars"
+        default = false
+        label = "Webinars"
+      },
+      {
+        fullName = "Public Relations"
+        default = false
+        label = "Public Relations"
+      },
+      {
+        fullName = "Partners"
+        default = false
+        label = "Partners"
+      },
+      {
+        fullName = "Referral Program"
+        default = false
+        label = "Referral Program"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+      {
+        fullName = "Lunches"
+        default = false
+        label = "Lunches"
+      },
+      {
+        fullName = "Direct Mail"
+        default = false
+        label = "Direct Mail"
+      },
+      {
+        fullName = "Sales Call Down"
+        default = false
+        label = "Sales Call Down"
+      },
+      {
+        fullName = "Online Banners/Ads"
+        default = false
+        label = "Online Banners/Ads"
+      },
+      {
+        fullName = "Internal Website"
+        default = false
+        label = "Internal Website"
+      },
+    ]
+    restricted = false
+    fieldDependency = {
+    }
+    createable = true
+    updateable = true
+    queryable = true
+    description = "This is a field that is installed by and used with the Adoption Dashboard AppExchange package. If your org already has a similar field, you can change the reports that are part of the Adoption Dashboard package to use your custom field and then delete this field."
+    sorted = false
+  }
+  salesforce.Text Country__c {
+    apiName = "Campaign.Country__c"
+    label = "Country"
+    _required = false
+    inlineHelpText = "Where is the event taking place?"
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    description = "Where is the event taking place?"
+    externalId = false
+  }
+  salesforce.Summary of_SQL_s__c {
+    apiName = "Campaign.of_SQL_s__c"
+    label = "# of SQL's"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "CampaignMember.SQL__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "CampaignMember.CampaignId"
+    summaryOperation = "count"
+  }
+  salesforce.Summary of_MQL_s__c {
+    apiName = "Campaign.of_MQL_s__c"
+    label = "# of MQL's"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "CampaignMember.MQL__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "CampaignMember.CampaignId"
+    summaryOperation = "count"
+  }
+  salesforce.Text City__c {
+    apiName = "Campaign.City__c"
+    label = "City"
+    _required = false
+    inlineHelpText = "Where is the event taking place?"
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    description = "Where is the event taking place?"
+    externalId = false
+  }
+  salesforce.Checkbox Nurturing__c {
+    apiName = "Campaign.Nurturing__c"
+    label = "Nurturing"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Reachout__c {
+    apiName = "Campaign.Reachout__c"
+    label = "Reachout"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Account__c {
+    apiName = "Campaign.Account__c"
+    label = "Account"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

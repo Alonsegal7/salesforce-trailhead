@@ -1,0 +1,29 @@
+salesforce.LightningPage zisf__Clean_Dashboard {
+  fullName = "zisf__Clean_Dashboard"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zisf__xJFbinoHsQUhdfMDJIzJIMbcYHFAXH"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+      ]
+      name = "main"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Clean Dashboard"
+  template = {
+    name = "flexipage:defaultAppHomeTemplate"
+  }
+  type = "AppPage"
+}

@@ -1,0 +1,9 @@
+salesforce.ApexPage zaapit__Leads_tools_links {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 33
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Leads Tools Links"
+  fullName = "zaapit__Leads_tools_links"
+  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__Leads_tools_links.page")
+}

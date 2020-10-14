@@ -1,0 +1,24 @@
+type salesforce.Opportunity {
+  salesforce.Checkbox LID__Is_Influenced__c {
+    apiName = "Opportunity.LID__Is_Influenced__c"
+    label = "Is_Influenced"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Opportunity was influenced by activities on LinkedIn Sales Navigator"
+  }
+  salesforce.Text LID__LinkedIn_Company_Id__c {
+    apiName = "Opportunity.LID__LinkedIn_Company_Id__c"
+    label = "LinkedIn Company Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 80
+    queryable = true
+    description = "LinkedIn Id of the company"
+    externalId = false
+  }
+}

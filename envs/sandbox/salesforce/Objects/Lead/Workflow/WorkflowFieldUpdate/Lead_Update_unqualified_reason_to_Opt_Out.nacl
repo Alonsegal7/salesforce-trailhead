@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Update_unqualified_reason_to_Opt_Out {
+  fullName = "Lead.Update_unqualified_reason_to_Opt_Out"
+  field = salesforce.Lead.field.Why_unqualified__c
+  literalValue = "Opt Out"
+  name = "Update unqualified reason to 'Opt Out'"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

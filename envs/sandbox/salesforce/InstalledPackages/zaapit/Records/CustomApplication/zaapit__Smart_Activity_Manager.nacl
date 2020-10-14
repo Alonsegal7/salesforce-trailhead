@@ -1,0 +1,27 @@
+salesforce.CustomApplication zaapit__Smart_Activity_Manager {
+  fullName = "zaapit__Smart_Activity_Manager"
+  defaultLandingTab = "zaapit__Overview"
+  description = "Smart Activity Manager™ App by ZaapIT.com"
+  isNavAutoTempTabsDisabled = false
+  isNavPersonalizationDisabled = false
+  label = "Smart Activity Manager™"
+  tabs = [
+    salesforce.CustomTab.instance.zaapit__Overview,
+    salesforce.CustomTab.instance.zaapit__Tasks_Recent,
+    salesforce.CustomTab.instance.zaapit__Events_Recent,
+    salesforce.CustomTab.instance.zaapit__All_Tasks,
+    salesforce.CustomTab.instance.zaapit__All_Events,
+    salesforce.CustomTab.instance.ExchangeRate__c,
+    salesforce.CustomTab.instance.Round_Robin__c,
+    salesforce.CustomTab.instance.Project__c,
+    salesforce.CustomTab.instance.Queue__c,
+    salesforce.CustomTab.instance.Allocation__c,
+    salesforce.CustomTab.instance.Billing_Entity__c,
+    salesforce.CustomTab.instance.Milestone__c,
+    salesforce.CustomTab.instance.StoryLogSnapshot__c,
+    salesforce.CustomTab.instance.Subscription__c,
+    salesforce.CustomTab.instance.Lead_Registration__c,
+    salesforce.CustomTab.instance.Professional_Service_Request__c,
+    salesforce.CustomTab.instance.GB_Threshold__c,
+  ]
+}

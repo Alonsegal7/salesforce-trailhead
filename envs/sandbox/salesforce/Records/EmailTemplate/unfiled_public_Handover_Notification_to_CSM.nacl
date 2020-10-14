@@ -1,0 +1,64 @@
+salesforce.EmailTemplate unfiled_public_Handover_Notification_to_CSM {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "CSM Handover for {!Handover__c.Company__c}"
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "Handover Notification to CSM"
+  style = "freeForm"
+  subject = "CSM Handover for {!Handover__c.Company__c}"
+  textOnly = '''
+{!Handover__c.Company__c} handed over by {!Handover__c.CreatedBy} to {!Handover__c.CSM__c}
+
+Handover Details:
+
+Website: {!Handover__c.Website__c}
+
+Service needed: {!Handover__c.Which_Kind_of_CSM__c}
+
+Opportunity plan: {!Handover__c.Plan_Name__c}
+
+Country: {!Handover__c.Country__c}
+
+Primary Contact: {!Handover__c.Primary_Contact__c}
+
+Core business: {!Handover__c.Core_Business__c}
+
+Use cases: {!Handover__c.Use_Cases__c}
+
+Our main competition was: {!Handover__c.Competition_They_re_Evaluating__c}
+
+Tools in their ecosystem: {!Handover__c.Tools_in_Ecosystem__c}
+
+Pains & Impact: {!Handover__c.Pains__c}
+
+Workflow: {!Handover__c.Workflow__c}
+
+Account user potential: {!Handover__c.Account_Users_Potential__c}
+
+ARR: {!Handover__c.ARR__c}$
+
+DM & Signer details and process: {!Handover__c.DM_Process__c}
+
+Success metrics: {!Handover__c.Success_Metrics__c}
+
+Timeline & Why: {!Handover__c.Timeline__c}
+
+Risks: {!Handover__c.Risks__c}
+
+Example of projects: {!Handover__c.Example_of_Projects__c}
+
+Type of projects they manage: {!Handover__c.Types_of_Projects__c}
+
+Departments: {!Handover__c.Department_Function__c}
+
+AE notes to CSM: {!Handover__c.AE_Notes_to_CSM__c}
+
+
+To view handover details click here
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Handover_Notification_to_CSM"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Handover_Notification_to_CSM.email")
+}

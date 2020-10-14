@@ -1,0 +1,14 @@
+salesforce.ApexClass leadconvertchtr__leadConvertChatterTests {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 29
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 8
+      namespace = "leadconvertchtr"
+    },
+  ]
+  status = "Active"
+  fullName = "leadconvertchtr__leadConvertChatterTests"
+  content = "(hidden)"
+}

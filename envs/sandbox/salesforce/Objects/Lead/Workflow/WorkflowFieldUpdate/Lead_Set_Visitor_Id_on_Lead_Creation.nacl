@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Set_Visitor_Id_on_Lead_Creation {
+  fullName = "Lead.Set_Visitor_Id_on_Lead_Creation"
+  field = salesforce.Lead.field.First_Visitor_Id__c
+  formula = "visitor_id__c"
+  name = "Set Visitor Id on Lead Creation"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

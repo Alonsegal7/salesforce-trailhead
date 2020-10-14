@@ -1,0 +1,19 @@
+salesforce.EmailTemplate unfiled_public_New_GSI_Lead_Alert_EMEA {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "New GSI Lead Alert - EMEA"
+  style = "products"
+  subject = "New Lead from GSI company was created ({!Lead.Company})"
+  textOnly = '''
+Opportunity Name: {!Opportunity.Name}
+Owner: {!Opportunity.OwnerFullName}
+ARR: {!Opportunity.ARR_For_Reports__c}
+Link: {!Opportunity.Link}
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/New_GSI_Lead_Alert_EMEA"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/New_GSI_Lead_Alert_EMEA.email")
+}

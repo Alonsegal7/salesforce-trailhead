@@ -1,0 +1,15 @@
+salesforce.WebLink Lead_MassManager__Mass_Delete {
+  fullName = "Lead.MassManager__Mass_Delete"
+  availability = "online"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Mass Delete"
+  openType = "sidebar"
+  page = "MassManager__LeadsMassDelete"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Lead,
+  ]
+}

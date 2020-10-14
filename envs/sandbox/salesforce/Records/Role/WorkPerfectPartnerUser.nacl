@@ -1,0 +1,10 @@
+salesforce.Role WorkPerfectPartnerUser {
+  fullName = "WorkPerfectPartnerUser"
+  caseAccessLevel = "Read"
+  contactAccessLevel = "Edit"
+  description = "Work Perfect Partner User"
+  mayForecastManagerShare = false
+  name = "Work Perfect Partner User"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.WorkPerfectPartnerManager
+}

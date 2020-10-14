@@ -1,0 +1,6 @@
+salesforce.CustomTab zaapit__Events_Recent {
+  fullName = "zaapit__Events_Recent"
+  label = "Upcoming Events"
+  motif = "Custom25: Alarm clock"
+  page = "zaapit__zaapit_tb_eventWL_filtered_SAM"
+}

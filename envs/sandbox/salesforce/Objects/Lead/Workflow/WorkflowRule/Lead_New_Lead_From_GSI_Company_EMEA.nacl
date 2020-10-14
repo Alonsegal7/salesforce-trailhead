@@ -1,0 +1,37 @@
+salesforce.WorkflowRule Lead_New_Lead_From_GSI_Company_EMEA {
+  fullName = "Lead.New Lead From GSI Company - EMEA"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Lead_New_GSI_Lead_Alert_EMEA
+      type = "Alert"
+    },
+  ]
+  active = true
+  booleanFilter = "(1 OR 2) AND 3 AND 4"
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Company
+      operation = "contains"
+      value = "Accenture,Deloitte,KPMG, Boston Consulting,Baker Tilly,Tata Consulting,Capgemini,Genpact,Wipro,Cognizant,Infosys,Atos,Tech Mahindra,DXC,McKinsey"
+    },
+    {
+      field = salesforce.Lead.field.Company
+      operation = "equals"
+      value = "EY,PwC"
+    },
+    {
+      field = salesforce.Lead.field.LeadSource
+      operation = "equals"
+      value = "Website - Contact Sales"
+    },
+    {
+      field = salesforce.Lead.field.Region__c
+      operation = "equals"
+      value = "EMEA"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

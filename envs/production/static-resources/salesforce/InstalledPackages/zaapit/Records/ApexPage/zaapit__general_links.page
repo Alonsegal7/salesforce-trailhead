@@ -1,0 +1,13 @@
+<apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false" >
+<style>
+.toolsrus{color:#333333;width:130px;}
+.toolsrus h3{padding: 5px;;font-size:13px;color:#333333;display:block;}
+.toolsrus a{padding:5px;;font-size:13px;color:#333333;display:block;text-align:center;}
+.toolsrus a:hover{padding:5px;;font-size:13px;color:#333333;display:block;background:#efefef}
+.toolsrus ul{margin-left:10px;padding-left:0px;}
+</style>
+<div class="toolsrus" >
+<a href="javascript:void(0)" onclick="guideMe('welcome_guide_me',0);" >{!$Label.Welcome_Tour}</a>
+<a href="{!$Label.user_guide_link}" target="_blank">{!$Label.User_Guide}</a>
+</div>
+ </apex:page>

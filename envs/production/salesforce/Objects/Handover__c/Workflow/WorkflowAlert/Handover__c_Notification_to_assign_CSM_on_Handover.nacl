@@ -1,0 +1,24 @@
+salesforce.WorkflowAlert Handover__c_Notification_to_assign_CSM_on_Handover {
+  fullName = "Handover__c.Notification_to_assign_CSM_on_Handover"
+  description = "Notification to assign CSM on Handover"
+  protected = false
+  recipients = [
+    {
+      recipient = "michaelp@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "shahar@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "trey@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Handover_Notification_to_Assign_CSM
+  _parent = [
+    salesforce.Handover__c,
+  ]
+}

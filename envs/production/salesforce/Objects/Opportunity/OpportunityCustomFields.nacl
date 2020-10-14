@@ -1,0 +1,7088 @@
+type salesforce.Opportunity {
+  salesforce.Checkbox Budget_Confirmed__c {
+    apiName = "Opportunity.Budget_Confirmed__c"
+    label = "Budget Confirmed?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Discovery_Completed__c {
+    apiName = "Opportunity.Discovery_Completed__c"
+    label = "Discovery Completed?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox ROI_Analysis_Completed__c {
+    apiName = "Opportunity.ROI_Analysis_Completed__c"
+    label = "ROI Analysis Completed?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Long_Opportunity_ID__c {
+    apiName = "Opportunity.Long_Opportunity_ID__c"
+    label = "Long Opportunity ID"
+    _required = false
+    formula = "CASESAFEID(Id)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Sale_status__c {
+    apiName = "Opportunity.Sale_status__c"
+    label = "Sale status"
+    _required = false
+    formula = "if( text(Sale__r.Sale_Status_Override__c) <>\"\", text(Sale__r.Sale_Status_Override__c),text(Sale__r.Sale_Status__c) )"
+    inlineHelpText = "From Sale: Sale status override or sale status if not overridden."
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Sale_Status_Override__c,
+      salesforce.Sale__c.field.Sale_Status__c,
+      salesforce.Opportunity.field.Sale__c,
+    ]
+  }
+  salesforce.Picklist Opportunity_status__c {
+    apiName = "Opportunity.Opportunity_status__c"
+    label = "Opportunity status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "1"
+        default = false
+        label = "1"
+      },
+      {
+        fullName = "2"
+        default = false
+        label = "2"
+      },
+      {
+        fullName = "3"
+        default = false
+        label = "3"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.MultiselectPicklist Which_features_were_missing__c {
+    apiName = "Opportunity.Which_features_were_missing__c"
+    label = "Which features are missing?"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Communication"
+        default = false
+        label = "Communication"
+      },
+      {
+        fullName = "Organization"
+        default = false
+        label = "Organization"
+      },
+      {
+        fullName = "Time Management"
+        default = false
+        label = "Time Management"
+      },
+      {
+        fullName = "Dependencies"
+        default = false
+        label = "Dependencies"
+      },
+      {
+        fullName = "Cross board"
+        default = false
+        label = "Cross board"
+      },
+      {
+        fullName = "Integration"
+        default = false
+        label = "Integration"
+      },
+      {
+        fullName = "Automation"
+        default = false
+        label = "Automation"
+      },
+      {
+        fullName = "Notification"
+        default = false
+        label = "Notification"
+      },
+      {
+        fullName = "Reporting"
+        default = false
+        label = "Reporting"
+      },
+      {
+        fullName = "Security"
+        default = false
+        label = "Security"
+      },
+      {
+        fullName = "Permissions"
+        default = false
+        label = "Permissions"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+    ]
+    restricted = true
+    fieldDependency = {
+      controllingField = "Lost_Reason__c"
+      valueSettings = [
+        {
+          valueName = "Communication"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Organization"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Time Management"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Dependencies"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Cross board"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Integration"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Automation"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Notification"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Reporting"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Security"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Permissions"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Missing features",
+          ]
+        },
+      ]
+    }
+    visibleLines = 10
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Date Qualified_timestamp__c {
+    apiName = "Opportunity.Qualified_timestamp__c"
+    label = "Qualified timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Discovery_timestamp__c {
+    apiName = "Opportunity.Discovery_timestamp__c"
+    label = "Discovery timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Evaluation_timestamp__c {
+    apiName = "Opportunity.Evaluation_timestamp__c"
+    label = "Evaluation Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Buying_process_timestamp__c {
+    apiName = "Opportunity.Buying_process_timestamp__c"
+    label = "Buying process timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Closed_Won_timestamp__c {
+    apiName = "Opportunity.Closed_Won_timestamp__c"
+    label = "Closed Won timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Closed_Lost_timestamp__c {
+    apiName = "Opportunity.Closed_Lost_timestamp__c"
+    label = "Closed Lost timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Sale__c {
+    apiName = "Opportunity.Sale__c"
+    label = "Sale"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Sale__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Deal_Status__c {
+    apiName = "Opportunity.Deal_Status__c"
+    label = "Deal Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Expected"
+        default = false
+        label = "Expected"
+      },
+      {
+        fullName = "Complete"
+        default = false
+        label = "Complete"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Expected_Plan_Id__c {
+    apiName = "Opportunity.Expected_Plan_Id__c"
+    label = "Expected Plan Id"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "the expected BigBrain plan id"
+    externalId = false
+  }
+  salesforce.Number Expected_Plan_Seats__c {
+    apiName = "Opportunity.Expected_Plan_Seats__c"
+    label = "Expected Plan Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Expected_Plan_Tier__c {
+    apiName = "Opportunity.Expected_Plan_Tier__c"
+    label = "Expected Plan Tier"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Expected_Plan_Period__c {
+    apiName = "Opportunity.Expected_Plan_Period__c"
+    label = "Expected Plan Period"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 15
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Expected_Plan_Name__c {
+    apiName = "Opportunity.Expected_Plan_Name__c"
+    label = "Expected Plan Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 80
+    queryable = true
+    externalId = false
+  }
+  salesforce.Percent Expected_Discount__c {
+    apiName = "Opportunity.Expected_Discount__c"
+    label = "Expected Discount %"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 1
+    precision = 17
+    queryable = true
+  }
+  salesforce.Number Expected_ARR__c {
+    apiName = "Opportunity.Expected_ARR__c"
+    label = "Added ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Opportunity added ARR"
+    externalId = false
+  }
+  salesforce.Picklist Currency__c {
+    apiName = "Opportunity.Currency__c"
+    label = "Currency"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Currency
+  }
+  salesforce.FormulaNumber Forecast_Added_ARR__c {
+    apiName = "Opportunity.Forecast_Added_ARR__c"
+    label = "Forecast Added ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Expected_ARR__c* Probability"
+    inlineHelpText = "Added ARR * Probability"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Expected_ARR__c,
+    ]
+  }
+  salesforce.Text pulse_account_ids__c {
+    apiName = "Opportunity.pulse_account_ids__c"
+    label = "Pulse_Account_IDs"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Billing_Ids__c {
+    apiName = "Opportunity.Billing_Ids__c"
+    label = "Billing Ids"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text primary_pulse_account_id__c {
+    apiName = "Opportunity.primary_pulse_account_id__c"
+    label = "primary pulse account id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber Green_Bucket_ARR__c {
+    apiName = "Opportunity.Green_Bucket_ARR__c"
+    label = "Green Bucket ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Sale__r.ARR__c"
+    inlineHelpText = "= ARR from Sale"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Sale__c,
+      salesforce.Sale__c.field.ARR__c,
+    ]
+  }
+  salesforce.FormulaNumber Forecast_ARR__c {
+    apiName = "Opportunity.Forecast_ARR__c"
+    label = "Forecast Green Bucket ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Sale__r.GB_Forecast_ARR__c"
+    inlineHelpText = "Return the forecast ARR from the sale (= Sale ARR * Probability)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Sale__c,
+      salesforce.Sale__c.field.GB_Forecast_ARR__c,
+    ]
+  }
+  salesforce.Date Next_activity_date__c {
+    apiName = "Opportunity.Next_activity_date__c"
+    label = "Next activity date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox skip_sales_state__c {
+    apiName = "Opportunity.skip_sales_state__c"
+    label = "Skip Sales State?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Pains__c {
+    apiName = "Opportunity.Pains__c"
+    label = "(Obsolete) Pains & Impact"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1500
+    queryable = true
+    visibleLines = 10
+  }
+  salesforce.LongTextArea Current_tools__c {
+    apiName = "Opportunity.Current_tools__c"
+    label = "(Obsolete) Current tools"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.LongTextArea DM_process__c {
+    apiName = "Opportunity.DM_process__c"
+    label = "DM & Signer Details and Process"
+    _required = false
+    inlineHelpText = "Who is/are the decision maker(s), signer and what is the DM process?"
+    createable = true
+    updateable = true
+    length = 5000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.Number time_zone_offset__c {
+    apiName = "Opportunity.time_zone_offset__c"
+    label = "Time Zone Offset"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Success_Metrics__c {
+    apiName = "Opportunity.Success_Metrics__c"
+    label = "Success Metrics"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.LongTextArea Workflow__c {
+    apiName = "Opportunity.Workflow__c"
+    label = "Workflow"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 10
+  }
+  salesforce.Text Next_activity__c {
+    apiName = "Opportunity.Next_activity__c"
+    label = "Next Activity"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Main_Point_of_Contacts__c {
+    apiName = "Opportunity.Main_Point_of_Contacts__c"
+    label = "Main Point of Contact"
+    _required = false
+    createable = true
+    updateable = true
+    length = 10000
+    queryable = true
+    visibleLines = 4
+  }
+  salesforce.LongTextArea Core_Business__c {
+    apiName = "Opportunity.Core_Business__c"
+    label = "Core Business"
+    _required = false
+    createable = true
+    updateable = true
+    length = 5000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.LongTextArea Use_cases__c {
+    apiName = "Opportunity.Use_cases__c"
+    label = "(Obsolete) Use Cases"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 6
+  }
+  salesforce.LongTextArea Timeline__c {
+    apiName = "Opportunity.Timeline__c"
+    label = "Timeline & Why"
+    _required = false
+    inlineHelpText = "What is their timeline to close the deal, and what is the compelling event?"
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    description = "Key information"
+    visibleLines = 5
+  }
+  salesforce.Text Full_of_opportunity_size__c {
+    apiName = "Opportunity.Full_of_opportunity_size__c"
+    label = "Full opportunity size"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 150
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Benefits__c {
+    apiName = "Opportunity.Benefits__c"
+    label = "(Obsolete) Benefits"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.LongTextArea Risks__c {
+    apiName = "Opportunity.Risks__c"
+    label = "Risks"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 10
+  }
+  salesforce.FormulaCheckbox migrated_from_BB_as_won__c {
+    apiName = "Opportunity.migrated_from_BB_as_won__c"
+    label = "migrated from BB as won"
+    formula = "false"
+    inlineHelpText = "True if Amiel migrated the opp as closed won & created date = closed won timestamp."
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber OPP_Qualified__c {
+    apiName = "Opportunity.OPP_Qualified__c"
+    label = "Qualified"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(TEXT( Qualified_timestamp__c )<>\"\",1,0)"
+    inlineHelpText = "True if there's a Qualified timestamp"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Qualified_timestamp__c,
+    ]
+  }
+  salesforce.FormulaNumber Evaluation__c {
+    apiName = "Opportunity.Evaluation__c"
+    label = "Evaluation"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(TEXT( Evaluation_timestamp__c  )<>\"\",1,0)"
+    inlineHelpText = "True if there's an 'Evaluation_timestamp'"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Evaluation_timestamp__c,
+    ]
+  }
+  salesforce.FormulaNumber Buying_process__c {
+    apiName = "Opportunity.Buying_process__c"
+    label = "Buying Process"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(TEXT( Buying_process_timestamp__c  )<>\"\",1,0)"
+    inlineHelpText = "True if there's a 'Buying_process_timestamp'"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Buying_process_timestamp__c,
+    ]
+  }
+  salesforce.FormulaNumber Won__c {
+    apiName = "Opportunity.Won__c"
+    label = "Won"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(ispickval(  StageName , \"Closed Won\"  ),1,0)"
+    inlineHelpText = "True if the stage is 'Closed Won'"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Lost__c {
+    apiName = "Opportunity.Lost__c"
+    label = "Lost"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(ispickval(  StageName , \"Closed Lost\"  ),1,0)"
+    inlineHelpText = "True if opp stage is 'Closed Lost'"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Lost_Reason__c {
+    apiName = "Opportunity.Lost_Reason__c"
+    label = "Why Closed Lost?"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Couldn't get to decision maker"
+        default = false
+        label = "Couldn't get to decision maker"
+      },
+      {
+        fullName = "COVID-19"
+        default = false
+        label = "COVID-19"
+      },
+      {
+        fullName = "Data Residency"
+        default = false
+        label = "Data Residency"
+      },
+      {
+        fullName = "Duplicate Opportunity"
+        default = false
+        label = "Duplicate Opportunity"
+      },
+      {
+        fullName = "Legal"
+        default = false
+        label = "Legal"
+      },
+      {
+        fullName = "Lost to Competitor"
+        default = false
+        label = "Lost to Competitor"
+      },
+      {
+        fullName = "Missing features"
+        default = false
+        label = "Missing features"
+      },
+      {
+        fullName = "No Budget / Lost Funding"
+        default = false
+        label = "No Budget / Lost Funding"
+      },
+      {
+        fullName = "No Decision / Non-Responsive"
+        default = false
+        label = "No Decision / Non-Responsive"
+      },
+      {
+        fullName = "No growth potential"
+        default = false
+        label = "No growth potential"
+      },
+      {
+        fullName = "Price"
+        default = false
+        label = "Price"
+      },
+      {
+        fullName = "Security"
+        default = false
+        label = "Security"
+      },
+      {
+        fullName = "Sticking with internal tool"
+        default = false
+        label = "Sticking with internal tool"
+      },
+      {
+        fullName = "Timeline Too Long"
+        default = false
+        label = "Timeline Too Long"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+    ]
+    restricted = false
+    fieldDependency = {
+      controllingField = "StageName"
+      valueSettings = [
+        {
+          valueName = "Couldn't get to decision maker"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "COVID-19"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Data Residency"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Duplicate Opportunity"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Legal"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Lost to Competitor"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Missing features"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "No Budget / Lost Funding"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "No Decision / Non-Responsive"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "No growth potential"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Price"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Security"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Sticking with internal tool"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Timeline Too Long"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Closed Lost",
+          ]
+        },
+      ]
+    }
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.LongTextArea Feedback_for_product__c {
+    apiName = "Opportunity.Feedback_for_product__c"
+    label = "(Obsolete) Feedback for product"
+    _required = false
+    inlineHelpText = "Help product team to improve"
+    createable = true
+    updateable = true
+    length = 3000
+    queryable = true
+    visibleLines = 7
+  }
+  salesforce.Picklist Test_picklist__c {
+    apiName = "Opportunity.Test_picklist__c"
+    label = "Test picklist"
+    _required = false
+    valueSet = [
+      {
+        fullName = "A"
+        default = false
+        label = "A"
+      },
+      {
+        fullName = "B"
+        default = false
+        label = "B"
+      },
+      {
+        fullName = "C"
+        default = false
+        label = "C"
+      },
+      {
+        fullName = "D"
+        default = false
+        label = "D"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Test_number__c {
+    apiName = "Opportunity.Test_number__c"
+    label = "Test number"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaCurrency Pipeline__c {
+    apiName = "Opportunity.Pipeline__c"
+    label = "Pipeline ARR"
+    _required = false
+    formula = "if( Green_Bucket_ARR__c = 0, Expected_ARR__c , Green_Bucket_ARR__c)"
+    inlineHelpText = "If amount = 0, show forecast ARR, else show amount."
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Expected_ARR__c,
+      salesforce.Opportunity.field.Green_Bucket_ARR__c,
+    ]
+  }
+  salesforce.FormulaCheckbox Close_date_Today__c {
+    apiName = "Opportunity.Close_date_Today__c"
+    label = "Close date < Today?"
+    formula = "CloseDate < Today()"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Mapped_type__c {
+    apiName = "Opportunity.Mapped_type__c"
+    label = "Mapped type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 33
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber GB_opp__c {
+    apiName = "Opportunity.GB_opp__c"
+    label = "Is Potential Green Bucket Opp"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+if(
+
+or(
+
+and(
+RecordType.Name ='Partner Opportunity',
+or( ispickval(Account.Account_Source_Type__c ,'Outbound'),
+and( ispickval(Account.Account_Source_Type__c,'Inbound'), Green_Bucket_ARR__c >=5000))),
+
+or(
+
+and(
+
+or(ispickval(Pricing_Version__c,"5"),ispickval(Pricing_Version__c,"6"),ispickval(Pricing_Version__c,"8"))
+,lower(Expected_Plan_Period__c) ="yearly", Expected_ARR__c >=7000),
+and(
+
+or(ispickval(Pricing_Version__c,"6"),ispickval(Pricing_Version__c,"8"))
+,or(and(lower(Expected_Plan_Period__c) ="yearly", Expected_Plan_Seats__c >=20, lower(Expected_Plan_Tier__c) ="enterprise"),
+    and(lower(Expected_Plan_Period__c) ="yearly", Expected_Plan_Seats__c >=40, lower(Expected_Plan_Tier__c) ="pro"))),
+    
+and(
+Expected_Plan_Seats__c >=25, lower(Expected_Plan_Tier__c) ="enterprise",lower(Expected_Plan_Period__c) ="yearly"),
+
+and(
+Expected_Plan_Seats__c >=50,or(lower(Expected_Plan_Period__c) ="yearly",Expected_Plan_Period__c ="two_yearly")))),1,0)
+'''
+    inlineHelpText = "Check if the opportunity is potential to be a green bucket Opp."
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    description = '''
+Internal - 
+V5/V6/V8 with yearly plan with >7K ARR OR
+V6/V8 with yearly Ent over 20/ Pro over 40 OR
+Yearly Enterprise​ deals with >​25 seats OR
+Yearly/2 Yearly plans with >50 seats
+
+Partner - 
+Outbound OR
+Inbound with >5K ARR
+'''
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Expected_Plan_Seats__c,
+      salesforce.Opportunity.field.Expected_Plan_Tier__c,
+      salesforce.Opportunity.field.Expected_Plan_Period__c,
+      salesforce.Opportunity.field.Expected_ARR__c,
+      salesforce.Opportunity.field.Green_Bucket_ARR__c,
+      salesforce.Opportunity.field.Pricing_Version__c,
+      salesforce.Account.field.Account_Source_Type__c,
+    ]
+  }
+  salesforce.FormulaCheckbox Out_of_Forecast__c {
+    apiName = "Opportunity.Out_of_Forecast__c"
+    label = "Out of Forecast"
+    formula = '''
+if( RecordTypeId ='0121t000000Lucv',
+OR(
+iSPICKVAL( Sale__r.FinalSaleStatus__c , "Expected Complete") && ISPICKVAL(StageName,"Closed Won"),
+
+(iSPICKVAL( Sale__r.FinalSaleStatus__c , "Complete") && ISPICKVAL(StageName,"Closed Won") &&  Expected_Plan_Period__c ="monthly")),
+
+if( RecordTypeId ='0121t000000IQUb',
+OR(
+iSPICKVAL( Sale__r.FinalSaleStatus__c , "Expected Complete") && ISPICKVAL(StageName,"Closed Won"),
+
+iSPICKVAL( Sale__r.FinalSaleStatus__c , "Complete") && iSPICKVAL(Account.Account_Source_Type__c,'Inbound') && ISPICKVAL(StageName,"Closed Won") && Amount<5000 &&  Account.ARR__c <5000),false))
+'''
+    inlineHelpText = "True if [opportunity is closed won & sale is 'expected complete'] or if [sale is 'complete' & opportunity is closed won & on monthly subscription]."
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Sale__c,
+      salesforce.Opportunity.field.Expected_Plan_Period__c,
+      salesforce.Sale__c.field.FinalSaleStatus__c,
+      salesforce.Account.field.ARR__c,
+      salesforce.Account.field.Account_Source_Type__c,
+    ]
+  }
+  salesforce.FormulaNumber GB_Won__c {
+    apiName = "Opportunity.GB_Won__c"
+    label = "Is Sale Complete"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if( ISPICKVAL(Sale__r.Sale_Status__c, \"Complete\"),1,0)"
+    inlineHelpText = "Return '1' if the Sale Status is 'Complete' (=the sale met the green bucket threshold), otherwise return '0'"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Sale_Status__c,
+      salesforce.Opportunity.field.Sale__c,
+    ]
+  }
+  salesforce.FormulaNumber Seats_GB__c {
+    apiName = "Opportunity.Seats_GB__c"
+    label = "Seats GB"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if(  ISPICKVAL(Sale__r.Sale_Status__c, \"Complete\"), Sale__r.Expected_Plan_Seats__c ,0)"
+    inlineHelpText = "For GB complete sales - show expected plan seats from sale"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Sale_Status__c,
+      salesforce.Opportunity.field.Sale__c,
+      salesforce.Sale__c.field.Expected_Plan_Seats__c,
+    ]
+  }
+  salesforce.FormulaNumber GB_ARR__c {
+    apiName = "Opportunity.GB_ARR__c"
+    label = "Complete Sale ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if(  ISPICKVAL(Sale__r.Sale_Status__c, \"Complete\"),  Sale__r.ARR__c  ,0)"
+    inlineHelpText = "Return '1' if the Sale Status is 'Complete' (=met the green bucket threshold), otherwise return '0'"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Sale_Status__c,
+      salesforce.Opportunity.field.Sale__c,
+      salesforce.Sale__c.field.ARR__c,
+    ]
+  }
+  salesforce.Picklist Which_competitor__c {
+    apiName = "Opportunity.Which_competitor__c"
+    label = "Which Tool?"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Airtable"
+        default = false
+        label = "Airtable"
+      },
+      {
+        fullName = "Asana"
+        default = false
+        label = "Asana"
+      },
+      {
+        fullName = "Basecamp"
+        default = false
+        label = "Basecamp"
+      },
+      {
+        fullName = "Clarizen"
+        default = false
+        label = "Clarizen"
+      },
+      {
+        fullName = "ClickUp"
+        default = false
+        label = "ClickUp"
+      },
+      {
+        fullName = "Float"
+        default = false
+        label = "Float"
+      },
+      {
+        fullName = "Freshworks"
+        default = false
+        label = "Freshworks"
+      },
+      {
+        fullName = "Google Suite"
+        default = false
+        label = "Google Suite"
+      },
+      {
+        fullName = "G-Suite"
+        default = false
+        label = "G-Suite"
+      },
+      {
+        fullName = "Hubspot"
+        default = false
+        label = "Hubspot"
+      },
+      {
+        fullName = "Jira"
+        default = false
+        label = "Jira"
+      },
+      {
+        fullName = "LeadSquared"
+        default = false
+        label = "LeadSquared"
+      },
+      {
+        fullName = "MavenLink"
+        default = false
+        label = "MavenLink"
+      },
+      {
+        fullName = "MS Project"
+        default = false
+        label = "MS Project"
+      },
+      {
+        fullName = "Notion"
+        default = false
+        label = "Notion"
+      },
+      {
+        fullName = "Pipedrive"
+        default = false
+        label = "Pipedrive"
+      },
+      {
+        fullName = "Quickbase"
+        default = false
+        label = "Quickbase"
+      },
+      {
+        fullName = "Salesforce"
+        default = false
+        label = "Salesforce"
+      },
+      {
+        fullName = "Service now"
+        default = false
+        label = "Service now"
+      },
+      {
+        fullName = "Sitecore"
+        default = false
+        label = "Sitecore"
+      },
+      {
+        fullName = "Smartsheet"
+        default = false
+        label = "Smartsheet"
+      },
+      {
+        fullName = "Teamwork"
+        default = false
+        label = "Teamwork"
+      },
+      {
+        fullName = "Trello"
+        default = false
+        label = "Trello"
+      },
+      {
+        fullName = "Workday"
+        default = false
+        label = "Workday"
+      },
+      {
+        fullName = "Workfront"
+        default = false
+        label = "Workfront"
+      },
+      {
+        fullName = "Wrike"
+        default = false
+        label = "Wrike"
+      },
+      {
+        fullName = "Zendesk"
+        default = false
+        label = "Zendesk"
+      },
+      {
+        fullName = "Zoho"
+        default = false
+        label = "Zoho"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+      {
+        fullName = "Unknown"
+        default = false
+        label = "Unknown"
+      },
+    ]
+    restricted = false
+    fieldDependency = {
+      controllingField = "Lost_Reason__c"
+      valueSettings = [
+        {
+          valueName = "Airtable"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Asana"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Basecamp"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Clarizen"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "ClickUp"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Float"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Freshworks"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Google Suite"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "G-Suite"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Hubspot"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Jira"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "LeadSquared"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "MavenLink"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "MS Project"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Notion"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Pipedrive"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Quickbase"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Salesforce"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Service now"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Sitecore"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Smartsheet"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Teamwork"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Trello"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Workday"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Workfront"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Wrike"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Zendesk"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Zoho"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+        {
+          valueName = "Unknown"
+          controllingFieldValue = [
+            "Lost to Competitor",
+            "Sticking with internal tool",
+          ]
+        },
+      ]
+    }
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text Unique_Opp__c {
+    apiName = "Opportunity.Unique_Opp__c"
+    label = "Unique Opp"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime Next_Step_Timestamp__c {
+    apiName = "Opportunity.Next_Step_Timestamp__c"
+    label = "Next Step Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Html Next_Strategic_Step_History__c {
+    apiName = "Opportunity.Next_Strategic_Step_History__c"
+    label = "Next Strategic Step History"
+    _required = false
+    createable = true
+    updateable = true
+    length = 100000
+    queryable = true
+    visibleLines = 25
+  }
+  salesforce.FormulaNumber Power_of_1__c {
+    apiName = "Opportunity.Power_of_1__c"
+    label = "Power of 1"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "1"
+    inlineHelpText = "Number 1 for summing reports"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.LongTextArea Authority_SDR__c {
+    apiName = "Opportunity.Authority_SDR__c"
+    label = "Authority"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.LongTextArea Budget_Text__c {
+    apiName = "Opportunity.Budget_Text__c"
+    label = "Budget (Text)"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.Text Competition__c {
+    apiName = "Opportunity.Competition__c"
+    label = "Competition (SDR)"
+    _required = false
+    inlineHelpText = "SDRs - fill which monday.com competitors they're currently using"
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea SDR_Notes__c {
+    apiName = "Opportunity.SDR_Notes__c"
+    label = "SDR Notes"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea Use_Case_SDR__c {
+    apiName = "Opportunity.Use_Case_SDR__c"
+    label = "(Obsolete) Use Case (SDR)"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea About_Company__c {
+    apiName = "Opportunity.About_Company__c"
+    label = "About Company"
+    _required = false
+    createable = true
+    updateable = true
+    length = 2000
+    queryable = true
+    visibleLines = 4
+  }
+  salesforce.LongTextArea Pains_SDR__c {
+    apiName = "Opportunity.Pains_SDR__c"
+    label = "Pains (SDR)"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.TextArea Opportunity_Size__c {
+    apiName = "Opportunity.Opportunity_Size__c"
+    label = "Opportunity Size"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Timeline_SDR__c {
+    apiName = "Opportunity.Timeline_SDR__c"
+    label = "Timeline (SDR)"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Url Link_to_Call__c {
+    apiName = "Opportunity.Link_to_Call__c"
+    label = "Link to Call"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text SDR_Name_for_reports__c {
+    apiName = "Opportunity.SDR_Name_for_reports__c"
+    label = "SDR Name (for reports)"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.TextArea Current_tools_SDR__c {
+    apiName = "Opportunity.Current_tools_SDR__c"
+    label = "Current tools (SDR)"
+    _required = false
+    inlineHelpText = "SDRs - fill which tools they're using today for their daily work"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "For SDRs to fill - which tools are they using today for their daily work?"
+  }
+  salesforce.LongTextArea Departments__c {
+    apiName = "Opportunity.Departments__c"
+    label = "Departments"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.TextArea Demo_Notes__c {
+    apiName = "Opportunity.Demo_Notes__c"
+    label = "Demo Notes"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup SDR_Name__c {
+    apiName = "Opportunity.SDR_Name__c"
+    label = "SDR Name"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Feedback_on_SDR_Call__c {
+    apiName = "Opportunity.Feedback_on_SDR_Call__c"
+    label = "Feedback on SDR Call"
+    _required = false
+    createable = true
+    updateable = true
+    length = 13000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Lookup Company__c {
+    apiName = "Opportunity.Company__c"
+    label = "Company"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Expected_Monthly_PPU__c {
+    apiName = "Opportunity.Expected_Monthly_PPU__c"
+    label = "Expected Monthly PPU"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Departments_AE__c {
+    apiName = "Opportunity.Departments_AE__c"
+    label = "(Obsolete) Departments"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Pricing_Version__c {
+    apiName = "Opportunity.Pricing_Version__c"
+    label = "Pricing Version"
+    _required = false
+    valueSet = [
+      {
+        fullName = "3"
+        default = false
+        label = "Pricing V3"
+      },
+      {
+        fullName = "5"
+        default = false
+        label = "Pricing V5"
+      },
+      {
+        fullName = "6"
+        default = false
+        label = "Pricing V6"
+      },
+      {
+        fullName = "7"
+        default = false
+        label = "Pricing V7"
+      },
+      {
+        fullName = "8"
+        default = true
+        label = "Pricing V8"
+      },
+      {
+        fullName = "Buckets"
+        default = false
+        isActive = false
+        label = "Buckets"
+      },
+      {
+        fullName = "Price Per User"
+        default = false
+        isActive = false
+        label = "Price Per User"
+      },
+      {
+        fullName = "4"
+        default = false
+        isActive = false
+        label = "Pricing V4"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.LongTextArea Subscription_Ids__c {
+    apiName = "Opportunity.Subscription_Ids__c"
+    label = "Subscription Ids"
+    _required = false
+    createable = true
+    updateable = true
+    length = 100000
+    queryable = true
+    visibleLines = 5
+  }
+  salesforce.Text Competition_AE__c {
+    apiName = "Opportunity.Competition_AE__c"
+    label = "(Obsolete) Competition"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Monday_Account__c {
+    apiName = "Opportunity.Monday_Account__c"
+    label = "Monday Account"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Lead_created_date__c {
+    apiName = "Opportunity.Lead_created_date__c"
+    label = "Lead created date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber X1st_cycle_period__c {
+    apiName = "Opportunity.X1st_cycle_period__c"
+    label = "Time from Lead to Closed Opp"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "CloseDate - Lead_created_date__c"
+    inlineHelpText = "How many days passed from lead creation to opportunity closing"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Lead_created_date__c,
+    ]
+  }
+  salesforce.Checkbox Top_Opportunity__c {
+    apiName = "Opportunity.Top_Opportunity__c"
+    label = "Top Opportunity?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.MultiselectPicklist Deal_Enabler__c {
+    apiName = "Opportunity.Deal_Enabler__c"
+    label = "Top Deal Enablers"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Admin"
+        default = false
+        label = "Admin"
+      },
+      {
+        fullName = "API"
+        default = false
+        label = "API"
+      },
+      {
+        fullName = "Automations"
+        default = false
+        label = "Automations"
+      },
+      {
+        fullName = "Board_linkage"
+        default = false
+        label = "Board_linkage"
+      },
+      {
+        fullName = "Calendar"
+        default = false
+        label = "Calendar"
+      },
+      {
+        fullName = "Communication"
+        default = false
+        label = "Communication"
+      },
+      {
+        fullName = "Dependencies"
+        default = false
+        label = "Dependencies"
+      },
+      {
+        fullName = "Forms"
+        default = false
+        label = "Forms"
+      },
+      {
+        fullName = "Gantt/timeline"
+        default = false
+        label = "Gantt/timeline"
+      },
+      {
+        fullName = "Integrations"
+        default = false
+        label = "Integrations"
+      },
+      {
+        fullName = "KanBan"
+        default = false
+        label = "KanBan"
+      },
+      {
+        fullName = "Multiple_accounts"
+        default = false
+        label = "Multiple_accounts"
+      },
+      {
+        fullName = "My_week"
+        default = false
+        label = "My_week"
+      },
+      {
+        fullName = "Permissions"
+        default = false
+        label = "Permissions"
+      },
+      {
+        fullName = "Reporting"
+        default = false
+        label = "Reporting"
+      },
+      {
+        fullName = "Resource_allocation"
+        default = false
+        label = "Resource_allocation"
+      },
+      {
+        fullName = "Security"
+        default = false
+        label = "Security"
+      },
+      {
+        fullName = "Sub_folders"
+        default = false
+        label = "Sub_folders"
+      },
+      {
+        fullName = "Sub_tasks"
+        default = false
+        label = "Sub_tasks"
+      },
+      {
+        fullName = "Time_tracking"
+        default = false
+        label = "Time_tracking"
+      },
+      {
+        fullName = "Workspaces"
+        default = false
+        label = "Workspaces"
+      },
+      {
+        fullName = "N/A"
+        default = false
+        label = "N/A"
+      },
+      {
+        fullName = "Easy to adopt"
+        default = false
+        isActive = false
+        label = "Easy to adopt"
+      },
+    ]
+    restricted = true
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.MultiselectPicklist Deal_Blockers__c {
+    apiName = "Opportunity.Deal_Blockers__c"
+    label = "Top Deal Blockers"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Admin"
+        default = false
+        label = "Admin"
+      },
+      {
+        fullName = "API"
+        default = false
+        label = "API"
+      },
+      {
+        fullName = "Automations"
+        default = false
+        label = "Automations"
+      },
+      {
+        fullName = "Board_linkage"
+        default = false
+        label = "Board_linkage"
+      },
+      {
+        fullName = "Calendar"
+        default = false
+        label = "Calendar"
+      },
+      {
+        fullName = "Communication"
+        default = false
+        label = "Communication"
+      },
+      {
+        fullName = "Dependencies"
+        default = false
+        label = "Dependencies"
+      },
+      {
+        fullName = "Forms"
+        default = false
+        label = "Forms"
+      },
+      {
+        fullName = "Gantt/timeline"
+        default = false
+        label = "Gantt/timeline"
+      },
+      {
+        fullName = "Integrations"
+        default = false
+        label = "Integrations"
+      },
+      {
+        fullName = "KanBan"
+        default = false
+        label = "KanBan"
+      },
+      {
+        fullName = "Multiple_accounts"
+        default = false
+        label = "Multiple_accounts"
+      },
+      {
+        fullName = "My_week"
+        default = false
+        label = "My_week"
+      },
+      {
+        fullName = "Permissions"
+        default = false
+        label = "Permissions"
+      },
+      {
+        fullName = "Reporting"
+        default = false
+        label = "Reporting"
+      },
+      {
+        fullName = "Resource_allocation"
+        default = false
+        label = "Resource_allocation"
+      },
+      {
+        fullName = "Security"
+        default = false
+        label = "Security"
+      },
+      {
+        fullName = "Sub_folders"
+        default = false
+        label = "Sub_folders"
+      },
+      {
+        fullName = "Sub_tasks"
+        default = false
+        label = "Sub_tasks"
+      },
+      {
+        fullName = "Time_tracking"
+        default = false
+        label = "Time_tracking"
+      },
+      {
+        fullName = "Workspaces"
+        default = false
+        label = "Workspaces"
+      },
+      {
+        fullName = "N/A"
+        default = false
+        label = "N/A"
+      },
+      {
+        fullName = "Easy to adopt"
+        default = false
+        isActive = false
+        label = "Easy to adopt"
+      },
+    ]
+    restricted = true
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Lookup Owner_s_Manager__c {
+    apiName = "Opportunity.Owner_s_Manager__c"
+    label = "Owner's Manager"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Migration_Id__c {
+    apiName = "Opportunity.Migration_Id__c"
+    label = "Migration Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaCurrency Predicted_Collection__c {
+    apiName = "Opportunity.Predicted_Collection__c"
+    label = "Predicted Collection"
+    _required = false
+    formula = "if( lower(Expected_Plan_Period__c)='monthly', Pipeline__c/12, Pipeline__c )"
+    createable = false
+    updateable = false
+    scale = 2
+    precision = 18
+    queryable = true
+    description = "Created for Marketing ROI Calculations"
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Utm_banner__c {
+    apiName = "Opportunity.Utm_banner__c"
+    label = "Utm_banner"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Utm_source__c {
+    apiName = "Opportunity.Utm_source__c"
+    label = "Utm_source"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Utm_campaign__c {
+    apiName = "Opportunity.Utm_campaign__c"
+    label = "Utm_campaign"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 200
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaCheckbox Owner_Is_Partner__c {
+    apiName = "Opportunity.Owner_Is_Partner__c"
+    label = "Owner Is Partner"
+    formula = '''
+/*(  Owner.Profile.Name  = "Channel Managers" ) || (  Owner.Profile.Name = "Partner Community Custom" )*/
+ispickval(Owner.Function__c,"Partner")||ispickval(Owner.Function__c,"Partners- Channel Manager")
+'''
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Opportunity_Source_Type__c {
+    apiName = "Opportunity.Opportunity_Source_Type__c"
+    label = "Opportunity Source Type"
+    _required = false
+    formula = "TEXT(Account.Account_Source_Type__c)"
+    inlineHelpText = "From account - account source type"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Industry__c {
+    apiName = "Opportunity.Industry__c"
+    label = "Company: Industry"
+    _required = false
+    formula = "if( isblank(Company__r.Industry_new__c),text(Monday_Account__r.Industry) ,Company__r.Industry_new__c  )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Validation_Timestamp__c {
+    apiName = "Opportunity.Validation_Timestamp__c"
+    label = "Validation Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox Company_MA_Discrepancy__c {
+    apiName = "Opportunity.Company_MA_Discrepancy__c"
+    label = "Monitoring: Company & MA Discrepancy"
+    formula = "Account.RecordType.DeveloperName = \"Company\" || Company__r.RecordType.Id = \"0121t000000IQTnAAO\" ||  Company__r.RecordType.DeveloperName = \"Partner Account\""
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Validation__c {
+    apiName = "Opportunity.Validation__c"
+    label = "Validation"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF(TEXT( Validation_Timestamp__c  )<>\"\",1,0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    businessStatus = "Active"
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Close_date_In_This_Quarter_for_reports__c {
+    apiName = "Opportunity.Close_date_In_This_Quarter_for_reports__c"
+    label = "Close Date In This Quarter (for reports)"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+if(((CASE(MONTH( CloseDate ),
+1, "Q1" ,
+2, "Q1",
+3, "Q1",
+4, "Q2",
+5, "Q2",
+6, "Q2",
+7, "Q3",
+8, "Q3",
+9, "Q3",
+10, "Q4",
+11, "Q4",
+12, "Q4",
+"None")
+==
+CASE(MONTH( Today() ),
+1, "Q1" ,
+2, "Q1",
+3, "Q1",
+4, "Q2",
+5, "Q2",
+6, "Q2",
+7, "Q3",
+8, "Q3",
+9, "Q3",
+10, "Q4",
+11, "Q4",
+12, "Q4",
+"None"))
+&&
+(Year(Today()) == Year(CloseDate))),1,0)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Has_Sales_Engineer_Assigned__c {
+    apiName = "Opportunity.Has_Sales_Engineer_Assigned__c"
+    label = "Has Sales Engineer Assigned"
+    formula = "not(isblank(Sales_Engineer__c ))"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber SE_Score__c {
+    apiName = "Opportunity.SE_Score__c"
+    label = "SE Score"
+    _required = false
+    precision = 18
+    scale = 1
+    formula = '''
+IF( Green_Bucket_ARR__c  > 99999,3,IF(Green_Bucket_ARR__c > 49999,2,IF(Green_Bucket_ARR__c > 24999,1,IF(Green_Bucket_ARR__c > 14999,0.5,0))))
+
++
+
+IF(TEXT(Type) = "New Business",1,0)
+
++
+
+IF( Key_Deal__c = TRUE,1,0)
+
++ 
+
+IF( Top_Opportunity__c = TRUE,0.5,0)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Created_Date_4_9_20__c {
+    apiName = "Opportunity.Created_Date_4_9_20__c"
+    label = "Created Date > 4.9.20"
+    formula = "IF(DATEVALUE(CreatedDate) > DATE(2020,09,03),TRUE, FALSE)"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Html Manager_s_notes__c {
+    apiName = "Opportunity.Manager_s_notes__c"
+    label = "Manager's Notes"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 25
+  }
+  salesforce.MultiselectPicklist Competition_They_re_Evaluating__c {
+    apiName = "Opportunity.Competition_They_re_Evaluating__c"
+    label = "Competition They're Evaluating"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    inlineHelpText = "Which other tools are they currently evaluating?"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Key information section of opportunity - Global Picklist"
+    valueSetName = salesforce.GlobalValueSet.instance.Competitors
+  }
+  salesforce.FormulaText Dedicated_CSM_Email__c {
+    apiName = "Opportunity.Dedicated_CSM_Email__c"
+    label = "Dedicated CSM Email"
+    _required = false
+    formula = "if(isnull(Sale__c),\"No Dedicated CSM\", if(isnull(Sale__r.CSM_Email__c),\"No Dedicated CSM\",Sale__r.CSM_Email__c ))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Deal_Enablers_2__c {
+    apiName = "Opportunity.Deal_Enablers_2__c"
+    label = "Deal Enablers 2"
+    _required = false
+    restricted = true
+    fieldDependency = {
+      controllingField = "Deal_Enablers_1__c"
+      valueSettings = [
+        {
+          valueName = "Admin"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "API"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Automations"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Board Linkage"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Communication"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Easy to Adopt"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Files Management "
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Integrations"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "KanBan"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Mobile"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Multiple Accounts Management"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Permissions"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "PMO"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Reporting"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Security"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Sub Folders"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Time Management"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Other/None"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+      ]
+    }
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Enablers_and_Blockers_H1
+  }
+  salesforce.Picklist Deal_Enablers_1_Info__c {
+    apiName = "Opportunity.Deal_Enablers_1_Info__c"
+    label = "Deal Enablers - Info"
+    _required = false
+    restricted = true
+    fieldDependency = {
+      controllingField = "Deal_Enablers_1__c"
+      valueSettings = [
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Account permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Board permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Custom permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Pulse/Group view level permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Role based permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Team permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "WS permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Baseline "
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Critical path"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Dependencies"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Milestones"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Planned VS Actual"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Filters "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Formulas"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Limited boards"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Resource_allocation"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Sharing"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Speed "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Time reports "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Communication audit"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Custom data retention"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Data Residency"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Encryption key management"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Permissions"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Security (encryption, sessions control etc.)"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "User provisioning (SCIM)"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Calendar"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "My_week"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "Time_tracking"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "Timeline"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "Account logs/activity"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Billing by department/WS"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Boards management"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Domain block"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Super/Billing Admin"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "User Engagement Stats"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Automation permissions"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Missing column support"
+          controllingFieldValue = [
+            "Automations",
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing features in existing recipes"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Missing recipes"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Items linkage"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Rollup"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Sub_tasks"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Annotation"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Emails"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Formatting in updates "
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Notification"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Personal preferences"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Custom Recipes"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Integration permissions"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing app"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing features in existing app"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Files (upload, download, photos, preview etc.)"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "GPS/location capabilities"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Notifications"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Offline mode"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+      ]
+    }
+    inlineHelpText = "Drill down for deal enabler 1"
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Enablers_and_Blockers_H2
+  }
+  salesforce.Picklist Deal_Enablers_2_Info__c {
+    apiName = "Opportunity.Deal_Enablers_2_Info__c"
+    label = "Deal Enablers 2 - Info"
+    _required = false
+    restricted = true
+    fieldDependency = {
+      controllingField = "Deal_Enablers_2__c"
+      valueSettings = [
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Account permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Board permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Custom permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Pulse/Group view level permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Role based permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Team permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "WS permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Baseline "
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Critical path"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Dependencies"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Milestones"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Planned VS Actual"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Filters "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Formulas"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Limited boards"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Resource_allocation"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Sharing"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Speed "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Time reports "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Communication audit"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Custom data retention"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Data Residency"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Encryption key management"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Permissions"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Security (encryption, sessions control etc.)"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "User provisioning (SCIM)"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Calendar"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "My_week"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "Time_tracking"
+          controllingFieldValue = [
+            "Other/None",
+          ]
+        },
+        {
+          valueName = "Timeline"
+          controllingFieldValue = [
+            "Other/None",
+          ]
+        },
+        {
+          valueName = "Account logs/activity"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Billing by department/WS"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Boards management"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Domain block"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Super/Billing Admin"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "User Engagement Stats"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Automation permissions"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Missing column support"
+          controllingFieldValue = [
+            "Automations",
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing features in existing recipes"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Missing recipes"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Items linkage"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Rollup"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Sub_tasks"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Annotation"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Emails"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Formatting in updates "
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Notification"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Personal preferences"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Custom Recipes"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Integration permissions"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing app"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing features in existing app"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Files (upload, download, photos, preview etc.)"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "GPS/location capabilities"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Notifications"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Offline mode"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+      ]
+    }
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Dependent on Deal Enablers 2"
+    valueSetName = salesforce.GlobalValueSet.instance.Enablers_and_Blockers_H2
+  }
+  salesforce.Picklist Deal_Blockers_1__c {
+    apiName = "Opportunity.Deal_Blockers_1__c"
+    label = "Deal Blockers"
+    _required = false
+    restricted = true
+    inlineHelpText = "The main reason this deal might not go through"
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Enablers_and_Blockers_H1
+  }
+  salesforce.Picklist Deal_Blockers_1_Info__c {
+    apiName = "Opportunity.Deal_Blockers_1_Info__c"
+    label = "Deal Blockers - Info"
+    _required = false
+    restricted = true
+    fieldDependency = {
+      controllingField = "Deal_Blockers_1__c"
+      valueSettings = [
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Account permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Board permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Custom permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Pulse/Group view level permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Role based permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Team permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "WS permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Baseline "
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Critical path"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Dependencies"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Milestones"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Planned VS Actual"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Filters "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Formulas"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Limited boards"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Resource_allocation"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Sharing"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Speed "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Time reports "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Communication audit"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Custom data retention"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Data Residency"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Encryption key management"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Permissions"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Security (encryption, sessions control etc.)"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "User provisioning (SCIM)"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Calendar"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "My_week"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "Time_tracking"
+          controllingFieldValue = [
+            "Other/None",
+          ]
+        },
+        {
+          valueName = "Timeline"
+          controllingFieldValue = [
+            "Other/None",
+          ]
+        },
+        {
+          valueName = "Account logs/activity"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Billing by department/WS"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Boards management"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Domain block"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Super/Billing Admin"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "User Engagement Stats"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Automation permissions"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Missing column support"
+          controllingFieldValue = [
+            "Automations",
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing features in existing recipes"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Missing recipes"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Items linkage"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Rollup"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Sub_tasks"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Annotation"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Emails"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Formatting in updates "
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Notification"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Personal preferences"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Custom Recipes"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Integration permissions"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing app"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing features in existing app"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Files (upload, download, photos, preview etc.)"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "GPS/location capabilities"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Notifications"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Offline mode"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+      ]
+    }
+    inlineHelpText = "Drill down for deal blocker 1"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Dependent on deal blockers 1"
+    valueSetName = salesforce.GlobalValueSet.instance.Enablers_and_Blockers_H2
+  }
+  salesforce.Picklist Deal_Enablers_1__c {
+    apiName = "Opportunity.Deal_Enablers_1__c"
+    label = "Deal Enablers"
+    _required = false
+    restricted = true
+    inlineHelpText = "What is the main platform feature that supported this deal?"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "First Hierarchy of deal enablers - will trigger a dependent list of second Hierarchy of deal enablers"
+    valueSetName = salesforce.GlobalValueSet.instance.Enablers_and_Blockers_H1
+  }
+  salesforce.Checkbox Key_Deal__c {
+    apiName = "Opportunity.Key_Deal__c"
+    label = "Key Deal?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Used in the managers section of the opportunity"
+  }
+  salesforce.Number Push_Count__c {
+    apiName = "Opportunity.Push_Count__c"
+    label = "Push Count"
+    _required = false
+    defaultValueFormula = "0"
+    precision = 18
+    scale = 0
+    inlineHelpText = "Number of times the opportunity close date was pushed between months"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Number of times the opportunity close date was pushed between months"
+    externalId = false
+  }
+  salesforce.FormulaText Final_Sale_Status__c {
+    apiName = "Opportunity.Final_Sale_Status__c"
+    label = "Final Sale Status"
+    _required = false
+    formula = "text(Sale__r.FinalSaleStatus__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Opportunity_Age__c {
+    apiName = "Opportunity.Opportunity_Age__c"
+    label = "Opportunity Age"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+IF(IsClosed,if(ispickval(StageName,"Closed Lost"), Closed_Lost_timestamp__c - DATEVALUE(CreatedDate), 
+CloseDate - DATEVALUE(CreatedDate)),
+TODAY() - DATEVALUE(CreatedDate))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Deal_Size__c {
+    apiName = "Opportunity.Deal_Size__c"
+    label = "Deal Size"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if( Green_Bucket_ARR__c = 0,  Expected_ARR__c , Green_Bucket_ARR__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Expected_ARR__c,
+      salesforce.Opportunity.field.Green_Bucket_ARR__c,
+    ]
+  }
+  salesforce.Checkbox Forecasted__c {
+    apiName = "Opportunity.Forecasted__c"
+    label = "Commit"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.MultiselectPicklist Current_Tool__c {
+    apiName = "Opportunity.Current_Tool__c"
+    label = "Current Tool"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    inlineHelpText = "What are they currently using that monday.com will replace?"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Key information section - Global Picklist"
+    valueSetName = salesforce.GlobalValueSet.instance.Replaced_tools
+  }
+  salesforce.Picklist Deal_Blockers_2__c {
+    apiName = "Opportunity.Deal_Blockers_2__c"
+    label = "Deal Blockers 2"
+    _required = false
+    restricted = true
+    fieldDependency = {
+      controllingField = "Deal_Blockers_1__c"
+      valueSettings = [
+        {
+          valueName = "Admin"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "API"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Automations"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Board Linkage"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Communication"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Easy to Adopt"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Files Management "
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Integrations"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "KanBan"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Mobile"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Multiple Accounts Management"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Permissions"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "PMO"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Reporting"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Security"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Sub Folders"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Time Management"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Other/None"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+      ]
+    }
+    inlineHelpText = "The second reason why the deal may not go through"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Key information section - global picklist"
+    valueSetName = salesforce.GlobalValueSet.instance.Enablers_and_Blockers_H1
+  }
+  salesforce.Picklist Deal_Blockers_2_Info__c {
+    apiName = "Opportunity.Deal_Blockers_2_Info__c"
+    label = "Deal Blockers 2 - Info"
+    _required = false
+    restricted = true
+    fieldDependency = {
+      controllingField = "Deal_Blockers_2__c"
+      valueSettings = [
+        {
+          valueName = "Other"
+          controllingFieldValue = [
+            "Multiple Accounts Management",
+            "Permissions",
+            "PMO",
+            "Reporting",
+            "Security",
+            "Sub Folders",
+            "Time Management",
+            "Other/None",
+            "Admin",
+            "API",
+            "Automations",
+            "Board Linkage",
+            "Communication",
+            "Easy to Adopt",
+            "Files Management ",
+            "Integrations",
+            "KanBan",
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Account permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Board permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Custom permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Pulse/Group view level permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Role based permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Team permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "WS permissions"
+          controllingFieldValue = [
+            "Permissions",
+          ]
+        },
+        {
+          valueName = "Baseline "
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Critical path"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Dependencies"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Milestones"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Planned VS Actual"
+          controllingFieldValue = [
+            "PMO",
+          ]
+        },
+        {
+          valueName = "Filters "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Formulas"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Limited boards"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Resource_allocation"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Sharing"
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Speed "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Time reports "
+          controllingFieldValue = [
+            "Reporting",
+          ]
+        },
+        {
+          valueName = "Communication audit"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Custom data retention"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Data Residency"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Encryption key management"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Permissions"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Security (encryption, sessions control etc.)"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "User provisioning (SCIM)"
+          controllingFieldValue = [
+            "Security",
+          ]
+        },
+        {
+          valueName = "Calendar"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "My_week"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "Time_tracking"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "Timeline"
+          controllingFieldValue = [
+            "Time Management",
+          ]
+        },
+        {
+          valueName = "Account logs/activity"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Billing by department/WS"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Boards management"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Domain block"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Super/Billing Admin"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "User Engagement Stats"
+          controllingFieldValue = [
+            "Admin",
+          ]
+        },
+        {
+          valueName = "Automation permissions"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Missing column support"
+          controllingFieldValue = [
+            "Automations",
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing features in existing recipes"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Missing recipes"
+          controllingFieldValue = [
+            "Automations",
+          ]
+        },
+        {
+          valueName = "Items linkage"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Rollup"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Sub_tasks"
+          controllingFieldValue = [
+            "Board Linkage",
+          ]
+        },
+        {
+          valueName = "Annotation"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Emails"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Formatting in updates "
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Notification"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Personal preferences"
+          controllingFieldValue = [
+            "Communication",
+          ]
+        },
+        {
+          valueName = "Custom Recipes"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Integration permissions"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing app"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Missing features in existing app"
+          controllingFieldValue = [
+            "Integrations",
+          ]
+        },
+        {
+          valueName = "Files (upload, download, photos, preview etc.)"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "GPS/location capabilities"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Notifications"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+        {
+          valueName = "Offline mode"
+          controllingFieldValue = [
+            "Mobile",
+          ]
+        },
+      ]
+    }
+    inlineHelpText = "Information about the deal blocker you've chosen"
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Enablers_and_Blockers_H2
+  }
+  salesforce.MultiselectPicklist Other_tools_they_re_using__c {
+    apiName = "Opportunity.Other_tools_they_re_using__c"
+    label = "Tools in their Ecosystem"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    inlineHelpText = "Which other tools are they using in the company that we can integrate with?"
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Tools_in_Ecosystem
+  }
+  salesforce.Text DM_Details__c {
+    apiName = "Opportunity.DM_Details__c"
+    label = "(Obsolete) DM and Signer"
+    _required = false
+    inlineHelpText = "The decision maker's and signer's name and title"
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Key information section"
+    externalId = false
+  }
+  salesforce.Html Extra_Information__c {
+    apiName = "Opportunity.Extra_Information__c"
+    label = "Extra Information"
+    _required = false
+    inlineHelpText = "This is the place for you to take notes and add information about this opportunity"
+    createable = true
+    updateable = true
+    length = 130000
+    queryable = true
+    visibleLines = 10
+  }
+  salesforce.MultiselectPicklist DepartmentFunction__c {
+    apiName = "Opportunity.DepartmentFunction__c"
+    label = "Department/Function"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    inlineHelpText = "Main department/function of the account"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Key Information section - global picklist"
+    valueSetName = salesforce.GlobalValueSet.instance.Functions
+  }
+  salesforce.FormulaCheckbox Managed_By_Dealhub__c {
+    apiName = "Opportunity.Managed_By_Dealhub__c"
+    label = "Managed By Dealhub?"
+    formula = "Quote_Count__c > 0 || Product_Count__c > 0"
+    createable = false
+    updateable = false
+    queryable = true
+    description = "Used by BigBrain for claim pickers"
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Quote_Count__c,
+      salesforce.Opportunity.field.Product_Count__c,
+    ]
+  }
+  salesforce.Summary Won_SO_Count__c {
+    apiName = "Opportunity.Won_SO_Count__c"
+    label = "Won SO Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Quote.Document_Type__c"
+        operation = "equals"
+        value = "Sales Order"
+      },
+      {
+        field = "Quote.DH_Quote_Status__c"
+        operation = "equals"
+        value = "Won"
+      },
+    ]
+    summaryForeignKey = "Quote.OpportunityId"
+    summaryOperation = "count"
+    _generated_dependencies = [
+      salesforce.Quote.field.DH_Quote_Status__c,
+      salesforce.Quote.field.Document_Type__c,
+    ]
+  }
+  salesforce.FormulaText Link_to_BB_Account__c {
+    apiName = "Opportunity.Link_to_BB_Account__c"
+    label = "Link to BB Account"
+    _required = false
+    formula = '''
+if( primary_pulse_account_id__c <>'',
+ HYPERLINK("https://bigbrain.me/accounts/"&   primary_pulse_account_id__c   &"'/profile",
+"Link to BB Account",'BLANK') 
+,'')
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Record_Type__c {
+    apiName = "Opportunity.Record_Type__c"
+    label = "Record Type Number"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if( RecordTypeId ='0121t000000Lucv',1,if( RecordTypeId='0121t000000IQUb',2,0))"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Week_Created_Date__c {
+    apiName = "Opportunity.Week_Created_Date__c"
+    label = "Week Created Date"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+IF( 
+
+CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1) +1 )/ 7) > 52, 
+
+52, 
+
+CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+1 ) / 7) 
+
+)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.MultiselectPicklist Selling_competing_products__c {
+    apiName = "Opportunity.Selling_competing_products__c"
+    label = "Selling competing products?"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    inlineHelpText = "Is the partner working with any of our competitors?"
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Competitors
+  }
+  salesforce.FormulaCheckbox Is_BDR__c {
+    apiName = "Opportunity.Is_BDR__c"
+    label = "BDR Lead?"
+    formula = "ISPICKVAL(  SDR_Name__r.Function__c  , 'BDR')"
+    inlineHelpText = "SDR Name's function is 'BDR'"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.SDR_Name__c,
+      salesforce.User.field.Function__c,
+    ]
+  }
+  salesforce.FormulaCheckbox TLV_Office_Temp__c {
+    apiName = "Opportunity.TLV_Office_Temp__c"
+    label = "TLV Office (Temp)"
+    formula = "text(Owner.Office__c ) = \"Tel Aviv Office\""
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Monday_Solutions_Offered__c {
+    apiName = "Opportunity.Monday_Solutions_Offered__c"
+    label = "Monday Solution Offered"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Creative"
+        default = false
+        label = "Creative"
+      },
+      {
+        fullName = "Marketing"
+        default = false
+        label = "Marketing"
+      },
+      {
+        fullName = "Project Management"
+        default = false
+        label = "Project Management"
+      },
+      {
+        fullName = "Sales Operations"
+        default = false
+        label = "Sales Operations"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaText MA_Discount_Type__c {
+    apiName = "Opportunity.MA_Discount_Type__c"
+    label = "MA: Discount Type"
+    _required = false
+    formula = "Text(Account.Discount_Type__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    description = "Show if the account is qualified to get a special discount (i.e- NGO, Education)"
+    externalId = false
+  }
+  salesforce.FormulaCheckbox Wrong_Pulse_Account_Id__c {
+    apiName = "Opportunity.Wrong_Pulse_Account_Id__c"
+    label = "Wrong Pulse Account Id"
+    formula = "if( Account.primary_pulse_account_id__c <>\"\",if( primary_pulse_account_id__c <>  Account.primary_pulse_account_id__c , true, false),false)"
+    inlineHelpText = "True if the related account has an account primary pulse account ID and it's different from the opportunity's primary pulse account id."
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.primary_pulse_account_id__c,
+      salesforce.Account.field.primary_pulse_account_id__c,
+    ]
+  }
+  salesforce.Picklist Opportunity_Reseller__c {
+    apiName = "Opportunity.Opportunity_Reseller__c"
+    label = "Opportunity Reseller"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Not a Reseller"
+        default = false
+        label = "Not a Reseller"
+      },
+      {
+        fullName = "729"
+        default = false
+        label = "729"
+      },
+      {
+        fullName = "Babel"
+        default = false
+        label = "Babel"
+      },
+      {
+        fullName = "Eligeo"
+        default = false
+        label = "Eligeo"
+      },
+      {
+        fullName = "Refresh Networks (ZA)"
+        default = false
+        label = "Refresh Networks (ZA)"
+      },
+      {
+        fullName = "Right Decision  (ES)"
+        default = false
+        label = "Right Decision  (ES)"
+      },
+      {
+        fullName = "SEOSEON (FI)"
+        default = false
+        label = "SEOSEON (FI)"
+      },
+      {
+        fullName = "Soluma (SR)"
+        default = false
+        label = "Soluma (SR)"
+      },
+      {
+        fullName = "Soluware (CH)"
+        default = false
+        label = "Soluware (CH)"
+      },
+      {
+        fullName = "ESL"
+        default = false
+        label = "ESL"
+      },
+      {
+        fullName = "Entrypoint"
+        default = false
+        label = "Entrypoint"
+      },
+      {
+        fullName = "g-company"
+        default = false
+        label = "g-company"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text Owners_Team_on_Won__c {
+    apiName = "Opportunity.Owners_Team_on_Won__c"
+    label = "Owner's Team on Won"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.MultiselectPicklist Other_software_they_re_selling__c {
+    apiName = "Opportunity.Other_software_they_re_selling__c"
+    label = "Other software they're selling"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Tools_in_Ecosystem
+  }
+  salesforce.Picklist Region__c {
+    apiName = "Opportunity.Region__c"
+    label = "Region"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Region
+  }
+  salesforce.Picklist Zone__c {
+    apiName = "Opportunity.Zone__c"
+    label = "Zone"
+    _required = false
+    restricted = true
+    fieldDependency = {
+      controllingField = "Region__c"
+      valueSettings = [
+        {
+          valueName = "East Asia"
+          controllingFieldValue = [
+            "APAC",
+          ]
+        },
+        {
+          valueName = "Oceania"
+          controllingFieldValue = [
+            "APAC",
+          ]
+        },
+        {
+          valueName = "Southeast Asia"
+          controllingFieldValue = [
+            "APAC",
+          ]
+        },
+        {
+          valueName = "Africa"
+          controllingFieldValue = [
+            "EMEA",
+          ]
+        },
+        {
+          valueName = "Eastern_Europe"
+          controllingFieldValue = [
+            "EMEA",
+          ]
+        },
+        {
+          valueName = "Middle East"
+          controllingFieldValue = [
+            "EMEA",
+          ]
+        },
+        {
+          valueName = "UK + Ireland"
+          controllingFieldValue = [
+            "EMEA",
+          ]
+        },
+        {
+          valueName = "Caribbean"
+          controllingFieldValue = [
+            "LATAM",
+          ]
+        },
+        {
+          valueName = "Central America"
+          controllingFieldValue = [
+            "LATAM",
+          ]
+        },
+        {
+          valueName = "South America"
+          controllingFieldValue = [
+            "LATAM",
+          ]
+        },
+      ]
+    }
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Sub_Region
+  }
+  salesforce.Date Negotiation_Timestamp__c {
+    apiName = "Opportunity.Negotiation_Timestamp__c"
+    label = "Negotiation Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Priority_Customer_Id__c {
+    apiName = "Opportunity.Priority_Customer_Id__c"
+    label = "Priority Customer Id"
+    _required = false
+    formula = "Billing_Entity__r.Priority_Id__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.LongTextArea Closed_Opportunity_Summary__c {
+    apiName = "Opportunity.Closed_Opportunity_Summary__c"
+    label = "Closed Opportunity Summary"
+    _required = false
+    inlineHelpText = "What was the differentiator? Was there any compelling event that made them buy now? Were there any pricing/other issues?"
+    createable = true
+    updateable = true
+    length = 80000
+    queryable = true
+    visibleLines = 10
+  }
+  salesforce.Text First_Lead_Source__c {
+    apiName = "Opportunity.First_Lead_Source__c"
+    label = "First Lead Source"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Lessons_and_Insights__c {
+    apiName = "Opportunity.Lessons_and_Insights__c"
+    label = "Lessons and Insights"
+    _required = false
+    inlineHelpText = "What are the lessons learned from this sale process?"
+    createable = true
+    updateable = true
+    length = 50000
+    queryable = true
+    visibleLines = 10
+  }
+  salesforce.DateTime Send_Summary_Email_Trigger__c {
+    apiName = "Opportunity.Send_Summary_Email_Trigger__c"
+    label = "Send Summary Email Trigger"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Summary_Email_Timestamp__c {
+    apiName = "Opportunity.Summary_Email_Timestamp__c"
+    label = "Summary Email Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Lead_Contacted_Date__c {
+    apiName = "Opportunity.Lead_Contacted_Date__c"
+    label = "Lead Contacted Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Populated from 'Lead'"
+  }
+  salesforce.LongTextArea Legal_Security_Issues__c {
+    apiName = "Opportunity.Legal_Security_Issues__c"
+    label = "(Obsolete) Legal/Security Issues"
+    _required = false
+    inlineHelpText = "Were there any legal or security issues that affected the sale process?"
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 10
+  }
+  salesforce.Picklist Send_to__c {
+    apiName = "Opportunity.Send_to__c"
+    label = "Send to"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Myself"
+        default = false
+        label = "Preview to Myself"
+      },
+      {
+        fullName = "Sales Team"
+        default = false
+        label = "Sales Team"
+      },
+    ]
+    restricted = false
+    inlineHelpText = "Send a preview to yourself in order to preview the email"
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaText Priority_Sales_Order_Id__c {
+    apiName = "Opportunity.Priority_Sales_Order_Id__c"
+    label = "Priority Sales Order Id"
+    _required = false
+    formula = "SyncedQuote.Priority_Order_No__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Claimed_ARR__c {
+    apiName = "Opportunity.Claimed_ARR__c"
+    label = "Claimed ARR"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Expected_ARR_Temp__c {
+    apiName = "Opportunity.Expected_ARR_Temp__c"
+    label = "Expected ARR Temp"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaCheckbox Summary_Sent_to_Company__c {
+    apiName = "Opportunity.Summary_Sent_to_Company__c"
+    label = "Summary Sent to Company"
+    formula = "not(isblank( Summary_Email_Timestamp__c ))"
+    createable = false
+    updateable = false
+    queryable = true
+    description = '''
+TRUE if a summary of this closed won opp had been sent to the entire sales team. 
+Used in Flow Component Visibility filter in Opportunity lightning page
+'''
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Forecasted_ARR__c {
+    apiName = "Opportunity.Forecasted_ARR__c"
+    label = "Commit ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF( Forecasted__c =True, Green_Bucket_ARR__c ,0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber Deal__c {
+    apiName = "Opportunity.Deal__c"
+    label = "Deal"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if(isblank( Id ),0,1)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary Quote_ARR__c {
+    apiName = "Opportunity.Quote_ARR__c"
+    label = "Quote ARR Sum"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Quote.ARR__c"
+    summaryFilterItems = [
+      {
+        field = "Quote.IsSyncing"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "Quote.OpportunityId"
+    summaryOperation = "sum"
+  }
+  salesforce.Summary Quote_Count__c {
+    apiName = "Opportunity.Quote_Count__c"
+    label = "Quote Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryForeignKey = "Quote.OpportunityId"
+    summaryOperation = "count"
+  }
+  salesforce.Summary Product_ARR__c {
+    apiName = "Opportunity.Product_ARR__c"
+    label = "Product ARR Sum"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    description = "sum of opportunity products ARR"
+    summarizedField = "OpportunityLineItem.ARR__c"
+    summaryForeignKey = "OpportunityLineItem.OpportunityId"
+    summaryOperation = "sum"
+  }
+  salesforce.Summary Product_Count__c {
+    apiName = "Opportunity.Product_Count__c"
+    label = "Product Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryForeignKey = "OpportunityLineItem.OpportunityId"
+    summaryOperation = "count"
+  }
+  salesforce.Lookup Billing_Entity__c {
+    apiName = "Opportunity.Billing_Entity__c"
+    label = "Billing Entity"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Billing_Entity__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Country__c {
+    apiName = "Opportunity.Country__c"
+    label = "Country"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Billing_Entity_Name__c {
+    apiName = "Opportunity.Billing_Entity_Name__c"
+    label = "Billing Entity: Name"
+    _required = false
+    formula = "Billing_Entity__r.Name"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Billing_Entity_VAT_Number__c {
+    apiName = "Opportunity.Billing_Entity_VAT_Number__c"
+    label = "Billing Entity: VAT Number"
+    _required = false
+    formula = "Billing_Entity__r.VAT_Number__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Company_Name__c {
+    apiName = "Opportunity.Company_Name__c"
+    label = "Company: Name"
+    _required = false
+    formula = "Company__r.Name"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Contract_Type__c {
+    apiName = "Opportunity.Contract_Type__c"
+    label = "Contract Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "New Contract"
+        default = false
+        label = "New Contract"
+      },
+      {
+        fullName = "Change Existing Contract (Pro-rated)"
+        default = false
+        label = "Change Existing Contract (Pro-rated)"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.DateTime DH_Date_of_Signature__c {
+    apiName = "Opportunity.DH_Date_of_Signature__c"
+    label = "Date of Signature"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist DH_Dealroom_Status__c {
+    apiName = "Opportunity.DH_Dealroom_Status__c"
+    label = "DH Dealroom Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Won"
+        default = false
+        label = "Won"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "When the Dealroom is signed- this field is changed to 'Won' automatically by Dealhub"
+    sorted = false
+  }
+  salesforce.Text DH_Signer_Name_c__c {
+    apiName = "Opportunity.DH_Signer_Name_c__c"
+    label = "Signer Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text DH_Signer_Title__c {
+    apiName = "Opportunity.DH_Signer_Title__c"
+    label = "Signer Title"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Url DealRoom_Link__c {
+    apiName = "Opportunity.DealRoom_Link__c"
+    label = "DealRoom Link"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Is_Finalized__c {
+    apiName = "Opportunity.Is_Finalized__c"
+    label = "Is Finalized?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Is_SO_Signed__c {
+    apiName = "Opportunity.Is_SO_Signed__c"
+    label = "Is SO Manually Signed?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text License_Product__c {
+    apiName = "Opportunity.License_Product__c"
+    label = "License Product"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number USD_exchange_rate__c {
+    apiName = "Opportunity.USD_exchange_rate__c"
+    label = "USD exchange rate"
+    _required = false
+    precision = 18
+    scale = 4
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Summary License_Product_Count__c {
+    apiName = "Opportunity.License_Product_Count__c"
+    label = "License Product Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "OpportunityLineItem.Description"
+        operation = "equals"
+        value = "License"
+      },
+    ]
+    summaryForeignKey = "OpportunityLineItem.OpportunityId"
+    summaryOperation = "count"
+  }
+  salesforce.Summary Sales_Orders_Count__c {
+    apiName = "Opportunity.Sales_Orders_Count__c"
+    label = "Sales Orders Count"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryFilterItems = [
+      {
+        field = "Quote.Document_Type__c"
+        operation = "equals"
+        value = "Sales Order"
+      },
+    ]
+    summaryForeignKey = "Quote.OpportunityId"
+    summaryOperation = "count"
+  }
+  salesforce.Number Stamped_as_GB_opp__c {
+    apiName = "Opportunity.Stamped_as_GB_opp__c"
+    label = "Stamped as GB opp"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText CSM_Name__c {
+    apiName = "Opportunity.CSM_Name__c"
+    label = "CSM Name"
+    _required = false
+    formula = "if( ispickval(Type,'New Business'),\"New Business Opportunity\",if(isnull(Sale__c),\"No Dedicated CSM\", if(isnull(Sale__r.CSM_Name__c),\"No Dedicated CSM\",Sale__r.CSM_Name__c )))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCurrency ARR_For_Reports__c {
+    apiName = "Opportunity.ARR_For_Reports__c"
+    label = "(Obsolete) ARR For Reports"
+    _required = false
+    formula = "if( Green_Bucket_ARR__c = 0,  Expected_ARR__c , Green_Bucket_ARR__c)"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Owner_Role__c {
+    apiName = "Opportunity.Owner_Role__c"
+    label = "Owner Role"
+    _required = false
+    formula = "Owner.UserRole.Name"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Account_User_Potential__c {
+    apiName = "Opportunity.Account_User_Potential__c"
+    label = "Account User Potential"
+    _required = false
+    precision = 10
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaCheckbox Is_Syncing_SO__c {
+    apiName = "Opportunity.Is_Syncing_SO__c"
+    label = "Is Syncing SO?"
+    formula = "ISPICKVAL(SyncedQuote.Document_Type__c, \"Sales Order\")"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Billing_Entity_Address__c {
+    apiName = "Opportunity.Billing_Entity_Address__c"
+    label = "Billing Entity: Address"
+    _required = false
+    formula = "Billing_Entity__r.Billing_Address__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary Product_Seats__c {
+    apiName = "Opportunity.Product_Seats__c"
+    label = "Product Seats Sum"
+    _required = false
+    precision = 12
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "OpportunityLineItem.Quantity"
+    summaryFilterItems = [
+      {
+        field = "OpportunityLineItem.Product_Type__c"
+        operation = "equals"
+        value = "License"
+      },
+    ]
+    summaryForeignKey = "OpportunityLineItem.OpportunityId"
+    summaryOperation = "sum"
+  }
+  salesforce.Summary DH_Expected_Plan_Seats__c {
+    apiName = "Opportunity.DH_Expected_Plan_Seats__c"
+    label = "DH Expected Plan Seats Sum"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Quote.Total_Seats__c"
+    summaryFilterItems = [
+      {
+        field = "Quote.IsSyncing"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "Quote.OpportunityId"
+    summaryOperation = "sum"
+  }
+  salesforce.Picklist DH_Expected_Plan_Tier__c {
+    apiName = "Opportunity.DH_Expected_Plan_Tier__c"
+    label = "DH Expected Plan Tier"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Standard"
+        default = false
+        label = "Standard"
+      },
+      {
+        fullName = "Pro"
+        default = false
+        label = "Pro"
+      },
+      {
+        fullName = "Enterprise"
+        default = false
+        label = "Enterprise"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist DH_Expected_Plan_Period__c {
+    apiName = "Opportunity.DH_Expected_Plan_Period__c"
+    label = "DH Expected Plan Period"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Monthly"
+        default = false
+        label = "Monthly"
+      },
+      {
+        fullName = "Yearly"
+        default = false
+        label = "Yearly"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaText Owner_s_Office__c {
+    apiName = "Opportunity.Owner_s_Office__c"
+    label = "Owner's Office"
+    _required = false
+    formula = "TEXT(Owner.Office__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Checkbox Legal_Involved__c {
+    apiName = "Opportunity.Legal_Involved__c"
+    label = "Legal Involved?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber Time_to_Evaluation_Reports__c {
+    apiName = "Opportunity.Time_to_Evaluation_Reports__c"
+    label = "Time to Evaluation (Reports)"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Evaluation_timestamp__c -   Datevalue(CreatedDate)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Evaluation_timestamp__c,
+    ]
+  }
+  salesforce.FormulaNumber Time_to_Validation_Reports__c {
+    apiName = "Opportunity.Time_to_Validation_Reports__c"
+    label = "Time to Validation (Reports)"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if((Validation_Timestamp__c -  Datevalue(CreatedDate)<=0),0,Validation_Timestamp__c -  Datevalue(CreatedDate))"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Validation_Timestamp__c,
+    ]
+  }
+  salesforce.FormulaNumber Time_to_Buying_Process__c {
+    apiName = "Opportunity.Time_to_Buying_Process__c"
+    label = "Time to Buying Process"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Buying_process_timestamp__c - datevalue(CreatedDate)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Opportunity.field.Buying_process_timestamp__c,
+    ]
+  }
+  salesforce.FormulaNumber Time_to_Close_Reports__c {
+    apiName = "Opportunity.Time_to_Close_Reports__c"
+    label = "Time to Close (Reports)"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "CloseDate -   Datevalue(CreatedDate)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Budget__c {
+    apiName = "Opportunity.Budget__c"
+    label = "Budget"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Account_Recycling_Opportunity__c {
+    apiName = "Opportunity.Account_Recycling_Opportunity__c"
+    label = "Account Recycling Opportunity?"
+    defaultValue = false
+    inlineHelpText = "Opportunity created/managed from the account recycling effort"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Opportunity created/managed from the account recycling effort"
+  }
+  salesforce.FormulaText Owner_s_Team__c {
+    apiName = "Opportunity.Owner_s_Team__c"
+    label = "Owner: Team"
+    _required = false
+    formula = "TEXT(Owner.Team__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Cluster__c {
+    apiName = "Opportunity.Cluster__c"
+    label = "Cluster"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 200
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Owner_s_Function__c {
+    apiName = "Opportunity.Owner_s_Function__c"
+    label = "Owner's Function"
+    _required = false
+    formula = "text( Owner.Function__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Owner_s_Name__c {
+    apiName = "Opportunity.Owner_s_Name__c"
+    label = "Owner's Name"
+    _required = false
+    formula = "Owner.Full_Name__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Closed_Month__c {
+    apiName = "Opportunity.Closed_Month__c"
+    label = "Closed Month"
+    _required = false
+    formula = '''
+CASE(MONTH(CloseDate),
+1, "January",
+2, "February",
+3, "March",
+4, "April",
+5, "May",
+6, "June",
+7, "July",
+8, "August",
+9, "September",
+10, "October",
+11, "November",
+12, "December",
+"None")
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Html VP_Notes__c {
+    apiName = "Opportunity.VP_Notes__c"
+    label = "VP Notes"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 25
+  }
+  salesforce.Checkbox Revived__c {
+    apiName = "Opportunity.Revived__c"
+    label = "Revived?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Opportunity was closed lost but opened again"
+  }
+  salesforce.Date Revived_timestamp__c {
+    apiName = "Opportunity.Revived_timestamp__c"
+    label = "Revived timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Evaluation_Timestamp_DT__c {
+    apiName = "Opportunity.Evaluation_Timestamp_DT__c"
+    label = "Evaluation Timestamp (DT)"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Opportunity_Attribution__c {
+    apiName = "Opportunity.Opportunity_Attribution__c"
+    label = "Opportunity Attribution"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Resurrect"
+        default = false
+        label = "Resurrect activities"
+      },
+      {
+        fullName = "Elevate Conference"
+        default = false
+        label = "Elevate Conference"
+      },
+      {
+        fullName = "Organic growth"
+        default = false
+        label = "Organic growth"
+      },
+      {
+        fullName = "Account Engagement - High WAPP"
+        default = false
+        label = "Account Engagement - High WAPP"
+      },
+      {
+        fullName = "Account Engagement - Guest Abuse"
+        default = false
+        label = "Account Engagement - Guest Abuse"
+      },
+      {
+        fullName = "monday One offering"
+        default = false
+        label = "Monday One offering"
+      },
+      {
+        fullName = "Microsoft Integration offering"
+        default = false
+        label = "Microsoft Integration offering"
+      },
+      {
+        fullName = "M&C Use Case offering"
+        default = false
+        label = "M&C Use Case offering"
+      },
+      {
+        fullName = "ENT Upgrade offering"
+        default = false
+        label = "ENT Upgrade offering"
+      },
+      {
+        fullName = "G-Suite Integration offering"
+        default = false
+        label = "G-Suite Integration offering"
+      },
+      {
+        fullName = "Reach out due to high usage"
+        default = false
+        label = "Reach out due to high usage (High capacity, WAPP, Guest Abuse)"
+      },
+      {
+        fullName = "Reach out due to product improvements"
+        default = false
+        label = "Reach out due to product improvements"
+      },
+      {
+        fullName = "New team opened a trial account"
+        default = false
+        label = "New team opened a trial account"
+      },
+    ]
+    restricted = false
+    inlineHelpText = "What behaviours/ actions/ needs led you to speak about an expansion with the customer?"
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Sub_Attribution__c {
+    apiName = "Opportunity.Sub_Attribution__c"
+    label = "Sub-attribution"
+    _required = false
+    valueSet = [
+      {
+        fullName = "High WAPP"
+        default = false
+        label = "High WAPP"
+      },
+      {
+        fullName = "Guest Abuse"
+        default = false
+        label = "Guest Abuse"
+      },
+      {
+        fullName = "MondayOne"
+        default = false
+        label = "MondayOne"
+      },
+      {
+        fullName = "Marketing Creative Campaign"
+        default = false
+        label = "Marketing Creative Campaign"
+      },
+      {
+        fullName = "Account Recycling"
+        default = false
+        label = "Account Recycling"
+      },
+      {
+        fullName = "Microsoft Integration"
+        default = false
+        label = "Microsoft Integration"
+      },
+      {
+        fullName = "Platform Features"
+        default = false
+        label = "Platform Features"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaNumber Company_ARR_for_reports__c {
+    apiName = "Opportunity.Company_ARR_for_reports__c"
+    label = "Company: Company ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Company__r.Company_ARR__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Monday_Account_ARR__c {
+    apiName = "Opportunity.Monday_Account_ARR__c"
+    label = "Monday Account Claimed ARR - New"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Enterprise_38__c {
+    apiName = "Opportunity.Enterprise_38__c"
+    label = "Enterprise $38?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist CSM_Package__c {
+    apiName = "Opportunity.CSM_Package__c"
+    label = "CSM Package"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Bronze"
+        default = false
+        label = "Bronze"
+      },
+      {
+        fullName = "Silver"
+        default = false
+        label = "Silver"
+      },
+      {
+        fullName = "Gold"
+        default = false
+        label = "Gold"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Checkbox Handed_Over__c {
+    apiName = "Opportunity.Handed_Over__c"
+    label = "Handed Over?"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Long_Term_Growth_AE__c {
+    apiName = "Opportunity.Long_Term_Growth_AE__c"
+    label = "Long Term Growth (AE)"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Short_Term_Growth_AE__c {
+    apiName = "Opportunity.Short_Term_Growth_AE__c"
+    label = "Short Term Growth (AE)"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Retention_Score_AE__c {
+    apiName = "Opportunity.Retention_Score_AE__c"
+    label = "Retention Score AE"
+    _required = false
+    precision = 5
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber OB_Opp__c {
+    apiName = "Opportunity.OB_Opp__c"
+    label = "OB Opp"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if( GB_opp__c =1,0,1)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup Reseller__c {
+    apiName = "Opportunity.Reseller__c"
+    label = "Reseller"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaDate Closed_Timestamp__c {
+    apiName = "Opportunity.Closed_Timestamp__c"
+    label = "Closed Timestamp"
+    _required = false
+    formula = "if(text( StageName ) = \"Closed Won\",  CloseDate , if(text( StageName ) = \"Closed Lost\",  Closed_Lost_timestamp__c , NULL))"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Percent Enterprise_Pricing_Factor__c {
+    apiName = "Opportunity.Enterprise_Pricing_Factor__c"
+    label = "Enterprise Pricing Factor"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 4
+    precision = 18
+    queryable = true
+  }
+  salesforce.Text Account_Source_Type__c {
+    apiName = "Opportunity.Account_Source_Type__c"
+    label = "Account Source Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 200
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text help_for_data_loader__c {
+    apiName = "Opportunity.help_for_data_loader__c"
+    label = "help for data loader"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime Validation_Timestamp_DT__c {
+    apiName = "Opportunity.Validation_Timestamp_DT__c"
+    label = "Validation Timestamp (DT"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Buying_Process_Timestamp_DT__c {
+    apiName = "Opportunity.Buying_Process_Timestamp_DT__c"
+    label = "Buying Process  Timestamp (DT)"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Won_Timestamp_DT__c {
+    apiName = "Opportunity.Won_Timestamp_DT__c"
+    label = "Won Timestamp (DT)"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Lost_Timestamp_DT__c {
+    apiName = "Opportunity.Lost_Timestamp_DT__c"
+    label = "Lost Timestamp (DT)"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Discovery_Timestamp_DT__c {
+    apiName = "Opportunity.Discovery_Timestamp_DT__c"
+    label = "Discovery Timestamp (DT)"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Revived_Timestamp_DT__c {
+    apiName = "Opportunity.Revived_Timestamp_DT__c"
+    label = "Revived Timestamp (DT)"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime Qualified_Timestamp_DT__c {
+    apiName = "Opportunity.Qualified_Timestamp_DT__c"
+    label = "Qualified Timestamp (DT)"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup GB_Threshold__c {
+    apiName = "Opportunity.GB_Threshold__c"
+    label = "GB Threshold"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.GB_Threshold__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Part of the new GB Infra"
+  }
+  salesforce.FormulaText Account_Region__c {
+    apiName = "Opportunity.Account_Region__c"
+    label = "Monday Account: Region"
+    _required = false
+    formula = "text( Account.Region__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.MultiselectPicklist Use_Cases_PL__c {
+    apiName = "Opportunity.Use_Cases_PL__c"
+    label = "Use Cases"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Use_Cases
+  }
+  salesforce.MultiselectPicklist Pains_PL__c {
+    apiName = "Opportunity.Pains_PL__c"
+    label = "Pains"
+    _required = false
+    restricted = true
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Pain_Points
+  }
+  salesforce.LongTextArea Notes_from_Lead__c {
+    apiName = "Opportunity.Notes_from_Lead__c"
+    label = "Notes from Lead"
+    _required = false
+    createable = true
+    updateable = true
+    length = 50000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.FormulaText Billing_Entity_Billing_Country__c {
+    apiName = "Opportunity.Billing_Entity_Billing_Country__c"
+    label = "Billing Entity Billing Country"
+    _required = false
+    formula = "TEXT(Billing_Entity__r.Country__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Checkbox Sync_to_BB__c {
+    apiName = "Opportunity.Sync_to_BB__c"
+    label = "Sync to BB"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "A field that will be part of the BB field set, when there is a change in this field the BB integration will be triggered."
+  }
+  salesforce.FormulaNumber Green_Bucket_ARR_V2__c {
+    apiName = "Opportunity.Green_Bucket_ARR_V2__c"
+    label = "Green Bucket ARR - New"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = '''
+if(Expected_Plan_Name__c!=null,
+    if( Is_Account_Green_Bucket__c, 
+        if(IsWon, 
+            Claimed_ARR__c ,
+            Expected_ARR__c) ,
+        if(IsWon, 
+            Claimed_ARR__c ,
+            Expected_ARR__c)+ Monday_Account_ARR__c ),
+    0)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    description = "Part of the new GB Infra."
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Is_Account_Green_Bucket__c {
+    apiName = "Opportunity.Is_Account_Green_Bucket__c"
+    label = "Is Account Green Bucket"
+    formula = "Monday_Account_ARR__c >= GB_Threshold__r.Min_ARR__c|| Account.of_Complete_Sales_MA__c>0"
+    createable = false
+    updateable = false
+    queryable = true
+    description = "Part of the new GB Infra"
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Professional_Service__c {
+    apiName = "Opportunity.Professional_Service__c"
+    label = "PS Request Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Received"
+        default = false
+        label = "Received"
+      },
+      {
+        fullName = "SO Signed"
+        default = false
+        label = "SO Signed"
+      },
+      {
+        fullName = "Delivered"
+        default = false
+        label = "Delivered"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Checkbox Is_Potential_GB_Opp_Override__c {
+    apiName = "Opportunity.Is_Potential_GB_Opp_Override__c"
+    label = "Is Potential GB Opp - Override"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Part of the new GB Infra"
+  }
+  salesforce.LongTextArea Lead_Notes__c {
+    apiName = "Opportunity.Lead_Notes__c"
+    label = "Lead Notes"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Checkbox Request_a_Sales_Engineer__c {
+    apiName = "Opportunity.Request_a_Sales_Engineer__c"
+    label = "Request a Sales Engineer"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Sales_Engineer__c {
+    apiName = "Opportunity.Sales_Engineer__c"
+    label = "Sales Engineer"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    lookupFilter = {
+      active = true
+      filterItems = [
+        {
+          field = "User.Function__c"
+          operation = "contains"
+          value = "Sales Engineer"
+        },
+      ]
+      isOptional = false
+    }
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Use_Photo_on_Proposal__c {
+    apiName = "Opportunity.Use_Photo_on_Proposal__c"
+    label = "Use Photo on Proposal"
+    _required = false
+    formula = "text(Owner.Use_my_photo_for_proposals__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Eligible_for_Sales_Engineer__c {
+    apiName = "Opportunity.Eligible_for_Sales_Engineer__c"
+    label = "Eligible for Sales Engineer?"
+    formula = '''
+if(IF( Green_Bucket_ARR__c  > 99999,3,IF(Green_Bucket_ARR__c > 49999,2,IF(Green_Bucket_ARR__c > 24999,1,IF(Green_Bucket_ARR__c > 14999,0.5,0))))
+
++
+
+IF(TEXT(Type) = "New Business",1,0)
+
++
+
+IF( Key_Deal__c = TRUE,1,0)
+
++ 
+
+IF( Top_Opportunity__c = TRUE,0.5,0) >= 2, TRUE, FALSE)
+'''
+    inlineHelpText = '''
+Opp is eligible for SE requests if:
+1) ARR > 25k &  New Business/Key Deal
+2) ARR > 50k
+3) ARR > 14k & Key Deal & Top Opp
+'''
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCheckbox Is_Potential_GB_Opp__c {
+    apiName = "Opportunity.Is_Potential_GB_Opp__c"
+    label = "Is Potential GB Opp - New"
+    formula = "Green_Bucket_ARR_V2__c >= GB_Threshold__r.Min_ARR__c ||  Is_Account_Green_Bucket__c || Is_Potential_GB_Opp_Override__c"
+    createable = false
+    updateable = false
+    queryable = true
+    description = "Part of the new GB Infra"
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist SE_Use_Case__c {
+    apiName = "Opportunity.SE_Use_Case__c"
+    label = "SE Use Case"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Use_Cases
+  }
+  salesforce.Picklist SE_Department__c {
+    apiName = "Opportunity.SE_Department__c"
+    label = "SE Department"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Functions
+  }
+  salesforce.Picklist SE_Support_Type__c {
+    apiName = "Opportunity.SE_Support_Type__c"
+    label = "SE Support Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Custom App"
+        default = false
+        label = "Custom App"
+      },
+      {
+        fullName = "RFx"
+        default = false
+        label = "RFx"
+      },
+      {
+        fullName = "Use case analysis"
+        default = false
+        label = "Use case analysis"
+      },
+      {
+        fullName = "Complex board implementation"
+        default = false
+        label = "Complex board implementation"
+      },
+      {
+        fullName = "Custom automation"
+        default = false
+        label = "Custom automation"
+      },
+      {
+        fullName = "Custom integration"
+        default = false
+        label = "Custom integration"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.LongTextArea SE_Use_case_brief__c {
+    apiName = "Opportunity.SE_Use_case_brief__c"
+    label = "SE Use case brief"
+    _required = false
+    inlineHelpText = "Please explain what you need SE support with"
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea GB_New_Infra_Notes__c {
+    apiName = "Opportunity.GB_New_Infra_Notes__c"
+    label = "GB New Infra - Notes"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.FormulaCheckbox AM_I_the_CPM__c {
+    apiName = "Opportunity.AM_I_the_CPM__c"
+    label = "AM I the CPM"
+    formula = "IF(Owner_s_Manager__c =  $User.Id , TRUE, FALSE)"
+    createable = false
+    updateable = false
+    queryable = true
+  }
+  salesforce.DateTime Handover_Timestamp__c {
+    apiName = "Opportunity.Handover_Timestamp__c"
+    label = "Handover Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Owner_Company_Name__c {
+    apiName = "Opportunity.Owner_Company_Name__c"
+    label = "Owner Company Name"
+    _required = false
+    formula = "Owner.CompanyName"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+  }
+  salesforce.Email Primary_Contact_Email__c {
+    apiName = "Opportunity.Primary_Contact_Email__c"
+    label = "Primary Contact Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Primary_Contact_Role_First_Name__c {
+    apiName = "Opportunity.Primary_Contact_Role_First_Name__c"
+    label = "Primary Contact Role First Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Primary_Contact_Role__c {
+    apiName = "Opportunity.Primary_Contact_Role__c"
+    label = "Primary Contact Role"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contact,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date SE_Effort_Start_Date__c {
+    apiName = "Opportunity.SE_Effort_Start_Date__c"
+    label = "SE Effort Start Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date SE_Effort_End_Date__c {
+    apiName = "Opportunity.SE_Effort_End_Date__c"
+    label = "SE Effort End Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number SE_Request_Max_Potential_ARR__c {
+    apiName = "Opportunity.SE_Request_Max_Potential_ARR__c"
+    label = "SE Request Max Potential ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime SE_Request_Timestamp__c {
+    apiName = "Opportunity.SE_Request_Timestamp__c"
+    label = "SE Request Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox Opp_Owner_is_Partner__c {
+    apiName = "Opportunity.Opp_Owner_is_Partner__c"
+    label = "Opp Owner is Partner"
+    formula = '''
+/*( Owner.Profile.Name = "Channel Managers" ) || ( Owner.Profile.Name = "Partner Community Custom" )*/
+ispickval(Owner.Function__c,"Partner")||ispickval(Owner.Function__c,"Partners- Channel Manager")
+'''
+    createable = false
+    updateable = false
+    queryable = true
+    description = "DO NOT DELETE! We use this field in DealHub"
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup PS_Request_Provider__c {
+    apiName = "Opportunity.PS_Request_Provider__c"
+    label = "PS Request Provider"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    lookupFilter = {
+      active = true
+      filterItems = [
+        {
+          field = "Account.RecordTypeId"
+          operation = "equals"
+          value = "Partner company"
+        },
+      ]
+      isOptional = false
+    }
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Is_Dealroom_Signed__c {
+    apiName = "Opportunity.Is_Dealroom_Signed__c"
+    defaultValue = false
+    label = "Is Dealroom Signed?"
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.FormulaCheckbox Sale_has_Monday_Account__c {
+    apiName = "Opportunity.Sale_has_Monday_Account__c"
+    formula = "AccountId  =  Sale__r.Monday_Account__c"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Sale has Monday Account"
+    queryable = false
+    updateable = false
+    createable = false
+  }
+}

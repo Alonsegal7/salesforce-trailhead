@@ -1,0 +1,369 @@
+salesforce.Layout Event_Layout {
+  fullName = "Event-Event Layout"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Calendar Event Details"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Event.field.Subject
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Location
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Event.field.StartDateTime
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Event.field.EndDateTime
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.IsAllDayEvent
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Type
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Description
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Event.field.Company_Name__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Event.field.Am_I_the_Assigned_User__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Call_Source__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Email_Bounced__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Meeting_Type_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.No_Show_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Canceled_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Booked_By_Prospect_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Queue_Name_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.User__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Rescheduled_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Response_Status_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.SMS_Response_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Confirmed_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Meeting_Series_CP__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Owner_Manager_Email__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Event.field.Contact_Sales_From_Today__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Event.field.Owner_s_Manager__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Event.field.Team_Manager__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Owner_Team__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Event.field.CurrencyIsoCode
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Event.field.Day_of_the_week__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Event.field.Owner_Profile__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Call_Start_Time__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.Call_End_Time__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Event.field.OwnerId
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Related To"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.WhoId
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.WhatId
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Other Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Event.field.IsReminderSet
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Description Information"
+      style = "OneColumn"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Additional Information"
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Event.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Event.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = false
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  platformActionList = {
+    actionListContext = "Record"
+    platformActionListItems = [
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 0
+      },
+      {
+        actionName = "Delete"
+        actionType = "StandardButton"
+        sortOrder = 1
+      },
+      {
+        actionName = "FeedItem.TextPost"
+        actionType = "QuickAction"
+        sortOrder = 2
+      },
+      {
+        actionName = "FeedItem.ContentPost"
+        actionType = "QuickAction"
+        sortOrder = 3
+      },
+      {
+        actionName = "FeedItem.PollPost"
+        actionType = "QuickAction"
+        sortOrder = 4
+      },
+    ]
+  }
+  quickActionList = {
+    quickActionListItems = [
+      {
+        quickActionName = "FeedItem.ContentNote"
+      },
+      {
+        quickActionName = "FeedItem.ContentPost"
+      },
+      {
+        quickActionName = "FeedItem.LinkPost"
+      },
+      {
+        quickActionName = "FeedItem.MobileSmartActions"
+      },
+      {
+        quickActionName = "FeedItem.PollPost"
+      },
+      {
+        quickActionName = "FeedItem.QuestionPost"
+      },
+      {
+        quickActionName = "FeedItem.RypplePost"
+      },
+      {
+        quickActionName = "FeedItem.TextPost"
+      },
+    ]
+  }
+  relatedContent = {
+    relatedContentItems = [
+      {
+        layoutItem = {
+          behavior = "Readonly"
+          field = salesforce.Event.field.WhoId
+        }
+      },
+      {
+        layoutItem = {
+          behavior = "Readonly"
+          field = salesforce.Event.field.WhatId
+        }
+      },
+    ]
+  }
+  relatedLists = [
+    {
+      relatedList = "RelatedFileList"
+    },
+    {
+      relatedList = "RelatedContentNoteList"
+    },
+    {
+      relatedList = "RelatedActivityAttachmentList"
+    },
+  ]
+  relatedObjects = [
+    "WhoId",
+    "WhatId",
+  ]
+  showEmailCheckbox = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h61000001Rgn2"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Event,
+  ]
+  _generated_dependencies = [
+    salesforce.Activity.field.Owner_Team__c,
+    salesforce.Activity.field.Team_Manager__c,
+    salesforce.Activity.field.Owner_s_Manager__c,
+    salesforce.Activity.field.Contact_Sales_From_Today__c,
+    salesforce.Activity.field.Owner_Manager_Email__c,
+    salesforce.Activity.field.Meeting_Series_CP__c,
+    salesforce.Activity.field.Confirmed_CP__c,
+    salesforce.Activity.field.SMS_Response_CP__c,
+    salesforce.Activity.field.Response_Status_CP__c,
+    salesforce.Activity.field.Rescheduled_CP__c,
+    salesforce.Activity.field.User__c,
+    salesforce.Activity.field.Queue_Name_CP__c,
+    salesforce.Activity.field.Booked_By_Prospect_CP__c,
+    salesforce.Activity.field.Canceled_CP__c,
+    salesforce.Activity.field.No_Show_CP__c,
+    salesforce.Activity.field.Meeting_Type_CP__c,
+    salesforce.Activity.field.Email_Bounced__c,
+    salesforce.Activity.field.Call_End_Time__c,
+    salesforce.Activity.field.Call_Start_Time__c,
+    salesforce.Activity.field.Owner_Profile__c,
+    salesforce.Activity.field.Day_of_the_week__c,
+    salesforce.Activity.field.Call_Source__c,
+    salesforce.Activity.field.Am_I_the_Assigned_User__c,
+    salesforce.Activity.field.Company_Name__c,
+  ]
+}

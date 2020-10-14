@@ -1,0 +1,10 @@
+<apex:page standardController="Opportunity" showHeader="false" sidebar="false" > 
+<c:zp_ifrm_helper />
+ <a href="/{!opportunity.id}" target="_top"> <div class="h1"><apex:outputText value="{!Opportunity.name}">
+    </apex:outputText></div></a>
+
+<apex:relatedList subject="{!Opportunity}" list="OpenActivities"/>
+<apex:relatedList subject="{!Opportunity}" list="OpportunityLineItems"/>
+<apex:relatedList subject="{!Opportunity}" list="ActivityHistories"/>
+
+</apex:page>

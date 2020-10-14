@@ -1,0 +1,186 @@
+type salesforce.rh2__PS_Exception__c {
+  salesforce.LongTextArea rh2__DML_Exception_Message__c {
+    apiName = "rh2__PS_Exception__c.rh2__DML_Exception_Message__c"
+    label = "DML Exception Message"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    description = "The message reported from a DMLException, if any."
+    visibleLines = 10
+  }
+  salesforce.LongTextArea rh2__DML_Failed_Record_Ids__c {
+    apiName = "rh2__PS_Exception__c.rh2__DML_Failed_Record_Ids__c"
+    label = "DML Failed Record Ids"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    description = "The record IDs, if any, of the failed records recorded from a DMLException."
+    visibleLines = 10
+  }
+  salesforce.Number rh2__DML_Failed_Records_Count__c {
+    apiName = "rh2__PS_Exception__c.rh2__DML_Failed_Records_Count__c"
+    label = "DML Number of Failed Records"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "The count of failed records reported from a DMLException, if any."
+    externalId = false
+  }
+  salesforce.LongTextArea rh2__DML_Problem_Field_Names__c {
+    apiName = "rh2__PS_Exception__c.rh2__DML_Problem_Field_Names__c"
+    label = "DML Problem Field Names"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    description = "If any, the problem fields associated with the failures recorded from a DMLException."
+    visibleLines = 10
+  }
+  salesforce.Text rh2__DML_Status_Code__c {
+    apiName = "rh2__PS_Exception__c.rh2__DML_Status_Code__c"
+    label = "DML Status Code"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "The status code, if any, from a DML Exception."
+    externalId = false
+  }
+  salesforce.LongTextArea rh2__Exception_Stack_Trace__c {
+    apiName = "rh2__PS_Exception__c.rh2__Exception_Stack_Trace__c"
+    label = "Exception Stack Trace"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 10
+  }
+  salesforce.Text rh2__Formatted_Date__c {
+    apiName = "rh2__PS_Exception__c.rh2__Formatted_Date__c"
+    label = "Formatted Date"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Holds the date of the exception and displays it according to the users profile in local time."
+    externalId = false
+  }
+  salesforce.Number rh2__Line_Number__c {
+    apiName = "rh2__PS_Exception__c.rh2__Line_Number__c"
+    label = "Line Number"
+    _required = false
+    precision = 10
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number rh2__Number_of_Occurrences__c {
+    apiName = "rh2__PS_Exception__c.rh2__Number_of_Occurrences__c"
+    label = "Number of Occurrences"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Object__c {
+    apiName = "rh2__PS_Exception__c.rh2__Object__c"
+    label = "Object"
+    _required = false
+    inlineHelpText = "The object that experienced the Rollup Helper exception."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea rh2__Potential_Affected_Target_Fields__c {
+    apiName = "rh2__PS_Exception__c.rh2__Potential_Affected_Target_Fields__c"
+    label = "Potentially Affected Target Fields"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    description = "If any, the field(s) being processed when the error was encountered."
+    visibleLines = 10
+  }
+  salesforce.Text rh2__Record_Id__c {
+    apiName = "rh2__PS_Exception__c.rh2__Record_Id__c"
+    label = "Record Id"
+    _required = false
+    inlineHelpText = "The ID of the record that experienced an exception."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 18
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText rh2__Record_Link__c {
+    apiName = "rh2__PS_Exception__c.rh2__Record_Link__c"
+    label = "Record Link"
+    _required = false
+    formula = "HYPERLINK( rh2__Record_Id__c, rh2__Record_Id__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText rh2__Rollup_Link__c {
+    apiName = "rh2__PS_Exception__c.rh2__Rollup_Link__c"
+    label = "Rollup Link"
+    _required = false
+    formula = "IF(!ISBLANK(rh2__Rollup_Name__c), HYPERLINK(\"/apex/PS_RollupType?s=\" &  rh2__Rollup_Name__c, \"Link to the Rollup\"), 'No rollup link available.')"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text rh2__Rollup_Name__c {
+    apiName = "rh2__PS_Exception__c.rh2__Rollup_Name__c"
+    label = "Rollup Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "The name of the rollup setting that caused the error."
+    externalId = false
+  }
+}

@@ -1,0 +1,927 @@
+type salesforce.zisf__ZoomInfo__c {
+  salesforce.Lookup zisf__Account__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Account__c"
+    label = "Account"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    inlineHelpText = "Associated account."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Associated account."
+  }
+  salesforce.Text zisf__Calculated_Job_Function__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Calculated_Job_Function__c"
+    label = "Calculated Job Function"
+    _required = false
+    inlineHelpText = "Inferred Job Function Based on the Title Input Parameter."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Inferred Job Function Based on the Title Input Parameter."
+    externalId = false
+  }
+  salesforce.Text zisf__Calculated_Management_Level__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Calculated_Management_Level__c"
+    label = "Calculated Management Level"
+    _required = false
+    inlineHelpText = "Inferred Management Level Based on Title Input Parameter."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Inferred Management Level Based on Title Input Parameter."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_City__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_City__c"
+    label = "Company City"
+    _required = false
+    inlineHelpText = "Company HQ city address."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Company HQ city address."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Country__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Country__c"
+    label = "Company Country"
+    _required = false
+    inlineHelpText = "Company HQ country address."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Company HQ country address."
+    externalId = false
+  }
+  salesforce.LongTextArea zisf__Company_Description__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Description__c"
+    label = "Company Description"
+    _required = false
+    inlineHelpText = "Description of business."
+    createable = true
+    updateable = true
+    length = 15000
+    queryable = true
+    description = "Description of business."
+    visibleLines = 3
+  }
+  salesforce.Text zisf__Company_Employee_Count__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Employee_Count__c"
+    label = "Company Employee Count"
+    _required = false
+    inlineHelpText = "Employee count for Company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    description = "Employee count for Company."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Employee_Range__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Employee_Range__c"
+    label = "Company Employee Range"
+    _required = false
+    inlineHelpText = "Employee Range for Company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    description = "Employee Range for Company."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Fax__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Fax__c"
+    label = "Company Fax"
+    _required = false
+    inlineHelpText = "Company HQ Fax number."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    description = "Company HQ Fax number."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Industry__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Industry__c"
+    label = "Company Industry"
+    _required = false
+    inlineHelpText = "Industry of Company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 200
+    queryable = true
+    description = "Industry of Company."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Is_Defunct__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Is_Defunct__c"
+    label = "Company Is Defunct"
+    _required = false
+    inlineHelpText = "Flag to determine whether company is defunct."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 25
+    queryable = true
+    description = "Flag to determine whether company is defunct."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_NAICS_Codes__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_NAICS_Codes__c"
+    label = "Company NAICS Codes"
+    _required = false
+    inlineHelpText = "List of NAICS codes associated with company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "List of NAICS codes associated with company."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Name__c"
+    label = "Company Name"
+    _required = false
+    inlineHelpText = "Name of business."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Name of business."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Parent_ID__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Parent_ID__c"
+    label = "Company Parent ID"
+    _required = false
+    inlineHelpText = "ZoomInfo ID of Parent company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 25
+    queryable = true
+    description = "ZoomInfo ID of Parent company."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Parent_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Parent_Name__c"
+    label = "Company Parent Name"
+    _required = false
+    inlineHelpText = "Name of Parent company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Name of Parent company."
+    externalId = false
+  }
+  salesforce.Phone zisf__Company_Phone__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Phone__c"
+    label = "Company Phone"
+    _required = false
+    inlineHelpText = "Company HQ phone."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Company HQ phone."
+  }
+  salesforce.Text zisf__Company_Ranking__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Ranking__c"
+    label = "Company Ranking"
+    _required = false
+    inlineHelpText = "Reported company rankings."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Reported company rankings."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Revenue_Range__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Revenue_Range__c"
+    label = "Company Revenue Range"
+    _required = false
+    inlineHelpText = "Revenue range associated with Company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Revenue range associated with Company."
+    externalId = false
+  }
+  salesforce.Number zisf__Company_Revenue__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Revenue__c"
+    label = "Company Revenue"
+    _required = false
+    precision = 18
+    scale = 0
+    inlineHelpText = "Revenue associated with Company."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Revenue associated with Company."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_SIC_Codes__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_SIC_Codes__c"
+    label = "Company SIC Codes"
+    _required = false
+    inlineHelpText = "List of SIC classification codes associated with company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "List of SIC classification codes associated with company."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_State__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_State__c"
+    label = "Company State"
+    _required = false
+    inlineHelpText = "Company business state address."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Company business state address."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Street__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Street__c"
+    label = "Company Street"
+    _required = false
+    inlineHelpText = "Company HQ street address."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Company HQ street address."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Ticker__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Ticker__c"
+    label = "Company Ticker"
+    _required = false
+    inlineHelpText = "Stock Ticker for publicly traded companies."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 25
+    queryable = true
+    description = "Stock Ticker for publicly traded companies."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Ultimate_Parent_ID__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Ultimate_Parent_ID__c"
+    label = "Company Ultimate Parent ID"
+    _required = false
+    inlineHelpText = "ZoomInfo ID for Ultimate Parent company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 25
+    queryable = true
+    description = "ZoomInfo ID for Ultimate Parent company."
+    externalId = false
+  }
+  salesforce.Text zisf__Company_Ultimate_Parent_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Ultimate_Parent_Name__c"
+    label = "Company Ultimate Parent Name"
+    _required = false
+    inlineHelpText = "Name of Ultimate parent of company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Name of Ultimate parent of company."
+    externalId = false
+  }
+  salesforce.Url zisf__Company_Website__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Website__c"
+    label = "Company Website"
+    _required = false
+    inlineHelpText = "Corporate website associated with Company."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Corporate website associated with Company."
+  }
+  salesforce.Text zisf__Company_Zip_Code__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Company_Zip_Code__c"
+    label = "Company Zip Code"
+    _required = false
+    inlineHelpText = "Company HQ Zip code."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    description = "Company HQ Zip code."
+    externalId = false
+  }
+  salesforce.Number zisf__Confidence_Match_Score__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Confidence_Match_Score__c"
+    label = "Confidence Match Score"
+    _required = false
+    precision = 12
+    scale = 2
+    inlineHelpText = "Numeric value for confidence match score (0-100)."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Numeric value for confidence match score."
+    externalId = false
+  }
+  salesforce.Lookup zisf__Contact__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Contact__c"
+    label = "Contact"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contact,
+    ]
+    inlineHelpText = "Associated contact."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Associated contact."
+  }
+  salesforce.Text zisf__Email_Matches_Company_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Email_Matches_Company_Name__c"
+    label = "Email Matches Company Name"
+    _required = false
+    inlineHelpText = "Indicates if ZoomInfo Recognizes a Match Between the Email Domain Input Value and Known Domains for the Company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Indicates if ZoomInfo Recognizes a Match Between the Email Domain Input Value and Known Domains for the Company."
+    externalId = false
+  }
+  salesforce.Text zisf__Email_Matches_Person_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Email_Matches_Person_Name__c"
+    label = "Email Matches Person Name"
+    _required = false
+    inlineHelpText = "Indicates if the Email Address Contains the Person's Full Name."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Indicates if the Email Address Contains the Person's Full Name."
+    externalId = false
+  }
+  salesforce.Email zisf__Email__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Email__c"
+    label = "Email"
+    _required = false
+    inlineHelpText = "Person Business Email Address."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Person Business Email Address."
+    externalId = false
+  }
+  salesforce.Text zisf__First_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__First_Name__c"
+    label = "First Name"
+    _required = false
+    inlineHelpText = "First Name of Person."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "First Name of Person."
+    externalId = false
+  }
+  salesforce.Text zisf__Free_Email__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Free_Email__c"
+    label = "Free Email"
+    _required = false
+    inlineHelpText = "Indicates if ZoomInfo Recognizes an Email Address Input Value as Managed by a Free or Temporary Email Service Provider."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Indicates if ZoomInfo Recognizes an Email Address Input Value as Managed by a Free or Temporary Email Service Provider."
+    externalId = false
+  }
+  salesforce.Text zisf__Generic_Email__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Generic_Email__c"
+    label = "Generic Email"
+    _required = false
+    inlineHelpText = "Indicates if ZoomInfo Recognizes Email Input Value as a Role Based Username."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Indicates if ZoomInfo Recognizes Email Input Value as a Role Based Username."
+    externalId = false
+  }
+  salesforce.Text zisf__Job_Function__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Job_Function__c"
+    label = "Job Function"
+    _required = false
+    inlineHelpText = "Person's organizational job function."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Person's organizational job function."
+    externalId = false
+  }
+  salesforce.Text zisf__Job_Title__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Job_Title__c"
+    label = "Job Title"
+    _required = false
+    inlineHelpText = "Person current  job title."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Person current  job title."
+    externalId = false
+  }
+  salesforce.Text zisf__Known_First_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Known_First_Name__c"
+    label = "Known First Name"
+    _required = false
+    inlineHelpText = "Indicates if ZoomInfo Recognizes a First Name Input Value as a Known First Name Using Multiple Sources Including the U.S. Census."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Indicates if ZoomInfo Recognizes a First Name Input Value as a Known First Name Using Multiple Sources Including the U.S. Census."
+    externalId = false
+  }
+  salesforce.Text zisf__Known_Full_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Known_Full_Name__c"
+    label = "Known Full Name"
+    _required = false
+    inlineHelpText = "Indicates if ZoomInfo Recognizes a First Name Input Value as a Known Full Name Using Multiple Sources Including the U.S. Census."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Indicates if ZoomInfo Recognizes a First Name Input Value as a Known Full Name Using Multiple Sources Including the U.S. Census."
+    externalId = false
+  }
+  salesforce.Text zisf__Known_Last_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Known_Last_Name__c"
+    label = "Known Last Name"
+    _required = false
+    inlineHelpText = "Indicates if ZoomInfo Recognizes a First Name Input Value as a Known Last Name Using Multiple Sources Including the U.S. Census."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Indicates if ZoomInfo Recognizes a First Name Input Value as a Known Last Name Using Multiple Sources Including the U.S. Census."
+    externalId = false
+  }
+  salesforce.Text zisf__Last_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Last_Name__c"
+    label = "Last Name"
+    _required = false
+    inlineHelpText = "Last Name of Person."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Last Name of Person."
+    externalId = false
+  }
+  salesforce.Lookup zisf__Lead__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Lead__c"
+    label = "Lead"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Lead,
+    ]
+    inlineHelpText = "Associated lead."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Associated lead."
+  }
+  salesforce.Text zisf__Malformed_Email__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Malformed_Email__c"
+    label = "Malformed Email"
+    _required = false
+    inlineHelpText = "Indicates if ZoomInfo Recognizes and Email Address Input Value is Malformed and does not Follow the xyz@domain.com Syntax."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Indicates if ZoomInfo Recognizes and Email Address Input Value is Malformed and does not Follow the xyz@domain.com Syntax."
+    externalId = false
+  }
+  salesforce.Text zisf__Management_Level__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Management_Level__c"
+    label = "Management Level"
+    _required = false
+    inlineHelpText = "Person's management level."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Person's management level."
+    externalId = false
+  }
+  salesforce.TextArea zisf__Match_Inputs__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Match_Inputs__c"
+    label = "Match Inputs"
+    _required = false
+    inlineHelpText = "Values passed in to match to ZoomInfo data."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Values passed in to match to ZoomInfo data."
+  }
+  salesforce.Text zisf__Normalized_First_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Normalized_First_Name__c"
+    label = "Normalized First Name"
+    _required = false
+    inlineHelpText = "ZoomInfo Normalized First Name Based on Input Value."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "ZoomInfo Normalized First Name Based on Input Value."
+    externalId = false
+  }
+  salesforce.Text zisf__Normalized_Last_Name__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Normalized_Last_Name__c"
+    label = "Normalized Last Name"
+    _required = false
+    inlineHelpText = "ZoomInfo Normalized Last Name Based on Input Value."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "ZoomInfo Normalized Last Name Based on Input Value."
+    externalId = false
+  }
+  salesforce.Text zisf__Person_City__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_City__c"
+    label = "Person City"
+    _required = false
+    inlineHelpText = "Person business city address."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Person business city address."
+    externalId = false
+  }
+  salesforce.Text zisf__Person_Country__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Country__c"
+    label = "Person Country"
+    _required = false
+    inlineHelpText = "Person business country address."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Person business country address."
+    externalId = false
+  }
+  salesforce.Text zisf__Person_Direct_Phone__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Direct_Phone__c"
+    label = "Person Direct Phone"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 64
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea zisf__Person_Education__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Education__c"
+    label = "Person Education"
+    _required = false
+    inlineHelpText = "Person educational history."
+    createable = true
+    updateable = true
+    length = 15000
+    queryable = true
+    description = "Person educational history."
+    visibleLines = 3
+  }
+  salesforce.LongTextArea zisf__Person_Employment_History__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Employment_History__c"
+    label = "Person Employment History"
+    _required = false
+    inlineHelpText = "Person's employment history."
+    createable = true
+    updateable = true
+    length = 15000
+    queryable = true
+    description = "Person's employment history."
+    visibleLines = 3
+  }
+  salesforce.Text zisf__Person_Gender__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Gender__c"
+    label = "Person Gender"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text zisf__Person_Has_Moved__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Has_Moved__c"
+    label = "Person Has Moved"
+    _required = false
+    inlineHelpText = "Indicates ZoomInfo Recognizes the Person Company Input Value does not match ZoomInfo Current Company but does Match Known Employment History."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Indicates ZoomInfo Recognizes the Person Company Input Value does not match ZoomInfo Current Company but does Match Known Employment History."
+    externalId = false
+  }
+  salesforce.Url zisf__Person_Image_URL__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Image_URL__c"
+    label = "Person Image URL"
+    _required = false
+    inlineHelpText = "Person Image URL"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Person Image URL"
+  }
+  salesforce.Text zisf__Person_Looks_Like_EU__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Looks_Like_EU__c"
+    label = "Person Looks Like EU"
+    _required = false
+    inlineHelpText = "Inferred Person European Union Geographic Region Designation."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    description = "Inferred Person European Union Geographic Region Designation."
+    externalId = false
+  }
+  salesforce.Phone zisf__Person_Phone__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Phone__c"
+    label = "Person Phone"
+    _required = false
+    inlineHelpText = "Person Business Phone Number."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Person Business Phone Number."
+  }
+  salesforce.Text zisf__Person_State__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_State__c"
+    label = "Person State"
+    _required = false
+    inlineHelpText = "Person business state address."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Person business state address."
+    externalId = false
+  }
+  salesforce.Text zisf__Person_Street__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Street__c"
+    label = "Person Street"
+    _required = false
+    inlineHelpText = "Person business street address."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Person business street address."
+    externalId = false
+  }
+  salesforce.Text zisf__Person_Within_EU__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Within_EU__c"
+    label = "Person Within EU"
+    _required = false
+    inlineHelpText = "Denotes whether person is within EU, based on ZoomInfo person location. email and phone data."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 5
+    queryable = true
+    description = "Denotes whether person is within EU, based on ZoomInfo person location. email and phone data."
+    externalId = false
+  }
+  salesforce.Text zisf__Person_Zip_Code__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Person_Zip_Code__c"
+    label = "Person Zip Code"
+    _required = false
+    inlineHelpText = "Person business Zip code."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    description = "Person business Zip code."
+    externalId = false
+  }
+  salesforce.Url zisf__ZoomInfo_Company_URL__c {
+    apiName = "zisf__ZoomInfo__c.zisf__ZoomInfo_Company_URL__c"
+    label = "ZoomInfo Company URL"
+    _required = false
+    inlineHelpText = "URL for ZoomInfo company profile."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "URL for ZoomInfo company profile."
+  }
+  salesforce.Date zisf__ZoomInfo_Last_Verified_Date__c {
+    apiName = "zisf__ZoomInfo__c.zisf__ZoomInfo_Last_Verified_Date__c"
+    label = "ZoomInfo Last Verified Date"
+    _required = false
+    inlineHelpText = "Date person record was last verified in ZoomInfo's database."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Date person record was last verified in ZoomInfo's database."
+  }
+  salesforce.Text zisf__ZoomInfo_Person_ID__c {
+    apiName = "zisf__ZoomInfo__c.zisf__ZoomInfo_Person_ID__c"
+    label = "ZoomInfo Person ID"
+    _required = false
+    inlineHelpText = "ZoomInfo ID for person record."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 25
+    queryable = true
+    description = "ZoomInfo unique identified for Person record."
+    externalId = false
+  }
+  salesforce.Url zisf__ZoomInfo_Person_URL__c {
+    apiName = "zisf__ZoomInfo__c.zisf__ZoomInfo_Person_URL__c"
+    label = "ZoomInfo Person URL"
+    _required = false
+    inlineHelpText = "Click to view ZoomInfo person profile."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "URL for ZoomInfo person."
+  }
+  salesforce.MultiselectPicklist zisf__ZoomInfo_Source2__c {
+    apiName = "zisf__ZoomInfo__c.zisf__ZoomInfo_Source2__c"
+    label = "ZoomInfo Source"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Clean"
+        default = false
+        label = "Clean"
+      },
+      {
+        fullName = "Complete"
+        default = false
+        label = "Complete"
+      },
+    ]
+    restricted = true
+    visibleLines = 3
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist zisf__ZoomInfo_Source__c {
+    apiName = "zisf__ZoomInfo__c.zisf__ZoomInfo_Source__c"
+    label = "ZoomInfo Source"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Clean"
+        default = false
+        label = "Clean"
+      },
+      {
+        fullName = "Complete"
+        default = false
+        label = "Complete"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text zisf__Zoominfo_Company_ID__c {
+    apiName = "zisf__ZoomInfo__c.zisf__Zoominfo_Company_ID__c"
+    label = "Zoominfo Company ID"
+    _required = false
+    inlineHelpText = "ZoomInfo unique identified for Company."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 25
+    queryable = true
+    description = "ZoomInfo unique identified for Company."
+    externalId = false
+  }
+}

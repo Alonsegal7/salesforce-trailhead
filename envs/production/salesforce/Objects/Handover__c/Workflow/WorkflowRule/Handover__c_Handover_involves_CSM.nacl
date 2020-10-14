@@ -1,0 +1,26 @@
+salesforce.WorkflowRule Handover__c_Handover_involves_CSM {
+  fullName = "Handover__c.Handover involves CSM"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Handover__c_Notification_to_assign_CSM_on_Handover
+      type = "Alert"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Handover__c.field.Involve_CSM__c
+      operation = "equals"
+      value = "Yes"
+    },
+    {
+      field = salesforce.Handover__c.field.Passed_from_Account__c
+      operation = "equals"
+      value = "False"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Handover__c,
+  ]
+}

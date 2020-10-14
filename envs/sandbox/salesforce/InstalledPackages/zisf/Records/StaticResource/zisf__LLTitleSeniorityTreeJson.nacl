@@ -1,0 +1,7 @@
+salesforce.StaticResource zisf__LLTitleSeniorityTreeJson {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Private"
+  contentType = "application/octet-stream"
+  fullName = "zisf__LLTitleSeniorityTreeJson"
+  content = file("salesforce/InstalledPackages/zisf/Records/StaticResource/zisf__LLTitleSeniorityTreeJson.bin")
+}

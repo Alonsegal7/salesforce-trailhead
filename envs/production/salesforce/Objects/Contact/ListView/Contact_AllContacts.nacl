@@ -1,0 +1,32 @@
+salesforce.ListView Contact_AllContacts {
+  fullName = "Contact.AllContacts"
+  columns = [
+    "FULL_NAME",
+    "ACCOUNT.NAME",
+    "CONTACT.TITLE",
+    "CONTACT.PHONE1",
+    "Enriched_phone__c",
+    "CONTACT.EMAIL",
+    "CORE.USERS.FIRST_NAME",
+    "CORE.USERS.LAST_NAME",
+    "Contact_Role__c",
+    "CONTACT.CREATED_DATE",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "CONTACT.CREATED_DATE"
+      operation = "greaterOrEqual"
+      value = "7/19/2020 12:00 AM"
+    },
+    {
+      field = "Company__c"
+      operation = "contains"
+      value = "Taboola"
+    },
+  ]
+  label = "All Contacts"
+  _parent = [
+    salesforce.Contact,
+  ]
+}

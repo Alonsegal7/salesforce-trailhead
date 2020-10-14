@@ -1,0 +1,19 @@
+salesforce.EmailTemplate unfiled_public_New_Won_GSI_Opp {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "New Won GSI Opp"
+  style = "products"
+  subject = "New Won Opportunity with GSI ({!Opportunity.Company__c})"
+  textOnly = '''
+Opportunity Name: {!Opportunity.Name}
+Owner: {!Opportunity.OwnerFullName}
+ARR: {!Opportunity.ARR_For_Reports__c}
+Link: {!Opportunity.Link}
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/New_Won_GSI_Opp"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/New_Won_GSI_Opp.email")
+}

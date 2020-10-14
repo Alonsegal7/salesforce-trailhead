@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Opportunity_Evaluation_timestamp {
+  fullName = "Opportunity.Evaluation timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Evaluation_timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Opportunity.field.StageName
+      operation = "equals"
+      value = "Evaluation"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

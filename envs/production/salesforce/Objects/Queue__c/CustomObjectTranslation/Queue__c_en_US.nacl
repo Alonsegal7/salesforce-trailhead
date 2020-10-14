@@ -1,0 +1,77 @@
+salesforce.CustomObjectTranslation Queue__c_en_US {
+  fullName = "Queue__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Queue"
+    },
+    {
+      plural = true
+      value = "Queues"
+    },
+  ]
+  fields = [
+    {
+      help = ""
+      label = ""
+      name = salesforce.Queue__c.field.Countries__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Cycle_Number__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.End_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Maximum_Company_Size__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Maximum_Timezone__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Minimum_Company_Size__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Minimum_Timezone__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Region__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Reps_in_Queue__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Self_Priority__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Should_Receive_Referrals__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Start_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.User__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Queue__c.field.Weight__c
+    },
+  ]
+  startsWith = "Vowel"
+  _parent = [
+    salesforce.Queue__c,
+  ]
+}

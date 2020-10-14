@@ -1,0 +1,28 @@
+salesforce.WorkflowAlert Account_ARR_change_for_partners {
+  fullName = "Account.ARR_change_for_partners"
+  description = "ARR change for partners"
+  protected = false
+  recipients = [
+    {
+      type = "owner"
+    },
+    {
+      recipient = "avivc@monday.com"
+      type = "user"
+    },
+    {
+      field = salesforce.Account.field.Owner_s_Manager__c
+      type = "userLookup"
+    },
+    {
+      field = salesforce.Account.field.Partner__c
+      type = "userLookup"
+    },
+  ]
+  senderAddress = "naomida@monday.com"
+  senderType = "OrgWideEmailAddress"
+  template = salesforce.EmailTemplate.instance.unfiled_public_ARR_change_for_partners
+  _parent = [
+    salesforce.Account,
+  ]
+}

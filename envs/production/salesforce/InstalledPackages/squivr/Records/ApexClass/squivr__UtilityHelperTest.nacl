@@ -1,0 +1,14 @@
+salesforce.ApexClass squivr__UtilityHelperTest {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 24
+      namespace = "squivr"
+    },
+  ]
+  status = "Active"
+  fullName = "squivr__UtilityHelperTest"
+  content = "(hidden)"
+}

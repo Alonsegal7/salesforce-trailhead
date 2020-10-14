@@ -1,0 +1,46 @@
+salesforce.ListView Lead_Open_Leads_Leah {
+  fullName = "Lead.Open_Leads_Leah"
+  columns = [
+    "CORE.USERS.FIRST_NAME",
+    "LEAD.STATUS",
+    "LEAD.COMPANY",
+    "Lead_name__c",
+    "LEAD.COUNTRY",
+    "Engagement__c",
+    "Enabled_users__c",
+    "Current_score__c",
+    "Days_left_in_trial__c",
+    "Distribution_reason__c",
+    "Next_activity_date__c",
+    "Next_activity__c",
+    "MQL_Image__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Nurturing,Received,Attempting,Contacted"
+    },
+    {
+      field = "CORE.USERS.FIRST_NAME"
+      operation = "equals"
+      value = "Leah"
+    },
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead"
+    },
+  ]
+  label = "Open Leads Leah"
+  sharedTo = {
+    group = [
+      "Admins",
+    ]
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

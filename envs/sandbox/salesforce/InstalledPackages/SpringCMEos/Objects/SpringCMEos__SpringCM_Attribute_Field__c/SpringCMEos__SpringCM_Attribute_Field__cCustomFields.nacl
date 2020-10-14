@@ -1,0 +1,121 @@
+type salesforce.SpringCMEos__SpringCM_Attribute_Field__c {
+  salesforce.Picklist SpringCMEos__DataType__c {
+    apiName = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__DataType__c"
+    label = "DataType"
+    _required = false
+    valueSet = [
+      {
+        fullName = "String"
+        default = true
+        label = "String"
+      },
+      {
+        fullName = "Number"
+        default = false
+        label = "Number"
+      },
+      {
+        fullName = "Date"
+        default = false
+        label = "Date"
+      },
+      {
+        fullName = "DropDown"
+        default = false
+        label = "DropDown"
+      },
+      {
+        fullName = "Decimal"
+        default = false
+        label = "Decimal"
+      },
+      {
+        fullName = "MagicDropDown"
+        default = false
+        label = "MagicDropDown"
+      },
+      {
+        fullName = "Cascade"
+        default = false
+        label = "Cascade"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text SpringCMEos__Field__c {
+    apiName = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Field__c"
+    label = "Field"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SpringCMEos__Group__c {
+    apiName = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Group__c"
+    label = "Group"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SpringCMEos__Max_Value__c {
+    apiName = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Max_Value__c"
+    label = "Max Value"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SpringCMEos__Min_Value__c {
+    apiName = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Min_Value__c"
+    label = "Min Value"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup SpringCMEos__SpringCM_Attribute_Group__c {
+    apiName = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__SpringCM_Attribute_Group__c"
+    label = "SpringCM Attribute Group"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.SpringCMEos__SpringCM_Attribute_Group__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text SpringCMEos__Value__c {
+    apiName = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Value__c"
+    label = "Value"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+}

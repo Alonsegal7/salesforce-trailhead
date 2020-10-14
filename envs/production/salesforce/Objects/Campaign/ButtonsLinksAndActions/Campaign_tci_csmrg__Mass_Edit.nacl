@@ -1,0 +1,28 @@
+salesforce.WebLink Campaign_tci_csmrg__Mass_Edit {
+  fullName = "Campaign.tci_csmrg__Mass_Edit"
+  availability = "online"
+  displayType = "massActionButton"
+  linkType = "javascript"
+  masterLabel = "Mass Edit"
+  openType = "onClickJavaScript"
+  protected = false
+  requireRowSelection = true
+  url = '''
+{!REQUIRESCRIPT("/soap/ajax/19.0/connection.js")}
+
+var records = {!GETRECORDIDS($ObjectType.Campaign)};
+
+if (records[0] == null) {
+
+alert("Please select at least one Campaign to edit.");
+} 
+
+else {
+
+window.location = '/apex/tci_csmrg__MassEditCampaigns?recs='+records.join(',');
+}
+'''
+  _parent = [
+    salesforce.Campaign,
+  ]
+}

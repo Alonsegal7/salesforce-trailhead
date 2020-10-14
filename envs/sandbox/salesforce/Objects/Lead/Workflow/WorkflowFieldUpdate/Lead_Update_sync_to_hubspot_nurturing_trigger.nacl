@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Update_sync_to_hubspot_nurturing_trigger {
+  fullName = "Lead.Update_sync_to_hubspot_nurturing_trigger"
+  field = salesforce.Lead.field.Sync_UQ_to_HS_Nurture__c
+  literalValue = "1"
+  name = "Update sync to hubspot nurturing trigger"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

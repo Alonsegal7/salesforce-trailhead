@@ -1,0 +1,158 @@
+salesforce.LightningPage AM_Opportunity {
+  fullName = "AM_Opportunity"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "collapsed"
+              value = "false"
+            },
+            {
+              name = "enableActionsConfiguration"
+              value = "false"
+            },
+            {
+              name = "hideChatterActions"
+              value = "false"
+            },
+            {
+              name = "numVisibleActions"
+              value = "3"
+            },
+          ]
+          componentName = "force:highlightsPanel"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideUpdateButton"
+              value = "false"
+            },
+            {
+              name = "variant"
+              value = "linear"
+            },
+          ]
+          componentName = "runtime_sales_pathassistant:pathAssistant"
+        },
+      ]
+      name = "header"
+      type = "Region"
+    },
+    {
+      name = "Facet-b15e8542-283b-4848-a2f7-faa07a5b606a"
+      type = "Facet"
+    },
+    {
+      name = "Facet-b2310e25-e0f9-4c34-8413-db58ccb00edd"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-b15e8542-283b-4848-a2f7-faa07a5b606a"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.relatedLists"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-b2310e25-e0f9-4c34-8413-db58ccb00edd"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-be142a5d-1af8-4bee-90fe-d51bc3328acd"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://new.bigbrain.me/crm/sales/account"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-be142a5d-1af8-4bee-90fe-d51bc3328acd"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      name = "main"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "recordActionDeployment"
+              value = "NewBusinessOpportunity"
+            },
+          ]
+          componentName = "lbpm:actionList"
+        },
+      ]
+      name = "leftsidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "AM - Opportunity"
+  sobjectType = "Opportunity"
+  template = {
+    name = "flexipage:recordHomePinnedHeaderLeftSidebarTwoColTemplateDesktop"
+  }
+  type = "RecordPage"
+}

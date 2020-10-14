@@ -1,0 +1,1004 @@
+salesforce.LightningPage Opportunity_Record_Page {
+  fullName = "Opportunity_Record_Page"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "collapsed"
+              value = "false"
+            },
+            {
+              name = "enableActionsConfiguration"
+              value = "false"
+            },
+            {
+              name = "hideChatterActions"
+              value = "false"
+            },
+            {
+              name = "numVisibleActions"
+              value = "3"
+            },
+          ]
+          componentName = "force:highlightsPanel"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideUpdateButton"
+              value = "false"
+            },
+            {
+              name = "variant"
+              value = "linear"
+            },
+          ]
+          componentName = "runtime_sales_pathassistant:pathAssistant"
+        },
+      ]
+      mode = "Replace"
+      name = "header"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "UrlSuffix"
+            },
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://service.valooto.com/salesforce/quotes?salesforceUserID=0053X00000BoB2nQAF&opportunityID=0061w00001Exwwd&state=production"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "iframeEmbed"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "height"
+              value = "300"
+            },
+            {
+              name = "label"
+            },
+            {
+              name = "pageName"
+              value = "SpringCM_EOSOpportunity"
+            },
+            {
+              name = "showLabel"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:visualforcePage"
+        },
+      ]
+      mode = "Replace"
+      name = "subheader"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Opportunity.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "AttachedContentDocuments"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+      ]
+      name = "Facet-e0d2ced2-6c6b-4d99-81ef-ab4af5df4fc5"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Opportunity.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Histories"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Opportunity.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "OpportunityHistories"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+      ]
+      name = "Facet-wdr1uuvvfqj"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-e0d2ced2-6c6b-4d99-81ef-ab4af5df4fc5"
+            },
+            {
+              name = "label"
+              value = "Files"
+            },
+            {
+              name = "name"
+              value = "accordionSection--cenk7chtrtp"
+            },
+          ]
+          componentName = "flexipage:accordionSection"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-wdr1uuvvfqj"
+            },
+            {
+              name = "label"
+              value = "Field History"
+            },
+            {
+              name = "name"
+              value = "accordionSection--7eq6jajcrnh"
+            },
+          ]
+          componentName = "flexipage:accordionSection"
+        },
+      ]
+      name = "Facet-eb3bdb36-9736-4001-9a93-0c81dda11a9d"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "accordionSections"
+              value = "Facet-eb3bdb36-9736-4001-9a93-0c81dda11a9d"
+            },
+          ]
+          componentName = "flexipage:accordion"
+        },
+      ]
+      name = "Facet-b3075180-423d-4f68-80ba-045d734e6ef9"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "createQuickActionName"
+              value = "NewOpportunity"
+            },
+            {
+              name = "lookupFieldName"
+              value = "Id"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Opportunity.Billing_Quote_Information"
+            },
+          ]
+          componentName = "console:relatedRecord"
+        },
+        {
+          componentName = "subscriptionPickersComponent"
+        },
+      ]
+      name = "Facet-d4bca067-f823-4061-a718-a916d8ca48be"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "250px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://new.bigbrain.me/crm/salesforce/opportunity-pickers"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainPicker"
+          visibilityRule = {
+            booleanFilter = "1 OR 2"
+            criteria = [
+              {
+                leftValue = "{!Record.Quote_Count__c}"
+                operator = "LT"
+                rightValue = "1"
+              },
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "EQUAL"
+                rightValue = "Partner"
+              },
+            ]
+          }
+        },
+      ]
+      name = "Facet-eb7a8b8a-47fe-4a53-9f89-6238154515f8"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "maxHeight"
+              value = "2000px"
+            },
+            {
+              name = "numberOfMonths"
+              value = "6"
+            },
+          ]
+          componentName = "StoryLog"
+        },
+      ]
+      name = "Facet-2da996c0-ffa5-4528-9055-45e9eca92804"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://bigbrain.me"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+      ]
+      name = "Facet-e970d143-40fa-4f57-9423-2534012de7a6"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "createQuickActionName"
+              value = "NewOpportunity"
+            },
+            {
+              name = "lookupFieldName"
+              value = "Id"
+            },
+            {
+              name = "titleFieldName"
+              value = "BI Fields"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Opportunity.BI_Admin"
+            },
+          ]
+          componentName = "console:relatedRecord"
+        },
+      ]
+      name = "Facet-392bdf78-98c5-4aaf-be24-a9aa2ea920e0"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "createQuickActionName"
+              value = "NewOpportunity"
+            },
+            {
+              name = "lookupFieldName"
+              value = "Id"
+            },
+            {
+              name = "titleFieldName"
+              value = "Date and Time fields"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Opportunity.Time_and_Date_Fields"
+            },
+          ]
+          componentName = "console:relatedRecord"
+        },
+      ]
+      name = "Facet-4515277e-4269-4e79-a4b5-1dcfe4cc654f"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "createQuickActionName"
+              value = "NewOpportunity"
+            },
+            {
+              name = "lookupFieldName"
+              value = "Id"
+            },
+            {
+              name = "titleFieldName"
+              value = "System Information"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Opportunity.System_Info"
+            },
+          ]
+          componentName = "console:relatedRecord"
+        },
+      ]
+      name = "Facet-6bil636b6hw"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListContainer"
+        },
+      ]
+      name = "Facet-f2e642a4-4147-4cc1-8afa-8af11797a5ae"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-392bdf78-98c5-4aaf-be24-a9aa2ea920e0"
+            },
+            {
+              name = "title"
+              value = "BI Fields"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-4515277e-4269-4e79-a4b5-1dcfe4cc654f"
+            },
+            {
+              name = "title"
+              value = "Time and Date Fields"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-6bil636b6hw"
+            },
+            {
+              name = "title"
+              value = "System Information"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-f2e642a4-4147-4cc1-8afa-8af11797a5ae"
+            },
+            {
+              name = "title"
+              value = "Related"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-a95547e4-bbe8-41c0-97cc-8c7357ed9452"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-a95547e4-bbe8-41c0-97cc-8c7357ed9452"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      name = "Facet-d25316a6-0a44-4d96-aa6a-8d1fb027b1ca"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-b3075180-423d-4f68-80ba-045d734e6ef9"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-d4bca067-f823-4061-a718-a916d8ca48be"
+            },
+            {
+              name = "title"
+              value = "Billing & Quote Info"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-eb7a8b8a-47fe-4a53-9f89-6238154515f8"
+            },
+            {
+              name = "title"
+              value = "BigBrain pickers"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-2da996c0-ffa5-4528-9055-45e9eca92804"
+            },
+            {
+              name = "title"
+              value = "Deal Story"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-e970d143-40fa-4f57-9423-2534012de7a6"
+            },
+            {
+              name = "title"
+              value = "Account Profile"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-d25316a6-0a44-4d96-aa6a-8d1fb027b1ca"
+            },
+            {
+              name = "title"
+              value = "BI + Admin"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-26e5df67-c926-4b6e-90d3-c0b7fd701f0f"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "490px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://new.bigbrain.me/crm/sales/account"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "overflow: scroll;border: 1px solid rgb(221, 219, 218);border-radius: .25rem;background-clip: padding-box;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-26e5df67-c926-4b6e-90d3-c0b7fd701f0f"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      mode = "Replace"
+      name = "main"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "boardId"
+              value = "198601936"
+            },
+            {
+              name = "dashboardId"
+            },
+            {
+              name = "filterFieldAPI"
+            },
+            {
+              name = "filterValue"
+              value = "raz"
+            },
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://monday.monday.com"
+            },
+            {
+              name = "itemId"
+            },
+            {
+              name = "itemIdFieldAPI"
+              value = "Monday_Board_Item_Id__c"
+            },
+            {
+              name = "itemView"
+              value = "true"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "mondayEmbed"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "decorate"
+              value = "true"
+            },
+            {
+              name = "richTextValue"
+              value = "<p><b style=\"font-size: 20px; color: rgb(46, 163, 81);\">** This is a committed opp **</b></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!Record.Forecasted__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "decorate"
+              value = "false"
+            },
+            {
+              name = "richTextValue"
+              value = "<p><b style=\"color: rgb(255, 106, 0);\">﻿Has a request pending for a Sales Engineer...</b></p><p><b style=\"color: rgb(255, 106, 0);\">Please contact the SE team for more information.</b></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+          visibilityRule = {
+            booleanFilter = "1 AND 2"
+            criteria = [
+              {
+                leftValue = "{!Record.Request_a_Sales_Engineer__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+              {
+                leftValue = "{!Record.Has_Sales_Engineer_Assigned__c}"
+                operator = "EQUAL"
+                rightValue = "false"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "flowArguments"
+              value = "[{\"label\":\"CurrOppID\",\"dataType\":\"String\",\"supportsRecordId\":true,\"value\":\"{!Record.Id}\"}]"
+            },
+            {
+              name = "flowLayout"
+              value = "oneColumn"
+            },
+            {
+              name = "flowName"
+              value = "Closed_Won_Opportunity_Summary"
+            },
+          ]
+          componentName = "flowruntime:interview"
+          visibilityRule = {
+            booleanFilter = "1 and ((2 or 3 or 8 or 9) and ((4 and 6) or (5 and 7)))"
+            criteria = [
+              {
+                leftValue = "{!Record.Summary_Sent_to_Company__c}"
+                operator = "EQUAL"
+                rightValue = "false"
+              },
+              {
+                leftValue = "{!$User.Profile.Name}"
+                operator = "CONTAINS"
+                rightValue = "Sales"
+              },
+              {
+                leftValue = "{!$User.Profile.Name}"
+                operator = "CONTAINS"
+                rightValue = "Admin"
+              },
+              {
+                leftValue = "{!Record.Green_Bucket_ARR__c}"
+                operator = "GE"
+                rightValue = "6900"
+              },
+              {
+                leftValue = "{!Record.Expected_ARR__c}"
+                operator = "GE"
+                rightValue = "14000"
+              },
+              {
+                leftValue = "{!Record.StageName}"
+                operator = "EQUAL"
+                rightValue = "Closed Won"
+              },
+              {
+                leftValue = "{!Record.StageName}"
+                operator = "EQUAL"
+                rightValue = "Closed Lost"
+              },
+              {
+                leftValue = "{!$User.Profile.Name}"
+                operator = "CONTAINS"
+                rightValue = "Channel Managers"
+              },
+              {
+                leftValue = "{!$User.Profile.Name}"
+                operator = "CONTAINS"
+                rightValue = "Managers"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Opportunity.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Quotes"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "ADVGRID"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Opportunity.SyncedQuoteId"
+            },
+            {
+              name = "relatedListApiName"
+              value = "CombinedAttachments"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!Record.SyncedQuote.IsSyncing}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Opportunity.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "OpportunityContactRoles"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Opportunity.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "AttachedContentNotes"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "CARD"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Opportunity.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "OpportunityLineItems"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.Profile.Name}"
+                operator = "EQUAL"
+                rightValue = "System Administrator"
+              },
+            ]
+          }
+        },
+        {
+          componentName = "runtime_sales_activities:activityPanel"
+        },
+        {
+          componentName = "forceChatter:recordFeedContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Opportunity Record Page"
+  parentFlexiPage = "sfa__Opportunity_rec_L"
+  sobjectType = "Opportunity"
+  template = {
+    name = "flexipage:recordHomeWithSubheaderTemplateDesktop"
+  }
+  type = "RecordPage"
+}

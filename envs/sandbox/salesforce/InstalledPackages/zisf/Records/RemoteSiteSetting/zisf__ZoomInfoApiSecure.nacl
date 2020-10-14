@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting zisf__ZoomInfoApiSecure {
+  fullName = "zisf__ZoomInfoApiSecure"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://partnerapi.zoominfo.com"
+}

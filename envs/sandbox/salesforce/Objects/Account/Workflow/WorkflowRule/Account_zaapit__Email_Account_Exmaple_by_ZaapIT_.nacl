@@ -1,0 +1,16 @@
+salesforce.WorkflowRule Account_zaapit__Email_Account_Exmaple_by_ZaapIT_ {
+  fullName = "Account.zaapit__Email - Account %28Exmaple by ZaapIT%29"
+  actions = [
+    {
+      name = salesforce.WorkflowTask.instance.Account_zaapit__Email
+      type = "Task"
+    },
+  ]
+  active = false
+  description = "Email Account - by ZaapIT"
+  formula = "false"
+  triggerType = "onCreateOnly"
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,8 @@
+salesforce.ApexComponent LID__LinkedInJSComponent {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 25
+  description = "This component provides the necessary java script function for the call back actions from LinkedIn servers to associate, dis-associate, create activity record on lead, account, contact and opportunity."
+  label = "LinkedInJSComponent"
+  fullName = "LID__LinkedInJSComponent"
+  content = "(hidden)"
+}

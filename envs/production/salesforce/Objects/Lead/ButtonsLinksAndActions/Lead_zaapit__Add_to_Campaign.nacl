@@ -1,0 +1,16 @@
+salesforce.WebLink Lead_zaapit__Add_to_Campaign {
+  fullName = "Lead.zaapit__Add_to_Campaign"
+  availability = "online"
+  displayType = "massActionButton"
+  encodingKey = "UTF-8"
+  height = 600
+  linkType = "url"
+  masterLabel = "Add to Campaign"
+  openType = "sidebar"
+  protected = false
+  requireRowSelection = true
+  url = "/**/add_to_campignLead();"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

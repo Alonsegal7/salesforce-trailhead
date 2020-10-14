@@ -1,0 +1,9 @@
+salesforce.Role IL_SDR_Team_Leader {
+  fullName = "IL_SDR_Team_Leader"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "IL SDR Team Leader"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.IL_VP_Sales
+}

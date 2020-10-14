@@ -1,0 +1,14 @@
+type salesforce.LineItem_Sync__c {
+  salesforce.Text Opportunity_Line_Item_field__c {
+    apiName = "LineItem_Sync__c.Opportunity_Line_Item_field__c"
+    label = "Opportunity Line Item field"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+}

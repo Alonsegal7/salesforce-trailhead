@@ -1,0 +1,44 @@
+salesforce.ListView Account_My_Prioritised_Accounts_Scaled_CSM_s {
+  fullName = "Account.My_Prioritised_Accounts_Scaled_CSM_s"
+  columns = [
+    "ACCOUNT.NAME",
+    "PARENT_NAME",
+    "Next_Charge_Date__c",
+    "Plan_Name__c",
+    "ARR__c",
+    "WAPP_From_Members__c",
+    "Health_Score__c",
+    "Priority_Reason__c",
+    "Action_Plan__c",
+    "Scale_Account_Status__c",
+    "Account_Sentiment__c",
+    "Renewal_Certainty__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "ACCOUNT.RECORDTYPE"
+      operation = "equals"
+      value = "Account.Monday_Account"
+    },
+    {
+      field = "CSM_Function__c"
+      operation = "equals"
+      value = "Scaled Touch"
+    },
+    {
+      field = "Prioritized_Account__c"
+      operation = "equals"
+      value = "1"
+    },
+    {
+      field = "AM_i_the_CSM__c"
+      operation = "equals"
+      value = "1"
+    },
+  ]
+  label = "My Prioritised Accounts (Scaled CSM's)"
+  _parent = [
+    salesforce.Account,
+  ]
+}

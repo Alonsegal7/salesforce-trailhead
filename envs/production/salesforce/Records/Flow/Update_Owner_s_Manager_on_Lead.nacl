@@ -1,0 +1,213 @@
+salesforce.Flow Update_Owner_s_Manager_on_Lead {
+  fullName = "Update_Owner_s_Manager_on_Lead"
+  assignments = [
+    {
+      name = "Do_Nothing"
+      label = "Do Nothing"
+      locationX = 563
+      locationY = 329
+      assignmentItems = [
+        {
+          assignToReference = "Error"
+          operator = "Assign"
+          value = {
+            booleanValue = true
+          }
+        },
+      ]
+    },
+    {
+      name = "Success"
+      label = "Success"
+      locationX = 974
+      locationY = 343
+      assignmentItems = [
+        {
+          assignToReference = "Error"
+          operator = "Assign"
+          value = {
+            stringValue = "Success"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      name = "Owner_Is_Active"
+      label = "Owner Is Active?"
+      locationX = 435
+      locationY = 62
+      defaultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      defaultConnectorLabel = "Inactive"
+      rules = [
+        {
+          name = "Is_Active"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Lead.Owner:User.IsActive"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Lead.Owner:User.Long_User_ID__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                stringValue = "0051t000003OiHnAAK"
+              }
+            },
+            {
+              leftValueReference = "Get_Current_Lead.Owner:User.Long_User_ID__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                stringValue = "0051t000003PwDrAAK"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Owner_Manger_Owner_s_Manager"
+          }
+          label = "Is Active"
+        },
+      ]
+    },
+    {
+      name = "Owner_Manger_Owner_s_Manager"
+      label = "Owner.Manger = Owner's Manager?"
+      locationX = 698
+      locationY = 81
+      defaultConnector = {
+        targetReference = "Update_Account_Owner_s_Manager"
+      }
+      defaultConnectorLabel = "Not Equal"
+      rules = [
+        {
+          name = "Equal"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Current_Lead.Owner_s_Manager__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "Get_Current_Lead.Owner:User.ManagerId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Do_Nothing"
+          }
+          label = "Equal"
+        },
+      ]
+    },
+  ]
+  description = "Triggered by process builder - Update Owner's Manager on Lead"
+  interviewLabel = "Update Owner's Manager on Lead {!$Flow.CurrentDateTime}"
+  label = "Update Owner's Manager on Lead"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get_Current_Lead"
+      label = "Get Current Lead"
+      locationX = 237
+      locationY = 68
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Owner_Is_Active"
+      }
+      faultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      filters = [
+        {
+          field = "Long_Lead_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Lead
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_Account_Owner_s_Manager"
+      label = "Update Account Owner's Manager"
+      locationX = 973
+      locationY = 76
+      connector = {
+        targetReference = "Success"
+      }
+      faultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      filters = [
+        {
+          field = "Long_Account_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            elementReference = "Get_Current_Lead.Owner:User.ManagerId"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+  ]
+  start = {
+    locationX = 48
+    locationY = 68
+    connector = {
+      targetReference = "Get_Current_Lead"
+    }
+  }
+  status = "Obsolete"
+  variables = [
+    {
+      name = "Error"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      value = {
+        stringValue = "0"
+      }
+    },
+    {
+      name = "recordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+  ]
+}

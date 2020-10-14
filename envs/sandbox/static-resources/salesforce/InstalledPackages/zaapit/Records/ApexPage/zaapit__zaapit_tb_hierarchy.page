@@ -1,0 +1,4 @@
+<apex:page standardController="account">
+ <c:zaapit_hierarchy idx="{!id}" title1="{!$Label.zaapit__account_hierarchy}" titleLink="{!'/apex/zaapit__zaapit_tb_hierarchy?id='+id}" />
+    <!-- Thank you for looking :) please contact us for customizing this application, custom formula example: recordName="zaapit__temp_name__c" extraField="name,zaapit__temp_name__c"-->
+</apex:page>
