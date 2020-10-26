@@ -1,8 +1,0 @@
-salesforce.ListView SpringCMEos__DSWConfig__c_SpringCMEos__All {
-  fullName = "SpringCMEos__DSWConfig__c.SpringCMEos__All"
-  filterScope = "Everything"
-  label = "All"
-  _parent = [
-    salesforce.SpringCMEos__DSWConfig__c,
-  ]
-}

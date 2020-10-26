@@ -1,0 +1,12 @@
+salesforce.LightningMessageChannel dfsle__DecUpdatePageLayouts {
+  fullName = "dfsle__DecUpdatePageLayouts"
+  description = "Update user selected page layouts with custom button for sending with DocuSign"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "Envelope configuration Record Id"
+      fieldName = "recordId"
+    },
+  ]
+  masterLabel = "DecUpdatePageLayouts"
+}

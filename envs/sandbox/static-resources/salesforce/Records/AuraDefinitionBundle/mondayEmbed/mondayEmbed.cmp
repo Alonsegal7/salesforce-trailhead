@@ -15,10 +15,17 @@
     <aura:attribute name="frameBorder" type="String" />
     <aura:attribute name="style" type="String" />
     <aura:attribute name="sandbox" type="String" />
-	
+    <aura:attribute name="userFieldAPI" type="String"/>
+
     <aura:attribute name="record" type="Object" />
     <aura:attribute name="simpleRecord" type="Object" />
     <aura:attribute name="recordError" type="String"/>
+
+    <aura:attribute name="UserRecord" type="Object" />
+    <aura:attribute name="currentUserId" type="String" />
+    <aura:attribute name="simpleUserRecord" type="Object"/>
+    <aura:attribute name="userRecordError" type="String"/>
+
 	<force:recordData 
           recordId="{!v.recordId}"
           targetRecord="{!v.record}"
@@ -26,6 +33,13 @@
           targetError="{!v.recordError}"
           layoutType="FULL"
           recordUpdated="{!c.onRender}"/>
+    <!--current user-->
+    <force:recordData 
+          recordId="{!v.currentUserId}"
+          targetRecord="{!v.UserRecord}"
+          targetFields="{!v.simpleUserRecord}"
+          targetError="{!v.userRecordError}"
+          layoutType="FULL"/>
 
     <iframe src="{! v.fullURL}" 
         id="monday-embed"

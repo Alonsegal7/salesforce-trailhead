@@ -1,4 +1,4 @@
-public with sharing class SubscriptionPickerController {
+public without sharing class SubscriptionPickerController {
     @AuraEnabled(cacheable=true)
     public static map<Id,Subscription__c> getSubscriptions(String oppId){
         try{

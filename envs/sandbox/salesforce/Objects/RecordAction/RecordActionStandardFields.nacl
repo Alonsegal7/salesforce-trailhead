@@ -217,14 +217,6 @@ type salesforce.RecordAction {
       salesforce.Sale__c,
       salesforce.SocialPersona,
       salesforce.SocialPost,
-      salesforce.SpringCMEos__DSWConfig__c,
-      salesforce.SpringCMEos__EOS_Type__c,
-      salesforce.SpringCMEos__Environment__c,
-      salesforce.SpringCMEos__Org_Url__c,
-      salesforce.SpringCMEos__SpringCM_Attribute_Field__c,
-      salesforce.SpringCMEos__SpringCM_Attribute_Group__c,
-      salesforce.SpringCMEos__SpringCM_Public_Settings__c,
-      salesforce.SpringCMEos__SpringCM_Testing__c,
       salesforce.StoryLogItemSetting__c,
       salesforce.StoryLogSetting__c,
       salesforce.StoryLogSnapshot__c,
@@ -233,6 +225,23 @@ type salesforce.RecordAction {
       salesforce.Target__c,
       salesforce.Team__c,
       salesforce.User,
+      salesforce.dfsle__AgreementConfiguration__c,
+      salesforce.dfsle__BulkList__c,
+      salesforce.dfsle__BulkStatus__c,
+      salesforce.dfsle__CustomParameterMap__c,
+      salesforce.dfsle__CustomRecipient__c,
+      salesforce.dfsle__Document__c,
+      salesforce.dfsle__EOS_Type__c,
+      salesforce.dfsle__EnvelopeConfigurationDocument__c,
+      salesforce.dfsle__EnvelopeConfigurationRecipient__c,
+      salesforce.dfsle__EnvelopeConfiguration__c,
+      salesforce.dfsle__EnvelopeLocalization__c,
+      salesforce.dfsle__EnvelopeStatus__c,
+      salesforce.dfsle__Envelope__c,
+      salesforce.dfsle__GenTemplate__c,
+      salesforce.dfsle__Log__c,
+      salesforce.dfsle__RecipientStatus__c,
+      salesforce.dfsle__Recipient__c,
       salesforce.leadconvertchtr__LeadConvertChatter__c,
       salesforce.mondayapp__IntegrationWebhookSubscription__c,
       salesforce.rh2__Filter__c,
@@ -310,6 +319,12 @@ type salesforce.RecordAction {
         fullName = "Closed_Won_Opportunity_Summary"
         default = false
         label = "Closed_Won_Opportunity_Summary"
+        isActive = true
+      },
+      {
+        fullName = "Co_Sell_Process"
+        default = false
+        label = "Co_Sell_Process"
         isActive = true
       },
       {
@@ -725,6 +740,12 @@ type salesforce.RecordAction {
         fullName = "Closed_Won_Opportunity_Summary"
         default = false
         label = "Closed_Won_Opportunity_Summary"
+        isActive = true
+      },
+      {
+        fullName = "Co_Sell_Process"
+        default = false
+        label = "Co_Sell_Process"
         isActive = true
       },
       {
@@ -1175,6 +1196,12 @@ type salesforce.RecordAction {
         fullName = "QuickActionDefinition.Opportunity.Clone_with_Products"
         default = false
         label = "QuickActionDefinition.Opportunity.Clone_with_Products"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Create_Co_Sell_Opp"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Create_Co_Sell_Opp"
         isActive = true
       },
       {

@@ -1,0 +1,8 @@
+salesforce.StaticResource dfsle__icon_DocuSignAgreements {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "image/svg+xml"
+  description = "icon_DocuSignAgreements.svg"
+  fullName = "dfsle__icon_DocuSignAgreements"
+  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__icon_DocuSignAgreements.svg")
+}

@@ -5,6 +5,13 @@ salesforce.Layout Subscription_Layout {
   ]
   layoutSections = [
     {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "New Section"
+      style = "TwoColumnsLeftToRight"
+    },
+    {
       customLabel = false
       detailHeading = false
       editHeading = true
@@ -17,9 +24,21 @@ salesforce.Layout Subscription_Layout {
               field = salesforce.Subscription__c.field.Name
             },
             {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Activation_Date__c
+              behavior = "Readonly"
+              field = salesforce.Subscription__c.field.Name_for_CC_Claim__c
             },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Contract__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Monday_Account__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
             {
               behavior = "Edit"
               field = salesforce.Subscription__c.field.ARR__c
@@ -30,31 +49,28 @@ salesforce.Layout Subscription_Layout {
             },
             {
               behavior = "Edit"
-              field = salesforce.Subscription__c.field.Billing_Ids__c
-            },
-            {
-              behavior = "Edit"
               field = salesforce.Subscription__c.field.Collection__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Contract__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Deactivation_Date__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Discount__c
             },
             {
               behavior = "Edit"
               field = salesforce.Subscription__c.field.Exchange_Rate__c
             },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Plan Details"
+      layoutColumns = [
+        {
+          layoutItems = [
             {
               behavior = "Edit"
-              field = salesforce.Subscription__c.field.Expiration_Date__c
+              field = salesforce.Subscription__c.field.Paid_Months__c
             },
             {
               behavior = "Edit"
@@ -62,47 +78,7 @@ salesforce.Layout Subscription_Layout {
             },
             {
               behavior = "Edit"
-              field = salesforce.Subscription__c.field.Is_Active__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Is_Claimed__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.List_Price__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Monday_Account__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Opportunity_Product_Id__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Paid_Months__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Payment_Method__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Period__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Pricing_Version__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Pulse_Account_Id__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Pulse_Contract_Id__c
+              field = salesforce.Subscription__c.field.Tier__c
             },
             {
               behavior = "Edit"
@@ -110,15 +86,126 @@ salesforce.Layout Subscription_Layout {
             },
             {
               behavior = "Edit"
-              field = salesforce.Subscription__c.field.Status__c
+              field = salesforce.Subscription__c.field.Pricing_Version__c
             },
             {
               behavior = "Edit"
-              field = salesforce.Subscription__c.field.Tier__c
+              field = salesforce.Subscription__c.field.Period__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Activation_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Deactivation_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Expiration_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.List_Price__c
             },
             {
               behavior = "Edit"
               field = salesforce.Subscription__c.field.Unit_Price__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Discount__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Billing Contract Details"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Status__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Payment_Method__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Pulse_Account_Id__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Source_Sales_Order__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Pulse_Contract_Id__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.BigBrain_Id__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Claim Details"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Is_Claimed__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Claimed_On_Opportunity__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Billing_Ids__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Migrated Details"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Migrated_Unit_Price__c
             },
             {
               behavior = "Edit"
@@ -136,21 +223,34 @@ salesforce.Layout Subscription_Layout {
               behavior = "Edit"
               field = salesforce.Subscription__c.field.Migrated_Paid_Months__c
             },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Migrated_Unit_Price__c
-            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Admin"
+      layoutColumns = [
+        {
+          layoutItems = [
             {
               behavior = "Readonly"
               field = salesforce.Subscription__c.field.Long_Subscription_Id__c
             },
             {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.BigBrain_Id__c
+              behavior = "Readonly"
+              field = salesforce.Subscription__c.field.Product_Code__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Subscription__c.field.Seats_Mismatch__c
             },
             {
               behavior = "Edit"
-              field = salesforce.Subscription__c.field.Source_Sales_Order__c
+              field = salesforce.Subscription__c.field.Opportunity_Product_Id__c
             },
           ]
         },
@@ -158,32 +258,16 @@ salesforce.Layout Subscription_Layout {
           layoutItems = [
             {
               behavior = "Edit"
-              field = salesforce.Subscription__c.field.OwnerId
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.CurrencyIsoCode
+              field = salesforce.Subscription__c.field.Manual_Trigger__c
             },
             {
               behavior = "Edit"
               field = salesforce.Subscription__c.field.Include_in_CC_Claim__c
             },
-            {
-              behavior = "Readonly"
-              field = salesforce.Subscription__c.field.Product_Code__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Subscription__c.field.Claimed_On_Opportunity__c
-            },
-            {
-              behavior = "Readonly"
-              field = salesforce.Subscription__c.field.Name_for_CC_Claim__c
-            },
           ]
         },
       ]
-      style = "TwoColumnsTopToBottom"
+      style = "TwoColumnsLeftToRight"
     },
     {
       customLabel = false

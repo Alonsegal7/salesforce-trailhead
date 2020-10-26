@@ -641,30 +641,6 @@ salesforce.SearchSettings {
       {
         enhancedLookupEnabled = false
         lookupAutoCompleteEnabled = false
-        name = salesforce.SpringCMEos__DSWConfig__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.SpringCMEos__SpringCM_Attribute_Field__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.SpringCMEos__SpringCM_Attribute_Group__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.SpringCMEos__SpringCM_Testing__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
         name = salesforce.StoryLogItemSetting__c
         resultsPerPageCount = 0
       },
@@ -721,6 +697,102 @@ salesforce.SearchSettings {
         lookupAutoCompleteEnabled = false
         name = salesforce.WorkBadgeDefinition
         resultsPerPageCount = 25
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__AgreementConfiguration__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__BulkList__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__BulkStatus__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__CustomParameterMap__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__CustomRecipient__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__Document__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__EnvelopeConfigurationDocument__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__EnvelopeConfigurationRecipient__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__EnvelopeConfiguration__c
+        resultsPerPageCount = 25
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__EnvelopeLocalization__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__EnvelopeStatus__c
+        resultsPerPageCount = 25
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__Envelope__c
+        resultsPerPageCount = 25
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__GenTemplate__c
+        resultsPerPageCount = 25
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__Log__c
+        resultsPerPageCount = 25
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__RecipientStatus__c
+        resultsPerPageCount = 0
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
+        name = salesforce.dfsle__Recipient__c
+        resultsPerPageCount = 0
       },
       {
         enhancedLookupEnabled = false

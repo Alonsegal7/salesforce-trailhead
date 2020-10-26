@@ -86,6 +86,7 @@ type salesforce.AuthProvider {
       values = [
         "Apple",
         "Custom",
+        "Evergreen",
         "Facebook",
         "GitHub",
         "Google",

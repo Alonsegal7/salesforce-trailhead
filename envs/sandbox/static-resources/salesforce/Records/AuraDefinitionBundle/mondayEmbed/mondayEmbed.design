@@ -8,6 +8,7 @@
     <design:attribute name="itemView" label="Use Item Details View"/>
     <design:attribute name="viewId" label="View Id (Optional)" />
     <design:attribute name="dashboardId" label="Dashboard Id (Optional)" description="Set Dashboard Id in order to present a full view of a monday Dashboard. If you set this parameter, the rest of the parameters will be ignored."/>
+    <design:attribute name="userFieldAPI" label="Board Id from Current User" description="Insert a User API Field to dynamicly present a board based on the current user"/>
     <design:attribute name="width" label="Width" default="100%"/>
     <design:attribute name="height" label="Height" default="500px"/>
     <design:attribute name="style" label="Style" default="border: none; overflow: scroll;"/>

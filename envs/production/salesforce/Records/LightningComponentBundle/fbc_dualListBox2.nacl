@@ -1,0 +1,143 @@
+salesforce.LightningComponentBundle fbc_dualListBox2 {
+  xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 47
+  description = "Dual List Box (fbc)"
+  isExposed = true
+  masterLabel = "Dual List Box (fbc)"
+  targets = {
+    target = [
+      "lightning__FlowScreen",
+    ]
+  }
+  targetConfigs = {
+    targetConfig = [
+      {
+        targets = "lightning__FlowScreen"
+        configurationEditor = "c-fbc_dual-list-box-c-p-e"
+        category = "Input"
+        property = [
+          {
+            name = "label"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "sourceLabel"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "fieldLevelHelp"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "selectedLabel"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "min"
+            type = "Integer"
+            role = "inputOnly"
+          },
+          {
+            name = "max"
+            type = "Integer"
+            role = "inputOnly"
+          },
+          {
+            name = "disableReordering"
+            type = "Boolean"
+            role = "inputOnly"
+          },
+          {
+            name = "size"
+            type = "Integer"
+            role = "inputOnly"
+          },
+          {
+            name = "required"
+            type = "Boolean"
+            role = "inputOnly"
+          },
+          {
+            name = "requiredOptions"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "useObjectValueAsOutput"
+            type = "Boolean"
+            role = "inputOnly"
+          },
+          {
+            name = "useWhichObjectKeyForData"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "useWhichObjectKeyForLabel"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "useWhichObjectKeyForSort"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "allOptionsFieldDescriptorList"
+            type = "apex://fbc_FieldDescriptor[]"
+            role = "inputOnly"
+          },
+          {
+            name = "allOptionsCSV"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "allOptionsStringCollection"
+            type = "String[]"
+            role = "inputOnly"
+          },
+          {
+            name = "allOptionsStringCollectionLabels"
+            type = "String[]"
+            role = "inputOnly"
+          },
+          {
+            name = "allOptionsStringFormat"
+            type = "String"
+            role = "inputOnly"
+          },
+          {
+            name = "selectedOptionsFieldDescriptorList"
+            type = "apex://fbc_FieldDescriptor[]"
+          },
+          {
+            name = "selectedOptionsCSV"
+            type = "String"
+          },
+          {
+            name = "selectedOptionsStringList"
+            type = "String[]"
+          },
+        ]
+      },
+    ]
+  }
+  fullName = "fbc_dualListBox2"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_dualListBox2/fbc_dualListBox2.html")
+        filePath = "lwc/fbc_dualListBox2/fbc_dualListBox2.html"
+      },
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_dualListBox2/fbc_dualListBox2.js")
+        filePath = "lwc/fbc_dualListBox2/fbc_dualListBox2.js"
+      },
+    ]
+  }
+}

@@ -14,7 +14,7 @@ salesforce.Audience Companies {
       },
       {
         criterionValue = {
-          entityField = "RecordTypeId"
+          entityField = "RecordType.Id"
           entityType = "Account"
           fieldValue = "Account.Company"
         }

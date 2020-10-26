@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle dfsle__DeleteAgreement {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 45
+  description = "DeleteAgreement"
+  fullName = "dfsle__DeleteAgreement"
+  type = "Component"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

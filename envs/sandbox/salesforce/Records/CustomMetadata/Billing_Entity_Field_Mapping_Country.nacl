@@ -1,0 +1,11 @@
+salesforce.CustomMetadata Billing_Entity_Field_Mapping_Country {
+  fullName = "Billing_Entity_Field_Mapping.Country"
+  label = "Country__c"
+  protected = false
+  values = [
+    {
+      field = "Partner_SO_Request_Field__c"
+      value = "Billing_Country__c"
+    },
+  ]
+}

@@ -128,6 +128,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.CC_Products_ARR_Sum__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.CSM_Name__c
     },
     {
@@ -147,6 +151,11 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
           translation = ""
         },
       ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Channel_Partner__c
+      relationshipLabel = ""
     },
     {
       label = ""
@@ -776,6 +785,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.Opportunity.field.Is_Potential_Green_Bucket__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Is_Primary_SO_Signed__c
     },
     {
       label = ""
@@ -1787,6 +1800,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Wire_Products_ARR_Sum__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Won_SO_Count__c
     },
     {
@@ -2018,6 +2035,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.QuickAction.instance.Opportunity_Clone_with_Products
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Create_Co_Sell_Opp
     },
     {
       label = ""

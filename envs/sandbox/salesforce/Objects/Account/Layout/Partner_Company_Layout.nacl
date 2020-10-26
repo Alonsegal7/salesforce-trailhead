@@ -426,6 +426,14 @@ salesforce.Layout Partner_Company_Layout {
       ]
       relatedList = salesforce.LSNLY__Lessonly_User__c.field.Partner__c
     },
+    {
+      fields = [
+        "OPPORTUNITY.NAME",
+        "ACCOUNT.NAME",
+        "OPPORTUNITY.CLOSE_DATE",
+      ]
+      relatedList = salesforce.Opportunity.field.Channel_Partner__c
+    },
   ]
   relatedObjects = [
     "ParentId",

@@ -6,16 +6,13 @@ public without sharing class ContractService {
             Account mondayAccount = [SELECT Id, Name, Active_Contract__c, Company__c FROM Account WHERE Id = :opportunity.AccountId];
             QuoteLineItem quoteLicenseLine = [SELECT Id, Tier__c, ListPrice, UnitPrice, Discount, ServiceDate,Quantity,End_Date__c FROM QuoteLineItem WHERE QuoteId = :quote.Id AND Product_Type__c = 'License' limit 1];
             List<OpportunityLineItem> opportunityLines = [SELECT Id, Contract__c FROM OpportunityLineItem WHERE OpportunityId = :opportunity.Id for update];
-            //boolean tierHasChanged=quote.DH_Tier__c<>quote.Get_Contract_Tier__c;
             if(quote.ContractId != null) 
                 deactivateContract(quote.ContractId); 
             system.debug('Raz Ben Ron quote.Quote_Type__c: '+quote.Quote_Type__c);
-            //if(quote.Quote_Type__c =='Pro-rated' && !tierHasChanged && quote.Get_Contract_Tier__c!=null) {
-            if(quote.Quote_Type__c =='Pro-rated- Additional Seats'){ //prorated without change of tier
+            if(quote.Quote_Type__c =='Pro-rated- Additional Seats'&&!quote.Pro_Rated_Different_Price__c){ //prorated without change of tier
                 quote.ContractId=quote.Get_Contract_Id__c;
                 system.debug('Raz Ben Ron should connect to get id:' );
-            // } else if(quote.Quote_Type__c == 'New Contract'||(quote.Quote_Type__c == 'Pro-rated' && (tierHasChanged||quote.Get_Contract_Tier__c==null))) {
-            } else if(quote.Quote_Type__c == 'New Contract'||quote.Quote_Type__c == 'Change Tier in the same term') {
+            } else if(quote.Quote_Type__c == 'New Contract'||quote.Quote_Type__c == 'Change Tier in the same term'||quote.Pro_Rated_Different_Price__c) {
                 Id contractId = createContract(mondayAccount, quote, quoteLicenseLine);
                 quote.ContractId = contractId;
                 mondayAccount.Active_Contract__c = contractId;

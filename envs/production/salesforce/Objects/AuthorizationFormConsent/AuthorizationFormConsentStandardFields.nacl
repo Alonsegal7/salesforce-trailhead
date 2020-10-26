@@ -126,7 +126,7 @@ type salesforce.AuthorizationFormConsent {
   salesforce.Text ConsentCapturedSource {
     apiName = "AuthorizationFormConsent.ConsentCapturedSource"
     label = "Consent Captured Source"
-    _required = true
+    _required = false
     createable = true
     updateable = true
     unique = false
@@ -137,7 +137,7 @@ type salesforce.AuthorizationFormConsent {
   salesforce.Picklist ConsentCapturedSourceType {
     apiName = "AuthorizationFormConsent.ConsentCapturedSourceType"
     label = "Consent Captured Source Type"
-    _required = true
+    _required = false
     valueSet = [
       {
         fullName = "Email"
@@ -178,7 +178,7 @@ type salesforce.AuthorizationFormConsent {
   salesforce.DateTime ConsentCapturedDateTime {
     apiName = "AuthorizationFormConsent.ConsentCapturedDateTime"
     label = "Consent Captured Date Time"
-    _required = true
+    _required = false
     createable = true
     updateable = true
     queryable = true

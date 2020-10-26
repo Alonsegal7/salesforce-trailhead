@@ -2327,10 +2327,6 @@ salesforce.RecordType Lead_Partner_Lead {
           default = false
         },
         {
-          fullName = "Negotiations"
-          default = false
-        },
-        {
           fullName = "New Lead"
           default = false
         },
@@ -2428,6 +2424,27 @@ salesforce.RecordType Lead_Partner_Lead {
         },
         {
           fullName = "Onboarding %26 training"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Qualified_for_Solution__c"
+      values = [
+        {
+          fullName = "Creative"
+          default = false
+        },
+        {
+          fullName = "Marketing"
+          default = false
+        },
+        {
+          fullName = "PMO"
+          default = false
+        },
+        {
+          fullName = "Sales Operations"
           default = false
         },
       ]
@@ -3277,39 +3294,6 @@ salesforce.RecordType Lead_Partner_Lead {
         },
         {
           fullName = "Trial Account"
-          default = false
-        },
-      ]
-    },
-    {
-      picklist = "zisf__Zoom_Clean_Status__c"
-      values = [
-        {
-          fullName = "Clean"
-          default = false
-        },
-        {
-          fullName = "Company Clean Only"
-          default = false
-        },
-        {
-          fullName = "Different"
-          default = false
-        },
-        {
-          fullName = "Error"
-          default = false
-        },
-        {
-          fullName = "In Sync"
-          default = false
-        },
-        {
-          fullName = "Not Compared"
-          default = true
-        },
-        {
-          fullName = "Not Found"
           default = false
         },
       ]

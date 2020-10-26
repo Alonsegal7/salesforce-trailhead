@@ -1,7 +1,0 @@
-salesforce.ApexClass SpringCMEos__SpringCMInboxTrackerController {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 37
-  status = "Active"
-  fullName = "SpringCMEos__SpringCMInboxTrackerController"
-  content = file("salesforce/InstalledPackages/SpringCMEos/Records/ApexClass/SpringCMEos__SpringCMInboxTrackerController.cls")
-}

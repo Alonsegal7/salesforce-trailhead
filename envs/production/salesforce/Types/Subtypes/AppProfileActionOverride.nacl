@@ -45,6 +45,7 @@ type salesforce.AppProfileActionOverride {
         "Allocation__c",
         "Asset",
         "AssetRelationship",
+        "AssociatedLocation",
         "Billing_Entity__c",
         "Business_Review__c",
         "CalendlyAction__c",
@@ -64,6 +65,7 @@ type salesforce.AppProfileActionOverride {
         "ContactRequest",
         "ContentDocument",
         "Contract",
+        "DelegatedAccount",
         "Department__c",
         "EngagementChannelType",
         "EnhancedLetterhead",
@@ -98,6 +100,7 @@ type salesforce.AppProfileActionOverride {
         "LSNLY__Lessonly_User__c",
         "Lead",
         "Lead_Registration__c",
+        "Location",
         "Milestone__c",
         "Monday_Account__c",
         "Note",
@@ -157,14 +160,6 @@ type salesforce.AppProfileActionOverride {
         "valt__Valooto_Quote_Answer__c",
         "valt__Valooto_Quote_Workflow__c",
         "valt__Valooto_Workflow__c",
-        "zisf__FmcDefaultValue__c",
-        "zisf__ZoomInfo_Clean_Settings__c",
-        "zisf__ZoomInfo_Custom_Settings__c",
-        "zisf__ZoomInfo_Inbound_Settings__c",
-        "zisf__ZoomInfo__c",
-        "zisf__ZoomSessions__c",
-        "zisf__Zoom_Scheduler__c",
-        "zisf__zicCleanJob__c",
       ]
     }
     foreignKeyDomain = [

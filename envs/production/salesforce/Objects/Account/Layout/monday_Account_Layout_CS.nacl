@@ -396,7 +396,15 @@ salesforce.Layout monday_Account_Layout_CS {
         "New",
       ]
       fields = [
+        "CREATED_DATE",
         "NAME",
+        "CREATEDBY_USER",
+        "Full_Opportunity_Size__c",
+        "Short_Term_Growth__c",
+        "Long_Term_Growth__c",
+        "Retention_Score__c",
+        "Handover_Notes__c",
+        "Which_Kind_of_CSM__c",
       ]
       relatedList = salesforce.Handover__c.field.Monday_Account__c
     },

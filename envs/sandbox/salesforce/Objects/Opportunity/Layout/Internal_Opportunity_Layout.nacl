@@ -107,6 +107,22 @@ salesforce.Layout Internal_Opportunity_Layout {
               behavior = "Readonly"
               field = salesforce.Opportunity.field.Opp_Owner_is_Partner__c
             },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.CC_Products_ARR_Sum__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Wire_Products_ARR_Sum__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Is_Primary_SO_Signed__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Channel_Partner__c
+            },
           ]
         },
         {

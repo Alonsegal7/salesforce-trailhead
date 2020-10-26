@@ -41,6 +41,7 @@ type salesforce.QueueSobject {
         "ContactRequest",
         "DataUseLegalBasis",
         "DataUsePurpose",
+        "DelegatedAccount",
         "EngagementChannelType",
         "ExchangeRate__c",
         "Field_Trip__Field_Analytic_Config__c",
@@ -63,6 +64,8 @@ type salesforce.QueueSobject {
         "LSNLY__Lessonly_User__c",
         "Lead",
         "Lead_Registration__c",
+        "Location",
+        "LocationTrustMeasure",
         "Macro",
         "Opportunity_Snapshot__c",
         "Order",
@@ -96,14 +99,6 @@ type salesforce.QueueSobject {
         "squivr__MilestoneTemplate__c",
         "valt__Valooto_Quote_Workflow__c",
         "valt__Valooto_Workflow__c",
-        "zisf__FmcDefaultValue__c",
-        "zisf__ZoomInfo_Clean_Settings__c",
-        "zisf__ZoomInfo_Custom_Settings__c",
-        "zisf__ZoomInfo_Inbound_Settings__c",
-        "zisf__ZoomInfo__c",
-        "zisf__ZoomSessions__c",
-        "zisf__Zoom_Scheduler__c",
-        "zisf__zicCleanJob__c",
       ]
     }
   }

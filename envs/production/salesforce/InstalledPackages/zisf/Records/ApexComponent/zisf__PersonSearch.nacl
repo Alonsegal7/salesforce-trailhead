@@ -1,8 +1,0 @@
-salesforce.ApexComponent zisf__PersonSearch {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 26
-  description = "Visualforce Component for Person Search."
-  label = "PersonSearch"
-  fullName = "zisf__PersonSearch"
-  content = "(hidden)"
-}

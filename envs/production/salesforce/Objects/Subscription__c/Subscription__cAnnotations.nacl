@@ -234,7 +234,7 @@ type salesforce.Subscription__c {
   enableSearch = true
   enableSharing = true
   enableStreamingApi = true
-  externalSharingModel = "Private"
+  externalSharingModel = "Read"
   nameField = {
     label = "Subscription Name"
     trackHistory = false

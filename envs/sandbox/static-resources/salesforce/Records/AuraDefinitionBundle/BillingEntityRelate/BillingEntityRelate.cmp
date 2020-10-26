@@ -12,7 +12,7 @@
 	
 	<aura:attribute name="selected_more_option" type="string" description="Selected more option (single match)" />
 	
-	
+	<aura:attribute name="related_partner_so" type="object" description="Related Partner DO Request" />
 	<aura:attribute name="form_new" type="boolean" description="Show create new Billing Entity form" default="false" />
 	<aura:attribute name="enable_form_new" type="boolean" description="Enable create new Billing Entity form" default="false" />
 	<aura:attribute name="form_new_fields" type="List" description="New Billing Entity field set" />
@@ -179,7 +179,7 @@
 					<aura:iteration items="{! v.form_new_fields }" var="field" indexVar="i">
 						<div class="slds-grid slds-gutters">
 							<div class="slds-col slds-size_1-of-1">
-								<lightning:inputField variant="label-stacked" required="true" fieldName="{! field }" />
+								<lightning:inputField variant="label-stacked" required="true" fieldName="{! field.name }" value="{! field.val }" />
 							</div>
 						</div>
 					</aura:iteration>

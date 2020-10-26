@@ -114,6 +114,10 @@ salesforce.OrgPreferenceSettings {
       settingValue = "false"
     },
     {
+      settingName = "ShapeExportPref"
+      settingValue = "false"
+    },
+    {
       settingName = "SocialProfilesEnable"
       settingValue = "true"
     },

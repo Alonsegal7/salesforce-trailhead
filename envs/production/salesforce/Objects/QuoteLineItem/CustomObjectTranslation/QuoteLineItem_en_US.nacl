@@ -159,11 +159,19 @@ salesforce.CustomObjectTranslation QuoteLineItem_en_US {
     },
     {
       label = ""
+      name = salesforce.QuoteLineItem.field.Training_Hours__c
+    },
+    {
+      label = ""
       name = salesforce.QuoteLineItem.field.Trigger_sync_quote_line_to_priority__c
     },
     {
       label = ""
       name = salesforce.QuoteLineItem.field.Unique_Key__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Unit_Price__c
     },
   ]
   layouts = [

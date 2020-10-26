@@ -1880,15 +1880,15 @@ salesforce.CustomObjectTranslation Lead_en_US {
           translation = ""
         },
         {
-          masterLabel = "Negotiations"
-          translation = ""
-        },
-        {
           masterLabel = "New"
           translation = ""
         },
         {
           masterLabel = "Nurturing"
+          translation = ""
+        },
+        {
+          masterLabel = "Qualified"
           translation = ""
         },
         {
@@ -2040,6 +2040,28 @@ salesforce.CustomObjectTranslation Lead_en_US {
     {
       label = ""
       name = salesforce.Lead.field.Qualified__c
+    },
+    {
+      label = ""
+      name = salesforce.Lead.field.Qualified_for_Solution__c
+      picklistValues = [
+        {
+          masterLabel = "Creative"
+          translation = ""
+        },
+        {
+          masterLabel = "Marketing"
+          translation = ""
+        },
+        {
+          masterLabel = "PMO"
+          translation = ""
+        },
+        {
+          masterLabel = "Sales Operations"
+          translation = ""
+        },
+      ]
     },
     {
       label = ""
@@ -2670,81 +2692,6 @@ salesforce.CustomObjectTranslation Lead_en_US {
       label = ""
       name = salesforce.Lead.field.visitor_id__c
     },
-    {
-      help = ""
-      label = ""
-      name = salesforce.Lead.field.zisf__Person_Has_Moved__c
-    },
-    {
-      label = ""
-      name = salesforce.Lead.field.zisf__ZoomInfo_Complete_Status__c
-    },
-    {
-      help = ""
-      label = ""
-      name = salesforce.Lead.field.zisf__ZoomInfo_Email__c
-    },
-    {
-      label = ""
-      name = salesforce.Lead.field.zisf__ZoomInfo_Industry__c
-    },
-    {
-      help = ""
-      label = ""
-      name = salesforce.Lead.field.zisf__ZoomInfo_Last_Clean_Run__c
-    },
-    {
-      help = ""
-      label = ""
-      name = salesforce.Lead.field.zisf__ZoomInfo_Phone__c
-    },
-    {
-      help = ""
-      label = ""
-      name = salesforce.Lead.field.zisf__ZoomInfo_Trigger__c
-    },
-    {
-      label = ""
-      name = salesforce.Lead.field.zisf__Zoom_Clean_Status__c
-      picklistValues = [
-        {
-          masterLabel = "Clean"
-          translation = ""
-        },
-        {
-          masterLabel = "Company Clean Only"
-          translation = ""
-        },
-        {
-          masterLabel = "Different"
-          translation = ""
-        },
-        {
-          masterLabel = "Error"
-          translation = ""
-        },
-        {
-          masterLabel = "In Sync"
-          translation = ""
-        },
-        {
-          masterLabel = "Not Compared"
-          translation = ""
-        },
-        {
-          masterLabel = "Not Found"
-          translation = ""
-        },
-      ]
-    },
-    {
-      label = ""
-      name = salesforce.Lead.field.zisf__zoom_id__c
-    },
-    {
-      label = ""
-      name = salesforce.Lead.field.zisf__zoom_lastupdated__c
-    },
   ]
   layouts = [
     {
@@ -2901,6 +2848,10 @@ salesforce.CustomObjectTranslation Lead_en_US {
     {
       label = ""
       name = "LID__LinkedIn_Message"
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Lead_Related_BB_Accounts
     },
     {
       label = ""

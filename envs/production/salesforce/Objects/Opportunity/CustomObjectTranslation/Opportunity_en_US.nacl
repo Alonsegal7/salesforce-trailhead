@@ -53,6 +53,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.ARR_at_Risk__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.About_Company__c
     },
     {
@@ -154,6 +158,11 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Channel_Partner__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Claimed_ARR__c
     },
     {
@@ -188,6 +197,11 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.Opportunity.field.Cluster__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Co_Sell_Opportunity__c
+      relationshipLabel = ""
     },
     {
       label = ""
@@ -245,6 +259,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.Opportunity.field.Created_Date_4_9_20__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Created_From_New_Opp_flow__c
     },
     {
       label = ""
@@ -618,6 +636,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
       name = salesforce.Opportunity.field.Discovery_timestamp__c
     },
     {
+      label = ""
+      name = salesforce.Opportunity.field.Downgrade_Opportunity__c
+    },
+    {
       help = ""
       label = ""
       name = salesforce.Opportunity.field.Eligible_for_Sales_Engineer__c
@@ -987,6 +1009,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Monday_Item_ID__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Monday_Solutions_Offered__c
       picklistValues = [
         {
@@ -1109,6 +1135,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Opportunity_Open_Reason_from_flow__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Opportunity_Reseller__c
       picklistValues = [
         {
@@ -1163,12 +1193,50 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Opportunity_Risk_Level__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Opportunity_Size__c
     },
     {
       help = ""
       label = ""
       name = salesforce.Opportunity.field.Opportunity_Source_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Opportunity_Type_2__c
+      picklistValues = [
+        {
+          masterLabel = "Add Monday Account"
+          translation = ""
+        },
+        {
+          masterLabel = "Add Users"
+          translation = ""
+        },
+        {
+          masterLabel = "Add Users and Upgrade Tier"
+          translation = ""
+        },
+        {
+          masterLabel = "Downgrade"
+          translation = ""
+        },
+        {
+          masterLabel = "New Business"
+          translation = ""
+        },
+        {
+          masterLabel = "Other Products"
+          translation = ""
+        },
+        {
+          masterLabel = "Upgrade Plan"
+          translation = ""
+        },
+      ]
     },
     {
       label = ""
@@ -1255,6 +1323,11 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.Opportunity.field.Pains__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Parent_Opportunity__c
+      relationshipLabel = ""
     },
     {
       help = ""
@@ -1615,6 +1688,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.Opportunity.field.TLV_Office_Temp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Test_monday_Integration__c
     },
     {
       label = ""
@@ -2109,6 +2186,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Co_Sell_Opportunity
+    },
+    {
+      label = ""
       name = salesforce.QuickAction.instance.Opportunity_Create_Partner_SO_Request
     },
     {
@@ -2118,6 +2199,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.QuickAction.instance.Opportunity_Create_Relate_Billing_Entity
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_Expansion_Opportunity
     },
     {
       label = ""
@@ -2142,6 +2227,14 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.QuickAction.instance.Opportunity_Request_a_Sales_Engineer
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_SO_Manually_Signed
+    },
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Opportunity_SO_Request
     },
     {
       label = ""

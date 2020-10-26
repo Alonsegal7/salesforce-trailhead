@@ -40,6 +40,10 @@ salesforce.CustomObjectTranslation Account_Snapshot__c_en_US {
     },
     {
       label = ""
+      name = salesforce.Account_Snapshot__c.field.Belongs_to_Viewed_Company__c
+    },
+    {
+      label = ""
       name = salesforce.Account_Snapshot__c.field.BigBrain_ID__c
     },
     {

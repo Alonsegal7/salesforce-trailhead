@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__CustomRecipient__c_it {
+  fullName = "dfsle__CustomRecipient__c-it"
+  _parent = [
+    salesforce.dfsle__CustomRecipient__c,
+  ]
+}

@@ -474,6 +474,10 @@ salesforce.Layout Internal_Opportunity_Layout {
               behavior = "Readonly"
               field = salesforce.Opportunity.field.SyncedQuoteId
             },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Downgrade_Opportunity__c
+            },
           ]
         },
         {
@@ -495,8 +499,8 @@ salesforce.Layout Internal_Opportunity_Layout {
               field = salesforce.Opportunity.field.Sales_Engineer__c
             },
             {
-              behavior = "Readonly"
-              field = salesforce.Opportunity.field.TLV_Office_Temp__c
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Parent_Opportunity__c
             },
           ]
         },
@@ -543,7 +547,7 @@ salesforce.Layout Internal_Opportunity_Layout {
         sortOrder = 2
       },
       {
-        actionName = "Opportunity.Clone_with_Products"
+        actionName = "Opportunity.Expansion_Opportunity"
         actionType = "QuickAction"
         sortOrder = 3
       },
@@ -596,6 +600,11 @@ salesforce.Layout Internal_Opportunity_Layout {
         actionName = "Delete"
         actionType = "StandardButton"
         sortOrder = 13
+      },
+      {
+        actionName = "Opportunity.Clone_with_Products"
+        actionType = "QuickAction"
+        sortOrder = 14
       },
     ]
   }

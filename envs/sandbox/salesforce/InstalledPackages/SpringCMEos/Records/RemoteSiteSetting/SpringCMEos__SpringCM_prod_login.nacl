@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting SpringCMEos__SpringCM_prod_login {
-  fullName = "SpringCMEos__SpringCM_prod_login"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://login.springcm.com"
-}

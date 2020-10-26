@@ -50,7 +50,23 @@
 	},
 	handleError : function (cmp, evt, hlp) {
 		console.log('Error here');
-		//
+        var payload = evt.getParams().response;
+		var errors = evt.getParams();
+        var errorMessage = 'An error had occured on the server. If this problem persist, please contact your Administrator';
+        console.log('Payload >>>> ' + payload);    
+        console.log('errors >>>> ' + JSON.stringify(errors));
+        if (errors && errors.hasOwnProperty('message')){
+            errorMessage = errors.message;
+        }
+        cmp.find('notifLib').showNotice({
+            "variant": "error",
+            "header": "Something has gone wrong!",
+            "message": errorMessage
+        });
+        var spinner = cmp.find("cmspinnernew");
+		$A.util.addClass(spinner, "slds-hide");
+        spinner = cmp.find("cmspinner");
+		$A.util.addClass(spinner, "slds-hide");
 	},
 	relate : function(cmp, evt, hlp){
 		hlp.relate(cmp, evt);

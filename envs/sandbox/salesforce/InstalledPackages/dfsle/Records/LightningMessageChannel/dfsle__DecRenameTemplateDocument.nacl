@@ -1,0 +1,16 @@
+salesforce.LightningMessageChannel dfsle__DecRenameTemplateDocument {
+  fullName = "dfsle__DecRenameTemplateDocument"
+  description = "Handles renaming of template documents in Envelope Templates"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "String value to update the document's name to"
+      fieldName = "name"
+    },
+    {
+      description = "Index of document in configuration data to update"
+      fieldName = "index"
+    },
+  ]
+  masterLabel = "DecRenameTemplateDocument"
+}

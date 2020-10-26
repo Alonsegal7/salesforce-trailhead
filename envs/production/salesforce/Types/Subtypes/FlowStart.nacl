@@ -50,6 +50,7 @@ type salesforce.FlowStart {
       values = [
         "PlatformEvent",
         "RecordAfterSave",
+        "RecordBeforeDelete",
         "RecordBeforeSave",
         "Scheduled",
         "ScheduledJourney",

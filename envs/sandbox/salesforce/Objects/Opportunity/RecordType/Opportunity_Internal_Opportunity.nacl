@@ -3004,11 +3004,19 @@ salesforce.RecordType Opportunity_Internal_Opportunity {
           default = false
         },
         {
+          fullName = "Downgrade"
+          default = false
+        },
+        {
           fullName = "Expansion"
           default = false
         },
         {
           fullName = "New Business"
+          default = false
+        },
+        {
+          fullName = "Renewal"
           default = false
         },
       ]

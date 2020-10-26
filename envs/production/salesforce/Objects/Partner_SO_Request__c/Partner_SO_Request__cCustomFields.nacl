@@ -146,14 +146,15 @@ type salesforce.Partner_SO_Request__c {
     _required = false
     valueSet = [
       {
-        fullName = "Monthly"
-        default = false
-        label = "Monthly"
-      },
-      {
         fullName = "Yearly"
         default = true
         label = "Yearly"
+      },
+      {
+        fullName = "Monthly"
+        default = false
+        label = "Monthly"
+        isActive = false
       },
     ]
     restricted = true
@@ -2936,5 +2937,13 @@ type salesforce.Partner_SO_Request__c {
     unique = false
     queryable = true
     externalId = false
+  }
+  salesforce.TextArea Comment_for_CPM__c {
+    apiName = "Partner_SO_Request__c.Comment_for_CPM__c"
+    label = "Comment for CPM"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
   }
 }

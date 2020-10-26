@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decSigningGroupLookup {
+  fullName = "dfsle__decSigningGroupLookup"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decSigningGroupLookup/decSigningGroupLookup.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decSigningGroupLookup/decSigningGroupLookup.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decSigningGroupLookup/decSigningGroupLookup.html"
+      },
+    ]
+  }
+}

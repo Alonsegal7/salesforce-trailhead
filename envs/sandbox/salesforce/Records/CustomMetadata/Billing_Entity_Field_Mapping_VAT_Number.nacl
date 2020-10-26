@@ -1,0 +1,11 @@
+salesforce.CustomMetadata Billing_Entity_Field_Mapping_VAT_Number {
+  fullName = "Billing_Entity_Field_Mapping.VAT_Number"
+  label = "VAT_Number__c"
+  protected = false
+  values = [
+    {
+      field = "Partner_SO_Request_Field__c"
+      value = "VAT__c"
+    },
+  ]
+}

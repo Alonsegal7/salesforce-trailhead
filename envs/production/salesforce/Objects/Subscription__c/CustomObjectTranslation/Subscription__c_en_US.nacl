@@ -93,6 +93,16 @@ salesforce.CustomObjectTranslation Subscription__c_en_US {
     },
     {
       label = ""
+      name = salesforce.Subscription__c.field.Manual_Trigger__c
+      picklistValues = [
+        {
+          masterLabel = "Create Active Contract"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
       name = salesforce.Subscription__c.field.Migrated_Discount__c
     },
     {
@@ -168,6 +178,10 @@ salesforce.CustomObjectTranslation Subscription__c_en_US {
     },
     {
       label = ""
+      name = salesforce.Subscription__c.field.Seats_Mismatch__c
+    },
+    {
+      label = ""
       name = salesforce.Subscription__c.field.Seats__c
     },
     {
@@ -194,7 +208,31 @@ salesforce.CustomObjectTranslation Subscription__c_en_US {
       sections = [
         {
           label = ""
+          section = "Admin"
+        },
+        {
+          label = ""
+          section = "Billing Contract Details"
+        },
+        {
+          label = ""
+          section = "Claim Details"
+        },
+        {
+          label = ""
           section = "Custom Links"
+        },
+        {
+          label = ""
+          section = "Migrated Details"
+        },
+        {
+          label = ""
+          section = "New Section"
+        },
+        {
+          label = ""
+          section = "Plan Details"
         },
       ]
     },

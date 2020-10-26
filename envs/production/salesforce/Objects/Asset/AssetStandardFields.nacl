@@ -421,4 +421,10 @@ type salesforce.Asset {
     updateable = false
     createable = false
   }
+  salesforce.Lookup LocationId {
+    apiName = "Asset.LocationId"
+    queryable = false
+    updateable = false
+    createable = false
+  }
 }

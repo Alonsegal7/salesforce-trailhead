@@ -1,0 +1,11 @@
+salesforce.LightningComponentBundle dfsle__documentUtils {
+  fullName = "dfsle__documentUtils"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/documentUtils/documentUtils.js"
+      },
+    ]
+  }
+}

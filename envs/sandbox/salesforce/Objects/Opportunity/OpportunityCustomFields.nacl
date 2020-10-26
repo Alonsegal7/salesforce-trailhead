@@ -5960,9 +5960,7 @@ Used in Flow Component Visibility filter in Opportunity lightning page
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Opportunity.field.Evaluation_timestamp__c,
-    ]
+    
   }
   salesforce.FormulaNumber Time_to_Validation_Reports__c {
     apiName = "Opportunity.Time_to_Validation_Reports__c"
@@ -5977,9 +5975,7 @@ Used in Flow Component Visibility filter in Opportunity lightning page
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Opportunity.field.Validation_Timestamp__c,
-    ]
+    
   }
   salesforce.FormulaNumber Time_to_Buying_Process__c {
     apiName = "Opportunity.Time_to_Buying_Process__c"
@@ -5994,9 +5990,7 @@ Used in Flow Component Visibility filter in Opportunity lightning page
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Opportunity.field.Buying_process_timestamp__c,
-    ]
+    
   }
   salesforce.FormulaNumber Time_to_Close_Reports__c {
     apiName = "Opportunity.Time_to_Close_Reports__c"
@@ -6812,11 +6806,17 @@ Opp is eligible for SE requests if:
   salesforce.FormulaCheckbox Opp_Owner_is_Partner__c {
     apiName = "Opportunity.Opp_Owner_is_Partner__c"
     label = "Opp Owner is Partner"
-    formula = "true"
+    formula = '''
+/*( Owner.Profile.Name = "Channel Managers" ) || ( Owner.Profile.Name = "Partner Community Custom" )*/
+ispickval(Owner.Function__c,"Partner")||ispickval(Owner.Function__c,"Partners- Channel Manager")
+'''
     createable = false
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.User.field.Function__c,
+    ]
   }
   salesforce.Checkbox Is_Dealroom_Signed__c {
     apiName = "Opportunity.Is_Dealroom_Signed__c"
@@ -6834,5 +6834,75 @@ Opp is eligible for SE requests if:
     queryable = false
     updateable = false
     createable = false
+  }
+  salesforce.Summary CC_Products_ARR_Sum__c {
+    apiName = "Opportunity.CC_Products_ARR_Sum__c"
+    label = "CC Products ARR Sum"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "OpportunityLineItem.ARR__c"
+    summaryFilterItems = [
+      {
+        field = "OpportunityLineItem.CC_Claim_Product__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "OpportunityLineItem.OpportunityId"
+    summaryOperation = "sum"
+    _generated_dependencies = [
+      salesforce.OpportunityLineItem.field.CC_Claim_Product__c,
+    ]
+  }
+  salesforce.Summary Wire_Products_ARR_Sum__c {
+    apiName = "Opportunity.Wire_Products_ARR_Sum__c"
+    label = "Wire Products ARR Sum"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "OpportunityLineItem.ARR__c"
+    summaryFilterItems = [
+      {
+        field = "OpportunityLineItem.CC_Claim_Product__c"
+        operation = "equals"
+        value = "False"
+      },
+    ]
+    summaryForeignKey = "OpportunityLineItem.OpportunityId"
+    summaryOperation = "sum"
+    _generated_dependencies = [
+      salesforce.OpportunityLineItem.field.CC_Claim_Product__c,
+    ]
+  }
+  salesforce.FormulaCheckbox Is_Primary_SO_Signed__c {
+    apiName = "Opportunity.Is_Primary_SO_Signed__c"
+    label = "Is Primary SO Signed"
+    formula = "SyncedQuote.Is_Finalized__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Quote.field.Is_Finalized__c,
+    ]
+  }
+  salesforce.Lookup Channel_Partner__c {
+    apiName = "Opportunity.Channel_Partner__c"
+    label = "Channel Partner"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
   }
 }

@@ -1,9 +1,0 @@
-salesforce.ApexPage SpringCMEos__SpringCM_EOSAccount {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 23
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "SpringCM"
-  fullName = "SpringCMEos__SpringCM_EOSAccount"
-  content = file("salesforce/InstalledPackages/SpringCMEos/Records/ApexPage/SpringCMEos__SpringCM_EOSAccount.page")
-}

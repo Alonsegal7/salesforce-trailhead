@@ -27,7 +27,7 @@ salesforce.ListView Lead_Contact_sales_Lead {
     {
       field = "LEAD.STATUS"
       operation = "equals"
-      value = "Received"
+      value = "New,Received"
     },
     {
       field = "LEAD.LEAD_SOURCE"

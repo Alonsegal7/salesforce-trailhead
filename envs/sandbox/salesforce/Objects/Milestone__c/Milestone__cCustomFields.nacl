@@ -45,10 +45,7 @@ type salesforce.Milestone__c {
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Kickoff__c.field.Go_Live_Date__c,
-      salesforce.Milestone__c.field.Kickoff__c,
-    ]
+    
   }
   salesforce.Checkbox Handshake_w_Sales__c {
     apiName = "Milestone__c.Handshake_w_Sales__c"
@@ -90,10 +87,7 @@ type salesforce.Milestone__c {
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Milestone__c.field.Kickoff__c,
-      salesforce.Kickoff__c.field.Kickoff_meeting_date__c,
-    ]
+    
   }
   salesforce.FormulaNumber Kickoff_milestone_duration__c {
     apiName = "Milestone__c.Kickoff_milestone_duration__c"
@@ -108,10 +102,7 @@ type salesforce.Milestone__c {
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Milestone__c.field.Kickoff__c,
-      salesforce.Kickoff__c.field.Kickoff_meeting_date__c,
-    ]
+    
   }
   salesforce.Text Log_a_Session__c {
     apiName = "Milestone__c.Log_a_Session__c"

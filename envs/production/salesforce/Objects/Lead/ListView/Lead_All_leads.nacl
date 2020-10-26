@@ -20,9 +20,9 @@ salesforce.ListView Lead_All_leads {
   filterScope = "Everything"
   filters = [
     {
-      field = "LEAD.COUNTRY_CODE"
+      field = "LEAD.LEAD_SOURCE"
       operation = "equals"
-      value = "GB"
+      value = "CS Pass"
     },
   ]
   label = "All leads"

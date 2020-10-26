@@ -1,8 +1,7 @@
 salesforce.Layout Company_Layout {
   fullName = "Account-Company Layout"
   excludeButtons = [
-    "DataDotComAccountInsights",
-    "DataDotComClean",
+    "DataDotComCompanyHierarchy",
     "DisableCustomerPortalAccount",
     "DisablePartnerPortalAccount",
     "IncludeOffline",
@@ -351,34 +350,39 @@ salesforce.Layout Company_Layout {
         sortOrder = 2
       },
       {
-        actionName = "Account.Account_Handover"
+        actionName = "Account.Expansion_Opportunity"
         actionType = "QuickAction"
         sortOrder = 3
       },
       {
+        actionName = "Account.Account_Handover"
+        actionType = "QuickAction"
+        sortOrder = 4
+      },
+      {
         actionName = "AccountHierarchy"
         actionType = "StandardButton"
-        sortOrder = 4
+        sortOrder = 5
       },
       {
         actionName = "LogACall"
         actionType = "QuickAction"
-        sortOrder = 5
+        sortOrder = 6
       },
       {
         actionName = "FeedItem.ContentNote"
         actionType = "QuickAction"
-        sortOrder = 6
+        sortOrder = 7
       },
       {
         actionName = "Delete"
         actionType = "StandardButton"
-        sortOrder = 7
+        sortOrder = 8
       },
       {
         actionName = "Account.Update_Company_Information"
         actionType = "QuickAction"
-        sortOrder = 8
+        sortOrder = 9
       },
     ]
   }
@@ -547,7 +551,15 @@ salesforce.Layout Company_Layout {
     },
     {
       fields = [
+        "CREATED_DATE",
         "NAME",
+        "CREATEDBY_USER",
+        "Full_Opportunity_Size__c",
+        "Short_Term_Growth__c",
+        "Long_Term_Growth__c",
+        "Retention_Score__c",
+        "Handover_Notes__c",
+        "Which_Kind_of_CSM__c",
       ]
       relatedList = salesforce.Handover__c.field.Monday_Account__c
     },
@@ -606,6 +618,15 @@ salesforce.Layout Company_Layout {
         "ACCOUNT.EMPLOYEES",
       ]
       relatedList = salesforce.Account.field.Regional_Company__c
+    },
+    {
+      fields = [
+        "CONTRACT.CONTRACT_NUMBER",
+        "CONTRACT.NAME",
+        "SALES.ACCOUNT.NAME",
+        "CONTRACT.STATUS",
+      ]
+      relatedList = salesforce.Contract.field.Regional_Company__c
     },
   ]
   relatedObjects = [

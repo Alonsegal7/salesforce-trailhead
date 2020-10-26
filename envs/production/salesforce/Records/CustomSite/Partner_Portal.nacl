@@ -21,7 +21,7 @@ salesforce.CustomSite Partner_Portal {
   masterLabel = "Partner Portal"
   referrerPolicyOriginWhenCrossOrigin = true
   requireHttps = true
-  requireInsecurePortalAccess = false
+  
   selfRegPage = salesforce.ApexPage.instance.CommunitiesSelfReg
   siteAdmin = "maayany@monday.com"
   siteType = "ChatterNetwork"

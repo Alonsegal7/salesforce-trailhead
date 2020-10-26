@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle dfsle__GenImportTemplateFiles {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "A Lightning Component Bundle"
+  fullName = "dfsle__GenImportTemplateFiles"
+  type = "Component"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

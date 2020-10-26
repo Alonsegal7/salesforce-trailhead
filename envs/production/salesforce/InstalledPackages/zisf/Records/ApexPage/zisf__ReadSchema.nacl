@@ -1,9 +1,0 @@
-salesforce.ApexPage zisf__ReadSchema {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 38
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "ReadSchema"
-  fullName = "zisf__ReadSchema"
-  content = file("salesforce/InstalledPackages/zisf/Records/ApexPage/zisf__ReadSchema.page")
-}

@@ -160,6 +160,17 @@ salesforce.SharingRules Lead {
       }
     },
     {
+      fullName = "Obo_Agency_Partner_User"
+      accessLevel = "Edit"
+      label = "Obo Agency Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "OboAgencyPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "OboAgencyPartnerUser"
+      }
+    },
+    {
       fullName = "Owner_is_Aktienow"
       accessLevel = "Edit"
       label = "Owner is Aktienow"

@@ -21,7 +21,7 @@ salesforce.CustomSite Monday_Partners_Portal {
   masterLabel = "Monday Partners Portal"
   referrerPolicyOriginWhenCrossOrigin = true
   requireHttps = true
-  requireInsecurePortalAccess = false
+  
   selfRegPage = salesforce.ApexPage.instance.CommunitiesSelfReg
   siteAdmin = "maayany@monday.com"
   siteType = "ChatterNetwork"

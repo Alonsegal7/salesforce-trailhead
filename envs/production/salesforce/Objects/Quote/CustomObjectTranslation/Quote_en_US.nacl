@@ -260,7 +260,7 @@ salesforce.CustomObjectTranslation Quote_en_US {
     },
     {
       label = ""
-      name = salesforce.Quote.field.Legal_Indication__c
+      name = salesforce.Quote.field.Legal_Agreement_Type__c
       picklistValues = [
         {
           masterLabel = "Addendum (negotiated)"
@@ -415,6 +415,10 @@ salesforce.CustomObjectTranslation Quote_en_US {
     {
       label = ""
       name = salesforce.Quote.field.Priority_SO_Final_Amount__c
+    },
+    {
+      label = ""
+      name = salesforce.Quote.field.Pro_Rated_Different_Price__c
     },
     {
       label = ""

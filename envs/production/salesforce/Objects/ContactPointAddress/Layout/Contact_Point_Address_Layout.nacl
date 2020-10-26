@@ -10,7 +10,7 @@ salesforce.Layout Contact_Point_Address_Layout {
         {
           layoutItems = [
             {
-              behavior = "Edit"
+              behavior = "Required"
               field = salesforce.ContactPointAddress.field.Name
             },
             {

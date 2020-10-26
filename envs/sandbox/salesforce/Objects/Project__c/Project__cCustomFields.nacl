@@ -12,11 +12,7 @@ type salesforce.Project__c {
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Project__c.field.Project_Closed_Date__c,
-      salesforce.Project__c.field.Project_Status__c,
-      salesforce.Project__c.field.Kickoff_Date__c,
-    ]
+    
   }
   salesforce.Text Current_Milestone_Type__c {
     apiName = "Project__c.Current_Milestone_Type__c"
@@ -58,9 +54,7 @@ type salesforce.Project__c {
     description = "Reflects the project owner function"
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.User.field.Function__c,
-    ]
+    
   }
   salesforce.Lookup Handover__c {
     apiName = "Project__c.Handover__c"
@@ -97,10 +91,7 @@ type salesforce.Project__c {
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Handover__c.field.Which_Kind_of_CSM__c,
-      salesforce.Project__c.field.Handover__c,
-    ]
+    
   }
   salesforce.Picklist Postponed_Cancel_reasson__c {
     apiName = "Project__c.Postponed_Cancel_reasson__c"

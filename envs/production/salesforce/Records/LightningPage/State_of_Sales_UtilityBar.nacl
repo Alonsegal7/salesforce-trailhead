@@ -1,0 +1,22 @@
+salesforce.LightningPage State_of_Sales_UtilityBar {
+  fullName = "State_of_Sales_UtilityBar"
+  flexiPageRegions = [
+    {
+      name = "utilityItems"
+      type = "Region"
+    },
+    {
+      name = "backgroundComponents"
+      type = "Background"
+    },
+  ]
+  masterLabel = "State of Sales UtilityBar"
+  template = {
+    name = "one:utilityBarTemplateDesktop"
+    properties = {
+      name = "isLeftAligned"
+      value = "true"
+    }
+  }
+  type = "UtilityBar"
+}

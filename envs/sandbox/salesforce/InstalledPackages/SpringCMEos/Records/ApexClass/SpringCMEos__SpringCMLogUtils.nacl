@@ -1,7 +1,0 @@
-salesforce.ApexClass SpringCMEos__SpringCMLogUtils {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 28
-  status = "Active"
-  fullName = "SpringCMEos__SpringCMLogUtils"
-  content = file("salesforce/InstalledPackages/SpringCMEos/Records/ApexClass/SpringCMEos__SpringCMLogUtils.cls")
-}

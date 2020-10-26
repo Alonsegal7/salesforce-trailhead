@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__sendingDocumentsList {
+  fullName = "dfsle__sendingDocumentsList"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingDocumentsList/sendingDocumentsList.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingDocumentsList/sendingDocumentsList.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingDocumentsList/sendingDocumentsList.js"
+      },
+    ]
+  }
+}

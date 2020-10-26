@@ -8623,6 +8623,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
+      field = "Opportunity.CC_Products_ARR_Sum__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.CSM_Name__c"
       readable = "false"
     },
@@ -8634,6 +8639,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     {
       editable = "false"
       field = "Opportunity.CampaignId"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Channel_Partner__c"
       readable = "false"
     },
     {
@@ -9119,6 +9129,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     {
       editable = "false"
       field = "Opportunity.Is_Potential_Green_Bucket__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Is_Primary_SO_Signed__c"
       readable = "false"
     },
     {
@@ -9843,6 +9858,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
+      field = "Opportunity.Wire_Products_ARR_Sum__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Won_SO_Count__c"
       readable = "false"
     },
@@ -10528,6 +10548,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
+      field = "Partner_SO_Request__c.VAT_Text__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Partner_SO_Request__c.VAT__c"
       readable = "false"
     },
@@ -11038,6 +11063,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
+      field = "Quote.Legal_Agreement_Type__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Quote.License_Product_Count__c"
       readable = "false"
     },
@@ -11119,6 +11149,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     {
       editable = "false"
       field = "Quote.Priority_SO_Final_Amount__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Quote.Pro_Rated_Different_Price__c"
       readable = "false"
     },
     {
@@ -11303,6 +11338,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
+      field = "QuoteLineItem.List_Price__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "QuoteLineItem.Opportunity_Line_Item_ID__c"
       readable = "false"
     },
@@ -11368,12 +11408,22 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
+      field = "QuoteLineItem.Training_Hours__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "QuoteLineItem.Trigger_sync_quote_line_to_priority__c"
       readable = "false"
     },
     {
       editable = "false"
       field = "QuoteLineItem.Unique_Key__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "QuoteLineItem.Unit_Price__c"
       readable = "false"
     },
     {
@@ -12263,166 +12313,6 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__All_Words__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Any_Attribute_Field__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Any_Words__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Content__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__DSWName__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Description__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__EOS_Object_Id__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__EOS_Object_Type__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__In_Folder__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Include_Sub_Folders__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__JSON_Configuration__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__JSON_Format__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Phrase__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Title__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__UpdatedBy__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__UpdatedOnOrAfter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Updated_On_Or_Before__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Variables__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__DSWConfig__c.SpringCMEos__Without_Words__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__DataType__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Field__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Group__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Max_Value__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Min_Value__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__SpringCM_Attribute_Group__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Field__c.SpringCMEos__Value__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Group__c.SpringCMEos__Dynamic_Search_Widget_Configuration__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Group__c.SpringCMEos__ExcludeGroup__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Attribute_Group__c.SpringCMEos__Group__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Testing__c.SpringCMEos__Status__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Testing__c.SpringCMEos__Subject__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "SpringCMEos__SpringCM_Testing__c.SpringCMEos__Year__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
       field = "StoryLogItemSetting__c.FieldSetName__c"
       readable = "false"
     },
@@ -12674,6 +12564,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     {
       editable = "false"
       field = "Subscription__c.Long_Subscription_Id__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Subscription__c.Manual_Trigger__c"
       readable = "false"
     },
     {
@@ -13508,6 +13403,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
+      field = "User.Personal_Monday_Board_Id__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "User.Pod__c"
       readable = "false"
     },
@@ -13519,36 +13419,6 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     {
       editable = "false"
       field = "User.Rep_Maturity__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "User.SpringCMEos__Portal_Only__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "User.SpringCMEos__SpringCM_EnabledEndDate__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "User.SpringCMEos__SpringCM_EnabledStartDate__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "User.SpringCMEos__SpringCM_Persona__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "User.SpringCMEos__SpringCM_Role__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "User.SpringCMEos__SpringCM_User__c"
       readable = "false"
     },
     {
@@ -13603,6 +13473,26 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
+      field = "User.dfsle__CanManageAccount__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "User.dfsle__Provisioned__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "User.dfsle__Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "User.dfsle__Username__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "User.n_onboarding__c"
       readable = "false"
     },
@@ -13619,6 +13509,926 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     {
       editable = "false"
       field = "User.zaapit__Enable_ZaapIT_s_View_Editor__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__AgreementConfiguration__c.dfsle__TempFolderId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkList__c.dfsle__DocuSignId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkList__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkStatus__c.dfsle__BatchSize__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkStatus__c.dfsle__DocuSignId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkStatus__c.dfsle__FailedEnvelopes__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkStatus__c.dfsle__LastStatusUpdate__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkStatus__c.dfsle__QueuedEnvelopes__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkStatus__c.dfsle__SentEnvelopes__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkStatus__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__BulkStatus__c.dfsle__Submitted__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomParameterMap__c.dfsle__Name__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomParameterMap__c.dfsle__Order__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomParameterMap__c.dfsle__SubValue__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomParameterMap__c.dfsle__Type__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomParameterMap__c.dfsle__Value__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__AccessCode__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__EmailMessage__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__EmailSubject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__Email__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__FirstName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__HostEmail__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__HostName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__Language__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__LastName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__Note__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__Relationship__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__Role__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__RoutingOrder__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__SignNow__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__SigningGroupId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__SigningGroupName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__SmsPhoneNumber__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__CustomRecipient__c.dfsle__Type__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Document__c.dfsle__Extension__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Document__c.dfsle__LastModified__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Document__c.dfsle__ReadOnly__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Document__c.dfsle__Required__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Document__c.dfsle__Sequence__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Document__c.dfsle__Size__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Document__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Document__c.dfsle__Type__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationDocument__c.dfsle__Extension__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationDocument__c.dfsle__Filter__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationDocument__c.dfsle__Name__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationDocument__c.dfsle__ReadOnly__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationDocument__c.dfsle__Required__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationDocument__c.dfsle__Sequence__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationDocument__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationDocument__c.dfsle__Type__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__AccessCode__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__EmailMessage__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__EmailSubject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Email__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Filter__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__HostEmail__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__HostName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__IdCheckRequired__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__IncrementRoutingOrder__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Language__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Name__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Note__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__ReadOnly__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Relationship__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Required__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Roles__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__RoutingOrder__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Sequence__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__SignNow__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__SigningGroupId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__SigningGroupName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__SmsPhoneNumber__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfigurationRecipient__c.dfsle__Type__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__Action__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__Active__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__AddSourceDocuments__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__AddSourceRecipients__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__CustomFields__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__DocuSignId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__EmailMessage__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__EmailSubject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__ExpireAfterDays__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__ExpireWarnDays__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__Expires__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__IsDraft__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__MergeFields__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__Notifications__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__ObjectType__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__Options__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__RemindAfterDays__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__RemindFrequencyDays__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__Remind__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__SenderPermissions__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__ShowChatterSettings__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__ShowEmailMessage__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__ShowEmailSubject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__ShowRemindExpire__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__ShowSendButton__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__ShowTagButton__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeConfiguration__c.dfsle__SourceObject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeLocalization__c.dfsle__EmailMessage__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeLocalization__c.dfsle__EmailSubject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeLocalization__c.dfsle__Language__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__Completed__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__DocuSignId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__EmailSubject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__Expires__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__LastStatusUpdate__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__Reason__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__SenderEmail__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__SenderName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__Sent__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__EnvelopeStatus__c.dfsle__TimeToComplete__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__DocuSignId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__EmailMessage__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__EmailSubject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__EnvelopeConfiguration__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__ExpireAfterDays__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__ExpireWarnDays__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__Expires__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__Options__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__RemindAfterDays__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__RemindFrequencyDays__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__Remind__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__SenderPermissions__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__Sent__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Envelope__c.dfsle__UpdateChatter__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__Description__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__FileName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__FileSuffix__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__HasPreviewedDocuments__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__IsSample__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__ObjectMappings__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__SignerMappings__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__SourceObject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__StepsCompleted__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__TemplateId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__TemplateType__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__UseAllTemplates__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__GenTemplate__c.dfsle__UseCurrentRecord__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Log__c.dfsle__Class__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Log__c.dfsle__EntityId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Log__c.dfsle__Message__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Log__c.dfsle__Method__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Log__c.dfsle__Severity__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Log__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Log__c.dfsle__TransactionId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Log__c.dfsle__Version__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__Completed__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__Email__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__LastStatusUpdate__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__Reason__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__RoutingOrder__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__Sent__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__Sequence__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__RecipientStatus__c.dfsle__Type__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__AccessCode__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__EmailMessage__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__EmailSubject__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__Email__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__EnvelopeRecipientId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__HostEmail__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__HostName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__IdCheckRequired__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__Language__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__Note__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__ReadOnly__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__Required__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__RoleValue__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__Role__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__RoutingOrder__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__Sequence__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__SignNow__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__SigningGroupId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__SigningGroupName__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__SmsPhoneNumber__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__SourceId__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "dfsle__Recipient__c.dfsle__Type__c"
       readable = "false"
     },
     {

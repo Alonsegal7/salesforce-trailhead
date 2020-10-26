@@ -8,6 +8,7 @@ salesforce.SharingSettings {
   enableManualUserRecordSharing = false
   enablePortalUserCaseSharing = true
   enablePortalUserVisibility = true
-  enableSecureGuestAccess = true
+  enableSecureGuestAccess = false
   enableStandardReportVisibility = true
+  enableRemoveTMGroupMembership = false
 }

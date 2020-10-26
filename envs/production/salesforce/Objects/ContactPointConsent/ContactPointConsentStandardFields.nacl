@@ -167,7 +167,7 @@ type salesforce.ContactPointConsent {
   }
   salesforce.DateTime EffectiveTo {
     apiName = "ContactPointConsent.EffectiveTo"
-    label = "Effective To "
+    label = "Effective To"
     _required = false
     createable = true
     updateable = true
@@ -176,7 +176,7 @@ type salesforce.ContactPointConsent {
   salesforce.DateTime CaptureDate {
     apiName = "ContactPointConsent.CaptureDate"
     label = "Capture Date"
-    _required = true
+    _required = false
     createable = true
     updateable = true
     queryable = true
@@ -184,7 +184,7 @@ type salesforce.ContactPointConsent {
   salesforce.Picklist CaptureContactPointType {
     apiName = "ContactPointConsent.CaptureContactPointType"
     label = "Capture Contact Point Type"
-    _required = true
+    _required = false
     valueSet = [
       {
         fullName = "Email"
@@ -225,7 +225,7 @@ type salesforce.ContactPointConsent {
   salesforce.Text CaptureSource {
     apiName = "ContactPointConsent.CaptureSource"
     label = "Capture Source"
-    _required = true
+    _required = false
     createable = true
     updateable = true
     unique = false

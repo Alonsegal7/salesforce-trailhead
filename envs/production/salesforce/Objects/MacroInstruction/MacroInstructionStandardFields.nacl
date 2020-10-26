@@ -493,18 +493,6 @@ type salesforce.MacroInstruction {
         isActive = true
       },
       {
-        fullName = "Field.Account.Company_Open_Trials_Count__c"
-        default = false
-        label = "Company Open Trials Count (DEV)"
-        isActive = true
-      },
-      {
-        fullName = "Field.Account.Company_Paying_Accounts__c"
-        default = false
-        label = "Company Paying Accounts (DEV)"
-        isActive = true
-      },
-      {
         fullName = "Field.Account.Company_Seats__c"
         default = false
         label = "Company Seats"
@@ -514,18 +502,6 @@ type salesforce.MacroInstruction {
         fullName = "Field.Account.Company_Size__c"
         default = false
         label = "Company Size"
-        isActive = true
-      },
-      {
-        fullName = "Field.Account.Company_Trials_Count__c"
-        default = false
-        label = "Company Trials Count (DEV)"
-        isActive = true
-      },
-      {
-        fullName = "Field.Account.Company_Trials_This_Week__c"
-        default = false
-        label = "Company Trials This Week (DEV)"
         isActive = true
       },
       {
@@ -2083,6 +2059,30 @@ type salesforce.MacroInstruction {
         isActive = true
       },
       {
+        fullName = "Field.Lead.Related_Accounts_In_Last_7_Days__c"
+        default = false
+        label = "Related Accounts In Last 7 Days"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Related_Accounts_Total__c"
+        default = false
+        label = "Related Accounts Total"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Related_Accounts_in_Trial__c"
+        default = false
+        label = "Related Accounts in Trial"
+        isActive = true
+      },
+      {
+        fullName = "Field.Lead.Related_Paying_Accounts__c"
+        default = false
+        label = "Related Paying Accounts"
+        isActive = true
+      },
+      {
         fullName = "Field.Lead.SQL_Timestamp__c"
         default = false
         label = "SQL Timestamp"
@@ -2779,6 +2779,24 @@ type salesforce.MacroInstruction {
         isActive = true
       },
       {
+        fullName = "Field.Opportunity.Monday_Item_ID__c"
+        default = false
+        label = "Monday Item ID"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Monday_Item_ID__c.begin"
+        default = false
+        label = "Monday Item ID"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Monday_Item_ID__c.end"
+        default = false
+        label = "Monday Item ID"
+        isActive = true
+      },
+      {
         fullName = "Field.Opportunity.Monday_Solutions_Offered__c"
         default = false
         label = "Monday Solution Offered"
@@ -2929,6 +2947,12 @@ type salesforce.MacroInstruction {
         isActive = true
       },
       {
+        fullName = "Field.Opportunity.StageName"
+        default = false
+        label = "Stage"
+        isActive = true
+      },
+      {
         fullName = "Field.Opportunity.Subscription_Ids__c"
         default = false
         label = "Subscription Ids"
@@ -2962,6 +2986,12 @@ type salesforce.MacroInstruction {
         fullName = "Field.Opportunity.Sync_to_BB__c"
         default = false
         label = "Sync to BB"
+        isActive = true
+      },
+      {
+        fullName = "Field.Opportunity.Test_monday_Integration__c"
+        default = false
+        label = "Test monday Integration"
         isActive = true
       },
       {
@@ -3895,6 +3925,12 @@ type salesforce.MacroInstruction {
         isActive = true
       },
       {
+        fullName = "QuickAction.Lead.Related_BB_Accounts"
+        default = false
+        label = "Related BB Accounts Action"
+        isActive = true
+      },
+      {
         fullName = "QuickAction.Lead.Relationship_Fields"
         default = false
         label = "Relationship Fields Action"
@@ -3961,6 +3997,12 @@ type salesforce.MacroInstruction {
         isActive = true
       },
       {
+        fullName = "QuickAction.Opportunity.Co_Sell_Opportunity"
+        default = false
+        label = "Co-Sell Opportunity Action"
+        isActive = true
+      },
+      {
         fullName = "QuickAction.Opportunity.Create_Partner_SO_Request"
         default = false
         label = "Create Partner SO Request Action"
@@ -3976,6 +4018,12 @@ type salesforce.MacroInstruction {
         fullName = "QuickAction.Opportunity.Request_a_Sales_Engineer"
         default = false
         label = "Request a Sales Engineer Action"
+        isActive = true
+      },
+      {
+        fullName = "QuickAction.Opportunity.SO_Manually_Signed"
+        default = false
+        label = "SO - Manually Signed Action"
         isActive = true
       },
       {
@@ -4321,6 +4369,12 @@ type salesforce.MacroInstruction {
         isActive = true
       },
       {
+        fullName = "Tab.DelegatedAccount"
+        default = false
+        label = "Active External Managed Account Tab"
+        isActive = true
+      },
+      {
         fullName = "Tab.Department__c"
         default = false
         label = "Active Department Tab"
@@ -4516,6 +4570,18 @@ type salesforce.MacroInstruction {
         fullName = "Tab.Lead_Registration__c"
         default = false
         label = "Active Lead Registration Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.Location"
+        default = false
+        label = "Active Location Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.LocationTrustMeasure"
+        default = false
+        label = "Active Location Trust Measure Tab"
         isActive = true
       },
       {
@@ -4780,54 +4846,6 @@ type salesforce.MacroInstruction {
         fullName = "Tab.valt__Valooto_Workflow__c"
         default = false
         label = "Active Valooto Workflow Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.zisf__FmcDefaultValue__c"
-        default = false
-        label = "Active FmcDefaultValue Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.zisf__ZoomInfo_Clean_Settings__c"
-        default = false
-        label = "Active ZoomInfo Clean Setting Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.zisf__ZoomInfo_Custom_Settings__c"
-        default = false
-        label = "Active ZoomInfo Custom Setting Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.zisf__ZoomInfo_Inbound_Settings__c"
-        default = false
-        label = "Active ZoomInfo Inbound Setting Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.zisf__ZoomInfo__c"
-        default = false
-        label = "Active ZoomInfo Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.zisf__ZoomSessions__c"
-        default = false
-        label = "Active ZoomSessions Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.zisf__Zoom_Scheduler__c"
-        default = false
-        label = "Active Zoom Scheduler Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.zisf__zicCleanJob__c"
-        default = false
-        label = "Active Clean Job Tab"
         isActive = true
       },
     ]

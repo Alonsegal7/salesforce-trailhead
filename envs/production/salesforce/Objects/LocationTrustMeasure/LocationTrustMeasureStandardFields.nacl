@@ -1,0 +1,19 @@
+type salesforce.LocationTrustMeasure {
+  string Description {
+  }
+  string IconUrl {
+  }
+  string IsVisibleInPublic {
+  }
+  salesforce.Lookup LocationId {
+    apiName = "LocationTrustMeasure.LocationId"
+    inlineHelpText = "The store, hotel, or other physical space that your business occupies. Each trust measure lives at a single location. If no external reference exists on the location, the trust card won’t display. If you get an error, edit the location to add an external reference."
+  }
+  salesforce.Lookup OwnerId {
+    apiName = "LocationTrustMeasure.OwnerId"
+  }
+  string SortOrder {
+  }
+  string Title {
+  }
+}

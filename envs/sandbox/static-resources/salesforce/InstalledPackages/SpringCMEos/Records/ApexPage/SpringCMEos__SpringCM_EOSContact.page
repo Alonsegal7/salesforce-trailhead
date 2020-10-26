@@ -1,3 +1,0 @@
-<apex:page standardController="Contact" >
-	<c:SpringCM_EOSGrid objectType="Contact" objectId="{!Contact.Id}" /> 
-</apex:page>

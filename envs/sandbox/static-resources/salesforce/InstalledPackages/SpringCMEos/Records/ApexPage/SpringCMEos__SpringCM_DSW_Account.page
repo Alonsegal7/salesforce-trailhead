@@ -1,3 +1,0 @@
-<apex:page standardController="Account" >
-	<c:SpringCM_DSWGrid objectType="Account" objectId="{!Id}" />
-</apex:page>

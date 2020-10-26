@@ -35,6 +35,7 @@ type salesforce.ExternalServiceRegistration {
       values = [
         "InteragentHyperSchema",
         "OpenApi",
+        "OpenApi3",
       ]
     }
   }

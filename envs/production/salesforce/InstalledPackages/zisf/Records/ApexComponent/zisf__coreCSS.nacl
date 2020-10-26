@@ -1,7 +1,0 @@
-salesforce.ApexComponent zisf__coreCSS {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 26
-  label = "coreCSS"
-  fullName = "zisf__coreCSS"
-  content = "(hidden)"
-}

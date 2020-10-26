@@ -93,6 +93,16 @@ salesforce.CustomObjectTranslation Subscription__c_en_US {
     },
     {
       label = ""
+      name = salesforce.Subscription__c.field.Manual_Trigger__c
+      picklistValues = [
+        {
+          masterLabel = "Create Active Contract"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
       name = salesforce.Subscription__c.field.Migrated_Discount__c
     },
     {

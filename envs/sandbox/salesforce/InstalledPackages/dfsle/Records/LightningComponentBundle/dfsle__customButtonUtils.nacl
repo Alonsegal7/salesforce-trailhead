@@ -1,0 +1,11 @@
+salesforce.LightningComponentBundle dfsle__customButtonUtils {
+  fullName = "dfsle__customButtonUtils"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/customButtonUtils/customButtonUtils.js"
+      },
+    ]
+  }
+}

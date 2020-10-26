@@ -1,0 +1,11 @@
+salesforce.AuraDefinitionBundle dfsle__DECSetup {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "SetupEsignature"
+  fullName = "dfsle__DECSetup"
+  type = "Component"
+  markup = "(hidden)"
+  styleContent = "(hidden)"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+}

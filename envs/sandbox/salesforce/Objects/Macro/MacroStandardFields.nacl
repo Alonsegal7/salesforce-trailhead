@@ -205,6 +205,12 @@ type salesforce.Macro {
         isActive = true
       },
       {
+        fullName = "dfsle__AgreementConfiguration__c"
+        default = false
+        label = "Agreement Configuration"
+        isActive = true
+      },
+      {
         fullName = "Allocation__c"
         default = false
         label = "Allocation"
@@ -343,6 +349,96 @@ type salesforce.Macro {
         isActive = true
       },
       {
+        fullName = "dfsle__BulkList__c"
+        default = false
+        label = "DocuSign Bulk Send List"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__BulkStatus__c"
+        default = false
+        label = "DocuSign Bulk Send Status"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__CustomParameterMap__c"
+        default = false
+        label = "DocuSign Custom Parameter Map"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__CustomRecipient__c"
+        default = false
+        label = "DocuSign Custom Recipient"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__Envelope__c"
+        default = false
+        label = "DocuSign Envelope"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__EnvelopeConfigurationDocument__c"
+        default = false
+        label = "DocuSign Envelope Configuration Document"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__EnvelopeConfigurationRecipient__c"
+        default = false
+        label = "DocuSign Envelope Configuration Recipien"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__Document__c"
+        default = false
+        label = "DocuSign Envelope Document"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__Recipient__c"
+        default = false
+        label = "DocuSign Envelope Recipient"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__EnvelopeConfiguration__c"
+        default = false
+        label = "DocuSign Envelope Template"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__GenTemplate__c"
+        default = false
+        label = "DocuSign Gen Template"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__EnvelopeLocalization__c"
+        default = false
+        label = "DocuSign Localization"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__Log__c"
+        default = false
+        label = "DocuSign Log"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__RecipientStatus__c"
+        default = false
+        label = "DocuSign Recipient Status"
+        isActive = true
+      },
+      {
+        fullName = "dfsle__EnvelopeStatus__c"
+        default = false
+        label = "DocuSign Status"
+        isActive = true
+      },
+      {
         fullName = "EngagementChannelType"
         default = false
         label = "Engagement Channel Type"
@@ -406,12 +502,6 @@ type salesforce.Macro {
         fullName = "GB_Threshold__c"
         default = false
         label = "GB Threshold"
-        isActive = true
-      },
-      {
-        fullName = "SpringCMEos__DSWConfig__c"
-        default = false
-        label = "Get It! Configuration"
         isActive = true
       },
       {
@@ -742,24 +832,6 @@ type salesforce.Macro {
         fullName = "SocialPost"
         default = false
         label = "Social Post"
-        isActive = true
-      },
-      {
-        fullName = "SpringCMEos__SpringCM_Attribute_Field__c"
-        default = false
-        label = "SpringCM Attribute Field"
-        isActive = true
-      },
-      {
-        fullName = "SpringCMEos__SpringCM_Attribute_Group__c"
-        default = false
-        label = "SpringCM Attribute Group"
-        isActive = true
-      },
-      {
-        fullName = "SpringCMEos__SpringCM_Testing__c"
-        default = false
-        label = "SpringCM Testing"
         isActive = true
       },
       {

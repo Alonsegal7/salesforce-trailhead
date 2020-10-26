@@ -94,7 +94,7 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             for (Database.SaveResult sr : results) {
                 if (!sr.isSuccess()) {
                     for(Database.Error e : sr.getErrors()) {
-                        Utilities.sendEmail('Error in Account_Snapshot ',e.getMessage()+' acc.snapsToCreate',new list<string>{'razbe@monday.com'});
+                        Utilities.sendEmail('Error in Account_Snapshot ',e.getMessage(),new list<string>{'razbe@monday.com'});
                         System.debug('The following error has occurred.');  
                         System.debug(e.getStatusCode() + ': ' + e.getMessage());
                         System.debug('Fields that affected this error: ' + e.getFields());
@@ -105,10 +105,10 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
                     totalSnapsCreated+=1;
                 }
             }
-            totalAccountsFromQuery+=snapsToCreate.size()==null?0:snapsToCreate.size();
+            totalAccountsFromQuery+=snapsToCreate.isEmpty()?0:snapsToCreate.size();
             //insert snapsToCreate;
         }catch(Exception e){
-            Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage()+' acc.snapsToCreate');   
+            Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage());   
         }
     }
     public void finish(Database.BatchableContext bc) {

@@ -1,0 +1,130 @@
+type salesforce.dfsle__Document__c {
+  salesforce.MasterDetail dfsle__Envelope__c {
+    apiName = "dfsle__Document__c.dfsle__Envelope__c"
+    label = "DocuSign Envelope"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.dfsle__Envelope__c,
+    ]
+    inlineHelpText = "Envelope"
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+    description = "Envelope"
+  }
+  salesforce.Text dfsle__Extension__c {
+    apiName = "dfsle__Document__c.dfsle__Extension__c"
+    label = "Extension"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 20
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime dfsle__LastModified__c {
+    apiName = "dfsle__Document__c.dfsle__LastModified__c"
+    label = "Source Last Modified"
+    _required = false
+    inlineHelpText = "Source Last Modified"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Source Last Modified"
+  }
+  salesforce.Checkbox dfsle__ReadOnly__c {
+    apiName = "dfsle__Document__c.dfsle__ReadOnly__c"
+    label = "Read-only"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox dfsle__Required__c {
+    apiName = "dfsle__Document__c.dfsle__Required__c"
+    label = "Required"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number dfsle__Sequence__c {
+    apiName = "dfsle__Document__c.dfsle__Sequence__c"
+    label = "Sequence"
+    _required = false
+    defaultValueFormula = "1"
+    precision = 6
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Sequence"
+    externalId = false
+  }
+  salesforce.Number dfsle__Size__c {
+    apiName = "dfsle__Document__c.dfsle__Size__c"
+    label = "Document Size"
+    _required = false
+    precision = 12
+    scale = 0
+    inlineHelpText = "Document Size"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Document Size"
+    externalId = false
+  }
+  salesforce.Text dfsle__SourceId__c {
+    apiName = "dfsle__Document__c.dfsle__SourceId__c"
+    label = "Source ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 40
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist dfsle__Type__c {
+    apiName = "dfsle__Document__c.dfsle__Type__c"
+    label = "Document Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "File"
+        default = false
+        label = "File"
+      },
+      {
+        fullName = "Template"
+        default = false
+        label = "Template"
+      },
+      {
+        fullName = "Document"
+        default = false
+        label = "Document"
+      },
+      {
+        fullName = "Other"
+        default = false
+        label = "Other"
+      },
+    ]
+    restricted = false
+    inlineHelpText = "Document Type"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Document Type"
+    sorted = false
+  }
+}

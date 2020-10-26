@@ -18,6 +18,11 @@ salesforce.SecuritySettings {
         start = "207.232.22.164"
       },
       {
+        description = "bHome"
+        end = "82.166.85.26"
+        start = "82.166.85.26"
+      },
+      {
         description = "redash"
         end = "34.235.22.222"
         start = "34.235.22.222"

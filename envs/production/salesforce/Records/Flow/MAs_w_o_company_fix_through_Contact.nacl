@@ -185,17 +185,19 @@ LEN({!Get_Contact.Email}) - FIND( "@", {!Get_Contact.Email})
       }
       filters = [
         {
-          field = "RecordTypeId"
-          operator = "EqualTo"
-          value = {
-            stringValue = "0121t000000IQTiAAO"
-          }
-        },
-        {
           field = "Website"
           operator = "EqualTo"
           value = {
+            
             elementReference = "ContactDomain"
+          }
+        },
+        {
+          field = "RecordTypeId"
+          operator = "EqualTo"
+          value = {
+            
+            stringValue = "0121t000000IQTiAAO"
           }
         },
       ]
@@ -242,17 +244,19 @@ LEN({!Get_Contact.Email}) - FIND( "@", {!Get_Contact.Email})
       }
       filters = [
         {
-          field = "Company__c"
-          operator = "IsNull"
-          value = {
-            booleanValue = true
-          }
-        },
-        {
           field = "Id"
           operator = "EqualTo"
           value = {
+            
             elementReference = "RecordId"
+          }
+        },
+        {
+          field = "Company__c"
+          operator = "IsNull"
+          value = {
+            
+            booleanValue = true
           }
         },
         {

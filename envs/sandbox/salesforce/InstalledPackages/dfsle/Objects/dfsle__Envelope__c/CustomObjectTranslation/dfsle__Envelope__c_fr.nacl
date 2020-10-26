@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__Envelope__c_fr {
+  fullName = "dfsle__Envelope__c-fr"
+  _parent = [
+    salesforce.dfsle__Envelope__c,
+  ]
+}

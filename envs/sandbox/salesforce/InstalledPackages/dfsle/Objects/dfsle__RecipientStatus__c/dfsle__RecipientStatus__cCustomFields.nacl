@@ -1,0 +1,120 @@
+type salesforce.dfsle__RecipientStatus__c {
+  salesforce.MasterDetail dfsle__EnvelopeStatus__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__EnvelopeStatus__c"
+    label = "DocuSign Envelope Status"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.dfsle__EnvelopeStatus__c,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.DateTime dfsle__Completed__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__Completed__c"
+    label = "Completed"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Email dfsle__Email__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__Email__c"
+    label = "Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime dfsle__LastStatusUpdate__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__LastStatusUpdate__c"
+    label = "Last Status Update"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea dfsle__Reason__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__Reason__c"
+    label = "Declined Reason"
+    _required = false
+    createable = true
+    updateable = true
+    length = 500
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number dfsle__RoutingOrder__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__RoutingOrder__c"
+    label = "Routing Order"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime dfsle__Sent__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__Sent__c"
+    label = "Sent"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number dfsle__Sequence__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__Sequence__c"
+    label = "Sequence"
+    _required = false
+    precision = 10
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    externalId = true
+    queryable = true
+  }
+  salesforce.Text dfsle__SourceId__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__SourceId__c"
+    label = "Salesforce Source ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 18
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text dfsle__Status__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__Status__c"
+    label = "Status"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 56
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text dfsle__Type__c {
+    apiName = "dfsle__RecipientStatus__c.dfsle__Type__c"
+    label = "Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 56
+    queryable = true
+    externalId = false
+  }
+}

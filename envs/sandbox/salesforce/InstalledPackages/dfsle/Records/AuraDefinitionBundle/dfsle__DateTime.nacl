@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle dfsle__DateTime {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "DateTime"
+  fullName = "dfsle__DateTime"
+  type = "Component"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

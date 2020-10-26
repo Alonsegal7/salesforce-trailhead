@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle vfv__FileViewer {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 43
+  description = "A Lightning Component Bundle"
+  fullName = "vfv__FileViewer"
+  type = "Component"
+  designContent = "(hidden)"
+  styleContent = "(hidden)"
+  markup = "(hidden)"
+}

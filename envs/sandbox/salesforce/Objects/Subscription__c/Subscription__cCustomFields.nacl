@@ -434,4 +434,21 @@ if(ARR_Gain__c>=0,text(round(ARR_Gain__c,2)),"("&text(round(abs(ARR_Gain__c),2))
     queryable = true
     externalId = false
   }
+  salesforce.Picklist Manual_Trigger__c {
+    apiName = "Subscription__c.Manual_Trigger__c"
+    label = "Manual Trigger"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Create Active Contract"
+        default = false
+        label = "Create Active Contract"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
 }

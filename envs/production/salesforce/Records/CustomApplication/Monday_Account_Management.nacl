@@ -15,6 +15,7 @@ salesforce.CustomApplication Monday_Account_Management {
   label = "Monday Account Management"
   navType = "Standard"
   tabs = [
+    salesforce.CustomTab.instance.AM_Home,
     "standard-Contact",
     "standard-Lead",
     "standard-Opportunity",
@@ -23,6 +24,7 @@ salesforce.CustomApplication Monday_Account_Management {
     "standard-Campaign",
     salesforce.CustomTab.instance.Lead_Registration__c,
     salesforce.CustomTab.instance.Professional_Service_Request__c,
+    salesforce.CustomTab.instance.My_Leads,
     salesforce.CustomTab.instance.Department__c,
     salesforce.CustomTab.instance.LSNLY__Lessonly_User__c,
   ]

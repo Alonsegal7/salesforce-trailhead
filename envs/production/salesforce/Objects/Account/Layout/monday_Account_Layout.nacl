@@ -1,7 +1,8 @@
 salesforce.Layout monday_Account_Layout {
   fullName = "Account-monday Account Layout"
   excludeButtons = [
-    "DataDotComCompanyHierarchy",
+    "DataDotComAccountInsights",
+    "DataDotComClean",
     "DisableCustomerPortalAccount",
     "DisablePartnerPortalAccount",
     "IncludeOffline",
@@ -117,28 +118,16 @@ salesforce.Layout monday_Account_Layout {
               field = salesforce.Account.field.Days_Left_in_Plan__c
             },
             {
-              behavior = "Edit"
-              field = salesforce.Account.field.Account_Source_Type__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Account.field.Transition_To_AM__c
+              behavior = "Readonly"
+              field = salesforce.Account.field.Link_to_BB_Account__c
             },
           ]
         },
         {
           layoutItems = [
             {
-              behavior = "Readonly"
-              field = salesforce.Account.field.Link_to_BB_Account__c
-            },
-            {
               behavior = "Edit"
               field = salesforce.Account.field.Plan_Name__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Account.field.Pricing_Version__c
             },
             {
               behavior = "Edit"
@@ -171,6 +160,10 @@ salesforce.Layout monday_Account_Layout {
             {
               behavior = "Edit"
               field = salesforce.Account.field.Discount_Type__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Pricing_Version__c
             },
           ]
         },
@@ -213,6 +206,35 @@ salesforce.Layout monday_Account_Layout {
         },
       ]
       style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = false
+      label = "Custom Links"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              customLink = salesforce.WebLink.instance.Account_Account_Analysis_Dashboard
+            },
+            {
+              customLink = salesforce.WebLink.instance.Account_QBR_Dashboard
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              customLink = salesforce.WebLink.instance.Account_Teams_Dashboard
+            },
+            {
+              customLink = salesforce.WebLink.instance.Account_BB_Account
+            },
+          ]
+        },
+      ]
+      style = "CustomLinks"
     },
     {
       customLabel = true
@@ -272,6 +294,7 @@ salesforce.Layout monday_Account_Layout {
       detailHeading = true
       editHeading = true
       label = "Address Information"
+      style = "TwoColumnsTopToBottom"
       layoutColumns = [
         {
           layoutItems = [
@@ -306,85 +329,69 @@ salesforce.Layout monday_Account_Layout {
           ]
         },
       ]
-      style = "TwoColumnsTopToBottom"
-    },
-    {
-      customLabel = false
-      detailHeading = true
-      editHeading = false
-      label = "Custom Links"
-      style = "CustomLinks"
     },
   ]
   platformActionList = {
     actionListContext = "Record"
     platformActionListItems = [
       {
-        actionName = "Edit"
-        actionType = "StandardButton"
-        sortOrder = 0
-      },
-      {
-        actionName = "NewTask"
-        actionType = "QuickAction"
-        sortOrder = 1
-      },
-      {
-        actionName = "LogACall"
-        actionType = "QuickAction"
-        sortOrder = 2
-      },
-      {
         actionName = "Account.Un_assign_Myself"
         actionType = "QuickAction"
-        sortOrder = 3
+        sortOrder = 0
       },
       {
         actionName = "Account.Account_Handover"
         actionType = "QuickAction"
-        sortOrder = 4
+        sortOrder = 1
       },
       {
-        actionName = "EmailHighlightAction"
-        actionType = "ProductivityAction"
-        sortOrder = 5
+        actionName = "Account.Expansion_Opportunity"
+        actionType = "QuickAction"
+        sortOrder = 2
+      },
+      {
+        actionName = "NewTask"
+        actionType = "QuickAction"
+        sortOrder = 3
+      },
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 4
       },
       {
         actionName = "FeedItem.ContentNote"
         actionType = "QuickAction"
-        sortOrder = 6
+        sortOrder = 5
       },
       {
         actionName = "FeedItem.TextPost"
         actionType = "QuickAction"
-        sortOrder = 7
+        sortOrder = 6
       },
       {
         actionName = "FeedItem.ContentPost"
         actionType = "QuickAction"
-        sortOrder = 8
+        sortOrder = 7
       },
       {
         actionName = "Share"
         actionType = "StandardButton"
-        sortOrder = 9
+        sortOrder = 8
       },
       {
         actionName = "Delete"
         actionType = "StandardButton"
+        sortOrder = 9
+      },
+      {
+        actionName = "LogACall"
+        actionType = "QuickAction"
         sortOrder = 10
       },
     ]
   }
-  relatedContent = {
-    relatedContentItems = [
-      {
-        layoutItem = {
-          component = "runtime_sales_social:socialPanel"
-        }
-      },
-    ]
-  }
+  
   relatedLists = [
     {
       fields = [
@@ -448,7 +455,15 @@ salesforce.Layout monday_Account_Layout {
         "New",
       ]
       fields = [
+        "CREATED_DATE",
         "NAME",
+        "CREATEDBY_USER",
+        "Full_Opportunity_Size__c",
+        "Short_Term_Growth__c",
+        "Long_Term_Growth__c",
+        "Retention_Score__c",
+        "Handover_Notes__c",
+        "Which_Kind_of_CSM__c",
       ]
       relatedList = salesforce.Handover__c.field.Monday_Account__c
     },

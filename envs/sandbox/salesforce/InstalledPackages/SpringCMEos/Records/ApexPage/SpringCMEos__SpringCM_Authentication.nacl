@@ -1,9 +1,0 @@
-salesforce.ApexPage SpringCMEos__SpringCM_Authentication {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 36
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "SpringCM_Authentication"
-  fullName = "SpringCMEos__SpringCM_Authentication"
-  content = file("salesforce/InstalledPackages/SpringCMEos/Records/ApexPage/SpringCMEos__SpringCM_Authentication.page")
-}

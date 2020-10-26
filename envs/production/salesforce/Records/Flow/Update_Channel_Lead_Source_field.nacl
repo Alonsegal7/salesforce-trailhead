@@ -2096,6 +2096,22 @@ salesforce.Flow Update_Channel_Lead_Source_field {
             {
               name = "implicit"
               value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
                 booleanValue = false
               }
             },
@@ -2139,22 +2155,8 @@ salesforce.Flow Update_Channel_Lead_Source_field {
           field = "Channel_Lead_Source__c"
           operator = "NotEqualTo"
           value = {
+            
             stringValue = "Contact Sales"
-          }
-        },
-        {
-          processMetadataValues = [
-            {
-              name = "implicit"
-              value = {
-                booleanValue = true
-              }
-            },
-          ]
-          field = "Id"
-          operator = "EqualTo"
-          value = {
-            elementReference = "myVariable_current.Id"
           }
         },
       ]
@@ -2237,6 +2239,22 @@ salesforce.Flow Update_Channel_Lead_Source_field {
             {
               name = "implicit"
               value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
                 booleanValue = false
               }
             },
@@ -2280,22 +2298,8 @@ salesforce.Flow Update_Channel_Lead_Source_field {
           field = "Channel_Lead_Source__c"
           operator = "NotEqualTo"
           value = {
+            
             stringValue = "Signup"
-          }
-        },
-        {
-          processMetadataValues = [
-            {
-              name = "implicit"
-              value = {
-                booleanValue = true
-              }
-            },
-          ]
-          field = "Id"
-          operator = "EqualTo"
-          value = {
-            elementReference = "myVariable_current.Id"
           }
         },
       ]
@@ -2378,6 +2382,22 @@ salesforce.Flow Update_Channel_Lead_Source_field {
             {
               name = "implicit"
               value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
                 booleanValue = false
               }
             },
@@ -2421,22 +2441,8 @@ salesforce.Flow Update_Channel_Lead_Source_field {
           field = "Channel_Lead_Source__c"
           operator = "NotEqualTo"
           value = {
+            
             stringValue = "Download"
-          }
-        },
-        {
-          processMetadataValues = [
-            {
-              name = "implicit"
-              value = {
-                booleanValue = true
-              }
-            },
-          ]
-          field = "Id"
-          operator = "EqualTo"
-          value = {
-            elementReference = "myVariable_current.Id"
           }
         },
       ]
@@ -2519,6 +2525,22 @@ salesforce.Flow Update_Channel_Lead_Source_field {
             {
               name = "implicit"
               value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
                 booleanValue = false
               }
             },
@@ -2562,22 +2584,8 @@ salesforce.Flow Update_Channel_Lead_Source_field {
           field = "Channel_Lead_Source__c"
           operator = "NotEqualTo"
           value = {
+            
             stringValue = "Outreach"
-          }
-        },
-        {
-          processMetadataValues = [
-            {
-              name = "implicit"
-              value = {
-                booleanValue = true
-              }
-            },
-          ]
-          field = "Id"
-          operator = "EqualTo"
-          value = {
-            elementReference = "myVariable_current.Id"
           }
         },
       ]
@@ -2660,6 +2668,22 @@ salesforce.Flow Update_Channel_Lead_Source_field {
             {
               name = "implicit"
               value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
                 booleanValue = false
               }
             },
@@ -2703,22 +2727,8 @@ salesforce.Flow Update_Channel_Lead_Source_field {
           field = "Channel_Lead_Source__c"
           operator = "NotEqualTo"
           value = {
+            
             stringValue = "Event"
-          }
-        },
-        {
-          processMetadataValues = [
-            {
-              name = "implicit"
-              value = {
-                booleanValue = true
-              }
-            },
-          ]
-          field = "Id"
-          operator = "EqualTo"
-          value = {
-            elementReference = "myVariable_current.Id"
           }
         },
       ]

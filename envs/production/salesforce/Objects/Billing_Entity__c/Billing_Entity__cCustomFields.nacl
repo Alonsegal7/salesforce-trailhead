@@ -4976,4 +4976,12 @@ IF (IsBlank ( Shipping_Zip_Postal_Code__c ),"",", "&Shipping_Zip_Postal_Code__c)
     updateable = true
     queryable = true
   }
+  salesforce.Checkbox Trigger_Sync_to_Priority__c {
+    apiName = "Billing_Entity__c.Trigger_Sync_to_Priority__c"
+    label = "Trigger Sync to Priority"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
 }

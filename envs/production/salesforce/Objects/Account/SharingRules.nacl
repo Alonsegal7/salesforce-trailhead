@@ -412,6 +412,22 @@ salesforce.SharingRules Account {
       }
     },
     {
+      fullName = "Obo_Agency_Partner_User"
+      accessLevel = "Edit"
+      accountSettings = {
+        caseAccessLevel = "Edit"
+        contactAccessLevel = "Edit"
+        opportunityAccessLevel = "Edit"
+      }
+      label = "Obo Agency Partner User"
+      sharedTo = {
+        portalRoleAndSubordinates = "OboAgencyPartnerUser"
+      }
+      sharedFrom = {
+        portalRoleAndSubordinates = "OboAgencyPartnerUser"
+      }
+    },
+    {
       fullName = "Owner_is_Avalon"
       accessLevel = "Edit"
       accountSettings = {

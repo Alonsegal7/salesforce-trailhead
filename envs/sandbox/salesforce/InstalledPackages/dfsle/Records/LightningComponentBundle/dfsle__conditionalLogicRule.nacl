@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__conditionalLogicRule {
+  fullName = "dfsle__conditionalLogicRule"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/conditionalLogicRule/conditionalLogicRule.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/conditionalLogicRule/conditionalLogicRule.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/conditionalLogicRule/conditionalLogicRule.css"
+      },
+    ]
+  }
+}

@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting SpringCMEos__SpringCM_api_uatna11 {
-  fullName = "SpringCMEos__SpringCM_api_uatna11"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://apiuatna11.springcm.com"
-}

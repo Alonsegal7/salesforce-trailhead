@@ -1,7 +1,0 @@
-salesforce.ApexComponent zisf__CleanMappingPage {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 26
-  label = "CleanMappingPage"
-  fullName = "zisf__CleanMappingPage"
-  content = "(hidden)"
-}

@@ -1,7 +1,0 @@
-salesforce.StaticResource zisf__jQuery {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "text/javascript"
-  fullName = "zisf__jQuery"
-  content = file("salesforce/InstalledPackages/zisf/Records/StaticResource/zisf__jQuery.resource")
-}

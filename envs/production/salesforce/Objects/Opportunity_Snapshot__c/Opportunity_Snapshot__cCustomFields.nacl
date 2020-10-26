@@ -253,4 +253,18 @@ type salesforce.Opportunity_Snapshot__c {
     queryable = true
     externalId = false
   }
+  salesforce.FormulaNumber Day_of_Month__c {
+    apiName = "Opportunity_Snapshot__c.Day_of_Month__c"
+    label = "Day of Month"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "day( Snapshot_Date__c )"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
 }

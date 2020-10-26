@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle dfsle__SendingApp {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "SendingApp"
+  fullName = "dfsle__SendingApp"
+  type = "Application"
+  markup = "(hidden)"
+}

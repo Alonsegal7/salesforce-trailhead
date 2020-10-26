@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__EnvelopeLocalization__c_ru {
+  fullName = "dfsle__EnvelopeLocalization__c-ru"
+  _parent = [
+    salesforce.dfsle__EnvelopeLocalization__c,
+  ]
+}

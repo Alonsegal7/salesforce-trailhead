@@ -3047,9 +3047,9 @@ if( primary_pulse_account_id__c <>'',
         label = "Call Booked"
       },
       {
-        fullName = "Negotiations"
+        fullName = "Qualified"
         default = false
-        label = "Negotiations"
+        label = "Qualified"
       },
     ]
     restricted = false
@@ -3470,9 +3470,7 @@ CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Lead.field.Related_Company__c,
-    ]
+    
   }
   salesforce.FormulaText Lead_Owner_s_Office__c {
     apiName = "Lead.Lead_Owner_s_Office__c"
@@ -3487,9 +3485,7 @@ CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.User.field.Office__c,
-    ]
+    
   }
   salesforce.FormulaText SDR_Office__c {
     apiName = "Lead.SDR_Office__c"
@@ -3504,10 +3500,7 @@ CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Lead.field.SDR_Name__c,
-      salesforce.User.field.Office__c,
-    ]
+    
   }
   salesforce.FormulaText Lead_Owner_SDR_Office__c {
     apiName = "Lead.Lead_Owner_SDR_Office__c"
@@ -3522,10 +3515,7 @@ CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Lead.field.SDR_Name__c,
-      salesforce.User.field.Office__c,
-    ]
+    
   }
   salesforce.FormulaCheckbox Owner_is_Partner_CPM__c {
     apiName = "Lead.Owner_is_Partner_CPM__c"
@@ -5297,7 +5287,7 @@ BB_UTM_Source__c='msteams_partnership_integration'||
     _required = false
     createable = true
     updateable = true
-    length = 130000
+    length = 131072
     queryable = true
     visibleLines = 3
   }
@@ -5818,7 +5808,7 @@ BB_UTM_Source__c='msteams_partnership_integration'||
   salesforce.FormulaCheckbox EMEA_Work_Hours__c {
     apiName = "Lead.EMEA_Work_Hours__c"
     label = "EMEA Work Hours"
-    formula = "if(VALUE(MID(TEXT(CreatedDate),12,2))>=6&&VALUE(MID(TEXT(CreatedDate),12,2))<=15,true,false)"
+    formula = "if(VALUE(MID(TEXT(CreatedDate),12,2))>=6&&VALUE(MID(TEXT(CreatedDate),12,2))<15,true,false)"
     inlineHelpText = "Returns the hours in GMT 0"
     createable = false
     updateable = false
@@ -5828,7 +5818,7 @@ BB_UTM_Source__c='msteams_partnership_integration'||
   salesforce.FormulaCheckbox NA_Work_Hours__c {
     apiName = "Lead.NA_Work_Hours__c"
     label = "NA Work Hours"
-    formula = "if(VALUE(MID(TEXT(CreatedDate),12,2))>=13&&VALUE(MID(TEXT(CreatedDate),12,2))<=22,true,false)"
+    formula = "if(VALUE(MID(TEXT(CreatedDate),12,2))>=13&&VALUE(MID(TEXT(CreatedDate),12,2))<22,true,false)"
     createable = false
     updateable = false
     queryable = true
@@ -5963,5 +5953,37 @@ We can add parameters to check different scoring parameters according to actual 
     queryable = false
     updateable = false
     createable = false
+  }
+  salesforce.Picklist Qualified_for_Solution__c {
+    apiName = "Lead.Qualified_for_Solution__c"
+    label = "Qualified for Solution"
+    _required = false
+    valueSet = [
+      {
+        fullName = "PMO"
+        default = false
+        label = "PMO"
+      },
+      {
+        fullName = "Marketing"
+        default = false
+        label = "Marketing"
+      },
+      {
+        fullName = "Creative"
+        default = false
+        label = "Creative"
+      },
+      {
+        fullName = "Sales Operations"
+        default = false
+        label = "Sales Operations"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
   }
 }

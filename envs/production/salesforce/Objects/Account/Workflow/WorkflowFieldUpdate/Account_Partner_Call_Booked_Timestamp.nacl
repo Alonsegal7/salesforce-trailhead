@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Partner_Call_Booked_Timestamp {
+  fullName = "Account.Partner_Call_Booked_Timestamp"
+  field = salesforce.Account.field.Partner_Call_Booked_Timestamp__c
+  formula = "TODAY()"
+  name = "Partner Call Booked Timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,11 @@
+salesforce.LightningComponentBundle dfsle__setupUtils {
+  fullName = "dfsle__setupUtils"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/setupUtils/setupUtils.js"
+      },
+    ]
+  }
+}

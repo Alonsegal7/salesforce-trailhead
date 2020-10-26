@@ -1,7 +1,0 @@
-salesforce.ApexClass zisf__BasicZoomSessionTokens {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  status = "Active"
-  fullName = "zisf__BasicZoomSessionTokens"
-  content = "(hidden)"
-}

@@ -1,0 +1,6 @@
+salesforce.CspTrustedSite dfsle__mixpanel {
+  fullName = "dfsle__mixpanel"
+  context = "All"
+  endpointUrl = "https://api.mixpanel.com"
+  isActive = true
+}

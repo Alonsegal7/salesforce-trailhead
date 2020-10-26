@@ -451,9 +451,7 @@ CASE(text(Function__c),"Ops",0,
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.User.field.Long_User_ID__c,
-    ]
+    
   }
   salesforce.FormulaText Rep_Maturity__c {
     apiName = "User.Rep_Maturity__c"
@@ -562,5 +560,17 @@ CASE(text(Function__c),"Ops",0,
     updateable = true
     queryable = true
     sorted = false
+  }
+  salesforce.Text Personal_Monday_Board_Id__c {
+    apiName = "User.Personal_Monday_Board_Id__c"
+    label = "Personal Monday Board Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
   }
 }

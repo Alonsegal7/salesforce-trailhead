@@ -1,0 +1,9 @@
+salesforce.CustomTab dfsle__GenTemplate__c {
+  fullName = "dfsle__GenTemplate__c"
+  customObject = true
+  icon = salesforce.Document.instance.dfsle__DocuSign_dfsle__AppIcon_png
+  motif = "Custom18: Form"
+  _parent = [
+    salesforce.dfsle__GenTemplate__c,
+  ]
+}

@@ -1,0 +1,9 @@
+salesforce.AuraDefinitionBundle dfsle__strike_row {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "I was created from Strike-CLI"
+  fullName = "dfsle__strike_row"
+  type = "Component"
+  markup = "(hidden)"
+  controllerContent = "(hidden)"
+}

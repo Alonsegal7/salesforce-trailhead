@@ -2160,6 +2160,10 @@ salesforce.CustomObjectTranslation Billing_Entity__c_en_US {
     },
     {
       label = ""
+      name = salesforce.Billing_Entity__c.field.Trigger_Sync_to_Priority__c
+    },
+    {
+      label = ""
       name = salesforce.Billing_Entity__c.field.Unique_Key__c
     },
     {

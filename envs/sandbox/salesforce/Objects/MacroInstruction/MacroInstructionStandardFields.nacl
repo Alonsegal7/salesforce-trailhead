@@ -4489,30 +4489,6 @@ type salesforce.MacroInstruction {
         isActive = true
       },
       {
-        fullName = "Tab.SpringCMEos__DSWConfig__c"
-        default = false
-        label = "Active Get It! Configuration Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.SpringCMEos__SpringCM_Attribute_Field__c"
-        default = false
-        label = "Active SpringCM Attribute Field Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.SpringCMEos__SpringCM_Attribute_Group__c"
-        default = false
-        label = "Active SpringCM Attribute Group Tab"
-        isActive = true
-      },
-      {
-        fullName = "Tab.SpringCMEos__SpringCM_Testing__c"
-        default = false
-        label = "Active SpringCM Testing Tab"
-        isActive = true
-      },
-      {
         fullName = "Tab.StoryLogItemSetting__c"
         default = false
         label = "Active Story Log Item Setting Tab"
@@ -4564,6 +4540,102 @@ type salesforce.MacroInstruction {
         fullName = "Tab.User"
         default = false
         label = "Active User Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__AgreementConfiguration__c"
+        default = false
+        label = "Active Agreement Configuration Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__BulkList__c"
+        default = false
+        label = "Active DocuSign Bulk Send List Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__BulkStatus__c"
+        default = false
+        label = "Active DocuSign Bulk Send Status Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__CustomParameterMap__c"
+        default = false
+        label = "Active DocuSign Custom Parameter Map Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__CustomRecipient__c"
+        default = false
+        label = "Active DocuSign Custom Recipient Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__Document__c"
+        default = false
+        label = "Active DocuSign Envelope Document Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__EnvelopeConfigurationDocument__c"
+        default = false
+        label = "Active DocuSign Envelope Configuration Document Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__EnvelopeConfigurationRecipient__c"
+        default = false
+        label = "Active DocuSign Envelope Configuration Recipien Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__EnvelopeConfiguration__c"
+        default = false
+        label = "Active DocuSign Envelope Template Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__EnvelopeLocalization__c"
+        default = false
+        label = "Active DocuSign Localization Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__EnvelopeStatus__c"
+        default = false
+        label = "Active DocuSign Status Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__Envelope__c"
+        default = false
+        label = "Active DocuSign Envelope Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__GenTemplate__c"
+        default = false
+        label = "Active DocuSign Gen Template Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__Log__c"
+        default = false
+        label = "Active DocuSign Log Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__RecipientStatus__c"
+        default = false
+        label = "Active DocuSign Recipient Status Tab"
+        isActive = true
+      },
+      {
+        fullName = "Tab.dfsle__Recipient__c"
+        default = false
+        label = "Active DocuSign Envelope Recipient Tab"
         isActive = true
       },
       {

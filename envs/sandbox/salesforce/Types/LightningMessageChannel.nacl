@@ -22,7 +22,7 @@ type salesforce.LightningMessageChannel {
   boolean isExposed {
     _required = false
   }
-  salesforce.LightningMessageField lightningMessageFields {
+  "List<salesforce.LightningMessageField>" lightningMessageFields {
     _required = false
   }
   string masterLabel {

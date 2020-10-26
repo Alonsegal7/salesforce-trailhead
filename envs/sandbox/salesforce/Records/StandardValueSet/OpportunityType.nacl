@@ -17,5 +17,15 @@ salesforce.StandardValueSet OpportunityType {
       default = false
       label = "Cross sale"
     },
+    {
+      fullName = "Renewal"
+      default = false
+      label = "Renewal"
+    },
+    {
+      fullName = "Downgrade"
+      default = false
+      label = "Downgrade"
+    },
   ]
 }

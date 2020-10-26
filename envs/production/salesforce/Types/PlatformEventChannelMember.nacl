@@ -22,7 +22,6 @@ type salesforce.PlatformEventChannelMember {
       enforce_value = false
       values = [
         "ActivityEngagementVirtualChannel",
-        "CDPMDSChangeData",
         "ChangeDataStandardSales",
         "ChangeEvents",
         "CommerceChangeEvents",
@@ -32,8 +31,10 @@ type salesforce.PlatformEventChannelMember {
         "EinsteinDiscoveryWBChannel",
         "EinsteinPlatformStandardChannel",
         "FTestStandardChannel",
+        "FTestStandardInternalChannel",
         "GlobalIdentityStandard",
         "IsotopeStandardChangeEvents",
+        "PardotSyncStdChannel",
         "WorkPlansCDCEventChannel",
       ]
     }
@@ -166,22 +167,6 @@ type salesforce.PlatformEventChannelMember {
         "yw__YeswareHistoricalSync__ChangeEvent",
         "yw__YeswareOpportunitySync__ChangeEvent",
         "yw__YeswareTaskSync__ChangeEvent",
-        "zisf__CleanTokenStorage__ChangeEvent",
-        "zisf__FmcDefaultValue__ChangeEvent",
-        "zisf__ZISFLog__ChangeEvent",
-        "zisf__ZISFSettings__ChangeEvent",
-        "zisf__ZoomAppTokenStorage__ChangeEvent",
-        "zisf__ZoomInfoComplete__ChangeEvent",
-        "zisf__ZoomInfo_Clean_Settings__ChangeEvent",
-        "zisf__ZoomInfo_Custom_Settings__ChangeEvent",
-        "zisf__ZoomInfo_Inbound_Settings__ChangeEvent",
-        "zisf__ZoomInfo__ChangeEvent",
-        "zisf__ZoomSession__ChangeEvent",
-        "zisf__ZoomSessions__ChangeEvent",
-        "zisf__ZoomTokenStorage__ChangeEvent",
-        "zisf__Zoom_Scheduler__ChangeEvent",
-        "zisf__ZoominfoSalesforceApp__ChangeEvent",
-        "zisf__zicCleanJob__ChangeEvent",
       ]
     }
     foreignKeyDomain = [

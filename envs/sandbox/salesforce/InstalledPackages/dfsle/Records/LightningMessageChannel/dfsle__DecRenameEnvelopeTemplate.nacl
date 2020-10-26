@@ -1,0 +1,12 @@
+salesforce.LightningMessageChannel dfsle__DecRenameEnvelopeTemplate {
+  fullName = "dfsle__DecRenameEnvelopeTemplate"
+  description = "Handles renaming for Envelope Templates"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "The name to use for the given Envelope Template"
+      fieldName = "name"
+    },
+  ]
+  masterLabel = "DecRenameEnvelopeTemplate"
+}

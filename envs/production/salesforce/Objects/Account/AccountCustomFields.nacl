@@ -373,6 +373,7 @@ if(ISPICKVAL(Plan_Tier__c ,'Pro')&& Plan_Period__c ='monthly', 'Pro, Monthly',if
         },
       ]
       isOptional = false
+      infoMessage = "Please choose a 'company' record type and NOT a 'Monday Account' record type"
     }
     createable = true
     updateable = true
@@ -788,11 +789,6 @@ if(ISPICKVAL(Plan_Tier__c ,'Pro')&& Plan_Period__c ='monthly', 'Pro, Monthly',if
         fullName = "Churned"
         default = false
         label = "Churned"
-      },
-      {
-        fullName = "Canceled"
-        default = false
-        label = "Canceled"
       },
       {
         fullName = "Free Tier"
@@ -1841,7 +1837,7 @@ if(Health_Score_Bucket__c = "Low", image("http://icons.iconarchive.com/icons/ico
       },
       {
         fullName = "New"
-        default = false
+        default = true
         label = "New"
       },
       {
@@ -1853,6 +1849,11 @@ if(Health_Score_Bucket__c = "Low", image("http://icons.iconarchive.com/icons/ico
         fullName = "Contacted"
         default = false
         label = "Contacted"
+      },
+      {
+        fullName = "Call Booked"
+        default = false
+        label = "Call Booked"
       },
       {
         fullName = "Qualified"
@@ -1908,6 +1909,14 @@ if(Health_Score_Bucket__c = "Low", image("http://icons.iconarchive.com/icons/ico
         },
         {
           valueName = "Contacted"
+          controllingFieldValue = [
+            "Channel",
+            "DMR",
+            "Tech",
+          ]
+        },
+        {
+          valueName = "Call Booked"
           controllingFieldValue = [
             "Channel",
             "DMR",
@@ -2107,14 +2116,14 @@ if(Health_Score_Bucket__c = "Low", image("http://icons.iconarchive.com/icons/ico
     _required = false
     valueSet = [
       {
-        fullName = "Strategic"
-        default = false
-        label = "Strategic"
+        fullName = "Other"
+        default = true
+        label = "Other"
       },
       {
-        fullName = "Growth"
+        fullName = "Scale"
         default = false
-        label = "Growth"
+        label = "Scale"
       },
       {
         fullName = "Low Touch"
@@ -2122,14 +2131,14 @@ if(Health_Score_Bucket__c = "Low", image("http://icons.iconarchive.com/icons/ico
         label = "Low Touch"
       },
       {
-        fullName = "Other"
+        fullName = "Growth"
         default = false
-        label = "Other"
+        label = "Growth"
       },
       {
-        fullName = "Scale"
+        fullName = "Strategic"
         default = false
-        label = "Scale"
+        label = "Strategic"
       },
     ]
     restricted = true
@@ -2371,10 +2380,7 @@ False if there's only one record type.
     precision = 18
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Account.field.Plan_Seats__c,
-      salesforce.Account.field.WAPP__c,
-    ]
+    
   }
   salesforce.Summary of_Complete_Sale__c {
     apiName = "Account.of_Complete_Sale__c"
@@ -3361,6 +3367,12 @@ domain.co, domain2.in, domain3.com
           ]
         },
         {
+          valueName = "Citrix"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
           valueName = "Dell Technologies"
           controllingFieldValue = [
             "Channel",
@@ -3445,7 +3457,19 @@ domain.co, domain2.in, domain3.com
           ]
         },
         {
+          valueName = "Kissflow"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
           valueName = "Looker"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "LS Retail"
           controllingFieldValue = [
             "Channel",
           ]
@@ -3566,6 +3590,12 @@ domain.co, domain2.in, domain3.com
         },
         {
           valueName = "Redhat"
+          controllingFieldValue = [
+            "Channel",
+          ]
+        },
+        {
+          valueName = "Sage"
           controllingFieldValue = [
             "Channel",
           ]
@@ -5545,10 +5575,7 @@ domain.co, domain2.in, domain3.com
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Account.field.Company__c,
-      salesforce.Account.field.Account_Potential__c,
-    ]
+    
   }
   salesforce.MultiselectPicklist Business_Verticals__c {
     apiName = "Account.Business_Verticals__c"
@@ -7942,10 +7969,10 @@ Case( BillingCountryCode ,"IL",1,
     _required = false
     formula = '''
 if(RecordType.DeveloperName='Monday_Account',
-    if(((Plan_Seats__c>=20&&Plan_Seats__c<50&&ispickval(Plan_Tier__c,'Enterprise'))||
-        (Plan_Seats__c>=51&&ispickval(Plan_Tier__c,'Pro'))),
+    if(((Plan_Seats__c>=20&&Plan_Seats__c<100&&ispickval(Plan_Tier__c,'Enterprise'))||
+        (Plan_Seats__c>=55&&ispickval(Plan_Tier__c,'Pro'))),
         'Scaled Touch',
-        if(Plan_Seats__c>=50&&ispickval(Plan_Tier__c,'Enterprise'),
+        if(Plan_Seats__c>=100&&ispickval(Plan_Tier__c,'Enterprise'),
             'High Touch',
             'Non Managed')),
     '')
@@ -8072,7 +8099,7 @@ How can I accomplish them?
   }
   salesforce.Summary Account_Claimed_ARR__c {
     apiName = "Account.Account_Claimed_ARR__c"
-    label = "Account Claimed ARR"
+    label = "Account Claimed ARR - Sales"
     _required = false
     precision = 18
     scale = 2
@@ -8082,9 +8109,14 @@ How can I accomplish them?
     summarizedField = "Opportunity.Claimed_ARR__c"
     summaryFilterItems = [
       {
-        field = "Opportunity.StageName"
+        field = "Opportunity.IsWon"
         operation = "equals"
-        value = "Closed Won"
+        value = "True"
+      },
+      {
+        field = "Opportunity.RecordTypeId"
+        operation = "equals"
+        value = "Internal Opportunity"
       },
     ]
     summaryForeignKey = "Opportunity.AccountId"
@@ -8736,5 +8768,50 @@ HYPERLINK("https://monday.lightning.force.com/lightning/r/Account/"&Long_Account
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Date Partner_Call_Booked_Timestamp__c {
+    apiName = "Account.Partner_Call_Booked_Timestamp__c"
+    label = "Partner Call Booked Timestamp"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Churn_Reason__c {
+    apiName = "Account.Churn_Reason__c"
+    label = "Churn Reason"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Summary Account_Claimed_ARR_Partners__c {
+    apiName = "Account.Account_Claimed_ARR_Partners__c"
+    label = "Account Claimed ARR - Partners"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "Opportunity.Claimed_ARR__c"
+    summaryFilterItems = [
+      {
+        field = "Opportunity.IsWon"
+        operation = "equals"
+        value = "True"
+      },
+      {
+        field = "Opportunity.RecordTypeId"
+        operation = "equals"
+        value = "Partner Opportunity"
+      },
+    ]
+    summaryForeignKey = "Opportunity.AccountId"
+    summaryOperation = "sum"
   }
 }

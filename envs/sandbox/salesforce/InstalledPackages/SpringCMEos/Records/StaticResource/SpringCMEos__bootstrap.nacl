@@ -1,7 +1,0 @@
-salesforce.StaticResource SpringCMEos__bootstrap {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "application/zip"
-  fullName = "SpringCMEos__bootstrap"
-  content = file("salesforce/InstalledPackages/SpringCMEos/Records/StaticResource/SpringCMEos__bootstrap.zip")
-}

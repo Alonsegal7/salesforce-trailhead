@@ -80,26 +80,6 @@ salesforce.LightningPage Opportunity_Record_Page {
           ]
           componentName = "iframeEmbed"
         },
-        {
-          componentInstanceProperties = [
-            {
-              name = "height"
-              value = "300"
-            },
-            {
-              name = "label"
-            },
-            {
-              name = "pageName"
-              value = "SpringCM_EOSOpportunity"
-            },
-            {
-              name = "showLabel"
-              value = "true"
-            },
-          ]
-          componentName = "flexipage:visualforcePage"
-        },
       ]
       mode = "Replace"
       name = "subheader"
@@ -646,6 +626,23 @@ salesforce.LightningPage Opportunity_Record_Page {
         {
           componentInstanceProperties = [
             {
+              name = "flowArguments"
+              value = "[{\"label\":\"RecordId\",\"dataType\":\"String\",\"supportsRecordId\":true,\"value\":\"{!Record.Id}\"}]"
+            },
+            {
+              name = "flowLayout"
+              value = "oneColumn"
+            },
+            {
+              name = "flowName"
+              value = "Co_Sell_Process"
+            },
+          ]
+          componentName = "flowruntime:interview"
+        },
+        {
+          componentInstanceProperties = [
+            {
               name = "frameBorder"
               value = "0"
             },
@@ -696,7 +693,6 @@ salesforce.LightningPage Opportunity_Record_Page {
           componentInstanceProperties = [
             {
               name = "boardId"
-              value = "198601936"
             },
             {
               name = "dashboardId"
@@ -706,7 +702,6 @@ salesforce.LightningPage Opportunity_Record_Page {
             },
             {
               name = "filterValue"
-              value = "raz"
             },
             {
               name = "frameBorder"
@@ -725,7 +720,6 @@ salesforce.LightningPage Opportunity_Record_Page {
             },
             {
               name = "itemIdFieldAPI"
-              value = "Monday_Board_Item_Id__c"
             },
             {
               name = "itemView"
@@ -742,6 +736,10 @@ salesforce.LightningPage Opportunity_Record_Page {
             {
               name = "style"
               value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "userFieldAPI"
+              value = "Monday_Board_Item_Id__c"
             },
             {
               name = "width"

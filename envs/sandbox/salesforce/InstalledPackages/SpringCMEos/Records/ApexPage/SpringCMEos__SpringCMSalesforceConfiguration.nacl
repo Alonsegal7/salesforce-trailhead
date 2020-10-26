@@ -1,9 +1,0 @@
-salesforce.ApexPage SpringCMEos__SpringCMSalesforceConfiguration {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 24
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "SpringCMSalesforceConfiguration"
-  fullName = "SpringCMEos__SpringCMSalesforceConfiguration"
-  content = file("salesforce/InstalledPackages/SpringCMEos/Records/ApexPage/SpringCMEos__SpringCMSalesforceConfiguration.page")
-}

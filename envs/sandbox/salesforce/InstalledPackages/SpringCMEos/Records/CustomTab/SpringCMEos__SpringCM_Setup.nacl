@@ -1,6 +1,0 @@
-salesforce.CustomTab SpringCMEos__SpringCM_Setup {
-  fullName = "SpringCMEos__SpringCM_Setup"
-  label = "SpringCM Setup"
-  motif = "Custom99: CRT TV"
-  page = "SpringCMEos__SpringCM_Setup"
-}

@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle dfsle__LoadingEvent {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "LoadingEvent"
+  fullName = "dfsle__LoadingEvent"
+  type = "Event"
+  markup = "(hidden)"
+}

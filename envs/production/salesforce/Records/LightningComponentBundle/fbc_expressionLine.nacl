@@ -1,0 +1,24 @@
+salesforce.LightningComponentBundle fbc_expressionLine {
+  xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 46
+  description = "expressionLine"
+  isExposed = true
+  masterLabel = "expressionLine"
+  fullName = "fbc_expressionLine"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_expressionLine/fbc_expressionLine.css")
+        filePath = "lwc/fbc_expressionLine/fbc_expressionLine.css"
+      },
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_expressionLine/fbc_expressionLine.js")
+        filePath = "lwc/fbc_expressionLine/fbc_expressionLine.js"
+      },
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_expressionLine/fbc_expressionLine.html")
+        filePath = "lwc/fbc_expressionLine/fbc_expressionLine.html"
+      },
+    ]
+  }
+}

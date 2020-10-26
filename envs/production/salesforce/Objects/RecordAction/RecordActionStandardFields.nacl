@@ -155,6 +155,7 @@ type salesforce.RecordAction {
       salesforce.Allocation__c,
       salesforce.Asset,
       salesforce.AssetRelationship,
+      salesforce.AssociatedLocation,
       salesforce.Billing_Entity__c,
       salesforce.Business_Review__c,
       salesforce.CalendlyAction__c,
@@ -204,6 +205,7 @@ type salesforce.RecordAction {
       salesforce.Lead,
       salesforce.Lead_Registration__c,
       salesforce.LineItem_Sync__c,
+      "Location",
       salesforce.Milestone__c,
       salesforce.Monday_Account__c,
       salesforce.OpportunitiesMondayAccountsLink__c,
@@ -256,16 +258,6 @@ type salesforce.RecordAction {
       salesforce.yw__YeswareHistoricalSync__c,
       salesforce.yw__YeswareOpportunitySync__c,
       salesforce.yw__YeswareTaskSync__c,
-      salesforce.zisf__FmcDefaultValue__c,
-      salesforce.zisf__ZoomAppTokenStorage__c,
-      salesforce.zisf__ZoomInfo_Clean_Settings__c,
-      salesforce.zisf__ZoomInfo_Custom_Settings__c,
-      salesforce.zisf__ZoomInfo_Inbound_Settings__c,
-      salesforce.zisf__ZoomInfo__c,
-      salesforce.zisf__ZoomSessions__c,
-      salesforce.zisf__ZoomTokenStorage__c,
-      salesforce.zisf__Zoom_Scheduler__c,
-      salesforce.zisf__zicCleanJob__c,
     ]
     createable = true
     updateable = true
@@ -304,6 +296,12 @@ type salesforce.RecordAction {
         fullName = "Closed_Won_Opportunity_Summary"
         default = false
         label = "Closed_Won_Opportunity_Summary"
+        isActive = true
+      },
+      {
+        fullName = "Co_Sell_Process"
+        default = false
+        label = "Co_Sell_Process"
         isActive = true
       },
       {
@@ -451,9 +449,21 @@ type salesforce.RecordAction {
         isActive = true
       },
       {
+        fullName = "Monday_Solution_Picker"
+        default = false
+        label = "Monday_Solution_Picker"
+        isActive = true
+      },
+      {
         fullName = "OnLeadCreate"
         default = false
         label = "OnLeadCreate"
+        isActive = true
+      },
+      {
+        fullName = "Opportunity_Create_New_Opp_Flow"
+        default = false
+        label = "Opportunity_Create_New_Opp_Flow"
         isActive = true
       },
       {
@@ -478,6 +488,12 @@ type salesforce.RecordAction {
         fullName = "Partner_SO_Request_new"
         default = false
         label = "Partner_SO_Request_new"
+        isActive = true
+      },
+      {
+        fullName = "Partners_Manually_Signed_SO"
+        default = false
+        label = "Partners_Manually_Signed_SO"
         isActive = true
       },
       {
@@ -562,6 +578,24 @@ type salesforce.RecordAction {
         fullName = "Set_Lead_Owner_Manager_Id_on_lead_s_Owners_Manager"
         default = false
         label = "Set_Lead_Owner_Manager_Id_on_lead_s_Owners_Manager"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Create_Case"
+        default = false
+        label = "setup_service_experience__Create_Case"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Reset_Pwd"
+        default = false
+        label = "setup_service_experience__Reset_Pwd"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Verify_Cust"
+        default = false
+        label = "setup_service_experience__Verify_Cust"
         isActive = true
       },
       {
@@ -758,6 +792,12 @@ type salesforce.RecordAction {
         isActive = true
       },
       {
+        fullName = "Co_Sell_Process"
+        default = false
+        label = "Co_Sell_Process"
+        isActive = true
+      },
+      {
         fullName = "Company_Ownership_Logic"
         default = false
         label = "Company_Ownership_Logic"
@@ -902,9 +942,21 @@ type salesforce.RecordAction {
         isActive = true
       },
       {
+        fullName = "Monday_Solution_Picker"
+        default = false
+        label = "Monday_Solution_Picker"
+        isActive = true
+      },
+      {
         fullName = "OnLeadCreate"
         default = false
         label = "OnLeadCreate"
+        isActive = true
+      },
+      {
+        fullName = "Opportunity_Create_New_Opp_Flow"
+        default = false
+        label = "Opportunity_Create_New_Opp_Flow"
         isActive = true
       },
       {
@@ -929,6 +981,12 @@ type salesforce.RecordAction {
         fullName = "Partner_SO_Request_new"
         default = false
         label = "Partner_SO_Request_new"
+        isActive = true
+      },
+      {
+        fullName = "Partners_Manually_Signed_SO"
+        default = false
+        label = "Partners_Manually_Signed_SO"
         isActive = true
       },
       {
@@ -1001,6 +1059,12 @@ type salesforce.RecordAction {
         fullName = "QuickActionDefinition.Account.CSM_Update"
         default = false
         label = "QuickActionDefinition.Account.CSM_Update"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Account.Expansion_Opportunity"
+        default = false
+        label = "QuickActionDefinition.Account.Expansion_Opportunity"
         isActive = true
       },
       {
@@ -1232,6 +1296,12 @@ type salesforce.RecordAction {
         isActive = true
       },
       {
+        fullName = "QuickActionDefinition.Lead.Related_BB_Accounts"
+        default = false
+        label = "QuickActionDefinition.Lead.Related_BB_Accounts"
+        isActive = true
+      },
+      {
         fullName = "QuickActionDefinition.Lead.Relationship_Fields"
         default = false
         label = "QuickActionDefinition.Lead.Relationship_Fields"
@@ -1304,6 +1374,12 @@ type salesforce.RecordAction {
         isActive = true
       },
       {
+        fullName = "QuickActionDefinition.Opportunity.Co_Sell_Opportunity"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Co_Sell_Opportunity"
+        isActive = true
+      },
+      {
         fullName = "QuickActionDefinition.Opportunity.Create_Partner_SO_Request"
         default = false
         label = "QuickActionDefinition.Opportunity.Create_Partner_SO_Request"
@@ -1319,6 +1395,12 @@ type salesforce.RecordAction {
         fullName = "QuickActionDefinition.Opportunity.Create_Relate_Billing_Entity"
         default = false
         label = "QuickActionDefinition.Opportunity.Create_Relate_Billing_Entity"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.Expansion_Opportunity"
+        default = false
+        label = "QuickActionDefinition.Opportunity.Expansion_Opportunity"
         isActive = true
       },
       {
@@ -1349,6 +1431,18 @@ type salesforce.RecordAction {
         fullName = "QuickActionDefinition.Opportunity.Send_Opportunity_Summary"
         default = false
         label = "QuickActionDefinition.Opportunity.Send_Opportunity_Summary"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.SO_Manually_Signed"
+        default = false
+        label = "QuickActionDefinition.Opportunity.SO_Manually_Signed"
+        isActive = true
+      },
+      {
+        fullName = "QuickActionDefinition.Opportunity.SO_Request"
+        default = false
+        label = "QuickActionDefinition.Opportunity.SO_Request"
         isActive = true
       },
       {
@@ -1463,6 +1557,24 @@ type salesforce.RecordAction {
         fullName = "Set_Lead_Owner_Manager_Id_on_lead_s_Owners_Manager"
         default = false
         label = "Set_Lead_Owner_Manager_Id_on_lead_s_Owners_Manager"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Create_Case"
+        default = false
+        label = "setup_service_experience__Create_Case"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Reset_Pwd"
+        default = false
+        label = "setup_service_experience__Reset_Pwd"
+        isActive = true
+      },
+      {
+        fullName = "setup_service_experience__Verify_Cust"
+        default = false
+        label = "setup_service_experience__Verify_Cust"
         isActive = true
       },
       {

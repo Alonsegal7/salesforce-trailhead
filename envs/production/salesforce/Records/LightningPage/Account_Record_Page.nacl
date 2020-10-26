@@ -99,48 +99,6 @@ salesforce.LightningPage Account_Record_Page {
         {
           componentInstanceProperties = [
             {
-              name = "createQuickActionName"
-              value = "NewAccount"
-            },
-            {
-              name = "lookupFieldName"
-              value = "Account.Id"
-            },
-            {
-              name = "titleFieldName"
-              value = "Company Details"
-            },
-            {
-              name = "updateQuickActionName"
-              value = "Account.Update_Company_Information"
-            },
-          ]
-          componentName = "console:relatedRecord"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "createQuickActionName"
-              value = "NewAccount"
-            },
-            {
-              name = "lookupFieldName"
-              value = "Account.Id"
-            },
-            {
-              name = "titleFieldName"
-              value = "Business Opportunities & Risks"
-            },
-            {
-              name = "updateQuickActionName"
-              value = "Account.Business_Opportunities_Risks"
-            },
-          ]
-          componentName = "console:relatedRecord"
-        },
-        {
-          componentInstanceProperties = [
-            {
               name = "parentFieldApiName"
               value = "Account.Id"
             },
@@ -166,19 +124,122 @@ salesforce.LightningPage Account_Record_Page {
         {
           componentInstanceProperties = [
             {
-              name = "parentFieldApiName"
+              name = "decorate"
+              value = "true"
+            },
+            {
+              name = "richTextValue"
+              value = "<p><span style=\"color: rgb(255, 0, 0);\">You haven't mapped any departments yet! Click on 'New' above to create a new department.</span></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!Record.Departments_Mapped__c}"
+                operator = "EQUAL"
+                rightValue = "0"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "createQuickActionName"
+              value = "NewAccount"
+            },
+            {
+              name = "lookupFieldName"
               value = "Account.Id"
             },
             {
-              name = "relatedListApiName"
-              value = "Contacts__r"
+              name = "titleFieldName"
+              value = "Company Details"
             },
             {
-              name = "relatedListComponentOverride"
-              value = "GRID"
+              name = "updateQuickActionName"
+              value = "Account.Update_Company_Information"
             },
           ]
-          componentName = "force:relatedListSingleContainer"
+          componentName = "console:relatedRecord"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "decorate"
+              value = "true"
+            },
+            {
+              name = "richTextValue"
+              value = "<p><b style=\"font-size: 16px;\">Org Chart (pilot)</b></p><p>Drag and drop contacts and accounts to change the account's hierarchy.</p><p>Connects are made automatically using the 'reports to' field on contact, and 'parent account' on accounts.</p><p>Please make sure to only move and update <b>contacts.</b></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+          visibilityRule = {
+            booleanFilter = "1 OR 2 OR 3 OR 4"
+            criteria = [
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "EQUAL"
+                rightValue = "Ops"
+              },
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "CONTAINS"
+                rightValue = "Anthony Damski"
+              },
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "EQUAL"
+                rightValue = "Amir Mizrachi"
+              },
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "EQUAL"
+                rightValue = "Doron Eliezer"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enabledObjects"
+              value = "Accounts and Contacts"
+            },
+          ]
+          componentName = "squivr:OrgChart"
+          visibilityRule = {
+            booleanFilter = "1 OR 2 OR 3 OR 4 OR 5"
+            criteria = [
+              {
+                leftValue = "{!$User.Function__c}"
+                operator = "EQUAL"
+                rightValue = "Ops"
+              },
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "EQUAL"
+                rightValue = "Anthony Damski"
+              },
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "EQUAL"
+                rightValue = "Amir Mizrachi"
+              },
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "EQUAL"
+                rightValue = "Doron Eliezer"
+              },
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "CONTAINS"
+                rightValue = "Hans"
+              },
+            ]
+          }
         },
       ]
       name = "Facet-4dad3253-d936-4399-9174-7bb83bb65584"
@@ -548,23 +609,23 @@ salesforce.LightningPage Account_Record_Page {
         {
           componentInstanceProperties = [
             {
-              name = "cacheAge"
-              value = "1440"
+              name = "createQuickActionName"
+              value = "NewAccount"
             },
             {
-              name = "label"
-              value = "ARR & Seats Trend"
+              name = "lookupFieldName"
+              value = "Account.Id"
             },
             {
-              name = "reportName"
-              value = "My_MAs_Snapshots_since_102020_Sxe"
+              name = "titleFieldName"
+              value = "Business Opportunities & Risks"
             },
             {
-              name = "showRefreshButton"
-              value = "true"
+              name = "updateQuickActionName"
+              value = "Account.Business_Opportunities_Risks"
             },
           ]
-          componentName = "flexipage:reportChart"
+          componentName = "console:relatedRecord"
         },
         {
           componentName = "runtime_sales_activities:activityPanel"

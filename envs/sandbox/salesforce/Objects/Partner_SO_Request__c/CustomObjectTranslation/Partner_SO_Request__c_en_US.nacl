@@ -2176,6 +2176,10 @@ salesforce.CustomObjectTranslation Partner_SO_Request__c_en_US {
     },
     {
       label = ""
+      name = salesforce.Partner_SO_Request__c.field.VAT_Text__c
+    },
+    {
+      label = ""
       name = salesforce.Partner_SO_Request__c.field.VAT__c
     },
     {

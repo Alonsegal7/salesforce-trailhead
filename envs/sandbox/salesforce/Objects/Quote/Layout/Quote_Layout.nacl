@@ -61,6 +61,14 @@ salesforce.Layout Quote_Layout {
               behavior = "Readonly"
               field = salesforce.Quote.field.Use_Photo_on_Proposal__c
             },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Legal_Agreement_Type__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Pro_Rated_Different_Price__c
+            },
           ]
         },
         {

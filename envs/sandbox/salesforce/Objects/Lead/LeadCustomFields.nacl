@@ -3217,10 +3217,7 @@ CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Lead.field.Related_Company__c,
-      salesforce.User.field.Function_Ownership_Score__c,
-    ]
+    
   }
   salesforce.Checkbox Requested_Demo__c {
     apiName = "Lead.Requested_Demo__c"
@@ -3296,11 +3293,7 @@ CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Lead.field.Related_Company__c,
-      salesforce.Account.field.Strategic_receiver__c,
-      salesforce.User.field.Full_Name__c,
-    ]
+    
   }
   salesforce.FormulaText Manager_s_Long_Id__c {
     apiName = "Lead.Manager_s_Long_Id__c"
@@ -3315,9 +3308,7 @@ CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.User.field.Long_User_ID__c,
-    ]
+    
   }
   salesforce.Checkbox Open_CS_Ticket_in_Zendesk__c {
     apiName = "Lead.Open_CS_Ticket_in_Zendesk__c"

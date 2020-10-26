@@ -99,6 +99,11 @@ salesforce.QuickAction Account_BI_and_Admin {
           },
           {
             emptySpace = false
+            field = "Account_Claimed_ARR_Partners__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
             field = "Prioritized_Account__c"
             uiBehavior = "Edit"
           },

@@ -1,7 +1,0 @@
-salesforce.StaticResource zisf__hasEnoughCredits {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "text/plain"
-  fullName = "zisf__hasEnoughCredits"
-  content = file("salesforce/InstalledPackages/zisf/Records/StaticResource/zisf__hasEnoughCredits.txt")
-}

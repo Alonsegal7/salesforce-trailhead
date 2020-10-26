@@ -9,14 +9,12 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
     public list<String> accountHeaderFields;
     public list<String> snapshotHeaderFields;
     public id accountId;
-    //public boolean isTest=false;
     
     public Account_Snapshot() {
     }
     
     public Account_Snapshot(id testAccId) {
         accountId=testAccId;
-        //isTest=isTestIndication;
     }
     @InvocableMethod
     public static void ManualRun(list<id> testAccId){
@@ -56,7 +54,6 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             query+=' and Id NOT IN (SELECT Account__c FROM Account_Snapshot__c where Date__c=today) ';
             if(accountId!=null)
                 query+=' and id=\''+accountId+'\' '; 
-            //system.debug('Raz Ben Ron AS isTest '+isTest);
             if(!(today.format('E')=='Sun'||today.day()==1||today.day()>tomorrow.day()||accountId!=null)&&!test.isRunningTest())
                 query+=' limit 0 ';
             system.debug('Raz Ben Ron accSnap query: '+query); 
@@ -82,7 +79,6 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
                 os.Weekly_Snapshot__c=isOngoing;
                 os.End_of_Month__c=isLast;
                 os.Start_of_Month__c=isFirst;
-                //if(isTest)
                 if(accountId!=null)
                     os.Test_Snapshot__c=true;
                 for (Integer i=0;i<accountHeaderFields.size();i++){
@@ -94,12 +90,11 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             }
             num+=1;
             system.debug('Raz Ben Ron accSnap snapsToCreate: '+snapsToCreate); 
-            //Database.insert(snapsToCreate, false);
             Database.SaveResult[] results = Database.insert(snapsToCreate, false);
             for (Database.SaveResult sr : results) {
                 if (!sr.isSuccess()) {
                     for(Database.Error e : sr.getErrors()) {
-                        Utilities.sendEmail('Error in Account_Snapshot ',e.getMessage()+' acc.snapsToCreate',new list<string>{'razbe@monday.com'});
+                        Utilities.sendEmail('Error in Account_Snapshot ',e.getMessage(),new list<string>{'razbe@monday.com'});
                         System.debug('The following error has occurred.');  
                         System.debug(e.getStatusCode() + ': ' + e.getMessage());
                         System.debug('Fields that affected this error: ' + e.getFields());
@@ -110,10 +105,10 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
                     totalSnapsCreated+=1;
                 }
             }
-            totalAccountsFromQuery+=snapsToCreate.size()==null?0:snapsToCreate.size();
+            totalAccountsFromQuery+=snapsToCreate.isEmpty()?0:snapsToCreate.size();
             //insert snapsToCreate;
         }catch(Exception e){
-            Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage()+' acc.snapsToCreate');   
+            Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage());   
         }
     }
     public void finish(Database.BatchableContext bc) {

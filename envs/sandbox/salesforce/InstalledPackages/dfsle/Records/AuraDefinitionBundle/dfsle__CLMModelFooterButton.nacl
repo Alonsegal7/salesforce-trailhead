@@ -1,0 +1,9 @@
+salesforce.AuraDefinitionBundle dfsle__CLMModelFooterButton {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "A Lightning Component Bundle"
+  fullName = "dfsle__CLMModelFooterButton"
+  type = "Component"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

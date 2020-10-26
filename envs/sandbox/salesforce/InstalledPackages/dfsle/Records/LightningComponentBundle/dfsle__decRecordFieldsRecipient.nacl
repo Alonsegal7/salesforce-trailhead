@@ -1,0 +1,15 @@
+salesforce.LightningComponentBundle dfsle__decRecordFieldsRecipient {
+  fullName = "dfsle__decRecordFieldsRecipient"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRecordFieldsRecipient/decRecordFieldsRecipient.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRecordFieldsRecipient/decRecordFieldsRecipient.html"
+      },
+    ]
+  }
+}

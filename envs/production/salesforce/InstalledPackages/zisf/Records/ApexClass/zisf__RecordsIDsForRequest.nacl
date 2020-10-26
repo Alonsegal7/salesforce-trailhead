@@ -1,7 +1,0 @@
-salesforce.ApexClass zisf__RecordsIDsForRequest {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  status = "Active"
-  fullName = "zisf__RecordsIDsForRequest"
-  content = "(hidden)"
-}

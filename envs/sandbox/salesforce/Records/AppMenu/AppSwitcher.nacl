@@ -270,27 +270,11 @@ salesforce.AppMenu AppSwitcher {
       type = "ConnectedApp"
     },
     {
-      name = "SpringCMEos__SpringCM"
+      name = "squivr__Squivr"
       type = "CustomApplication"
     },
     {
-      name = "SpringCM_FileIt"
-      type = "ConnectedApp"
-    },
-    {
-      name = "SpringCM_OAuth"
-      type = "ConnectedApp"
-    },
-    {
-      name = "SpringCM_OAuth_QAR"
-      type = "ConnectedApp"
-    },
-    {
-      name = "SpringCM_OAuth_QAT"
-      type = "ConnectedApp"
-    },
-    {
-      name = "squivr__Squivr"
+      name = "dfsle__DocuSignForSalesforceCore"
       type = "CustomApplication"
     },
   ]

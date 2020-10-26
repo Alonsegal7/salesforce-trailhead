@@ -44,508 +44,7 @@ salesforce.LightningPage Monday_Account_Version_31 {
     {
       componentInstances = [
         {
-          componentInstanceProperties = [
-            {
-              name = "frameBorder"
-              value = "0"
-            },
-            {
-              name = "height"
-              value = "500px"
-            },
-            {
-              name = "iframeUrl"
-              value = "https://new.bigbrain.me/crm/sales/account"
-            },
-            {
-              name = "sandbox"
-              value = "allow-same-origin allow-scripts allow-forms"
-            },
-            {
-              name = "scrolling"
-              value = "auto"
-            },
-            {
-              name = "style"
-              value = "border: none; overflow: scroll;"
-            },
-            {
-              name = "width"
-              value = "100%"
-            },
-          ]
-          componentName = "BigBrainEmbed"
-        },
-      ]
-      name = "Facet-11bcd57f-9188-4e5c-96f0-92f6bda77cb9"
-      type = "Facet"
-    },
-    {
-      componentInstances = [
-        {
-          componentName = "runtime_sales_activities:activityPanel"
-        },
-      ]
-      name = "Facet-eb668f45-0d6b-43be-b50e-5593c3553276"
-      type = "Facet"
-    },
-    {
-      componentInstances = [
-        {
-          componentInstanceProperties = [
-            {
-              name = "frameBorder"
-              value = "0"
-            },
-            {
-              name = "height"
-              value = "640px"
-            },
-            {
-              name = "iframeUrl"
-              value = "https://looker.bigbrain.me/embed/dashboards/1076?Account%20Id=39&filter_config=%7B\"Account%20Id\":%5B%7B\"type\":\"%3D\",\"values\":%5B%7B\"constant\":\"ACCOUNT_ID\"%7D,%7B%7D%5D,\"id\":2%7D%5D%7D"
-            },
-            {
-              name = "sandbox"
-              value = "allow-same-origin allow-scripts allow-forms"
-            },
-            {
-              name = "scrolling"
-              value = "auto"
-            },
-            {
-              name = "style"
-              value = "border: none; overflow: scroll;"
-            },
-            {
-              name = "width"
-              value = "100%"
-            },
-          ]
-          componentName = "LookerEmbed"
-        },
-      ]
-      name = "Facet-405247b9-4fd6-4181-b524-66c74800f3b1"
-      type = "Facet"
-    },
-    {
-      componentInstances = [
-        {
-          componentInstanceProperties = [
-            {
-              name = "frameBorder"
-              value = "0"
-            },
-            {
-              name = "height"
-              value = "640px"
-            },
-            {
-              name = "iframeUrl"
-              value = "https://looker.bigbrain.me/embed/dashboards/2557?Account%20Id=39&filter_config=%7B%22Account%20Id%22:%5B%7B%22type%22:%22%3D%22,%22values%22:%5B%7B%22constant%22:%22ACCOUNT_ID%22%7D,%7B%7D%5D,%22id%22:2%7D%5D%7D"
-            },
-            {
-              name = "sandbox"
-              value = "allow-same-origin allow-scripts allow-forms"
-            },
-            {
-              name = "scrolling"
-              value = "auto"
-            },
-            {
-              name = "style"
-              value = "border: none; overflow: scroll;"
-            },
-            {
-              name = "width"
-              value = "100%"
-            },
-          ]
-          componentName = "LookerEmbed"
-        },
-      ]
-      name = "Facet-e1adcaa8-94c6-4cb9-a311-07451206ad4b"
-      type = "Facet"
-    },
-    {
-      componentInstances = [
-        {
-          componentInstanceProperties = [
-            {
-              name = "parentFieldApiName"
-              value = "Account.Company__c"
-            },
-            {
-              name = "relatedListApiName"
-              value = "Contracts"
-            },
-            {
-              name = "relatedListComponentOverride"
-              value = "ADVGRID"
-            },
-            {
-              name = "rowsToDisplay"
-              value = "5"
-            },
-            {
-              name = "showActionBar"
-              value = "true"
-            },
-          ]
-          componentName = "force:relatedListSingleContainer"
-        },
-      ]
-      name = "Facet-55596baa-abe2-4468-b664-7cdad30321bf"
-      type = "Facet"
-    },
-    {
-      componentInstances = [
-        {
-          componentInstanceProperties = [
-            {
-              name = "active"
-              value = "true"
-            },
-            {
-              name = "body"
-              value = "Facet-11bcd57f-9188-4e5c-96f0-92f6bda77cb9"
-            },
-            {
-              name = "title"
-              value = "Big Brain"
-            },
-          ]
-          componentName = "flexipage:tab"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "body"
-              value = "Facet-eb668f45-0d6b-43be-b50e-5593c3553276"
-            },
-            {
-              name = "title"
-              value = "Activities"
-            },
-          ]
-          componentName = "flexipage:tab"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "body"
-              value = "Facet-405247b9-4fd6-4181-b524-66c74800f3b1"
-            },
-            {
-              name = "title"
-              value = "Account Analysis"
-            },
-          ]
-          componentName = "flexipage:tab"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "body"
-              value = "Facet-e1adcaa8-94c6-4cb9-a311-07451206ad4b"
-            },
-            {
-              name = "title"
-              value = "Teams Analysis"
-            },
-          ]
-          componentName = "flexipage:tab"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "body"
-              value = "Facet-55596baa-abe2-4468-b664-7cdad30321bf"
-            },
-            {
-              name = "title"
-              value = "Company Contracts"
-            },
-          ]
-          componentName = "flexipage:tab"
-        },
-      ]
-      name = "Facet-16405d74-33eb-4d2c-aaa9-4249d26c2850"
-      type = "Facet"
-    },
-    {
-      componentInstances = [
-        {
-          componentInstanceProperties = [
-            {
-              name = "hideUpdateButton"
-              value = "false"
-            },
-            {
-              name = "variant"
-              value = "linear"
-            },
-          ]
-          componentName = "runtime_sales_pathassistant:pathAssistant"
-          visibilityRule = {
-            booleanFilter = "1 AND 2 AND 3"
-            criteria = [
-              {
-                leftValue = "{!Record.CSM__r.Username}"
-                operator = "NE"
-              },
-              {
-                leftValue = "{!Record.CSM__r.LastName}"
-                operator = "NE"
-                rightValue = "Low Touch CS Pool"
-              },
-              {
-                leftValue = "{!Record.CSM_Function__c}"
-                operator = "NE"
-                rightValue = "Scaled Touch"
-              },
-            ]
-          }
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "createQuickActionName"
-              value = "NewAccount"
-            },
-            {
-              name = "lookupFieldName"
-              value = "Account.Id"
-            },
-            {
-              name = "titleFieldName"
-              value = "Prioritised Account"
-            },
-            {
-              name = "updateQuickActionName"
-              value = "Account.Scaled_Touch_Section"
-            },
-          ]
-          componentName = "console:relatedRecord"
-          visibilityRule = {
-            booleanFilter = "1 AND 2"
-            criteria = [
-              {
-                leftValue = "{!Record.Prioritized_Account__c}"
-                operator = "EQUAL"
-                rightValue = "true"
-              },
-              {
-                leftValue = "{!Record.CSM_Function__c}"
-                operator = "EQUAL"
-                rightValue = "Scaled Touch"
-              },
-            ]
-          }
-        },
-        {
-          componentName = "projectWidget"
-          visibilityRule = {
-            booleanFilter = "1 AND 2 AND 3"
-            criteria = [
-              {
-                leftValue = "{!Record.Low_Touch_CS__r.Username}"
-                operator = "NE"
-              },
-              {
-                leftValue = "{!Record.CSM__r.Username}"
-                operator = "EQUAL"
-              },
-              {
-                leftValue = "{!Record.Second_CSM__r.Username}"
-                operator = "EQUAL"
-              },
-            ]
-          }
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "hideHeader"
-              value = "true"
-            },
-          ]
-          componentName = "force:relatedListQuickLinksContainer"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "tabs"
-              value = "Facet-16405d74-33eb-4d2c-aaa9-4249d26c2850"
-            },
-          ]
-          componentName = "flexipage:tabset"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "parentFieldApiName"
-              value = "Account.Id"
-            },
-            {
-              name = "relatedListApiName"
-              value = "Contacts"
-            },
-            {
-              name = "relatedListComponentOverride"
-              value = "ADVGRID"
-            },
-            {
-              name = "rowsToDisplay"
-              value = "3"
-            },
-            {
-              name = "showActionBar"
-              value = "true"
-            },
-          ]
-          componentName = "force:relatedListSingleContainer"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "parentFieldApiName"
-              value = "Account.Id"
-            },
-            {
-              name = "relatedListApiName"
-              value = "Opportunities"
-            },
-            {
-              name = "relatedListComponentOverride"
-              value = "ADVGRID"
-            },
-            {
-              name = "rowsToDisplay"
-              value = "3"
-            },
-            {
-              name = "showActionBar"
-              value = "true"
-            },
-          ]
-          componentName = "force:relatedListSingleContainer"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "parentFieldApiName"
-              value = "Account.Id"
-            },
-            {
-              name = "relatedListApiName"
-              value = "Projects__r"
-            },
-            {
-              name = "relatedListComponentOverride"
-              value = "ADVGRID"
-            },
-            {
-              name = "rowsToDisplay"
-              value = "3"
-            },
-            {
-              name = "showActionBar"
-              value = "true"
-            },
-          ]
-          componentName = "force:relatedListSingleContainer"
-          visibilityRule = {
-            criteria = [
-              {
-                leftValue = "{!Record.Low_Touch_CS__r.Username}"
-                operator = "NE"
-              },
-            ]
-          }
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "parentFieldApiName"
-              value = "Account.Id"
-            },
-            {
-              name = "relatedListApiName"
-              value = "Relationships__r"
-            },
-            {
-              name = "relatedListComponentOverride"
-              value = "ADVGRID"
-            },
-            {
-              name = "rowsToDisplay"
-              value = "3"
-            },
-            {
-              name = "showActionBar"
-              value = "true"
-            },
-          ]
-          componentName = "force:relatedListSingleContainer"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "parentFieldApiName"
-              value = "Account.Id"
-            },
-            {
-              name = "relatedListApiName"
-              value = "Surveys__r"
-            },
-            {
-              name = "relatedListComponentOverride"
-              value = "ADVGRID"
-            },
-            {
-              name = "rowsToDisplay"
-              value = "3"
-            },
-            {
-              name = "showActionBar"
-              value = "true"
-            },
-          ]
-          componentName = "force:relatedListSingleContainer"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "parentFieldApiName"
-              value = "Account.Id"
-            },
-            {
-              name = "relatedListApiName"
-              value = "AttachedContentDocuments"
-            },
-            {
-              name = "relatedListComponentOverride"
-              value = "NONE"
-            },
-            {
-              name = "rowsToDisplay"
-              value = "10"
-            },
-            {
-              name = "showActionBar"
-              value = "true"
-            },
-          ]
-          componentName = "force:relatedListSingleContainer"
-        },
-      ]
-      name = "main"
-      type = "Region"
-    },
-    {
-      componentInstances = [
-        {
+          
           componentName = "force:detailPanel"
         },
       ]
@@ -734,6 +233,7 @@ salesforce.LightningPage Monday_Account_Version_31 {
     {
       componentInstances = [
         {
+          componentName = "force:relatedListSingleContainer"
           componentInstanceProperties = [
             {
               name = "parentFieldApiName"
@@ -756,7 +256,6 @@ salesforce.LightningPage Monday_Account_Version_31 {
               value = "true"
             },
           ]
-          componentName = "force:relatedListSingleContainer"
         },
       ]
       name = "Facet-7e072aca-9edc-4330-97be-12a3fe578135"
@@ -765,6 +264,7 @@ salesforce.LightningPage Monday_Account_Version_31 {
     {
       componentInstances = [
         {
+          componentName = "force:relatedListSingleContainer"
           componentInstanceProperties = [
             {
               name = "parentFieldApiName"
@@ -787,7 +287,6 @@ salesforce.LightningPage Monday_Account_Version_31 {
               value = "true"
             },
           ]
-          componentName = "force:relatedListSingleContainer"
           visibilityRule = {
             criteria = [
               {
@@ -902,6 +401,566 @@ salesforce.LightningPage Monday_Account_Version_31 {
         },
       ]
       name = "sidebar"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://new.bigbrain.me/crm/sales/account"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+      ]
+      name = "Facet-11bcd57f-9188-4e5c-96f0-92f6bda77cb9"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          
+          componentName = "runtime_sales_activities:activityPanel"
+        },
+      ]
+      name = "Facet-eb668f45-0d6b-43be-b50e-5593c3553276"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "640px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://looker.bigbrain.me/embed/dashboards/1076?Account%20Id=39&filter_config=%7B\"Account%20Id\":%5B%7B\"type\":\"%3D\",\"values\":%5B%7B\"constant\":\"ACCOUNT_ID\"%7D,%7B%7D%5D,\"id\":2%7D%5D%7D"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "LookerEmbed"
+        },
+      ]
+      name = "Facet-405247b9-4fd6-4181-b524-66c74800f3b1"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "640px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://looker.bigbrain.me/embed/dashboards/2557?Account%20Id=39&filter_config=%7B%22Account%20Id%22:%5B%7B%22type%22:%22%3D%22,%22values%22:%5B%7B%22constant%22:%22ACCOUNT_ID%22%7D,%7B%7D%5D,%22id%22:2%7D%5D%7D"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "LookerEmbed"
+        },
+      ]
+      name = "Facet-e1adcaa8-94c6-4cb9-a311-07451206ad4b"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Company__c"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Contracts"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "ADVGRID"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "5"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+          
+        },
+      ]
+      name = "Facet-55596baa-abe2-4468-b664-7cdad30321bf"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-11bcd57f-9188-4e5c-96f0-92f6bda77cb9"
+            },
+            {
+              name = "title"
+              value = "Big Brain"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-eb668f45-0d6b-43be-b50e-5593c3553276"
+            },
+            {
+              name = "title"
+              value = "Activities"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-405247b9-4fd6-4181-b524-66c74800f3b1"
+            },
+            {
+              name = "title"
+              value = "Account Analysis"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-e1adcaa8-94c6-4cb9-a311-07451206ad4b"
+            },
+            {
+              name = "title"
+              value = "Teams Analysis"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-55596baa-abe2-4468-b664-7cdad30321bf"
+            },
+            {
+              name = "title"
+              value = "Company Contracts"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-16405d74-33eb-4d2c-aaa9-4249d26c2850"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideUpdateButton"
+              value = "false"
+            },
+            {
+              name = "variant"
+              value = "linear"
+            },
+          ]
+          componentName = "runtime_sales_pathassistant:pathAssistant"
+          visibilityRule = {
+            booleanFilter = "1 AND 2 AND 3"
+            criteria = [
+              {
+                leftValue = "{!Record.CSM__r.Username}"
+                operator = "NE"
+              },
+              {
+                leftValue = "{!Record.CSM__r.LastName}"
+                operator = "NE"
+                rightValue = "Low Touch CS Pool"
+              },
+              {
+                leftValue = "{!Record.CSM_Function__c}"
+                operator = "NE"
+                rightValue = "Scaled Touch"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "createQuickActionName"
+              value = "NewAccount"
+            },
+            {
+              name = "lookupFieldName"
+              value = "Account.Id"
+            },
+            {
+              name = "titleFieldName"
+              value = "Prioritised Account"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Account.Scaled_Touch_Section"
+            },
+          ]
+          componentName = "console:relatedRecord"
+          visibilityRule = {
+            booleanFilter = "1 AND 2"
+            criteria = [
+              {
+                leftValue = "{!Record.Prioritized_Account__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+              {
+                leftValue = "{!Record.CSM_Function__c}"
+                operator = "EQUAL"
+                rightValue = "Scaled Touch"
+              },
+            ]
+          }
+        },
+        {
+          componentName = "projectWidget"
+          visibilityRule = {
+            booleanFilter = "1 AND 2 AND 3"
+            criteria = [
+              {
+                leftValue = "{!Record.Low_Touch_CS__r.Username}"
+                operator = "NE"
+              },
+              {
+                leftValue = "{!Record.CSM__r.Username}"
+                operator = "EQUAL"
+              },
+              {
+                leftValue = "{!Record.Second_CSM__r.Username}"
+                operator = "EQUAL"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "boardId"
+              value = "746047278"
+            },
+            {
+              name = "filterFieldAPI"
+              value = "primary_pulse_account_id__c"
+            },
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "400px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://monday.monday.com"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "mondayEmbed"
+          visibilityRule = {
+            booleanFilter = "1 AND 2"
+            criteria = [
+              {
+                leftValue = "{!Record.CSM_Function__c}"
+                operator = "EQUAL"
+                rightValue = "Scaled Touch"
+              },
+              {
+                leftValue = "{!Record.Prioritized_Account__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideHeader"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListQuickLinksContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-16405d74-33eb-4d2c-aaa9-4249d26c2850"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Contacts"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "ADVGRID"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "3"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Opportunities"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "ADVGRID"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "3"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Projects__r"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "ADVGRID"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "3"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!Record.Low_Touch_CS__r.Username}"
+                operator = "NE"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Relationships__r"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "ADVGRID"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "3"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Surveys__r"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "ADVGRID"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "3"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "AttachedContentDocuments"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+      ]
+      name = "main"
       type = "Region"
     },
   ]

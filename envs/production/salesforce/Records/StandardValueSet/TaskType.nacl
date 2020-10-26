@@ -178,9 +178,9 @@ salesforce.StandardValueSet TaskType {
       label = "Workshop"
     },
     {
-      fullName = "Offsite Hour"
+      fullName = "Office Hour"
       default = false
-      label = "Offsite Hour"
+      label = "Office Hour"
     },
   ]
 }

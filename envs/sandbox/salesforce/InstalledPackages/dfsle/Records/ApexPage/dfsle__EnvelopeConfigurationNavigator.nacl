@@ -1,0 +1,9 @@
+salesforce.ApexPage dfsle__EnvelopeConfigurationNavigator {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  availableInTouch = false
+  confirmationTokenRequired = true
+  label = "EnvelopeConfigurationNavigator"
+  fullName = "dfsle__EnvelopeConfigurationNavigator"
+  content = file("salesforce/InstalledPackages/dfsle/Records/ApexPage/dfsle__EnvelopeConfigurationNavigator.page")
+}

@@ -33,6 +33,10 @@ salesforce.Layout User_Layout_Main {
               behavior = "Edit"
               field = salesforce.User.field.Job_End_Date__c
             },
+            {
+              behavior = "Edit"
+              field = salesforce.User.field.Personal_Monday_Board_Id__c
+            },
           ]
         },
         {

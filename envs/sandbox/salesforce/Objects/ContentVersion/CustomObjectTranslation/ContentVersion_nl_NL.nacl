@@ -1,0 +1,48 @@
+salesforce.CustomObjectTranslation ContentVersion_nl_NL {
+  fullName = "ContentVersion-nl_NL"
+  fields = [
+    {
+      label = ""
+      name = salesforce.ContentVersion.field.dfsle__GeneratedFileFormat__c
+      picklistValues = [
+        {
+          masterLabel = "PDF"
+          translation = "PDF"
+        },
+        {
+          masterLabel = "Word"
+          translation = "Word"
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.ContentVersion.field.dfsle__GeneratedFileName__c
+    },
+    {
+      label = ""
+      name = salesforce.ContentVersion.field.dfsle__GeneratedFileSuffix__c
+      picklistValues = [
+        {
+          masterLabel = "date"
+          translation = "Datum"
+        },
+        {
+          masterLabel = "name"
+          translation = "naam"
+        },
+        {
+          masterLabel = "name_date"
+          translation = "Naam_Datum"
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.ContentVersion.field.dfsle__Rule__c
+    },
+  ]
+  _parent = [
+    salesforce.ContentVersion,
+  ]
+}

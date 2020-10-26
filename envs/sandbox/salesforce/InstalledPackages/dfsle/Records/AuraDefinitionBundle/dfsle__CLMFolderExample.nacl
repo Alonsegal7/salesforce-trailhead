@@ -1,0 +1,9 @@
+salesforce.AuraDefinitionBundle dfsle__CLMFolderExample {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "A Lightning Component Bundle"
+  fullName = "dfsle__CLMFolderExample"
+  type = "Component"
+  styleContent = "(hidden)"
+  markup = "(hidden)"
+}

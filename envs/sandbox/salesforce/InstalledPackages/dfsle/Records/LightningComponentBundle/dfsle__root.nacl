@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__root {
+  fullName = "dfsle__root"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/root/root.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/root/defaultLoadingTemplate.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/root/authorizationTemplate.html"
+      },
+    ]
+  }
+}

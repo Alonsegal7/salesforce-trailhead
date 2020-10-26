@@ -19,11 +19,21 @@ salesforce.LightningPage Opportunity_Record_Page {
             },
             {
               name = "numVisibleActions"
-              value = "3"
+              value = "6"
             },
           ]
           componentName = "force:highlightsPanel"
         },
+      ]
+      mode = "Replace"
+      name = "header"
+      type = "Region"
+    },
+    {
+      mode = "Replace"
+      name = "subheader"
+      type = "Region"
+      componentInstances = [
         {
           componentInstanceProperties = [
             {
@@ -38,14 +48,6 @@ salesforce.LightningPage Opportunity_Record_Page {
           componentName = "runtime_sales_pathassistant:pathAssistant"
         },
       ]
-      mode = "Replace"
-      name = "header"
-      type = "Region"
-    },
-    {
-      mode = "Replace"
-      name = "subheader"
-      type = "Region"
     },
     {
       componentInstances = [
@@ -727,7 +729,7 @@ salesforce.LightningPage Opportunity_Record_Page {
             },
             {
               name = "richTextValue"
-              value = "<p><b style=\"font-size: 18px; color: rgb(251, 39, 93);\">ATTENTION This Opportunity doesn't have a forecast.</b></p><p><b style=\"font-size: 16px; color: rgb(251, 39, 93);\">Please generate a quote in DealHub so this deal will be reflected in the monthly forecast.</b></p>"
+              value = "<p><b style=\"color: rgb(251, 39, 93); font-size: 18px;\">ATTENTION This Opportunity doesn't have a forecast.</b></p><p><b style=\"color: rgb(251, 39, 93); font-size: 16px;\">Please verify the currency, and generate a quote in DealHub to reflect this deal in the monthly forecast.</b></p>"
             },
           ]
           componentName = "flexipage:richText"
@@ -824,6 +826,165 @@ salesforce.LightningPage Opportunity_Record_Page {
           componentInstanceProperties = [
             {
               name = "decorate"
+              value = "false"
+            },
+            {
+              name = "richTextValue"
+              value = "<p><b style=\"color: rgb(255, 106, 0);\">This opportunity has an open SE request pending</b></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+          visibilityRule = {
+            booleanFilter = "1 AND 2"
+            criteria = [
+              {
+                leftValue = "{!Record.Request_a_Sales_Engineer__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+              {
+                leftValue = "{!Record.Has_Sales_Engineer_Assigned__c}"
+                operator = "EQUAL"
+                rightValue = "false"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "decorate"
+              value = "true"
+            },
+            {
+              name = "richTextValue"
+              value = "<p><b style=\"font-size: 16px; color: rgb(101, 189, 12);\">This is a Co-Sell Opportunity</b></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+          visibilityRule = {
+            booleanFilter = "1 AND 2"
+            criteria = [
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "CONTAINS"
+                rightValue = "Aviv Caspi"
+              },
+              {
+                leftValue = "{!Record.Co_Sell_Opportunity__r.Name}"
+                operator = "NE"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "lookupFieldName"
+              value = "Opportunity.Co_Sell_Opportunity__c"
+            },
+            {
+              name = "titleFieldName"
+              value = "Co-Sell Opportunity Details"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Opportunity.Co_Sell_Opportunity"
+            },
+          ]
+          componentName = "console:relatedRecord"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "CONTAINS"
+                rightValue = "Aviv Caspi"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "flowArguments"
+              value = "[{\"label\":\"RecordId\",\"dataType\":\"String\",\"supportsRecordId\":true,\"value\":\"{!Record.Id}\"}]"
+            },
+            {
+              name = "flowLayout"
+              value = "oneColumn"
+            },
+            {
+              name = "flowName"
+              value = "Co_Sell_Process"
+            },
+          ]
+          componentName = "flowruntime:interview"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.Full_Name__c}"
+                operator = "CONTAINS"
+                rightValue = "Aviv Caspi"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "flowArguments"
+              value = "[{\"label\":\"recordId\",\"dataType\":\"String\",\"supportsRecordId\":true,\"value\":\"{!Record.Id}\"}]"
+            },
+            {
+              name = "flowLayout"
+              value = "oneColumn"
+            },
+            {
+              name = "flowName"
+              value = "Monday_Solution_Picker"
+            },
+          ]
+          componentName = "flowruntime:interview"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "EQUAL"
+                rightValue = "Ben Ron"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "lookupFieldName"
+              value = "Opportunity.Id"
+            },
+            {
+              name = "titleFieldName"
+              value = "Manually Signed SO Details"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Opportunity.SO_Manually_Signed"
+            },
+          ]
+          componentName = "console:relatedRecord"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!Record.RecordType.Name}"
+                operator = "CONTAINS"
+                rightValue = "Partner"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "decorate"
               value = "true"
             },
             {
@@ -844,34 +1005,6 @@ salesforce.LightningPage Opportunity_Record_Page {
                 leftValue = "{!Record.Forecasted__c}"
                 operator = "EQUAL"
                 rightValue = "true"
-              },
-            ]
-          }
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "decorate"
-              value = "false"
-            },
-            {
-              name = "richTextValue"
-              value = "<p><b style=\"color: rgb(255, 106, 0);\">﻿Has a request pending for a Sales Engineer...</b></p><p><b style=\"color: rgb(255, 106, 0);\">Please contact the SE team for more information.</b></p>"
-            },
-          ]
-          componentName = "flexipage:richText"
-          visibilityRule = {
-            booleanFilter = "1 AND 2"
-            criteria = [
-              {
-                leftValue = "{!Record.Request_a_Sales_Engineer__c}"
-                operator = "EQUAL"
-                rightValue = "true"
-              },
-              {
-                leftValue = "{!Record.Has_Sales_Engineer_Assigned__c}"
-                operator = "EQUAL"
-                rightValue = "false"
               },
             ]
           }

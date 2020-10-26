@@ -12,6 +12,9 @@ salesforce.Flow Account_Set_ARR_on_Open_Opps {
       label = "myDecision"
       locationX = 50
       locationY = 0
+      defaultConnector = {
+        targetReference = "myDecision2"
+      }
       defaultConnectorLabel = "default"
       rules = [
         {
@@ -30,6 +33,38 @@ salesforce.Flow Account_Set_ARR_on_Open_Opps {
             targetReference = "myRule_1_A1"
           }
           label = "Account ARR Changes"
+        },
+      ]
+    },
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 1
+        }
+      }
+      name = "myDecision2"
+      label = "myDecision2"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_3"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "formula_myRule_3"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_3_A1"
+          }
+          label = "Account Claimed ARR - Partners"
         },
       ]
     },
@@ -56,9 +91,30 @@ not(isblank({!myVariable_current.Account_Claimed_ARR__c}  ))&&
 {!myVariable_current.RecordType.DeveloperName}=='Monday_Account'
 '''
     },
+    {
+      processMetadataValues = {
+        name = "originalFormula"
+        value = {
+          stringValue = '''
+(isnew()||ischanged([Account].Account_Claimed_ARR_Partners__c ))&&
+not(isblank([Account].Account_Claimed_ARR_Partners__c  ))&&
+[Account].RecordType.DeveloperName=='Monday_Account'
+
+
+'''
+        }
+      }
+      name = "formula_myRule_3"
+      dataType = "Boolean"
+      expression = '''
+(isnew()||ischanged({!myVariable_current.Account_Claimed_ARR_Partners__c} ))&&
+not(isblank({!myVariable_current.Account_Claimed_ARR_Partners__c}  ))&&
+{!myVariable_current.RecordType.DeveloperName}=='Monday_Account'
+'''
+    },
   ]
-  interviewLabel = "Account_Set_ARR_on_Open_Opps-3_InterviewLabel"
-  label = "Account - Set ARR on Open Opps"
+  interviewLabel = "Account_Set_ARR_on_Open_Opps-4_InterviewLabel"
+  label = "Account - Set Claimed ARR on Open Opps"
   processMetadataValues = [
     {
       name = "ObjectType"
@@ -117,6 +173,201 @@ not(isblank({!myVariable_current.Account_Claimed_ARR__c}  ))&&
       name = "myRule_1_A1"
       label = "Update Open Opps"
       locationX = 100
+      locationY = 200
+      connector = {
+        targetReference = "myDecision2"
+      }
+      filters = [
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "AccountId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "myVariable_current.Id"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "inputDataType"
+              value = {
+                stringValue = "Boolean"
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Closed"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "leftHandSideType"
+              value = {
+                stringValue = "Boolean"
+              }
+            },
+            {
+              name = "operatorDataType"
+              value = {
+                stringValue = "Boolean"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Boolean"
+              }
+            },
+          ]
+          field = "IsClosed"
+          operator = "EqualTo"
+          value = {
+            booleanValue = false
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "inputDataType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Record Type ID"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = "RecordType"
+              }
+            },
+            {
+              name = "leftHandSideType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "operatorDataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+          ]
+          field = "RecordTypeId"
+          operator = "EqualTo"
+          value = {
+            stringValue = "0121t000000LucvAAC"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "Number"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Monday Account ARR"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = ""
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "Reference"
+              }
+            },
+          ]
+          field = "Monday_Account_ARR__c"
+          value = {
+            elementReference = "myVariable_current.Account_Claimed_ARR__c"
+          }
+        },
+      ]
+      object = salesforce.Opportunity
+    },
+    {
+      processMetadataValues = [
+        {
+          name = "evaluationType"
+          value = {
+            stringValue = "criteria"
+          }
+        },
+        {
+          name = "extraTypeInfo"
+        },
+        {
+          name = "isChildRelationship"
+          value = {
+            booleanValue = true
+          }
+        },
+        {
+          name = "reference"
+          value = {
+            stringValue = "[Account].Opportunities"
+          }
+        },
+        {
+          name = "referenceTargetField"
+        },
+      ]
+      name = "myRule_3_A1"
+      label = "Update Open Opps - Partners"
+      locationX = 300
       locationY = 200
       filters = [
         {
@@ -185,6 +436,57 @@ not(isblank({!myVariable_current.Account_Claimed_ARR__c}  ))&&
             booleanValue = false
           }
         },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "inputDataType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Record Type ID"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = "RecordType"
+              }
+            },
+            {
+              name = "leftHandSideType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "operatorDataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+          ]
+          field = "RecordTypeId"
+          operator = "EqualTo"
+          value = {
+            stringValue = "0121t000000IQUbAAO"
+          }
+        },
       ]
       inputAssignments = [
         {
@@ -204,7 +506,7 @@ not(isblank({!myVariable_current.Account_Claimed_ARR__c}  ))&&
             {
               name = "leftHandSideLabel"
               value = {
-                stringValue = "Monday Account ARR"
+                stringValue = "Monday Account Claimed ARR - New"
               }
             },
             {
@@ -222,7 +524,7 @@ not(isblank({!myVariable_current.Account_Claimed_ARR__c}  ))&&
           ]
           field = "Monday_Account_ARR__c"
           value = {
-            elementReference = "myVariable_current.ARR__c"
+            elementReference = "myVariable_current.Account_Claimed_ARR_Partners__c"
           }
         },
       ]

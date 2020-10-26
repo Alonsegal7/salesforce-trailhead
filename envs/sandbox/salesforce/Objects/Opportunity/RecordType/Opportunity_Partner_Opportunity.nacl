@@ -2940,11 +2940,19 @@ salesforce.RecordType Opportunity_Partner_Opportunity {
       picklist = "Type"
       values = [
         {
+          fullName = "Downgrade"
+          default = false
+        },
+        {
           fullName = "Expansion"
           default = false
         },
         {
           fullName = "New Business"
+          default = false
+        },
+        {
+          fullName = "Renewal"
           default = false
         },
       ]

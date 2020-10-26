@@ -1,0 +1,11 @@
+salesforce.CustomMetadata Billing_Entity_Field_Mapping_Zip_Postal_Code {
+  fullName = "Billing_Entity_Field_Mapping.Zip_Postal_Code"
+  label = "Zip_Postal_Code__c"
+  protected = false
+  values = [
+    {
+      field = "Partner_SO_Request_Field__c"
+      value = "Zip_Postal_Code__c"
+    },
+  ]
+}

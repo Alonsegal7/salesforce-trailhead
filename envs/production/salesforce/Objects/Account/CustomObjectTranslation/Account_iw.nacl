@@ -55,6 +55,10 @@ salesforce.CustomObjectTranslation Account_iw {
     },
     {
       label = ""
+      name = salesforce.Account.field.Account_Claimed_ARR_Partners__c
+    },
+    {
+      label = ""
       name = salesforce.Account.field.Account_Claimed_ARR__c
     },
     {
@@ -622,6 +626,10 @@ salesforce.CustomObjectTranslation Account_iw {
       help = ""
       label = ""
       name = salesforce.Account.field.Capacity__c
+    },
+    {
+      label = ""
+      name = salesforce.Account.field.Churn_Reason__c
     },
     {
       label = ""
@@ -1947,10 +1955,6 @@ salesforce.CustomObjectTranslation Account_iw {
       name = salesforce.Account.field.Monday_Account_Status__c
       picklistValues = [
         {
-          masterLabel = "Canceled"
-          translation = ""
-        },
-        {
           masterLabel = "Churned"
           translation = ""
         },
@@ -2402,6 +2406,10 @@ salesforce.CustomObjectTranslation Account_iw {
     },
     {
       label = ""
+      name = salesforce.Account.field.Partner_Call_Booked_Timestamp__c
+    },
+    {
+      label = ""
       name = salesforce.Account.field.Partner_Company_Status_Change_Timestamp__c
     },
     {
@@ -2410,6 +2418,10 @@ salesforce.CustomObjectTranslation Account_iw {
       picklistValues = [
         {
           masterLabel = "Attempting"
+          translation = ""
+        },
+        {
+          masterLabel = "Call Booked"
           translation = ""
         },
         {
@@ -3374,61 +3386,6 @@ salesforce.CustomObjectTranslation Account_iw {
       label = ""
       name = salesforce.Account.field.utm_banner__c
     },
-    {
-      label = ""
-      name = salesforce.Account.field.zisf__Company_ID__c
-    },
-    {
-      label = ""
-      name = salesforce.Account.field.zisf__ZoomInfo_Complete_Status__c
-    },
-    {
-      label = ""
-      name = salesforce.Account.field.zisf__ZoomInfo_Industry__c
-    },
-    {
-      help = ""
-      label = ""
-      name = salesforce.Account.field.zisf__ZoomInfo_Last_Clean_Run__c
-    },
-    {
-      label = ""
-      name = salesforce.Account.field.zisf__Zoom_Clean_Status__c
-      picklistValues = [
-        {
-          masterLabel = "Clean"
-          translation = ""
-        },
-        {
-          masterLabel = "Different"
-          translation = ""
-        },
-        {
-          masterLabel = "Error"
-          translation = ""
-        },
-        {
-          masterLabel = "In Sync"
-          translation = ""
-        },
-        {
-          masterLabel = "Not Compared"
-          translation = ""
-        },
-        {
-          masterLabel = "Not Found"
-          translation = ""
-        },
-      ]
-    },
-    {
-      label = ""
-      name = salesforce.Account.field.zisf__zoom_id__c
-    },
-    {
-      label = ""
-      name = salesforce.Account.field.zisf__zoom_lastupdated__c
-    },
   ]
   layouts = [
     {
@@ -3530,6 +3487,10 @@ salesforce.CustomObjectTranslation Account_iw {
     },
     {
       label = ""
+      name = salesforce.QuickAction.instance.Account_Expansion_Opportunity
+    },
+    {
+      label = ""
       name = salesforce.QuickAction.instance.Account_Handover_Account
     },
     {
@@ -3620,6 +3581,14 @@ salesforce.CustomObjectTranslation Account_iw {
   webLinks = [
     {
       label = ""
+      name = salesforce.WebLink.instance.Account_Account_Analysis_Dashboard
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_BB_Account
+    },
+    {
+      label = ""
       name = salesforce.WebLink.instance.Account_GoogleMaps
     },
     {
@@ -3645,6 +3614,14 @@ salesforce.CustomObjectTranslation Account_iw {
     {
       label = ""
       name = salesforce.WebLink.instance.Account_Mass_Delete_Records
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_QBR_Dashboard
+    },
+    {
+      label = ""
+      name = salesforce.WebLink.instance.Account_Teams_Dashboard
     },
     {
       label = ""

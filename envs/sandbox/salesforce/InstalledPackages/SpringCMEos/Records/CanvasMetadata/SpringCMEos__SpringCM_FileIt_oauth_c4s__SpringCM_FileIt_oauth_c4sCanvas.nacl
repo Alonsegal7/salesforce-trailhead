@@ -1,9 +1,0 @@
-salesforce.CanvasMetadata SpringCMEos__SpringCM_FileIt_oauth_c4s__SpringCM_FileIt_oauth_c4sCanvas {
-  fullName = "SpringCMEos__SpringCM_FileIt_oauth_c4s__SpringCM_FileIt_oauth_c4sCanvas"
-  module = "SpringCM_FileIt_oauth_c4s"
-  accessMethod = "Post"
-  canvasUrl = "https://canvas.springcm.com/atlas/EOS/GetEosInformation.aspx"
-  lifecycleClass = "SpringCMEos__FileItLifecycleHandler"
-  locationOptions = "VF,AR"
-  samlInitiationMethod = "None"
-}

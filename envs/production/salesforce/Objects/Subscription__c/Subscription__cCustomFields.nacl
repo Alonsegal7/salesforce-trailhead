@@ -446,4 +446,30 @@ if(ARR_Gain__c>=0,text(round(ARR_Gain__c,2)),"("&text(round(abs(ARR_Gain__c),2))
     updateable = true
     queryable = true
   }
+  salesforce.Picklist Manual_Trigger__c {
+    apiName = "Subscription__c.Manual_Trigger__c"
+    label = "Manual Trigger"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Create Active Contract"
+        default = false
+        label = "Create Active Contract"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaCheckbox Seats_Mismatch__c {
+    apiName = "Subscription__c.Seats_Mismatch__c"
+    label = "Seats Mismatch"
+    formula = "round(value(Seats__c),0) != Contract__r.Seats__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
 }

@@ -587,4 +587,13 @@ type salesforce.Account_Snapshot__c {
     queryable = true
     externalId = false
   }
+  salesforce.FormulaCheckbox Belongs_to_Viewed_Company__c {
+    apiName = "Account_Snapshot__c.Belongs_to_Viewed_Company__c"
+    label = "Belongs to Viewed Company"
+    formula = "Company__r.Long_Account_ID__c  = LEFT($Setup.Last_Viewed_Account__c.AccountId__c, 18)"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
 }

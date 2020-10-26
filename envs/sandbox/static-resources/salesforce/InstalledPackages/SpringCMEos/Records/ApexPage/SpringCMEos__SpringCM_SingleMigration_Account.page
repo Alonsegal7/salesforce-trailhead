@@ -1,3 +1,0 @@
-<apex:page standardController="Account" showHeader="false" sidebar="false">
-	<c:SpringCM_EOSGrid objectType="Account" objectId="{!Account.Id}" startMigration="true" />
-</apex:page>

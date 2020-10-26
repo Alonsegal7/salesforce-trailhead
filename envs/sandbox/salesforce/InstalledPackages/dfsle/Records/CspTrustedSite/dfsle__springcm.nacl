@@ -1,0 +1,6 @@
+salesforce.CspTrustedSite dfsle__springcm {
+  fullName = "dfsle__springcm"
+  context = "All"
+  endpointUrl = "https://*.springcm.com"
+  isActive = true
+}

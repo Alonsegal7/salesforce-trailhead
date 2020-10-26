@@ -1,0 +1,10 @@
+salesforce.CustomTab dfsle__EnvelopeConfiguration__c {
+  fullName = "dfsle__EnvelopeConfiguration__c"
+  customObject = true
+  description = "DocuSign Envelope Templates"
+  icon = salesforce.Document.instance.dfsle__DocuSign_dfsle__AppIcon_png
+  motif = "Custom107: TV Widescreen"
+  _parent = [
+    salesforce.dfsle__EnvelopeConfiguration__c,
+  ]
+}

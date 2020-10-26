@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle dfsle__OnlineEditorTemplateEdit {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "OnlineEditorTemplateEdit"
+  fullName = "dfsle__OnlineEditorTemplateEdit"
+  type = "Component"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

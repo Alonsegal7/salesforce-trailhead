@@ -52,120 +52,6 @@ salesforce.LightningPage Lead_Record_Page {
     {
       componentInstances = [
         {
-          componentInstanceProperties = [
-            {
-              name = "frameBorder"
-              value = "0"
-            },
-            {
-              name = "height"
-              value = "470px"
-            },
-            {
-              name = "iframeUrl"
-              value = "https://new.bigbrain.me/crm/sales/account"
-            },
-            {
-              name = "sandbox"
-              value = "allow-same-origin allow-scripts allow-forms"
-            },
-            {
-              name = "scrolling"
-              value = "auto"
-            },
-            {
-              name = "style"
-              value = "overflow: hidden;border: 1px solid rgb(221, 219, 218);border-radius: .25rem;background-clip: padding-box;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);"
-            },
-            {
-              name = "width"
-              value = "100%"
-            },
-          ]
-          componentName = "BigBrainEmbed"
-        },
-      ]
-      name = "Facet-c92efa3d-6e15-4ffe-ab5f-c9ae737a1fa3"
-      type = "Facet"
-    },
-    {
-      componentInstances = [
-        {
-          componentInstanceProperties = [
-            {
-              name = "frameBorder"
-              value = "0"
-            },
-            {
-              name = "height"
-              value = "500px"
-            },
-            {
-              name = "iframeUrl"
-              value = "http://bigbrain.me/accounts/duplicates_page"
-            },
-            {
-              name = "sandbox"
-              value = "allow-same-origin allow-scripts allow-forms"
-            },
-            {
-              name = "scrolling"
-              value = "auto"
-            },
-            {
-              name = "style"
-              value = "border: none; overflow: scroll;"
-            },
-            {
-              name = "width"
-              value = "100%"
-            },
-          ]
-          componentName = "BigBrainEmbed"
-        },
-      ]
-      name = "Facet-81f60b77-ca32-4eac-9b76-2d65b0582320"
-      type = "Facet"
-    },
-    {
-      componentInstances = [
-        {
-          componentInstanceProperties = [
-            {
-              name = "active"
-              value = "true"
-            },
-            {
-              name = "body"
-              value = "Facet-c92efa3d-6e15-4ffe-ab5f-c9ae737a1fa3"
-            },
-            {
-              name = "title"
-              value = "Big Brain"
-            },
-          ]
-          componentName = "flexipage:tab"
-        },
-        {
-          componentInstanceProperties = [
-            {
-              name = "body"
-              value = "Facet-81f60b77-ca32-4eac-9b76-2d65b0582320"
-            },
-            {
-              name = "title"
-              value = "BB Related Accounts"
-            },
-          ]
-          componentName = "flexipage:tab"
-        },
-      ]
-      name = "Facet-c03c09be-e7d2-4232-9bf5-e9934582f122"
-      type = "Facet"
-    },
-    {
-      componentInstances = [
-        {
           componentName = "force:detailPanel"
         },
         {
@@ -256,6 +142,62 @@ salesforce.LightningPage Lead_Record_Page {
         {
           componentInstanceProperties = [
             {
+              name = "createQuickActionName"
+              value = "NewLead"
+            },
+            {
+              name = "lookupFieldName"
+              value = "Lead.Id"
+            },
+            {
+              name = "updateQuickActionName"
+              value = "Lead.Related_BB_Accounts"
+            },
+          ]
+          componentName = "console:relatedRecord"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "http://bigbrain.me/accounts/duplicates_page"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+      ]
+      name = "Facet-51e27c7f-dd78-4c00-bfdf-37b5ea630683"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
               name = "active"
               value = "false"
             },
@@ -296,6 +238,19 @@ salesforce.LightningPage Lead_Record_Page {
           ]
           componentName = "flexipage:tab"
         },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-51e27c7f-dd78-4c00-bfdf-37b5ea630683"
+            },
+            {
+              name = "title"
+              value = "Related BB Accounts"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
       ]
       name = "Facet-e4228a1c-e7c3-462a-ac72-53a39d45b335"
       type = "Facet"
@@ -305,11 +260,35 @@ salesforce.LightningPage Lead_Record_Page {
         {
           componentInstanceProperties = [
             {
-              name = "tabs"
-              value = "Facet-c03c09be-e7d2-4232-9bf5-e9934582f122"
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "400px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://new.bigbrain.me/crm/sales/account"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
             },
           ]
-          componentName = "flexipage:tabset"
+          componentName = "BigBrainEmbed"
         },
         {
           componentInstanceProperties = [

@@ -151,6 +151,7 @@ type salesforce.CustomSite {
   string rootComponent {
     _required = false
     foreignKeyDomain = [
+      "ManagedContent",
       "SiteComponent",
     ]
   }

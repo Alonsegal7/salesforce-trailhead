@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle dfsle__CLMHomeBody {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "A lightning component that contains CLM Home Page body specific sub-components."
+  fullName = "dfsle__CLMHomeBody"
+  type = "Component"
+  markup = "(hidden)"
+  styleContent = "(hidden)"
+  controllerContent = "(hidden)"
+}

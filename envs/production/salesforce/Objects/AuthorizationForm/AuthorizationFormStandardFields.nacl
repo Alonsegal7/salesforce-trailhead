@@ -137,7 +137,7 @@ type salesforce.AuthorizationForm {
   }
   salesforce.Checkbox IsSignatureRequired {
     apiName = "AuthorizationForm.IsSignatureRequired"
-    label = "Signature Required"
+    label = "Is Signature Required"
     defaultValue = false
     createable = true
     updateable = true

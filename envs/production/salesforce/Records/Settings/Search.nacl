@@ -239,6 +239,12 @@ salesforce.SearchSettings {
       {
         enhancedLookupEnabled = false
         lookupAutoCompleteEnabled = false
+        name = salesforce.DelegatedAccount
+        resultsPerPageCount = 25
+      },
+      {
+        enhancedLookupEnabled = false
+        lookupAutoCompleteEnabled = false
         name = salesforce.Department__c
         resultsPerPageCount = 25
       },
@@ -780,54 +786,6 @@ salesforce.SearchSettings {
         enhancedLookupEnabled = false
         lookupAutoCompleteEnabled = false
         name = salesforce.valt__Valooto_Workflow__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.zisf__FmcDefaultValue__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.zisf__ZoomInfo_Clean_Settings__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.zisf__ZoomInfo_Custom_Settings__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.zisf__ZoomInfo_Inbound_Settings__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.zisf__ZoomInfo__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.zisf__ZoomSessions__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.zisf__Zoom_Scheduler__c
-        resultsPerPageCount = 0
-      },
-      {
-        enhancedLookupEnabled = false
-        lookupAutoCompleteEnabled = false
-        name = salesforce.zisf__zicCleanJob__c
         resultsPerPageCount = 0
       },
     ]

@@ -123,6 +123,16 @@ salesforce.QuickAction Opportunity_BI_Admin {
         quickActionLayoutItems = [
           {
             emptySpace = false
+            field = "Test_monday_Integration__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Monday_Item_ID__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
             field = "Owner_s_Manager__c"
             uiBehavior = "Edit"
           },

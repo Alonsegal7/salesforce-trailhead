@@ -1,0 +1,7 @@
+salesforce.CustomTab dfsle__Setup {
+  fullName = "dfsle__Setup"
+  icon = salesforce.Document.instance.dfsle__DocuSign_dfsle__AppIcon_png
+  label = "DocuSign Setup"
+  motif = "Custom67: Gears"
+  page = "dfsle__Setup"
+}

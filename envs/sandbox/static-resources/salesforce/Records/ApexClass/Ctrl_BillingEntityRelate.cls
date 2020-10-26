@@ -5,10 +5,21 @@ public class Ctrl_BillingEntityRelate  {
 		Map <String, object> mso = new Map <String, object>();
 		mso.put('bestMatch', getBillingEntities(oppId, true));
 		mso.put('moreOptions', getBillingEntities(oppId, false));
+		mso.put('partnerSORequest', getPartnerSO(oppId));
 		mso.put('newFormFields', getNewFormFields());
+		mso.put('fieldMapping', getfieldMapping());
 		System.debug('iCloudius - Initial Parameters:\n' + JSON.serializePretty(mso));
 		res = JSON.serialize(mso);
 		return res;
+	}
+
+	public static Partner_SO_Request__c getPartnerSO(Id oppId){
+		Partner_SO_Request__c p = null;
+		List <Partner_SO_Request__c> lp = [SELECT Id, Name, Financial_Customer_Name__c, VAT__c, CurrencyIsoCode, Billing_Country__c, Billing_City__c, Billing_Street__c, 
+												  Zip_Postal_Code__c, Finance_Contact_Email__c, Finance_Contact_Phone__c 
+										   FROM Partner_SO_Request__c WHERE Partner_Opportunity__c = :oppId ORDER BY CreatedDate DESC];
+		if (lp != null && !lp.isEmpty()) p = lp[0];
+		return p;
 	}
 
 	public static List <BillingEntityWrap> getBillingEntities(Id oppId, Boolean bestMatch){
@@ -86,6 +97,15 @@ public class Ctrl_BillingEntityRelate  {
 			ls.add(f.getFieldPath());
 		}
 		return ls;
+	}
+
+	public static Map <String, String> getfieldMapping(){
+		Map <String, String> mss = new Map <String, String>();
+		List <Billing_Entity_Field_Mapping__mdt> lmd = [SELECT Id, MasterLabel, Partner_SO_Request_Field__c FROM Billing_Entity_Field_Mapping__mdt];
+		if (lmd != null && !lmd.isEmpty()){
+			for (Billing_Entity_Field_Mapping__mdt md: lmd) mss.put(md.MasterLabel, md.Partner_SO_Request_Field__c);
+		}
+		return mss;
 	}
 	
 	@AuraEnabled

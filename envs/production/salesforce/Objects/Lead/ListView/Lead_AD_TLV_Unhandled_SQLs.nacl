@@ -1,12 +1,13 @@
 salesforce.ListView Lead_AD_TLV_Unhandled_SQLs {
   fullName = "Lead.AD_TLV_Unhandled_SQLs"
   columns = [
+    "FULL_NAME",
+    "LEAD.PHONE",
+    "LEAD.EMAIL",
     "SDR_Name_for_reports__c",
     "CORE.USERS.FIRST_NAME",
     "AE__c",
     "Owner_s_Manager__c",
-    "FULL_NAME",
-    "LEAD.EMAIL",
     "LEAD.COMPANY",
     "LEAD.STATUS",
     "LEAD.CREATED_DATE",

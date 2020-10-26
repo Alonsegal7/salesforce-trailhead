@@ -83,6 +83,22 @@ salesforce.Layout Opportunity_Layout {
               behavior = "Readonly"
               field = salesforce.Opportunity.field.Opp_Owner_is_Partner__c
             },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.CC_Products_ARR_Sum__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Wire_Products_ARR_Sum__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Is_Primary_SO_Signed__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Channel_Partner__c
+            },
           ]
         },
         {
@@ -709,74 +725,79 @@ salesforce.Layout Opportunity_Layout {
     actionListContext = "Record"
     platformActionListItems = [
       {
+        actionName = "Opportunity.Create_Co_Sell_Opp"
+        actionType = "QuickAction"
+        sortOrder = 0
+      },
+      {
         actionName = "Edit"
         actionType = "StandardButton"
-        sortOrder = 0
+        sortOrder = 1
       },
       {
         actionName = "Opportunity.Create_Quote"
         actionType = "QuickAction"
-        sortOrder = 1
+        sortOrder = 2
       },
       {
         actionName = "Opportunity.View_Quotes"
         actionType = "QuickAction"
-        sortOrder = 2
+        sortOrder = 3
       },
       {
         actionName = "Opportunity.Handover"
         actionType = "QuickAction"
-        sortOrder = 3
+        sortOrder = 4
       },
       {
         actionName = "Opportunity.Clone_with_Products"
         actionType = "QuickAction"
-        sortOrder = 4
+        sortOrder = 5
       },
       {
         actionName = "Opportunity.Create_Relate_Billing_Entity"
         actionType = "QuickAction"
-        sortOrder = 5
+        sortOrder = 6
       },
       {
         actionName = "Opportunity.Create_Partner_SO_Request"
         actionType = "QuickAction"
-        sortOrder = 6
+        sortOrder = 7
       },
       {
         actionName = "Delete"
         actionType = "StandardButton"
-        sortOrder = 7
+        sortOrder = 8
       },
       {
         actionName = "NewTask"
         actionType = "QuickAction"
-        sortOrder = 8
+        sortOrder = 9
       },
       {
         actionName = "LogACall"
         actionType = "QuickAction"
-        sortOrder = 9
+        sortOrder = 10
       },
       {
         actionName = "Clone"
         actionType = "StandardButton"
-        sortOrder = 10
+        sortOrder = 11
       },
       {
         actionName = "FeedItem.ContentNote"
         actionType = "QuickAction"
-        sortOrder = 11
+        sortOrder = 12
       },
       {
         actionName = "FeedItem.TextPost"
         actionType = "QuickAction"
-        sortOrder = 12
+        sortOrder = 13
       },
       {
         actionName = "FeedItem.ContentPost"
         actionType = "QuickAction"
-        sortOrder = 13
+        sortOrder = 14
       },
     ]
   }

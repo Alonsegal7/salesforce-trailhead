@@ -1,0 +1,12 @@
+salesforce.LightningMessageChannel dfsle__DecEditRecipient {
+  fullName = "dfsle__DecEditRecipient"
+  description = "Initiates edit for a given recipient"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "Index of recipient in configuration data to indicate which one to remove"
+      fieldName = "index"
+    },
+  ]
+  masterLabel = "DecEditRecipient"
+}

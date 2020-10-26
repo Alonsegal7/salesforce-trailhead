@@ -1,7 +1,0 @@
-salesforce.StaticResource zisf__ToS {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "application/octet-stream"
-  fullName = "zisf__ToS"
-  content = file("salesforce/InstalledPackages/zisf/Records/StaticResource/zisf__ToS.bin")
-}

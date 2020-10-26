@@ -1782,6 +1782,17 @@ iSPICKVAL( Sale__r.FinalSaleStatus__c , "Complete") && iSPICKVAL(Account.Account
     createable = true
     updateable = true
     queryable = true
+    lookupFilter = {
+      active = true
+      filterItems = [
+        {
+          field = "Account.RecordTypeId"
+          operation = "equals"
+          value = "Company"
+        },
+      ]
+      isOptional = true
+    }
   }
   salesforce.Number Expected_Monthly_PPU__c {
     apiName = "Opportunity.Expected_Monthly_PPU__c"
@@ -5123,7 +5134,7 @@ CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+
   salesforce.FormulaCheckbox TLV_Office_Temp__c {
     apiName = "Opportunity.TLV_Office_Temp__c"
     label = "TLV Office (Temp)"
-    formula = "text(Owner.Office__c ) = \"Tel Aviv Office\""
+    formula = "text(Owner.Office__c ) = \"Tel Aviv Office\" || text(Owner.Office__c ) = \"Sydney Office\" || text(Owner.Office__c ) = \"London Office\""
     createable = false
     updateable = false
     queryable = true
@@ -5770,9 +5781,9 @@ Used in Flow Component Visibility filter in Opportunity lightning page
     apiName = "Opportunity.Is_Finalized__c"
     label = "Is Finalized?"
     defaultValue = false
-    createable = true
-    updateable = true
-    queryable = true
+    createable = false
+    updateable = false
+    queryable = false
   }
   salesforce.Checkbox Is_SO_Signed__c {
     apiName = "Opportunity.Is_SO_Signed__c"
@@ -6391,7 +6402,7 @@ CASE(MONTH(CloseDate),
     label = "Monday Account Claimed ARR - New"
     _required = false
     precision = 18
-    scale = 0
+    scale = 2
     createable = true
     updateable = true
     unique = false
@@ -7084,5 +7095,186 @@ ispickval(Owner.Function__c,"Partner")||ispickval(Owner.Function__c,"Partners- C
     queryable = false
     updateable = false
     createable = false
+  }
+  salesforce.Text Monday_Item_ID__c {
+    apiName = "Opportunity.Monday_Item_ID__c"
+    label = "Monday Item ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    description = "External Monday Item ID for monday.com integration with SF"
+    externalId = false
+  }
+  salesforce.Checkbox Test_monday_Integration__c {
+    apiName = "Opportunity.Test_monday_Integration__c"
+    label = "Test monday Integration"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Opportunity_Type_2__c {
+    apiName = "Opportunity.Opportunity_Type_2__c"
+    label = "Opportunity Type 2"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Add Users"
+        default = false
+        label = "Add Users"
+      },
+      {
+        fullName = "Upgrade Plan"
+        default = false
+        label = "Upgrade Plan"
+      },
+      {
+        fullName = "Add Users and Upgrade Tier"
+        default = false
+        label = "Add Users and Upgrade Tier"
+      },
+      {
+        fullName = "Add Monday Account"
+        default = false
+        label = "Add Monday Account"
+      },
+      {
+        fullName = "New Business"
+        default = false
+        label = "New Business"
+      },
+      {
+        fullName = "Downgrade"
+        default = false
+        label = "Downgrade"
+      },
+      {
+        fullName = "Other Products"
+        default = false
+        label = "Other Products"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Lookup Parent_Opportunity__c {
+    apiName = "Opportunity.Parent_Opportunity__c"
+    label = "Parent Opportunity"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Opportunity,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Downgrade_Opportunity__c {
+    apiName = "Opportunity.Downgrade_Opportunity__c"
+    label = "Downgrade Opportunity"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Created_From_New_Opp_flow__c {
+    apiName = "Opportunity.Created_From_New_Opp_flow__c"
+    label = "Created From New Opp flow"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "For monitoring opps that were created using the new opportunity flow"
+  }
+  salesforce.Text Opportunity_Open_Reason_from_flow__c {
+    apiName = "Opportunity.Opportunity_Open_Reason_from_flow__c"
+    label = "Opportunity Open Reason (from flow)"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaPercent Opportunity_Risk_Level__c {
+    apiName = "Opportunity.Opportunity_Risk_Level__c"
+    label = "Opportunity Risk Level"
+    _required = false
+    formula = '''
+if(text( StageName ) = "Closed Won",0,
+if(text(StageName) = "Closed Lost",0,
+(1-
+(if(Company__r.Company_ARR__c > 10000,10,8)
++
+ if(Sales_Orders_Count__c >= 1,40,0)
++
+ if(Expected_ARR__c < Green_Bucket_ARR__c,10,8)
++
+ if(Push_Count__c <= 2,10, if(Push_Count__c < 4, 5, 0))
++
+ if(Opportunity_Age__c <= 60, 10, if(Opportunity_Age__c <= 90, 5, 0))
++
+ if(today() - LastActivityDate < 8, 10,  if( today() - LastActivityDate < 15, 5,  -5))
++
+ if(Forecasted__c,40,10)
++
+ if(CloseDate - today() < 60 && Push_Count__c <= 2, 10, 5)
++
+ if(text(StageName) = "Qualified" && Opportunity_Age__c > 30, -5, if((text(StageName) = "Validation" || text(StageName) = "Buying Process") && Opportunity_Age__c < 30, 10, 5)))
+/130)))
+'''
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup Channel_Partner__c {
+    apiName = "Opportunity.Channel_Partner__c"
+    label = "Channel Partner"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Co_Sell_Opportunity__c {
+    apiName = "Opportunity.Co_Sell_Opportunity__c"
+    label = "Co-Sell Opportunity"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Opportunity,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber ARR_at_Risk__c {
+    apiName = "Opportunity.ARR_at_Risk__c"
+    label = "ARR at Risk"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "min(max(Opportunity_Risk_Level__c *  Expected_ARR__c, Expected_ARR__c ,0),0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
   }
 }

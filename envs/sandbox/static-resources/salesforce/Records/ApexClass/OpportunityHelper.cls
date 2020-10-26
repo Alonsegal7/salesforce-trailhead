@@ -1,15 +1,23 @@
 public class OpportunityHelper {
 	public static void beforeUpdate(List<Opportunity> opportunities, map <Id, Opportunity> oldMap){
-        for(Opportunity opp : opportunities){
-            Opportunity oldOpp = oldMap.get(opp.Id);
-            
-            if (oldOpp != null && oldOpp.AccountId != opp.AccountId) { handleAccountIdChange(opp); }
-            if (oldOpp != null && (oldOpp.CurrencyIsoCode != opp.CurrencyIsoCode || opp.USD_exchange_rate__c == null)) { ExchangeRateService.apply(opp); }
-            
-            if(isManagedByDealhub(opp)){
-                opp.Expected_ARR__c = opp.Quote_ARR__c;
-                if(opp.Is_Syncing_SO__c) { opp.Claimed_ARR__c = opp.Product_ARR__c; }
+        try{
+            for(Opportunity opp : opportunities){
+                Opportunity oldOpp = oldMap.get(opp.Id);
+                
+                if (oldOpp != null && oldOpp.AccountId != opp.AccountId) { handleAccountIdChange(opp); }
+                if (oldOpp != null && (oldOpp.CurrencyIsoCode != opp.CurrencyIsoCode || opp.USD_exchange_rate__c == null)) { ExchangeRateService.apply(opp); }
+                
+                if(isManagedByDealhub(opp)){
+                    opp.Expected_ARR__c = opp.Quote_ARR__c+opp.CC_Products_ARR_Sum__c;
+                    //if(opp.Is_Syncing_SO__c) { opp.Claimed_ARR__c = opp.Product_ARR__c; }
+                    opp.Claimed_ARR__c = opp.CC_Products_ARR_Sum__c==0?null:opp.CC_Products_ARR_Sum__c;
+                    if(opp.Is_Primary_SO_Signed__c){
+                        opp.Claimed_ARR__c=opp.Claimed_ARR__c==null?opp.Wire_Products_ARR_Sum__c:opp.Claimed_ARR__c+opp.Wire_Products_ARR_Sum__c;
+                    }
+                }
             }
+        }catch(Exception e){
+            Utilities.sendDebugEmail('Error in OpportunityHelper ',e,e.getMessage());   
         }
     }
     
@@ -26,7 +34,9 @@ public class OpportunityHelper {
     public static void MarkQuotesSigned(Set<Id> quoteIds){
         if(quoteIds.size() > 0){
             List<Quote> quotesList = [SELECT Id, Is_Manually_Signed__c FROM Quote WHERE Id = :quoteIds AND Is_Manually_Signed__c = false for update];
-            for(Quote q :quotesList) { q.Is_Manually_Signed__c = true; }
+            for(Quote q :quotesList) { 
+                q.Is_Manually_Signed__c = true; 
+            }
             if ( !quotesList.isEmpty() ) { update quotesList; }
         }
     }

@@ -21,7 +21,7 @@ salesforce.Flow Partner_SO_Request_new {
             },
           ]
           connector = {
-            targetReference = "Success_Message"
+            targetReference = "No_State1"
           }
           label = "Yes"
         },
@@ -41,6 +41,49 @@ salesforce.Flow Partner_SO_Request_new {
             targetReference = "Error_Message"
           }
           label = "No"
+        },
+      ]
+    },
+    {
+      name = "No_State1"
+      label = "No State?"
+      locationX = 1004
+      locationY = 531
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "No_State2"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Billing_State"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "NoState"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Success_Message"
+          }
+          label = "No State"
+        },
+        {
+          name = "Yes_State"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Billing_State"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "NoState"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_State"
+          }
+          label = "Yes State"
         },
       ]
     },
@@ -146,8 +189,8 @@ salesforce.Flow Partner_SO_Request_new {
     {
       name = "Create_SO_Request_Object"
       label = "Create SO Request Object"
-      locationX = 138
-      locationY = 599
+      locationX = 140
+      locationY = 603
       assignRecordIdToReference = "SOID"
       connector = {
         targetReference = "I_SO_Created"
@@ -190,15 +233,15 @@ salesforce.Flow Partner_SO_Request_new {
           }
         },
         {
-          field = "Billing_State__c"
-          value = {
-            elementReference = "Billing_State"
-          }
-        },
-        {
           field = "Billing_Street__c"
           value = {
             elementReference = "Billing_Street"
+          }
+        },
+        {
+          field = "Comment_for_CPM__c"
+          value = {
+            elementReference = "Comments_for_CPM"
           }
         },
         {
@@ -330,7 +373,7 @@ salesforce.Flow Partner_SO_Request_new {
       name = "Get_Opp"
       label = "Get Opp"
       locationX = 388
-      locationY = 214
+      locationY = 215
       assignNullValuesIfNoRecordsFound = false
       connector = {
         targetReference = "Billing_Info"
@@ -392,8 +435,9 @@ salesforce.Flow Partner_SO_Request_new {
         {
           name = "Finance_Customer_Name"
           dataType = "String"
-          fieldText = "Finance Customer Name"
+          fieldText = "Billing Entity Name"
           fieldType = "InputField"
+          helpText = "<p><b style=\"color: rgb(46, 84, 237);\">Official name of the company for billing purposes.</b></p>"
           isRequired = true
         },
         {
@@ -487,9 +531,11 @@ salesforce.Flow Partner_SO_Request_new {
         {
           name = "Billing_State"
           choiceReferences = [
+            "NoState",
             "BillingState",
           ]
           dataType = "String"
+          defaultSelectedChoiceReference = "NoState"
           fieldText = "Billing State"
           fieldType = "DropdownBox"
           isRequired = true
@@ -568,7 +614,7 @@ salesforce.Flow Partner_SO_Request_new {
           dataType = "Number"
           fieldText = "VAT #"
           fieldType = "InputField"
-          helpText = "<p>Put 0 if there is no need for VAT #.</p>"
+          helpText = "<p><b style=\"color: rgb(38, 48, 211);\">Put 000000000 if there is no need for VAT #.</b></p>"
           isRequired = true
           scale = 0
           visibilityRule = {
@@ -607,10 +653,28 @@ salesforce.Flow Partner_SO_Request_new {
       showHeader = true
     },
     {
+      name = "Partner_SO_Request"
+      label = "Partner SO Request"
+      locationX = 918
+      locationY = 794
+      allowBack = true
+      allowFinish = true
+      allowPause = true
+      fields = [
+        {
+          name = "SuccessMessage1"
+          fieldText = "<p><b style=\"color: rgb(23, 199, 20); background-color: rgb(255, 255, 255);\">Your request has been submitted successfully. Your CPM will review the SO details and reach out to you.</b></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
       name = "SO_Details"
       label = "SO Details"
-      locationX = 138
-      locationY = 408
+      locationX = 139
+      locationY = 411
       allowBack = true
       allowFinish = true
       allowPause = true
@@ -813,8 +877,9 @@ salesforce.Flow Partner_SO_Request_new {
         {
           name = "Price_per_Seat"
           dataType = "Number"
-          fieldText = "Price per Seat (not discounted)"
+          fieldText = "Price per Seat (list price, not discounted)"
           fieldType = "InputField"
+          helpText = "<p><b style=\"color: rgb(32, 32, 231);\">Please provide the list price per seat that you communicated to the customer. Do not put here the discounted price per seat.</b></p>"
           isRequired = true
           scale = 0
           visibilityRule = {
@@ -833,7 +898,7 @@ salesforce.Flow Partner_SO_Request_new {
         {
           name = "Discount"
           dataType = "Number"
-          fieldText = "Discount"
+          fieldText = "Discount (%)"
           fieldType = "InputField"
           isRequired = false
           scale = 0
@@ -971,6 +1036,17 @@ salesforce.Flow Partner_SO_Request_new {
           fieldType = "LargeTextArea"
           isRequired = false
         },
+        {
+          name = "CommentsCPM"
+          fieldText = "<p><b>Internal Comments</b></p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Comments_for_CPM"
+          fieldText = "Comments for CPM"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
       ]
       showFooter = true
       showHeader = true
@@ -978,8 +1054,8 @@ salesforce.Flow Partner_SO_Request_new {
     {
       name = "Success_Message"
       label = "Success Message"
-      locationX = 854
-      locationY = 696
+      locationX = 1169
+      locationY = 674
       allowBack = false
       allowFinish = true
       allowPause = true
@@ -1023,6 +1099,54 @@ salesforce.Flow Partner_SO_Request_new {
       isCollection = false
       isInput = false
       isOutput = false
+    },
+  ]
+  choices = [
+    {
+      name = "NoState"
+      choiceText = "No State"
+      dataType = "String"
+      value = {
+        elementReference = "No_State"
+      }
+    },
+  ]
+  constants = [
+    {
+      name = "No_State"
+      dataType = "String"
+      value = {
+        stringValue = "No State"
+      }
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_State"
+      label = "Update State"
+      locationX = 926
+      locationY = 657
+      connector = {
+        targetReference = "Partner_SO_Request"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "SOID"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Billing_State__c"
+          value = {
+            elementReference = "BillingState"
+          }
+        },
+      ]
+      object = salesforce.Partner_SO_Request__c
     },
   ]
 }

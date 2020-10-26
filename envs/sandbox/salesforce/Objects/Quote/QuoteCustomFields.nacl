@@ -704,9 +704,7 @@ CASE( Payment_Terms__c ,
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Opportunity.field.DealRoom_Link__c,
-    ]
+    
   }
   salesforce.Picklist CSM_Package__c {
     apiName = "Quote.CSM_Package__c"
@@ -758,9 +756,7 @@ CASE( Payment_Terms__c ,
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Opportunity.field.DealRoom_Link__c,
-    ]
+    
   }
   salesforce.Summary of_Options__c {
     apiName = "Quote.of_Options__c"
@@ -780,9 +776,7 @@ CASE( Payment_Terms__c ,
     ]
     summaryForeignKey = "QuoteLineItem.QuoteId"
     summaryOperation = "count"
-    _generated_dependencies = [
-      salesforce.QuoteLineItem.field.Product_Type__c,
-    ]
+    
   }
   salesforce.Summary Total_Net_Price__c {
     apiName = "Quote.Total_Net_Price__c"
@@ -801,9 +795,7 @@ CASE( Payment_Terms__c ,
     ]
     summaryForeignKey = "QuoteLineItem.QuoteId"
     summaryOperation = "sum"
-    _generated_dependencies = [
-      salesforce.QuoteLineItem.field.Is_Primary__c,
-    ]
+    
   }
   salesforce.Summary Primary_Option_Discount__c {
     apiName = "Quote.Primary_Option_Discount__c"
@@ -822,9 +814,7 @@ CASE( Payment_Terms__c ,
     ]
     summaryForeignKey = "QuoteLineItem.QuoteId"
     summaryOperation = "sum"
-    _generated_dependencies = [
-      salesforce.QuoteLineItem.field.Is_Primary__c,
-    ]
+    
   }
   salesforce.Text Get_Contract_Id__c {
     apiName = "Quote.Get_Contract_Id__c"
@@ -1082,5 +1072,59 @@ ISPICKVAL( Owner:User.Office__c ,"NY Office") || ISPICKVAL( Owner:User.Office__c
     queryable = false
     updateable = false
     createable = false
+  }
+  salesforce.Picklist Legal_Agreement_Type__c {
+    apiName = "Quote.Legal_Agreement_Type__c"
+    label = "Legal Agreement Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Terms of Service"
+        default = false
+        label = "Terms of Service"
+      },
+      {
+        fullName = "Addendum to SO"
+        default = false
+        label = "Addendum to SO"
+      },
+      {
+        fullName = "Addendum (negotiated)"
+        default = false
+        label = "Addendum (negotiated)"
+      },
+      {
+        fullName = "monday.com SaaS"
+        default = false
+        label = "monday.com SaaS"
+      },
+      {
+        fullName = "Customer SaaS"
+        default = false
+        label = "Customer SaaS"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaCheckbox Pro_Rated_Different_Price__c {
+    apiName = "Quote.Pro_Rated_Different_Price__c"
+    label = "Pro Rated Different Price"
+    formula = '''
+if ( ISPICKVAL(Quote_Type__c,'Pro-rated- Additional Seats' )&& NOT(ISBLANK(Get_Contract_Unit_Price__c)) &&
+Get_Contract_Unit_Price__c - Price_Per_Seat__c <> 0, true,false)
+'''
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Quote.field.Get_Contract_Unit_Price__c,
+      salesforce.Quote.field.Quote_Type__c,
+      salesforce.Quote.field.Price_Per_Seat__c,
+    ]
   }
 }

@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__EnvelopeStatus__c_ru {
+  fullName = "dfsle__EnvelopeStatus__c-ru"
+  _parent = [
+    salesforce.dfsle__EnvelopeStatus__c,
+  ]
+}

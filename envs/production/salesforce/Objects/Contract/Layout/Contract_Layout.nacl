@@ -73,6 +73,10 @@ salesforce.Layout Contract_Layout {
               behavior = "Readonly"
               field = salesforce.Contract.field.Contract_In_Dates_Range__c
             },
+            {
+              behavior = "Edit"
+              field = salesforce.Contract.field.Regional_Company__c
+            },
           ]
         },
         {

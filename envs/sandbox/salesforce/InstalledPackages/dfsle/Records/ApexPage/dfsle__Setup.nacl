@@ -1,0 +1,9 @@
+salesforce.ApexPage dfsle__Setup {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "DocuSign Setup"
+  fullName = "dfsle__Setup"
+  content = file("salesforce/InstalledPackages/dfsle/Records/ApexPage/dfsle__Setup.page")
+}

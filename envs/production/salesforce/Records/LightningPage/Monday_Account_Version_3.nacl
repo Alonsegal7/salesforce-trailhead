@@ -162,20 +162,16 @@ salesforce.LightningPage Monday_Account_Version_3 {
               value = "Account.Id"
             },
             {
+              name = "titleFieldName"
+              value = "Related Accounts in Big Brain"
+            },
+            {
               name = "updateQuickActionName"
               value = "Account.BB_Related_Accounts_Data"
             },
           ]
           componentName = "console:relatedRecord"
-          visibilityRule = {
-            criteria = [
-              {
-                leftValue = "{!$User.Function__c}"
-                operator = "EQUAL"
-                rightValue = "Ops"
-              },
-            ]
-          }
+          
         },
         {
           componentInstanceProperties = [
@@ -303,7 +299,7 @@ salesforce.LightningPage Monday_Account_Version_3 {
             },
             {
               name = "numVisibleActions"
-              value = "5"
+              value = "3"
             },
           ]
           componentName = "force:highlightsPanel"
@@ -383,6 +379,7 @@ salesforce.LightningPage Monday_Account_Version_3 {
             },
             {
               name = "filterFieldAPI"
+              value = "primary_pulse_account_id__c"
             },
             {
               name = "filterValue"
@@ -401,13 +398,14 @@ salesforce.LightningPage Monday_Account_Version_3 {
             },
             {
               name = "itemId"
+              value = "747179062"
             },
             {
               name = "itemIdFieldAPI"
             },
             {
               name = "itemView"
-              value = "false"
+              value = "true"
             },
             {
               name = "sandbox"
@@ -431,7 +429,7 @@ salesforce.LightningPage Monday_Account_Version_3 {
           ]
           componentName = "mondayEmbed"
           visibilityRule = {
-            booleanFilter = "1 OR 2"
+            booleanFilter = "1 OR 2 OR 3 OR 4"
             criteria = [
               {
                 leftValue = "{!$User.LastName}"
@@ -442,6 +440,16 @@ salesforce.LightningPage Monday_Account_Version_3 {
                 leftValue = "{!$User.LastName}"
                 operator = "EQUAL"
                 rightValue = "Axelrad"
+              },
+              {
+                leftValue = "{!Record.Prioritized_Account__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+              {
+                leftValue = "{!Record.CSM_Function__c}"
+                operator = "EQUAL"
+                rightValue = "Scaled Touch"
               },
             ]
           }
@@ -1010,6 +1018,31 @@ salesforce.LightningPage Monday_Account_Version_3 {
             },
           ]
           componentName = "console:relatedRecord"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Histories"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
         },
       ]
       name = "leftsidebar"

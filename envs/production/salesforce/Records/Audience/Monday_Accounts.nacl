@@ -6,7 +6,7 @@ salesforce.Audience Monday_Accounts {
     criterion = [
       {
         criterionValue = {
-          entityField = "RecordTypeId"
+          entityField = "RecordType.Id"
           entityType = "Account"
           fieldValue = "Account.Monday_Account"
         }

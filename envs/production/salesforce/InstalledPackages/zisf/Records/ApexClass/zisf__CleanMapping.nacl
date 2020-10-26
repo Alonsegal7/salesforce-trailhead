@@ -1,7 +1,0 @@
-salesforce.ApexClass zisf__CleanMapping {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 40
-  status = "Active"
-  fullName = "zisf__CleanMapping"
-  content = "(hidden)"
-}

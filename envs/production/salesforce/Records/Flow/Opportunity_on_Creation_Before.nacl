@@ -4,8 +4,8 @@ salesforce.Flow Opportunity_on_Creation_Before {
     {
       name = "Set_Claimed_ARR_on_Opp"
       label = "Set Claimed ARR on Opp"
-      locationX = 50
-      locationY = 493
+      locationX = 291
+      locationY = 678
       assignmentItems = [
         {
           assignToReference = "$Record.Monday_Account_ARR__c"
@@ -16,13 +16,28 @@ salesforce.Flow Opportunity_on_Creation_Before {
         },
       ]
     },
+    {
+      name = "Set_Claimed_ARR_Partners"
+      label = "Set Claimed ARR - Partners"
+      locationX = 530
+      locationY = 655
+      assignmentItems = [
+        {
+          assignToReference = "$Record.Monday_Account_ARR__c"
+          operator = "Assign"
+          value = {
+            elementReference = "Get_Account_Data.Account_Claimed_ARR_Partners__c"
+          }
+        },
+      ]
+    },
   ]
   decisions = [
     {
       name = "Account_Has_Claimed_ARR"
       label = "Account Has Claimed ARR"
-      locationX = 182
-      locationY = 373
+      locationX = 282
+      locationY = 486
       defaultConnectorLabel = "Default Outcome"
       rules = [
         {
@@ -45,10 +60,79 @@ salesforce.Flow Opportunity_on_Creation_Before {
       ]
     },
     {
+      name = "Has_Claimed_ARR_Partners"
+      label = "Has Claimed ARR - Partners"
+      locationX = 523
+      locationY = 494
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Yes_Partners"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Account_Data.Account_Claimed_ARR_Partners__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Claimed_ARR_Partners"
+          }
+          label = "Has Claimed Partners"
+        },
+      ]
+    },
+    {
+      name = "Internal_Opportunity"
+      label = "Opp Record Type"
+      locationX = 439
+      locationY = 375
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Internal"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "$Record.RecordTypeId"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "0121t000000LucvAAC"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Account_Has_Claimed_ARR"
+          }
+          label = "Internal"
+        },
+        {
+          name = "Partners"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "$Record.RecordTypeId"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "0121t000000IQUbAAO"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Has_Claimed_ARR_Partners"
+          }
+          label = "Partners"
+        },
+      ]
+    },
+    {
       name = "Opp_Has_Account"
       label = "Opp Has Account"
-      locationX = 402
-      locationY = 210
+      locationX = 491
+      locationY = 81
       defaultConnectorLabel = "Default Outcome"
       rules = [
         {
@@ -92,11 +176,11 @@ salesforce.Flow Opportunity_on_Creation_Before {
     {
       name = "Get_Account_Data"
       label = "Get Account Data"
-      locationX = 182
-      locationY = 253
+      locationX = 493
+      locationY = 234
       assignNullValuesIfNoRecordsFound = false
       connector = {
-        targetReference = "Account_Has_Claimed_ARR"
+        targetReference = "Internal_Opportunity"
       }
       filters = [
         {
@@ -112,6 +196,7 @@ salesforce.Flow Opportunity_on_Creation_Before {
       queriedFields = [
         salesforce.Account.field.Id,
         salesforce.Account.field.Account_Claimed_ARR__c,
+        salesforce.Account.field.Account_Claimed_ARR_Partners__c,
       ]
       storeOutputAutomatically = true
     },

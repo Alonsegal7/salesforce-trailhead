@@ -21,6 +21,14 @@ salesforce.Layout Quote_Line_Item_Layout {
               behavior = "Edit"
               field = salesforce.QuoteLineItem.field.DH_Option_Quote_Type__c
             },
+            {
+              behavior = "Readonly"
+              field = salesforce.QuoteLineItem.field.Unit_Price__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.QuoteLineItem.field.Training_Hours__c
+            },
           ]
         },
         {

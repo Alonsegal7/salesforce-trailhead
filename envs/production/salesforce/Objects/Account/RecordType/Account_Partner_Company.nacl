@@ -1509,10 +1509,6 @@ salesforce.RecordType Account_Partner_Company {
       picklist = "Monday_Account_Status__c"
       values = [
         {
-          fullName = "Canceled"
-          default = false
-        },
-        {
           fullName = "Churned"
           default = false
         },
@@ -2063,6 +2059,10 @@ salesforce.RecordType Account_Partner_Company {
       values = [
         {
           fullName = "Attempting"
+          default = false
+        },
+        {
+          fullName = "Call Booked"
           default = false
         },
         {
@@ -2877,35 +2877,6 @@ salesforce.RecordType Account_Partner_Company {
         },
         {
           fullName = "Western Europe"
-          default = false
-        },
-      ]
-    },
-    {
-      picklist = "zisf__Zoom_Clean_Status__c"
-      values = [
-        {
-          fullName = "Clean"
-          default = false
-        },
-        {
-          fullName = "Different"
-          default = false
-        },
-        {
-          fullName = "Error"
-          default = false
-        },
-        {
-          fullName = "In Sync"
-          default = false
-        },
-        {
-          fullName = "Not Compared"
-          default = true
-        },
-        {
-          fullName = "Not Found"
           default = false
         },
       ]

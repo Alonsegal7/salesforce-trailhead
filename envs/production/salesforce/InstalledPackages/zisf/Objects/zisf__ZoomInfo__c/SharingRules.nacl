@@ -1,6 +1,0 @@
-salesforce.SharingRules zisf__ZoomInfo__c {
-  fullName = "zisf__ZoomInfo__c"
-  _parent = [
-    salesforce.zisf__ZoomInfo__c,
-  ]
-}

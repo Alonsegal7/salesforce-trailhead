@@ -467,6 +467,14 @@ salesforce.Layout monday_Account_Layout_CS {
       ]
       relatedList = salesforce.Company_Domain__c.field.Company__c
     },
+    {
+      fields = [
+        "OPPORTUNITY.NAME",
+        "ACCOUNT.NAME",
+        "OPPORTUNITY.CLOSE_DATE",
+      ]
+      relatedList = salesforce.Opportunity.field.Channel_Partner__c
+    },
   ]
   relatedObjects = [
     "ParentId",

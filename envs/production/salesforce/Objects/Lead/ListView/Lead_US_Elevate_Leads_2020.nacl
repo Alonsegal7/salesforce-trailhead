@@ -11,11 +11,6 @@ salesforce.ListView Lead_US_Elevate_Leads_2020 {
   filterScope = "Everything"
   filters = [
     {
-      field = "LEAD.CREATED_DATE"
-      operation = "equals"
-      value = "TODAY"
-    },
-    {
       field = "LEAD.LEAD_SOURCE"
       operation = "equals"
       value = "Online Event"

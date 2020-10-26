@@ -3,8 +3,9 @@ trigger Subscription_Trigger on Subscription__c (after delete, after insert, aft
         if (trigger.isInsert){
             Subscription_ConnectToContract.Subscription_ConnectToContract(trigger.new,trigger.oldMap);
         }
-        if (trigger.isUpdate){}
-
+        if (trigger.isUpdate){
+            Subscription_ConnectToContract.Subscription_ConnectToContract(trigger.new,trigger.oldMap);
+        }
     }
     
     if(Trigger.isAfter){

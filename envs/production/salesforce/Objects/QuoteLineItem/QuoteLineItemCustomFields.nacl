@@ -300,4 +300,30 @@ type salesforce.QuoteLineItem {
     queryable = true
     externalId = false
   }
+  salesforce.FormulaNumber Unit_Price__c {
+    apiName = "QuoteLineItem.Unit_Price__c"
+    label = "Unit Price"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = "UnitPrice * (1- Discount )"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Training_Hours__c {
+    apiName = "QuoteLineItem.Training_Hours__c"
+    label = "Training Hours"
+    _required = false
+    precision = 18
+    scale = 1
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
 }

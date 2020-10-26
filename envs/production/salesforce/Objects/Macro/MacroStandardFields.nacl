@@ -289,12 +289,6 @@ type salesforce.Macro {
         isActive = true
       },
       {
-        fullName = "zisf__zicCleanJob__c"
-        default = false
-        label = "Clean Job"
-        isActive = true
-      },
-      {
         fullName = "CommSubscription"
         default = false
         label = "Communication Subscription"
@@ -373,6 +367,12 @@ type salesforce.Macro {
         isActive = true
       },
       {
+        fullName = "DelegatedAccount"
+        default = false
+        label = "External Managed Account"
+        isActive = true
+      },
+      {
         fullName = "FeedItem"
         default = false
         label = "Feed Item"
@@ -400,12 +400,6 @@ type salesforce.Macro {
         fullName = "rh2__Filter__c"
         default = false
         label = "Filter"
-        isActive = true
-      },
-      {
-        fullName = "zisf__FmcDefaultValue__c"
-        default = false
-        label = "FmcDefaultValue"
         isActive = true
       },
       {
@@ -520,6 +514,18 @@ type salesforce.Macro {
         fullName = "LSNLY__Lessonly_User__c"
         default = false
         label = "Lessonly User"
+        isActive = true
+      },
+      {
+        fullName = "Location"
+        default = false
+        label = "Location"
+        isActive = true
+      },
+      {
+        fullName = "LocationTrustMeasure"
+        default = false
+        label = "Location Trust Measure"
         isActive = true
       },
       {
@@ -820,42 +826,6 @@ type salesforce.Macro {
         fullName = "valt__Valooto_Workflow__c"
         default = false
         label = "Valooto Workflow"
-        isActive = true
-      },
-      {
-        fullName = "zisf__ZoomInfo__c"
-        default = false
-        label = "ZoomInfo"
-        isActive = true
-      },
-      {
-        fullName = "zisf__ZoomInfo_Clean_Settings__c"
-        default = false
-        label = "ZoomInfo Clean Setting"
-        isActive = true
-      },
-      {
-        fullName = "zisf__ZoomInfo_Custom_Settings__c"
-        default = false
-        label = "ZoomInfo Custom Setting"
-        isActive = true
-      },
-      {
-        fullName = "zisf__ZoomInfo_Inbound_Settings__c"
-        default = false
-        label = "ZoomInfo Inbound Setting"
-        isActive = true
-      },
-      {
-        fullName = "zisf__Zoom_Scheduler__c"
-        default = false
-        label = "Zoom Scheduler"
-        isActive = true
-      },
-      {
-        fullName = "zisf__ZoomSessions__c"
-        default = false
-        label = "ZoomSessions"
         isActive = true
       },
     ]

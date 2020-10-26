@@ -21,7 +21,7 @@ salesforce.Layout Partner_Region_Layout {
               field = salesforce.Partner_Region__c.field.Partner_Company__c
             },
             {
-              behavior = "Required"
+              behavior = "Readonly"
               field = salesforce.Partner_Region__c.field.Country__c
             },
             {
@@ -29,7 +29,7 @@ salesforce.Layout Partner_Region_Layout {
               field = salesforce.Partner_Region__c.field.Main_User__c
             },
             {
-              behavior = "Required"
+              behavior = "Readonly"
               field = salesforce.Partner_Region__c.field.Daily_Leads_Quota__c
             },
             {
@@ -45,11 +45,11 @@ salesforce.Layout Partner_Region_Layout {
         {
           layoutItems = [
             {
-              behavior = "Edit"
+              behavior = "Readonly"
               field = salesforce.Partner_Region__c.field.Active_Region__c
             },
             {
-              behavior = "Edit"
+              behavior = "Readonly"
               field = salesforce.Partner_Region__c.field.Is_Leadpool_Priority__c
             },
             {

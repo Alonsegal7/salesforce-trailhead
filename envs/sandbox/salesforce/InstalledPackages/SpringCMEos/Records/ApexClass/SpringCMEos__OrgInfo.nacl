@@ -1,7 +1,0 @@
-salesforce.ApexClass SpringCMEos__OrgInfo {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 35
-  status = "Active"
-  fullName = "SpringCMEos__OrgInfo"
-  content = "(hidden)"
-}

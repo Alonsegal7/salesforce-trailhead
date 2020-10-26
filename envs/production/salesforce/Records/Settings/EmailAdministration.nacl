@@ -14,7 +14,7 @@ salesforce.EmailAdministrationSettings {
   enableRestrictTlsToDomains = false
   enableSendViaExchangePref = true
   enableSendViaGmailPref = false
-  enableSetMatchingEmailsOnBounce = false
+  
   enableUseOrgFootersForExtTrans = false
   sendEmailsEvenWhenAutomationUpdatesSameRecord = true
   sendMassEmailNotification = false

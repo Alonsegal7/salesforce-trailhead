@@ -6,7 +6,6 @@ ischanged(StageName)&&
 (ISPICKVAL(StageName,"Closed Won")&& 
 Is_Dealroom_Signed__c = False &&  Is_SO_Signed__c = False) &&  ISBLANK(Billing_Ids__c )
 &&
-$Profile.Name!="Channel Managers"&&
 $Profile.Name!="System Administrator"&&
 $Profile.Name!="Integration Administrator"&&
 $Profile.Name!="Managers monday sales"

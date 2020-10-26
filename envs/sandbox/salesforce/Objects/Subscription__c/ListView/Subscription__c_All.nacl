@@ -11,18 +11,7 @@ salesforce.ListView Subscription__c_All {
     "CREATEDBY_USER",
   ]
   filterScope = "Everything"
-  filters = [
-    {
-      field = "ARR_Gain__c"
-      operation = "lessThan"
-      value = "0"
-    },
-    {
-      field = "Is_Claimed__c"
-      operation = "equals"
-      value = "0"
-    },
-  ]
+  
   label = "All"
   _parent = [
     salesforce.Subscription__c,

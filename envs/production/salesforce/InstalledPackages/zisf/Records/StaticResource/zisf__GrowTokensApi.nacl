@@ -1,7 +1,0 @@
-salesforce.StaticResource zisf__GrowTokensApi {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/octet-stream"
-  fullName = "zisf__GrowTokensApi"
-  content = file("salesforce/InstalledPackages/zisf/Records/StaticResource/zisf__GrowTokensApi.bin")
-}

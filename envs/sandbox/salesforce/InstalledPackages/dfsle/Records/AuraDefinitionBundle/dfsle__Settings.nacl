@@ -1,0 +1,11 @@
+salesforce.AuraDefinitionBundle dfsle__Settings {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "Settings"
+  fullName = "dfsle__Settings"
+  type = "Component"
+  styleContent = "(hidden)"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

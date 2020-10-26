@@ -1,0 +1,11 @@
+salesforce.LightningComponentBundle dfsle__selectFilesModalUtils {
+  fullName = "dfsle__selectFilesModalUtils"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/selectFilesModalUtils/selectFilesModalUtils.js"
+      },
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decMergeFields {
+  fullName = "dfsle__decMergeFields"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decMergeFields/decMergeFields.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decMergeFields/decMergeFields.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decMergeFields/decMergeFields.js"
+      },
+    ]
+  }
+}

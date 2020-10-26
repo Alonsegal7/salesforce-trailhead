@@ -140,14 +140,6 @@ type salesforce.AnimationRule {
         "valt__Valooto_Quote_Answer__c",
         "valt__Valooto_Quote_Workflow__c",
         "valt__Valooto_Workflow__c",
-        "zisf__FmcDefaultValue__c",
-        "zisf__ZoomInfo_Clean_Settings__c",
-        "zisf__ZoomInfo_Custom_Settings__c",
-        "zisf__ZoomInfo_Inbound_Settings__c",
-        "zisf__ZoomInfo__c",
-        "zisf__ZoomSessions__c",
-        "zisf__Zoom_Scheduler__c",
-        "zisf__zicCleanJob__c",
       ]
     }
     foreignKeyDomain = [
@@ -236,8 +228,8 @@ type salesforce.AnimationRule {
         "Language__c",
         "LeadSource",
         "Lead_Source_Type__c",
+        "Legal_Agreement_Type__c",
         "Legal_Agreement__c",
-        "Legal_Indication__c",
         "Location__c",
         "Lost_Reason__c",
         "Manual_Trigger__c",
@@ -250,6 +242,7 @@ type salesforce.AnimationRule {
         "Opportunity_Attribution__c",
         "Opportunity_Record_Type__c",
         "Opportunity_Reseller__c",
+        "Opportunity_Type_2__c",
         "Opportunity_status__c",
         "Ownership",
         "PDR__c",
@@ -269,6 +262,7 @@ type salesforce.AnimationRule {
         "Professional_Service__c",
         "Project_Status__c",
         "Project_Type__c",
+        "Qualified_for_Solution__c",
         "Quote_Type__c",
         "Rating",
         "Reason_For_Low_Readiness__c",
@@ -322,13 +316,6 @@ type salesforce.AnimationRule {
         "of_Free_Months__c",
         "rh2__Test_Picklist__c",
         "rh2__Unit__c",
-        "zisf__Job_Status__c",
-        "zisf__Job_Type__c",
-        "zisf__ZoomInfo_Source__c",
-        "zisf__Zoom_Clean_Status__c",
-        "zisf__accounts_clean_filter__c",
-        "zisf__contacts_clean_filter__c",
-        "zisf__leads_clean_filter__c",
       ]
     }
     foreignKeyDomain = [

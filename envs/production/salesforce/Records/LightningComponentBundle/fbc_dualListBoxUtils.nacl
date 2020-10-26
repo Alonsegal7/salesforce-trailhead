@@ -1,0 +1,16 @@
+salesforce.LightningComponentBundle fbc_dualListBoxUtils {
+  xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 46
+  description = "Dual List Box Utils"
+  isExposed = false
+  masterLabel = "Dual List Box Utils"
+  fullName = "fbc_dualListBoxUtils"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_dualListBoxUtils/fbc_dualListBoxUtils.js")
+        filePath = "lwc/fbc_dualListBoxUtils/fbc_dualListBoxUtils.js"
+      },
+    ]
+  }
+}

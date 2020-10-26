@@ -1031,6 +1031,10 @@ salesforce.CustomObjectTranslation Partner_SO_Request__c_en_US {
     },
     {
       label = ""
+      name = salesforce.Partner_SO_Request__c.field.Comment_for_CPM__c
+    },
+    {
+      label = ""
       name = salesforce.Partner_SO_Request__c.field.Customer_Success_Package__c
       picklistValues = [
         {
@@ -1132,10 +1136,6 @@ salesforce.CustomObjectTranslation Partner_SO_Request__c_en_US {
       label = ""
       name = salesforce.Partner_SO_Request__c.field.Period__c
       picklistValues = [
-        {
-          masterLabel = "Monthly"
-          translation = ""
-        },
         {
           masterLabel = "Yearly"
           translation = ""

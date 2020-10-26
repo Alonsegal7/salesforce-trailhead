@@ -127,6 +127,7 @@ type salesforce.QuickAction {
         "Email",
         "Flow",
         "LightningComponent",
+        "LightningWebComponent",
         "LogACall",
         "MobileCreateFull",
         "MobileExtension",

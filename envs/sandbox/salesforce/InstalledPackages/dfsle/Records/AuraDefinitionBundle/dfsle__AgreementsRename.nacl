@@ -1,0 +1,11 @@
+salesforce.AuraDefinitionBundle dfsle__AgreementsRename {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "AgreementsRename"
+  fullName = "dfsle__AgreementsRename"
+  type = "Component"
+  styleContent = "(hidden)"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

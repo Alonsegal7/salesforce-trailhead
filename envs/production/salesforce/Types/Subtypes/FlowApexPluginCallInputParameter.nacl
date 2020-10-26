@@ -68,6 +68,7 @@ type salesforce.FlowApexPluginCallInputParameter {
       "InteractionResource",
       "InteractionStage",
       "InteractionStatement",
+      "InteractionSteppedStage",
       "InteractionSwitch",
       "InteractionTodo",
       "InteractionValueList",

@@ -1,3 +1,0 @@
-<apex:page standardController="Opportunity">
-	<SpringCMEos:SpringCM_EOSGrid objectType="Opportunity" objectId="{!Id}" />
-</apex:page>

@@ -4,6 +4,10 @@
        if(frame){
            console.log("mondayEmbed - onRender", frame.src);     
        }
+       var userId = $A.get("$SObjectType.CurrentUser.Id");
+       component.set('v.currentUserId', userId); 
+       console.log('Raz userId: '+userId);
+
        console.log("mondayEmbed - setTimeout");  
        var fullURL='';
        var initialURL =component.get('v.iframeUrl');
@@ -15,12 +19,22 @@
        var filterAPI=component.get('v.filterFieldAPI');
        var filterValue=component.get('v.filterValue');
        var itemView=component.get('v.itemView');
+       var userFieldAPI=component.get('v.userFieldAPI');
        
        fullURL=initialURL;
        //DASHBOARD
        if(dashId!=undefined && dashId!=''){
             fullURL+='/overviews/' + dashId;
         //BOARD
+       }else if (userFieldAPI!=undefined&&userFieldAPI!=''){
+            var fieldapi = 'v.simpleUserRecord.'+userFieldAPI;
+            console.log('Raz fieldapi: '+fieldapi);
+            var userFieldValue=$A.get('$SObjectType.CurrentUser.'+userFieldAPI);
+            //var userFieldValue = component.get(fieldapi);
+            console.log('Raz userFieldValue: '+userFieldValue);
+            if(userFieldValue!=undefined){
+                fullURL+='/boards/' + userFieldValue;
+            }
        }else if(boardId!=undefined && boardId!=''){
             fullURL+='/boards/' + boardId;
             if(viewId!=undefined && viewId!=''){

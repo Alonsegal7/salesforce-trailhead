@@ -1,7 +1,0 @@
-salesforce.ApexComponent zisf__listLoadCSS {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 26
-  label = "listLoadCSS"
-  fullName = "zisf__listLoadCSS"
-  content = "(hidden)"
-}

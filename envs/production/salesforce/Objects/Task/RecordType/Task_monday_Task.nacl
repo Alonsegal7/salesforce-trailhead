@@ -157,7 +157,7 @@ salesforce.RecordType Task_monday_Task {
           default = false
         },
         {
-          fullName = "Offsite Hour"
+          fullName = "Office Hour"
           default = false
         },
         {

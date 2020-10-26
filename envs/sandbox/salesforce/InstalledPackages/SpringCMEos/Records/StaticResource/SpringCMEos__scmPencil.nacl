@@ -1,7 +1,0 @@
-salesforce.StaticResource SpringCMEos__scmPencil {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "image/png"
-  fullName = "SpringCMEos__scmPencil"
-  content = file("salesforce/InstalledPackages/SpringCMEos/Records/StaticResource/SpringCMEos__scmPencil.png")
-}

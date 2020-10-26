@@ -41,6 +41,7 @@ type salesforce.EmbeddedServiceCustomLabel {
         "CM_Container_Button_AssistiveText",
         "CM_Container_Header_Primary_Greeting",
         "CM_Container_Header_Secondary_Greeting",
+        "CM_Container_MenuItems_AssistiveText",
         "CM_Container_MenuItems_ChannelLabel",
         "CM_Container_MenuItems_WebChatAvailable",
         "CM_Container_MenuItems_WebChatLoading",

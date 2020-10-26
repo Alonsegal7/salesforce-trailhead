@@ -47,6 +47,7 @@ type salesforce.BrandingSet {
         "login:branding-login2",
         "lpi:branding-lpi",
         "mfg:branding-mfg",
+        "mortgage:branding-mortgage",
         "napili:branding-napili",
         "napili:branding-napili-merged",
         "prm:branding-prm-merged",

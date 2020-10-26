@@ -1,0 +1,12 @@
+salesforce.LightningMessageChannel dfsle__Success {
+  fullName = "dfsle__Success"
+  description = "Handles success-related events to display a toast message to end user"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "The success message that has to be displayed to end user"
+      fieldName = "successMessage"
+    },
+  ]
+  masterLabel = "Success"
+}

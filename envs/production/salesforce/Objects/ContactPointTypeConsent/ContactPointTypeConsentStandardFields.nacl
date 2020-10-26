@@ -1,7 +1,7 @@
 type salesforce.ContactPointTypeConsent {
   serviceid Id {
     apiName = "ContactPointTypeConsent.Id"
-    label = "Contact Point Consent ID"
+    label = "Contact Point Type Consent ID"
     _required = false
     queryable = true
     _hidden = true
@@ -215,7 +215,7 @@ type salesforce.ContactPointTypeConsent {
   salesforce.DateTime CaptureDate {
     apiName = "ContactPointTypeConsent.CaptureDate"
     label = "Capture Date"
-    _required = true
+    _required = false
     createable = true
     updateable = true
     queryable = true
@@ -223,7 +223,7 @@ type salesforce.ContactPointTypeConsent {
   salesforce.Picklist CaptureContactPointType {
     apiName = "ContactPointTypeConsent.CaptureContactPointType"
     label = "Capture Contact Point Type"
-    _required = true
+    _required = false
     valueSet = [
       {
         fullName = "Email"
@@ -264,7 +264,7 @@ type salesforce.ContactPointTypeConsent {
   salesforce.Text CaptureSource {
     apiName = "ContactPointTypeConsent.CaptureSource"
     label = "Capture Source"
-    _required = true
+    _required = false
     createable = true
     updateable = true
     unique = false

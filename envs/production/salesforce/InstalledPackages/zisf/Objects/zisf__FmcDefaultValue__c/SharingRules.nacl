@@ -1,6 +1,0 @@
-salesforce.SharingRules zisf__FmcDefaultValue__c {
-  fullName = "zisf__FmcDefaultValue__c"
-  _parent = [
-    salesforce.zisf__FmcDefaultValue__c,
-  ]
-}

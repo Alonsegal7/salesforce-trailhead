@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__sendingRecipientMoreOptions {
+  fullName = "dfsle__sendingRecipientMoreOptions"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingRecipientMoreOptions/sendingRecipientMoreOptions.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingRecipientMoreOptions/sendingRecipientMoreOptions.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingRecipientMoreOptions/sendingRecipientMoreOptions.css"
+      },
+    ]
+  }
+}

@@ -10,16 +10,6 @@ salesforce.QuickAction Account_BB_Related_Accounts_Data {
         quickActionLayoutItems = [
           {
             emptySpace = false
-            field = "Company_Paying_Accounts__c"
-            uiBehavior = "Edit"
-          },
-          {
-            emptySpace = false
-            field = "Company_Open_Trials_Count__c"
-            uiBehavior = "Edit"
-          },
-          {
-            emptySpace = false
             field = "Related_Paying_Accounts__c"
             uiBehavior = "Edit"
           },
@@ -32,16 +22,6 @@ salesforce.QuickAction Account_BB_Related_Accounts_Data {
       },
       {
         quickActionLayoutItems = [
-          {
-            emptySpace = false
-            field = "Company_Trials_Count__c"
-            uiBehavior = "Edit"
-          },
-          {
-            emptySpace = false
-            field = "Company_Trials_This_Week__c"
-            uiBehavior = "Edit"
-          },
           {
             emptySpace = false
             field = "Related_Accounts_Total__c"

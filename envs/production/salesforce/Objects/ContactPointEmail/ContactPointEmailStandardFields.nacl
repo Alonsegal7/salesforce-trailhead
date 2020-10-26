@@ -399,18 +399,6 @@ type salesforce.ContactPointEmail {
         isActive = true
       },
       {
-        fullName = "Asia/Beirut"
-        default = false
-        label = "(GMT+03:00) Eastern European Summer Time (Asia/Beirut)"
-        isActive = true
-      },
-      {
-        fullName = "Asia/Jerusalem"
-        default = false
-        label = "(GMT+03:00) Israel Daylight Time (Asia/Jerusalem)"
-        isActive = true
-      },
-      {
         fullName = "Asia/Kuwait"
         default = false
         label = "(GMT+03:00) Arabian Standard Time (Asia/Kuwait)"
@@ -420,24 +408,6 @@ type salesforce.ContactPointEmail {
         fullName = "Asia/Riyadh"
         default = false
         label = "(GMT+03:00) Arabian Standard Time (Asia/Riyadh)"
-        isActive = true
-      },
-      {
-        fullName = "Europe/Athens"
-        default = false
-        label = "(GMT+03:00) Eastern European Summer Time (Europe/Athens)"
-        isActive = true
-      },
-      {
-        fullName = "Europe/Bucharest"
-        default = false
-        label = "(GMT+03:00) Eastern European Summer Time (Europe/Bucharest)"
-        isActive = true
-      },
-      {
-        fullName = "Europe/Helsinki"
-        default = false
-        label = "(GMT+03:00) Eastern European Summer Time (Europe/Helsinki)"
         isActive = true
       },
       {
@@ -471,39 +441,33 @@ type salesforce.ContactPointEmail {
         isActive = true
       },
       {
-        fullName = "Europe/Amsterdam"
+        fullName = "Asia/Beirut"
         default = false
-        label = "(GMT+02:00) Central European Summer Time (Europe/Amsterdam)"
+        label = "(GMT+02:00) Eastern European Standard Time (Asia/Beirut)"
         isActive = true
       },
       {
-        fullName = "Europe/Berlin"
+        fullName = "Asia/Jerusalem"
         default = false
-        label = "(GMT+02:00) Central European Summer Time (Europe/Berlin)"
+        label = "(GMT+02:00) Israel Standard Time (Asia/Jerusalem)"
         isActive = true
       },
       {
-        fullName = "Europe/Brussels"
+        fullName = "Europe/Athens"
         default = false
-        label = "(GMT+02:00) Central European Summer Time (Europe/Brussels)"
+        label = "(GMT+02:00) Eastern European Standard Time (Europe/Athens)"
         isActive = true
       },
       {
-        fullName = "Europe/Paris"
+        fullName = "Europe/Bucharest"
         default = false
-        label = "(GMT+02:00) Central European Summer Time (Europe/Paris)"
+        label = "(GMT+02:00) Eastern European Standard Time (Europe/Bucharest)"
         isActive = true
       },
       {
-        fullName = "Europe/Prague"
+        fullName = "Europe/Helsinki"
         default = false
-        label = "(GMT+02:00) Central European Summer Time (Europe/Prague)"
-        isActive = true
-      },
-      {
-        fullName = "Europe/Rome"
-        default = false
-        label = "(GMT+02:00) Central European Summer Time (Europe/Rome)"
+        label = "(GMT+02:00) Eastern European Standard Time (Europe/Helsinki)"
         isActive = true
       },
       {
@@ -519,39 +483,75 @@ type salesforce.ContactPointEmail {
         isActive = true
       },
       {
+        fullName = "Europe/Amsterdam"
+        default = false
+        label = "(GMT+01:00) Central European Standard Time (Europe/Amsterdam)"
+        isActive = true
+      },
+      {
+        fullName = "Europe/Berlin"
+        default = false
+        label = "(GMT+01:00) Central European Standard Time (Europe/Berlin)"
+        isActive = true
+      },
+      {
+        fullName = "Europe/Brussels"
+        default = false
+        label = "(GMT+01:00) Central European Standard Time (Europe/Brussels)"
+        isActive = true
+      },
+      {
+        fullName = "Europe/Paris"
+        default = false
+        label = "(GMT+01:00) Central European Standard Time (Europe/Paris)"
+        isActive = true
+      },
+      {
+        fullName = "Europe/Prague"
+        default = false
+        label = "(GMT+01:00) Central European Standard Time (Europe/Prague)"
+        isActive = true
+      },
+      {
+        fullName = "Europe/Rome"
+        default = false
+        label = "(GMT+01:00) Central European Standard Time (Europe/Rome)"
+        isActive = true
+      },
+      {
         fullName = "Europe/Dublin"
         default = false
-        label = "(GMT+01:00) Irish Standard Time (Europe/Dublin)"
+        label = "(GMT+00:00) Greenwich Mean Time (Europe/Dublin)"
         isActive = true
       },
       {
         fullName = "Europe/Lisbon"
         default = false
-        label = "(GMT+01:00) Western European Summer Time (Europe/Lisbon)"
+        label = "(GMT+00:00) Western European Standard Time (Europe/Lisbon)"
         isActive = true
       },
       {
         fullName = "Europe/London"
         default = false
-        label = "(GMT+01:00) British Summer Time (Europe/London)"
-        isActive = true
-      },
-      {
-        fullName = "America/Scoresbysund"
-        default = false
-        label = "(GMT+00:00) East Greenland Summer Time (America/Scoresbysund)"
-        isActive = true
-      },
-      {
-        fullName = "Atlantic/Azores"
-        default = false
-        label = "(GMT+00:00) Azores Summer Time (Atlantic/Azores)"
+        label = "(GMT+00:00) Greenwich Mean Time (Europe/London)"
         isActive = true
       },
       {
         fullName = "GMT"
         default = false
         label = "(GMT+00:00) Greenwich Mean Time (GMT)"
+        isActive = true
+      },
+      {
+        fullName = "America/Scoresbysund"
+        default = false
+        label = "(GMT-01:00) East Greenland Standard Time (America/Scoresbysund)"
+        isActive = true
+      },
+      {
+        fullName = "Atlantic/Azores"
+        default = false
+        label = "(GMT-01:00) Azores Standard Time (Atlantic/Azores)"
         isActive = true
       },
       {
@@ -645,12 +645,6 @@ type salesforce.ContactPointEmail {
         isActive = true
       },
       {
-        fullName = "America/Mexico_City"
-        default = false
-        label = "(GMT-05:00) Central Daylight Time (America/Mexico_City)"
-        isActive = true
-      },
-      {
         fullName = "America/Panama"
         default = false
         label = "(GMT-05:00) Eastern Standard Time (America/Panama)"
@@ -669,15 +663,21 @@ type salesforce.ContactPointEmail {
         isActive = true
       },
       {
-        fullName = "America/Mazatlan"
+        fullName = "America/Mexico_City"
         default = false
-        label = "(GMT-06:00) Mexican Pacific Daylight Time (America/Mazatlan)"
+        label = "(GMT-06:00) Central Standard Time (America/Mexico_City)"
         isActive = true
       },
       {
         fullName = "America/Los_Angeles"
         default = false
         label = "(GMT-07:00) Pacific Daylight Time (America/Los_Angeles)"
+        isActive = true
+      },
+      {
+        fullName = "America/Mazatlan"
+        default = false
+        label = "(GMT-07:00) Mexican Pacific Standard Time (America/Mazatlan)"
         isActive = true
       },
       {
@@ -803,5 +803,17 @@ type salesforce.ContactPointEmail {
     caseSensitive = false
     length = 250
     queryable = true
+  }
+  salesforce.Unknown PreferenceRank {
+    apiName = "ContactPointEmail.PreferenceRank"
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.Picklist UsageType {
+    apiName = "ContactPointEmail.UsageType"
+    queryable = false
+    updateable = false
+    createable = false
   }
 }

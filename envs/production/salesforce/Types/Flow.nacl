@@ -68,6 +68,7 @@ type salesforce.Flow {
       values = [
         "ActionCadenceFlow",
         "ActionPlan",
+        "AppProcess",
         "Appointments",
         "AutoLaunchedFlow",
         "CartAsyncFlow",
@@ -75,7 +76,6 @@ type salesforce.Flow {
         "ContactRequestFlow",
         "CustomEvent",
         "CustomerLifecycle",
-        "DecisionStudio",
         "DigitalForm",
         "FSCLending",
         "FieldServiceMobile",
@@ -88,6 +88,7 @@ type salesforce.Flow {
         "ManagedContentFlow",
         "OfflineFlow",
         "OrchestrationFlow",
+        "RecommendationStrategy",
         "SalesEntryExperienceFlow",
         "Survey",
         "SurveyEnrich",

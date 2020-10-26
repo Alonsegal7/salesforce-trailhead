@@ -6,7 +6,7 @@ salesforce.WorkflowRule Account_GSI_added_to_an_account {
       type = "Alert"
     },
   ]
-  active = false
+  active = true
   criteriaItems = [
     {
       field = salesforce.Account.field.GSI_user__c

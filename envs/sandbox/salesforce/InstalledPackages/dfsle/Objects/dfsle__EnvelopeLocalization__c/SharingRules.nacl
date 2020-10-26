@@ -1,0 +1,6 @@
+salesforce.SharingRules dfsle__EnvelopeLocalization__c {
+  fullName = "dfsle__EnvelopeLocalization__c"
+  _parent = [
+    salesforce.dfsle__EnvelopeLocalization__c,
+  ]
+}

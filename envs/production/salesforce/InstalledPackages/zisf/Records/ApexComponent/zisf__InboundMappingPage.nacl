@@ -1,7 +1,0 @@
-salesforce.ApexComponent zisf__InboundMappingPage {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 40
-  label = "InboundMappingPage"
-  fullName = "zisf__InboundMappingPage"
-  content = "(hidden)"
-}

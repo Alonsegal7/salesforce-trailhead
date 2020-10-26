@@ -1,10 +1,10 @@
 salesforce.Role OboAgencyPartnerUser {
   fullName = "OboAgencyPartnerUser"
-  caseAccessLevel = "None"
+  caseAccessLevel = "Edit"
   contactAccessLevel = "Edit"
   description = "Obo Agency Partner User"
   mayForecastManagerShare = false
   name = "Obo Agency Partner User"
-  opportunityAccessLevel = "None"
+  opportunityAccessLevel = "Edit"
   parentRole = salesforce.Role.instance.OboAgencyPartnerManager
 }

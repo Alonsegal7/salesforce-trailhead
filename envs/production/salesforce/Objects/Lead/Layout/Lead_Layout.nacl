@@ -1,8 +1,6 @@
 salesforce.Layout Lead_Layout {
   fullName = "Lead-Lead Layout"
-  excludeButtons = [
-    "DataDotComClean",
-  ]
+  
   layoutSections = [
     {
       customLabel = false
@@ -336,6 +334,10 @@ salesforce.Layout Lead_Layout {
             {
               behavior = "Edit"
               field = salesforce.Lead.field.Link_to_Call__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Lead.field.Qualified_for_Solution__c
             },
           ]
         },

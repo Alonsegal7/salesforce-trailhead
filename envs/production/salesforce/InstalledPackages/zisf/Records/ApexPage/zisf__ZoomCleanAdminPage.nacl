@@ -1,9 +1,0 @@
-salesforce.ApexPage zisf__ZoomCleanAdminPage {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 39
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "Settings"
-  fullName = "zisf__ZoomCleanAdminPage"
-  content = file("salesforce/InstalledPackages/zisf/Records/ApexPage/zisf__ZoomCleanAdminPage.page")
-}

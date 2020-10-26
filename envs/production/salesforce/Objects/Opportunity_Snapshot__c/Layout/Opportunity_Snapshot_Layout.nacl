@@ -88,6 +88,10 @@ salesforce.Layout Opportunity_Snapshot_Layout {
               behavior = "Edit"
               field = salesforce.Opportunity_Snapshot__c.field.Owner_Manager__c
             },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity_Snapshot__c.field.Day_of_Month__c
+            },
           ]
         },
         {

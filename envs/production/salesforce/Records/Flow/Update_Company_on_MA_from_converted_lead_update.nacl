@@ -121,54 +121,6 @@ salesforce.Flow Update_Company_on_MA_from_converted_lead_update {
             {
               name = "implicit"
               value = {
-                booleanValue = false
-              }
-            },
-            {
-              name = "inputDataType"
-              value = {
-                stringValue = "ID"
-              }
-            },
-            {
-              name = "leftHandSideLabel"
-              value = {
-                stringValue = "Company"
-              }
-            },
-            {
-              name = "leftHandSideReferenceTo"
-              value = {
-                stringValue = "Account"
-              }
-            },
-            {
-              name = "leftHandSideType"
-              value = {
-                stringValue = "ID"
-              }
-            },
-            {
-              name = "operatorDataType"
-              value = {
-                stringValue = "String"
-              }
-            },
-            {
-              name = "rightHandSideType"
-              value = {
-                stringValue = "GlobalConstant"
-              }
-            },
-          ]
-          field = "Company__c"
-          operator = "EqualTo"
-        },
-        {
-          processMetadataValues = [
-            {
-              name = "implicit"
-              value = {
                 booleanValue = true
               }
             },
@@ -225,6 +177,55 @@ salesforce.Flow Update_Company_on_MA_from_converted_lead_update {
             },
           ]
           field = "ParentId"
+          operator = "EqualTo"
+          
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "inputDataType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "Company"
+              }
+            },
+            {
+              name = "leftHandSideReferenceTo"
+              value = {
+                stringValue = "Account"
+              }
+            },
+            {
+              name = "leftHandSideType"
+              value = {
+                stringValue = "ID"
+              }
+            },
+            {
+              name = "operatorDataType"
+              value = {
+                stringValue = "String"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "GlobalConstant"
+              }
+            },
+          ]
+          field = "Company__c"
           operator = "EqualTo"
         },
       ]

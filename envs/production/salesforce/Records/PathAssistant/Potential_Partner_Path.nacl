@@ -4,13 +4,6 @@ salesforce.PathAssistant Potential_Partner_Path {
   entityName = "Lead"
   fieldName = "Status"
   masterLabel = "Potential Partner Path"
-  pathAssistantSteps = [
-    {
-      fieldNames = [
-        "Why_unqualified__c",
-      ]
-      picklistValueName = "Unqualified"
-    },
-  ]
+  
   recordTypeName = "Potential_Partner"
 }

@@ -230,10 +230,6 @@ salesforce.AppMenu AppSwitcher {
       type = "CustomApplication"
     },
     {
-      name = "zisf__ZoomClean"
-      type = "CustomApplication"
-    },
-    {
       name = "monday_automations"
       type = "ConnectedApp"
     },
@@ -271,6 +267,14 @@ salesforce.AppMenu AppSwitcher {
     },
     {
       name = "squivr__Squivr"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__TrustCard"
+      type = "CustomApplication"
+    },
+    {
+      name = "State_of_Sales"
       type = "CustomApplication"
     },
   ]

@@ -1,0 +1,16 @@
+salesforce.LightningMessageChannel dfsle__SendingRenameDocument {
+  fullName = "dfsle__SendingRenameDocument"
+  description = "Handles renaming for Documents in Sending Experience"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "String value to update the document's name to"
+      fieldName = "name"
+    },
+    {
+      description = "Index of document in configuration data to update"
+      fieldName = "index"
+    },
+  ]
+  masterLabel = "SendingRenameDocument"
+}

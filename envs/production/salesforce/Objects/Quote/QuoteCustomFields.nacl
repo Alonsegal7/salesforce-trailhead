@@ -572,6 +572,7 @@ CASE( Payment_Terms__c ,
     ]
     summaryForeignKey = "QuoteLineItem.QuoteId"
     summaryOperation = "sum"
+    description = "Price per seat before discount (=List Price)"
   }
   salesforce.Summary Total_Free_Months__c {
     apiName = "Quote.Total_Free_Months__c"
@@ -1091,43 +1092,7 @@ ISPICKVAL( Owner:User.Office__c ,"NY Office") || ISPICKVAL( Owner:User.Office__c
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
   }
-  salesforce.Picklist Legal_Indication__c {
-    apiName = "Quote.Legal_Indication__c"
-    label = "Legal Indication"
-    _required = false
-    valueSet = [
-      {
-        fullName = "Terms of Service"
-        default = false
-        label = "Terms of Service"
-      },
-      {
-        fullName = "Addendum to SO"
-        default = false
-        label = "Addendum to SO"
-      },
-      {
-        fullName = "Addendum (negotiated)"
-        default = false
-        label = "Addendum (negotiated)"
-      },
-      {
-        fullName = "monday.com SaaS"
-        default = false
-        label = "monday.com SaaS"
-      },
-      {
-        fullName = "Customer SaaS"
-        default = false
-        label = "Customer SaaS"
-      },
-    ]
-    restricted = false
-    createable = true
-    updateable = true
-    queryable = true
-    sorted = false
-  }
+  
   salesforce.Checkbox Temp_for_Data_Fix__c {
     apiName = "Quote.Temp_for_Data_Fix__c"
     label = "Temp for Data Fix"
@@ -1183,5 +1148,54 @@ ISPICKVAL( Owner:User.Office__c ,"NY Office") || ISPICKVAL( Owner:User.Office__c
     queryable = false
     updateable = false
     createable = false
+  }
+  salesforce.Picklist Legal_Agreement_Type__c {
+    apiName = "Quote.Legal_Agreement_Type__c"
+    label = "Legal Agreement Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Terms of Service"
+        default = false
+        label = "Terms of Service"
+      },
+      {
+        fullName = "Addendum to SO"
+        default = false
+        label = "Addendum to SO"
+      },
+      {
+        fullName = "Addendum (negotiated)"
+        default = false
+        label = "Addendum (negotiated)"
+      },
+      {
+        fullName = "monday.com SaaS"
+        default = false
+        label = "monday.com SaaS"
+      },
+      {
+        fullName = "Customer SaaS"
+        default = false
+        label = "Customer SaaS"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaCheckbox Pro_Rated_Different_Price__c {
+    apiName = "Quote.Pro_Rated_Different_Price__c"
+    label = "Pro Rated Different Price"
+    formula = '''
+if ( ISPICKVAL(Quote_Type__c,'Pro-rated- Additional Seats' )&&  NOT(ISBLANK(Get_Contract_Unit_Price__c)) &&
+Get_Contract_Unit_Price__c  -  Price_Per_Seat__c <> 0, true,false)
+'''
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
   }
 }

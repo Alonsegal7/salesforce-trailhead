@@ -2284,6 +2284,39 @@ salesforce.RecordType Opportunity_Partner_Opportunity {
       ]
     },
     {
+      picklist = "Opportunity_Type_2__c"
+      values = [
+        {
+          fullName = "Add Monday Account"
+          default = false
+        },
+        {
+          fullName = "Add Users"
+          default = false
+        },
+        {
+          fullName = "Add Users and Upgrade Tier"
+          default = false
+        },
+        {
+          fullName = "Downgrade"
+          default = false
+        },
+        {
+          fullName = "New Business"
+          default = false
+        },
+        {
+          fullName = "Other Products"
+          default = false
+        },
+        {
+          fullName = "Upgrade Plan"
+          default = false
+        },
+      ]
+    },
+    {
       picklist = "Opportunity_status__c"
       values = [
         {
@@ -3224,6 +3257,10 @@ salesforce.RecordType Opportunity_Partner_Opportunity {
     {
       picklist = "Type"
       values = [
+        {
+          fullName = "Downgrade"
+          default = false
+        },
         {
           fullName = "Expansion"
           default = false

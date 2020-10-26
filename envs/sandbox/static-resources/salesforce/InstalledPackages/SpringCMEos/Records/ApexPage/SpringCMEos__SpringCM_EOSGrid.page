@@ -1,3 +1,0 @@
-<apex:page controller="SpringCMEos.EOSController" action="{!setup}" showHeader="false" sidebar="false" >
-	<c:SpringCM_EOSGrid objectType="{!objectType}" objectId="{!objectId}" startmigration="{!startmigration}" />
-</apex:page>

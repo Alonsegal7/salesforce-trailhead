@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__EnvelopeLocalization__c_zh_TW {
+  fullName = "dfsle__EnvelopeLocalization__c-zh_TW"
+  _parent = [
+    salesforce.dfsle__EnvelopeLocalization__c,
+  ]
+}

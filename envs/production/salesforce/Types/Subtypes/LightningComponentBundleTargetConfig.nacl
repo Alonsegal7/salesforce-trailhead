@@ -7,7 +7,7 @@ type salesforce.LightningComponentBundleTargetConfig {
   }
   "List<salesforce.LightningComponentBundleObject>" objects {
   }
-  salesforce.LightningComponentBundleProperty property {
+  "List<salesforce.LightningComponentBundleProperty>" property {
   }
   salesforce.LightningComponentBundleSupportedFormFactors supportedFormFactors {
   }

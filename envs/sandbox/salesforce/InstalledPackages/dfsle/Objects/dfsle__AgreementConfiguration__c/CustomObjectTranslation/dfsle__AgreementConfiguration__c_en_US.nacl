@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__AgreementConfiguration__c_en_US {
+  fullName = "dfsle__AgreementConfiguration__c-en_US"
+  _parent = [
+    salesforce.dfsle__AgreementConfiguration__c,
+  ]
+}

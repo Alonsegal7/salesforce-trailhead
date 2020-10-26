@@ -149,6 +149,12 @@ type salesforce.EmailMessage {
     _required = false
     valueSet = [
       {
+        fullName = "razbe@monday.com"
+        default = false
+        label = "Raz Ben Ron <razbe@monday.com>"
+        isActive = true
+      },
+      {
         fullName = "customerexperience@monday.com"
         default = false
         label = "Customer Experience <customerexperience@monday.com>"
@@ -158,12 +164,6 @@ type salesforce.EmailMessage {
         fullName = "naomida@monday.com"
         default = false
         label = "Naomi Danosh <naomida@monday.com>"
-        isActive = true
-      },
-      {
-        fullName = "razbe@monday.com"
-        default = false
-        label = "Raz Ben Ron <razbe@monday.com>"
         isActive = true
       },
     ]
@@ -314,7 +314,7 @@ type salesforce.EmailMessage {
     updateable = true
     unique = false
     caseSensitive = false
-    length = 255
+    length = 765
     queryable = true
   }
   salesforce.Text ThreadIdentifier {
@@ -325,7 +325,7 @@ type salesforce.EmailMessage {
     updateable = true
     unique = false
     caseSensitive = false
-    length = 255
+    length = 765
     queryable = true
   }
   salesforce.Checkbox IsClientManaged {
@@ -361,6 +361,7 @@ type salesforce.EmailMessage {
       salesforce.LH__LH_Export_Lookups__c,
       salesforce.Lead_Registration__c,
       "ListEmail",
+      "Location",
       salesforce.Milestone__c,
       salesforce.Monday_Account__c,
       salesforce.Opportunity,
@@ -381,7 +382,6 @@ type salesforce.EmailMessage {
       salesforce.rh2__PS_Rollup_Dummy__c,
       salesforce.valt__Valooto_Opportunity_Answer__c,
       salesforce.valt__Valooto_Quote_Answer__c,
-      salesforce.zisf__ZoomInfo_Clean_Settings__c,
     ]
     createable = true
     updateable = false

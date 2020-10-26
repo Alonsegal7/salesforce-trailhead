@@ -2265,10 +2265,7 @@ False if there's only one record type.
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Account.field.Unassignment_Timestamp__c,
-      salesforce.Account.field.Ownership_Claimed_Timestamp__c,
-    ]
+    
   }
   salesforce.FormulaCheckbox Belongs_to_viewed_company__c {
     apiName = "Account.Belongs_to_viewed_company__c"
@@ -2278,10 +2275,7 @@ False if there's only one record type.
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Account.field.Long_Account_ID__c,
-      salesforce.Last_Viewed_Account__c.field.AccountId__c,
-    ]
+    
   }
   salesforce.Checkbox Is_Test_Account__c {
     apiName = "Account.Is_Test_Account__c"
@@ -2322,9 +2316,7 @@ False if there's only one record type.
     ]
     summaryForeignKey = "Sale__c.Company__c"
     summaryOperation = "count"
-    _generated_dependencies = [
-      salesforce.Sale__c.field.FinalSaleStatus__c,
-    ]
+    
   }
   salesforce.MultiselectPicklist Professional_Service_Capabilities__c {
     apiName = "Account.Professional_Service_Capabilities__c"
@@ -2490,11 +2482,7 @@ False if there's only one record type.
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Account.field.of_Complete_Sale__c,
-      salesforce.Account.field.of_Partial_Sale__c,
-      salesforce.Account.field.Company_ARR__c,
-    ]
+    
   }
   salesforce.Date Orange_Bucket_Timestamp__c {
     apiName = "Account.Orange_Bucket_Timestamp__c"
@@ -2531,9 +2519,7 @@ False if there's only one record type.
     ]
     summaryForeignKey = "Sale__c.Company__c"
     summaryOperation = "count"
-    _generated_dependencies = [
-      salesforce.Sale__c.field.FinalSaleStatus__c,
-    ]
+    
   }
   salesforce.FormulaCheckbox Orange_Bucket_Company__c {
     apiName = "Account.Orange_Bucket_Company__c"
@@ -2543,11 +2529,7 @@ False if there's only one record type.
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Account.field.Green_Bucket_Company__c,
-      salesforce.Account.field.of_Partial_Sale__c,
-      salesforce.Account.field.Company_ARR__c,
-    ]
+    
   }
   salesforce.FormulaCheckbox Needs_Ownership_Update__c {
     apiName = "Account.Needs_Ownership_Update__c"
@@ -2557,9 +2539,7 @@ False if there's only one record type.
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Account.field.Strategic__c,
-    ]
+    
   }
   salesforce.Checkbox Uses_monday_com__c {
     apiName = "Account.Uses_monday_com__c"

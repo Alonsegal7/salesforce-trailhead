@@ -52,6 +52,10 @@ salesforce.Layout Partner_Sales_Order_Layout {
               behavior = "Edit"
               field = salesforce.Partner_SO_Request__c.field.Shipping_Zip_Postal_Code__c
             },
+            {
+              behavior = "Edit"
+              field = salesforce.Partner_SO_Request__c.field.VAT_Text__c
+            },
           ]
         },
         {

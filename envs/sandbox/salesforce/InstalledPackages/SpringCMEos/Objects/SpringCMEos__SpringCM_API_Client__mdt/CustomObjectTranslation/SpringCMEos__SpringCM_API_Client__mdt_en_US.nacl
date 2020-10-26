@@ -1,6 +1,0 @@
-salesforce.CustomObjectTranslation SpringCMEos__SpringCM_API_Client__mdt_en_US {
-  fullName = "SpringCMEos__SpringCM_API_Client__mdt-en_US"
-  _parent = [
-    salesforce.SpringCMEos__SpringCM_API_Client__mdt,
-  ]
-}

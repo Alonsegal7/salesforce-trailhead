@@ -1,0 +1,506 @@
+salesforce.Flow Co_Sell_Process {
+  fullName = "Co_Sell_Process"
+  formulas = [
+    {
+      name = "CoSell_Link"
+      dataType = "String"
+      expression = "\"https://monday--partial.lightning.force.com/lightning/r/Opportunity/\"&{!CoSellID}"
+    },
+  ]
+  interviewLabel = "Co-Sell Process {!$Flow.CurrentDateTime}"
+  label = "Co-Sell Process"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "CanvasMode"
+      value = {
+        stringValue = "FREE_FORM_CANVAS"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordCreates = [
+    {
+      name = "Create_Co_Sell_Opp"
+      label = "Create Co-Sell Opp"
+      locationX = 676
+      locationY = 561
+      assignRecordIdToReference = "CoSellID"
+      connector = {
+        targetReference = "Update_MA"
+      }
+      inputAssignments = [
+        {
+          field = "AccountId"
+          value = {
+            elementReference = "Get_Opp.Account.Id"
+          }
+        },
+        {
+          field = "Account_Source_Type__c"
+          value = {
+            elementReference = "Get_Opp.Account_Source_Type__c"
+          }
+        },
+        {
+          field = "Channel_Partner__c"
+          value = {
+            elementReference = "Partner_ID"
+          }
+        },
+        {
+          field = "CloseDate"
+          value = {
+            elementReference = "Get_Opp.CloseDate"
+          }
+        },
+        {
+          field = "Co_Sell_Opportunity__c"
+          value = {
+            elementReference = "RecordId"
+          }
+        },
+        {
+          field = "Company__c"
+          value = {
+            elementReference = "Get_Opp.Company__c"
+          }
+        },
+        {
+          field = "CurrencyIsoCode"
+          value = {
+            elementReference = "Get_Opp.CurrencyIsoCode"
+          }
+        },
+        {
+          field = "Expected_ARR__c"
+          value = {
+            elementReference = "Get_Opp.Expected_ARR__c"
+          }
+        },
+        {
+          field = "Expected_Discount__c"
+          value = {
+            elementReference = "Get_Opp.Expected_Discount__c"
+          }
+        },
+        {
+          field = "Expected_Plan_Id__c"
+          value = {
+            elementReference = "Get_Opp.Expected_Plan_Id__c"
+          }
+        },
+        {
+          field = "Expected_Plan_Name__c"
+          value = {
+            elementReference = "Get_Opp.Expected_Plan_Name__c"
+          }
+        },
+        {
+          field = "Expected_Plan_Period__c"
+          value = {
+            elementReference = "Get_Opp.Expected_Plan_Period__c"
+          }
+        },
+        {
+          field = "Expected_Plan_Seats__c"
+          value = {
+            elementReference = "Get_Opp.Expected_Plan_Seats__c"
+          }
+        },
+        {
+          field = "Expected_Plan_Tier__c"
+          value = {
+            elementReference = "Get_Opp.Expected_Plan_Tier__c"
+          }
+        },
+        {
+          field = "LeadSource"
+          value = {
+            elementReference = "Get_Opp.LeadSource"
+          }
+        },
+        {
+          field = "Monday_Account__c"
+          value = {
+            elementReference = "Get_Opp.Monday_Account__r.Id"
+          }
+        },
+        {
+          field = "Name"
+          value = {
+            elementReference = "Get_Opp.Name"
+          }
+        },
+        {
+          field = "Opportunity_Attribution__c"
+          value = {
+            elementReference = "Get_Opp.Opportunity_Attribution__c"
+          }
+        },
+        {
+          field = "OwnerId"
+          value = {
+            elementReference = "Owner_ID"
+          }
+        },
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            elementReference = "Get_Owner.Manager.Manager.Id"
+          }
+        },
+        {
+          field = "Pricing_Version__c"
+          value = {
+            elementReference = "Get_Opp.Pricing_Version__c"
+          }
+        },
+        {
+          field = "Probability"
+          value = {
+            numberValue = 20
+          }
+        },
+        {
+          field = "RecordTypeId"
+          value = {
+            stringValue = "0121t000000IQUbAAO"
+          }
+        },
+        {
+          field = "Region__c"
+          value = {
+            elementReference = "Get_Opp.Region__c"
+          }
+        },
+        {
+          field = "StageName"
+          value = {
+            stringValue = "Qualified"
+          }
+        },
+        {
+          field = "Type"
+          value = {
+            elementReference = "Get_Opp.Type"
+          }
+        },
+        {
+          field = "Utm_banner__c"
+          value = {
+            elementReference = "Get_Opp.Utm_banner__c"
+          }
+        },
+        {
+          field = "Utm_campaign__c"
+          value = {
+            elementReference = "Get_Opp.Utm_campaign__c"
+          }
+        },
+        {
+          field = "Utm_source__c"
+          value = {
+            elementReference = "Get_Opp.Utm_source__c"
+          }
+        },
+        {
+          field = "primary_pulse_account_id__c"
+          value = {
+            elementReference = "Get_Opp.primary_pulse_account_id__c"
+          }
+        },
+      ]
+      object = salesforce.Opportunity
+    },
+    {
+      name = "Share_Account"
+      label = "Share Account"
+      locationX = 469
+      locationY = 556
+      connector = {
+        targetReference = "Create_Co_Sell_Opp"
+      }
+      inputAssignments = [
+        {
+          field = "AccountAccessLevel"
+          value = {
+            stringValue = "Edit"
+          }
+        },
+        {
+          field = "AccountId"
+          value = {
+            elementReference = "Get_Opp.Monday_Account__r.Id"
+          }
+        },
+        {
+          field = "CaseAccessLevel"
+          value = {
+            stringValue = "None"
+          }
+        },
+        {
+          field = "OpportunityAccessLevel"
+          value = {
+            stringValue = "Read"
+          }
+        },
+        {
+          field = "RowCause"
+          value = {
+            stringValue = "Manual"
+          }
+        },
+        {
+          field = "UserOrGroupId"
+          value = {
+            elementReference = "Get_Owner.Id"
+          }
+        },
+      ]
+      object = "AccountShare"
+    },
+  ]
+  recordLookups = [
+    {
+      name = "Get_Opp"
+      label = "Get Opp"
+      locationX = 179
+      locationY = 203
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Create_Co_Sell_Opportunity"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RecordId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Opportunity
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_Owner"
+      label = "Get Owner"
+      locationX = 152
+      locationY = 563
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Share_Account"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Owner_ID"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.User
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_MA"
+      label = "Update MA"
+      locationX = 808
+      locationY = 558
+      connector = {
+        targetReference = "Co_Sell_Process"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Get_Opp.Account.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Partner__c"
+          value = {
+            elementReference = "Owner_ID"
+          }
+        },
+      ]
+      object = salesforce.Account
+    },
+  ]
+  screens = [
+    {
+      name = "Co_Sell_Process"
+      label = "Co-Sell Process"
+      locationX = 943
+      locationY = 561
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "Successmessage"
+          fieldText = "<p><b style=\"font-size: 16px; color: rgb(63, 189, 12);\">Co-Sell Opportunity was created successfully! :)</b></p><p><br></p><p><a href=\"https://monday--partial.lightning.force.com/lightning/r/Opportunity/{!CoSellID}/view\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"font-size: 14px; color: rgb(46, 26, 228);\"><b>Opp Link</b></a></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Create_Co_Sell_Opportunity"
+      label = "Create Co-Sell Opportunity"
+      locationX = 178
+      locationY = 368
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Get_Owner"
+      }
+      fields = [
+        {
+          name = "Page1"
+          fieldText = "<p><b>Please choose the Partner and the user that should be the owner of the opportunity:</b></p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Partner"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "Channel_Partner__c"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Partner"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "Opportunity"
+              }
+            },
+            {
+              name = "required"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "Partner_ID"
+              name = "recordId"
+            },
+          ]
+        },
+        {
+          name = "OpportunityOwner"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "Owner_s_Manager__c"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Opportunity Owner"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "Opportunity"
+              }
+            },
+            {
+              name = "required"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "Owner_ID"
+              name = "recordId"
+            },
+          ]
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "Get_Opp"
+    }
+  }
+  status = "Active"
+  variables = [
+    {
+      name = "CoSellID"
+      dataType = "String"
+      isCollection = false
+      isInput = false
+      isOutput = false
+    },
+    {
+      name = "Owner_ID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "Partner_ID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "RecordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+  ]
+}

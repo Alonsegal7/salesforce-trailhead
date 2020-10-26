@@ -1,0 +1,12 @@
+salesforce.LightningMessageChannel dfsle__UpdateNotifications {
+  fullName = "dfsle__UpdateNotifications"
+  description = "Updates changes made to notification options settings"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "Payload to update notifications"
+      fieldName = "notifications"
+    },
+  ]
+  masterLabel = "UpdateNotifications"
+}

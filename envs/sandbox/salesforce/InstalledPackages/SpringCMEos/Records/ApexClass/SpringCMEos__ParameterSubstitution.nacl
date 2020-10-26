@@ -1,7 +1,0 @@
-salesforce.ApexClass SpringCMEos__ParameterSubstitution {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 38
-  status = "Active"
-  fullName = "SpringCMEos__ParameterSubstitution"
-  content = "(hidden)"
-}

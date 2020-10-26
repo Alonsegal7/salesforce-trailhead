@@ -29,6 +29,10 @@ salesforce.CustomObjectTranslation Opportunity_Snapshot__c_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity_Snapshot__c.field.Day_of_Month__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity_Snapshot__c.field.End_of_Month__c
     },
     {

@@ -1,0 +1,9 @@
+salesforce.ApexPage dfsle__SetupSplash {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "DocuSign Setup Splash Page"
+  fullName = "dfsle__SetupSplash"
+  content = file("salesforce/InstalledPackages/dfsle/Records/ApexPage/dfsle__SetupSplash.page")
+}

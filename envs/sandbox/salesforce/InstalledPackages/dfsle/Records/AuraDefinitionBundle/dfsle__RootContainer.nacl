@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle dfsle__RootContainer {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "RootContainer"
+  fullName = "dfsle__RootContainer"
+  type = "Component"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+  helperContent = "(hidden)"
+}

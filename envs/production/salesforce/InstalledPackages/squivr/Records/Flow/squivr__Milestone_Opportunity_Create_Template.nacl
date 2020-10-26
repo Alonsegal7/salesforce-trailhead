@@ -6,7 +6,7 @@ salesforce.Flow squivr__Milestone_Opportunity_Create_Template {
       label = "Create Opportunity Milestones"
       locationX = 175
       locationY = 506
-      actionName = salesforce.ApexClass.instance.squivr__MilestoneFlow
+      actionName = "MilestoneFlow"
       actionType = "apex"
       inputParameters = [
         {

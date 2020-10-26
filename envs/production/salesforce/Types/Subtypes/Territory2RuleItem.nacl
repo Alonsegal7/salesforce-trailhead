@@ -28,6 +28,7 @@ type salesforce.Territory2RuleItem {
         "Account.ARR__c",
         "Account.AccountNumber",
         "Account.AccountSource",
+        "Account.Account_Claimed_ARR_Partners__c",
         "Account.Account_Claimed_ARR__c",
         "Account.Account_Country__c",
         "Account.Account_Disabled_Timestamp__c",
@@ -77,6 +78,7 @@ type salesforce.Territory2RuleItem {
         "Account.CSM__c",
         "Account.CS_Segment__c",
         "Account.Capacity__c",
+        "Account.Churn_Reason__c",
         "Account.CloneSourceId",
         "Account.Cluster__c",
         "Account.Collection_Temp__c",
@@ -249,6 +251,7 @@ type salesforce.Territory2RuleItem {
         "Account.Parent_Domain__c",
         "Account.Partner_Attempting_ttimestamp__c",
         "Account.Partner_CSM__c",
+        "Account.Partner_Call_Booked_Timestamp__c",
         "Account.Partner_Company_Status_Change_Timestamp__c",
         "Account.Partner_Company_Status__c",
         "Account.Partner_Contacted_Timestamp__c",
@@ -408,13 +411,6 @@ type salesforce.Territory2RuleItem {
         "Account.tci_csmrg__CustomerPriority__c",
         "Account.tci_csmrg__NumberofLocations__c",
         "Account.utm_banner__c",
-        "Account.zisf__Company_ID__c",
-        "Account.zisf__ZoomInfo_Complete_Status__c",
-        "Account.zisf__ZoomInfo_Industry__c",
-        "Account.zisf__ZoomInfo_Last_Clean_Run__c",
-        "Account.zisf__Zoom_Clean_Status__c",
-        "Account.zisf__zoom_id__c",
-        "Account.zisf__zoom_lastupdated__c",
       ]
     }
     foreignKeyDomain = [

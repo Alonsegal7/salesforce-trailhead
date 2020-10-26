@@ -7,7 +7,7 @@ salesforce.AnalyticsSettings {
   canEnableSavedView = false
   canExploreDataConversationally = false
   canShareAppsWithCommunities = false
-  canSubscribeDashboardWidgets = false
+  
   canViewThumbnailAssets = false
   enableAutoCompleteCombo = true
   enableDashboardComponentSnapshot = true
@@ -27,6 +27,6 @@ salesforce.AnalyticsSettings {
   enableUseOldChartsLookAndFeel = false
   enableWaveReplication = true
   enableWaveSharingInheritance = false
-  enableWaveTemplate = false
+  
   enableWaveTrendedDatasetCleanup = false
 }

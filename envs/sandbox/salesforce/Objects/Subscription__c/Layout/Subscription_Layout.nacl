@@ -148,6 +148,10 @@ salesforce.Layout Subscription_Layout {
               behavior = "Edit"
               field = salesforce.Subscription__c.field.BigBrain_Id__c
             },
+            {
+              behavior = "Edit"
+              field = salesforce.Subscription__c.field.Manual_Trigger__c
+            },
           ]
         },
         {

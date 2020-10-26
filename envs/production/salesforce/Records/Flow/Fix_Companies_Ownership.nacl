@@ -80,13 +80,6 @@ salesforce.Flow Fix_Companies_Ownership {
           }
         },
         {
-          field = "Owner_s_Email__c"
-          operator = "EqualTo"
-          value = {
-            stringValue = "alexd@monday.com"
-          }
-        },
-        {
           field = "RecordTypeId"
           operator = "EqualTo"
           value = {
@@ -97,7 +90,16 @@ salesforce.Flow Fix_Companies_Ownership {
           field = "Strategic__c"
           operator = "EqualTo"
           value = {
+            
             booleanValue = false
+          }
+        },
+        {
+          field = "Owner_s_Email__c"
+          operator = "EqualTo"
+          value = {
+            
+            stringValue = "alexd@monday.com"
           }
         },
       ]

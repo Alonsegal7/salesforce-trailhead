@@ -280,7 +280,7 @@ salesforce.Flow Create_Monday_Account_Snapshots {
     }
     triggerType = "Scheduled"
   }
-  status = "Active"
+  status = "Obsolete"
   textTemplates = [
     {
       name = "EmailBodyComplete"

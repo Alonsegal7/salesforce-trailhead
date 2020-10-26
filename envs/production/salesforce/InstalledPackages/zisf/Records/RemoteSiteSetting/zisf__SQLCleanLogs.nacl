@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting zisf__SQLCleanLogs {
-  fullName = "zisf__SQLCleanLogs"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://go.zoominfo.com"
-}

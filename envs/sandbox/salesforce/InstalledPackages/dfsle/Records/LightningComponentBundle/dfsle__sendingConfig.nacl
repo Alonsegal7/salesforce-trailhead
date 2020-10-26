@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__sendingConfig {
+  fullName = "dfsle__sendingConfig"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingConfig/sendingConfig.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingConfig/sendingConfig.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingConfig/sendingConfig.html"
+      },
+    ]
+  }
+}

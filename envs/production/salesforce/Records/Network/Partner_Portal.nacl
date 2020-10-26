@@ -10,7 +10,7 @@ salesforce.Network Partner_Portal {
   enableDirectMessages = true
   enableGuestChatter = false
   enableGuestFileAccess = false
-  enableGuestMemberVisibility = true
+  enableGuestMemberVisibility = false
   enableInvitation = false
   enableKnowledgeable = false
   enableMemberVisibility = true

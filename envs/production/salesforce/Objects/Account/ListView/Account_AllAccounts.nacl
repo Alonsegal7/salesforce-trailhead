@@ -23,11 +23,6 @@ salesforce.ListView Account_AllAccounts {
       operation = "equals"
       value = "Account.Company"
     },
-    {
-      field = "ACCOUNT.EMPLOYEES"
-      operation = "greaterOrEqual"
-      value = "500"
-    },
   ]
   label = "All Companies"
   sharedTo = {

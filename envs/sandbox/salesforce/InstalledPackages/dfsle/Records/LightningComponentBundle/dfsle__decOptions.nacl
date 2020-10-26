@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decOptions {
+  fullName = "dfsle__decOptions"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decOptions/decOptions.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decOptions/decOptions.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decOptions/decOptions.css"
+      },
+    ]
+  }
+}

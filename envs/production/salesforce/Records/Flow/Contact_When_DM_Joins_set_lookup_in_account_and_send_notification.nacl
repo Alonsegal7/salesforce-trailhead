@@ -169,6 +169,12 @@ salesforce.Flow Contact_When_DM_Joins_set_lookup_in_account_and_send_notificatio
       }
     },
     {
+      name = "CanvasMode"
+      value = {
+        stringValue = "FREE_FORM_CANVAS"
+      }
+    },
+    {
       name = "OriginBuilderType"
       value = {
         stringValue = "LightningFlowBuilder"
@@ -256,7 +262,7 @@ Contact: https://monday.lightning.force.com/lightning/r/Contact/{!$Record.Id}/vi
 Title: {!$Record.Title}
 Email: {!$Record.Email}
 
-Account: https://monday.lightning.force.com/lightning/r/Account/{!$Record.AccountId}/View
+Account: https://monday.lightning.force.com/lightning/r/Account/{!$Record.AccountId}/view
 Account Status: {!get_account.Monday_Account_Status__c}
 Account Plan: {!get_account.Plan_Name__c}
 Account Country: {!get_account.BillingCountry}
@@ -297,7 +303,7 @@ Senior titles in the account: {!get_account.Number_of_titles_added__c}
       isInput = false
       isOutput = false
       value = {
-        stringValue = "A new {!$Record.Seniority__c} has been added to your account!"
+        stringValue = "A new {!$Record.Seniority__c} has been added to your account {!get_account.Name}"
       }
     },
   ]

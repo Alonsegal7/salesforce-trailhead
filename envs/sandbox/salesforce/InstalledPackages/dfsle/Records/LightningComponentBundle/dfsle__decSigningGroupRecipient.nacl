@@ -1,0 +1,15 @@
+salesforce.LightningComponentBundle dfsle__decSigningGroupRecipient {
+  fullName = "dfsle__decSigningGroupRecipient"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decSigningGroupRecipient/decSigningGroupRecipient.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decSigningGroupRecipient/decSigningGroupRecipient.html"
+      },
+    ]
+  }
+}

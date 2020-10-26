@@ -16,10 +16,6 @@ salesforce.WorkflowAlert Sale__c_Partners_celebration {
       type = "user"
     },
     {
-      recipient = "naomida@monday.com"
-      type = "user"
-    },
-    {
       recipient = "ophir@monday.com"
       type = "user"
     },

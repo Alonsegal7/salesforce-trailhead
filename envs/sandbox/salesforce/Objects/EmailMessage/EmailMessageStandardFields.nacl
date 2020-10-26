@@ -308,7 +308,7 @@ type salesforce.EmailMessage {
     updateable = true
     unique = false
     caseSensitive = false
-    length = 255
+    length = 765
     queryable = true
   }
   salesforce.Text ThreadIdentifier {
@@ -319,7 +319,7 @@ type salesforce.EmailMessage {
     updateable = true
     unique = false
     caseSensitive = false
-    length = 255
+    length = 765
     queryable = true
   }
   salesforce.Checkbox IsClientManaged {
@@ -375,6 +375,15 @@ type salesforce.EmailMessage {
       salesforce.Survey__c,
       salesforce.Target__c,
       salesforce.Team__c,
+      salesforce.dfsle__AgreementConfiguration__c,
+      salesforce.dfsle__BulkList__c,
+      salesforce.dfsle__BulkStatus__c,
+      salesforce.dfsle__CustomParameterMap__c,
+      salesforce.dfsle__EnvelopeConfiguration__c,
+      salesforce.dfsle__EnvelopeStatus__c,
+      salesforce.dfsle__GenTemplate__c,
+      salesforce.dfsle__Log__c,
+      salesforce.dfsle__RecipientStatus__c,
       salesforce.rh2__PS_Export_Rollups__c,
       salesforce.rh2__PS_Rollup_Dummy__c,
       salesforce.valt__Valooto_Opportunity_Answer__c,

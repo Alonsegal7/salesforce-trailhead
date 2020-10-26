@@ -1,0 +1,295 @@
+salesforce.Flow Monday_Solution_Picker {
+  fullName = "Monday_Solution_Picker"
+  assignments = [
+    {
+      name = "Set_Params"
+      label = "Set Params"
+      locationX = 176
+      locationY = 158
+      assignmentItems = [
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:campaign"
+          }
+        },
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:brand"
+          }
+        },
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:data_mapping"
+          }
+        },
+        {
+          assignToReference = "iconsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "standard:investment_account"
+          }
+        },
+        {
+          assignToReference = "labelsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "Marketing"
+          }
+        },
+        {
+          assignToReference = "labelsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "Creative"
+          }
+        },
+        {
+          assignToReference = "labelsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "PMO"
+          }
+        },
+        {
+          assignToReference = "labelsCollection"
+          operator = "Add"
+          value = {
+            stringValue = "Sales Operations"
+          }
+        },
+        {
+          assignToReference = "subtitleCollection"
+          operator = "Add"
+          value = {
+            stringValue = "Marketing"
+          }
+        },
+        {
+          assignToReference = "subtitleCollection"
+          operator = "Add"
+          value = {
+            stringValue = "Creative"
+          }
+        },
+        {
+          assignToReference = "subtitleCollection"
+          operator = "Add"
+          value = {
+            stringValue = "PMO"
+          }
+        },
+        {
+          assignToReference = "subtitleCollection"
+          operator = "Add"
+          value = {
+            stringValue = "Sales Operations"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Monday_Solution"
+      }
+    },
+  ]
+  interviewLabel = "Monday Solution Picker {!$Flow.CurrentDateTime}"
+  label = "Monday Solution Picker"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "CanvasMode"
+      value = {
+        stringValue = "AUTO_LAYOUT_CANVAS"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordUpdates = [
+    {
+      name = "Update_Opportunity"
+      label = "Update Opportunity"
+      locationX = 176
+      locationY = 398
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Monday_Solutions_Offered__c"
+          value = {
+            elementReference = "Solution_Picker.value"
+          }
+        },
+      ]
+      object = salesforce.Opportunity
+    },
+  ]
+  screens = [
+    {
+      name = "Monday_Solution"
+      label = "Monday Solution"
+      locationX = 176
+      locationY = 278
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Update_Opportunity"
+      }
+      fields = [
+        {
+          name = "Solution_Picker"
+          extensionName = "profFlow_vNav:visualNav"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "choiceIcons"
+              value = {
+                elementReference = "iconsCollection"
+              }
+            },
+            {
+              name = "choiceLabels"
+              value = {
+                elementReference = "labelsCollection"
+              }
+            },
+            {
+              name = "choiceSubLabels"
+              value = {
+                elementReference = "subtitleCollection"
+              }
+            },
+            {
+              name = "iconSize"
+              value = {
+                stringValue = "medium"
+              }
+            },
+            {
+              name = "iconVariant"
+              value = {
+                stringValue = "square"
+              }
+            },
+            {
+              name = "showIcons"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "showSubLabel"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "choiceValues"
+              value = {
+                elementReference = "labelsCollection"
+              }
+            },
+            {
+              name = "buttonSize"
+              value = {
+                numberValue = 100
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Solution_Fit"
+          extensionName = "flowruntime:slider"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Solution Fit"
+              }
+            },
+            {
+              name = "max"
+              value = {
+                numberValue = 10
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Solution_Feedback_Long"
+          fieldText = "Solution Feedback"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
+      ]
+      showFooter = true
+      showHeader = false
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 0
+    connector = {
+      targetReference = "Set_Params"
+    }
+  }
+  status = "Draft"
+  variables = [
+    {
+      name = "iconsCollection"
+      dataType = "String"
+      isCollection = true
+      isInput = false
+      isOutput = false
+    },
+    {
+      name = "labelsCollection"
+      dataType = "String"
+      isCollection = true
+      isInput = false
+      isOutput = false
+    },
+    {
+      name = "recordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+    },
+    {
+      name = "subtitleCollection"
+      dataType = "String"
+      isCollection = true
+      isInput = false
+      isOutput = false
+    },
+  ]
+}

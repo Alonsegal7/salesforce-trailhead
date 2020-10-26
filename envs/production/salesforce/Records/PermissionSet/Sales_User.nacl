@@ -53,6 +53,11 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Account.Account_Claimed_ARR_Partners__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Account.Account_Claimed_ARR__c"
       readable = "false"
     },
@@ -304,6 +309,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Account.Capacity__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Account.Churn_Reason__c"
       readable = "false"
     },
     {
@@ -1188,6 +1198,11 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Account.Partner_Call_Booked_Timestamp__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Account.Partner_Company_Status_Change_Timestamp__c"
       readable = "false"
     },
@@ -1923,41 +1938,6 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
-      field = "Account.zisf__Company_ID__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Account.zisf__ZoomInfo_Complete_Status__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Account.zisf__ZoomInfo_Industry__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Account.zisf__ZoomInfo_Last_Clean_Run__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Account.zisf__Zoom_Clean_Status__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Account.zisf__zoom_id__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Account.zisf__zoom_lastupdated__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
       field = "AccountContactRelation.EndDate"
       readable = "false"
     },
@@ -1999,6 +1979,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Account_Snapshot__c.Allocated__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Account_Snapshot__c.Belongs_to_Viewed_Company__c"
       readable = "false"
     },
     {
@@ -2293,6 +2278,11 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Asset.LocationId"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Asset.ManufactureDate"
       readable = "false"
     },
@@ -2569,6 +2559,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Billing_Entity__c.Temp_Update__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Billing_Entity__c.Trigger_Sync_to_Priority__c"
       readable = "false"
     },
     {
@@ -3558,46 +3553,6 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
-      field = "Contact.zisf__Person_Has_Moved__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Contact.zisf__ZoomInfo_Complete_Status__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Contact.zisf__ZoomInfo_Email__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Contact.zisf__ZoomInfo_Last_Clean_Run__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Contact.zisf__ZoomInfo_Phone__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Contact.zisf__Zoom_Clean_Status__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Contact.zisf__zoom_id__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Contact.zisf__zoom_lastupdated__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
       field = "ContactPointAddress.ActiveFromDate"
       readable = "false"
     },
@@ -3649,6 +3604,16 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "ContactPointAddress.ParentId"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "ContactPointAddress.PreferenceRank"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "ContactPointAddress.UsageType"
       readable = "false"
     },
     {
@@ -3738,6 +3703,16 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "ContactPointEmail.PreferenceRank"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "ContactPointEmail.UsageType"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "ContactPointPhone.ActiveFromDate"
       readable = "false"
     },
@@ -3809,6 +3784,16 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "ContactPointPhone.PhoneType"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "ContactPointPhone.PreferenceRank"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "ContactPointPhone.UsageType"
       readable = "false"
     },
     {
@@ -3999,6 +3984,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Contract.Pulse_Contract_Id__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Contract.Regional_Company__c"
       readable = "false"
     },
     {
@@ -7853,6 +7843,11 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Lead.Qualified_for_Solution__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Lead.Qualified_timestamp__c"
       readable = "false"
     },
@@ -8523,56 +8518,6 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
-      field = "Lead.zisf__Person_Has_Moved__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Lead.zisf__ZoomInfo_Complete_Status__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Lead.zisf__ZoomInfo_Email__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Lead.zisf__ZoomInfo_Industry__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Lead.zisf__ZoomInfo_Last_Clean_Run__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Lead.zisf__ZoomInfo_Phone__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Lead.zisf__ZoomInfo_Trigger__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Lead.zisf__Zoom_Clean_Status__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Lead.zisf__zoom_id__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "Lead.zisf__zoom_lastupdated__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
       field = "Lead_Registration__c.CPM__c"
       readable = "false"
     },
@@ -8644,6 +8589,71 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Lead_Registration__c.Title__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.CloseDate"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.ConstructionEndDate"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.ConstructionStartDate"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.Description"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.DrivingDirections"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.Location"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.LocationLevel"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.OpenDate"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.ParentLocationId"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.PossessionDate"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.RemodelEndDate"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.RemodelStartDate"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Location.TimeZone"
       readable = "false"
     },
     {
@@ -8878,6 +8888,11 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Opportunity.ARR_at_Risk__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.About_Company__c"
       readable = "false"
     },
@@ -8998,6 +9013,11 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Opportunity.Channel_Partner__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Claimed_ARR__c"
       readable = "false"
     },
@@ -9039,6 +9059,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Opportunity.Cluster__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Co_Sell_Opportunity__c"
       readable = "false"
     },
     {
@@ -9099,6 +9124,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Opportunity.Created_Date_4_9_20__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Created_From_New_Opp_flow__c"
       readable = "false"
     },
     {
@@ -9279,6 +9309,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Opportunity.Discovery_timestamp__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Downgrade_Opportunity__c"
       readable = "false"
     },
     {
@@ -9658,6 +9693,11 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Opportunity.Monday_Item_ID__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Monday_Solutions_Offered__c"
       readable = "false"
     },
@@ -9723,7 +9763,17 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Opportunity.Opportunity_Open_Reason_from_flow__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Opportunity_Reseller__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Opportunity_Risk_Level__c"
       readable = "false"
     },
     {
@@ -9734,6 +9784,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Opportunity.Opportunity_Source_Type__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Opportunity_Type_2__c"
       readable = "false"
     },
     {
@@ -9819,6 +9874,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Opportunity.Pains__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Parent_Opportunity__c"
       readable = "false"
     },
     {
@@ -10138,6 +10198,11 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Opportunity.Test_monday_Integration__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Test_number__c"
       readable = "false"
     },
@@ -10444,6 +10509,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Opportunity_Snapshot__c.Commit__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity_Snapshot__c.Day_of_Month__c"
       readable = "false"
     },
     {
@@ -10844,6 +10914,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Partner_SO_Request__c.Billing_Street__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Partner_SO_Request__c.Comment_for_CPM__c"
       readable = "false"
     },
     {
@@ -11553,7 +11628,7 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
-      field = "Quote.Legal_Indication__c"
+      field = "Quote.Legal_Agreement_Type__c"
       readable = "false"
     },
     {
@@ -11639,6 +11714,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Quote.Priority_SO_Final_Amount__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Quote.Pro_Rated_Different_Price__c"
       readable = "false"
     },
     {
@@ -11903,12 +11983,22 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "QuoteLineItem.Training_Hours__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "QuoteLineItem.Trigger_sync_quote_line_to_priority__c"
       readable = "false"
     },
     {
       editable = "false"
       field = "QuoteLineItem.Unique_Key__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "QuoteLineItem.Unit_Price__c"
       readable = "false"
     },
     {
@@ -13063,6 +13153,11 @@ salesforce.PermissionSet Sales_User {
     },
     {
       editable = "false"
+      field = "Subscription__c.Manual_Trigger__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Subscription__c.Migrated_Discount__c"
       readable = "false"
     },
@@ -13134,6 +13229,11 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "Subscription__c.Pulse_Contract_Id__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Subscription__c.Seats_Mismatch__c"
       readable = "false"
     },
     {
@@ -14929,831 +15029,6 @@ salesforce.PermissionSet Sales_User {
     {
       editable = "false"
       field = "valt__Valooto_Workflow__c.valt__User__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__FmcDefaultValue__c.zisf__Job_function__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__FmcDefaultValue__c.zisf__LocationTree__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__FmcDefaultValue__c.zisf__Location__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__FmcDefaultValue__c.zisf__Management_Level__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__FmcDefaultValue__c.zisf__job_title__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__Account_Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__Contact_Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__Contact_Updated_Filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__Lead_Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__Lead_Updated_Filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__Profile_ID__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__accounts_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__accounts_clean_filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__accounts_clean_report__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__accounts_clean_rule__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__accounts_zoom_record_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__contacts_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__contacts_clean_filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__contacts_clean_report__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__contacts_clean_rule__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__contacts_zoom_record_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__leads_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__leads_clean_filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__leads_clean_report__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__leads_clean_rule__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Clean_Settings__c.zisf__leads_zoom_record_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Account_FMC_Persist_Search__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Account_FMC_Tab_Disable__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Account_Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Account_Overview_Tab_Disable__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Contact_Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Contact_Overview_Tab_Disable__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Contact_Web_Mentions_Tab_Disable__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Contact_Web_Mentions_as_Default__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Enable_Check_For_Duplicated_Option__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Find_More_Contacts_as_Default__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Lead_Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Lead_Overview_Tab_Disable__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Lead_Web_Mentions_Tab_Disable__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Lead_Web_Mentions_as_Default__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__Match_Duplicate_Leads_in_FMC__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__SSO_url__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__ZoomInfo_Tab_Company_Search_Disable__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__ZoomInfo_Tab_Company_Search_as_Default__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__ZoomInfo_Tab_People_Search_Disable__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__contributer__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__token__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Custom_Settings__c.zisf__token_expire_time__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Account_Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Account_Updated_Filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Contact_Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Contact_Updated_Filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Lead_Mapping__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__Lead_Updated_Filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_clean_filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_clean_report__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_clean_rule__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__accounts_zoom_record_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_clean_filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_clean_report__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_clean_rule__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__contacts_zoom_record_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_clean_filter__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_clean_report__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_clean_rule__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__leads_zoom_record_clean_active__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__token__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo_Inbound_Settings__c.zisf__token_expire_time__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Account__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Calculated_Job_Function__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Calculated_Management_Level__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_City__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Country__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Description__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Employee_Count__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Employee_Range__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Fax__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Industry__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Is_Defunct__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_NAICS_Codes__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Parent_ID__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Parent_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Phone__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Ranking__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Revenue_Range__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Revenue__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_SIC_Codes__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_State__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Street__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Ticker__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Ultimate_Parent_ID__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Ultimate_Parent_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Website__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Company_Zip_Code__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Confidence_Match_Score__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Contact__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Email_Matches_Company_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Email_Matches_Person_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Email__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__First_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Free_Email__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Generic_Email__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Job_Function__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Job_Title__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Known_First_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Known_Full_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Known_Last_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Last_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Lead__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Malformed_Email__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Management_Level__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Match_Inputs__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Normalized_First_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Normalized_Last_Name__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_City__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Country__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Direct_Phone__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Education__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Employment_History__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Gender__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Has_Moved__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Image_URL__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Looks_Like_EU__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Phone__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_State__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Street__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Within_EU__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Person_Zip_Code__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__ZoomInfo_Company_URL__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__ZoomInfo_Last_Verified_Date__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__ZoomInfo_Person_ID__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__ZoomInfo_Person_URL__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__ZoomInfo_Source2__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__ZoomInfo_Source__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomInfo__c.zisf__Zoominfo_Company_ID__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__JWT_token__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__JWT_token_expire__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__id_token__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__id_token_expire__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__modified_ts__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__session_token__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__session_token_expire__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__user_id__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__zoom_session_token_ext__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__ZoomSessions__c.zisf__zoom_username__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__Zoom_Scheduler__c.zisf__Account_Job_Cron_Expr__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__Zoom_Scheduler__c.zisf__Account_Job_Cron_ID__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__Zoom_Scheduler__c.zisf__CronJobList__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__DateTime_Finished__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__Errors__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__Errors_logs__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__Inactive__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__Job_Status__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__Job_Type__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__Matched_Only_Company__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__Matched__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__Records__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__Unmatched__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__fields_updated__c"
-      readable = "false"
-    },
-    {
-      editable = "false"
-      field = "zisf__zicCleanJob__c.zisf__logs__c"
       readable = "false"
     },
   ]

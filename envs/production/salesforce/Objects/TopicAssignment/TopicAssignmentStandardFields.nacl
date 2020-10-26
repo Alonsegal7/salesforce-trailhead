@@ -139,16 +139,6 @@ type salesforce.TopicAssignment {
       salesforce.yw__YeswareHistoricalSync__c,
       salesforce.yw__YeswareOpportunitySync__c,
       salesforce.yw__YeswareTaskSync__c,
-      salesforce.zisf__FmcDefaultValue__c,
-      salesforce.zisf__ZoomAppTokenStorage__c,
-      salesforce.zisf__ZoomInfo_Clean_Settings__c,
-      salesforce.zisf__ZoomInfo_Custom_Settings__c,
-      salesforce.zisf__ZoomInfo_Inbound_Settings__c,
-      salesforce.zisf__ZoomInfo__c,
-      salesforce.zisf__ZoomSessions__c,
-      salesforce.zisf__ZoomTokenStorage__c,
-      salesforce.zisf__Zoom_Scheduler__c,
-      salesforce.zisf__zicCleanJob__c,
     ]
     createable = true
     updateable = false

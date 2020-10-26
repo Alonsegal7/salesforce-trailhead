@@ -144,9 +144,17 @@ salesforce.Flow Fix_Blank_Parent_Company_on_Account {
       }
       filters = [
         {
+          field = "ParentId"
+          operator = "IsNull"
+          value = {
+            booleanValue = true
+          }
+        },
+        {
           field = "Company__c"
           operator = "IsNull"
           value = {
+            
             booleanValue = false
           }
         },
@@ -154,14 +162,8 @@ salesforce.Flow Fix_Blank_Parent_Company_on_Account {
           field = "Company__c"
           operator = "NotEqualTo"
           value = {
+            
             stringValue = "0011t00000cRhxiAAC"
-          }
-        },
-        {
-          field = "ParentId"
-          operator = "IsNull"
-          value = {
-            booleanValue = true
           }
         },
         {

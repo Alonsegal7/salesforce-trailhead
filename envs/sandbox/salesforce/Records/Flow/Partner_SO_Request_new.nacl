@@ -135,6 +135,12 @@ salesforce.Flow Partner_SO_Request_new {
       }
     },
     {
+      name = "CanvasMode"
+      value = {
+        stringValue = "FREE_FORM_CANVAS"
+      }
+    },
+    {
       name = "OriginBuilderType"
       value = {
         stringValue = "LightningFlowBuilder"
@@ -301,12 +307,6 @@ salesforce.Flow Partner_SO_Request_new {
           field = "Type_of_Engagement__c"
           value = {
             elementReference = "Type_of_Engagement_1"
-          }
-        },
-        {
-          field = "VAT__c"
-          value = {
-            elementReference = "Vat_Number"
           }
         },
         {
@@ -550,27 +550,6 @@ salesforce.Flow Partner_SO_Request_new {
           fieldText = "Zip/Postal Code"
           fieldType = "InputField"
           isRequired = true
-          visibilityRule = {
-            conditionLogic = "and"
-            conditions = [
-              {
-                leftValueReference = "Is_New_Customer.value"
-                operator = "EqualTo"
-                rightValue = {
-                  booleanValue = true
-                }
-              },
-            ]
-          }
-        },
-        {
-          name = "Vat_Number"
-          dataType = "Number"
-          fieldText = "VAT #"
-          fieldType = "InputField"
-          helpText = "<p>Put 0 if there is no need for VAT #.</p>"
-          isRequired = true
-          scale = 0
           visibilityRule = {
             conditionLogic = "and"
             conditions = [
@@ -1011,7 +990,7 @@ salesforce.Flow Partner_SO_Request_new {
       targetReference = "Get_Opp"
     }
   }
-  status = "Draft"
+  status = "Active"
   variables = [
     {
       name = "New_Customer"

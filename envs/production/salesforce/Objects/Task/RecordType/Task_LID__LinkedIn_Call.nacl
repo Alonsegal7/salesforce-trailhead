@@ -162,7 +162,7 @@ salesforce.RecordType Task_LID__LinkedIn_Call {
           default = false
         },
         {
-          fullName = "Offsite Hour"
+          fullName = "Office Hour"
           default = false
         },
         {

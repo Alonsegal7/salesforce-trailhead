@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting SpringCMEos__SpringCM_prod_rest_us11 {
-  fullName = "SpringCMEos__SpringCM_prod_rest_us11"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://restus11.springcm.com"
-}

@@ -1,0 +1,12 @@
+salesforce.LightningMessageChannel dfsle__DecDeleteRecipient {
+  fullName = "dfsle__DecDeleteRecipient"
+  description = "Handles deletion of recipients in Envelope Templates"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "Index of document in configuration data to indicate which one to remove"
+      fieldName = "index"
+    },
+  ]
+  masterLabel = "DecDeleteRecipient"
+}

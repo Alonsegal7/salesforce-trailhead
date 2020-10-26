@@ -141,7 +141,7 @@ salesforce.RecordType Task_Account_Management_Task {
           default = false
         },
         {
-          fullName = "Offsite Hour"
+          fullName = "Office Hour"
           default = false
         },
         {

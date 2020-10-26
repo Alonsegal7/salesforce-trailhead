@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting SpringCMEos__SpringCM_uat_login {
-  fullName = "SpringCMEos__SpringCM_uat_login"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://loginuat.springcm.com"
-}

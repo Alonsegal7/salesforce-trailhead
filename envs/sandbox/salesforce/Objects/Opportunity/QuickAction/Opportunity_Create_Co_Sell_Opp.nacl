@@ -1,0 +1,10 @@
+salesforce.QuickAction Opportunity_Create_Co_Sell_Opp {
+  fullName = "Opportunity.Create_Co_Sell_Opp"
+  flowDefinition = "Co_Sell_Process"
+  label = "Create Co-Sell Opp"
+  optionsCreateFeedItem = false
+  type = "Flow"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

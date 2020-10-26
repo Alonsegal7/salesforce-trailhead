@@ -5,8 +5,8 @@ salesforce.SecuritySettings {
   enableAuditFieldsInactiveOwner = true
   enableAuraSecureEvalPref = false
   enableRequireHttpsConnection = true
-  isTLSv12Required = false
-  isTLSv12RequiredCommunities = true
+  
+  
   networkAccess = {
     ipRanges = [
       {
@@ -73,7 +73,7 @@ salesforce.SecuritySettings {
     referrerPolicy = true
     requireHttpOnly = false
     requireHttps = true
-    securityCentralKillSession = true
+    
     sessionTimeout = "TwelveHours"
   }
   singleSignOnSettings = {

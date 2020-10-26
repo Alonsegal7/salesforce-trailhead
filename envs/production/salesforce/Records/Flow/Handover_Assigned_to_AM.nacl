@@ -409,6 +409,22 @@ salesforce.Flow Handover_Assigned_to_AM {
             {
               name = "implicit"
               value = {
+                booleanValue = true
+              }
+            },
+          ]
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            
+            elementReference = "myVariable_current.Company__c"
+          }
+        },
+        {
+          processMetadataValues = [
+            {
+              name = "implicit"
+              value = {
                 booleanValue = false
               }
             },
@@ -452,22 +468,8 @@ salesforce.Flow Handover_Assigned_to_AM {
           field = "Accounts_transitioned__c"
           operator = "EqualTo"
           value = {
+            
             booleanValue = false
-          }
-        },
-        {
-          processMetadataValues = [
-            {
-              name = "implicit"
-              value = {
-                booleanValue = true
-              }
-            },
-          ]
-          field = "Id"
-          operator = "EqualTo"
-          value = {
-            elementReference = "myVariable_current.Company__c"
           }
         },
       ]

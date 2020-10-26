@@ -1,7 +1,0 @@
-salesforce.CustomTab SpringCMEos__SpringCM_Viewer {
-  fullName = "SpringCMEos__SpringCM_Viewer"
-  description = "View SpringCM directly form Salesforce within this tab."
-  label = "SpringCM Files"
-  motif = "Custom38: Camera"
-  page = "SpringCMEos__SpringCM_ViewerTab"
-}

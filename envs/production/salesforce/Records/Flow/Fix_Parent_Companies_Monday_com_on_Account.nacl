@@ -144,22 +144,24 @@ salesforce.Flow Fix_Parent_Companies_Monday_com_on_Account {
       }
       filters = [
         {
+          field = "ParentId"
+          operator = "EqualTo"
+          value = {
+            
+            stringValue = "0011t00000cRhxiAAC"
+          }
+        },
+        {
           field = "Company__c"
           operator = "IsNull"
           value = {
+            
             booleanValue = false
           }
         },
         {
           field = "Company__c"
           operator = "NotEqualTo"
-          value = {
-            stringValue = "0011t00000cRhxiAAC"
-          }
-        },
-        {
-          field = "ParentId"
-          operator = "EqualTo"
           value = {
             stringValue = "0011t00000cRhxiAAC"
           }

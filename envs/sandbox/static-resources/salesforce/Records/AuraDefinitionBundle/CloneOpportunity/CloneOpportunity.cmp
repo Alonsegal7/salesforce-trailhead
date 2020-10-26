@@ -5,7 +5,7 @@
 	<aura:attribute name="clonedOppRecordId" type="Id"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
     <aura:attribute name="errors" type="Object"/>
-    <aura:attribute name="fields" type="String[]" default="Name,CloseDate,Opportunity_Attribution__c" />
+    <aura:attribute name="fields" type="String[]" default="Name,CloseDate,Opportunity_Attribution__c,CurrencyIsoCode" />
     
     <aura:html tag="style">
         .slds-modal__container{

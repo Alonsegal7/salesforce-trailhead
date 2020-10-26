@@ -1,7 +1,0 @@
-salesforce.StaticResource SpringCMEos__scmRedx {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "image/png"
-  fullName = "SpringCMEos__scmRedx"
-  content = file("salesforce/InstalledPackages/SpringCMEos/Records/StaticResource/SpringCMEos__scmRedx.png")
-}

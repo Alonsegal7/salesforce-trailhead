@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__modal {
+  fullName = "dfsle__modal"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/modal/modal.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/modal/modal.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/modal/modal.css"
+      },
+    ]
+  }
+}

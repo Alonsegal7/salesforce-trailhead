@@ -295,6 +295,16 @@ type salesforce.Contract {
         default = false
         label = "DealHub"
       },
+      {
+        fullName = "Manual Creation"
+        default = false
+        label = "Manual Creation"
+      },
+      {
+        fullName = "Activation"
+        default = false
+        label = "Activation"
+      },
     ]
     restricted = false
     createable = true
@@ -350,5 +360,28 @@ type salesforce.Contract {
     updateable = false
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup Regional_Company__c {
+    apiName = "Contract.Regional_Company__c"
+    label = "Regional Company"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    lookupFilter = {
+      active = true
+      filterItems = [
+        {
+          field = "Account.RecordTypeId"
+          operation = "equals"
+          value = "Company"
+        },
+      ]
+      isOptional = false
+    }
+    createable = true
+    updateable = true
+    queryable = true
   }
 }

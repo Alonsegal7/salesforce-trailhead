@@ -138,7 +138,7 @@ salesforce.RecordType Task_LID__InMail {
           default = false
         },
         {
-          fullName = "Offsite Hour"
+          fullName = "Office Hour"
           default = false
         },
         {

@@ -1,0 +1,31 @@
+salesforce.ListView Lead_Leads_Qualified_to_Offer_Solutions {
+  fullName = "Lead.Leads_Qualified_to_Offer_Solutions"
+  columns = [
+    "MQL_Image__c",
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "LEAD.COMPANY",
+    "LEAD.CREATED_DATE",
+    "Last_Contact_Sales_Timestamp__c",
+    "FULL_NAME",
+    "LEAD.TITLE",
+    "LEAD.EMAIL",
+    "LEAD.STATUS",
+    "LEAD.PHONE",
+    "LEAD.COUNTRY_CODE",
+    "Company_Size__c",
+    "Description_shortcut__c",
+    "Region__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Qualified_for_Solution__c"
+      operation = "notEqual"
+    },
+  ]
+  label = "Leads Qualified to Offer Solutions"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

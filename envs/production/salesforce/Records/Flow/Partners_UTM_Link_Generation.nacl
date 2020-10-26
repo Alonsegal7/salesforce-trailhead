@@ -171,6 +171,14 @@ salesforce.Flow Partners_UTM_Link_Generation {
       }
     },
     {
+      name = "PortugueseHomePage"
+      choiceText = "<span style=\"font-size: 13px;\">Portuguese Home Page</span>"
+      dataType = "String"
+      value = {
+        stringValue = "https://monday.com/lang/pt"
+      }
+    },
+    {
       name = "ProjectManagement"
       choiceText = "Project Management"
       dataType = "String"
@@ -272,6 +280,12 @@ salesforce.Flow Partners_UTM_Link_Generation {
       }
     },
     {
+      name = "CanvasMode"
+      value = {
+        stringValue = "FREE_FORM_CANVAS"
+      }
+    },
+    {
       name = "OriginBuilderType"
       value = {
         stringValue = "LightningFlowBuilder"
@@ -312,7 +326,7 @@ salesforce.Flow Partners_UTM_Link_Generation {
     {
       name = "Update_Partner_Region"
       label = "Update Partner Region"
-      locationX = 1222
+      locationX = 1223
       locationY = 150
       connector = {
         targetReference = "Results"
@@ -325,7 +339,7 @@ salesforce.Flow Partners_UTM_Link_Generation {
       name = "Results"
       label = "Results"
       locationX = 1341
-      locationY = 147
+      locationY = 148
       allowBack = true
       allowFinish = true
       allowPause = false
@@ -343,7 +357,7 @@ salesforce.Flow Partners_UTM_Link_Generation {
       name = "UTM_Link_Generation"
       label = "UTM Link Generation"
       locationX = 965
-      locationY = 150
+      locationY = 151
       allowBack = true
       allowFinish = true
       allowPause = true
@@ -371,6 +385,7 @@ salesforce.Flow Partners_UTM_Link_Generation {
             "straightIntoPlatform",
             "DutchGeneralMessaging",
             "ItalianHRSoftware",
+            "PortugueseHomePage",
           ]
           dataType = "String"
           defaultSelectedChoiceReference = "Default"
