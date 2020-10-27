@@ -1153,7 +1153,6 @@ false))
     formulaTreatBlanksAs = "BlankAsZero"
     _generated_dependencies = [
       salesforce.Account.field.Members__c,
-      salesforce.Account.field.WAPP__c,
     ]
   }
   salesforce.FormulaCheckbox WAPP_Drop__c {
@@ -7187,6 +7186,11 @@ Case( BillingCountryCode ,"IL",1,
         fullName = "Match Regions"
         default = false
         label = "Match Regions"
+      },
+      {
+        fullName = "Update Company Domains"
+        default = false
+        label = "Update Company Domains"
       },
     ]
     restricted = false

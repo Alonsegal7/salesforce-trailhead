@@ -1,11 +1,15 @@
 type salesforce.Company_Domain__c {
-  salesforce.TextArea Domain__c {
+  salesforce.Text Domain__c {
     apiName = "Company_Domain__c.Domain__c"
     label = "Domain"
     _required = false
     createable = true
     updateable = true
+    unique = true
+    caseSensitive = false
+    length = 255
     queryable = true
+    externalId = false
   }
   salesforce.MasterDetail Company__c {
     apiName = "Company_Domain__c.Company__c"

@@ -12,7 +12,10 @@ public class OpportunityHelper {
                     //if(opp.Is_Syncing_SO__c) { opp.Claimed_ARR__c = opp.Product_ARR__c; }
                     opp.Claimed_ARR__c = opp.CC_Products_ARR_Sum__c==0?null:opp.CC_Products_ARR_Sum__c;
                     if(opp.Is_Primary_SO_Signed__c){
-                        opp.Claimed_ARR__c=opp.Claimed_ARR__c==null?opp.Wire_Products_ARR_Sum__c:opp.Claimed_ARR__c+opp.Wire_Products_ARR_Sum__c;
+                        if(opp.Claimed_ARR__c==null)
+                            opp.Claimed_ARR__c=opp.Wire_Products_ARR_Sum__c;
+                        else
+                            opp.Claimed_ARR__c+=opp.Wire_Products_ARR_Sum__c;  
                     }
                 }
             }

@@ -8751,6 +8751,11 @@ salesforce.PermissionSet zaapit__ZaapIT_Apps1 {
     },
     {
       editable = "false"
+      field = "Opportunity.Company_Long_Id__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Company_MA_Discrepancy__c"
       readable = "false"
     },

@@ -5,7 +5,7 @@ salesforce.CustomMetadata Billing_Entity_Field_Mapping_VAT_Number {
   values = [
     {
       field = "Partner_SO_Request_Field__c"
-      value = "VAT__c"
+      value = "VAT_Text__c"
     },
   ]
 }

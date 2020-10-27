@@ -43,44 +43,7 @@ salesforce.LightningPage Opportunity_Record_Page {
       type = "Region"
     },
     {
-      componentInstances = [
-        {
-          componentInstanceProperties = [
-            {
-              name = "UrlSuffix"
-            },
-            {
-              name = "frameBorder"
-              value = "0"
-            },
-            {
-              name = "height"
-              value = "500px"
-            },
-            {
-              name = "iframeUrl"
-              value = "https://service.valooto.com/salesforce/quotes?salesforceUserID=0053X00000BoB2nQAF&opportunityID=0061w00001Exwwd&state=production"
-            },
-            {
-              name = "sandbox"
-              value = "allow-same-origin allow-scripts allow-forms"
-            },
-            {
-              name = "scrolling"
-              value = "auto"
-            },
-            {
-              name = "style"
-              value = "border: none; overflow: scroll;"
-            },
-            {
-              name = "width"
-              value = "100%"
-            },
-          ]
-          componentName = "iframeEmbed"
-        },
-      ]
+      
       mode = "Replace"
       name = "subheader"
       type = "Region"
@@ -689,6 +652,42 @@ salesforce.LightningPage Opportunity_Record_Page {
     },
     {
       componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "UrlSuffix"
+            },
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://service.valooto.com/salesforce/quotes?salesforceUserID=0053X00000BoB2nQAF&opportunityID=0061w00001Exwwd&state=production"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "iframeEmbed"
+        },
         {
           componentInstanceProperties = [
             {

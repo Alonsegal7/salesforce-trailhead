@@ -205,6 +205,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Company_Long_Id__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Company_MA_Discrepancy__c
     },
     {

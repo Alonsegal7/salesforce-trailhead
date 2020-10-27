@@ -32,8 +32,7 @@ salesforce.LightningComponentBundle subscriptionPickersComponent {
     targetConfig = [
       {
         targets = "lightningCommunity__Default"
-        "property
-" = {
+        "property" = {
           name = "recordId"
           type = "String"
           label = "Record Id"

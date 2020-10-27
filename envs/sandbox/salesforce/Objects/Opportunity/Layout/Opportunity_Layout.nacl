@@ -85,14 +85,6 @@ salesforce.Layout Opportunity_Layout {
             },
             {
               behavior = "Readonly"
-              field = salesforce.Opportunity.field.CC_Products_ARR_Sum__c
-            },
-            {
-              behavior = "Readonly"
-              field = salesforce.Opportunity.field.Wire_Products_ARR_Sum__c
-            },
-            {
-              behavior = "Readonly"
               field = salesforce.Opportunity.field.Is_Primary_SO_Signed__c
             },
             {
@@ -110,6 +102,26 @@ salesforce.Layout Opportunity_Layout {
             {
               behavior = "Edit"
               field = salesforce.Opportunity.field.Top_Opportunity__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Product_ARR__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Wire_Products_ARR_Sum__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.CC_Products_ARR_Sum__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Expected_ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Claimed_ARR__c
             },
           ]
         },
@@ -211,10 +223,6 @@ salesforce.Layout Opportunity_Layout {
             {
               behavior = "Readonly"
               field = salesforce.Opportunity.field.Expected_Plan_Name__c
-            },
-            {
-              behavior = "Edit"
-              field = salesforce.Opportunity.field.Expected_ARR__c
             },
             {
               behavior = "Edit"
@@ -595,10 +603,6 @@ salesforce.Layout Opportunity_Layout {
               behavior = "Edit"
               field = salesforce.Opportunity.field.DH_Signer_Title__c
             },
-            {
-              behavior = "Edit"
-              field = salesforce.Opportunity.field.Claimed_ARR__c
-            },
           ]
         },
         {
@@ -938,6 +942,12 @@ salesforce.Layout Opportunity_Layout {
         "OPPORTUNITY.CLOSE_DATE",
       ]
       relatedList = salesforce.Opportunity.field.Co_Sell_Opportunity__c
+    },
+    {
+      fields = [
+        "NAME",
+      ]
+      relatedList = salesforce.Partner_SO_Request__c.field.Partner_Opportunity__c
     },
   ]
   relatedObjects = [

@@ -30,9 +30,10 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
         }
     }
     if (Trigger.isAfter) {
-        if(trigger.isInsert){
+        if(trigger.isInsert||trigger.IsUpdate){
             Account_SetCompanyDomains.Account_SetCompanyDomains(trigger.new,trigger.oldmap);
         }
+
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
         if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);
         if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);

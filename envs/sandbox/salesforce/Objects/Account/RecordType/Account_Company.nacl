@@ -1378,6 +1378,10 @@ salesforce.RecordType Account_Company {
           fullName = "Match Regions"
           default = false
         },
+        {
+          fullName = "Update Company Domains"
+          default = false
+        },
       ]
     },
     {

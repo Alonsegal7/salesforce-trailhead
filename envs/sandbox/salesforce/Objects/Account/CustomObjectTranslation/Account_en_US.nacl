@@ -1749,6 +1749,10 @@ salesforce.CustomObjectTranslation Account_en_US {
           masterLabel = "Match Regions"
           translation = ""
         },
+        {
+          masterLabel = "Update Company Domains"
+          translation = ""
+        },
       ]
     },
     {

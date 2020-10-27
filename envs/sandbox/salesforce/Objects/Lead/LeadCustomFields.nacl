@@ -3199,10 +3199,7 @@ CEILING( ( DATEVALUE(CreatedDate) - DATE( YEAR( DATEVALUE(CreatedDate) ), 1, 1)+
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Lead.field.Related_Company__c,
-      salesforce.User.field.Full_Name__c,
-    ]
+    
   }
   salesforce.FormulaNumber Company_Owner_Function_Score__c {
     apiName = "Lead.Company_Owner_Function_Score__c"

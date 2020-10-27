@@ -3,21 +3,22 @@ public class Ctrl_BillingEntityRelate  {
 	public static String getInitialParameters(Id oppId){
 		String res = '';
 		Map <String, object> mso = new Map <String, object>();
+        mso.put('fieldMapping', getfieldMapping());
 		mso.put('bestMatch', getBillingEntities(oppId, true));
 		mso.put('moreOptions', getBillingEntities(oppId, false));
-		mso.put('partnerSORequest', getPartnerSO(oppId));
+		mso.put('partnerSORequest', getPartnerSO(oppId, (Map <String, String>)mso.get('fieldMapping')));
 		mso.put('newFormFields', getNewFormFields());
-		mso.put('fieldMapping', getfieldMapping());
 		System.debug('iCloudius - Initial Parameters:\n' + JSON.serializePretty(mso));
 		res = JSON.serialize(mso);
 		return res;
 	}
 
-	public static Partner_SO_Request__c getPartnerSO(Id oppId){
+	public static Partner_SO_Request__c getPartnerSO(Id oppId, Map <String, String> fieldsMapping){
 		Partner_SO_Request__c p = null;
-		List <Partner_SO_Request__c> lp = [SELECT Id, Name, Financial_Customer_Name__c, VAT__c, CurrencyIsoCode, Billing_Country__c, Billing_City__c, Billing_Street__c, 
-												  Zip_Postal_Code__c, Finance_Contact_Email__c, Finance_Contact_Phone__c 
-										   FROM Partner_SO_Request__c WHERE Partner_Opportunity__c = :oppId ORDER BY CreatedDate DESC];
+        String query = 'SELECT ';
+        for (String s: fieldsMapping.values()) query += s + ', ';
+        query += 'Id, Name FROM Partner_SO_Request__c WHERE Partner_Opportunity__c = \'' + oppId + '\' ORDER BY CreatedDate DESC';
+		List <Partner_SO_Request__c> lp = Database.query(query);
 		if (lp != null && !lp.isEmpty()) p = lp[0];
 		return p;
 	}

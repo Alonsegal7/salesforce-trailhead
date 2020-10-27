@@ -6905,4 +6905,22 @@ ispickval(Owner.Function__c,"Partner")||ispickval(Owner.Function__c,"Partners- C
     updateable = true
     queryable = true
   }
+  salesforce.FormulaText Company_Long_Id__c {
+    apiName = "Opportunity.Company_Long_Id__c"
+    label = "Company: Long Id"
+    _required = false
+    formula = "Company__r.Long_Account_ID__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Account.field.Long_Account_ID__c,
+      salesforce.Opportunity.field.Company__c,
+    ]
+  }
 }

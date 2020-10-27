@@ -9040,6 +9040,11 @@ salesforce.PermissionSet LSNLY__Lessonly_Administrator {
     },
     {
       editable = "false"
+      field = "Opportunity.Company_Long_Id__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Company_MA_Discrepancy__c"
       readable = "false"
     },

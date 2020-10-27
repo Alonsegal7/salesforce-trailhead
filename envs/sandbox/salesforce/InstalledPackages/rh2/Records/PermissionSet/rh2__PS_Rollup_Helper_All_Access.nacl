@@ -9100,6 +9100,11 @@ salesforce.PermissionSet rh2__PS_Rollup_Helper_All_Access {
     },
     {
       editable = "false"
+      field = "Opportunity.Company_Long_Id__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Company_MA_Discrepancy__c"
       readable = "false"
     },
