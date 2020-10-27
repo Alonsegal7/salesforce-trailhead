@@ -200,6 +200,7 @@ type salesforce.AnimationRule {
         "Deal_Enablers_2__c",
         "Deal_Enablers_2_info__c",
         "Deal_Status__c",
+        "Dealhub_Opportunity_Type__c",
         "Department__c",
         "Discount_Type__c",
         "Distribution_reason__c",

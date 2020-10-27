@@ -8945,6 +8945,11 @@ salesforce.PermissionSet squivr__Squivr_Org {
     },
     {
       editable = "false"
+      field = "Opportunity.Added_ARR_Risk__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Amount"
       readable = "false"
     },
@@ -9020,6 +9025,11 @@ salesforce.PermissionSet squivr__Squivr_Org {
     },
     {
       editable = "false"
+      field = "Opportunity.CC_Products_ARR_Sum__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.CSM_Name__c"
       readable = "false"
     },
@@ -9091,6 +9101,11 @@ salesforce.PermissionSet squivr__Squivr_Org {
     {
       editable = "false"
       field = "Opportunity.Company_ARR_for_reports__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Company_Long_Id__c"
       readable = "false"
     },
     {
@@ -9286,6 +9301,11 @@ salesforce.PermissionSet squivr__Squivr_Org {
     {
       editable = "false"
       field = "Opportunity.Deal__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Dealhub_Opportunity_Type__c"
       readable = "false"
     },
     {
@@ -9556,6 +9576,11 @@ salesforce.PermissionSet squivr__Squivr_Org {
     {
       editable = "false"
       field = "Opportunity.Is_Potential_GB_Opp__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Is_Primary_SO_Signed__c"
       readable = "false"
     },
     {
@@ -9990,6 +10015,11 @@ salesforce.PermissionSet squivr__Squivr_Org {
     },
     {
       editable = "false"
+      field = "Opportunity.Qualified_for_Solution__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Qualified_timestamp__c"
       readable = "false"
     },
@@ -10356,6 +10386,11 @@ salesforce.PermissionSet squivr__Squivr_Org {
     {
       editable = "false"
       field = "Opportunity.Which_features_were_missing__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Wire_Products_ARR_Sum__c"
       readable = "false"
     },
     {
@@ -11890,7 +11925,17 @@ salesforce.PermissionSet squivr__Squivr_Org {
     },
     {
       editable = "false"
+      field = "QuoteLineItem.DH_List_Price__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "QuoteLineItem.DH_Option_Quote_Type__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "QuoteLineItem.DH_Unit_Price__c"
       readable = "false"
     },
     {

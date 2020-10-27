@@ -235,7 +235,7 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
           assignToReference = "CompanyId"
           operator = "Assign"
           value = {
-            elementReference = "Get_Account.Company__r.Id"
+            elementReference = "Get_Account.Company_Long_ID__c"
           }
         },
         {
@@ -281,7 +281,7 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
           assignToReference = "CompanyId"
           operator = "Assign"
           value = {
-            elementReference = "Get_Opportunity.Account.Company__r.Id"
+            elementReference = "Get_Opportunity.Company__r.Long_Account_ID__c"
           }
         },
         {
@@ -570,14 +570,14 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
           conditionLogic = "and"
           conditions = [
             {
-              leftValueReference = "Please_choose_one_of_the_following"
+              leftValueReference = "What_do_you_want_to_do"
               operator = "EqualTo"
               rightValue = {
                 elementReference = "newAccount"
               }
             },
             {
-              leftValueReference = "Please_choose_one_of_the_following"
+              leftValueReference = "What_do_you_want_to_do"
               operator = "EqualTo"
               rightValue = {
                 elementReference = "Others"
@@ -594,7 +594,7 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
           conditionLogic = "and"
           conditions = [
             {
-              leftValueReference = "Please_choose_one_of_the_following"
+              leftValueReference = "What_do_you_want_to_do"
               operator = "EqualTo"
               rightValue = {
                 elementReference = "newBusinessOpp"
@@ -1458,7 +1458,7 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
         targetReference = "Count_Opps_0"
       }
       faultConnector = {
-        targetReference = "Error"
+        targetReference = "No_Opps_Found"
       }
       filters = [
         {
@@ -2052,10 +2052,8 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
         {
           name = "Estimated_Close_Date"
           dataType = "Date"
-          defaultValue = {
-            elementReference = "closeDateDefault"
-          }
-          fieldText = "Estimated Close Date"
+          
+          fieldText = "Estimated Close Date (please choose)"
           fieldType = "InputField"
           isRequired = true
         },

@@ -29,6 +29,14 @@ salesforce.Layout Quote_Line_Item_Layout {
               behavior = "Edit"
               field = salesforce.QuoteLineItem.field.Training_Hours__c
             },
+            {
+              behavior = "Edit"
+              field = salesforce.QuoteLineItem.field.DH_Unit_Price__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.QuoteLineItem.field.DH_List_Price__c
+            },
           ]
         },
         {

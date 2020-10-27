@@ -405,7 +405,7 @@ salesforce.LightningPage Monday_Account_Version_3 {
             },
             {
               name = "itemView"
-              value = "true"
+              value = "false"
             },
             {
               name = "sandbox"

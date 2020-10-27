@@ -27,6 +27,10 @@ salesforce.WorkflowAlert Quote_Notification_when_Sales_Oder_is_signed_Partners {
       type = "user"
     },
     {
+      recipient = "omriyo@monday.com"
+      type = "user"
+    },
+    {
       recipient = "orens@monday.com"
       type = "user"
     },

@@ -7269,10 +7269,151 @@ if(text(StageName) = "Closed Lost",0,
     _required = false
     precision = 18
     scale = 0
-    formula = "min(max(Opportunity_Risk_Level__c *  Expected_ARR__c, Expected_ARR__c ,0),0)"
+    formula = "max(Opportunity_Risk_Level__c *  Expected_ARR__c,0)"
     createable = false
     updateable = false
     unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Dealhub_Opportunity_Type__c {
+    apiName = "Opportunity.Dealhub_Opportunity_Type__c"
+    label = "Dealhub Opportunity Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "New Business"
+        default = false
+        label = "New Business"
+      },
+      {
+        fullName = "Expansion"
+        default = false
+        label = "Expansion"
+      },
+      {
+        fullName = "Downgrade"
+        default = false
+        label = "Downgrade"
+      },
+      {
+        fullName = "Renewal"
+        default = false
+        label = "Renewal"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaNumber Added_ARR_Risk__c {
+    apiName = "Opportunity.Added_ARR_Risk__c"
+    label = "Added ARR - Risk"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Expected_ARR__c -  ARR_at_Risk__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Summary CC_Products_ARR_Sum__c {
+    apiName = "Opportunity.CC_Products_ARR_Sum__c"
+    label = "CC Products ARR Sum"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "OpportunityLineItem.ARR__c"
+    summaryFilterItems = [
+      {
+        field = "OpportunityLineItem.CC_Claim_Product__c"
+        operation = "equals"
+        value = "True"
+      },
+    ]
+    summaryForeignKey = "OpportunityLineItem.OpportunityId"
+    summaryOperation = "sum"
+  }
+  salesforce.Summary Wire_Products_ARR_Sum__c {
+    apiName = "Opportunity.Wire_Products_ARR_Sum__c"
+    label = "Wire Products ARR Sum"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = false
+    updateable = false
+    queryable = true
+    summarizedField = "OpportunityLineItem.ARR__c"
+    summaryFilterItems = [
+      {
+        field = "OpportunityLineItem.CC_Claim_Product__c"
+        operation = "equals"
+        value = "False"
+      },
+    ]
+    summaryForeignKey = "OpportunityLineItem.OpportunityId"
+    summaryOperation = "sum"
+  }
+  salesforce.FormulaCheckbox Is_Primary_SO_Signed__c {
+    apiName = "Opportunity.Is_Primary_SO_Signed__c"
+    label = "Is Primary SO Signed"
+    formula = "SyncedQuote.Is_Finalized__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Qualified_for_Solution__c {
+    apiName = "Opportunity.Qualified_for_Solution__c"
+    label = "Qualified for Solution"
+    _required = false
+    valueSet = [
+      {
+        fullName = "PMO"
+        default = false
+        label = "PMO"
+      },
+      {
+        fullName = "Marketing"
+        default = false
+        label = "Marketing"
+      },
+      {
+        fullName = "Creative"
+        default = false
+        label = "Creative"
+      },
+      {
+        fullName = "Sales Operations"
+        default = false
+        label = "Sales Operations"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaText Company_Long_Id__c {
+    apiName = "Opportunity.Company_Long_Id__c"
+    label = "Company: Long Id"
+    _required = false
+    formula = "Company__r.Long_Account_ID__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"

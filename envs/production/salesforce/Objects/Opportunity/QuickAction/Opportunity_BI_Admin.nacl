@@ -99,18 +99,38 @@ salesforce.QuickAction Opportunity_BI_Admin {
           },
           {
             emptySpace = false
+            field = "Expected_ARR__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
             field = "Claimed_ARR__c"
             uiBehavior = "Edit"
           },
           {
             emptySpace = false
-            field = "Product_ARR__c"
+            field = "Quote_ARR__c"
             uiBehavior = "Readonly"
           },
           {
             emptySpace = false
-            field = "Monday_Solutions_Offered__c"
-            uiBehavior = "Edit"
+            field = "CC_Products_ARR_Sum__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Wire_Products_ARR_Sum__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Is_Primary_SO_Signed__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Product_ARR__c"
+            uiBehavior = "Readonly"
           },
           {
             emptySpace = false
@@ -232,11 +252,6 @@ salesforce.QuickAction Opportunity_BI_Admin {
             emptySpace = false
             field = "Seats_GB__c"
             uiBehavior = "Readonly"
-          },
-          {
-            emptySpace = false
-            field = "Expected_ARR__c"
-            uiBehavior = "Edit"
           },
           {
             emptySpace = false

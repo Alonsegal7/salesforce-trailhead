@@ -1865,6 +1865,27 @@ salesforce.RecordType Opportunity_Internal_Opportunity {
       ]
     },
     {
+      picklist = "Dealhub_Opportunity_Type__c"
+      values = [
+        {
+          fullName = "Downgrade"
+          default = false
+        },
+        {
+          fullName = "Expansion"
+          default = false
+        },
+        {
+          fullName = "New Business"
+          default = false
+        },
+        {
+          fullName = "Renewal"
+          default = false
+        },
+      ]
+    },
+    {
       picklist = "DepartmentFunction__c"
       values = [
         {
@@ -2878,6 +2899,27 @@ salesforce.RecordType Opportunity_Internal_Opportunity {
         },
         {
           fullName = "SO Signed"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Qualified_for_Solution__c"
+      values = [
+        {
+          fullName = "Creative"
+          default = false
+        },
+        {
+          fullName = "Marketing"
+          default = false
+        },
+        {
+          fullName = "PMO"
+          default = false
+        },
+        {
+          fullName = "Sales Operations"
           default = false
         },
       ]

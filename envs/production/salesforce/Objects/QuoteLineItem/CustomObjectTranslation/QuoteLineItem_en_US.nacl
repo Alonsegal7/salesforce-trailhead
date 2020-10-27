@@ -43,6 +43,10 @@ salesforce.CustomObjectTranslation QuoteLineItem_en_US {
     },
     {
       label = ""
+      name = salesforce.QuoteLineItem.field.DH_List_Price__c
+    },
+    {
+      label = ""
       name = salesforce.QuoteLineItem.field.DH_Option_Quote_Type__c
       picklistValues = [
         {
@@ -54,6 +58,10 @@ salesforce.CustomObjectTranslation QuoteLineItem_en_US {
           translation = ""
         },
       ]
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.DH_Unit_Price__c
     },
     {
       label = ""

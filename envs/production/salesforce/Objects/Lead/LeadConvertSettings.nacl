@@ -6,6 +6,38 @@ salesforce.LeadConvertSettings LeadConvertSettings {
       inputObject = "Lead"
       mappingFields = [
         {
+          inputField = "Engagement__c"
+          outputField = "Engagement__c"
+        },
+        {
+          inputField = "time_zone_offset__c"
+          outputField = "Time_Zone_Offset__c"
+        },
+        {
+          inputField = "Trial_end__c"
+          outputField = "Trial_End__c"
+        },
+        {
+          inputField = "Trial_start__c"
+          outputField = "Trial_Start__c"
+        },
+        {
+          inputField = "Zone__c"
+          outputField = "Zone__c"
+        },
+        {
+          inputField = "Free_Tier__c"
+          outputField = "Free_Tier__c"
+        },
+        {
+          inputField = "HQ_Phone__c"
+          outputField = "HQ_Phone__c"
+        },
+        {
+          inputField = "Lead_Source_Type__c"
+          outputField = "Account_Source_Type__c"
+        },
+        {
           inputField = "monday_account_status__c"
           outputField = "Monday_Account_Status__c"
         },
@@ -48,22 +80,6 @@ salesforce.LeadConvertSettings LeadConvertSettings {
         {
           inputField = "Ticker__c"
           outputField = "Ticker__c"
-        },
-        {
-          inputField = "time_zone_offset__c"
-          outputField = "Time_Zone_Offset__c"
-        },
-        {
-          inputField = "Trial_end__c"
-          outputField = "Trial_End__c"
-        },
-        {
-          inputField = "Trial_start__c"
-          outputField = "Trial_Start__c"
-        },
-        {
-          inputField = "Zone__c"
-          outputField = "Zone__c"
         },
         {
           inputField = "Account_Recycling_Lead__c"
@@ -113,22 +129,6 @@ salesforce.LeadConvertSettings LeadConvertSettings {
           inputField = "Enabled_users__c"
           outputField = "Enabled_Users__c"
         },
-        {
-          inputField = "Engagement__c"
-          outputField = "Engagement__c"
-        },
-        {
-          inputField = "Free_Tier__c"
-          outputField = "Free_Tier__c"
-        },
-        {
-          inputField = "HQ_Phone__c"
-          outputField = "HQ_Phone__c"
-        },
-        {
-          inputField = "Lead_Source_Type__c"
-          outputField = "Account_Source_Type__c"
-        },
       ]
       outputObject = "Account"
     },
@@ -170,12 +170,16 @@ salesforce.LeadConvertSettings LeadConvertSettings {
       inputObject = "Lead"
       mappingFields = [
         {
-          inputField = "Budget_Text__c"
-          outputField = "Budget_Text__c"
+          inputField = "Lead_notes__c"
+          outputField = "Lead_Notes__c"
         },
         {
-          inputField = "Cluster__c"
-          outputField = "Cluster__c"
+          inputField = "Link_to_Call__c"
+          outputField = "Link_to_Call__c"
+        },
+        {
+          inputField = "Main_Point_of_Contacts__c"
+          outputField = "Main_Point_of_Contacts__c"
         },
         {
           inputField = "Current_tools_SDR__c"
@@ -234,6 +238,14 @@ salesforce.LeadConvertSettings LeadConvertSettings {
           outputField = "Budget__c"
         },
         {
+          inputField = "Budget_Text__c"
+          outputField = "Budget_Text__c"
+        },
+        {
+          inputField = "Cluster__c"
+          outputField = "Cluster__c"
+        },
+        {
           inputField = "Competition__c"
           outputField = "Competition__c"
         },
@@ -250,6 +262,66 @@ salesforce.LeadConvertSettings LeadConvertSettings {
           outputField = "Core_Business__c"
         },
         {
+          inputField = "Country_Text__c"
+          outputField = "Country__c"
+        },
+        {
+          inputField = "Current_tools__c"
+          outputField = "Current_tools__c"
+        },
+        {
+          inputField = "Department_Function__c"
+          outputField = "DepartmentFunction__c"
+        },
+        {
+          inputField = "DM_Details__c"
+          outputField = "DM_Details__c"
+        },
+        {
+          inputField = "DM_process__c"
+          outputField = "DM_process__c"
+        },
+        {
+          inputField = "Feedback_on_SDR_Call__c"
+          outputField = "Feedback_on_SDR_Call__c"
+        },
+        {
+          inputField = "First_Lead_Source__c"
+          outputField = "First_Lead_Source__c"
+        },
+        {
+          inputField = "Full_opportunity_size__c"
+          outputField = "Full_of_opportunity_size__c"
+        },
+        {
+          inputField = "Lead_created_date__c"
+          outputField = "Lead_created_date__c"
+        },
+        {
+          inputField = "Region__c"
+          outputField = "Region__c"
+        },
+        {
+          inputField = "SalesLoft1__Most_Recent_Cadence_Name__c"
+          outputField = "SalesLoft1__Most_Recent_Cadence_Name__c"
+        },
+        {
+          inputField = "SalesLoft1__Most_Recent_Last_Completed_Step__c"
+          outputField = "SalesLoft1__Most_Recent_Last_Completed_Step__c"
+        },
+        {
+          inputField = "Opportunity_Size__c"
+          outputField = "Opportunity_Size__c"
+        },
+        {
+          inputField = "What_else_are_they_selling__c"
+          outputField = "Other_software_they_re_selling__c"
+        },
+        {
+          inputField = "Owner_s_Manager__c"
+          outputField = "Owner_s_Manager__c"
+        },
+        {
           inputField = "Pains_PL__c"
           outputField = "Pains_PL__c"
         },
@@ -262,8 +334,8 @@ salesforce.LeadConvertSettings LeadConvertSettings {
           outputField = "Pricing_Version__c"
         },
         {
-          inputField = "Region__c"
-          outputField = "Region__c"
+          inputField = "Qualified_for_Solution__c"
+          outputField = "Qualified_for_Solution__c"
         },
         {
           inputField = "Risks__c"
@@ -316,74 +388,6 @@ salesforce.LeadConvertSettings LeadConvertSettings {
         {
           inputField = "Zone__c"
           outputField = "Zone__c"
-        },
-        {
-          inputField = "Country_Text__c"
-          outputField = "Country__c"
-        },
-        {
-          inputField = "Current_tools__c"
-          outputField = "Current_tools__c"
-        },
-        {
-          inputField = "Department_Function__c"
-          outputField = "DepartmentFunction__c"
-        },
-        {
-          inputField = "DM_Details__c"
-          outputField = "DM_Details__c"
-        },
-        {
-          inputField = "DM_process__c"
-          outputField = "DM_process__c"
-        },
-        {
-          inputField = "Feedback_on_SDR_Call__c"
-          outputField = "Feedback_on_SDR_Call__c"
-        },
-        {
-          inputField = "First_Lead_Source__c"
-          outputField = "First_Lead_Source__c"
-        },
-        {
-          inputField = "Full_opportunity_size__c"
-          outputField = "Full_of_opportunity_size__c"
-        },
-        {
-          inputField = "Lead_created_date__c"
-          outputField = "Lead_created_date__c"
-        },
-        {
-          inputField = "Lead_notes__c"
-          outputField = "Lead_Notes__c"
-        },
-        {
-          inputField = "Link_to_Call__c"
-          outputField = "Link_to_Call__c"
-        },
-        {
-          inputField = "Main_Point_of_Contacts__c"
-          outputField = "Main_Point_of_Contacts__c"
-        },
-        {
-          inputField = "SalesLoft1__Most_Recent_Cadence_Name__c"
-          outputField = "SalesLoft1__Most_Recent_Cadence_Name__c"
-        },
-        {
-          inputField = "SalesLoft1__Most_Recent_Last_Completed_Step__c"
-          outputField = "SalesLoft1__Most_Recent_Last_Completed_Step__c"
-        },
-        {
-          inputField = "Opportunity_Size__c"
-          outputField = "Opportunity_Size__c"
-        },
-        {
-          inputField = "What_else_are_they_selling__c"
-          outputField = "Other_software_they_re_selling__c"
-        },
-        {
-          inputField = "Owner_s_Manager__c"
-          outputField = "Owner_s_Manager__c"
         },
       ]
       outputObject = "Opportunity"

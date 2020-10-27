@@ -42,7 +42,6 @@ type salesforce.Allocation__c {
     formulaTreatBlanksAs = "BlankAsZero"
     _generated_dependencies = [
       salesforce.Round_Robin__c.field.Total_Passes__c,
-      salesforce.Allocation__c.field.Round_Robin__c,
     ]
   }
   salesforce.FormulaNumber Current_Level__c {
@@ -58,8 +57,6 @@ type salesforce.Allocation__c {
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Round_Robin__c.field.Current_Level__c,
-    ]
+    
   }
 }

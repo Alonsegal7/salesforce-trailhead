@@ -78,6 +78,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Added_ARR_Risk__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Authority_SDR__c
     },
     {
@@ -133,6 +137,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.Opportunity.field.Buying_process_timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.CC_Products_ARR_Sum__c
     },
     {
       label = ""
@@ -206,6 +214,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.Opportunity.field.Company_ARR_for_reports__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Company_Long_Id__c
     },
     {
       label = ""
@@ -604,6 +616,28 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Dealhub_Opportunity_Type__c
+      picklistValues = [
+        {
+          masterLabel = "Downgrade"
+          translation = ""
+        },
+        {
+          masterLabel = "Expansion"
+          translation = ""
+        },
+        {
+          masterLabel = "New Business"
+          translation = ""
+        },
+        {
+          masterLabel = "Renewal"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Dedicated_CSM_Email__c
     },
     {
@@ -818,6 +852,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     {
       label = ""
       name = salesforce.Opportunity.field.Is_Potential_GB_Opp__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Is_Primary_SO_Signed__c
     },
     {
       label = ""
@@ -1431,6 +1469,28 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Qualified_for_Solution__c
+      picklistValues = [
+        {
+          masterLabel = "Creative"
+          translation = ""
+        },
+        {
+          masterLabel = "Marketing"
+          translation = ""
+        },
+        {
+          masterLabel = "PMO"
+          translation = ""
+        },
+        {
+          masterLabel = "Sales Operations"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Qualified_timestamp__c
     },
     {
@@ -1983,6 +2043,10 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
           translation = ""
         },
       ]
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Wire_Products_ARR_Sum__c
     },
     {
       label = ""

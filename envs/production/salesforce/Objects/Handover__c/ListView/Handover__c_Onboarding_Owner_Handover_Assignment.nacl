@@ -39,6 +39,11 @@ salesforce.ListView Handover__c_Onboarding_Owner_Handover_Assignment {
       operation = "greaterOrEqual"
       value = "LAST_N_DAYS:30"
     },
+    {
+      field = "RECORDTYPE"
+      operation = "equals"
+      value = "Handover__c.Sales"
+    },
   ]
   label = "Onboarding Owner Handover Assignment"
   _parent = [

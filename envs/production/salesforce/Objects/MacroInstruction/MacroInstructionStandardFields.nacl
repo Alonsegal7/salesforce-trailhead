@@ -301,6 +301,12 @@ type salesforce.MacroInstruction {
         isActive = true
       },
       {
+        fullName = "Field.Account.Account_Source_Type__c"
+        default = false
+        label = "Account Source Type"
+        isActive = true
+      },
+      {
         fullName = "Field.Account.Account_Territory__c"
         default = false
         label = "Account Territory"
@@ -2794,12 +2800,6 @@ type salesforce.MacroInstruction {
         fullName = "Field.Opportunity.Monday_Item_ID__c.end"
         default = false
         label = "Monday Item ID"
-        isActive = true
-      },
-      {
-        fullName = "Field.Opportunity.Monday_Solutions_Offered__c"
-        default = false
-        label = "Monday Solution Offered"
         isActive = true
       },
       {

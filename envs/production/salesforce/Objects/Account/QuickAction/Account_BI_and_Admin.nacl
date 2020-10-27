@@ -59,6 +59,11 @@ salesforce.QuickAction Account_BI_and_Admin {
           },
           {
             emptySpace = false
+            field = "Account_Source_Type__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
             field = "Previous_Month_ARR__c"
             uiBehavior = "Edit"
           },

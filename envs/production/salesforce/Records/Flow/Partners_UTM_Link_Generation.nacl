@@ -187,6 +187,14 @@ salesforce.Flow Partners_UTM_Link_Generation {
       }
     },
     {
+      name = "Spain_Enterprise"
+      choiceText = "<span style=\"font-size: 13px;\">Spain - Enterprise</span>"
+      dataType = "String"
+      value = {
+        stringValue = "https://monday.com/lang/es/enterprise"
+      }
+    },
+    {
       name = "Spanish"
       choiceText = "Spanish"
       dataType = "String"
@@ -357,7 +365,7 @@ salesforce.Flow Partners_UTM_Link_Generation {
       name = "UTM_Link_Generation"
       label = "UTM Link Generation"
       locationX = 965
-      locationY = 151
+      locationY = 153
       allowBack = true
       allowFinish = true
       allowPause = true
@@ -386,6 +394,7 @@ salesforce.Flow Partners_UTM_Link_Generation {
             "DutchGeneralMessaging",
             "ItalianHRSoftware",
             "PortugueseHomePage",
+            "Spain_Enterprise",
           ]
           dataType = "String"
           defaultSelectedChoiceReference = "Default"
