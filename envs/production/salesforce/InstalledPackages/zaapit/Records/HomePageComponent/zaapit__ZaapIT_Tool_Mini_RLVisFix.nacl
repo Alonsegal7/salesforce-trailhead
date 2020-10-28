@@ -1,6 +1,0 @@
-salesforce.HomePageComponent zaapit__ZaapIT_Tool_Mini_RLVisFix {
-  fullName = "zaapit__ZaapIT Tool - Mini RLVisFix"
-  body = "<br>"
-  pageComponentType = "htmlArea"
-  width = "narrow"
-}

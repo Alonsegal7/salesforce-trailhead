@@ -10189,6 +10189,16 @@ salesforce.PermissionSet LSNLY__Lessonly_Reporting_User {
     },
     {
       editable = "false"
+      field = "Opportunity.Solution_Feedback__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Solution_Fit__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Stamped_as_GB_opp__c"
       readable = "false"
     },

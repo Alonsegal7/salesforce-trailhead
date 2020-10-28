@@ -2645,6 +2645,10 @@ salesforce.CustomObjectTranslation Account_en_US {
           translation = ""
         },
         {
+          masterLabel = "PS"
+          translation = ""
+        },
+        {
           masterLabel = "Tech"
           translation = ""
         },

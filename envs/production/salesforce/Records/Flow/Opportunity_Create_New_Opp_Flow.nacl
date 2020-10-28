@@ -88,8 +88,8 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
     {
       name = "CompNameFromComp"
       label = "CompNameFromComp"
-      locationX = 636
-      locationY = 98
+      locationX = 683
+      locationY = 121
       assignmentItems = [
         {
           assignToReference = "CompName"
@@ -106,14 +106,14 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
     {
       name = "CompNameFromMA"
       label = "CompNameFromMA"
-      locationX = 539
-      locationY = 166
+      locationX = 585
+      locationY = 178
       assignmentItems = [
         {
           assignToReference = "CompName"
           operator = "Assign"
           value = {
-            elementReference = "Get_Account.Company__r.Name"
+            elementReference = "CompNameFromMaPath"
           }
         },
         {
@@ -201,6 +201,66 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
       }
     },
     {
+      name = "Set_Labels"
+      label = "Set Labels"
+      locationX = 176
+      locationY = 205
+      assignmentItems = [
+        {
+          assignToReference = "ChoiceLables"
+          operator = "AddAtStart"
+          value = {
+            stringValue = "Add seats/plan upgrade (50 to 100 users, Pro to Ent, etc.)"
+          }
+        },
+        {
+          assignToReference = "ChoiceLables"
+          operator = "Add"
+          value = {
+            stringValue = "New Monday Account for already paying company"
+          }
+        },
+        {
+          assignToReference = "ChoiceLables"
+          operator = "Add"
+          value = {
+            stringValue = "Renewal - upgrade pricing version"
+          }
+        },
+        {
+          assignToReference = "ChoiceLables"
+          operator = "Add"
+          value = {
+            stringValue = "Renewal - same pricing"
+          }
+        },
+        {
+          assignToReference = "ChoiceLables"
+          operator = "Add"
+          value = {
+            stringValue = "Downgrade"
+          }
+        },
+        {
+          assignToReference = "ChoiceLables"
+          operator = "Add"
+          value = {
+            stringValue = "New Monday Account, not connected to other accounts"
+          }
+        },
+        {
+          assignToReference = "ChoiceLables"
+          operator = "Add"
+          value = {
+            stringValue = "Other or don't know yet"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Set_Values"
+      }
+    },
+    {
       name = "Set_selected_opp"
       label = "Set selected opp"
       locationX = 2175
@@ -216,6 +276,66 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
       ]
       connector = {
         targetReference = "Loop_Over_Selected_Opps"
+      }
+    },
+    {
+      name = "Set_Values"
+      label = "Set Values"
+      locationX = 177
+      locationY = 315
+      assignmentItems = [
+        {
+          assignToReference = "ValuesSet"
+          operator = "AddAtStart"
+          value = {
+            stringValue = "Expansion"
+          }
+        },
+        {
+          assignToReference = "ValuesSet"
+          operator = "Add"
+          value = {
+            stringValue = "Cross Sale"
+          }
+        },
+        {
+          assignToReference = "ValuesSet"
+          operator = "Add"
+          value = {
+            stringValue = "Expansion"
+          }
+        },
+        {
+          assignToReference = "ValuesSet"
+          operator = "Add"
+          value = {
+            stringValue = "Renewal"
+          }
+        },
+        {
+          assignToReference = "ValuesSet"
+          operator = "Add"
+          value = {
+            stringValue = "Downgrade"
+          }
+        },
+        {
+          assignToReference = "ValuesSet"
+          operator = "Add"
+          value = {
+            stringValue = "New Business"
+          }
+        },
+        {
+          assignToReference = "ValuesSet"
+          operator = "Add"
+          value = {
+            stringValue = "Expansion"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Which_Object"
       }
     },
     {
@@ -360,6 +480,24 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
           operator = "Assign"
           value = {
             stringValue = "Cross sale"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Use_Existing_or_New"
+      }
+    },
+    {
+      name = "Type_Downgrade"
+      label = "Type Downgrade"
+      locationX = 902
+      locationY = 822
+      assignmentItems = [
+        {
+          assignToReference = "New_Opportunity_Type"
+          operator = "Assign"
+          value = {
+            stringValue = "Downgrade"
           }
         },
       ]
@@ -529,8 +667,8 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
     {
       name = "Account_Type_0"
       label = "Account Type"
-      locationX = 406
-      locationY = 111
+      locationX = 398
+      locationY = 127
       defaultConnector = {
         targetReference = "CompNameFromMA"
       }
@@ -566,38 +704,31 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
       defaultConnectorLabel = "Upsell"
       rules = [
         {
-          name = "Cross_Sell"
+          name = "Cross_Sale"
           conditionLogic = "and"
           conditions = [
             {
-              leftValueReference = "What_do_you_want_to_do"
+              leftValueReference = "ChosenOption"
               operator = "EqualTo"
               rightValue = {
-                elementReference = "newAccount"
-              }
-            },
-            {
-              leftValueReference = "What_do_you_want_to_do"
-              operator = "EqualTo"
-              rightValue = {
-                elementReference = "Others"
+                stringValue = "Cross Sale"
               }
             },
           ]
           connector = {
             targetReference = "Type_Cross_Sell"
           }
-          label = "Cross Sell"
+          label = "Cross Sale"
         },
         {
           name = "New_Business"
           conditionLogic = "and"
           conditions = [
             {
-              leftValueReference = "What_do_you_want_to_do"
+              leftValueReference = "ChosenOption"
               operator = "EqualTo"
               rightValue = {
-                elementReference = "newBusinessOpp"
+                stringValue = "New Business"
               }
             },
           ]
@@ -605,6 +736,23 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
             targetReference = "Type_New_Business"
           }
           label = "New Business"
+        },
+        {
+          name = "Downgrade"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "ChosenOption"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Downgrade"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Type_Downgrade"
+          }
+          label = "Downgrade"
         },
       ]
     },
@@ -940,8 +1088,8 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
     {
       name = "Which_Object"
       label = "Which Object"
-      locationX = 167
-      locationY = 235
+      locationX = 180
+      locationY = 456
       defaultConnector = {
         targetReference = "Error"
       }
@@ -1010,6 +1158,11 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
       name = "closeDateDefault"
       dataType = "Date"
       expression = "DATE( Year(ADDMONTHS({!$Flow.CurrentDate},2)),MONTH( ADDMONTHS({!$Flow.CurrentDate},2)),1 ) -1"
+    },
+    {
+      name = "CompNameFromMaPath"
+      dataType = "String"
+      expression = "{!Get_Account.Company__r.Name}"
     },
   ]
   interviewLabel = "Opportunity - Create New Opp Flow {!$Flow.CurrentDateTime}"
@@ -1150,9 +1303,7 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
         },
         {
           field = "Opportunity_Open_Reason_from_flow__c"
-          value = {
-            elementReference = "What_do_you_want_to_do"
-          }
+          
         },
         {
           field = "OwnerId"
@@ -1286,9 +1437,7 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
         },
         {
           field = "Opportunity_Open_Reason_from_flow__c"
-          value = {
-            elementReference = "What_do_you_want_to_do"
-          }
+          
         },
         {
           field = "Other_tools_they_re_using__c"
@@ -1426,8 +1575,8 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
     {
       name = "Get_Opportunity"
       label = "Get Opportunity"
-      locationX = 308
-      locationY = 535
+      locationX = 349
+      locationY = 536
       assignNullValuesIfNoRecordsFound = false
       connector = {
         targetReference = "setAccountIdOpp"
@@ -1974,7 +2123,7 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
     {
       name = "New_Opportunity"
       label = "New Opportunity"
-      locationX = 547
+      locationX = 548
       locationY = 374
       allowBack = false
       allowFinish = true
@@ -1989,23 +2138,63 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
           fieldType = "DisplayText"
         },
         {
-          name = "What_do_you_want_to_do"
-          choiceReferences = [
-            "changeUsersChoice",
-            "upgradePlanChoice",
-            "upgradeExpandChoice",
-            "newAccount",
-            "newBusinessOpp",
-            "downgradeChoice",
-            "Others",
-            "RenewalChoice",
-            "PricingVersion",
-            "DontKnow",
-          ]
-          dataType = "String"
-          fieldText = "What is the opportunity for?"
-          fieldType = "RadioButtons"
+          name = "Redirection"
+          
+          
+          
+          fieldType = "ComponentInstance"
           isRequired = true
+          extensionName = "c:fbc_quickChoiceFSC"
+          inputParameters = [
+            {
+              name = "inputMode"
+              value = {
+                stringValue = "Dual String Collections"
+              }
+            },
+            {
+              name = "choiceLabels"
+              value = {
+                elementReference = "ChoiceLables"
+              }
+            },
+            {
+              name = "choiceValues"
+              value = {
+                elementReference = "ValuesSet"
+              }
+            },
+            {
+              name = "required"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "masterLabel"
+              value = {
+                stringValue = "What is the opportunity for?"
+              }
+            },
+            {
+              name = "displayMode"
+              value = {
+                stringValue = "Radio"
+              }
+            },
+            {
+              name = "style_width"
+              value = {
+                numberValue = 450
+              }
+            },
+          ]
+          outputParameters = [
+            {
+              assignToReference = "ChosenOption"
+              name = "value"
+            },
+          ]
         },
       ]
       showFooter = true
@@ -2035,7 +2224,7 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
     {
       name = "Please_fill_out_the_following_information"
       label = "Please fill out the following information"
-      locationX = 641
+      locationX = 635
       locationY = 374
       allowBack = true
       allowFinish = true
@@ -2296,7 +2485,7 @@ salesforce.Flow Opportunity_Create_New_Opp_Flow {
     locationX = 50
     locationY = 85
     connector = {
-      targetReference = "Which_Object"
+      targetReference = "Set_Labels"
     }
   }
   status = "Active"
@@ -2309,7 +2498,7 @@ Time: {!$Flow.CurrentDateTime}
 Start Time: {!$Flow.InterviewStartTime}
 https://monday.lightning.force.com/lightning/r/Opportunity/{!NewOpportunityId}/view
 
-What would you like to do?: {!What_do_you_want_to_do}
+What would you like to do?: {!ChosenOption}
 New or existing?: {!Please_choose_one_of_the_following}
 By: {!$User.Full_Name__c}
 Function: {!$User.Function__c}
@@ -2327,6 +2516,20 @@ Office: {!$User.Office__c}
     },
     {
       name = "BBiD"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+    },
+    {
+      name = "ChoiceLables"
+      dataType = "String"
+      isCollection = true
+      isInput = true
+      isOutput = false
+    },
+    {
+      name = "ChosenOption"
       dataType = "String"
       isCollection = false
       isInput = true
@@ -2448,6 +2651,13 @@ Office: {!$User.Office__c}
       isInput = true
       isOutput = true
       objectType = salesforce.Opportunity
+    },
+    {
+      name = "ValuesSet"
+      dataType = "String"
+      isCollection = true
+      isInput = true
+      isOutput = false
     },
   ]
 }

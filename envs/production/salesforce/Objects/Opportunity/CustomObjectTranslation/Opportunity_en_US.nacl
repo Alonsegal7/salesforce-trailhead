@@ -1689,6 +1689,14 @@ salesforce.CustomObjectTranslation Opportunity_en_US {
     },
     {
       label = ""
+      name = salesforce.Opportunity.field.Solution_Feedback__c
+    },
+    {
+      label = ""
+      name = salesforce.Opportunity.field.Solution_Fit__c
+    },
+    {
+      label = ""
       name = salesforce.Opportunity.field.Stamped_as_GB_opp__c
     },
     {

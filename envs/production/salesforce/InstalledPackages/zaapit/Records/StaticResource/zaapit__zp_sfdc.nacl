@@ -1,7 +1,0 @@
-salesforce.StaticResource zaapit__zp_sfdc {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/png"
-  fullName = "zaapit__zp_sfdc"
-  content = file("salesforce/InstalledPackages/zaapit/Records/StaticResource/zaapit__zp_sfdc.png")
-}

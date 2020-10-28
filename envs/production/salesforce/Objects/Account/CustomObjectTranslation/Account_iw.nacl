@@ -2581,6 +2581,10 @@ salesforce.CustomObjectTranslation Account_iw {
           translation = ""
         },
         {
+          masterLabel = "PS"
+          translation = ""
+        },
+        {
           masterLabel = "Tech"
           translation = ""
         },

@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__contracts_rl {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 31
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "contracts_rl"
-  fullName = "zaapit__contracts_rl"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__contracts_rl.page")
-}

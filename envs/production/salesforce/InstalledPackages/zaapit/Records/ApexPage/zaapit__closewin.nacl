@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__closewin {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 34
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "closewin"
-  fullName = "zaapit__closewin"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__closewin.page")
-}

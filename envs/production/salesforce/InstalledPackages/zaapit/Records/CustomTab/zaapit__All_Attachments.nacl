@@ -1,7 +1,0 @@
-salesforce.CustomTab zaapit__All_Attachments {
-  fullName = "zaapit__All_Attachments"
-  description = "Attachments Manager"
-  label = "Attachments"
-  motif = "Custom23: Mail"
-  page = "zaapit__zaapit_tb_attachmentWL"
-}

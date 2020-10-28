@@ -2188,6 +2188,10 @@ salesforce.RecordType Account_Partner_Company {
           default = false
         },
         {
+          fullName = "PS"
+          default = false
+        },
+        {
           fullName = "Tech"
           default = false
         },

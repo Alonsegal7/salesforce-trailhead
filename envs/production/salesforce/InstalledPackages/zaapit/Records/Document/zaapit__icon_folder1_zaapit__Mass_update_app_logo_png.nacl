@@ -1,8 +1,0 @@
-salesforce.Document zaapit__icon_folder1_zaapit__Mass_update_app_logo_png {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  internalUseOnly = false
-  name = "Mass update app logo"
-  public = true
-  fullName = "zaapit__icon_folder1/zaapit__Mass_update_app_logo.png"
-  content = file("salesforce/InstalledPackages/zaapit/Records/Document/zaapit__icon_folder1/zaapit__Mass_update_app_logo.png")
-}

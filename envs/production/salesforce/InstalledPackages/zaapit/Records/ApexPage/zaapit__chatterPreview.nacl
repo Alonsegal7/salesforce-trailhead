@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__chatterPreview {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 31
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "chatterPreview"
-  fullName = "zaapit__chatterPreview"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__chatterPreview.page")
-}

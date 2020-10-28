@@ -1,6 +1,0 @@
-salesforce.CustomTab zaapit__Files {
-  fullName = "zaapit__Files"
-  label = "Files"
-  motif = "Custom21: Computer"
-  page = "zaapit__zaapit_tb_files"
-}

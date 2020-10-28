@@ -5,7 +5,7 @@ salesforce.Flow Monday_Solution_Picker {
       name = "Set_Params"
       label = "Set Params"
       locationX = 176
-      locationY = 158
+      locationY = 278
       assignmentItems = [
         {
           assignToReference = "iconsCollection"
@@ -91,6 +91,13 @@ salesforce.Flow Monday_Solution_Picker {
             stringValue = "Sales Operations"
           }
         },
+        {
+          assignToReference = "SolutionValues"
+          operator = "Add"
+          value = {
+            elementReference = "Opportunity_Info.Monday_Solutions_Offered__c"
+          }
+        },
       ]
       connector = {
         targetReference = "Monday_Solution"
@@ -98,7 +105,7 @@ salesforce.Flow Monday_Solution_Picker {
     },
   ]
   interviewLabel = "Monday Solution Picker {!$Flow.CurrentDateTime}"
-  label = "Monday Solution Picker"
+  label = "Monday Solution Feedback"
   processMetadataValues = [
     {
       name = "BuilderType"
@@ -125,7 +132,7 @@ salesforce.Flow Monday_Solution_Picker {
       name = "Update_Opportunity"
       label = "Update Opportunity"
       locationX = 176
-      locationY = 398
+      locationY = 518
       filters = [
         {
           field = "Id"
@@ -142,8 +149,23 @@ salesforce.Flow Monday_Solution_Picker {
             elementReference = "Solution_Picker.value"
           }
         },
+        {
+          field = "Solution_Feedback__c"
+          value = {
+            elementReference = "Solution_Feedback_Long"
+          }
+        },
+        {
+          field = "Solution_Fit__c"
+          value = {
+            elementReference = "Solution_Fit.value"
+          }
+        },
       ]
       object = salesforce.Opportunity
+      connector = {
+        targetReference = "Success"
+      }
     },
   ]
   screens = [
@@ -151,14 +173,19 @@ salesforce.Flow Monday_Solution_Picker {
       name = "Monday_Solution"
       label = "Monday Solution"
       locationX = 176
-      locationY = 278
-      allowBack = false
+      locationY = 398
+      allowBack = true
       allowFinish = true
-      allowPause = false
+      allowPause = true
       connector = {
         targetReference = "Update_Opportunity"
       }
       fields = [
+        {
+          name = "Select_Solution"
+          fieldText = "<p>Which solution did you present to the customer as part of this deal?</p>"
+          fieldType = "DisplayText"
+        },
         {
           name = "Solution_Picker"
           extensionName = "profFlow_vNav:visualNav"
@@ -239,29 +266,67 @@ salesforce.Flow Monday_Solution_Picker {
                 numberValue = 10
               }
             },
+            {
+              name = "size"
+              value = {
+                stringValue = "medium"
+              }
+            },
+            {
+              name = "value"
+              value = {
+                elementReference = "Opportunity_Info.Solution_Fit__c"
+              }
+            },
           ]
           isRequired = true
           storeOutputAutomatically = true
         },
         {
+          name = "Feedback_Explaination"
+          fieldText = "<p>Please provide any feedback, questions, or issues that were brought up regarding the solution</p>"
+          fieldType = "DisplayText"
+        },
+        {
           name = "Solution_Feedback_Long"
+          defaultValue = {
+            stringValue = "{!Opportunity_Info.Solution_Feedback__c}"
+          }
           fieldText = "Solution Feedback"
           fieldType = "LargeTextArea"
           isRequired = false
         },
       ]
       showFooter = true
-      showHeader = false
+      showHeader = true
+    },
+    {
+      name = "Success"
+      label = "Success"
+      locationX = 176
+      locationY = 638
+      allowBack = true
+      allowFinish = true
+      allowPause = true
+      fields = [
+        {
+          name = "SuccessMessage"
+          fieldText = "<p>Solution Feedback Saves Successfully!</p><p><br></p><p><img src=\"https://monday--c.documentforce.com/sfc/servlet.shepherd/version/download/0683X00000IFq71?asPdf=false&amp;operationContext=CHATTER\"></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
     },
   ]
   start = {
     locationX = 50
     locationY = 0
     connector = {
-      targetReference = "Set_Params"
+      targetReference = "Opportunity_Info"
     }
   }
-  status = "Draft"
+  status = "Active"
   variables = [
     {
       name = "iconsCollection"
@@ -285,11 +350,48 @@ salesforce.Flow Monday_Solution_Picker {
       isOutput = false
     },
     {
+      name = "SolutionValues"
+      dataType = "String"
+      isCollection = true
+      isInput = false
+      isOutput = false
+    },
+    {
       name = "subtitleCollection"
       dataType = "String"
       isCollection = true
       isInput = false
       isOutput = false
+    },
+  ]
+  recordLookups = [
+    {
+      name = "Opportunity_Info"
+      label = "Opportunity Info"
+      locationX = 176
+      locationY = 158
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Set_Params"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Opportunity
+      queriedFields = [
+        salesforce.Opportunity.field.Id,
+        salesforce.Opportunity.field.Monday_Solutions_Offered__c,
+        salesforce.Opportunity.field.Solution_Feedback__c,
+        salesforce.Opportunity.field.Solution_Fit__c,
+      ]
+      storeOutputAutomatically = true
     },
   ]
 }

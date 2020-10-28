@@ -1,7 +1,0 @@
-salesforce.CustomTab zaapit__Accounts_Activities {
-  fullName = "zaapit__Accounts_Activities"
-  description = "Custom object explorer tab"
-  label = "Explorer 1"
-  motif = "Custom15: People"
-  page = "zaapit__zaapit_tb_GeneralWL5"
-}

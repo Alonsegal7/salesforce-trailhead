@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__zaapit_tb_contact_rl {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Contact RL"
-  fullName = "zaapit__zaapit_tb_contact_rl"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tb_contact_rl.page")
-}

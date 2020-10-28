@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__zaapit_tab_general1 {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "General Tabs 1"
-  fullName = "zaapit__zaapit_tab_general1"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tab_general1.page")
-}

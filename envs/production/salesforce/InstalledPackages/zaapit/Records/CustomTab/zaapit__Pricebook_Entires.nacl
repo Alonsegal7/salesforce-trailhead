@@ -1,6 +1,0 @@
-salesforce.CustomTab zaapit__Pricebook_Entires {
-  fullName = "zaapit__Pricebook_Entires"
-  label = "Pricebook Entries"
-  motif = "Custom43: Jewel"
-  page = "zaapit__zaapit_tb_PricebookEntries"
-}

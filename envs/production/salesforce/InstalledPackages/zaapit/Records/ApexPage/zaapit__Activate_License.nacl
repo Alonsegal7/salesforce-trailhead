@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__Activate_License {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 31
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Activate License"
-  fullName = "zaapit__Activate_License"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__Activate_License.page")
-}

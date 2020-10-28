@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__masscreate {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "MassCreate"
-  fullName = "zaapit__masscreate"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__masscreate.page")
-}

@@ -10304,6 +10304,16 @@ salesforce.PermissionSet LH__All_Lookup_Helper_Settings {
     },
     {
       editable = "false"
+      field = "Opportunity.Solution_Feedback__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
+      field = "Opportunity.Solution_Fit__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Opportunity.Stamped_as_GB_opp__c"
       readable = "false"
     },

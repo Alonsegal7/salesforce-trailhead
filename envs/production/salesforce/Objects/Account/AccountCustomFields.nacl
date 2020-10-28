@@ -6474,6 +6474,11 @@ domain.co, domain2.in, domain3.com
         default = false
         label = "Tech"
       },
+      {
+        fullName = "PS"
+        default = false
+        label = "PS"
+      },
     ]
     restricted = true
     createable = true

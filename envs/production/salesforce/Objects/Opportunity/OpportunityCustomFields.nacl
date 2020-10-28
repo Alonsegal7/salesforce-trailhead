@@ -7418,4 +7418,26 @@ if(text(StageName) = "Closed Lost",0,
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
   }
+  salesforce.Number Solution_Fit__c {
+    apiName = "Opportunity.Solution_Fit__c"
+    label = "Solution Fit"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea Solution_Feedback__c {
+    apiName = "Opportunity.Solution_Feedback__c"
+    label = "Solution Feedback"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
 }
