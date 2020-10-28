@@ -21,6 +21,10 @@ salesforce.Layout Company_Domain_Layout {
               behavior = "Required"
               field = salesforce.Company_Domain__c.field.Company__c
             },
+            {
+              behavior = "Edit"
+              field = salesforce.Company_Domain__c.field.Status__c
+            },
           ]
         },
         {

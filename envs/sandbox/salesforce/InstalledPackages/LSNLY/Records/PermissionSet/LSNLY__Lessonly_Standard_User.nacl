@@ -2963,6 +2963,11 @@ salesforce.PermissionSet LSNLY__Lessonly_Standard_User {
     },
     {
       editable = "false"
+      field = "Company_Domain__c.Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Contact.AccountId"
       readable = "false"
     },

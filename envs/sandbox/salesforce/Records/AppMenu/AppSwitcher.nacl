@@ -254,10 +254,6 @@ salesforce.AppMenu AppSwitcher {
       type = "CustomApplication"
     },
     {
-      name = "standard__TrustCard"
-      type = "CustomApplication"
-    },
-    {
       name = "LSNLY__Lessonly"
       type = "CustomApplication"
     },

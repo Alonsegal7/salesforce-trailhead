@@ -1,6 +1,0 @@
-salesforce.HomePageComponent zaapit__ZaapIT_Related_List_visual_Fix {
-  fullName = "zaapit__ZaapIT Related List visual Fix"
-  body = "<br>"
-  pageComponentType = "htmlArea"
-  width = "narrow"
-}

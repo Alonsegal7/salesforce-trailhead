@@ -1,7 +1,0 @@
-salesforce.CustomTab zaapit__Smart_Tables_MOB {
-  fullName = "zaapit__Smart_Tables_MOB"
-  description = "Smart Tables - Mobile"
-  label = "Smart Tables"
-  motif = "Custom11: Star"
-  page = "zaapit__zaapit_tb_Main_MOB"
-}

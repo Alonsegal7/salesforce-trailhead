@@ -9,7 +9,7 @@ type salesforce.zaapit__View_Style__c {
     caseSensitive = false
     length = 255
     queryable = true
-    externalId = false
+    
   }
   salesforce.Text zaapit__Field_To_Color__c {
     apiName = "zaapit__View_Style__c.zaapit__Field_To_Color__c"
@@ -21,7 +21,7 @@ type salesforce.zaapit__View_Style__c {
     caseSensitive = false
     length = 255
     queryable = true
-    externalId = false
+    
   }
   salesforce.Text zaapit__Row_Style__c {
     apiName = "zaapit__View_Style__c.zaapit__Row_Style__c"
@@ -33,7 +33,7 @@ type salesforce.zaapit__View_Style__c {
     caseSensitive = false
     length = 255
     queryable = true
-    externalId = false
+    
   }
   salesforce.LongTextArea zaapit__SOQL__c {
     apiName = "zaapit__View_Style__c.zaapit__SOQL__c"
@@ -43,7 +43,7 @@ type salesforce.zaapit__View_Style__c {
     updateable = true
     length = 32768
     queryable = true
-    visibleLines = 3
+    
   }
   salesforce.Text zaapit__Style_Description__c {
     apiName = "zaapit__View_Style__c.zaapit__Style_Description__c"
@@ -55,7 +55,7 @@ type salesforce.zaapit__View_Style__c {
     caseSensitive = false
     length = 250
     queryable = true
-    externalId = false
+    
   }
   salesforce.Text zaapit__ViewID__c {
     apiName = "zaapit__View_Style__c.zaapit__ViewID__c"
@@ -67,7 +67,7 @@ type salesforce.zaapit__View_Style__c {
     caseSensitive = false
     length = 255
     queryable = true
-    externalId = false
+    
   }
   salesforce.LongTextArea zaapit__css__c {
     apiName = "zaapit__View_Style__c.zaapit__css__c"
@@ -77,6 +77,6 @@ type salesforce.zaapit__View_Style__c {
     updateable = true
     length = 32768
     queryable = true
-    visibleLines = 3
+    
   }
 }

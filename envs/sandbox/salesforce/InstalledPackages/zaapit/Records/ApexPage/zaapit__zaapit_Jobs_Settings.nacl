@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__zaapit_Jobs_Settings {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Jobs Settings"
-  fullName = "zaapit__zaapit_Jobs_Settings"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_Jobs_Settings.page")
-}

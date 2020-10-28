@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__campaigns_tools_links {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 33
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Campaigns Tools Links"
-  fullName = "zaapit__campaigns_tools_links"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__campaigns_tools_links.page")
-}

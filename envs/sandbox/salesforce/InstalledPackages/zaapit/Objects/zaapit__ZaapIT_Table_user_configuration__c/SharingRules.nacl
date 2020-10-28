@@ -1,6 +1,0 @@
-salesforce.SharingRules zaapit__ZaapIT_Table_user_configuration__c {
-  fullName = "zaapit__ZaapIT_Table_user_configuration__c"
-  _parent = [
-    salesforce.zaapit__ZaapIT_Table_user_configuration__c,
-  ]
-}

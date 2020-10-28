@@ -6,6 +6,6 @@ type salesforce.zaapit__ZaapIT_Global_Settings__c {
     createable = true
     updateable = true
     queryable = true
-    description = "showCustomizeLink - override other customize Link options"
+    
   }
 }

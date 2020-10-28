@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__zaapit_tab_customerview {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Customer View"
-  fullName = "zaapit__zaapit_tab_customerview"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tab_customerview.page")
-}

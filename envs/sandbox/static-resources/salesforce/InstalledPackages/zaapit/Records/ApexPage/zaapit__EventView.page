@@ -1,9 +1,0 @@
-<apex:page standardController="event">
-<style>
-body .btn[value='Delete']{display:none;}
-</style>
-<c:zp_ifrm_helper />
- <apex:form id="theForm"> 
-<apex:detail subject="{!event.id}"/> 
-</apex:form>
-</apex:page>

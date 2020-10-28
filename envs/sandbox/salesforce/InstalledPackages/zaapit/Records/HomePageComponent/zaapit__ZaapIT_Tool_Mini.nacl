@@ -1,6 +1,0 @@
-salesforce.HomePageComponent zaapit__ZaapIT_Tool_Mini {
-  fullName = "zaapit__ZaapIT Tool - Mini"
-  body = "<br>"
-  pageComponentType = "htmlArea"
-  width = "narrow"
-}

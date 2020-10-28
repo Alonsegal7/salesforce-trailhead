@@ -1,8 +1,0 @@
-salesforce.CustomTab zaapit__zaapit_editable_tb__c {
-  fullName = "zaapit__zaapit_editable_tb__c"
-  customObject = true
-  motif = "Custom29: PDA"
-  _parent = [
-    salesforce.zaapit__zaapit_editable_tb__c,
-  ]
-}

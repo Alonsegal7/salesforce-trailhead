@@ -1151,9 +1151,7 @@ false))
     precision = 18
     queryable = true
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Account.field.Members__c,
-    ]
+    
   }
   salesforce.FormulaCheckbox WAPP_Drop__c {
     apiName = "Account.WAPP_Drop__c"

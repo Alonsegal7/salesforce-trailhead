@@ -3023,6 +3023,11 @@ salesforce.PermissionSet dfsle__DocuSign_Administrator {
     },
     {
       editable = "false"
+      field = "Company_Domain__c.Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Contact.AccountId"
       readable = "false"
     },

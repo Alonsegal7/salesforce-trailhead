@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__zaapit_tb_GeneralWL25 {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "General Working List 25"
-  fullName = "zaapit__zaapit_tb_GeneralWL25"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tb_GeneralWL25.page")
-}

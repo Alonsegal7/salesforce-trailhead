@@ -3345,6 +3345,11 @@ salesforce.PermissionSet rh2__PS_Rollup_Helper_All_Access {
     },
     {
       editable = "false"
+      field = "Company_Domain__c.Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Contact.AccountId"
       readable = "false"
     },

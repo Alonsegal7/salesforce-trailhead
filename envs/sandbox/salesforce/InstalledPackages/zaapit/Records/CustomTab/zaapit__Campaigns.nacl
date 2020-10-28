@@ -1,7 +1,0 @@
-salesforce.CustomTab zaapit__Campaigns {
-  fullName = "zaapit__Campaigns"
-  description = "Campaigns - mass update"
-  label = "Campaigns"
-  motif = "Custom11: Star"
-  page = "zaapit__zaapit_tb_CampaignWL"
-}

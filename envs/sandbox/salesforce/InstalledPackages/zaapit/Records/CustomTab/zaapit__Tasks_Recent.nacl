@@ -1,6 +1,0 @@
-salesforce.CustomTab zaapit__Tasks_Recent {
-  fullName = "zaapit__Tasks_Recent"
-  label = "Open Tasks"
-  motif = "Custom62: Chalkboard"
-  page = "zaapit__zaapit_tb_taskWL_filtered_SAM"
-}

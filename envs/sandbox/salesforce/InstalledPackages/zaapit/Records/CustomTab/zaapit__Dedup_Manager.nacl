@@ -1,6 +1,0 @@
-salesforce.CustomTab zaapit__Dedup_Manager {
-  fullName = "zaapit__Dedup_Manager"
-  label = "Dedup Manager"
-  motif = "Custom48: Trophy"
-  page = "zaapit__zaapit_tab_dedup"
-}

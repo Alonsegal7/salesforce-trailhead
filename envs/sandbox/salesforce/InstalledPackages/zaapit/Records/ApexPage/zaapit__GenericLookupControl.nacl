@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__GenericLookupControl {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 34
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "GenericLookupControl"
-  fullName = "zaapit__GenericLookupControl"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__GenericLookupControl.page")
-}

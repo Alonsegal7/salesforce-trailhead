@@ -1,5 +1,0 @@
-<apex:page >
-<script>
-self.close();
-</script>
-</apex:page>

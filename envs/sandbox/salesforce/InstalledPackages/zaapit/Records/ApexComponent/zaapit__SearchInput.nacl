@@ -1,8 +1,0 @@
-salesforce.ApexComponent zaapit__SearchInput {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  description = "This is a generic template for Visualforce Component.  With this template, you may adjust the default elements and values and add new elements and values."
-  label = "SearchInput"
-  fullName = "zaapit__SearchInput"
-  content = "(hidden)"
-}

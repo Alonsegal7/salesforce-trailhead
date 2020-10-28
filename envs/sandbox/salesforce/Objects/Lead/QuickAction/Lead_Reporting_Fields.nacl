@@ -1,7 +1,7 @@
 salesforce.QuickAction Lead_Reporting_Fields {
   fullName = "Lead.Reporting_Fields"
   description = "For admin and reporting fields"
-  icon = salesforce.StaticResource.instance.zaapit__zp_sfdc
+  icon = "zaapit__zp_sfdc"
   label = "Reporting Fields"
   optionsCreateFeedItem = false
   quickActionLayout = {

@@ -1,7 +1,0 @@
-salesforce.StaticResource zaapit__js_crossifrms {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/x-javascript"
-  fullName = "zaapit__js_crossifrms"
-  content = file("salesforce/InstalledPackages/zaapit/Records/StaticResource/zaapit__js_crossifrms.resource")
-}

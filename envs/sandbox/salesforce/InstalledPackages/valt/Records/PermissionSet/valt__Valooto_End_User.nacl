@@ -2970,6 +2970,11 @@ salesforce.PermissionSet valt__Valooto_End_User {
     },
     {
       editable = "false"
+      field = "Company_Domain__c.Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Contact.AccountId"
       readable = "false"
     },

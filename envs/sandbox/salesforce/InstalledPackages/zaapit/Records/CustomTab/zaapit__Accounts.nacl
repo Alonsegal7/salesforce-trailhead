@@ -1,7 +1,0 @@
-salesforce.CustomTab zaapit__Accounts {
-  fullName = "zaapit__Accounts"
-  description = "Accounts - mass update"
-  label = "Accounts"
-  motif = "Custom84: Presenter"
-  page = "zaapit__zaapit_tb_AccountWL"
-}

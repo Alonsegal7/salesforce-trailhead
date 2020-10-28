@@ -1,6 +1,0 @@
-salesforce.CustomObjectTranslation zaapit__zaapit_editable_tb__c_en_US {
-  fullName = "zaapit__zaapit_editable_tb__c-en_US"
-  _parent = [
-    salesforce.zaapit__zaapit_editable_tb__c,
-  ]
-}

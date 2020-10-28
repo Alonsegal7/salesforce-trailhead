@@ -1,7 +1,8 @@
 salesforce.Layout Company_Layout {
   fullName = "Account-Company Layout"
   excludeButtons = [
-    "DataDotComCompanyHierarchy",
+    "DataDotComAccountInsights",
+    "DataDotComClean",
     "DisableCustomerPortalAccount",
     "DisablePartnerPortalAccount",
     "IncludeOffline",
@@ -216,6 +217,10 @@ salesforce.Layout Company_Layout {
             {
               behavior = "Readonly"
               field = salesforce.Account.field.Green_Bucket_Company__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Account.field.Manual_Trigger__c
             },
           ]
         },

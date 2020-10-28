@@ -7,7 +7,7 @@ type salesforce.zaapit__ZaapIT_Related_List_Tabs1__c {
     createable = true
     updateable = true
     queryable = true
-    description = "Use a label API name to translate the tabs, label value format: tab1 text#tab2 text#tab3 text..."
+    
   }
   salesforce.TextArea zaapit__vf_p_name1__c {
     apiName = "zaapit__ZaapIT_Related_List_Tabs1__c.zaapit__vf_p_name1__c"
@@ -32,7 +32,7 @@ type salesforce.zaapit__ZaapIT_Related_List_Tabs1__c {
     createable = true
     updateable = true
     queryable = true
-    description = "vf_p_name__c"
+    
   }
   salesforce.TextArea zaapit__vf_p_titles1__c {
     apiName = "zaapit__ZaapIT_Related_List_Tabs1__c.zaapit__vf_p_titles1__c"
@@ -57,6 +57,6 @@ type salesforce.zaapit__ZaapIT_Related_List_Tabs1__c {
     createable = true
     updateable = true
     queryable = true
-    description = "vf_p_titles"
+    
   }
 }

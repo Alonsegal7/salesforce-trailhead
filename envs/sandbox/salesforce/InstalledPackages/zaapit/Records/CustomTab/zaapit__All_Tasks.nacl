@@ -1,7 +1,0 @@
-salesforce.CustomTab zaapit__All_Tasks {
-  fullName = "zaapit__All_Tasks"
-  description = "Tasks Tab  - Smart Activity Manager"
-  label = "All Tasks"
-  motif = "Custom62: Chalkboard"
-  page = "zaapit__zaapit_tb_taskWL_ALL_SAM"
-}

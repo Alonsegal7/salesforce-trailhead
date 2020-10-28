@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__Contact_View {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 31
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Contact View"
-  fullName = "zaapit__Contact_View"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__Contact_View.page")
-}

@@ -64,7 +64,5 @@ type salesforce.zaapit__zaapit_editable_tb__c {
   
   
   
-  topicsForObjects = {
-    enableTopics = false
-  }
+  
 }

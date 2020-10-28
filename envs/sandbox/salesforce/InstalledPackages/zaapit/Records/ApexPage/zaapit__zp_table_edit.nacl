@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__zp_table_edit {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "zp_table_edit"
-  fullName = "zaapit__zp_table_edit"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zp_table_edit.page")
-}

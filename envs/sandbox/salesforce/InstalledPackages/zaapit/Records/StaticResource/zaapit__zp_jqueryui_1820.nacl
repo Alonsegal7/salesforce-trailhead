@@ -1,8 +1,0 @@
-salesforce.StaticResource zaapit__zp_jqueryui_1820 {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/x-javascript"
-  description = "jq ui 1.9.2, was 1820"
-  fullName = "zaapit__zp_jqueryui_1820"
-  content = file("salesforce/InstalledPackages/zaapit/Records/StaticResource/zaapit__zp_jqueryui_1820.resource")
-}

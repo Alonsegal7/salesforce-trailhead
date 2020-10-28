@@ -1,8 +1,0 @@
-salesforce.StaticResource zaapit__zp_jquery172 {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "text/javascript"
-  description = "jq 3.3.1 + migrate (was 172,1.10.2,v1.11.2)"
-  fullName = "zaapit__zp_jquery172"
-  content = file("salesforce/InstalledPackages/zaapit/Records/StaticResource/zaapit__zp_jquery172.resource")
-}

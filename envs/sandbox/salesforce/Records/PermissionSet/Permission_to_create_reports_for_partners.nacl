@@ -2948,6 +2948,11 @@ salesforce.PermissionSet Permission_to_create_reports_for_partners {
     },
     {
       editable = "false"
+      field = "Company_Domain__c.Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Contact.AccountId"
       readable = "false"
     },

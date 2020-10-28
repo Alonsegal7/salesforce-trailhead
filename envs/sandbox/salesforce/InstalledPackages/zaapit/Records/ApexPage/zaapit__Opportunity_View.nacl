@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__Opportunity_View {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 31
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Opportunity View"
-  fullName = "zaapit__Opportunity_View"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__Opportunity_View.page")
-}

@@ -1,6 +1,0 @@
-salesforce.CustomTab zaapit__Overview {
-  fullName = "zaapit__Overview"
-  label = "Overview"
-  motif = "Custom25: Alarm clock"
-  page = "zaapit__zaapit_chart_Activities"
-}

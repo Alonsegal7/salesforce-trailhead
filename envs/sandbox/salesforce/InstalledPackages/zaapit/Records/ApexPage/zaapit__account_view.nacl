@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__account_view {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 31
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Account View"
-  fullName = "zaapit__account_view"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__account_view.page")
-}

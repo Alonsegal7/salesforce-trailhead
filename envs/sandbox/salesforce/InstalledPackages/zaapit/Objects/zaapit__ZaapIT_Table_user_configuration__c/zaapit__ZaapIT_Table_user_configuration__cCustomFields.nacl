@@ -9,7 +9,7 @@ type salesforce.zaapit__ZaapIT_Table_user_configuration__c {
     caseSensitive = false
     length = 50
     queryable = true
-    externalId = false
+    
   }
   salesforce.Lookup zaapit__ZaapIT_Table_View__c {
     apiName = "zaapit__ZaapIT_Table_user_configuration__c.zaapit__ZaapIT_Table_View__c"
@@ -33,6 +33,6 @@ type salesforce.zaapit__ZaapIT_Table_user_configuration__c {
     caseSensitive = false
     length = 255
     queryable = true
-    externalId = false
+    
   }
 }

@@ -2948,6 +2948,11 @@ salesforce.PermissionSet ARH__Any_Record_Hierarchy {
     },
     {
       editable = "false"
+      field = "Company_Domain__c.Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Contact.AccountId"
       readable = "false"
     },

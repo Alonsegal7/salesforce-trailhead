@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__importDataFromCSV {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 33
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "importDataFromCSV"
-  fullName = "zaapit__importDataFromCSV"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__importDataFromCSV.page")
-}

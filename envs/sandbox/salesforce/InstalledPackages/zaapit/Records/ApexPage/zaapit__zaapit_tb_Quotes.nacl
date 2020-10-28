@@ -1,9 +1,0 @@
-salesforce.ApexPage zaapit__zaapit_tb_Quotes {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "zaapit_tb_Quotes"
-  fullName = "zaapit__zaapit_tb_Quotes"
-  content = file("salesforce/InstalledPackages/zaapit/Records/ApexPage/zaapit__zaapit_tb_Quotes.page")
-}

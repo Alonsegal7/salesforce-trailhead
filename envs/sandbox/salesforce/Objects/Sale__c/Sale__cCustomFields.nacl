@@ -335,9 +335,7 @@ CASE(MONTH(Close_Date__c),
     queryable = true
     externalId = false
     formulaTreatBlanksAs = "BlankAsZero"
-    _generated_dependencies = [
-      salesforce.Sale__c.field.Sale_Status__c,
-    ]
+    
   }
   salesforce.Number of_Connected_Opportunities__c {
     apiName = "Sale__c.of_Connected_Opportunities__c"

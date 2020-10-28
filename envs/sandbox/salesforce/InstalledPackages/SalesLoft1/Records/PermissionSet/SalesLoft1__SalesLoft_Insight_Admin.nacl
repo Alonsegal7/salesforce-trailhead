@@ -2949,6 +2949,11 @@ salesforce.PermissionSet SalesLoft1__SalesLoft_Insight_Admin {
     },
     {
       editable = "false"
+      field = "Company_Domain__c.Status__c"
+      readable = "false"
+    },
+    {
+      editable = "false"
       field = "Contact.AccountId"
       readable = "false"
     },
