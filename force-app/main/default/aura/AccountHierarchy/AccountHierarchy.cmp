@@ -1,0 +1,31 @@
+<aura:component extends="c:BaseComponent" implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+  access="global">
+
+  <!-- attrs -->
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="hierarchy" type="Object" />
+  <!-- handlers -->
+  <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+  <!-- events -->
+  <!-- methods -->
+
+  <div class="slds-card">
+    <header class="slds-card__header slds-grid">
+      <div class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-media__body slds-truncate">
+          <span class="slds-text-heading_small card-title">
+            Account Hierarchy
+          </span>
+        </div>
+      </div>
+    </header>
+    <div class="slds-card__body">
+      <div class="slds-card__body_inner">
+        <div class="slds-tree_container">
+          <c:RecurciveHierarchy hierarchy="{!v.hierarchy}" currentLevel="1" />
+        </div>
+      </div>
+      <c:Spinner isLoading="{!v.isLoading}" size="small" />
+    </div>
+  </div>
+</aura:component>

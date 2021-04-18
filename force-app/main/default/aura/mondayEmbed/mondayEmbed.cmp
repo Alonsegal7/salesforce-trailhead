@@ -1,0 +1,52 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride" access="global">
+    <aura:attribute name="iframeUrl" type="String" />
+    <aura:attribute name="boardId" type="String" />
+    <aura:attribute name="boardIdFieldAPI" type="String" />
+    <aura:attribute name="itemIdFieldAPI" type="String" />
+    <aura:attribute name="viewId" type="String" />
+    <aura:attribute name="dashboardId" type="String" />
+    <aura:attribute name="itemId" type="String"/>
+    <aura:attribute name="filterFieldAPI" type="String"/>
+    <aura:attribute name="filterValue" type="String"/>
+    <aura:attribute name="itemView" type="Boolean"/>
+    <aura:attribute name="fullURL" type="String"/>
+    <aura:attribute name="width" type="String" />
+    <aura:attribute name="height" type="String" />
+    <aura:attribute name="scrolling" type="String" />
+    <aura:attribute name="frameBorder" type="String" />
+    <aura:attribute name="style" type="String" />
+    <aura:attribute name="sandbox" type="String" />
+    <aura:attribute name="userFieldAPI" type="String" />
+    <aura:attribute name="userFilterAPI" type="String" />
+    <aura:attribute name="accountSlugNameAPI" type="String" />
+    <aura:attribute name="accountSlugName" type="String" />
+    
+	
+    <aura:attribute name="record" type="Object" />
+    <aura:attribute name="simpleRecord" type="Object" />
+    <aura:attribute name="recordError" type="String"/>
+	<force:recordData 
+          recordId="{!v.recordId}"
+          targetRecord="{!v.record}"
+          targetFields="{!v.simpleRecord}"
+          targetError="{!v.recordError}"
+          layoutType="FULL"
+          recordUpdated="{!c.onRender}"/>
+    
+    <aura:attribute name="currentUser" type="User" />
+    <force:recordData
+              recordId="{!$SObjectType.CurrentUser.Id}"
+              targetFields="{!v.currentUser}"
+              layoutType="FULL"
+              mode="VIEW"/>
+
+    <iframe src="{! v.fullURL}" 
+        id="monday-embed"
+        width="{!v.width}"
+        height="{!v.height}"
+        style="{!v.style}"
+        frameBorder="{!v.frameBorder}"
+        sandbox="{!v.sandbox}"
+        scrolling="{!v.scrolling}"/>
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+</aura:component>

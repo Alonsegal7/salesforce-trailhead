@@ -1,0 +1,12 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction" access="global">
+    <aura:attribute name="url" type="String" />
+    <aura:attribute name="pageReference" type="Object" />
+    <!--<aura:attribute name="recordId" type="Id" />-->
+
+    <lightning:recordEditForm recordId="{!v.recordId}" objectApiName="Lead">
+        <lightning:messages />
+        <lightning:inputField fieldName="Close_Date_for_Convert__c" required="true"/>
+        <lightning:button label="Save" title="Neutral action" onclick="{! c.convertlead }"/>
+    </lightning:recordEditForm>
+
+</aura:component>

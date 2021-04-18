@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage">
+            <property label="Bar Title" name="title" type="String" default="Enter Bar Title"/>
+            <property label="Bar Sub Title" name="subTitle" type="String"/>
+            <property label="Field API Name" name="fieldAPIName" type="String" description="Values from 0 to 100"/>
+            <property label="Single Bar Color (No Conditional Formatting)" name="barColor" type="String" default="#ffcc00" datasource="#ffcc00,#00ca72,#a358d0,#fb275d,#00cff0,#595ad4"/>
+            <property label="Conditional Formatting" name="conditinalFormatting" type="boolean"/>
+            <property label="First Threshold (Red)" name="firstThreshold" default="33" type="Integer" description="Values from 0 to 100, can't be higher than second threshold"/>
+            <property label="Second Threshold (Yellow)" name="secondThreshold" default="67" type="Integer" description="Values from 0 to 100, can't be lower than first threshold"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

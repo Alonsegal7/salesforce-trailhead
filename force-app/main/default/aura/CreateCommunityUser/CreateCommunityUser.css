@@ -1,0 +1,30 @@
+.THIS {
+}
+.THIS.wrap-all{
+    position: relative;
+}
+.THIS .slds-modal__header{
+    padding-top: 0;
+}
+    .THIS .slds-modal__content {
+        height: 194px;
+    }
+.THIS .errMsg{
+    color: #d10000;
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.THIS .successMsg{
+    color: #006f09;
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.THIS .modalFooter{
+    border-top: 2px solid rgb(221, 219, 218);
+    text-align: center;
+    padding-top: 1rem;
+}

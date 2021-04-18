@@ -1,0 +1,29 @@
+<aura:component controller="Ctrl_CreateCommunityUser" implements="force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable" access="global">
+	<aura:attribute name="hasError" type="Boolean" default="false" />
+	<aura:attribute name="hasSuccess" type="Boolean" default="false" />
+	<aura:attribute name="errMsg" type="String" default="" />
+	<aura:attribute name="hostingContact" type="Contact" />
+	
+	<aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+	
+	<div class="wrap-all">
+		<header class="slds-modal__header">
+			<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Community User</h2>
+		</header>
+		<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+			<aura:if isTrue="{! v.hasError }">
+                <div class="errMsg">
+                    <aura:unescapedHtml value="{! v.errMsg }"></aura:unescapedHtml>
+                </div>
+			</aura:if>
+			<aura:if isTrue="{! v.hasSuccess }">
+                <lightning:formattedUrl value="{! v.errMsg }" label="User" target="_blank" /> was Created
+			</aura:if>
+		</div>    
+		<footer class="modalFooter">
+			<lightning:button label="Close" class="slds-button slds-button_neutral" onclick="{! c.closeDialog }" />
+		</footer>
+		<lightning:spinner alternativeText="Loading" size="medium" class="slds-hide" aura:id="cmspinner" />
+	</div>
+	
+</aura:component>

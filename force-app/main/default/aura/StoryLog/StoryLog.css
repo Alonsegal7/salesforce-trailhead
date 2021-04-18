@@ -1,0 +1,15 @@
+.THIS .items-wrapper {
+    background: #ffffff;
+    max-height: 600px;
+    overflow: auto;
+}
+
+.THIS .timeline {
+	position: absolute;
+    top: 48px;
+    left: 48.5px;
+    bottom: 0;
+    background: #636363;
+    width: 3px;
+    z-index: 1;
+}

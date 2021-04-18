@@ -1,0 +1,63 @@
+<!--
+    Component Name:     Partner_DealRegistrationForm.cmp
+    Where Is It Used:   Partner Community
+    Purpose:            Form used for Partner to register a Lead with required details and submit to check
+    controller="AddProductController"
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" controller="Tal_APICall">
+    <!-- <aura:html tag="style">
+        .slds-modal__container{ 
+           height : auto;
+           width: 100%;
+           max-width: 100vh; 
+        } 
+        .modal-body{ 
+           height : 100vh !important; 
+           max-height: 80vh !important; 
+        }
+    </aura:html> -->
+
+    <aura:attribute name="fields" type="List" default="[]"/>
+    <aura:attribute name="partnerFieldSetForm" type="List" description="Partner - New Deal Registration Form"/>
+
+    <lightning:navigation aura:id="navService"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div title="" style="background: #575c96; padding-top: 20px; padding-bottom: 20px;">
+        ###
+        <div class="modalWhite">
+            <lightning:card>
+                <img src="{!$Resource.Monday_Logo}" class="mondayImage"/>
+                <p class="slds-m-vertical_small formTitle">Deal Registration</p>
+                <section><!--onsubmit="{!c.handleSubmit}"-->
+                    <lightning:recordEditForm
+                        onload="{!c.handleLoad}"
+                        onsuccess="{!c.handleSuccess}"
+                        objectApiName="Lead_Registration__c"
+                        onsubmit="{!c.handleSubmit}"
+                        aura:id="recordEditForm">
+                        <lightning:messages />
+
+                        <aura:iteration items="{! v.partnerFieldSetForm }" var="field" indexVar="i">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <lightning:inputField aura:id="fieldSet" rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                </div>
+                            </div>
+                        </aura:iteration>
+                        <div class="slds-align_absolute-center">
+                            <lightning:button variant="brand" label="Submit" type="submit" />
+                        </div>
+                    </lightning:recordEditForm>
+                    <!-- <div class="slds-modal__footer slds-align_absolute-center">
+                        <lightning:button variant="brand"
+                                          label="Next Step"
+                                          title="Next Step"
+                                          onclick="{!c.submitDetails}"/>
+                    </div> -->
+                </section>
+            </lightning:card>
+        </div>
+    </div>
+</aura:component>

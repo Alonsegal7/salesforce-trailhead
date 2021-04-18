@@ -1,0 +1,34 @@
+<aura:component controller="Opportunity_ClosingProcess">
+    333
+    <aura:html tag="style">
+        .slds-modal__container{ 
+           height : auto;
+           width: 100%;
+           max-width: 100vh; 
+        } 
+        .modal-body{ 
+           height : 100vh !important; 
+           max-height: 80vh !important; 
+        }
+    </aura:html>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:attribute name="isClosedLost" type="Boolean" default="false"/>
+    <aura:attribute name="stage_ClosedLost" type="String" default=""/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:recordEditForm onload="{!c.loadInitialParameters}"
+                                onsuccess="{!c.handleSuccess}"
+                                onsubmit="{!c.handleSubmit}"
+                                objectApiName="Opportunity"
+                                aura:id="closedLostFields">
+            <lightning:messages />
+            <lightning:inputField fieldName="StageName" value="{!v.stage_ClosedLost}"/>
+            <lightning:inputField fieldName="Lost_Reason__c"/>
+            <lightning:inputField fieldName="Which_competitor__c"/>
+            <lightning:inputField fieldName="Which_features_were_missing__c"/>
+        </lightning:recordEditForm>  
+    <lightning:button name="cancel" label="Cancel" onclick="{!c.handleCancel}"/>
+    <lightning:button name="ok" label="OK" variant="brand" onclick="{!c.handleOK}"/>
+</aura:component>
