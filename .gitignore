@@ -49,3 +49,5 @@ manifest/
 scripts/
 globalValueSets/
 customMetadata/
+envs/
+salto.config/
