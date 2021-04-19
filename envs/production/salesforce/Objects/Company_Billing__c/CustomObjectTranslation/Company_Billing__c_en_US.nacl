@@ -1,0 +1,29 @@
+salesforce.CustomObjectTranslation Company_Billing__c_en_US {
+  fullName = "Company_Billing__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Company Billing"
+    },
+    {
+      plural = true
+      value = "Company Billings"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Company_Billing__c.field.Billing_Entity__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Company_Billing__c.field.Company__c
+      relationshipLabel = ""
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Company_Billing__c,
+  ]
+}

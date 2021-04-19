@@ -1,0 +1,7 @@
+salesforce.ApexClass zisf__ZoomApiResult {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 38
+  status = "Active"
+  fullName = "zisf__ZoomApiResult"
+  content = "(hidden)"
+}

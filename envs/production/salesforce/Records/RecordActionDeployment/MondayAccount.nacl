@@ -1,0 +1,51 @@
+salesforce.RecordActionDeployment MondayAccount {
+  fullName = "MondayAccount"
+  channelConfigurations = [
+    {
+      channel = "Chat"
+      channelItems = [
+        {
+          action = "Account.Un_assign_Myself"
+          isMandatory = false
+          isUiRemoveHidden = false
+          pinned = "Top"
+          position = 0
+          type = "QuickAction"
+        },
+        {
+          action = "Monday_Account_Handover"
+          isMandatory = false
+          isUiRemoveHidden = false
+          pinned = "Top"
+          position = 1
+          type = "Flow"
+        },
+      ]
+      isAutopopEnabled = false
+    },
+    {
+      channel = "Phone"
+      isAutopopEnabled = false
+    },
+    {
+      channel = "Other"
+      isAutopopEnabled = false
+    },
+  ]
+  deploymentContexts = {
+    entityName = "Account"
+  }
+  hasGuidedActions = true
+  hasRecommendations = false
+  masterLabel = "Monday Account"
+  selectableItems = [
+    {
+      action = "Monday_Account_Handover"
+      type = "Flow"
+    },
+    {
+      action = "Monday_Account_Unassignment"
+      type = "Flow"
+    },
+  ]
+}

@@ -1,0 +1,12 @@
+salesforce.Workflow Contract {
+  fullName = "Contract"
+  fieldUpdates = [
+    salesforce.WorkflowFieldUpdate.instance.Contract_Calculate_Contract_Term,
+  ]
+  rules = [
+    salesforce.WorkflowRule.instance.Contract_Calculate_Contract_Term,
+  ]
+  _parent = [
+    salesforce.Contract,
+  ]
+}

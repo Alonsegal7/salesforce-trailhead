@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__progressBar {
+  fullName = "dfsle__progressBar"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/progressBar/progressBar.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/progressBar/progressBar.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/progressBar/progressBar.html"
+      },
+    ]
+  }
+}

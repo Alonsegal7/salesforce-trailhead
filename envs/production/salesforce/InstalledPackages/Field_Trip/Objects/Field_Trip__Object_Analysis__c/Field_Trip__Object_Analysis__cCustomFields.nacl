@@ -1,0 +1,125 @@
+type salesforce.Field_Trip__Object_Analysis__c {
+  salesforce.LongTextArea Field_Trip__Filter__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Filter__c"
+    label = "Filter"
+    _required = false
+    createable = true
+    updateable = true
+    length = 1000
+    queryable = true
+    visibleLines = 2
+  }
+  salesforce.Number Field_Trip__Health_Score__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Health_Score__c"
+    label = "Health Score"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime Field_Trip__Last_Analyzed__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Last_Analyzed__c"
+    label = "Last Analyzed"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Field_Trip__Last_Batch_Id__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Last_Batch_Id__c"
+    label = "Last Batch Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 18
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Field_Trip__Object_Label__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Object_Label__c"
+    label = "Object Label"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Field_Trip__Object_Name__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Object_Name__c"
+    label = "Object Name"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Field_Trip__Record_Types__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Record_Types__c"
+    label = "Record Types"
+    _required = false
+    precision = 5
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Field_Trip__Records__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Records__c"
+    label = "Records"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Field_Trip__Tally__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Tally__c"
+    label = "Tally (Temporary)"
+    _required = false
+    defaultValueFormula = "0"
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Field_Trip__isCustom__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__isCustom__c"
+    label = "Custom"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Summary Field_Trip__Fields__c {
+    apiName = "Field_Trip__Object_Analysis__c.Field_Trip__Fields__c"
+    label = "Fields"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = false
+    updateable = false
+    queryable = true
+    summaryForeignKey = "Field_Trip__Field_Analysis__c.Field_Trip__Object_Analysis__c"
+    summaryOperation = "count"
+  }
+}

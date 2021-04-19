@@ -1,0 +1,26 @@
+type salesforce.CMSConnectAsset {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  string assetPath {
+    _required = false
+  }
+  string assetType {
+    _required = false
+  }
+  number sortOrder {
+    _required = false
+  }
+  metadataType = "CMSConnectAsset"
+}

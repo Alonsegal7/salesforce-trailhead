@@ -1,0 +1,10 @@
+salesforce.Role US_MM_CSM_TL {
+  fullName = "US_MM_CSM_TL"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "US MM CSM TL"
+  mayForecastManagerShare = false
+  name = "US MM CSM TL"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.US_CS_Manager
+}

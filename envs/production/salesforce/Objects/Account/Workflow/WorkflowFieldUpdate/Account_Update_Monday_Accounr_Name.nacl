@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Update_Monday_Accounr_Name {
+  fullName = "Account.Update_Monday_Accounr_Name"
+  field = salesforce.Account.field.Name
+  formula = "Company__r.Name +\"\"+\"(NO BB ACCOUNT YET)\""
+  name = "Update Monday Accounr Name"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

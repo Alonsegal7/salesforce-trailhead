@@ -1,0 +1,7 @@
+salesforce.ApexClass fbc_FormulaEvaluator {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 46
+  status = "Active"
+  fullName = "fbc_FormulaEvaluator"
+  content = file("salesforce/Records/ApexClass/fbc_FormulaEvaluator.cls")
+}

@@ -1,0 +1,15 @@
+salesforce.Workflow CampaignMember {
+  fullName = "CampaignMember"
+  fieldUpdates = [
+    salesforce.WorkflowFieldUpdate.instance.CampaignMember_MARK_SQL_IN_CAMPAIGN_MEMBER,
+    salesforce.WorkflowFieldUpdate.instance.CampaignMember_Mark_mql_on_campign,
+    salesforce.WorkflowFieldUpdate.instance.CampaignMember_mark_mql_in_campaign_member,
+  ]
+  rules = [
+    salesforce.WorkflowRule.instance.CampaignMember_MARK_SQL_IN_CAMPAIGN_MEMBER,
+    salesforce.WorkflowRule.instance.CampaignMember_mark_mql_in_campaign_member,
+  ]
+  _parent = [
+    salesforce.CampaignMember,
+  ]
+}

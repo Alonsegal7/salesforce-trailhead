@@ -1,0 +1,14 @@
+salesforce.ApexClass mondayapp__TriggerProducer {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 46
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 10
+      namespace = "mondayapp"
+    },
+  ]
+  status = "Active"
+  fullName = "mondayapp__TriggerProducer"
+  content = file("salesforce/InstalledPackages/mondayapp/Records/ApexClass/mondayapp__TriggerProducer.cls")
+}

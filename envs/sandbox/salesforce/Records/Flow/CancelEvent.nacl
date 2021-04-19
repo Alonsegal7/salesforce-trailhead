@@ -1,0 +1,168 @@
+salesforce.Flow CancelEvent {
+  fullName = "CancelEvent"
+  decisions = [
+    {
+      name = "Custom_UUID_Match"
+      label = "Custom UUID Match?"
+      locationX = 289
+      locationY = 95
+      defaultConnector = {
+        targetReference = "Fallback_Lookup"
+      }
+      defaultConnectorLabel = "Event Not Found"
+      rules = [
+        {
+          name = "Event_Found_via_Custom_Field"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "EventRecordId"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "UpdateEvent"
+          }
+          label = "Event Found via Custom Field"
+        },
+      ]
+    },
+    {
+      name = "Fallback_UUID_Match"
+      label = "Fallback UUID Match?"
+      locationX = 287
+      locationY = 191
+      defaultConnectorLabel = "Exit Flow"
+      rules = [
+        {
+          name = "Event_Found_via_Subject"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "EventRecordId"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "UpdateEvent"
+          }
+          label = "Event Found via Subject"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "CancelFlow {!$Flow.CurrentDateTime}"
+  label = "CancelEvent"
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Custom_Lookup"
+      label = "Custom Lookup"
+      locationX = 141
+      locationY = 95
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Custom_UUID_Match"
+      }
+      filters = [
+        {
+          field = "InviteeUuid__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "NewCalendlyAction.InviteeUuid__c"
+          }
+        },
+      ]
+      object = salesforce.Event
+      outputAssignments = [
+        {
+          assignToReference = "EventRecordId"
+          field = "Id"
+        },
+      ]
+    },
+    {
+      name = "Fallback_Lookup"
+      label = "Fallback Lookup"
+      locationX = 141
+      locationY = 191
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Fallback_UUID_Match"
+      }
+      filters = [
+        {
+          field = "Subject"
+          operator = "Contains"
+          value = {
+            elementReference = "NewCalendlyAction.InviteeUuid__c"
+          }
+        },
+      ]
+      object = salesforce.Event
+      outputAssignments = [
+        {
+          assignToReference = "EventRecordId"
+          field = "Id"
+        },
+      ]
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "UpdateEvent"
+      label = "UpdateEvent"
+      locationX = 601
+      locationY = 98
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "EventRecordId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "Description"
+          value = {
+            elementReference = "NewCalendlyAction.EventDescription__c"
+          }
+        },
+        {
+          field = "Subject"
+          value = {
+            stringValue = "{!NewCalendlyAction.EventSubject__c} - Calendly - {!NewCalendlyAction.InviteeUuid__c}"
+          }
+        },
+      ]
+      object = salesforce.Event
+    },
+  ]
+  startElementReference = "Custom_Lookup"
+  status = "Active"
+  variables = [
+    {
+      name = "EventRecordId"
+      dataType = "String"
+      isCollection = false
+      isInput = false
+      isOutput = false
+    },
+    {
+      name = "NewCalendlyAction"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.CalendlyAction__c
+    },
+  ]
+}

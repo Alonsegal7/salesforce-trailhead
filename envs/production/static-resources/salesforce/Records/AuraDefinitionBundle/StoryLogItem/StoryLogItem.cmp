@@ -1,0 +1,67 @@
+<aura:component>
+	
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.setIconSize}" />
+    
+    <!-- Attributes -->
+    <aura:attribute name="logItem" type="StoryLogSnapshot__c" />
+    <aura:attribute name="logItemSetting" type="Object" default="{}" />
+    <aura:attribute name="iconSize" type="String" default="" />
+
+    <aura:if isTrue="{!v.logItem.descriptionHtml}">
+    <div class="">
+        <lightning:layout class="wrapper">
+
+            <lightning:layoutItem class="block slds-p-vertical--medium" >
+                <div class="table-block" style="width: 100px; text-align: center;">
+                    <div class="icon-background"></div>
+
+                    <div class="table-cell-block">
+                        <lightning:icon class="icon" iconName="{!v.logItem.iconName}" size="{! v.iconSize }" />
+                    </div>
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem class="block slds-p-vertical--medium" flexibility="grow">
+                <div class="table-block">
+                    <div class="table-cell-block">
+                        <div class="slds-text-heading_small">
+
+<!--                            <a href="{!'/' + v.logItem.id}">ss</a>-->
+
+                            <b>{!v.logItem.sourceLabel}:</b>&nbsp;
+                            <aura:if isTrue="{!v.logItem.snapshotType == 'FieldUpdate'}">
+                                {!v.logItem.sourceDetails}
+                                <aura:set attribute="else">
+                                    <lightning:formattedUrl value="{!'/' + v.logItem.recordId}"
+                                                            label="{!v.logItem.sourceDetails}" target="_blank" />
+                                </aura:set>
+                            </aura:if>
+                        </div>
+
+                        <div class="slds-m-top--x-small">
+                            <aura:unescapedHtml value="{!v.logItem.descriptionHtml}" />
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+
+
+            <lightning:layoutItem class="block slds-p-vertical--medium" padding="around-small">
+                <div class="table-block">
+                    <span class="table-cell-block" style="text-align: right; word-break: keep-all;">
+                        <lightning:formattedDateTime value="{!v.logItem.doneAt}"
+                                                     year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                     minute="2-digit" hour12="true"/>
+                        <br/>
+                        <lightning:formattedUrl value="{!'/' + v.logItem.doneByUserId}"
+                                                label="{!v.logItem.doneByUserName}" target="_blank" />
+                    </span>
+                </div>
+            </lightning:layoutItem>
+
+        </lightning:layout>
+    </div>
+    </aura:if>
+    
+</aura:component>

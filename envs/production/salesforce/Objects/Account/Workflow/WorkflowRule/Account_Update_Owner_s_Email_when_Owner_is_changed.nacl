@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Account_Update_Owner_s_Email_when_Owner_is_changed {
+  fullName = "Account.Update Owner%27s Email when Owner is changed"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Update_Owner_s_Email
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "(ischanged(OwnerId) ||  Owner_s_Email__c <>  Owner.Email) &&  Owner_is_Active_reports__c"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Account,
+  ]
+}

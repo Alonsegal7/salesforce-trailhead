@@ -1,0 +1,98 @@
+salesforce.Flow Update_Lead_with_task_activity {
+  fullName = "Update_Lead_with_task_activity"
+  decisions = [
+    {
+      name = "Queue_name_is_true"
+      label = "Queue name is true"
+      locationX = 503
+      locationY = 112
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Has_queue_name_and_task_created"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "$Record.Queue_Name_CP__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "$Record.Queue_Name_CP__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                stringValue = ""
+              }
+            },
+            {
+              leftValueReference = "$Record.WhoId"
+              operator = "StartsWith"
+              rightValue = {
+                stringValue = "00Q"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Update_Lead_Queue_Name"
+          }
+          label = "Has queue name and task created"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Update Lead with task activity {!$Flow.CurrentDateTime}"
+  label = "Update Lead with task activity"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordUpdates = [
+    {
+      name = "Update_Lead_Queue_Name"
+      label = "Update Lead Queue Name"
+      locationX = 779
+      locationY = 111
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.WhoId"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "CP_Queue_Name__c"
+          value = {
+            elementReference = "$Record.Queue_Name_CP__c"
+          }
+        },
+      ]
+      object = salesforce.Lead
+    },
+  ]
+  start = {
+    locationX = 71
+    locationY = 45
+    connector = {
+      targetReference = "Queue_name_is_true"
+    }
+    object = salesforce.Task
+    triggerType = "RecordAfterSave"
+  }
+  status = "Active"
+}

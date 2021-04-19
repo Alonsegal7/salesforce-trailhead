@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle ARH__field {
+  fullName = "ARH__field"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/field/field.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/field/field.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/field/field.css"
+      },
+    ]
+  }
+}

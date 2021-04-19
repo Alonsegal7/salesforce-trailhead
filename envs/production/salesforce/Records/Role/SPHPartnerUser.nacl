@@ -1,0 +1,10 @@
+salesforce.Role SPHPartnerUser {
+  fullName = "SPHPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "SPH Partner User"
+  mayForecastManagerShare = false
+  name = "SPH Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

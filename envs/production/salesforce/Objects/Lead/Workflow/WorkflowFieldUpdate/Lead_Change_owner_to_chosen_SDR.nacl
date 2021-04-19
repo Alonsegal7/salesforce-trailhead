@@ -1,0 +1,13 @@
+salesforce.WorkflowFieldUpdate Lead_Change_owner_to_chosen_SDR {
+  fullName = "Lead.Change_owner_to_chosen_SDR"
+  field = salesforce.Lead.field.OwnerId
+  lookupValue = "tamir@monday.com"
+  lookupValueType = "User"
+  name = "Change owner to chosen SDR"
+  notifyAssignee = false
+  operation = "LookupValue"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,28 @@
+salesforce.WebLink Contract_tci_csmrg__Mass_Edit {
+  fullName = "Contract.tci_csmrg__Mass_Edit"
+  availability = "online"
+  displayType = "massActionButton"
+  linkType = "javascript"
+  masterLabel = "Mass Edit"
+  openType = "onClickJavaScript"
+  protected = false
+  requireRowSelection = true
+  url = '''
+{!REQUIRESCRIPT("/soap/ajax/19.0/connection.js")}
+
+var records = {!GETRECORDIDS($ObjectType.Contract)};
+
+if (records[0] == null) {
+
+alert("Please select at least one Contract to edit.");
+} 
+
+else {
+
+window.location = '/apex/tci_csmrg__MassEditContracts?recs='+records.join(',');
+}
+'''
+  _parent = [
+    salesforce.Contract,
+  ]
+}

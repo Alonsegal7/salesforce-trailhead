@@ -1,0 +1,52 @@
+salesforce.WorkflowRule Task_Mark_chat_tasks_as_complete {
+  fullName = "Task.Mark chat tasks as complete"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Task_Close_Task
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  booleanFilter = "1 AND (2 or 3 or 4 or 7) and 5 and 6"
+  criteriaItems = [
+    {
+      field = salesforce.Task.field.CreatedById
+      operation = "equals"
+      value = "API Hubspot"
+    },
+    {
+      field = salesforce.Task.field.Subject
+      operation = "contains"
+      value = "Submitted Form"
+    },
+    {
+      field = salesforce.Task.field.Subject
+      operation = "contains"
+      value = "New Conversation"
+    },
+    {
+      field = salesforce.Task.field.Subject
+      operation = "contains"
+      value = "Drift Conversation"
+    },
+    {
+      field = salesforce.Task.field.Status
+      operation = "equals"
+      value = "Open"
+    },
+    {
+      field = salesforce.Task.field.CreatedDate
+      operation = "greaterOrEqual"
+      value = "01/04/2020 02:00"
+    },
+    {
+      field = salesforce.Task.field.Subject
+      operation = "contains"
+      value = "Webinar"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Task,
+  ]
+}

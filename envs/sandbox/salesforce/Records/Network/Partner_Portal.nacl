@@ -1,0 +1,54 @@
+salesforce.Network Partner_Portal {
+  fullName = "Partner Portal"
+  allowInternalUserLogin = false
+  allowMembersToFlag = false
+  changePasswordTemplate = "unfiled$public/CommunityChangePasswordEmailTemplate"
+  disableReputationRecordConversations = true
+  emailSenderAddress = "maayany@monday.com"
+  emailSenderName = "Partner Portal"
+  enableCustomVFErrorPageOverrides = false
+  enableDirectMessages = true
+  enableGuestChatter = false
+  enableGuestFileAccess = false
+  enableGuestMemberVisibility = false
+  enableInvitation = false
+  enableKnowledgeable = false
+  enableMemberVisibility = true
+  enableNicknameDisplay = false
+  enablePrivateMessages = false
+  enableReputation = false
+  enableShowAllNetworkSettings = false
+  enableSiteAsContainer = true
+  enableTalkingAboutStats = true
+  enableTopicAssignmentRules = true
+  enableTopicSuggestions = false
+  enableUpDownVote = false
+  forgotPasswordTemplate = "unfiled$public/CommunityForgotPasswordEmailTemplate"
+  gatherCustomerSentimentData = false
+  networkMemberGroups = {
+    profile = [
+      "admin",
+      "partner community user",
+    ]
+  }
+  networkPageOverrides = {
+    changePasswordPageOverrideSetting = "Standard"
+    forgotPasswordPageOverrideSetting = "Designer"
+    homePageOverrideSetting = "Designer"
+    loginPageOverrideSetting = "Designer"
+    selfRegProfilePageOverrideSetting = "Designer"
+  }
+  picassoSite = "Partner_Portal1"
+  selfRegistration = false
+  sendWelcomeEmail = false
+  site = salesforce.CustomSite.instance.Partner_Portal
+  status = "DownForMaintenance"
+  tabs = {
+    defaultTab = "home"
+    standardTab = [
+      "Chatter",
+    ]
+  }
+  urlPathPrefix = "test"
+  welcomeTemplate = "unfiled$public/CommunityWelcomeEmailTemplate"
+}

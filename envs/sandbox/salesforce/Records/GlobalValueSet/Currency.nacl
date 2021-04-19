@@ -1,0 +1,62 @@
+salesforce.GlobalValueSet Currency {
+  fullName = "Currency"
+  customValue = [
+    {
+      fullName = "USD"
+      default = false
+      label = "USD"
+    },
+    {
+      fullName = "GBP"
+      default = false
+      label = "GBP"
+    },
+    {
+      fullName = "EUR"
+      default = false
+      label = "EUR"
+    },
+    {
+      fullName = "AUD"
+      default = false
+      label = "AUD"
+    },
+    {
+      fullName = "CAD"
+      default = false
+      label = "CAD"
+    },
+    {
+      fullName = "MXN"
+      default = false
+      label = "MXN"
+    },
+    {
+      fullName = "BRL"
+      default = false
+      label = "BRL"
+    },
+    {
+      fullName = "SEK"
+      default = false
+      label = "SEK"
+    },
+    {
+      fullName = "ILS"
+      default = false
+      label = "ILS"
+    },
+    {
+      fullName = "NOK"
+      default = false
+      label = "NOK"
+    },
+    {
+      fullName = "ZAR"
+      default = false
+      label = "ZAR"
+    },
+  ]
+  masterLabel = "Currency"
+  sorted = false
+}

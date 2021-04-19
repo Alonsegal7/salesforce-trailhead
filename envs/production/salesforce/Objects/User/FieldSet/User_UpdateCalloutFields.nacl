@@ -1,0 +1,75 @@
+salesforce.FieldSet User_UpdateCalloutFields {
+  fullName = "User.UpdateCalloutFields"
+  description = "x"
+  displayedFields = [
+    {
+      field = "LastName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Username"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "IsPortalEnabled"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Title"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "UserType"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "FirstName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "UserRoleId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "IsActive"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Email"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Function__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Department"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Office__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Rep_Maturity__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "UpdateCalloutFields"
+  _parent = [
+    salesforce.User,
+  ]
+}

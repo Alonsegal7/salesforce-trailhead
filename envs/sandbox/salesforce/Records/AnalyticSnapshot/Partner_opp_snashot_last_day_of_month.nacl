@@ -1,0 +1,60 @@
+salesforce.AnalyticSnapshot Partner_opp_snashot_last_day_of_month {
+  fullName = "Partner_opp_snashot_last_day_of_month"
+  groupColumn = "OPPORTUNITY_ID"
+  mappings = [
+    {
+      sourceField = "ExecutionTime"
+      sourceType = "snapshot"
+      targetField = "Opportunity_Snapshot__c.Name"
+    },
+    {
+      sourceField = "FULL_NAME"
+      sourceType = "tabular"
+      targetField = "Opportunity_Snapshot__c.Owner__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Opportunity.Forecast_ARR__c"
+      sourceType = "summary"
+      targetField = "Opportunity_Snapshot__c.Forecast_ARR__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Opportunity.Green_Bucket_ARR__c"
+      sourceType = "summary"
+      targetField = "Opportunity_Snapshot__c.Green_bucket_ARR__c"
+    },
+    {
+      sourceField = "OPPORTUNITY_ID"
+      sourceType = "tabular"
+      targetField = "Opportunity_Snapshot__c.Opportunity__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "PROBABILITY"
+      sourceType = "summary"
+      targetField = "Opportunity_Snapshot__c.Probability__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Opportunity.GB_opp__c"
+      sourceType = "summary"
+      targetField = "Opportunity_Snapshot__c.GB_Opp__c"
+    },
+    {
+      sourceField = "CLOSE_DATE"
+      sourceType = "tabular"
+      targetField = "Opportunity_Snapshot__c.Close_Date__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Opportunity.Record_Type__c"
+      sourceType = "summary"
+      targetField = "Opportunity_Snapshot__c.Record_Type_Number__c"
+    },
+  ]
+  name = "Partners - opportunity snashot - last day of month"
+  runningUser = "oran@monday.com"
+  sourceReport = "Administrative_Reports/Partners_opps_Snapshot_DO_NOT_TOUCH_gIe"
+  targetObject = salesforce.Opportunity_Snapshot__c
+}

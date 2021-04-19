@@ -1,0 +1,18 @@
+salesforce.WorkflowRule Milestone__c_Copy_Kickoff_date_to_Project {
+  fullName = "Milestone__c.Copy Kickoff date to Project"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Milestone__c_Milestone_Set_Kickoff_Date_on_Project
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = '''
+(isnew()||ischanged( Kickoff__c))&&
+RecordType.DeveloperName='Kickoff'
+'''
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Milestone__c,
+  ]
+}

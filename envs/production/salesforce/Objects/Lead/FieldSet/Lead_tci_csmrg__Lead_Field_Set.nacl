@@ -1,0 +1,172 @@
+salesforce.FieldSet Lead_tci_csmrg__Lead_Field_Set {
+  fullName = "Lead.tci_csmrg__Lead_Field_Set"
+  availableFields = [
+    {
+      field = "City"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Company"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ConvertedAccountId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ConvertedContactId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ConvertedOpportunityId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Country"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Description"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Fax"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "GeocodeAccuracy"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "HasOptedOutOfEmail"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "HasOptedOutOfFax"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Industry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "IsConverted"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Latitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Longitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MasterRecordId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Phone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "PostalCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Rating"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "State"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Status"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Street"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Title"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Website"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  description = "Mass Edit Leads VF Page"
+  displayedFields = [
+    {
+      field = "FirstName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LeadSource"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AnnualRevenue"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "NumberOfEmployees"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MobilePhone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Email"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Lead Field Set"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

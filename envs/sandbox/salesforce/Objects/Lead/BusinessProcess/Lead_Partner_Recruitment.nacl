@@ -1,0 +1,29 @@
+salesforce.BusinessProcess Lead_Partner_Recruitment {
+  fullName = "Lead.Partner Recruitment"
+  isActive = true
+  values = [
+    {
+      fullName = "Attempting"
+      default = false
+    },
+    {
+      fullName = "Contacted"
+      default = false
+    },
+    {
+      fullName = "New"
+      default = true
+    },
+    {
+      fullName = "Qualified"
+      default = false
+    },
+    {
+      fullName = "Unqualified"
+      default = false
+    },
+  ]
+  _parent = [
+    salesforce.Lead,
+  ]
+}

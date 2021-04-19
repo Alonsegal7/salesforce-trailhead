@@ -1,0 +1,33 @@
+salesforce.WorkflowRule Lead_New_Lead_for_Partners_Contact_Sales_or_Partner_s_Link {
+  fullName = "Lead.New Lead for Partners- Contact Sales or Partner%27s Link"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Lead_New_Outbound_Lead
+      type = "Alert"
+    },
+  ]
+  active = true
+  booleanFilter = "1 AND (2 OR 3)"
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.RecordTypeId
+      operation = "equals"
+      value = "Partner Lead"
+    },
+    {
+      field = salesforce.Lead.field.LeadSource
+      operation = "equals"
+      value = "Website - Contact Sales,Signup - Contact Sales"
+    },
+    {
+      field = salesforce.Lead.field.LeadSource
+      operation = "equals"
+      value = "Partner Link"
+    },
+  ]
+  description = "New Lead for Partners- Contact Sales or Partner's Link- Send Notification"
+  triggerType = "onCreateOnly"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

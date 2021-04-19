@@ -1,0 +1,244 @@
+salesforce.LightningPage Contact_Record_Page {
+  fullName = "Contact_Record_Page"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "collapsed"
+              value = "false"
+            },
+            {
+              name = "hideChatterActions"
+              value = "false"
+            },
+            {
+              name = "numVisibleActions"
+              value = "4"
+            },
+          ]
+          componentName = "force:highlightsPanel"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideHeader"
+              value = "false"
+            },
+          ]
+          componentName = "force:relatedListQuickLinksContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "header"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+      ]
+      mode = "Replace"
+      name = "detailTabContent"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "detailTabContent"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      mode = "Replace"
+      name = "maintabs"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "maintabs"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "displayGetIntroduced"
+              value = "true"
+            },
+            {
+              name = "displayHeader"
+              value = "false"
+            },
+            {
+              name = "displayHighlight"
+              value = "true"
+            },
+            {
+              name = "displayIcebreakers"
+              value = "true"
+            },
+            {
+              name = "displayRecentActivity"
+              value = "true"
+            },
+            {
+              name = "displayRelatedLeads"
+              value = "true"
+            },
+            {
+              name = "displayTopcard"
+              value = "true"
+            },
+            {
+              name = "headerText"
+              value = "Member Profile"
+            },
+            {
+              name = "minHeight"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+          ]
+          componentName = "LID:SalesNavigatorMemberProfileComponent"
+        },
+      ]
+      mode = "Replace"
+      name = "main"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "runtime_sales_activities:activityPanel"
+        },
+      ]
+      mode = "Replace"
+      name = "activityTabContent"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "activityTabContent"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.activity"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      mode = "Replace"
+      name = "sidebartabs"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "sidebartabs"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Contact.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Relationships__r"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Contact.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "ActivityHistories"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "context"
+              value = "RECORD"
+            },
+          ]
+          componentName = "forceChatter:exposedFeed"
+        },
+      ]
+      mode = "Replace"
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Contact Record Page"
+  parentFlexiPage = "sfa__Contact_rec_L"
+  sobjectType = "Contact"
+  template = {
+    name = "flexipage:recordHomeTemplateDesktop"
+  }
+  type = "RecordPage"
+}

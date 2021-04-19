@@ -1,0 +1,7 @@
+salesforce.ApexClass Batch_SyncQuote {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 43
+  status = "Active"
+  fullName = "Batch_SyncQuote"
+  content = file("salesforce/Records/ApexClass/Batch_SyncQuote.cls")
+}

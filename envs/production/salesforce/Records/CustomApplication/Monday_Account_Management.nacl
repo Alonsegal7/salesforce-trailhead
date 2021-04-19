@@ -1,0 +1,33 @@
+salesforce.CustomApplication Monday_Account_Management {
+  fullName = "Monday_Account_Management"
+  brand = {
+    headerColor = "#00CC6F"
+    logo = salesforce.ContentAsset.instance.Picture1
+    logoVersion = 1
+    shouldOverrideOrgTheme = true
+  }
+  formFactors = [
+    "Small",
+    "Large",
+  ]
+  isNavAutoTempTabsDisabled = true
+  isNavPersonalizationDisabled = false
+  label = "Monday Account Management"
+  navType = "Standard"
+  tabs = [
+    salesforce.CustomTab.instance.AM_Home,
+    "standard-Contact",
+    "standard-Lead",
+    "standard-Opportunity",
+    salesforce.CustomTab.instance.Monday_Accounts,
+    salesforce.CustomTab.instance.Company_Accounts,
+    "standard-Campaign",
+    salesforce.CustomTab.instance.Lead_Registration__c,
+    salesforce.CustomTab.instance.Professional_Service_Request__c,
+    salesforce.CustomTab.instance.My_Leads,
+    salesforce.CustomTab.instance.Department__c,
+    salesforce.CustomTab.instance.LSNLY__Lessonly_User__c,
+  ]
+  uiType = "Lightning"
+  utilityBar = "Monday_Account_Management_UtilityBar"
+}

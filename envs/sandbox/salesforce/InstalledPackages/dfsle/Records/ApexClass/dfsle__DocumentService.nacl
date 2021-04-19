@@ -1,0 +1,14 @@
+salesforce.ApexClass dfsle__DocumentService {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  packageVersions = [
+    {
+      majorNumber = 2
+      minorNumber = 6
+      namespace = "dfsle"
+    },
+  ]
+  status = "Active"
+  fullName = "dfsle__DocumentService"
+  content = file("salesforce/InstalledPackages/dfsle/Records/ApexClass/dfsle__DocumentService.cls")
+}

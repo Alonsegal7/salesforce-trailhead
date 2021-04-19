@@ -1,0 +1,9 @@
+salesforce.Role AU_Enterprise_Account_Manager_Dean_Team {
+  fullName = "AU_Enterprise_Account_Manager_Dean_Team"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "AU Enterprise Account Manager - Dean Team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.AU_Site_Manager
+}

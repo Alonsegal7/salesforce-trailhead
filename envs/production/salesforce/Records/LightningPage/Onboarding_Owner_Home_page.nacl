@@ -1,0 +1,182 @@
+salesforce.LightningPage Onboarding_Owner_Home_page {
+  fullName = "Onboarding_Owner_Home_page"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Project__c"
+            },
+            {
+              name = "filterName"
+              value = "My_Open_Projects"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "30"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "tPFXzBdxahpMygpcsIcWROkPCPASuX"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Task"
+            },
+            {
+              name = "filterName"
+              value = "My_Tasks_today_overdue"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "10"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+      ]
+      name = "top"
+      type = "Region"
+    },
+    {
+      name = "bottomLeft"
+      type = "Region"
+    },
+    {
+      name = "bottomRight"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "mAxnMjggJOLOBuLwHyyOtTBaqtEBhf"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zlBENNLPZHEdqpjbOKGGfxDBdnjAbd1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "label"
+              value = "Open Projects Age (My Accounts)"
+            },
+            {
+              name = "reportName"
+              value = "Open_Project_Age_My_Accounts_Aq7"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "of_Milestone_by_Project_My_Projects_CbX"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "My_Accounts_Activities_in_Last_3_OBs_vwj"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+      ]
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Onboarding Owner Home page"
+  template = {
+    name = "home:desktopTemplate"
+  }
+  type = "HomePage"
+}

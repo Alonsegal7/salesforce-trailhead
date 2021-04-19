@@ -1,0 +1,25 @@
+<apex:page standardController="product2" recordSetVar="Products" extensions="tci_csmrg.MassEditProducts" sidebar="false">
+ <apex:form id="theform">
+ <apex:pagemessages id="msg"/>
+       <apex:pageBlock title="Mass Edit - Products" mode="edit">     
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveRecords}" value="Save"/>            
+                <apex:commandButton value="Cancel" action="{!ccancel}"/>
+            </apex:pageBlockButtons>     
+                          
+                <apex:pageBlockTable value="{!products}" var="product">                
+                <apex:repeat value="{!$ObjectType.Product2.FieldSets.tci_csmrg__Product_Field_Set}" var="f">  
+                        <apex:column rendered="{!$ObjectType.Product2.Fields[f].accessible}">
+                               <apex:facet name="header">
+                                    <apex:outputPanel >
+                                        <apex:outputText value="{!$ObjectType['Product2'].Fields[f].label}" />
+                                    </apex:outputPanel>
+                                </apex:facet>
+                                <apex:inputField value="{!product[f]}"/>
+                            </apex:column>               
+                 </apex:repeat>
+                </apex:pageBlockTable><br/>
+        <apex:outputLabel ><b>&nbsp;&nbsp; Total Records Selected:&nbsp;{!size} </b></apex:outputLabel>
+        </apex:pageBlock>
+      </apex:form> 
+</apex:page>

@@ -1,0 +1,218 @@
+type salesforce.Survey__c {
+  salesforce.FormulaNumber Survey_Update_Age__c {
+    apiName = "Survey__c.Survey_Update_Age__c"
+    label = "Survey Update Age"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "today() - CreatedBy.Created_date__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Survey_ID__c {
+    apiName = "Survey__c.Survey_ID__c"
+    label = "Survey ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    caseSensitive = false
+    length = 50
+    queryable = true
+    description = "Survey ID from BigBrain"
+    externalId = false
+  }
+  salesforce.Number NPS_Score__c {
+    apiName = "Survey__c.NPS_Score__c"
+    label = "NPS Score"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Email User_Email__c {
+    apiName = "Survey__c.User_Email__c"
+    label = "User Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Is_Admin__c {
+    apiName = "Survey__c.Is_Admin__c"
+    label = "Is Admin"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.MasterDetail Account__c {
+    apiName = "Survey__c.Account__c"
+    label = "Account"
+    _required = false
+    writeRequiresMasterRead = true
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.Date Updated_Date__c {
+    apiName = "Survey__c.Updated_Date__c"
+    label = "Updated Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Promoters__c {
+    apiName = "Survey__c.Promoters__c"
+    label = "Promoters"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "NPS scores based on the last 6 month."
+    externalId = false
+  }
+  salesforce.Number Detractors__c {
+    apiName = "Survey__c.Detractors__c"
+    label = "Detractors"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "NPS Scores count based on the last 6 months"
+    externalId = false
+  }
+  salesforce.Number Passives__c {
+    apiName = "Survey__c.Passives__c"
+    label = "Passives"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "NPS Passive scores count based on the last 6 months"
+    externalId = false
+  }
+  salesforce.FormulaText Pulse_Account_Id__c {
+    apiName = "Survey__c.Pulse_Account_Id__c"
+    label = "Pulse Account Id"
+    _required = false
+    formula = "Account__r.primary_pulse_account_id__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Date Answer_Date__c {
+    apiName = "Survey__c.Answer_Date__c"
+    label = "Answer Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "This field will store the date a survey answer was received"
+  }
+  salesforce.Number Answer_Year__c {
+    apiName = "Survey__c.Answer_Year__c"
+    label = "Answer Year"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Answer_Month__c {
+    apiName = "Survey__c.Answer_Month__c"
+    label = "Answer Month"
+    _required = false
+    precision = 2
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Answer_Day__c {
+    apiName = "Survey__c.Answer_Day__c"
+    label = "Answer Day"
+    _required = false
+    precision = 2
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaDate Survery_Date__c {
+    apiName = "Survey__c.Survery_Date__c"
+    label = "Last Answer Score Date"
+    _required = false
+    formula = "DATE( Answer_Year__c , Answer_Month__c , Answer_Day__c )"
+    createable = false
+    updateable = false
+    queryable = true
+    description = "When was the last Score submitted"
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCurrency Account_ARR__c {
+    apiName = "Survey__c.Account_ARR__c"
+    label = "Account ARR"
+    _required = false
+    formula = "Account__r.ARR__c"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber NPS__c {
+    apiName = "Survey__c.NPS__c"
+    label = "NPS"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "((Promoters__c-Detractors__c)/(Promoters__c+Passives__c+Detractors__c ))*100"
+    inlineHelpText = "Calculates the NPS Score of the Account"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    description = "Calculates the NPS Score of the Account"
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+}

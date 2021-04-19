@@ -1,0 +1,27 @@
+salesforce.GlobalValueSet Quote_Type {
+  fullName = "Quote_Type"
+  customValue = [
+    {
+      fullName = "Pro-rated"
+      default = false
+      label = "Change Existing Contract (Pro-rated)"
+    },
+    {
+      fullName = "New Contract"
+      default = false
+      label = "New Contract"
+    },
+    {
+      fullName = "Pro-rated- Additional Seats"
+      default = false
+      label = "Pro-rated- Additional Seats"
+    },
+    {
+      fullName = "Change Tier in the same term"
+      default = false
+      label = "Change Tier in the same term"
+    },
+  ]
+  masterLabel = "Quote Type"
+  sorted = false
+}

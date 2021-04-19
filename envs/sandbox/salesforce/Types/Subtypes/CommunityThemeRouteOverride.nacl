@@ -1,0 +1,40 @@
+type salesforce.CommunityThemeRouteOverride {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  string customThemeLayoutType {
+    _required = false
+  }
+  string pageAttributes {
+    _required = false
+  }
+  string pageType {
+    _required = false
+  }
+  string themeLayoutType {
+    _required = false
+    _restriction = {
+      enforce_value = false
+      values = [
+        "Home",
+        "Inner",
+        "Login",
+      ]
+    }
+    foreignKeyDomain = [
+      salesforce.CommunityCustomThemeLayoutType,
+    ]
+  }
+  metadataType = "CommunityThemeRouteOverride"
+}

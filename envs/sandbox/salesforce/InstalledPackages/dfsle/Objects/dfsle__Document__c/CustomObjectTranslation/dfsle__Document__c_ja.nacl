@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__Document__c_ja {
+  fullName = "dfsle__Document__c-ja"
+  _parent = [
+    salesforce.dfsle__Document__c,
+  ]
+}

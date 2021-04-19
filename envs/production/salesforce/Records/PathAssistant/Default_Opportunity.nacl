@@ -1,0 +1,60 @@
+salesforce.PathAssistant Default_Opportunity {
+  fullName = "Default_Opportunity"
+  active = false
+  entityName = "Opportunity"
+  fieldName = "StageName"
+  masterLabel = "Default"
+  pathAssistantSteps = [
+    {
+      info = "<p><b>&#39;Buying process&#39; stage definition:</b></p><p><span style=\"font-size: 13px;\">When the prospect wants to use monday and started buying process</span></p>"
+      picklistValueName = "Buying process"
+    },
+    {
+      fieldNames = [
+        "Lost_Reason__c",
+      ]
+      info = '''
+<strong>Revise techniques to increase future wins.</strong>
+
+<ul><li>What contributed to losing this opportunity?</li><li>What do we need to do differently to improve our chances of winning?</li><li>Schedule a follow-up task or event for this account.</li></ul>
+'''
+      picklistValueName = "Closed Lost"
+    },
+    {
+      fieldNames = [
+        "CloseDate",
+        "Amount",
+      ]
+      info = "<img alt=\"User-added image\" src=\"https://monday--c.documentforce.com/servlet/rtaImage?eid=1CF1t0000000MpO&amp;feoid=Info&amp;refid=0EM1t0000002nwo\" style=\"height: 118px; width: 500px;\"></img>"
+      picklistValueName = "Closed Won"
+    },
+    {
+      info = "<p><b>&#39;Evaluation&#39; stage defenition:</b></p><p>When the prospect is considering potential use of monday tool.</p><p><br></p><p><b>When should you move to next stage?</b></p><p>When the <span style=\"font-size: 13px;\">prospect</span> wants to use monday and started buying process</p>"
+      picklistValueName = "Evaluation"
+    },
+    {
+      fieldNames = [
+        "Amount",
+        "CloseDate",
+      ]
+      info = '''
+<strong>Negotiate value and resolve objections.</strong>
+
+<ul><li>Have you confirmed all key decision makers are on board?</li><li>Have you focused enough on selling the value to negotiate the best price?</li></ul>
+'''
+      picklistValueName = "Negotiation"
+    },
+    {
+      fieldNames = [
+        "Pains__c",
+        "Current_tools__c",
+        "DM_process__c",
+        "Success_Metrics__c",
+        "Workflow__c",
+      ]
+      info = "<p><b>Discover these information before moving to Evaluation stage:</b></p><p><br></p><p><span style=\"font-family: Arial; font-size: 10pt;\">Pain</span></p><p><span style=\"font-family: Arial; font-size: 10pt;\">Current tools</span></p><p><span style=\"font-family: Arial; font-size: 10pt;\">DM process</span></p><p><span style=\"font-family: Arial; font-size: 10pt;\">Size</span></p><p><span style=\"font-family: Arial; font-size: 10pt;\">Success Metrics</span></p><p><span style=\"font-family: Arial; font-size: 10pt;\">Workflow</span></p><p><br></p><p><br></p>"
+      picklistValueName = "Qualified"
+    },
+  ]
+  recordTypeName = "__MASTER__"
+}

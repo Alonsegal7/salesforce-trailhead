@@ -1,0 +1,36 @@
+salesforce.ListView Sale__c_Change_Sale_Owner {
+  fullName = "Sale__c.Change_Sale_Owner"
+  columns = [
+    "NAME",
+    "Sale_Status__c",
+    "Owner__c",
+    "of_Connected_Opportunities__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Sale_Status__c"
+      operation = "notEqual"
+      value = "Partial,Complete"
+    },
+    {
+      field = "Owner__c"
+      operation = "contains"
+      value = "Aggelos"
+    },
+    {
+      field = "RECORDTYPE"
+      operation = "equals"
+      value = "Sale__c.Partner_Sale"
+    },
+  ]
+  label = "Change Sale Owner"
+  sharedTo = {
+    group = [
+      "Admins",
+    ]
+  }
+  _parent = [
+    salesforce.Sale__c,
+  ]
+}

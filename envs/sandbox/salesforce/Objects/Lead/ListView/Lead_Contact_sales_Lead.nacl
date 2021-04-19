@@ -1,0 +1,62 @@
+salesforce.ListView Lead_Contact_sales_Lead {
+  fullName = "Lead.Contact_sales_Lead"
+  columns = [
+    "MQL_Image__c",
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "LEAD.COMPANY",
+    "LEAD.CREATED_DATE",
+    "Last_Contact_Sales_Timestamp__c",
+    "FULL_NAME",
+    "LEAD.TITLE",
+    "LEAD.EMAIL",
+    "LEAD.STATUS",
+    "LEAD.PHONE",
+    "LEAD.COUNTRY_CODE",
+    "Company_Size__c",
+    "Description_shortcut__c",
+    "Region__c",
+  ]
+  filterScope = "Queue"
+  filters = [
+    {
+      field = "LEAD.STATUS"
+      operation = "notEqual"
+      value = "Unqualified"
+    },
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Received"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "notEqual"
+      value = "ChiliPiper,Linkedin Paid,Website - Request a Demo"
+    },
+    {
+      field = "LEAD.COUNTRY_CODE"
+      operation = "notEqual"
+      value = "AU,CA,NZ,US"
+    },
+    {
+      field = "Region__c"
+      operation = "notEqual"
+      value = "LATAM"
+    },
+  ]
+  label = "Contact sales"
+  queue = "Contact_sales"
+  sharedTo = {
+    role = [
+      "Head_of_Sales",
+      "IL_Enterprise_SDR_Nir_Team",
+      "Product",
+      "US_Enterprise_SDR",
+      "US_Enterprise_SDR_BDR",
+    ]
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

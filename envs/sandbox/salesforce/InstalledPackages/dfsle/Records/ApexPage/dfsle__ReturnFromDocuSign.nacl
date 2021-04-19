@@ -1,0 +1,9 @@
+salesforce.ApexPage dfsle__ReturnFromDocuSign {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  availableInTouch = true
+  confirmationTokenRequired = true
+  label = "Return"
+  fullName = "dfsle__ReturnFromDocuSign"
+  content = file("salesforce/InstalledPackages/dfsle/Records/ApexPage/dfsle__ReturnFromDocuSign.page")
+}

@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Qualified_timestamp {
+  fullName = "Opportunity.Qualified_timestamp"
+  field = salesforce.Opportunity.field.Qualified_timestamp__c
+  formula = "today()"
+  name = "Qualified timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

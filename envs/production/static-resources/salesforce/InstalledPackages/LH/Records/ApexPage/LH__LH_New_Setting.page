@@ -1,0 +1,28 @@
+<apex:page title="Lookup Helper Setting Creation" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">  
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ 
+    <style>
+        .slds-table.newsettingBlock {
+        background-color: #f4f6f9; 
+        }
+        
+        .slds-card__footer.newsettingNote {
+        text-align:left;
+        }
+    </style>
+<head>
+    <title>Create New Lookup Helper Setting</title>
+   
+</head>
+  
+      <div class="slds-scope" role="main" >
+        <apex:slds />
+      
+      <div style="width:95%; margin-left:auto; margin-right:auto;">        
+              <h3 style="color:red;text-align: center;font-size:2em;font-weight: bold;">
+        This is a temporary version of Lookup Helper! Please upgrade to the latest version, found <a href="http://lh.passagetech.com/">here</a>, to create or edit Lookup Helper Settings.
+        </h3>
+            </div>
+      </div>
+</html>
+</apex:page>

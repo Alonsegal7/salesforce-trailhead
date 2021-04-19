@@ -1,0 +1,10 @@
+salesforce.WorkflowRule Lead_zaapit__Call_Lead {
+  fullName = "Lead.zaapit__Call Lead"
+  active = false
+  description = "Call Lead - by ZaapIT"
+  formula = "false"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

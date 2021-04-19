@@ -1,0 +1,108 @@
+salesforce.GlobalValueSet Enablers_and_Blockers_H1 {
+  fullName = "Enablers_and_Blockers_H1"
+  customValue = [
+    {
+      fullName = "Admin"
+      default = false
+      label = "Admin"
+    },
+    {
+      fullName = "API"
+      default = false
+      label = "API"
+    },
+    {
+      fullName = "Automations"
+      default = false
+      label = "Automations"
+    },
+    {
+      fullName = "Board Linkage"
+      default = false
+      label = "Board Linkage"
+    },
+    {
+      fullName = "Communication"
+      default = false
+      label = "Communication"
+    },
+    {
+      fullName = "Easy to Adopt"
+      default = false
+      label = "Easy to Adopt"
+    },
+    {
+      fullName = "Files Management "
+      default = false
+      label = "Files Management "
+    },
+    {
+      fullName = "Forms"
+      default = false
+      label = "Forms"
+    },
+    {
+      fullName = "Integrations"
+      default = false
+      label = "Integrations"
+    },
+    {
+      fullName = "KanBan"
+      default = false
+      label = "KanBan"
+    },
+    {
+      fullName = "Mobile"
+      default = false
+      label = "Mobile"
+    },
+    {
+      fullName = "Multiple Accounts Management"
+      default = false
+      label = "Multiple Accounts Management"
+    },
+    {
+      fullName = "Permissions"
+      default = false
+      label = "Permissions"
+    },
+    {
+      fullName = "PMO"
+      default = false
+      label = "Project Management"
+    },
+    {
+      fullName = "Reporting"
+      default = false
+      label = "Reporting"
+    },
+    {
+      fullName = "Security"
+      default = false
+      label = "Security"
+    },
+    {
+      fullName = "Sub Folders"
+      default = false
+      label = "Sub Folders"
+    },
+    {
+      fullName = "Subitems Support"
+      default = false
+      label = "Subitems Support"
+    },
+    {
+      fullName = "Time Management"
+      default = false
+      label = "Time Management"
+    },
+    {
+      fullName = "Other/None"
+      default = false
+      label = "Other/None"
+    },
+  ]
+  description = "First Hierarchy of enablers and blockers"
+  masterLabel = "Enablers and Blockers H1"
+  sorted = false
+}

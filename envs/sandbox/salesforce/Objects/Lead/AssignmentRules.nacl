@@ -1,0 +1,24 @@
+salesforce.AssignmentRules Lead {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  assignmentRule = [
+    {
+      fullName = "monday"
+      active = false
+      ruleEntry = {
+        assignedTo = "Contact_sales"
+        assignedToType = "Queue"
+        criteriaItems = [
+          {
+            field = salesforce.Lead.field.LeadSource
+            operation = "equals"
+            value = "Website - Contact Sales"
+          },
+        ]
+      }
+    },
+  ]
+  fullName = "Lead"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

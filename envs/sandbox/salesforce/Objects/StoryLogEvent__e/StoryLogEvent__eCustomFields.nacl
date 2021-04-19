@@ -1,0 +1,14 @@
+type salesforce.StoryLogEvent__e {
+  salesforce.Text ParentRecordId__c {
+    apiName = "StoryLogEvent__e.ParentRecordId__c"
+    label = "Parent Record Id"
+    _required = false
+    createable = true
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 18
+    queryable = true
+    externalId = false
+  }
+}

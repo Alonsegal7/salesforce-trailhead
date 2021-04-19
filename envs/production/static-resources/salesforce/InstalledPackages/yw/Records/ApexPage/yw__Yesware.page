@@ -1,0 +1,7 @@
+<apex:page >
+    <apex:tabPanel switchType="client" id="yeswareTabPanel">        
+        <apex:tab label="Settings" name="settings" id="settingsTab">
+            <apex:include pageName="yw__Enable_Yesware_Event_Trigger" />
+        </apex:tab>
+    </apex:tabPanel>
+</apex:page>

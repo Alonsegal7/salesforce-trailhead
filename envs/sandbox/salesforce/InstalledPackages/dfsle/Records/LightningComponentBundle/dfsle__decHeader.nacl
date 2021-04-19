@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decHeader {
+  fullName = "dfsle__decHeader"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decHeader/decHeader.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decHeader/decHeader.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decHeader/decHeader.css"
+      },
+    ]
+  }
+}

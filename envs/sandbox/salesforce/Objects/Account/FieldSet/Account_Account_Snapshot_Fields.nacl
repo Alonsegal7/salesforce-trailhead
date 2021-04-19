@@ -1,0 +1,110 @@
+salesforce.FieldSet Account_Account_Snapshot_Fields {
+  fullName = "Account.Account_Snapshot_Fields"
+  description = "Account_Snapshot"
+  displayedFields = [
+    {
+      field = "ARR__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "WAPP__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CSM__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Second_CSM__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Members__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Plan_Seats__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Guests__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Free_Users__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Company__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MA_NPS__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Owner_s_Manager__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ParentId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Plan_Name__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Plan_Period__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Plan_Tier__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Prioritized_Account__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Partner_Type__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SDR__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Green_Bucket_Company__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Account_Snapshot_Fields"
+  _parent = [
+    salesforce.Account,
+  ]
+}

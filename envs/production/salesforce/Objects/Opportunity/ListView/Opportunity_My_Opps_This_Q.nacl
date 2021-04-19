@@ -1,0 +1,40 @@
+salesforce.ListView Opportunity_My_Opps_This_Q {
+  fullName = "Opportunity.My_Opps_This_Q"
+  columns = [
+    "Forecasted__c",
+    "CORE.USERS.FULL_NAME",
+    "OPPORTUNITY.NAME",
+    "ACCOUNT.NAME",
+    "OPPORTUNITY.STAGE_NAME",
+    "OPPORTUNITY.CLOSE_DATE",
+    "Green_Bucket_ARR__c",
+    "Expected_Plan_Name__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "OPPORTUNITY.CLOSE_DATE"
+      operation = "equals"
+      value = "THIS_MONTH"
+    },
+    {
+      field = "OPPORTUNITY.RECORDTYPE"
+      operation = "equals"
+      value = "Opportunity.Partner_Opportunity"
+    },
+    {
+      field = "AM_I_the_CPM__c"
+      operation = "equals"
+      value = "1"
+    },
+    {
+      field = "OPPORTUNITY.STAGE_NAME"
+      operation = "notEqual"
+      value = "Closed Won,Closed Lost"
+    },
+  ]
+  label = "(CP) My Open Opps - This Month"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

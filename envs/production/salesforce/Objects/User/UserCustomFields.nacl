@@ -1,0 +1,586 @@
+type salesforce.User {
+  salesforce.Checkbox should_get_leads_from_BigBrain__c {
+    apiName = "User.should_get_leads_from_BigBrain__c"
+    label = "Should Get Leads From BigBrain"
+    defaultValue = false
+    inlineHelpText = "it's a temp flag for the transition period to mark if a user will get his leads to SalesForce from BigBrain"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "it's a temp flag for the transition period to mark if a user will get his leads to SalesForce from BigBrain"
+  }
+  salesforce.FormulaText Long_User_ID__c {
+    apiName = "User.Long_User_ID__c"
+    label = "Long User ID"
+    _required = false
+    formula = "CASESAFEID(Id)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Checkbox n_onboarding__c {
+    apiName = "User.n_onboarding__c"
+    label = "In onboarding"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Email Migration_Email__c {
+    apiName = "User.Migration_Email__c"
+    label = "Migration Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Function__c {
+    apiName = "User.Function__c"
+    label = "Function"
+    _required = false
+    valueSet = [
+      {
+        fullName = "BDR"
+        default = false
+        label = "BDR"
+      },
+      {
+        fullName = "Bot"
+        default = false
+        label = "Bot"
+      },
+      {
+        fullName = "Enterprise AE"
+        default = false
+        label = "Enterprise AE"
+      },
+      {
+        fullName = "Enterprise AM"
+        default = false
+        label = "Enterprise AM"
+      },
+      {
+        fullName = "Enterprise CSM"
+        default = false
+        label = "Enterprise CSM"
+      },
+      {
+        fullName = "Finance"
+        default = false
+        label = "Finance"
+      },
+      {
+        fullName = "Low touch CS"
+        default = false
+        label = "Onboarding Team"
+      },
+      {
+        fullName = "Manager"
+        default = false
+        label = "Manager"
+      },
+      {
+        fullName = "Marketing"
+        default = false
+        label = "Marketing"
+      },
+      {
+        fullName = "Mid-Market AE"
+        default = false
+        label = "Mid-Market AE"
+      },
+      {
+        fullName = "Mid-Market AM"
+        default = false
+        label = "Mid-Market AM"
+      },
+      {
+        fullName = "Mid-Market CSM"
+        default = false
+        label = "Mid-Market CSM"
+      },
+      {
+        fullName = "Ops"
+        default = false
+        label = "Ops"
+      },
+      {
+        fullName = "Partner"
+        default = false
+        label = "Partner"
+      },
+      {
+        fullName = "Partners- Channel Manager"
+        default = false
+        label = "Partners- Channel Manager"
+      },
+      {
+        fullName = "Partners - non-CPM"
+        default = false
+        label = "Partners - non-CPM"
+      },
+      {
+        fullName = "Product"
+        default = false
+        label = "Product"
+      },
+      {
+        fullName = "SDR"
+        default = false
+        label = "SDR"
+      },
+      {
+        fullName = "Sales Engineer"
+        default = false
+        label = "Sales Engineer"
+      },
+      {
+        fullName = "Scaled Touch"
+        default = false
+        label = "Scaled Touch"
+      },
+      {
+        fullName = "SMB"
+        default = false
+        label = "SMB"
+      },
+      {
+        fullName = "Enablement"
+        default = false
+        label = "Enablement"
+      },
+      {
+        fullName = "GSI Partner"
+        default = false
+        isActive = false
+        label = "GSI Partner"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaCheckbox User_in_Viewer_s_Team__c {
+    apiName = "User.User_in_Viewer_s_Team__c"
+    label = "User in Viewer's Team"
+    formula = "text($User.Team__c) =  text(Team__c)"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Pod__c {
+    apiName = "User.Pod__c"
+    label = "POD Team"
+    _required = false
+    valueSet = [
+      {
+        fullName = "US Enterprise- Graham"
+        default = false
+        label = "US Enterprise- Graham"
+      },
+      {
+        fullName = "US Enterprise- Rick"
+        default = false
+        label = "US Enterprise- Rick"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number This_Month_Target__c {
+    apiName = "User.This_Month_Target__c"
+    label = "This Month Target"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Office__c {
+    apiName = "User.Office__c"
+    label = "Office"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Tel Aviv Office"
+        default = false
+        label = "Tel Aviv Office"
+      },
+      {
+        fullName = "NY Office"
+        default = false
+        label = "NY Office"
+      },
+      {
+        fullName = "SF Office"
+        default = false
+        label = "SF Office"
+      },
+      {
+        fullName = "Sydney Office"
+        default = false
+        label = "Sydney Office"
+      },
+      {
+        fullName = "London Office"
+        default = false
+        label = "London Office"
+      },
+      {
+        fullName = "Remote"
+        default = false
+        label = "Remote"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Date Created_date__c {
+    apiName = "User.Created_date__c"
+    label = "Created date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox Fully_Ramped_Rep__c {
+    apiName = "User.Fully_Ramped_Rep__c"
+    label = "Fully Ramped Rep"
+    formula = "if( Start_Date__c +180<today(),true,false)"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.MultiselectPicklist Language__c {
+    apiName = "User.Language__c"
+    label = "Language"
+    _required = false
+    valueSet = [
+      {
+        fullName = "English"
+        default = true
+        label = "English"
+      },
+      {
+        fullName = "Hebrew"
+        default = false
+        label = "Hebrew"
+      },
+      {
+        fullName = "French"
+        default = false
+        label = "French"
+      },
+      {
+        fullName = "Spanish"
+        default = false
+        label = "Spanish"
+      },
+      {
+        fullName = "German"
+        default = false
+        label = "German"
+      },
+    ]
+    restricted = true
+    visibleLines = 4
+    inlineHelpText = "Select all the languages in which you can comfortably speak with a client"
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Virtual_Partner_Id__c {
+    apiName = "User.Virtual_Partner_Id__c"
+    label = "Virtual Partner Id"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "For PCMs, the corresponding partner ID on BigBrain"
+    externalId = false
+  }
+  salesforce.FormulaText Profile_ID__c {
+    apiName = "User.Profile_ID__c"
+    label = "Profile ID (text)"
+    _required = false
+    formula = "Profile.Id"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Full_Name__c {
+    apiName = "User.Full_Name__c"
+    label = "Full Name"
+    _required = false
+    formula = "FirstName & \" \" &  LastName"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Team_Manager__c {
+    apiName = "User.Team_Manager__c"
+    label = "Team Manager"
+    _required = false
+    formula = "if( Profile.Id = \"00e1t000000NHjd\" ,  Full_Name__c , if(Profile.Id = \"00e1t000000ZIOT\" ,  Manager.Full_Name__c , \"\"))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Agent_Number__c {
+    apiName = "User.Agent_Number__c"
+    label = "Agent Number"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if(or(isblank(Agent_Code_Priority__c),Agent_Code_Priority__c=0),max(Agent_Code_Priority__c,value(Agent_Number_Priority__c)),Agent_Code_Priority__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Function_Ownership_Score__c {
+    apiName = "User.Function_Ownership_Score__c"
+    label = "Function Ownership Score"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+if( IsActive ,CASE(text(Function__c),"Ops",0,
+"Bot",0,
+"CSM",1,
+"Mid-Market CSM",1,
+"Enterprise CSM",1,
+"Low touch CS",1,
+"SDR",2,
+"BDR",2,
+"Partners- Channel Manager",3,
+"Partner",4,
+"Mid-Market AE",5,
+"Enterprise AE",5,
+"Mid-Market AM",6,
+"Enterprise AM",6,
+"Manager",7,10),0)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Agent_Code_Priority__c {
+    apiName = "User.Agent_Code_Priority__c"
+    label = "Agent Code (Priority)"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Dealhub_User__c {
+    apiName = "User.Dealhub_User__c"
+    label = "Dealhub User"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.AutoNumber Agent_Number_Priority__c {
+    apiName = "User.Agent_Number_Priority__c"
+    label = "Agent Number Priority"
+    _required = true
+    createable = false
+    updateable = false
+    externalId = true
+    queryable = true
+    _hidden = true
+    displayFormat = "{0}"
+  }
+  salesforce.Picklist Team__c {
+    apiName = "User.Team__c"
+    label = "Team"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Sales_Teams_Managers
+  }
+  salesforce.Date Dealhub_User_Since__c {
+    apiName = "User.Dealhub_User_Since__c"
+    label = "Dealhub User Since"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText User_Manager_Long_Id__c {
+    apiName = "User.User_Manager_Long_Id__c"
+    label = "User Manager Long Id"
+    _required = false
+    formula = "Manager.Long_User_ID__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.User.field.Long_User_ID__c,
+    ]
+  }
+  salesforce.FormulaText Rep_Maturity__c {
+    apiName = "User.Rep_Maturity__c"
+    label = "Rep Maturity"
+    _required = false
+    formula = "if(today()- Start_Date__c <60, \"New Rep\",if(today()- Start_Date__c > 60 && today()- Start_Date__c <180 , \"Taking leads rep\" , \"Fully ramped\"))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Date Start_Date__c {
+    apiName = "User.Start_Date__c"
+    label = "Start Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber Days_at_Monday__c {
+    apiName = "User.Days_at_Monday__c"
+    label = "Days at Monday"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if( IsActive , today() - Start_Date__c , Job_End_Date__c - Start_Date__c )"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Date Job_End_Date__c {
+    apiName = "User.Job_End_Date__c"
+    label = "Job End Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber Start_Date_Day__c {
+    apiName = "User.Start_Date_Day__c"
+    label = "Start Date Day"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "day(Start_Date__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Start_Date_Month__c {
+    apiName = "User.Start_Date_Month__c"
+    label = "Start Date Month"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "month(Start_Date__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Start_Date_Year__c {
+    apiName = "User.Start_Date_Year__c"
+    label = "Start Date Year"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "year(Start_Date__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Picklist Use_my_photo_for_proposals__c {
+    apiName = "User.Use_my_photo_for_proposals__c"
+    label = "Use my photo for proposals"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Yes"
+        default = true
+        label = "Yes"
+      },
+      {
+        fullName = "No"
+        default = false
+        label = "No"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+}

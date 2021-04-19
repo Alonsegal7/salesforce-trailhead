@@ -1,0 +1,10 @@
+salesforce.QuickAction Account_Take_Ownership {
+  fullName = "Account.Take_Ownership"
+  flowDefinition = "Take_Ownership_Flow"
+  label = "Take Ownership"
+  optionsCreateFeedItem = false
+  type = "Flow"
+  _parent = [
+    salesforce.Account,
+  ]
+}

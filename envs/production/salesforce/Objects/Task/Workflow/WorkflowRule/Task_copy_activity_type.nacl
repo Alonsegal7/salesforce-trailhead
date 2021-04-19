@@ -1,0 +1,20 @@
+salesforce.WorkflowRule Task_copy_activity_type {
+  fullName = "Task.copy activity type"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Task_copy_type
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Task.field.Type
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Task,
+  ]
+}

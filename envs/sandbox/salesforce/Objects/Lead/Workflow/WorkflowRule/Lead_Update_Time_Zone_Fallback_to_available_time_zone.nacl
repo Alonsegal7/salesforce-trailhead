@@ -1,0 +1,39 @@
+salesforce.WorkflowRule Lead_Update_Time_Zone_Fallback_to_available_time_zone {
+  fullName = "Lead.Update Time Zone Fallback to available time zone"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Update_Time_Zone_Fallback
+      type = "FieldUpdate"
+    },
+  ]
+  active = false
+  booleanFilter = "1 and (2 or 3 or 4 or 5)"
+  criteriaItems = [
+    {
+      field = "Lead.Country"
+      operation = "equals"
+      value = "us,usa,USA,United States,United States of America,Canada,ca,CA,canada,united states"
+    },
+    {
+      field = salesforce.Lead.field.Time_Zone_by_Phone_Number__c
+      operation = "notEqual"
+    },
+    {
+      field = salesforce.Lead.field.Time_Zone_by_State__c
+      operation = "notEqual"
+    },
+    {
+      field = salesforce.Lead.field.Time_Zone_by_State_Code__c
+      operation = "notEqual"
+    },
+    {
+      field = salesforce.Lead.field.time_zone_offset__c
+      operation = "notEqual"
+    },
+  ]
+  description = "For leads based in Canada or USA"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

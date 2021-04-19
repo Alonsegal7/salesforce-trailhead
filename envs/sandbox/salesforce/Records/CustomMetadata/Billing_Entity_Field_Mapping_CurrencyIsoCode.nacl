@@ -1,0 +1,11 @@
+salesforce.CustomMetadata Billing_Entity_Field_Mapping_CurrencyIsoCode {
+  fullName = "Billing_Entity_Field_Mapping.CurrencyIsoCode"
+  label = "CurrencyIsoCode"
+  protected = false
+  values = [
+    {
+      field = "Partner_SO_Request_Field__c"
+      value = "CurrencyIsoCode"
+    },
+  ]
+}

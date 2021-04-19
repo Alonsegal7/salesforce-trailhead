@@ -1,0 +1,24 @@
+salesforce.LightningComponentBundle fbc_dualListBoxCPE {
+  xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  description = "Dual List Box Cpe"
+  isExposed = true
+  masterLabel = "Dual List Box Cpe"
+  fullName = "fbc_dualListBoxCPE"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_dualListBoxCPE/fbc_dualListBoxCPE.css")
+        filePath = "lwc/fbc_dualListBoxCPE/fbc_dualListBoxCPE.css"
+      },
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_dualListBoxCPE/fbc_dualListBoxCPE.js")
+        filePath = "lwc/fbc_dualListBoxCPE/fbc_dualListBoxCPE.js"
+      },
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_dualListBoxCPE/fbc_dualListBoxCPE.html")
+        filePath = "lwc/fbc_dualListBoxCPE/fbc_dualListBoxCPE.html"
+      },
+    ]
+  }
+}

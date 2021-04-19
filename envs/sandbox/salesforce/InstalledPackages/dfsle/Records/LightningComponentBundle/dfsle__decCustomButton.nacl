@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decCustomButton {
+  fullName = "dfsle__decCustomButton"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decCustomButton/decCustomButton.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decCustomButton/decCustomButton.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decCustomButton/decCustomButton.js"
+      },
+    ]
+  }
+}

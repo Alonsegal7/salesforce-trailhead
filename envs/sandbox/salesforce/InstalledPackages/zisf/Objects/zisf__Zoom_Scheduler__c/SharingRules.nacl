@@ -1,0 +1,6 @@
+salesforce.SharingRules zisf__Zoom_Scheduler__c {
+  fullName = "zisf__Zoom_Scheduler__c"
+  _parent = [
+    salesforce.zisf__Zoom_Scheduler__c,
+  ]
+}

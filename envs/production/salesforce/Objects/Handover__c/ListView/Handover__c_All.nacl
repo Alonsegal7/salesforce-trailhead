@@ -1,0 +1,16 @@
+salesforce.ListView Handover__c_All {
+  fullName = "Handover__c.All"
+  columns = [
+    "NAME",
+    "Company__c",
+    "Company_Name__c",
+    "Monday_Account__c",
+    "Opportunity__c",
+    "CREATED_DATE",
+  ]
+  filterScope = "Mine"
+  label = "All"
+  _parent = [
+    salesforce.Handover__c,
+  ]
+}

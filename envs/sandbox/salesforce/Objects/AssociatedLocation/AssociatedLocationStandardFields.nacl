@@ -1,0 +1,191 @@
+type salesforce.AssociatedLocation {
+  serviceid Id {
+    apiName = "AssociatedLocation.Id"
+    label = "Associated Location ID"
+    _required = false
+    queryable = true
+    _hidden = true
+    updateable = false
+    createable = false
+  }
+  salesforce.Checkbox IsDeleted {
+    apiName = "AssociatedLocation.IsDeleted"
+    label = "Deleted"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+    _required = false
+  }
+  salesforce.AutoNumber AssociatedLocationNumber {
+    apiName = "AssociatedLocation.AssociatedLocationNumber"
+    label = "Associated Location Name"
+    _required = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Picklist CurrencyIsoCode {
+    apiName = "AssociatedLocation.CurrencyIsoCode"
+    label = "Currency ISO Code"
+    _required = false
+    valueSet = [
+      {
+        fullName = "AUD"
+        default = false
+        label = "Australian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "BRL"
+        default = false
+        label = "Brazilian Real"
+        isActive = true
+      },
+      {
+        fullName = "GBP"
+        default = false
+        label = "British Pound"
+        isActive = true
+      },
+      {
+        fullName = "CAD"
+        default = false
+        label = "Canadian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "EUR"
+        default = false
+        label = "Euro"
+        isActive = true
+      },
+      {
+        fullName = "ILS"
+        default = false
+        label = "Israeli Shekel"
+        isActive = true
+      },
+      {
+        fullName = "MXN"
+        default = false
+        label = "Mexican Peso"
+        isActive = true
+      },
+      {
+        fullName = "USD"
+        default = true
+        label = "U.S. Dollar"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime CreatedDate {
+    apiName = "AssociatedLocation.CreatedDate"
+    label = "Created Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup CreatedById {
+    apiName = "AssociatedLocation.CreatedById"
+    label = "Created By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime LastModifiedDate {
+    apiName = "AssociatedLocation.LastModifiedDate"
+    label = "Last Modified Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup LastModifiedById {
+    apiName = "AssociatedLocation.LastModifiedById"
+    label = "Last Modified By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime SystemModstamp {
+    apiName = "AssociatedLocation.SystemModstamp"
+    label = "System Modstamp"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup ParentRecordId {
+    apiName = "AssociatedLocation.ParentRecordId"
+    label = "Account Name ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Lookup LocationId {
+    apiName = "AssociatedLocation.LocationId"
+    label = "Location ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      "Location",
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Type {
+    apiName = "AssociatedLocation.Type"
+    label = "Type"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime ActiveFrom {
+    apiName = "AssociatedLocation.ActiveFrom"
+    label = "Active From"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime ActiveTo {
+    apiName = "AssociatedLocation.ActiveTo"
+    label = "Active To"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

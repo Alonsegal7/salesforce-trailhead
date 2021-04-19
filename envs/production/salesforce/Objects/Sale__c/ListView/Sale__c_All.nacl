@@ -1,0 +1,27 @@
+salesforce.ListView Sale__c_All {
+  fullName = "Sale__c.All"
+  columns = [
+    "NAME",
+    "Company__c",
+    "Close_Date__c",
+    "ARR__c",
+    "GB_Forecast_ARR__c",
+    "Expected_Plan_Name__c",
+    "Sale_Status__c",
+    "Probability__c",
+    "Owner__c",
+    "Sale_Status_Override__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Sale_Status__c"
+      operation = "equals"
+      value = "Complete"
+    },
+  ]
+  label = "All"
+  _parent = [
+    salesforce.Sale__c,
+  ]
+}

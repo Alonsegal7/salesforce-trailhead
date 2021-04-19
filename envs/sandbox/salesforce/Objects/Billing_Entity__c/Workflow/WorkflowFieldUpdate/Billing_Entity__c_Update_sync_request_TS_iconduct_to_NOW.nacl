@@ -1,0 +1,13 @@
+salesforce.WorkflowFieldUpdate Billing_Entity__c_Update_sync_request_TS_iconduct_to_NOW {
+  fullName = "Billing_Entity__c.Update_sync_request_TS_iconduct_to_NOW"
+  description = "For iConduct integration - this will trigger sync to priority using iConduct"
+  field = salesforce.Billing_Entity__c.field.Sync_Request_Timestamp_iConduct__c
+  formula = "now()"
+  name = "Update sync request TS iconduct to NOW()"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Billing_Entity__c,
+  ]
+}

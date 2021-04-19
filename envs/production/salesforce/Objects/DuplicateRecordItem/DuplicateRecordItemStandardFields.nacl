@@ -1,0 +1,267 @@
+type salesforce.DuplicateRecordItem {
+  serviceid Id {
+    apiName = "DuplicateRecordItem.Id"
+    label = "Duplicate Record Item ID"
+    _required = false
+    queryable = true
+    _hidden = true
+    updateable = false
+    createable = false
+  }
+  salesforce.Checkbox IsDeleted {
+    apiName = "DuplicateRecordItem.IsDeleted"
+    label = "Deleted"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+    _required = false
+  }
+  salesforce.AutoNumber Name {
+    apiName = "DuplicateRecordItem.Name"
+    label = "Duplicate Record Item Name"
+    _required = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Picklist CurrencyIsoCode {
+    apiName = "DuplicateRecordItem.CurrencyIsoCode"
+    label = "Currency ISO Code"
+    _required = false
+    valueSet = [
+      {
+        fullName = "AUD"
+        default = false
+        label = "Australian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "BRL"
+        default = false
+        label = "Brazilian Real"
+        isActive = true
+      },
+      {
+        fullName = "GBP"
+        default = false
+        label = "British Pound"
+        isActive = true
+      },
+      {
+        fullName = "CAD"
+        default = false
+        label = "Canadian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "DKK"
+        default = false
+        label = "Danish Krone"
+        isActive = true
+      },
+      {
+        fullName = "EUR"
+        default = false
+        label = "Euro"
+        isActive = true
+      },
+      {
+        fullName = "ILS"
+        default = false
+        label = "Israeli Shekel"
+        isActive = true
+      },
+      {
+        fullName = "MXN"
+        default = false
+        label = "Mexican Peso"
+        isActive = true
+      },
+      {
+        fullName = "SEK"
+        default = false
+        label = "Swedish Krona"
+        isActive = true
+      },
+      {
+        fullName = "USD"
+        default = true
+        label = "U.S. Dollar"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime CreatedDate {
+    apiName = "DuplicateRecordItem.CreatedDate"
+    label = "Created Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup CreatedById {
+    apiName = "DuplicateRecordItem.CreatedById"
+    label = "Created By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime LastModifiedDate {
+    apiName = "DuplicateRecordItem.LastModifiedDate"
+    label = "Last Modified Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup LastModifiedById {
+    apiName = "DuplicateRecordItem.LastModifiedById"
+    label = "Last Modified By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime SystemModstamp {
+    apiName = "DuplicateRecordItem.SystemModstamp"
+    label = "System Modstamp"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup DuplicateRecordSetId {
+    apiName = "DuplicateRecordItem.DuplicateRecordSetId"
+    label = "Duplicate Record Set ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.DuplicateRecordSet,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Lookup RecordId {
+    apiName = "DuplicateRecordItem.RecordId"
+    label = "Record ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+      salesforce.Account_Activity__c,
+      salesforce.Account_Snapshot__c,
+      salesforce.Allocation__c,
+      salesforce.Billing_Entity__c,
+      salesforce.Business_Review__c,
+      salesforce.CalendlyAction__c,
+      salesforce.Company_Billing__c,
+      salesforce.Contact,
+      salesforce.Country_Region_Mapping__c,
+      salesforce.DOZISF__Complete_Setting__c,
+      salesforce.Department__c,
+      salesforce.ExchangeRate__c,
+      salesforce.Field_Trip__Field_Analysis__c,
+      salesforce.Field_Trip__Field_Analytic_Config__c,
+      salesforce.Field_Trip__Logistics__c,
+      salesforce.Field_Trip__Object_Analysis__c,
+      salesforce.GB_Threshold__c,
+      salesforce.HandlerExecution__c,
+      salesforce.Handover__c,
+      salesforce.Individual,
+      salesforce.Kickoff__c,
+      salesforce.LH__LH_Export_Lookups__c,
+      salesforce.LH__LH_Queue__c,
+      salesforce.LH__Lookup_Helper_App_Settings__c,
+      salesforce.LH__Lookup_Helper_Error__c,
+      salesforce.LH__Lookup_Helper_Filter_Group__c,
+      salesforce.LH__Lookup_Helper_Filter__c,
+      salesforce.LH__Lookup_Helper_Record_Creation__c,
+      salesforce.LH__Lookup_Helper_Setting_Filter_Association__c,
+      salesforce.LH__Lookup_Helper_Setting__c,
+      salesforce.LSNLY__Job__c,
+      salesforce.LSNLY__Lessonly_Assignment__c,
+      salesforce.LSNLY__Lessonly_Content_Tag__c,
+      salesforce.LSNLY__Lessonly_Content__c,
+      salesforce.LSNLY__Lessonly_Custom_Field_Mapping__c,
+      salesforce.LSNLY__Lessonly_Group_Member__c,
+      salesforce.LSNLY__Lessonly_Group__c,
+      salesforce.LSNLY__Lessonly_Library_Attempt__c,
+      salesforce.LSNLY__Lessonly_Settings__c,
+      salesforce.LSNLY__Lessonly_Tag__c,
+      salesforce.LSNLY__Lessonly_User__c,
+      salesforce.LSNLY__Users__c,
+      salesforce.Last_Viewed_Account__c,
+      salesforce.Lead,
+      salesforce.Lead_Registration__c,
+      salesforce.LineItem_Sync__c,
+      salesforce.Milestone__c,
+      salesforce.Monday_Account__c,
+      salesforce.OpportunitiesMondayAccountsLink__c,
+      salesforce.Opportunity_Snapshot__c,
+      salesforce.Partner_Region__c,
+      salesforce.Partner_SO_Request__c,
+      salesforce.Professional_Service_Request__c,
+      salesforce.Project__c,
+      salesforce.Queue__c,
+      salesforce.Relationship__c,
+      salesforce.Round_Robin__c,
+      salesforce.Sale_Snapshot__c,
+      salesforce.Sale__c,
+      salesforce.StoryLogItemSetting__c,
+      salesforce.StoryLogSetting__c,
+      salesforce.StoryLogSnapshot__c,
+      salesforce.Subscription__c,
+      salesforce.Survey__c,
+      salesforce.Target__c,
+      salesforce.Team__c,
+      salesforce.leadconvertchtr__LeadConvertChatter__c,
+      salesforce.mondayapp__IntegrationWebhookSubscription__c,
+      salesforce.rh2__Filter__c,
+      salesforce.rh2__PS_Describe__c,
+      salesforce.rh2__PS_Exception__c,
+      salesforce.rh2__PS_Export_Rollups__c,
+      salesforce.rh2__PS_Object_Realtime__c,
+      salesforce.rh2__PS_Queue__c,
+      salesforce.rh2__PS_Rollup_Conditions__c,
+      salesforce.rh2__PS_Rollup_Dummy__c,
+      salesforce.rh2__PS_Settings__c,
+      salesforce.rh2__RH_Job__c,
+      salesforce.rh2__Rollup_Helper_Record_Scope__c,
+      salesforce.valt__Valooto_Opportunity_Answer__c,
+      salesforce.valt__Valooto_Quote_Answer__c,
+      salesforce.valt__Valooto_Quote_Workflow__c,
+      salesforce.valt__Valooto_Workflow__c,
+      salesforce.yw__YeswareContactSync__c,
+      salesforce.yw__YeswareEventSync__c,
+      salesforce.yw__YeswareHistoricalSync__c,
+      salesforce.yw__YeswareOpportunitySync__c,
+      salesforce.yw__YeswareTaskSync__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

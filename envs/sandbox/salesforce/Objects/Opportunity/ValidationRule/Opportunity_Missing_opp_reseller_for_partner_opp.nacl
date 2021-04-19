@@ -1,0 +1,14 @@
+salesforce.ValidationRule Opportunity_Missing_opp_reseller_for_partner_opp {
+  fullName = "Opportunity.Missing_opp_reseller_for_partner_opp"
+  active = false
+  description = "The reseller is missing for this opportunity"
+  errorConditionFormula = "if( and(RecordType.Name = \"Partner Opportunity\", DATEVALUE(CreatedDate) >= DATE(2019,12,17),  Owner.Profile.Name = \"Channel Managers\", not(ISNEW())), ISBLANK(text(Opportunity_Reseller__c)),FALSE)"
+  errorDisplayField = "Opportunity_Reseller__c"
+  errorMessage = '''
+Please add the opportunity reseller.
+If there's no reseller, pick 'Not a Reseller'.
+'''
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,61 @@
+salesforce.ListView Lead_Contact_Sales_6_2_for_Partners {
+  fullName = "Lead.Contact_Sales_6_2_for_Partners"
+  columns = [
+    "CORE.USERS.ALIAS",
+    "LEAD.LEAD_SOURCE",
+    "Hubspot_Score__c",
+    "LEAD.CREATED_DATE",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.PHONE",
+    "LEAD.COUNTRY",
+    "Company_Size__c",
+    "LEAD.TITLE",
+    "LEAD.RECORDTYPE",
+    "LEAD.STATUS",
+    "Leftover__c",
+  ]
+  filterScope = "Queue"
+  filters = [
+    {
+      field = "LEAD.STATUS"
+      operation = "notEqual"
+      value = "Unqualified"
+    },
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Received"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "notEqual"
+      value = "Event"
+    },
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "greaterOrEqual"
+      value = "2/6/2020 12:00 AM"
+    },
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead"
+    },
+    {
+      field = "LEAD.COUNTRY"
+      operation = "notEqual"
+      value = ",Canada,France,fr,Germany,United States,Deutschland,United Kingdom,USA,US,Australia,UK,ישראל"
+    },
+  ]
+  label = "Contact Sales 6.2 for Partners"
+  queue = "Contact_sales"
+  sharedTo = {
+    role = [
+      "Channel_Managers",
+    ]
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

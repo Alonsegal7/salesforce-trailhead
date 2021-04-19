@@ -1,0 +1,29 @@
+type salesforce.CMSConnectResourceType {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  salesforce.CMSConnectResourceDefinition cmsConnectResourceDefinition {
+    _required = false
+  }
+  string developerName {
+    _required = false
+  }
+  string masterLabel {
+    _required = false
+  }
+  string resourceType {
+    _required = false
+  }
+  metadataType = "CMSConnectResourceType"
+}

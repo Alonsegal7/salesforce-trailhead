@@ -1,0 +1,19 @@
+salesforce.Workflow Sale__c {
+  fullName = "Sale__c"
+  alerts = [
+    salesforce.WorkflowAlert.instance.Sale__c_Celebration_Email_For_Slack,
+    salesforce.WorkflowAlert.instance.Sale__c_Celebration_email,
+    salesforce.WorkflowAlert.instance.Sale__c_Partners_celebration,
+  ]
+  fieldUpdates = [
+    salesforce.WorkflowFieldUpdate.instance.Sale__c_csm_email_for_notifcation,
+  ]
+  rules = [
+    salesforce.WorkflowRule.instance.Sale__c_Send_Celebration_to_Partner,
+    salesforce.WorkflowRule.instance.Sale__c_Send_Celebration_to_Sales,
+    salesforce.WorkflowRule.instance.Sale__c_csm_email_for_notifcation,
+  ]
+  _parent = [
+    salesforce.Sale__c,
+  ]
+}

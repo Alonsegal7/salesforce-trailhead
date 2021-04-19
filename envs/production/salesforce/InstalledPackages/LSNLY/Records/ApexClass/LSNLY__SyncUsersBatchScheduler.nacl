@@ -1,0 +1,14 @@
+salesforce.ApexClass LSNLY__SyncUsersBatchScheduler {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 38
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 2
+      namespace = "LSNLY"
+    },
+  ]
+  status = "Active"
+  fullName = "LSNLY__SyncUsersBatchScheduler"
+  content = file("salesforce/InstalledPackages/LSNLY/Records/ApexClass/LSNLY__SyncUsersBatchScheduler.cls")
+}

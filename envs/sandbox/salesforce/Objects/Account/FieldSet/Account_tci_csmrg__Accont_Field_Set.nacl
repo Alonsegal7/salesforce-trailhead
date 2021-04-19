@@ -1,0 +1,187 @@
+salesforce.FieldSet Account_tci_csmrg__Accont_Field_Set {
+  fullName = "Account.tci_csmrg__Accont_Field_Set"
+  availableFields = [
+    {
+      field = "AnnualRevenue"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingCity"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingCountry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingGeocodeAccuracy"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingLatitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingLongitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingPostalCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingState"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingStreet"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Description"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Fax"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MasterRecordId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Ownership"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ParentId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Phone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingCity"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingCountry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingGeocodeAccuracy"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingLatitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingLongitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingPostalCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingState"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingStreet"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SicDesc"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Site"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Website"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  description = "Mass Edit Accounts VF Page"
+  displayedFields = [
+    {
+      field = "Name"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AccountNumber"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Type"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Rating"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Industry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AccountSource"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "NumberOfEmployees"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "primary_pulse_account_id__c"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Accont Field Set"
+  _parent = [
+    salesforce.Account,
+  ]
+}

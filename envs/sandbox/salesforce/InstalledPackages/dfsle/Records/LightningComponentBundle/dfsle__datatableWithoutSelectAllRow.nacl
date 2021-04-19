@@ -1,0 +1,15 @@
+salesforce.LightningComponentBundle dfsle__datatableWithoutSelectAllRow {
+  fullName = "dfsle__datatableWithoutSelectAllRow"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/datatableWithoutSelectAllRow/datatableWithoutSelectAllRow.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/datatableWithoutSelectAllRow/datatableWithoutSelectAllRow.js"
+      },
+    ]
+  }
+}

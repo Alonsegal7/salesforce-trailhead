@@ -1,0 +1,198 @@
+<apex:page controller="LH.LH_Realtime_Enablement_Controller" title="Lookup Helper Real Time Enablement" action="{!startupManageTrigger}" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">  
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+        <head>
+            <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+            <apex:includeScript value="{!URLFOR($Resource.LH__PT_JSZip, '/dist/jszip.js')}"/> 
+            <apex:includeScript value="{! URLFOR($Resource.PT_Resources_v1, '/js/hs_breadcrumbs.js')}" />   
+            <apex:includeScript value="{! URLFOR($Resource.HS_Jquery, 'jquery-1.12.1.min.js')}" />
+            <apex:includeScript value="{! URLFOR($Resource.PT_Resources_v1, '/js/UI_Utilities.js') }" />
+            <apex:stylesheet value="{! URLFOR($Resource.PT_Resources_v1, '/css/customMessage.css') }" />
+            
+        </head> 
+        
+        <style>
+            
+            .panel-primary > .panel-heading {
+            background-color: #16325c;
+            }
+            
+            .slds caption, .slds th, .slds td {
+            text-align: center;
+            }
+ 
+        </style>
+        
+        <script>
+        // Create JSZip (currently global) instance to receive files 
+        var zipFile = new JSZip();
+        zipFile.generate();
+        
+        $(document).ready(function(){
+            selectBreadcrumb_HS();
+            overridePageMessages();
+ 
+            if({!renderButton} == false && {!deployVars.deployed} == false) { 
+                document.getElementById("deployRemove").disabled = true;
+            }
+        });
+        </script>
+
+        <apex:slds />
+
+        <div class="slds-scope" role="main">
+            
+            <apex:form id="form">
+                <apex:actionFunction name="updateSettingsForEnableDisableTriggers" action="{!updateSettingsForEnableDisableTriggers}" />
+
+                <div class="slds-card slds-card_empty">
+                    <header class="slds-card__header slds-grid grid_flex-spread">
+                        <nav role="navigation">
+                            <ol class="slds-breadcrumb slds-list_horizontal">
+                                <li class="slds-list__item slds-text-heading_label home-crumb"><a href="{!$Page.LH_LandingPage}">Home</a></li>
+                                <li class="slds-list__item slds-text-heading_label setting-crumb"><a href="{!URLFOR($Page.LH_All_Settings)}">All Lookup Settings</a></li>
+                                <li class="slds-list__item slds-text-heading_label"> <a href="{!URLFOR($Page.LH_All_Realtime_Triggers)}"> Realtime Enablement </a></li>
+                                <li class="slds-list__item slds-text-heading_label"> <a class="slds-text-link_reset" href="{!URLFOR($Page.LH_Realtime_Enablement)}"> Deploy Trigger </a></li>
+                            </ol>
+                        </nav>
+                    </header>
+                </div>                
+                <br />
+                
+                <div class="slds-page-header">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media">    					
+                                <div class="slds-media__body">
+                                    <p class="slds-text-heading_label">Lookup Helper</p>
+                                    <div class="slds-grid">
+                                        <h1 class="slds-text-heading_medium slds-m-right_small slds-truncate slds-align-middle" >Add/Remove Real Time Trigger for {!deployVars.lookupTriggerName}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>	
+
+                <apex:pageMessages escape="false" />
+                <apex:outputpanel rendered="{!deployVars.Deployed}" id="deployedMessage">
+
+                    <div class="slds-grid slds-grid_align-center">
+                        <div class="slds-col slds-size_1-of-3 slds-col slds-size_1-of-3"></div>
+                        <div class="slds-box slds-theme_default slds-grid_align-center slds-m-top_medium" align="center">
+                            <p>
+                                Apex Trigger <b> {!deployVars.lookupTriggerName} </b> is installed.
+                            </p>
+                            <p>  		
+                                Apex Class <b> {!deployVars.lookupTriggerTestName} </b> is installed.  		
+                            </p>
+                            <p>
+                                Click <b>Remove</b> to uninstall the Apex Trigger and Apex Class for this object.
+                            </p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3"></div>			
+                    </div>
+                </apex:outputpanel>
+                
+                <apex:outputpanel rendered="{!IF(AND(NOT(deployVars.Deployed), renderButton), TRUE, FALSE)}" id="notDeployedMessage">
+
+                    <div class="slds-grid slds-grid_align-center">
+                        <div class="slds-col slds-size_1-of-3 slds-col slds-size_1-of-3"></div>
+                        <div class="slds-box slds-theme_default slds-grid_align-center slds-m-top_medium" align="center">
+                            <p>
+                                Apex Trigger <b> {!deployVars.lookupTriggerName} </b> does not exist.
+                            </p>
+                            <p>  		
+                                Apex Class <b> {!deployVars.lookupTriggerTestName} </b> does not exist. 		
+                            </p>
+                            <p>
+                                Click <b>Deploy</b> to install the Apex Trigger and Apex Class for this object.
+                            </p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3"></div>			
+                    </div>
+                </apex:outputpanel>
+                
+                <apex:outputpanel rendered="{!IF(AND(NOT(DeployVars.deployed), NOT(renderButton)), TRUE, FALSE)}" id="preDeployedMessage">
+                    <div class="slds-grid slds-grid_align-center">
+                        <div class="slds-col slds-size_1-of-3 slds-col slds-size_1-of-3"></div>
+                        <div class="slds-box slds-theme_default slds-grid_align-center slds-m-top_medium" align="center">
+                            <p>
+                                Apex Trigger <b> {!DeployVars.lookupTriggerName} </b> was deployed by default on install.
+                            </p>
+                            <p>
+                                These triggers are not designed to be removed and are part of the Lookup Helper default package.
+                            </p>
+                            <p>
+                                Click <b>Back</b> to return to the previous page.
+                            </p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3"></div>			
+                    </div>
+                </apex:outputpanel>
+                
+                <div class="slds-grid slds-grid_align-center">
+                    <apex:outputPanel styleclass="slds-col slds-m-top_medium" rendered="{!ISNULL(AsyncResult)}" style="margin-left:auto; margin-right:auto;">   			 			
+                        <apex:commandButton onclick="updateSettingsForEnableDisableTriggers();" rerender="none" rendered="{!OR(triggerInfo.packagedTrigger, deployVars.deployed)}" value="{!IF(deployVars.disabled, 'Enable', 'Disable')} {!deployVars.lookupTriggerName} Trigger" styleclass="slds-button slds-button--neutral"/>
+                        <input class="slds-button slds-button_brand" type="button" id="deployRemove" onclick="generateZip(); overridePageMessages();" 
+                               value="{!IF(deployVars.Deployed, 'Remove', 'Deploy')} {!deployVars.lookupTriggerName} Trigger" rendered="{!NOT(triggerInfo.packagedTrigger)}"/>
+                        &nbsp;
+                        <apex:commandButton styleClass="slds-button slds-button_neutral" value="Back" action="{!backPressed}" />
+                    </apex:outputPanel><br />
+                </div>
+
+                <div class="slds-grid slds-grid_align-center">
+                    <apex:outputPanel styleclass="slds-col slds-m-top_medium" rendered="{!AND(ISNULL(AsyncResult), NOT(deployVars.Deployed))}" style="margin-left:auto; margin-right:auto;">   
+                        <p>
+                            <b>Skip running tests other than the test for this trigger?</b> &nbsp;
+                            <apex:inputCheckbox value="{!runSpecifiedTests}"/>
+                        </p>
+                    </apex:outputPanel>
+                </div>
+                
+                
+                
+                <div class="slds-grid slds-m-vertical_small"><span></span></div>
+                <div class="slds-card">
+                    <header class="slds-card__header slds-grid">
+                        <div class="slds-col">
+                            <h3 class="slds-text-heading_small slds-truncate">Real Time Triggers in Org</h3>
+                        </div>		
+                    </header>
+                    <body>
+                        <section class="slds-card__body slds-grid">
+                            <table class="slds-table slds-table_bordered slds-max-medium-table_stacked" id="table" >
+                                <tbody>
+                                    <apex:repeat value="{!apexTriggersToDisplayMap}" var="trigKey">
+                                        <tr>
+                                            <td>
+                                                <a href="/{!apexTriggersToDisplayMap[trigKey]}" target="_blank">{!trigKey}</a>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                        </section>
+                    </body>
+                </div>	
+
+                <apex:actionPoller action="{!checkAsyncRequest}" interval="5" rerender="form, deployedMessage" rendered="{!NOT(ISNULL(AsyncResult))}" onComplete="window.location.reload();" />
+                <apex:actionFunction name="deployZip" action="{!deployZip}" rendered="{!ISNULL(AsyncResult)}" rerender="form, deployedMessage, poller" onComplete="overridePageMessages();">
+                    <apex:param name="data" assignTo="{!ZipData}" value=""/>
+                </apex:actionFunction> 
+                <c:zip name="generateZip" id="czip" oncomplete="deployZip(data);" rendered="{!ISNULL(AsyncResult)}">
+                    <c:zipEntry path="package.xml" data="{!PackageXml}"/>
+                    <c:zipEntry path="destructiveChanges.xml" data="{!DestructiveChangesXml}" rendered="{!deployVars.Deployed}"/>
+                    <c:zipEntry path="classes/{!deployVars.LookupTriggerTestName}.cls-meta.xml" data="{!TriggerTestCodeMetadata}" rendered="{!NOT(deployVars.Deployed)}"/>
+                    <c:zipEntry path="classes/{!deployVars.LookupTriggerTestName}.cls" data="{!TriggerTestCode}" rendered="{!AND(NOT(deployVars.Deployed), deployVars.deployFkObjectName == null)}"/>
+                    <c:zipEntry path="classes/{!deployVars.LookupTriggerTestName}.cls" data="{!FkTriggerTestCode}" rendered="{!AND(NOT(deployVars.Deployed), deployVars.deployFkObjectName != null)}"/>
+                    <c:zipEntry path="triggers/{!deployVars.LookupTriggerName}.trigger-meta.xml" data="{!TriggerCodeMetadata}" rendered="{!NOT(deployVars.Deployed)}"/>
+                    <c:zipEntry path="triggers/{!deployVars.LookupTriggerName}.trigger" data="{!TriggerCode}" rendered="{!AND(NOT(deployVars.Deployed), deployVars.deployFkObjectName == null)}"/>
+                    <c:zipEntry path="triggers/{!deployVars.LookupTriggerName}.trigger" data="{!FkTriggerCode}" rendered="{!AND(NOT(deployVars.Deployed), deployVars.deployFkObjectName != null)}"/>
+                </c:zip>
+ 
+            </apex:form>
+            
+        </div>
+    </html>
+</apex:page>

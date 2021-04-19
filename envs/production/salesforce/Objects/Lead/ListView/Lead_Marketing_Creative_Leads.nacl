@@ -1,0 +1,57 @@
+salesforce.ListView Lead_Marketing_Creative_Leads {
+  fullName = "Lead.Marketing_Creative_Leads"
+  columns = [
+    "FULL_NAME",
+    "LEAD.STATUS",
+    "Company_Size__c",
+    "Related_Company__c",
+    "LEAD.COUNTRY",
+    "LEAD.EMAIL",
+    "LEAD.PHONE",
+    "CORE.USERS.FIRST_NAME",
+    "CORE.USERS.LAST_NAME",
+    "Strategic_Company_Owner__c",
+    "Distribution_reason__c",
+    "Cluster__c",
+    "First_Lead_Source__c",
+    "Current_score__c",
+    "Engagement__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "greaterOrEqual"
+      value = "TODAY"
+    },
+    {
+      field = "First_Lead_Source__c"
+      operation = "equals"
+      value = "Big Brain - Signup"
+    },
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Unqualified,Received"
+    },
+    {
+      field = "Distribution_reason__c"
+      operation = "equals"
+      value = "New lead"
+    },
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead,Lead.Partner_Lead"
+    },
+    {
+      field = "Cluster__c"
+      operation = "equals"
+      value = "marketing,creative"
+    },
+  ]
+  label = "Marketing/Creative Leads"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

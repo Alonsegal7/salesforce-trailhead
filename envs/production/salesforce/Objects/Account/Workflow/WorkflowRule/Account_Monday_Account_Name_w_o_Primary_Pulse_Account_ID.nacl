@@ -1,0 +1,26 @@
+salesforce.WorkflowRule Account_Monday_Account_Name_w_o_Primary_Pulse_Account_ID {
+  fullName = "Account.Monday Account Name w%2Fo Primary Pulse Account ID"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Update_Monday_Accounr_Name
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.RecordTypeId
+      operation = "equals"
+      value = "Monday Account"
+    },
+    {
+      field = salesforce.Account.field.primary_pulse_account_id__c
+      operation = "equals"
+    },
+  ]
+  description = "For Monday Accounts the on create don't have primary pulse account id- change their name"
+  triggerType = "onCreateOnly"
+  _parent = [
+    salesforce.Account,
+  ]
+}

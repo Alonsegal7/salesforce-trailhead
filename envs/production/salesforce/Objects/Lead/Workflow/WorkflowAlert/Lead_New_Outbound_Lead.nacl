@@ -1,0 +1,23 @@
+salesforce.WorkflowAlert Lead_New_Outbound_Lead {
+  fullName = "Lead.New_Outbound_Lead"
+  description = "New Lead for Partners- Contact Sales or Partner's Link"
+  protected = false
+  recipients = [
+    {
+      type = "owner"
+    },
+    {
+      recipient = "avital@monday.com"
+      type = "user"
+    },
+    {
+      field = salesforce.Lead.field.Owner_s_Manager__c
+      type = "userLookup"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_New_Lead_for_Partner
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,57 @@
+type salesforce.CommunityThemeDefinition {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  serviceid fullName {
+    _required = false
+  }
+  salesforce.CommunityThemeBundleInfo bundlesInfo {
+    _required = false
+  }
+  salesforce.CommunityCustomThemeLayoutType customThemeLayoutType {
+    _required = false
+  }
+  string defaultBrandingSet {
+    _required = false
+    foreignKeyDomain = [
+      salesforce.BrandingSet,
+    ]
+  }
+  string description {
+    _required = false
+  }
+  boolean enableExtendedCleanUpOnDelete {
+    _required = false
+  }
+  string masterLabel {
+    _required = false
+  }
+  string publisher {
+    _required = false
+  }
+  salesforce.CommunityThemeRouteOverride themeRouteOverride {
+    _required = false
+  }
+  salesforce.CommunityThemeSetting themeSetting {
+    _required = false
+  }
+  string internalId {
+    _required = false
+    _hidden = true
+    localOnly = true
+  }
+  suffix = "communityThemeDefinition"
+  dirName = "communityThemeDefinitions"
+  metadataType = "CommunityThemeDefinition"
+}

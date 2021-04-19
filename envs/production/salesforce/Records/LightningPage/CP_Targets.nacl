@@ -1,0 +1,57 @@
+salesforce.LightningPage CP_Targets {
+  fullName = "CP_Targets"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "boardId"
+              value = "413011719"
+            },
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "1500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://monday.monday.com"
+            },
+            {
+              name = "itemView"
+              value = "false"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "mondayEmbed"
+        },
+      ]
+      name = "main"
+      type = "Region"
+    },
+  ]
+  masterLabel = "CP Targets"
+  template = {
+    name = "flexipage:defaultAppHomeTemplate"
+  }
+  type = "AppPage"
+}

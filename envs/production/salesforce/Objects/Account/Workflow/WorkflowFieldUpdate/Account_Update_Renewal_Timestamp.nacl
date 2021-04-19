@@ -1,0 +1,13 @@
+salesforce.WorkflowFieldUpdate Account_Update_Renewal_Timestamp {
+  fullName = "Account.Update_Renewal_Timestamp"
+  description = "Update the Renewal Timestamp field under Account object with change date = today()"
+  field = salesforce.Account.field.Renewal_Timestamp__c
+  formula = "TODAY()"
+  name = "Update Renewal Timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

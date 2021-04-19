@@ -1,0 +1,14 @@
+salesforce.ValidationRule Milestone__c_Actual_Go_live_date_is_mandatory {
+  fullName = "Milestone__c.Actual_Go_live_date_is_mandatory"
+  active = true
+  description = "Actual Go live date is mandatory when milestone type is Summary"
+  errorConditionFormula = '''
+ISBLANK( Actual_Go_live_date__c ) &&
+ ISPICKVAL( Milestone_type__c ,"Onboarding/Project Summery")
+'''
+  errorDisplayField = "Actual_Go_live_date__c"
+  errorMessage = "You should fill Actual Go live date"
+  _parent = [
+    salesforce.Milestone__c,
+  ]
+}

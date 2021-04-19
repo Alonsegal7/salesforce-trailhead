@@ -1,0 +1,10 @@
+salesforce.Role OmniFactorPartnerUser {
+  fullName = "OmniFactorPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Omni Factors Partner User"
+  mayForecastManagerShare = false
+  name = "Omni Factors Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.OmniFactorPartnerManager
+}

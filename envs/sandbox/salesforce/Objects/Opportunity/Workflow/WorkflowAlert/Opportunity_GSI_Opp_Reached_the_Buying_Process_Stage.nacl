@@ -1,0 +1,16 @@
+salesforce.WorkflowAlert Opportunity_GSI_Opp_Reached_the_Buying_Process_Stage {
+  fullName = "Opportunity.GSI_Opp_Reached_the_Buying_Process_Stage"
+  description = "GSI Opp Reached the Buying Process Stage"
+  protected = false
+  recipients = [
+    {
+      recipient = "eyalz@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_GSI_Opp_Reached_the_Buying_Process_Stage
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

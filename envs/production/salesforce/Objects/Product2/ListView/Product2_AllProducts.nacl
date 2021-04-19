@@ -1,0 +1,28 @@
+salesforce.ListView Product2_AllProducts {
+  fullName = "Product2.AllProducts"
+  columns = [
+    "PRODUCT2.NAME",
+    "PRODUCT2.CUSTOMER_PRODUCT_ID",
+    "PRODUCT2.DESCRIPTION",
+    "PRODUCT2.FAMILY",
+    "PRODUCT2.ACTIVE",
+    "PRODUCT2.CREATED_DATE",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "PRODUCT2.ACTIVE"
+      operation = "equals"
+      value = "1"
+    },
+    {
+      field = "PRODUCT2.CUSTOMER_PRODUCT_ID"
+      operation = "contains"
+      value = "v8"
+    },
+  ]
+  label = "All Products"
+  _parent = [
+    salesforce.Product2,
+  ]
+}

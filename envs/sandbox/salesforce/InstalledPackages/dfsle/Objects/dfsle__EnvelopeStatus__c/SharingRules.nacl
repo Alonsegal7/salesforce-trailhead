@@ -1,0 +1,6 @@
+salesforce.SharingRules dfsle__EnvelopeStatus__c {
+  fullName = "dfsle__EnvelopeStatus__c"
+  _parent = [
+    salesforce.dfsle__EnvelopeStatus__c,
+  ]
+}

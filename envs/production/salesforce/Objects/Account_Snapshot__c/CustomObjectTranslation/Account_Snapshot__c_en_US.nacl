@@ -1,0 +1,291 @@
+salesforce.CustomObjectTranslation Account_Snapshot__c_en_US {
+  fullName = "Account_Snapshot__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Account Snapshot"
+    },
+    {
+      plural = true
+      value = "Account Snapshots"
+    },
+  ]
+  fieldSets = [
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.Account_Snapshot__c_Snapshot_Creation_Fields
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Account_Members__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Account_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Account__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Allocated__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Belongs_to_Viewed_Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.BigBrain_ID__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.CSM_Function__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.CSM__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.CS_Segment__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Company__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Country_Text__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Country__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.End_of_Month__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Free_Users__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Guests__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Health_Score_Bucket__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Health_Score_MA__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Lead_Receiver__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.MAPP_From_Members__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.MAPP__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.NPS_Score__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Next_Charge_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Owner__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Owner_s_Function__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Owner_s_Manager__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Parent_Account__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Partner_CSM__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Partner__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Plan_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Plan_Period__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Plan_Start_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Plan_Tier__c
+      picklistValues = [
+        {
+          masterLabel = "Basic"
+          translation = ""
+        },
+        {
+          masterLabel = "Enterprise"
+          translation = ""
+        },
+        {
+          masterLabel = "Pro"
+          translation = ""
+        },
+        {
+          masterLabel = "Standard"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Pricing_Version__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Prioritized_Account__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Pulse_Account_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Region__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.SDR__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Second_CSM__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Snapshot_Unique_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Start_of_Month__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Status__c
+      picklistValues = [
+        {
+          masterLabel = "Immature"
+          translation = ""
+        },
+        {
+          masterLabel = "Mature"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Test_Snapshot__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Total_Churn__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Viewer_in_Owner_s_Team__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Viewer_is_Owner__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Viewers__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.WAPP_From_Members__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.WAPP__c
+    },
+    {
+      label = ""
+      name = salesforce.Account_Snapshot__c.field.Weekly_Snapshot__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Account Snapshot Layout"
+      sections = [
+        {
+          label = ""
+          section = "Account Data"
+        },
+        {
+          label = ""
+          section = "Account Information"
+        },
+        {
+          label = ""
+          section = "Account Team"
+        },
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Account_Snapshot__c,
+  ]
+}

@@ -1,0 +1,25 @@
+<apex:page standardController="Lead" recordSetVar="Leads" extensions="tci_csmrg.MassEditLeads" sidebar="false">
+  <apex:form id="theform">
+ <apex:pagemessages id="msg"/>
+       <apex:pageBlock title="Mass Edit - Leads" mode="edit">     
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveRecords}" value="Save"/>               
+                <apex:commandButton value="Cancel" action="{!ccancel}"/>
+            </apex:pageBlockButtons>     
+                          
+                <apex:pageBlockTable value="{!Leads}" var="Lead">                
+                <apex:repeat value="{!$ObjectType.Lead.FieldSets.tci_csmrg__Lead_Field_Set}" var="f">  
+                        <apex:column rendered="{!$ObjectType.Lead.Fields[f].accessible}">
+                               <apex:facet name="header">
+                                    <apex:outputPanel >
+                                        <apex:outputText value="{!$ObjectType['Lead'].Fields[f].label}" />
+                                    </apex:outputPanel>
+                                </apex:facet>
+                                <apex:inputField value="{!Lead[f]}"/>
+                            </apex:column>               
+                 </apex:repeat>
+                </apex:pageBlockTable><br/>
+        <apex:outputLabel ><b>&nbsp;&nbsp; Total Records Selected:&nbsp;{!size} </b></apex:outputLabel>
+        </apex:pageBlock>
+      </apex:form> 
+</apex:page>

@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle dfsle__CLMBreadcrumbs {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "A Lightning Component Bundle"
+  fullName = "dfsle__CLMBreadcrumbs"
+  type = "Component"
+  styleContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

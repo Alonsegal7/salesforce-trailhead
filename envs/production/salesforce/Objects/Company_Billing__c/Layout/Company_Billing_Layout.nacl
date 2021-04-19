@@ -1,0 +1,73 @@
+salesforce.Layout Company_Billing_Layout {
+  fullName = "Company_Billing__c-Company Billing Layout"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Company_Billing__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Company_Billing__c.field.Company__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Company_Billing__c.field.Billing_Entity__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Company_Billing__c.field.CurrencyIsoCode
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Company_Billing__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Company_Billing__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      style = "CustomLinks"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  _parent = [
+    salesforce.Company_Billing__c,
+  ]
+}

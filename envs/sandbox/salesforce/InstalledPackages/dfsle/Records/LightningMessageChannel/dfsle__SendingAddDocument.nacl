@@ -1,0 +1,12 @@
+salesforce.LightningMessageChannel dfsle__SendingAddDocument {
+  fullName = "dfsle__SendingAddDocument"
+  description = "Adds a new document to the list of documents of an envelope"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "The documents to be added while Sending with Docusign"
+      fieldName = "documents"
+    },
+  ]
+  masterLabel = "SendingAddDocument"
+}

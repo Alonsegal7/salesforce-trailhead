@@ -1,0 +1,9 @@
+salesforce.ApexPage valt__beforeCanvasPrepQuote {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 39
+  availableInTouch = false
+  confirmationTokenRequired = false
+  label = "beforeCanvasPrepQuote"
+  fullName = "valt__beforeCanvasPrepQuote"
+  content = file("salesforce/InstalledPackages/valt/Records/ApexPage/valt__beforeCanvasPrepQuote.page")
+}

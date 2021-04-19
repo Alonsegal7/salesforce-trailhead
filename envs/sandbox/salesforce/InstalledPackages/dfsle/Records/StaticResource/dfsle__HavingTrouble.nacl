@@ -1,0 +1,8 @@
+salesforce.StaticResource dfsle__HavingTrouble {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "image/png"
+  description = "CLM - Having trouble illustration."
+  fullName = "dfsle__HavingTrouble"
+  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__HavingTrouble.png")
+}

@@ -1,0 +1,24 @@
+salesforce.CustomApplication LH__Lookup_Helper {
+  fullName = "LH__Lookup_Helper"
+  defaultLandingTab = "LH__All_Settings"
+  isNavAutoTempTabsDisabled = false
+  isNavPersonalizationDisabled = false
+  label = "Lookup Helper"
+  tabs = [
+    salesforce.CustomTab.instance.LH__All_Settings,
+    salesforce.CustomTab.instance.LH__LH_Landing,
+    salesforce.CustomTab.instance.Target__c,
+    salesforce.CustomTab.instance.ExchangeRate__c,
+    salesforce.CustomTab.instance.Round_Robin__c,
+    salesforce.CustomTab.instance.Project__c,
+    salesforce.CustomTab.instance.Queue__c,
+    salesforce.CustomTab.instance.Allocation__c,
+    salesforce.CustomTab.instance.Billing_Entity__c,
+    salesforce.CustomTab.instance.Milestone__c,
+    salesforce.CustomTab.instance.StoryLogSnapshot__c,
+    salesforce.CustomTab.instance.Subscription__c,
+    salesforce.CustomTab.instance.Lead_Registration__c,
+    salesforce.CustomTab.instance.Professional_Service_Request__c,
+    salesforce.CustomTab.instance.GB_Threshold__c,
+  ]
+}

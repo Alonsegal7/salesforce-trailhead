@@ -1,0 +1,6 @@
+salesforce.CustomTab rh2__PS_All_Rollups {
+  fullName = "rh2__PS_All_Rollups"
+  label = "All Rollups"
+  motif = "Custom33: Desk"
+  page = "rh2__PS_AllSettings"
+}

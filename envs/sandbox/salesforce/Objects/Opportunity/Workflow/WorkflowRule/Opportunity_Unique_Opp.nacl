@@ -1,0 +1,20 @@
+salesforce.WorkflowRule Opportunity_Unique_Opp {
+  fullName = "Opportunity.Unique Opp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Unique_Opp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  description = "When an Opportunity has plan and pulse account - create a unique key to prevent duplicate Opp."
+  formula = '''
+NOT(ISBLANK( pulse_account_ids__c )) && NOT(ISBLANK( Expected_Plan_Name__c ))
+||
+ISCHANGED(pulse_account_ids__c)||ISCHANGED(Expected_Plan_Name__c)
+'''
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

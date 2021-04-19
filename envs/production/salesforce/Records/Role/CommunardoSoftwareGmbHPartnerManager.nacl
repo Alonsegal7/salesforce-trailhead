@@ -1,0 +1,10 @@
+salesforce.Role CommunardoSoftwareGmbHPartnerManager {
+  fullName = "CommunardoSoftwareGmbHPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Communardo Software GmbH Partner Manager"
+  mayForecastManagerShare = false
+  name = "Communardo Software GmbH Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

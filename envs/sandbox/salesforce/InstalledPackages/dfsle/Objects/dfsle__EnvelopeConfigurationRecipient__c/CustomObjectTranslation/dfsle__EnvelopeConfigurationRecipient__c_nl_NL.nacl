@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__EnvelopeConfigurationRecipient__c_nl_NL {
+  fullName = "dfsle__EnvelopeConfigurationRecipient__c-nl_NL"
+  _parent = [
+    salesforce.dfsle__EnvelopeConfigurationRecipient__c,
+  ]
+}

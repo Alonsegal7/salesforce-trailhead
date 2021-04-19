@@ -1,0 +1,23 @@
+salesforce.ContentAsset relationship_management {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  isVisibleByExternalUsers = false
+  language = "en_US"
+  masterLabel = "relationship_management"
+  relationships = [
+    {
+      organization = {
+        access = "VIEWER"
+      }
+    },
+  ]
+  versions = {
+    version = [
+      {
+        number = "1"
+        pathOnClient = "relationship_management.png"
+      },
+    ]
+  }
+  fullName = "relationship_management"
+  content = file("salesforce/Records/ContentAsset/relationship_management.asset")
+}

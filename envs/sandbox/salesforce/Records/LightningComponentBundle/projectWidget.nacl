@@ -1,0 +1,29 @@
+salesforce.LightningComponentBundle projectWidget {
+  xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 47
+  isExposed = true
+  targets = {
+    target = [
+      "lightning__RecordPage",
+      "lightning__AppPage",
+      "lightning__HomePage",
+    ]
+  }
+  fullName = "projectWidget"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = file("salesforce/Records/LightningComponentBundle/projectWidget/projectWidget.css")
+        filePath = "lwc/projectWidget/projectWidget.css"
+      },
+      {
+        source = file("salesforce/Records/LightningComponentBundle/projectWidget/projectWidget.js")
+        filePath = "lwc/projectWidget/projectWidget.js"
+      },
+      {
+        source = file("salesforce/Records/LightningComponentBundle/projectWidget/projectWidget.html")
+        filePath = "lwc/projectWidget/projectWidget.html"
+      },
+    ]
+  }
+}

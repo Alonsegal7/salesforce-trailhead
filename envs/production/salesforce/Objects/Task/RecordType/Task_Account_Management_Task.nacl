@@ -1,0 +1,193 @@
+salesforce.RecordType Task_Account_Management_Task {
+  fullName = "Task.Account_Management_Task"
+  active = true
+  description = "Tasks Relevant to Account Management"
+  label = "Account Management Task"
+  picklistValues = [
+    {
+      picklist = "Call_Sentiment__c"
+      values = [
+        {
+          fullName = "Demo Scheduled"
+          default = false
+        },
+        {
+          fullName = "Gatekeeper - No contact with prospect"
+          default = false
+        },
+        {
+          fullName = "No Answer"
+          default = false
+        },
+        {
+          fullName = "No Interest"
+          default = false
+        },
+        {
+          fullName = "Not Relevant- Authority"
+          default = false
+        },
+        {
+          fullName = "Not Relevant- Budget"
+          default = false
+        },
+        {
+          fullName = "Not Relevant- Timeline"
+          default = false
+        },
+        {
+          fullName = "Reassigned to Partner"
+          default = false
+        },
+        {
+          fullName = "Referred to Other Contact"
+          default = false
+        },
+        {
+          fullName = "Rescheduling"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Call_Source__c"
+      values = [
+        {
+          fullName = "Aircall"
+          default = false
+        },
+        {
+          fullName = "Salesloft"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Priority"
+      values = [
+        {
+          fullName = "High"
+          default = false
+        },
+        {
+          fullName = "Low"
+          default = false
+        },
+        {
+          fullName = "Medium"
+          default = false
+        },
+        {
+          fullName = "Normal"
+          default = true
+        },
+      ]
+    },
+    {
+      picklist = "Status"
+      values = [
+        {
+          fullName = "Completed"
+          default = false
+        },
+        {
+          fullName = "Open"
+          default = true
+        },
+      ]
+    },
+    {
+      picklist = "Subject"
+      values = [
+        {
+          fullName = "New Task"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Type"
+      values = [
+        {
+          fullName = "Call"
+          default = false
+        },
+        {
+          fullName = "Demo"
+          default = false
+        },
+        {
+          fullName = "Exploratory call"
+          default = false
+        },
+        {
+          fullName = "Goals Alignment"
+          default = false
+        },
+        {
+          fullName = "Internal Handover %2F Handshake"
+          default = false
+        },
+        {
+          fullName = "Intro to new DM %2F Champion"
+          default = false
+        },
+        {
+          fullName = "Kickoff"
+          default = false
+        },
+        {
+          fullName = "Meeting"
+          default = false
+        },
+        {
+          fullName = "Office Hour"
+          default = false
+        },
+        {
+          fullName = "Onboarding Call"
+          default = false
+        },
+        {
+          fullName = "Onsite Meeting"
+          default = false
+        },
+        {
+          fullName = "QBR"
+          default = false
+        },
+        {
+          fullName = "Resurrect Campaign"
+          default = false
+        },
+        {
+          fullName = "Strategic Session"
+          default = false
+        },
+        {
+          fullName = "Swag Package"
+          default = false
+        },
+        {
+          fullName = "Task"
+          default = false
+        },
+        {
+          fullName = "Training"
+          default = false
+        },
+        {
+          fullName = "Vito Letter"
+          default = false
+        },
+        {
+          fullName = "Workshop"
+          default = false
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.Task,
+  ]
+}

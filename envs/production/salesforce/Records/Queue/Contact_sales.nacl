@@ -1,0 +1,13 @@
+salesforce.Queue Contact_sales {
+  fullName = "Contact_sales"
+  doesSendEmailToMembers = false
+  name = "Contact sales"
+  queueMembers = {
+    users = {
+      user = "oran@monday.com"
+    }
+  }
+  queueSobject = {
+    sobjectType = "Lead"
+  }
+}

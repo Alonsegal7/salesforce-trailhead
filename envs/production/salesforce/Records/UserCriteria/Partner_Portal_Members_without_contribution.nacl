@@ -1,0 +1,10 @@
+salesforce.UserCriteria Partner_Portal_Members_without_contribution {
+  fullName = "Partner Portal.Members_without_contribution"
+  description = "Member criteria matches members who haven't  posted or commented"
+  lastChatterActivityAgeInSeconds = -1
+  masterLabel = "Members Without Contributions"
+  userTypes = [
+    "Partner",
+    "Customer",
+  ]
+}

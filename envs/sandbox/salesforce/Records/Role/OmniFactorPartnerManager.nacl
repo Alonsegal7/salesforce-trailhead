@@ -1,0 +1,10 @@
+salesforce.Role OmniFactorPartnerManager {
+  fullName = "OmniFactorPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Omni Factors Partner Manager"
+  mayForecastManagerShare = false
+  name = "Omni Factors Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

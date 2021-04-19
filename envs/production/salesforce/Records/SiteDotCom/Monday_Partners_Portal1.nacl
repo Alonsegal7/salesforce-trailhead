@@ -1,0 +1,7 @@
+salesforce.SiteDotCom Monday_Partners_Portal1 {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  label = "Monday Partners Portal"
+  siteType = "ChatterNetworkPicasso"
+  fullName = "Monday_Partners_Portal1"
+  content = file("salesforce/Records/SiteDotCom/Monday_Partners_Portal1.site")
+}

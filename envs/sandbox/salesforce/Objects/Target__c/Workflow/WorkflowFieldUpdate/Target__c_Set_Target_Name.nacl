@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Target__c_Set_Target_Name {
+  fullName = "Target__c.Set_Target_Name"
+  field = salesforce.Target__c.field.Name
+  formula = "User__r.FirstName &\" \"& User__r.LastName &\",\"&text(month( Target_Date__c ))&\"-\"&text(year( Target_Date__c ))&\",\"&text( Period__c )"
+  name = "Set Target Name"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Target__c,
+  ]
+}

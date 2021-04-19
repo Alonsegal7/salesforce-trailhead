@@ -1,0 +1,7 @@
+salesforce.CustomNotificationType Process_Builder_Notification {
+  fullName = "Process_Builder_Notification"
+  customNotifTypeName = "Process Builder Notification"
+  desktop = true
+  masterLabel = "Process Builder Notification"
+  mobile = true
+}

@@ -1,0 +1,8 @@
+salesforce.ListView Department__c_All {
+  fullName = "Department__c.All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Department__c,
+  ]
+}

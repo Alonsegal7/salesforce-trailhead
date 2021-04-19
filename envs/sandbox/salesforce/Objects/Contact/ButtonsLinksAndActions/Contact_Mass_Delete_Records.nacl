@@ -1,0 +1,18 @@
+salesforce.WebLink Contact_Mass_Delete_Records {
+  fullName = "Contact.Mass_Delete_Records"
+  availability = "online"
+  description = "Mass delete records"
+  displayType = "massActionButton"
+  linkType = "page"
+  masterLabel = "Mass Delete"
+  openType = "replace"
+  page = "Mass_Delete_Contact"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Contact,
+  ]
+  _generated_dependencies = [
+    salesforce.ApexPage.instance.Mass_Delete_Contact,
+  ]
+}

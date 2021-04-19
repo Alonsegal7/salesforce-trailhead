@@ -1,0 +1,33 @@
+salesforce.BusinessProcess Opportunity_Inside_sales {
+  fullName = "Opportunity.Inside sales"
+  isActive = true
+  values = [
+    {
+      fullName = "Buying process"
+      default = false
+    },
+    {
+      fullName = "Closed Lost"
+      default = false
+    },
+    {
+      fullName = "Closed Won"
+      default = false
+    },
+    {
+      fullName = "Evaluation"
+      default = false
+    },
+    {
+      fullName = "Qualified"
+      default = false
+    },
+    {
+      fullName = "Validation"
+      default = false
+    },
+  ]
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

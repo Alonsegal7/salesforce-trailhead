@@ -1,0 +1,42 @@
+salesforce.EmailTemplate unfiled_public_Quote_was_created {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "Quote was created"
+  style = "freeForm"
+  subject = "New {!Quote.Document_Type__c} was created by {!Quote.OwnerFullName} to {!Quote.Company__c}"
+  textOnly = '''
+New {!Quote.Document_Type__c} was created by {!Quote.OwnerFullName} to the company: {!Quote.Company__c}
+
+Quote Details:
+
+Tier {!Quote.DH_Tier__c}
+# of Seats {!Quote.Total_Seats__c}
+Price per seat {!Quote.Price_Per_Seat__c}
+Duration (months) {!Quote.Duration__c}
+Free months {!Quote.Total_Free_Months__c}
+Discount % {!Quote.Discount__c}
+CSM package {!Quote.CSM_Package__c}
+Total Net Price {!Quote.TotalPrice}
+
+
+
+ARR: {!Quote.ARR__c}
+
+Payment Terms: {!Quote.Payment_Terms__c}
+
+Engagement Type: {!Quote.Quote_Type__c}
+
+Expiration Date: {!Quote.ExpirationDate}
+
+Quote Status: {!Quote.DH_Quote_Status__c}
+
+
+Linke to Opportunity: {!Quote.Link_to_Opportunity__c}
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Quote_was_created"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Quote_was_created.email")
+}

@@ -1,0 +1,9 @@
+salesforce.Role US_Mid_Market_Team_Leader_Andrea_Team {
+  fullName = "US_Mid_Market_Team_Leader_Andrea_Team"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "US Mid Market Team Leader - Andrea Team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.US_VP_Sales
+}

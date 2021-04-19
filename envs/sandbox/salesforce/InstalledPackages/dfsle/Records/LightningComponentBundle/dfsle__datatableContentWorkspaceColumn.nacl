@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__datatableContentWorkspaceColumn {
+  fullName = "dfsle__datatableContentWorkspaceColumn"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/datatableContentWorkspaceColumn/datatableContentWorkspaceColumn.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/datatableContentWorkspaceColumn/datatableContentWorkspaceColumn.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/datatableContentWorkspaceColumn/datatableContentWorkspaceColumn.js"
+      },
+    ]
+  }
+}

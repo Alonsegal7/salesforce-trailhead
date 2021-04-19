@@ -1,0 +1,10 @@
+salesforce.Role SinergisBRPartnerUser {
+  fullName = "SinergisBRPartnerUser"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  description = "Sinergis Partner User"
+  mayForecastManagerShare = false
+  name = "Sinergis Partner User"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

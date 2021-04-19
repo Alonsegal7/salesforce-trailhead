@@ -1,0 +1,10 @@
+salesforce.Role GCompanyPartnerManager {
+  fullName = "GCompanyPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "G Company Partner Manager"
+  mayForecastManagerShare = false
+  name = "G Company Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

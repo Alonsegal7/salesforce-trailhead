@@ -1,0 +1,25 @@
+salesforce.DuplicateRule Contact_Standard_Contact_Duplicate_Rule {
+  fullName = "Contact.Standard_Contact_Duplicate_Rule"
+  actionOnInsert = "Allow"
+  actionOnUpdate = "Allow"
+  alertText = "You're creating a duplicate record. We recommend you use an existing record instead."
+  description = "Duplicate Rule for Contacts using the Standard Contact Matching Rule"
+  duplicateRuleMatchRules = [
+    {
+      matchRuleSObjectType = "Contact"
+      matchingRule = "Standard_Contact_Match_Rule_v1_1"
+    },
+  ]
+  isActive = false
+  masterLabel = "Standard Contact Duplicate Rule"
+  operationsOnInsert = [
+    "Alert",
+    "Report",
+  ]
+  operationsOnUpdate = "Report"
+  securityOption = "EnforceSharingRules"
+  sortOrder = 1
+  _parent = [
+    salesforce.Contact,
+  ]
+}

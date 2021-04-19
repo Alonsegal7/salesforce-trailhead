@@ -1,0 +1,14 @@
+salesforce.LightningPage zisf__Zoom_Clean_UtilityBar {
+  fullName = "zisf__Zoom_Clean_UtilityBar"
+  flexiPageRegions = [
+    {
+      name = "utilityItems"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Zoom Clean UtilityBar"
+  template = {
+    name = "one:utilityBarTemplateDesktop"
+  }
+  type = "UtilityBar"
+}

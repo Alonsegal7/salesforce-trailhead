@@ -1,0 +1,9 @@
+salesforce.ApexPage LID__LIContactMDPPage {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 29
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "LIContactMDPPage"
+  fullName = "LID__LIContactMDPPage"
+  content = file("salesforce/InstalledPackages/LID/Records/ApexPage/LID__LIContactMDPPage.page")
+}

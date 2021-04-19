@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_X1_50 {
+  fullName = "Lead.X1_50"
+  field = salesforce.Lead.field.Company_Size__c
+  literalValue = "1-50"
+  name = "1-50"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

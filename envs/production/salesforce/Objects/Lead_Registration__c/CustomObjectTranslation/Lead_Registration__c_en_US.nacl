@@ -1,0 +1,150 @@
+salesforce.CustomObjectTranslation Lead_Registration__c_en_US {
+  fullName = "Lead_Registration__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Lead Registration"
+    },
+    {
+      plural = true
+      value = "Lead Registrations"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.CPM__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Comments__c
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Company_Size__c
+      picklistValues = [
+        {
+          masterLabel = "1-50"
+          translation = ""
+        },
+        {
+          masterLabel = "100-250"
+          translation = ""
+        },
+        {
+          masterLabel = "1500+"
+          translation = ""
+        },
+        {
+          masterLabel = "251-1500"
+          translation = ""
+        },
+        {
+          masterLabel = "50-99"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Company__c
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Found_in_BB__c
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Location__c
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Potential_Deal_Size__c
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Registered_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Registering_Partner__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Registration_Expiration_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Relationship__c
+      picklistValues = [
+        {
+          masterLabel = "Former Customer"
+          translation = ""
+        },
+        {
+          masterLabel = "Mutual Connections"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Status_Reason__c
+      picklistValues = [
+        {
+          masterLabel = "Example"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Status__c
+      picklistValues = [
+        {
+          masterLabel = "Approved"
+          translation = ""
+        },
+        {
+          masterLabel = "Denied"
+          translation = ""
+        },
+        {
+          masterLabel = "Pending Review"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Lead_Registration__c.field.Title__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Lead Registration Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  quickActions = [
+    {
+      label = ""
+      name = salesforce.QuickAction.instance.Lead_Registration__c_Register_a_Lead
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Lead_Registration__c,
+  ]
+}

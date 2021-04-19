@@ -1,0 +1,9 @@
+salesforce.ApexPage dfsle__FileUploader {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "File Uploader"
+  fullName = "dfsle__FileUploader"
+  content = file("salesforce/InstalledPackages/dfsle/Records/ApexPage/dfsle__FileUploader.page")
+}

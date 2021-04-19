@@ -1,0 +1,27 @@
+salesforce.LightningComponentBundle dfsle__recipientRow {
+  fullName = "dfsle__recipientRow"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/recipientRow/decRow.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/recipientRow/decRow.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/recipientRow/sendingRow.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/recipientRow/sendingRow.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/recipientRow/recipientRow.js"
+      },
+    ]
+  }
+}

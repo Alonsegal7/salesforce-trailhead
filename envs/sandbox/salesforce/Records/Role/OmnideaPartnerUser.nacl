@@ -1,0 +1,10 @@
+salesforce.Role OmnideaPartnerUser {
+  fullName = "OmnideaPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Omnidea Partner User"
+  mayForecastManagerShare = false
+  name = "Omnidea Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

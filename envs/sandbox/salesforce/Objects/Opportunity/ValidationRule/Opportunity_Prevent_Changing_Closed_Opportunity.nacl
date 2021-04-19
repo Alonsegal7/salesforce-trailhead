@@ -1,0 +1,16 @@
+salesforce.ValidationRule Opportunity_Prevent_Changing_Closed_Opportunity {
+  fullName = "Opportunity.Prevent_Changing_Closed_Opportunity"
+  active = true
+  errorConditionFormula = '''
+(((ISPICKVAL(PRIORVALUE(StageName),"Closed Won")||ISPICKVAL(PRIORVALUE(StageName),"Closed Lost"))&&ischanged(StageName))||
+(IsClosed&&not ischanged(StageName))&&ischanged(CloseDate))&&
+$User.Id <>"0051t000003OeiAAAS"&&
+$Profile.Name!="System Administrator"&&
+$Profile.Name!="Integration Administrator"&&
+$Profile.Name!="Managers monday sales"
+'''
+  errorMessage = "The opportunity is closed and can't be updated."
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

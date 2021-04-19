@@ -1,0 +1,7 @@
+salesforce.ApexClass PackageInfoTest {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 36
+  status = "Active"
+  fullName = "PackageInfoTest"
+  content = file("salesforce/Records/ApexClass/PackageInfoTest.cls")
+}

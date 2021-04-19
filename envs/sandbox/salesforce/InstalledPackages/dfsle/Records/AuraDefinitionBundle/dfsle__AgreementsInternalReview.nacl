@@ -1,0 +1,11 @@
+salesforce.AuraDefinitionBundle dfsle__AgreementsInternalReview {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 45
+  description = "AgreementsInternalReview"
+  fullName = "dfsle__AgreementsInternalReview"
+  type = "Component"
+  styleContent = "(hidden)"
+  markup = "(hidden)"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+}

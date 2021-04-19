@@ -1,0 +1,10 @@
+salesforce.Role GaprisePartnerUser {
+  fullName = "GaprisePartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Gaprise Partner User"
+  mayForecastManagerShare = false
+  name = "Gaprise Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

@@ -1,0 +1,15 @@
+salesforce.LightningComponentBundle dfsle__decRecipientPrivateMessage {
+  fullName = "dfsle__decRecipientPrivateMessage"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRecipientPrivateMessage/decRecipientPrivateMessage.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRecipientPrivateMessage/decRecipientPrivateMessage.html"
+      },
+    ]
+  }
+}

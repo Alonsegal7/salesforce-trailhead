@@ -1,0 +1,16 @@
+salesforce.WebLink Lead_zaapit__Mass_Convert_L {
+  fullName = "Lead.zaapit__Mass_Convert_L"
+  availability = "online"
+  description = "Mass Convert in lightning"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Mass Convert (L)"
+  openType = "sidebar"
+  page = "zaapit__Mass_Convert"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Lead,
+  ]
+}

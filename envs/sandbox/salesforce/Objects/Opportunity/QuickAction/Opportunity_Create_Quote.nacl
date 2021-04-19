@@ -1,0 +1,12 @@
+salesforce.QuickAction Opportunity_Create_Quote {
+  fullName = "Opportunity.Create_Quote"
+  height = 530
+  label = "Create Quote"
+  lightningComponent = "ContractValidation"
+  optionsCreateFeedItem = false
+  type = "LightningComponent"
+  width = -100
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

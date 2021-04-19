@@ -1,0 +1,10 @@
+salesforce.ValidationRule Opportunity_Lost_reason {
+  fullName = "Opportunity.Lost_reason"
+  active = false
+  errorConditionFormula = "ISPICKVAL(StageName, \"Closed Lost\") &&   LastModifiedDate >   DATETIMEVALUE( DATE(2019,03,19) ) &&  ISPICKVAL( Lost_Reason__c , \"\")"
+  errorDisplayField = "Lost_Reason__c"
+  errorMessage = "Update why you lost the opportunity and which Features were missing"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

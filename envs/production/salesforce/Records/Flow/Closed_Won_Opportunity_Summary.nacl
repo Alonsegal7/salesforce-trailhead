@@ -1,0 +1,357 @@
+salesforce.Flow Closed_Won_Opportunity_Summary {
+  fullName = "Closed_Won_Opportunity_Summary"
+  actionCalls = [
+    {
+      name = "Fill_Send_Summary_Action_Fields"
+      label = "Fill 'Send Summary' Action Fields"
+      locationX = 946
+      locationY = 92
+      actionName = salesforce.QuickAction.instance.Opportunity_Send_Opportunity_Summary
+      actionType = "quickAction"
+      inputParameters = [
+        {
+          name = "Closed_Opportunity_Summary__c"
+          value = {
+            elementReference = "Opportunity_Summary"
+          }
+        },
+        {
+          name = "contextId"
+          value = {
+            elementReference = "CurrOppID"
+          }
+        },
+        {
+          name = "Send_Summary_Email_Trigger__c"
+          value = {
+            elementReference = "$Flow.CurrentDateTime"
+          }
+        },
+        {
+          name = "Send_to__c"
+          value = {
+            elementReference = "Send_to"
+          }
+        },
+      ]
+    },
+    {
+      name = "Send_lost_summary"
+      label = "Send lost summary"
+      locationX = 949
+      locationY = 218
+      actionName = salesforce.QuickAction.instance.Opportunity_Send_Opportunity_Summary
+      actionType = "quickAction"
+      inputParameters = [
+        {
+          name = "Closed_Opportunity_Summary__c"
+          value = {
+            elementReference = "Why_we_lost"
+          }
+        },
+        {
+          name = "contextId"
+          value = {
+            elementReference = "CurrOppID"
+          }
+        },
+        {
+          name = "Send_Summary_Email_Trigger__c"
+          value = {
+            elementReference = "$Flow.CurrentDateTime"
+          }
+        },
+        {
+          name = "Send_to__c"
+          value = {
+            elementReference = "Send_to_lost"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      name = "Won_or_Lost"
+      label = "Closed Status"
+      locationX = 524
+      locationY = 50
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Won"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "CurrentOpportunity.Green_Bucket_ARR__c"
+              operator = "GreaterThanOrEqualTo"
+              rightValue = {
+                numberValue = 5000
+              }
+            },
+            {
+              leftValueReference = "CurrentOpportunity.StageName"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Closed Won"
+              }
+            },
+            {
+              leftValueReference = "CurrentOpportunity.Summary_Sent_to_Company__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Send_Opportunity_Summary"
+          }
+          label = "Won"
+        },
+        {
+          name = "Lost"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "CurrentOpportunity.Expected_ARR__c"
+              operator = "GreaterThanOrEqualTo"
+              rightValue = {
+                numberValue = 5000
+              }
+            },
+            {
+              leftValueReference = "CurrentOpportunity.StageName"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Closed Lost"
+              }
+            },
+            {
+              leftValueReference = "CurrentOpportunity.Summary_Sent_to_Company__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Send_Opportunity_Summary_Lost"
+          }
+          label = "Lost"
+        },
+      ]
+    },
+  ]
+  description = "This flow pops up a summary page, in order to publish insights and lessons from the opportunities"
+  dynamicChoiceSets = [
+    {
+      name = "Sendto"
+      dataType = "Picklist"
+      picklistField = salesforce.Opportunity.field.Send_to__c
+      picklistObject = salesforce.Opportunity
+    },
+  ]
+  formulas = [
+    {
+      name = "NOW"
+      dataType = "DateTime"
+      expression = "NOW()"
+    },
+  ]
+  interviewLabel = "Closed Won Opportunity Summary {!$Flow.CurrentDateTime}"
+  label = "Closed Opportunity Summary"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordLookups = [
+    {
+      name = "Get_previous_Opportunity_summary_from_record"
+      label = "Get previous 'Opportunity summary' from record"
+      locationX = 390
+      locationY = 49
+      assignNullValuesIfNoRecordsFound = true
+      connector = {
+        targetReference = "Won_or_Lost"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "CurrOppID"
+          }
+        },
+      ]
+      object = salesforce.Opportunity
+      outputAssignments = [
+        {
+          assignToReference = "Old_opportunity_summary"
+          field = "Closed_Opportunity_Summary__c"
+        },
+        {
+          assignToReference = "CurrentOpportunity.Expected_ARR__c"
+          field = "Expected_ARR__c"
+        },
+        {
+          assignToReference = "CurrentOpportunity.Green_Bucket_ARR__c"
+          field = "Green_Bucket_ARR__c"
+        },
+        {
+          assignToReference = "CurrentOpportunity.RecordTypeId"
+          field = "RecordTypeId"
+        },
+        {
+          assignToReference = "CurrentOpportunity.StageName"
+          field = "StageName"
+        },
+        {
+          assignToReference = "CurrentOpportunity.Summary_Sent_to_Company__c"
+          field = "Summary_Sent_to_Company__c"
+        },
+        {
+          assignToReference = "CurrentOpportunity.Type"
+          field = "Type"
+        },
+      ]
+    },
+  ]
+  screens = [
+    {
+      description = "This screen is where users will be filling the final fields for the opportunity summary, and decide who to send it to, once they 'Close Won' their opps."
+      name = "Send_Opportunity_Summary"
+      label = "Send Opportunity Summary"
+      locationX = 733
+      locationY = 7
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Fill_Send_Summary_Action_Fields"
+      }
+      fields = [
+        {
+          name = "Header"
+          fieldText = "<p>Please take a moment to fill out what we learned from this deal. The summary can include:</p><ul><li>Why we won</li><li>What we learned</li><li>How we collaborated</li><li>Objections we overcame</li><li>Etc...</li></ul>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Opportunity_Summary"
+          defaultValue = {
+            stringValue = "{!Old_opportunity_summary}"
+          }
+          fieldText = "Opportunity Summary"
+          fieldType = "LargeTextArea"
+          helpText = "<p>What was the&nbsp;<b>differentiator</b>?</p><p>Was there any&nbsp;<b>compelling event</b>&nbsp;that made them purchase now?</p><p>Were there any&nbsp;<b>pricing</b>/other issues that helped close the deal?</p><p>Were there any&nbsp;<b>legal/security</b>&nbsp;issues that we can learn from?</p>"
+          isRequired = true
+        },
+        {
+          name = "Send_to"
+          choiceReferences = [
+            "Sendto",
+          ]
+          dataType = "String"
+          fieldText = "Send to:"
+          fieldType = "DropdownBox"
+          isRequired = true
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      description = "This screen is where users will be filling the final fields for the opportunity summary, and decide who to send it to, once they 'Close Won' their opps."
+      name = "Send_Opportunity_Summary_Lost"
+      label = "Send Opportunity Summary"
+      locationX = 645
+      locationY = 231
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Send_lost_summary"
+      }
+      fields = [
+        {
+          name = "Screen_request"
+          fieldText = "<p>Please take a moment to fill out what we learned from this deal. The summary can include:</p><ul><li>Why we lost</li><li>What we learned</li><li>What we could've done better</li><li>Objections we couldn't overcome</li><li>Etc...</li></ul>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Why_we_lost"
+          defaultValue = {
+            stringValue = "{!Old_opportunity_summary}"
+          }
+          fieldText = "Opportunity Summary"
+          fieldType = "LargeTextArea"
+          isRequired = true
+        },
+        {
+          name = "Send_to_lost"
+          choiceReferences = [
+            "Sendto",
+          ]
+          dataType = "String"
+          fieldText = "Send to:"
+          fieldType = "DropdownBox"
+          isRequired = true
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  stages = [
+    {
+      name = "WonStage"
+      isActive = false
+      label = "Won"
+      stageOrder = 1
+    },
+  ]
+  start = {
+    locationX = 28
+    locationY = 32
+    connector = {
+      targetReference = "Get_previous_Opportunity_summary_from_record"
+    }
+  }
+  status = "Active"
+  variables = [
+    {
+      name = "CurrentOpportunity"
+      dataType = "SObject"
+      isCollection = false
+      isInput = false
+      isOutput = false
+      objectType = salesforce.Opportunity
+    },
+    {
+      description = "Opportunity ID to run on"
+      name = "CurrOppID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+    },
+    {
+      name = "Old_opportunity_summary"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+  ]
+}

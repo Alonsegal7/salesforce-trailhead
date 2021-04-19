@@ -1,0 +1,8 @@
+salesforce.RecordType Survey__c_NPS {
+  fullName = "Survey__c.NPS"
+  active = true
+  label = "NPS"
+  _parent = [
+    salesforce.Survey__c,
+  ]
+}

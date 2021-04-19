@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Fill_company_name_if_missing_on_LEAD {
+  fullName = "Lead.Fill_company_name_if_missing_on_LEAD"
+  field = salesforce.Lead.field.Company
+  formula = "Related_Company__r.Name"
+  name = "Fill company name if missing on LEAD"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

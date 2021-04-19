@@ -1,0 +1,15 @@
+salesforce.WebLink Opportunity_MassManager__Mass_Update {
+  fullName = "Opportunity.MassManager__Mass_Update"
+  availability = "online"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Mass Update"
+  openType = "sidebar"
+  page = "MassManager__OpportunitiesMassUpdate"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

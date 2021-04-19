@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Lead_Has_request_Alert {
+  fullName = "Lead.Has request Alert"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Lead_Has_Request_Alert2
+      type = "Alert"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Has_request__c
+      operation = "equals"
+      value = "True"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

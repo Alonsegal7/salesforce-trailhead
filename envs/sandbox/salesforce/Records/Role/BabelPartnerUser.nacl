@@ -1,0 +1,10 @@
+salesforce.Role BabelPartnerUser {
+  fullName = "BabelPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Babel Partner User"
+  mayForecastManagerShare = false
+  name = "Babel Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.BabelPartnerManager
+}

@@ -1,0 +1,13 @@
+salesforce.AuraDefinitionBundle dfsle__Status {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "Status"
+  fullName = "dfsle__Status"
+  type = "Component"
+  markup = "(hidden)"
+  SVGContent = "(hidden)"
+  designContent = "(hidden)"
+  styleContent = "(hidden)"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+}

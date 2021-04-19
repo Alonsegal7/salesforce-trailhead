@@ -1,0 +1,40 @@
+salesforce.Layout Whitelisted_Domain_for_Visualforce_Inline_Frames_Layout {
+  fullName = "IframeWhiteListUrl-Whitelisted Domain for Visualforce Inline Frames Layout"
+  layoutSections = [
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = false
+      label = "Whitelisted Domains"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "Url"
+            },
+            {
+              behavior = "Required"
+              field = "Context"
+            },
+          ]
+        },
+      ]
+      style = "OneColumn"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      style = "CustomLinks"
+    },
+  ]
+  miniLayout = {
+    fields = [
+      "Context",
+    ]
+  }
+  showEmailCheckbox = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+}

@@ -1,0 +1,13 @@
+salesforce.EmailTemplate unfiled_public_LeadsNewassignmentnotificationSAMPLE {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "Internal notification to lead owner when new lead is assigned."
+  encodingKey = "ISO-8859-1"
+  name = "Leads:  New assignment notification (SAMPLE)"
+  style = "none"
+  subject = "New lead assigned to you:  {!Lead.Name} from {!Lead.Company}"
+  type = "text"
+  uiType = "Aloha"
+  fullName = "unfiled$public/LeadsNewassignmentnotificationSAMPLE"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/LeadsNewassignmentnotificationSAMPLE.email")
+}

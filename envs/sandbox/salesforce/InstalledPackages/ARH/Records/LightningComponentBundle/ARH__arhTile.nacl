@@ -1,0 +1,27 @@
+salesforce.LightningComponentBundle ARH__arhTile {
+  fullName = "ARH__arhTile"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/arhTile/arhTile.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/arhTile/arhTile.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/arhTile/arhListTile.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/arhTile/arhTile.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/arhTile/arhTileHeader.html"
+      },
+    ]
+  }
+}

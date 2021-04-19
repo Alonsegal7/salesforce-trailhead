@@ -1,0 +1,8 @@
+salesforce.ListView Milestone__c_All1 {
+  fullName = "Milestone__c.All1"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Milestone__c,
+  ]
+}

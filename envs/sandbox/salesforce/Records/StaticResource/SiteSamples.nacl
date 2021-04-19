@@ -1,0 +1,8 @@
+salesforce.StaticResource SiteSamples {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "application/zip"
+  description = "Static resource for sites sample pages"
+  fullName = "SiteSamples"
+  content = file("salesforce/Records/StaticResource/SiteSamples.zip")
+}

@@ -1,0 +1,37 @@
+salesforce.WorkflowRule Survey__c_Update_the_Most_recent_NPS_in_the_account {
+  fullName = "Survey__c.Update the Most recent NPS  in the account"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Survey__c_Update_Detractors_on_MA
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Survey__c_Update_NPS_on_MA
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Survey__c_Update_Passives_on_MA
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Survey__c_Update_Promoters_on_MA
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Survey__c.field.RecordTypeId
+      operation = "equals"
+      value = "NPS"
+    },
+    {
+      field = salesforce.Survey__c.field.NPS_Score__c
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onCreateOnly"
+  _parent = [
+    salesforce.Survey__c,
+  ]
+}

@@ -1,0 +1,6 @@
+salesforce.SharingRules mondayapp__IntegrationWebhookSubscription__c {
+  fullName = "mondayapp__IntegrationWebhookSubscription__c"
+  _parent = [
+    salesforce.mondayapp__IntegrationWebhookSubscription__c,
+  ]
+}

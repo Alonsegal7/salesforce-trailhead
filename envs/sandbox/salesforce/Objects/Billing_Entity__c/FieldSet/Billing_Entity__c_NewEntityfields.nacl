@@ -1,0 +1,55 @@
+salesforce.FieldSet Billing_Entity__c_NewEntityfields {
+  fullName = "Billing_Entity__c.NewEntityfields"
+  description = "Used in \"New\" button in Billing Entity Selection page"
+  displayedFields = [
+    {
+      field = "Name"
+      isFieldManaged = false
+      isRequired = true
+    },
+    {
+      field = "VAT_Number__c"
+      isFieldManaged = false
+      isRequired = true
+    },
+    {
+      field = "CurrencyIsoCode"
+      isFieldManaged = false
+      isRequired = true
+    },
+    {
+      field = "Country__c"
+      isFieldManaged = false
+      isRequired = true
+    },
+    {
+      field = "City__c"
+      isFieldManaged = false
+      isRequired = true
+    },
+    {
+      field = "Street__c"
+      isFieldManaged = false
+      isRequired = true
+    },
+    {
+      field = "Zip_Postal_Code__c"
+      isFieldManaged = false
+      isRequired = true
+    },
+    {
+      field = "Contact_Email__c"
+      isFieldManaged = false
+      isRequired = true
+    },
+    {
+      field = "Finance_Contact_Phone__c"
+      isFieldManaged = false
+      isRequired = true
+    },
+  ]
+  label = "NewEntityfields"
+  _parent = [
+    salesforce.Billing_Entity__c,
+  ]
+}

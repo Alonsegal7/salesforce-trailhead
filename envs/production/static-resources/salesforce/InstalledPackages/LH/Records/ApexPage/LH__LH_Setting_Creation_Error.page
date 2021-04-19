@@ -1,0 +1,11 @@
+<apex:page standardController="LH__Lookup_Helper_Setting__c" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">  
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    </head>     
+    <apex:slds />
+    <div class="slds-scope slds-grid--frame" role="main">
+        <font style="font-size:30px;">Lookup Helper Settings may only be created from the Lookup Helper Menu.</font>
+    </div>
+    </html>
+</apex:page>

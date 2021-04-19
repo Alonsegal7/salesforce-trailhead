@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Type_Customer {
+  fullName = "Account.Type_Customer"
+  field = salesforce.Account.field.Type
+  literalValue = "Customer"
+  name = "Type = Customer"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

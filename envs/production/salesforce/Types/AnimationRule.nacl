@@ -1,0 +1,337 @@
+type salesforce.AnimationRule {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  serviceid fullName {
+    _required = false
+  }
+  string animationFrequency {
+    _required = false
+    _restriction = {
+      enforce_value = false
+      values = [
+        "always",
+        "often",
+        "rarely",
+        "sometimes",
+      ]
+    }
+  }
+  string developerName {
+    _required = false
+  }
+  boolean isActive {
+    _required = false
+  }
+  string masterLabel {
+    _required = false
+  }
+  string recordTypeContext {
+    _required = false
+    _restriction = {
+      enforce_value = false
+      values = [
+        "All",
+        "Custom",
+        "Master",
+      ]
+    }
+  }
+  string recordTypeName {
+    _required = false
+  }
+  string sobjectType {
+    _required = false
+    _restriction = {
+      enforce_value = false
+      values = [
+        "Account",
+        "Account_Activity__c",
+        "Account_Snapshot__c",
+        "Allocation__c",
+        "BigBrain_Callout_Control__mdt",
+        "BigBrain_Setting__mdt",
+        "Billing_Entity__c",
+        "Business_Review__c",
+        "CalendlyAction__c",
+        "Campaign",
+        "Case",
+        "Company_Billing__c",
+        "Contact",
+        "Contract",
+        "DOZISF__JWT_Setting__mdt",
+        "Department__c",
+        "ExchangeRate__c",
+        "Field_Trip__Field_Analysis__c",
+        "Field_Trip__Field_Analytic_Config__c",
+        "Field_Trip__Object_Analysis__c",
+        "ForecastingItem__hd",
+        "GB_Threshold__c",
+        "Handover__c",
+        "Kickoff__c",
+        "LH__LH_Export_Lookups__c",
+        "LH__LH_Queue__c",
+        "LH__Lookup_Helper_Error__c",
+        "LH__Lookup_Helper_Filter_Group__c",
+        "LH__Lookup_Helper_Filter__c",
+        "LH__Lookup_Helper_Record_Creation__c",
+        "LH__Lookup_Helper_Setting_Filter_Association__c",
+        "LH__Lookup_Helper_Setting__c",
+        "LSNLY__Job__c",
+        "LSNLY__Lessonly_Assignment__c",
+        "LSNLY__Lessonly_Content_Tag__c",
+        "LSNLY__Lessonly_Content__c",
+        "LSNLY__Lessonly_Custom_Field_Mapping__c",
+        "LSNLY__Lessonly_Group_Member__c",
+        "LSNLY__Lessonly_Group__c",
+        "LSNLY__Lessonly_Library_Attempt__c",
+        "LSNLY__Lessonly_Settings__c",
+        "LSNLY__Lessonly_Tag__c",
+        "LSNLY__Lessonly_User__c",
+        "Lead",
+        "Lead_Registration__c",
+        "Milestone__c",
+        "Monday_Account__c",
+        "OpportunitiesMondayAccountsLink__c",
+        "Opportunity",
+        "Opportunity_Snapshot__c",
+        "Opportunity__hd",
+        "Order",
+        "Partner_Region__c",
+        "Partner_SO_Request__c",
+        "Professional_Service_Request__c",
+        "Project__c",
+        "Queue__c",
+        "Quote",
+        "Relationship__c",
+        "Round_Robin__c",
+        "Sale_Snapshot__c",
+        "Sale__c",
+        "StoryLogEvent__e",
+        "StoryLogItemSetting__c",
+        "StoryLogSetting__c",
+        "StoryLogSnapshot__c",
+        "Subscription__c",
+        "Survey__c",
+        "Target__c",
+        "Team__c",
+        "Trig_Ctrl__mdt",
+        "mondayapp__IntegrationWebhookSubscription__c",
+        "rh2__Filter__c",
+        "rh2__PS_Describe__c",
+        "rh2__PS_Exception__c",
+        "rh2__PS_Export_Rollups__c",
+        "rh2__PS_Queue__c",
+        "rh2__PS_Rollup_Conditions__c",
+        "rh2__PS_Rollup_Dummy__c",
+        "rh2__RH_Job__c",
+        "valt__Valooto_Opportunity_Answer__c",
+        "valt__Valooto_Quote_Answer__c",
+        "valt__Valooto_Quote_Workflow__c",
+        "valt__Valooto_Workflow__c",
+      ]
+    }
+    foreignKeyDomain = [
+      "CustomObject",
+    ]
+  }
+  string targetField {
+    _required = false
+    _restriction = {
+      enforce_value = false
+      values = [
+        "AccountSource",
+        "Account_First_Channel__c",
+        "Account_Last_Channel__c",
+        "Account_Potential__c",
+        "Account_Sentiment__c",
+        "Account_Source_Type__c",
+        "Account_Territory__c",
+        "Action_Plan__c",
+        "Addendum_to_SO__c",
+        "Additional_Seats_v7__c",
+        "Additional_Seats_v8__c",
+        "Authority__c",
+        "Average_Customer_Size__c",
+        "Billing_Country__c",
+        "Billing_Currency__c",
+        "Billing_State__c",
+        "Business_Verticals__c",
+        "CSM_Package__c",
+        "Challenge__c",
+        "Challenges_Risks__c",
+        "Channel_Lead_Source__c",
+        "Channel__c",
+        "Client_Complexity__c",
+        "Communication_Frequency__c",
+        "Company_Size__c",
+        "Contact_Department__c",
+        "Contact_Role__c",
+        "Contract_Type__c",
+        "Country__c",
+        "Currency__c",
+        "Customer_Success_Package__c",
+        "Customer_payed_by_wire_transfer_before__c",
+        "DB_Campaign_Tactic__c",
+        "DH_Dealroom_Status__c",
+        "DH_Expected_Plan_Period__c",
+        "DH_Expected_Plan_Tier__c",
+        "DH_Period__c",
+        "DH_Quote_Status__c",
+        "DH_Tier__c",
+        "Deal_Blockers_1_Info__c",
+        "Deal_Blockers_1__c",
+        "Deal_Blockers_2_Info__c",
+        "Deal_Blockers_2__c",
+        "Deal_Enablers_1_Info__c",
+        "Deal_Enablers_1__c",
+        "Deal_Enablers_2_Info__c",
+        "Deal_Enablers_2__c",
+        "Deal_Enablers_2_info__c",
+        "Deal_Status__c",
+        "Dealhub_Opportunity_Type__c",
+        "Department__c",
+        "Discount_Type__c",
+        "Distribution_reason__c",
+        "Do_you_provide_Professional_Services_Lic__c",
+        "Document_Type__c",
+        "Expected_Plan__c",
+        "Experience_with_Tenders__c",
+        "Field_Trip__Type__c",
+        "FinalSaleStatus__c",
+        "ForecastCategoryName",
+        "ForecastCategoryName__hpr",
+        "ForecastCategoryName__hst",
+        "G2C_Company_Size__c",
+        "Handover_Type_Required__c",
+        "Handover_Type__c",
+        "How_did_you_hear_about_our_Partnership__c",
+        "How_many_customers_do_you_have__c",
+        "How_many_users_do_you_want_to_start_with__c",
+        "Industry",
+        "Involve_CSM__c",
+        "Is_NGO__c",
+        "Is_Relevant_Potential_Partner__c",
+        "Keep_this_account__c",
+        "LH__Priority__c",
+        "LH__Schedule_Unit__c",
+        "Language__c",
+        "LeadSource",
+        "Lead_Source_Type__c",
+        "Legal_Agreement_Type__c",
+        "Legal_Agreement__c",
+        "Location__c",
+        "Lost_Reason__c",
+        "Manual_Trigger__c",
+        "Milestone_type__c",
+        "Monday_Account_Lifecycle__c",
+        "Monday_Account_Status__c",
+        "Monday_Solutions_Offered__c",
+        "Money__c",
+        "Office__c",
+        "Opportunity_Attribution__c",
+        "Opportunity_Record_Type__c",
+        "Opportunity_Reseller__c",
+        "Opportunity_Type_2__c",
+        "Opportunity_status__c",
+        "Ownership",
+        "PDR__c",
+        "Partner_Company_Status__c",
+        "Partner_Recruitment_Status__c",
+        "Partner_Type__c",
+        "Payment_Term__c",
+        "Payment_Terms__c",
+        "Period__c",
+        "Plan_Tier__c",
+        "Post_Onboarding_Readiness__c",
+        "Postponed_Cancel_reasson__c",
+        "Pricing_Version__c",
+        "Priority_Customer_Status__c",
+        "Priority_Reason__c",
+        "Priority__c",
+        "Professional_Service__c",
+        "Project_Status__c",
+        "Project_Type__c",
+        "Qualified_for_Solution__c",
+        "Quote_Type__c",
+        "Rating",
+        "Reason_For_Low_Readiness__c",
+        "Reason_For_Moving__c",
+        "Region__c",
+        "Relationship_Level__c",
+        "Relationship__c",
+        "Renewal_Certainty__c",
+        "Role_in_Monday_Account__c",
+        "SE_Department__c",
+        "SE_Support_Type__c",
+        "SE_Use_Case__c",
+        "Sale_Status_Override__c",
+        "Sale_Status__c",
+        "Scale_Account_Status__c",
+        "Seats_v7__c",
+        "Seats_v8__c",
+        "Security_Agreement__c",
+        "Send_to__c",
+        "Service_Type__c",
+        "Shipping_Country__c",
+        "Shipping_State__c",
+        "Source_Type__c",
+        "Source__c",
+        "StageName",
+        "StageName__hpr",
+        "StageName__hst",
+        "Status",
+        "Status_Reason__c",
+        "Status__c",
+        "Sub_Attribution__c",
+        "Sync_Status__c",
+        "Sync_status__c",
+        "Team_Status__c",
+        "Technical_Complexity__c",
+        "Test_1__c",
+        "Test_2__c",
+        "Test_picklist__c",
+        "Tier__c",
+        "Timeline_to_Reengage__c",
+        "Type",
+        "Type__c",
+        "Type_of_Engagement__c",
+        "Which_Kind_of_CSM__c",
+        "Which_competitor__c",
+        "Why_Lost__c",
+        "Why_Unassigned__c",
+        "Why_unqualified__c",
+        "Zone__c",
+        "monday_account_status__c",
+        "of_Free_Months__c",
+        "rh2__Test_Picklist__c",
+        "rh2__Unit__c",
+      ]
+    }
+    foreignKeyDomain = [
+      salesforce.CustomField,
+    ]
+  }
+  string targetFieldChangeToValues {
+    _required = false
+  }
+  string internalId {
+    _required = false
+    _hidden = true
+    localOnly = true
+  }
+  suffix = "animationRule"
+  dirName = "animationRules"
+  metadataType = "AnimationRule"
+}

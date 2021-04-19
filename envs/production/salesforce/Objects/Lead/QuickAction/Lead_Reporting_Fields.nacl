@@ -1,0 +1,234 @@
+salesforce.QuickAction Lead_Reporting_Fields {
+  fullName = "Lead.Reporting_Fields"
+  description = "For admin and reporting fields"
+  icon = "zaapit__zp_sfdc"
+  label = "Reporting Fields"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Team_Survey_Size__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Cluster__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Distributed_as_Free_Tier__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Owner_s_Manager__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Manager_s_Long_Id__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Slug__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Owner_Role__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "local_time__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "time_zone_offset__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Time_Zone_by_State_Code__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Is_Company_Size_100__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Strategic_Owner_Email__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Strategic_Company__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "SQL_under_AE_contacted__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Funnel__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Send_back_to_queue__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Meeting_Type_CP__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Leftover__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Account_was_disabled__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "No_Show_CP__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Quality_lead__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Salesloft_Owner__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Chatbot_Playbook__c"
+            uiBehavior = "Readonly"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "of_Meetings__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "of_Total_Calls__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "of_calls_by_SDR__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "of_Demos__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Created_Hour__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Created_Hour_NY_time__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Account_ARR__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Channel__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Channel_Lead_Source__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Lead_Source_Type__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Number_of_titles_added__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Marketing_Source__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "monday_account_status__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Has_request__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Email_Bounced__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  type = "Update"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

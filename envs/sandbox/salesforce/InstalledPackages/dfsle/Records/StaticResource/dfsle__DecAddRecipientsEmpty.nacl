@@ -1,0 +1,8 @@
+salesforce.StaticResource dfsle__DecAddRecipientsEmpty {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "image/svg+xml"
+  description = "Recipient Illustration Image"
+  fullName = "dfsle__DecAddRecipientsEmpty"
+  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__DecAddRecipientsEmpty.svg")
+}

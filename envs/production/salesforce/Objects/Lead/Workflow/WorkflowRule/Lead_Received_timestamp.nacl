@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Lead_Received_timestamp {
+  fullName = "Lead.Received timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Received_timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = false
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Status
+      operation = "equals"
+      value = "Received"
+    },
+  ]
+  triggerType = "onCreateOnly"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,46 @@
+type salesforce.LH__LH_Queue__c {
+  salesforce.Text LH__Status__c {
+    apiName = "LH__LH_Queue__c.LH__Status__c"
+    label = "Status"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LH__Step_Class__c {
+    apiName = "LH__LH_Queue__c.LH__Step_Class__c"
+    label = "Step Class"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LH__Batch_Class__c {
+    apiName = "LH__LH_Queue__c.LH__Batch_Class__c"
+    externalId = false
+    label = "Batch Class"
+    length = 50
+    _required = false
+    unique = false
+    queryable = false
+    updateable = false
+    createable = false
+  }
+  salesforce.LongTextArea LH__Step_JSON__c {
+    apiName = "LH__LH_Queue__c.LH__Step_JSON__c"
+    label = "Step JSON"
+    length = 32768
+    visibleLines = 3
+    queryable = false
+    updateable = false
+    createable = false
+  }
+}

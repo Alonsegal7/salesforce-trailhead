@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting iConduct {
+  fullName = "iConduct"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://www11.iconductcloud.com"
+}

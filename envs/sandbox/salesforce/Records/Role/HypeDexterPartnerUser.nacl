@@ -1,0 +1,10 @@
+salesforce.Role HypeDexterPartnerUser {
+  fullName = "HypeDexterPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Hype & Dexter Partner User"
+  mayForecastManagerShare = false
+  name = "Hype & Dexter Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.HypeDexterPartnerManager
+}

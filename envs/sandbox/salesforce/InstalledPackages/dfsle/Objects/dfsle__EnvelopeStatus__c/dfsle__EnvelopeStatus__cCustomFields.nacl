@@ -1,0 +1,132 @@
+type salesforce.dfsle__EnvelopeStatus__c {
+  salesforce.DateTime dfsle__Completed__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__Completed__c"
+    label = "Completed"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text dfsle__DocuSignId__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__DocuSignId__c"
+    label = "DocuSign Envelope ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    externalId = true
+    caseSensitive = false
+    length = 36
+    queryable = true
+  }
+  salesforce.Text dfsle__EmailSubject__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__EmailSubject__c"
+    label = "Email Subject"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime dfsle__Expires__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__Expires__c"
+    label = "Expires"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime dfsle__LastStatusUpdate__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__LastStatusUpdate__c"
+    label = "Last Status Update"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea dfsle__Reason__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__Reason__c"
+    label = "Declined or Voided Reason"
+    _required = false
+    createable = true
+    updateable = true
+    length = 500
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Email dfsle__SenderEmail__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__SenderEmail__c"
+    label = "Sender Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text dfsle__SenderName__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__SenderName__c"
+    label = "Sender Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 56
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime dfsle__Sent__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__Sent__c"
+    label = "Sent"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text dfsle__SourceId__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__SourceId__c"
+    label = "Salesforce Source ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 18
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text dfsle__Status__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__Status__c"
+    label = "Status"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 56
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText dfsle__TimeToComplete__c {
+    apiName = "dfsle__EnvelopeStatus__c.dfsle__TimeToComplete__c"
+    label = "Time to Complete"
+    _required = false
+    formula = '''
+IF(dfsle__Status__c  = "Voided", "",  IF(dfsle__Status__c  = "Declined",  "",   IF(dfsle__Status__c  = "Sent",  "",
+			TEXT(ROUND((dfsle__Completed__c  -  dfsle__Sent__c) - MOD(dfsle__Completed__c  - dfsle__Sent__c, 1), 0)) &" day(s), "&
+			TEXT(ROUND(MOD(dfsle__Completed__c - dfsle__Sent__c, 1) * 24 - MOD(MOD(dfsle__Completed__c - dfsle__Sent__c,1) * 24, 1), 0)) &" hour(s), "&
+			TEXT(ROUND(MOD(MOD(dfsle__Completed__c - dfsle__Sent__c, 1) * 24, 1) * 60, 0)) &" minute(s)")))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+  }
+}

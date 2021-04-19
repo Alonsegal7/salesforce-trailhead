@@ -1,0 +1,13 @@
+salesforce.WorkflowTask Contact_zaapit__Send_Letter_Contact {
+  fullName = "Contact.zaapit__Send_Letter_Contact"
+  assignedToType = "owner"
+  dueDateOffset = 1
+  notifyAssignee = true
+  priority = "Normal"
+  protected = false
+  status = "Not Started"
+  subject = "Send Letter"
+  _parent = [
+    salesforce.Contact,
+  ]
+}

@@ -1,0 +1,78 @@
+salesforce.AnalyticSnapshot Partners_Sale_Snapshot_1st_day_of_the_month {
+  fullName = "Partners_Sale_Snapshot_1st_day_of_the_month"
+  groupColumn = "Sale__c$Id"
+  mappings = [
+    {
+      sourceField = "ExecutionTime"
+      sourceType = "snapshot"
+      targetField = "Sale_Snapshot__c.Name"
+    },
+    {
+      sourceField = "Sale__c$Owner__c"
+      sourceType = "tabular"
+      targetField = "Sale_Snapshot__c.Sale_Owner__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Sale__c$Record_Type_Number__c"
+      sourceType = "summary"
+      targetField = "Sale_Snapshot__c.Record_Type_Number__c"
+    },
+    {
+      sourceField = "Sale__c$Id"
+      sourceType = "tabular"
+      targetField = "Sale_Snapshot__c.Sale__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Sale__c$ARR__c"
+      sourceType = "summary"
+      targetField = "Sale_Snapshot__c.ARR__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Sale__c$GB_Forecast_ARR__c"
+      sourceType = "summary"
+      targetField = "Sale_Snapshot__c.GB_Forecast_ARR__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Sale__c$Probability__c"
+      sourceType = "summary"
+      targetField = "Sale_Snapshot__c.Probability__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Sale__c$Sale_cycle__c"
+      sourceType = "summary"
+      targetField = "Sale_Snapshot__c.Sale_Cycle__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Sale__c$Expected_Plan_Seats__c"
+      sourceType = "summary"
+      targetField = "Sale_Snapshot__c.Expected_Plan_Seats__c"
+    },
+    {
+      sourceField = "Sale__c$Close_Date__c"
+      sourceType = "tabular"
+      targetField = "Sale_Snapshot__c.Close_Data__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Sale__c$gb_sale__c"
+      sourceType = "summary"
+      targetField = "Sale_Snapshot__c.GB_Sale__c"
+    },
+    {
+      aggregateType = "Sum"
+      sourceField = "Sale__c$Is_Sale_Complete__c"
+      sourceType = "summary"
+      targetField = "Sale_Snapshot__c.Final_Sale_Status__c"
+    },
+  ]
+  name = "Partners - Sale Snapshot- 1st day of the month"
+  runningUser = "oran@monday.com"
+  sourceReport = "Administrative_Reports/Partners_Sale_Snapshot_DO_NOT_TO_50L"
+  targetObject = salesforce.Sale_Snapshot__c
+}

@@ -1,0 +1,117 @@
+salesforce.GlobalValueSet Replaced_tools {
+  fullName = "Replaced_tools"
+  customValue = [
+    {
+      fullName = "Airtable"
+      default = false
+      label = "Airtable"
+    },
+    {
+      fullName = "Asana"
+      default = false
+      label = "Asana"
+    },
+    {
+      fullName = "Basecamp"
+      default = false
+      label = "Basecamp"
+    },
+    {
+      fullName = "Clarizen"
+      default = false
+      label = "Clarizen"
+    },
+    {
+      fullName = "Clickup"
+      default = false
+      label = "Clickup"
+    },
+    {
+      fullName = "Email"
+      default = false
+      label = "Email"
+    },
+    {
+      fullName = "Excel"
+      default = false
+      label = "Excel"
+    },
+    {
+      fullName = "Google Suite"
+      default = false
+      label = "Google Suite"
+    },
+    {
+      fullName = "Internal Tools"
+      default = false
+      label = "Internal Tools"
+    },
+    {
+      fullName = "Jira"
+      default = false
+      label = "Jira"
+    },
+    {
+      fullName = "MS project"
+      default = false
+      label = "MS project"
+    },
+    {
+      fullName = "Quickbase"
+      default = false
+      label = "Quickbase"
+    },
+    {
+      fullName = "Service now"
+      default = false
+      label = "Service now"
+    },
+    {
+      fullName = "Smartsheet"
+      default = false
+      label = "Smartsheet"
+    },
+    {
+      fullName = "Spreadsheet"
+      default = false
+      label = "Spreadsheet"
+    },
+    {
+      fullName = "Trello"
+      default = false
+      label = "Trello"
+    },
+    {
+      fullName = "Whiteboard, Pen & Paper"
+      default = false
+      label = "Whiteboard, Pen & Paper"
+    },
+    {
+      fullName = "Workday"
+      default = false
+      label = "Workday"
+    },
+    {
+      fullName = "Workfront"
+      default = false
+      label = "Workfront"
+    },
+    {
+      fullName = "Wrike"
+      default = false
+      label = "Wrike"
+    },
+    {
+      fullName = "Zoho"
+      default = false
+      label = "Zoho"
+    },
+    {
+      fullName = "Other"
+      default = false
+      label = "Other"
+    },
+  ]
+  masterLabel = "Replaced tools"
+  sorted = false
+}

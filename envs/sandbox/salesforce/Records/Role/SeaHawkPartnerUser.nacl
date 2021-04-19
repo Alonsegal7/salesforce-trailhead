@@ -1,0 +1,10 @@
+salesforce.Role SeaHawkPartnerUser {
+  fullName = "SeaHawkPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "SeaHawk Partner User"
+  mayForecastManagerShare = false
+  name = "SeaHawk Partner User"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.SeaHawkPartnerManager
+}

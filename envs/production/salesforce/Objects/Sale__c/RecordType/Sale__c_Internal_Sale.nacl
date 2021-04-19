@@ -1,0 +1,99 @@
+salesforce.RecordType Sale__c_Internal_Sale {
+  fullName = "Sale__c.Internal_Sale"
+  active = true
+  compactLayoutAssignment = "Sale_Compact_Layout"
+  label = "Internal Sale"
+  picklistValues = [
+    {
+      picklist = "FinalSaleStatus__c"
+      values = [
+        {
+          fullName = "Blank"
+          default = false
+        },
+        {
+          fullName = "Complete"
+          default = false
+        },
+        {
+          fullName = "Expected Complete"
+          default = false
+        },
+        {
+          fullName = "Expected Partial"
+          default = false
+        },
+        {
+          fullName = "Partial"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Sale_Status_Override__c"
+      values = [
+        {
+          fullName = "Blank"
+          default = false
+        },
+        {
+          fullName = "Complete"
+          default = false
+        },
+        {
+          fullName = "Expected Complete"
+          default = false
+        },
+        {
+          fullName = "Expected Partial"
+          default = false
+        },
+        {
+          fullName = "Partial"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Sale_Status__c"
+      values = [
+        {
+          fullName = "Blank"
+          default = false
+        },
+        {
+          fullName = "Complete"
+          default = false
+        },
+        {
+          fullName = "Expected Complete"
+          default = false
+        },
+        {
+          fullName = "Expected Partial"
+          default = false
+        },
+        {
+          fullName = "Partial"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Type__c"
+      values = [
+        {
+          fullName = "Partner"
+          default = false
+        },
+        {
+          fullName = "Sales"
+          default = false
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.Sale__c,
+  ]
+}

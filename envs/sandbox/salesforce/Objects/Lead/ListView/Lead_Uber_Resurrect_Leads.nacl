@@ -1,0 +1,43 @@
+salesforce.ListView Lead_Uber_Resurrect_Leads {
+  fullName = "Lead.Uber_Resurrect_Leads"
+  booleanFilter = "(1 OR 4) AND 3 AND 2"
+  columns = [
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.COMPANY",
+    "LEAD.STATE",
+    "LEAD.STATUS",
+    "LEAD.UNREAD",
+    "LEAD.CREATED_DATE",
+    "CORE.USERS.ALIAS",
+    "LEAD.LEAD_SOURCE",
+    "First_Lead_Source__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "equals"
+      value = "10/28/2019 12:00 AM"
+    },
+    {
+      field = "LEAD.COMPANY"
+      operation = "contains"
+      value = "uber"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "equals"
+      value = "Outreach - Resurrect"
+    },
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "equals"
+      value = "10/29/2019 12:00 AM"
+    },
+  ]
+  label = "Uber Resurrect Leads"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

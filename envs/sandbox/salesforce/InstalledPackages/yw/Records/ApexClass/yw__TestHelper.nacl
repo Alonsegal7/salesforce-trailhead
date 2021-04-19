@@ -1,0 +1,14 @@
+salesforce.ApexClass yw__TestHelper {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 27
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 24
+      namespace = "yw"
+    },
+  ]
+  status = "Active"
+  fullName = "yw__TestHelper"
+  content = file("salesforce/InstalledPackages/yw/Records/ApexClass/yw__TestHelper.cls")
+}

@@ -1,0 +1,8 @@
+salesforce.ListView zisf__ZoomInfo_Clean_Settings__c_zisf__All {
+  fullName = "zisf__ZoomInfo_Clean_Settings__c.zisf__All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.zisf__ZoomInfo_Clean_Settings__c,
+  ]
+}

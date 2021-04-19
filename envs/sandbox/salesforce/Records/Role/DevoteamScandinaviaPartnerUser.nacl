@@ -1,0 +1,10 @@
+salesforce.Role DevoteamScandinaviaPartnerUser {
+  fullName = "DevoteamScandinaviaPartnerUser"
+  caseAccessLevel = "Read"
+  contactAccessLevel = "Edit"
+  description = "Devoteam Scandinavia Partner User"
+  mayForecastManagerShare = false
+  name = "Devoteam Scandinavia Partner User"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.DevoteamScandinaviaPartnerManager
+}

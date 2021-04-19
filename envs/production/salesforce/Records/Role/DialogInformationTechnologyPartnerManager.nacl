@@ -1,0 +1,10 @@
+salesforce.Role DialogInformationTechnologyPartnerManager {
+  fullName = "DialogInformationTechnologyPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Dialog Information Technology Partner Manager"
+  mayForecastManagerShare = false
+  name = "Dialog Information Technology Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

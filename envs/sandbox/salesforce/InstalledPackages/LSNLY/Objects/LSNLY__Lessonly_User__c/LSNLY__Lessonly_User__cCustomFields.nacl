@@ -1,0 +1,438 @@
+type salesforce.LSNLY__Lessonly_User__c {
+  salesforce.Text LSNLY__Archived_At__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Archived_At__c"
+    label = "Archived At"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime LSNLY__Archived__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Archived__c"
+    label = "Archived"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text LSNLY__Archived_by_Lesosnly_User_Id__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Archived_by_Lesosnly_User_Id__c"
+    label = "Archived by Lesosnly User Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Business_Unit__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Business_Unit__c"
+    label = "Business Unit"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number LSNLY__Completed_Assignments__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Completed_Assignments__c"
+    label = "Completed Assignments"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_10__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_10__c"
+    label = "Custom Field 10"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_1__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_1__c"
+    label = "Custom Field 1"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_2__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_2__c"
+    label = "Custom Field 2"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_3__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_3__c"
+    label = "Custom Field 3"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_4__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_4__c"
+    label = "Custom Field 4"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_5__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_5__c"
+    label = "Custom Field 5"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_6__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_6__c"
+    label = "Custom Field 6"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_7__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_7__c"
+    label = "Custom Field 7"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 205
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_8__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_8__c"
+    label = "Custom Field 8"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Custom_Field_9__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Custom_Field_9__c"
+    label = "Custom Field 9"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Department__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Department__c"
+    label = "Department"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Email__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Email__c"
+    label = "Email"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Ext_UID__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Ext_UID__c"
+    label = "Ext UID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Hire_Date__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Hire_Date__c"
+    label = "Hire Date"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.DateTime LSNLY__Hired__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Hired__c"
+    label = "Hired"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number LSNLY__Incomplete_Assignments__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Incomplete_Assignments__c"
+    label = "Incomplete Assignments"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Job_Title__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Job_Title__c"
+    label = "Job Title"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Lessonly_Group_Names__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Lessonly_Group_Names__c"
+    label = "Lessonly Group Names"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Lessonly_Id__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Lessonly_Id__c"
+    label = "Lessonly Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Location__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Location__c"
+    label = "Location"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Manager_Name__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Manager_Name__c"
+    label = "Manager Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Name__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Name__c"
+    label = "Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number LSNLY__Number_of_Assignments__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Number_of_Assignments__c"
+    label = "Number of Assignments"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number LSNLY__Overdue_Assignments__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Overdue_Assignments__c"
+    label = "Overdue Assignments"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text LSNLY__Role__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Role__c"
+    label = "Role"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 250
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number LSNLY__Total_Completed__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Total_Completed__c"
+    label = "Total Completed"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number LSNLY__Total_Views__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Total_Views__c"
+    label = "Total Views"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number LSNLY__Unique_Learning_Content_Views__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__Unique_Learning_Content_Views__c"
+    label = "Unique Learning Content Views"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup LSNLY__User__c {
+    apiName = "LSNLY__Lessonly_User__c.LSNLY__User__c"
+    label = "User"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Partner__c {
+    apiName = "LSNLY__Lessonly_User__c.Partner__c"
+    label = "Partner"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Partner_Contact__c {
+    apiName = "LSNLY__Lessonly_User__c.Partner_Contact__c"
+    label = "Partner Contact"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contact,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Partner_User__c {
+    apiName = "LSNLY__Lessonly_User__c.Partner_User__c"
+    label = "Partner User"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

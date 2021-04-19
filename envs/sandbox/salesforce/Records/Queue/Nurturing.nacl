@@ -1,0 +1,8 @@
+salesforce.Queue Nurturing {
+  fullName = "Nurturing"
+  doesSendEmailToMembers = false
+  name = "Nurturing"
+  queueSobject = {
+    sobjectType = "Lead"
+  }
+}

@@ -1,0 +1,104 @@
+salesforce.QuickAction Opportunity_Time_and_Date_Fields {
+  fullName = "Opportunity.Time_and_Date_Fields"
+  label = "Time and Date Fields"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Qualified_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Evaluation_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Validation_Timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Buying_process_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "CloseDate"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Closed_Lost_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Lead_created_date__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Lead_Contacted_Date__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Time_to_Evaluation_Reports__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Time_to_Validation_Reports__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Time_to_Buying_Process__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Time_to_Close_Reports__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Close_date_Today__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Close_date_In_This_Quarter_for_reports__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  type = "Update"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

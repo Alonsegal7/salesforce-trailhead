@@ -1,0 +1,7 @@
+salesforce.CurrencySettings {
+  fullName = "Currency"
+  enableCurrencyEffectiveDates = false
+  enableCurrencySymbolWithMultiCurrency = false
+  enableMultiCurrency = true
+  isParenCurrencyConvDisabled = false
+}

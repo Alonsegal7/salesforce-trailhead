@@ -1,0 +1,6 @@
+salesforce.SharingRules zisf__ZoomSessions__c {
+  fullName = "zisf__ZoomSessions__c"
+  _parent = [
+    salesforce.zisf__ZoomSessions__c,
+  ]
+}

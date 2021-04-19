@@ -1,0 +1,24 @@
+salesforce.ListView Target__c_X09_2020_Targets {
+  fullName = "Target__c.X09_2020_Targets"
+  columns = [
+    "NAME",
+    "User__c",
+    "Target_Date__c",
+    "Amount__c",
+    "OWNER.FIRST_NAME",
+    "Total_Actual__c",
+    "CREATED_DATE",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Target_Date__c"
+      operation = "equals"
+      value = "9/2/2020"
+    },
+  ]
+  label = "09.2020 Targets"
+  _parent = [
+    salesforce.Target__c,
+  ]
+}

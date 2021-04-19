@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Update_evaluation_timestamp {
+  fullName = "Opportunity.Update_evaluation_timestamp"
+  field = salesforce.Opportunity.field.Evaluation_timestamp__c
+  formula = "Buying_process_timestamp__c"
+  name = "Update evaluation timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,8 @@
+salesforce.ListView Relationship__c_All {
+  fullName = "Relationship__c.All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Relationship__c,
+  ]
+}

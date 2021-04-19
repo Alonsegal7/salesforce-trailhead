@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation zisf__ZoomSessions__c_en_US {
+  fullName = "zisf__ZoomSessions__c-en_US"
+  _parent = [
+    salesforce.zisf__ZoomSessions__c,
+  ]
+}

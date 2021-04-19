@@ -1,0 +1,16 @@
+salesforce.WorkflowRule Contact_zaapit__Send_Letter_Contact {
+  fullName = "Contact.zaapit__Send Letter Contact"
+  actions = [
+    {
+      name = salesforce.WorkflowTask.instance.Contact_zaapit__Send_Letter_Contact
+      type = "Task"
+    },
+  ]
+  active = false
+  description = "Send Letter Contact - by ZaapIT"
+  formula = "false"
+  triggerType = "onCreateOnly"
+  _parent = [
+    salesforce.Contact,
+  ]
+}

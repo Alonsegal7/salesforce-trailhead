@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decRelationshipLookup {
+  fullName = "dfsle__decRelationshipLookup"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRelationshipLookup/decRelationshipLookup.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRelationshipLookup/decRelationshipLookup.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRelationshipLookup/decRelationshipLookup.css"
+      },
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__RecipientStatus__c_ru {
+  fullName = "dfsle__RecipientStatus__c-ru"
+  _parent = [
+    salesforce.dfsle__RecipientStatus__c,
+  ]
+}

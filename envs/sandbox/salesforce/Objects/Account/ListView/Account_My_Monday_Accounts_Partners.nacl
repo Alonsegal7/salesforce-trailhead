@@ -1,0 +1,33 @@
+salesforce.ListView Account_My_Monday_Accounts_Partners {
+  fullName = "Account.My_Monday_Accounts_Partners"
+  columns = [
+    "ACCOUNT.NAME",
+    "Company__c",
+    "CORE.USERS.FIRST_NAME",
+    "Monday_Account_Status__c",
+    "Plan_Name__c",
+    "ARR__c",
+    "WAPP_From_Members__c",
+    "Plan_Seats__c",
+    "Members__c",
+    "Guests__c",
+    "Next_Charge_Date__c",
+  ]
+  filterScope = "Mine"
+  filters = [
+    {
+      field = "ACCOUNT.RECORDTYPE"
+      operation = "equals"
+      value = "Account.Monday_Account"
+    },
+    {
+      field = "Monday_Account_Status__c"
+      operation = "equals"
+      value = "Paying Account"
+    },
+  ]
+  label = "Account Management (Partners)"
+  _parent = [
+    salesforce.Account,
+  ]
+}

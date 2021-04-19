@@ -1,0 +1,14 @@
+salesforce.LightningPage LSNLY__Lessonly_UtilityBar {
+  fullName = "LSNLY__Lessonly_UtilityBar"
+  flexiPageRegions = [
+    {
+      name = "utilityItems"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Lessonly UtilityBar"
+  template = {
+    name = "one:utilityBarTemplateDesktop"
+  }
+  type = "UtilityBar"
+}

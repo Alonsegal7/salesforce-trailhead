@@ -1,0 +1,373 @@
+salesforce.LightningPage LID__Contact_2_Column_Sales_Navigator {
+  fullName = "LID__Contact_2_Column_Sales_Navigator"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "collapsed"
+              value = "false"
+            },
+          ]
+          componentName = "force:highlightsPanel"
+        },
+      ]
+      mode = "Replace"
+      name = "header"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "runtime_sales_activities:activityPanel"
+        },
+      ]
+      name = "facet-445e81cc-4a89-4009-98dd-3656dc482293"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "runtime_sales_merge:mergeCandidatesPreviewCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Contact.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Opportunities"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Contact.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Cases"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Contact.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "CombinedAttachments"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "relatedTabContent"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+      ]
+      mode = "Replace"
+      name = "detailTabContent"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "displayGetIntroduced"
+              value = "false"
+            },
+            {
+              name = "displayHeader"
+              value = "false"
+            },
+            {
+              name = "displayHighlight"
+              value = "false"
+            },
+            {
+              name = "displayIcebreakers"
+              value = "false"
+            },
+            {
+              name = "displayRecentActivity"
+              value = "true"
+            },
+            {
+              name = "displayRelatedLeads"
+              value = "false"
+            },
+            {
+              name = "displayTopcard"
+              value = "false"
+            },
+            {
+              name = "headerText"
+              value = "Member Profile"
+            },
+            {
+              name = "minHeight"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+          ]
+          componentName = "LID:SalesNavigatorMemberProfileComponent"
+        },
+      ]
+      mode = "Replace"
+      name = "newsTabContent"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "facet-445e81cc-4a89-4009-98dd-3656dc482293"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.activity"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "false"
+            },
+            {
+              name = "body"
+              value = "relatedTabContent"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.relatedLists"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "detailTabContent"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "newsTabContent"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.news"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      mode = "Replace"
+      name = "maintabs"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "maintabs"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      mode = "Replace"
+      name = "main"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "displayGetIntroduced"
+              value = "true"
+            },
+            {
+              name = "displayHeader"
+              value = "false"
+            },
+            {
+              name = "displayHighlight"
+              value = "true"
+            },
+            {
+              name = "displayIcebreakers"
+              value = "true"
+            },
+            {
+              name = "displayRecentActivity"
+              value = "true"
+            },
+            {
+              name = "displayRelatedLeads"
+              value = "true"
+            },
+            {
+              name = "displayTopcard"
+              value = "true"
+            },
+            {
+              name = "headerText"
+              value = "Member Profile"
+            },
+            {
+              name = "minHeight"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+          ]
+          componentName = "LID:SalesNavigatorMemberProfileComponent"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "displayConnections"
+              value = "true"
+            },
+            {
+              name = "displayHeader"
+              value = "false"
+            },
+            {
+              name = "displayNews"
+              value = "true"
+            },
+            {
+              name = "displayRecommendedLeads"
+              value = "true"
+            },
+            {
+              name = "displayTopcard"
+              value = "true"
+            },
+            {
+              name = "headerText"
+              value = "Company Profile"
+            },
+            {
+              name = "minHeight"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+          ]
+          componentName = "LID:SalesNavigatorCompanyProfileComponent"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "displayGetIntroduced"
+              value = "false"
+            },
+            {
+              name = "displayHeader"
+              value = "false"
+            },
+            {
+              name = "displayHighlight"
+              value = "true"
+            },
+            {
+              name = "displayIcebreakers"
+              value = "false"
+            },
+            {
+              name = "displayRecentActivity"
+              value = "false"
+            },
+            {
+              name = "displayRelatedLeads"
+              value = "false"
+            },
+            {
+              name = "displayTopcard"
+              value = "false"
+            },
+            {
+              name = "headerText"
+              value = "Member Profile"
+            },
+            {
+              name = "minHeight"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+          ]
+          componentName = "LID:SalesNavigatorMemberProfileComponent"
+        },
+      ]
+      mode = "Replace"
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Contact 2 Column (Sales Navigator)"
+  parentFlexiPage = "sfa__Contact_rec_L"
+  sobjectType = "Contact"
+  template = {
+    name = "flexipage:recordHomeTemplateDesktop"
+  }
+  type = "RecordPage"
+}

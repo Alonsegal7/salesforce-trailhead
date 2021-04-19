@@ -1,0 +1,26 @@
+salesforce.WorkflowRule Account_Update_Adoption_Timestamp {
+  fullName = "Account.Update Adoption Timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Update_Adoption_Timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.Monday_Account_Lifecycle__c
+      operation = "equals"
+      value = "Adoption"
+    },
+    {
+      field = salesforce.Account.field.Adoption_Timestamp__c
+      operation = "equals"
+    },
+  ]
+  description = "When 'Monday Account Lifecycle' changes to 'Adoption', change Adoption Timestamp to 'TODAY()'"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Account,
+  ]
+}

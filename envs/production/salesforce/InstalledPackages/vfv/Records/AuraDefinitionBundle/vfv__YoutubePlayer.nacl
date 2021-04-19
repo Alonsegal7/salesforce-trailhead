@@ -1,0 +1,11 @@
+salesforce.AuraDefinitionBundle vfv__YoutubePlayer {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 43
+  description = "A Lightning Component Bundle"
+  fullName = "vfv__YoutubePlayer"
+  type = "Component"
+  designContent = "(hidden)"
+  styleContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle dfsle__Loading {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "Loading"
+  fullName = "dfsle__Loading"
+  type = "Component"
+  markup = "(hidden)"
+  styleContent = "(hidden)"
+  controllerContent = "(hidden)"
+}

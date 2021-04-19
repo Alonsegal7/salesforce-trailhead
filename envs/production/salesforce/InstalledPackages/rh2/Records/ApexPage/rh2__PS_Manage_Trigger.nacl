@@ -1,0 +1,9 @@
+salesforce.ApexPage rh2__PS_Manage_Trigger {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 42
+  availableInTouch = false
+  confirmationTokenRequired = false
+  label = "Manage Trigger"
+  fullName = "rh2__PS_Manage_Trigger"
+  content = file("salesforce/InstalledPackages/rh2/Records/ApexPage/rh2__PS_Manage_Trigger.page")
+}

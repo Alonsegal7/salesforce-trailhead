@@ -1,0 +1,313 @@
+salesforce.GlobalValueSet Enablers_and_Blockers_H2 {
+  fullName = "Enablers_and_Blockers_H2"
+  customValue = [
+    {
+      fullName = "Account logs/activity"
+      default = false
+      label = "Account logs/activity"
+    },
+    {
+      fullName = "Account permissions"
+      default = false
+      label = "Account permissions"
+    },
+    {
+      fullName = "Annotation"
+      default = false
+      label = "Annotation"
+    },
+    {
+      fullName = "Automation permissions"
+      default = false
+      label = "Automation permissions"
+    },
+    {
+      fullName = "Baseline "
+      default = false
+      label = "Baseline "
+    },
+    {
+      fullName = "Billing by department/WS"
+      default = false
+      label = "Billing by department/WS"
+    },
+    {
+      fullName = "Board permissions"
+      default = false
+      label = "Board permissions"
+    },
+    {
+      fullName = "Boards management"
+      default = false
+      label = "Boards management"
+    },
+    {
+      fullName = "Calendar"
+      default = false
+      label = "Calendar"
+    },
+    {
+      fullName = "Communication audit"
+      default = false
+      label = "Communication audit"
+    },
+    {
+      fullName = "Critical path"
+      default = false
+      label = "Critical path"
+    },
+    {
+      fullName = "Custom data retention"
+      default = false
+      label = "Custom data retention"
+    },
+    {
+      fullName = "Custom permissions"
+      default = false
+      label = "Custom permissions"
+    },
+    {
+      fullName = "Custom Recipes"
+      default = false
+      label = "Custom Recipes"
+    },
+    {
+      fullName = "Data Residency"
+      default = false
+      label = "Data Residency"
+    },
+    {
+      fullName = "Dependencies"
+      default = false
+      label = "Dependencies"
+    },
+    {
+      fullName = "Domain block"
+      default = false
+      label = "Domain block"
+    },
+    {
+      fullName = "Emails"
+      default = false
+      label = "Emails"
+    },
+    {
+      fullName = "Encryption key management"
+      default = false
+      label = "Encryption key management"
+    },
+    {
+      fullName = "Files (upload, download, photos, preview etc.)"
+      default = false
+      label = "Files (upload, download, photos, preview etc.)"
+    },
+    {
+      fullName = "Filters "
+      default = false
+      label = "Filters "
+    },
+    {
+      fullName = "Formatting in updates "
+      default = false
+      label = "Formatting in updates "
+    },
+    {
+      fullName = "Forms"
+      default = false
+      label = "Forms"
+    },
+    {
+      fullName = "Formulas"
+      default = false
+      label = "Formulas"
+    },
+    {
+      fullName = "Gantt/Timeline"
+      default = false
+      label = "Gantt/Timeline"
+    },
+    {
+      fullName = "GPS/location capabilities"
+      default = false
+      label = "GPS/location capabilities"
+    },
+    {
+      fullName = "Integration permissions"
+      default = false
+      label = "Integration permissions"
+    },
+    {
+      fullName = "Items linkage"
+      default = false
+      label = "Items linkage"
+    },
+    {
+      fullName = "Limited boards"
+      default = false
+      label = "Limited boards"
+    },
+    {
+      fullName = "Milestones"
+      default = false
+      label = "Milestones"
+    },
+    {
+      fullName = "Missing app"
+      default = false
+      label = "Missing app"
+    },
+    {
+      fullName = "Missing column support"
+      default = false
+      label = "Missing column support"
+    },
+    {
+      fullName = "Missing features in existing app"
+      default = false
+      label = "Missing features in existing app"
+    },
+    {
+      fullName = "Missing features in existing recipes"
+      default = false
+      label = "Missing features in existing recipes"
+    },
+    {
+      fullName = "Missing recipes"
+      default = false
+      label = "Missing recipes"
+    },
+    {
+      fullName = "Multiple_accounts"
+      default = false
+      label = "Multiple_accounts"
+    },
+    {
+      fullName = "My_week"
+      default = false
+      label = "My_week"
+    },
+    {
+      fullName = "Notification"
+      default = false
+      label = "Notification"
+    },
+    {
+      fullName = "Notifications"
+      default = false
+      label = "Notifications"
+    },
+    {
+      fullName = "Offline mode"
+      default = false
+      label = "Offline mode"
+    },
+    {
+      fullName = "Other"
+      default = false
+      label = "Other"
+    },
+    {
+      fullName = "Permissions"
+      default = false
+      label = "Permissions"
+    },
+    {
+      fullName = "Personal preferences"
+      default = false
+      label = "Personal preferences"
+    },
+    {
+      fullName = "Planned VS Actual"
+      default = false
+      label = "Planned VS Actual"
+    },
+    {
+      fullName = "Pulse/Group view level permissions"
+      default = false
+      label = "Pulse/Group view level permissions"
+    },
+    {
+      fullName = "Resource_allocation"
+      default = false
+      label = "Resource_allocation"
+    },
+    {
+      fullName = "Role based permissions"
+      default = false
+      label = "Role based permissions"
+    },
+    {
+      fullName = "Rollup"
+      default = false
+      label = "Rollup"
+    },
+    {
+      fullName = "Security (encryption, sessions control etc.)"
+      default = false
+      label = "Security (encryption, sessions control etc.)"
+    },
+    {
+      fullName = "Sharing"
+      default = false
+      label = "Sharing"
+    },
+    {
+      fullName = "Speed "
+      default = false
+      label = "Speed "
+    },
+    {
+      fullName = "Sub_tasks"
+      default = false
+      label = "Sub_tasks"
+    },
+    {
+      fullName = "Super/Billing Admin"
+      default = false
+      label = "Super/Billing Admin"
+    },
+    {
+      fullName = "Team permissions"
+      default = false
+      label = "Team permissions"
+    },
+    {
+      fullName = "Time_tracking"
+      default = false
+      label = "Time_tracking"
+    },
+    {
+      fullName = "Timeline"
+      default = false
+      label = "Timeline"
+    },
+    {
+      fullName = "Time reports "
+      default = false
+      label = "Time reports "
+    },
+    {
+      fullName = "User Engagement Stats"
+      default = false
+      label = "User Engagement Stats"
+    },
+    {
+      fullName = "User provisioning (SCIM)"
+      default = false
+      label = "User provisioning (SCIM)"
+    },
+    {
+      fullName = "Workspaces"
+      default = false
+      label = "Workspaces"
+    },
+    {
+      fullName = "WS permissions"
+      default = false
+      label = "WS permissions"
+    },
+  ]
+  description = "Second hierarchy of Enablers and Blockers - dependent on H1"
+  masterLabel = "Enablers and Blockers H2"
+  sorted = false
+}

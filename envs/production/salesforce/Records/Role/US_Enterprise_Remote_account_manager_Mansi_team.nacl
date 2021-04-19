@@ -1,0 +1,9 @@
+salesforce.Role US_Enterprise_Remote_account_manager_Mansi_team {
+  fullName = "US_Enterprise_Remote_account_manager_Mansi_team"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "US Enterprise Remote account manager - Mansi team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.US_Enterprise_Team_Leader_Mansi_Team
+}

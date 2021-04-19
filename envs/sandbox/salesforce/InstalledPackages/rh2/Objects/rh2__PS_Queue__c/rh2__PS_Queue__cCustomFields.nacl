@@ -1,0 +1,104 @@
+type salesforce.rh2__PS_Queue__c {
+  salesforce.Text rh2__Batch_Class__c {
+    apiName = "rh2__PS_Queue__c.rh2__Batch_Class__c"
+    label = "Batch Class"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number rh2__Max_Record_Scope__c {
+    apiName = "rh2__PS_Queue__c.rh2__Max_Record_Scope__c"
+    label = "Max Record Scope"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea rh2__Params__c {
+    apiName = "rh2__PS_Queue__c.rh2__Params__c"
+    label = "Params"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number rh2__Priority__c {
+    apiName = "rh2__PS_Queue__c.rh2__Priority__c"
+    label = "Priority"
+    _required = true
+    precision = 2
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea rh2__Query__c {
+    apiName = "rh2__PS_Queue__c.rh2__Query__c"
+    label = "Query"
+    _required = false
+    createable = true
+    updateable = true
+    length = 20000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Text rh2__Source_Object__c {
+    apiName = "rh2__PS_Queue__c.rh2__Source_Object__c"
+    label = "Source Object"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Status__c {
+    apiName = "rh2__PS_Queue__c.rh2__Status__c"
+    label = "Status"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 10
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Step_Class__c {
+    apiName = "rh2__PS_Queue__c.rh2__Step_Class__c"
+    label = "Step Class"
+    _required = true
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea rh2__Step_JSON__c {
+    apiName = "rh2__PS_Queue__c.rh2__Step_JSON__c"
+    label = "Step JSON"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+}

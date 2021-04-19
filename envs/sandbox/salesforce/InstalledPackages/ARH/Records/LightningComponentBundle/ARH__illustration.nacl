@@ -1,0 +1,15 @@
+salesforce.LightningComponentBundle ARH__illustration {
+  fullName = "ARH__illustration"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/illustration/illustration.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/illustration/illustration.html"
+      },
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+salesforce.WorkflowRule Lead_Mark_SQL_SQL_Timestamp {
+  fullName = "Lead.Mark SQL %2B SQL Timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_SQL_Timestamp
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_SQL_Timestamp_DT
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.SQL__c
+      operation = "equals"
+      value = "True"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

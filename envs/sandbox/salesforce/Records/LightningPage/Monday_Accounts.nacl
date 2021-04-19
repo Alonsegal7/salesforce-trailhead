@@ -1,0 +1,45 @@
+salesforce.LightningPage Monday_Accounts {
+  fullName = "Monday_Accounts"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Account"
+            },
+            {
+              name = "filterName"
+              value = "AllAccounts"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "20"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+      ]
+      name = "main"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Monday Accounts"
+  template = {
+    name = "flexipage:defaultAppHomeTemplate"
+  }
+  type = "AppPage"
+}

@@ -1,0 +1,22 @@
+<apex:page StandardController="Contact" showHeader="false" standardStylesheets="false" sidebar="false">
+    <html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Sales Navigator</title>
+        <style>
+            html, body, #component { padding: 0; margin: 0; height: 100%; width: 100%; }
+        </style>
+    </head>
+    <body>
+        <apex:includeLightning />
+        <div id="component"></div>
+        <script>
+            $Lightning.use("LID:SalesNavigatorMemberProfile", function() {
+                $Lightning.createComponent("LID:SalesNavigatorMemberProfileComponent", {recordId:"{!contact.Id}"}, "component", function(cmp){});
+            });
+        </script>
+    </body>
+    </html>
+</apex:page>

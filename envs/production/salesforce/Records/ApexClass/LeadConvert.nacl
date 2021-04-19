@@ -1,0 +1,7 @@
+salesforce.ApexClass LeadConvert {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 45
+  status = "Active"
+  fullName = "LeadConvert"
+  content = file("salesforce/Records/ApexClass/LeadConvert.cls")
+}

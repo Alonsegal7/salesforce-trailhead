@@ -1,0 +1,48 @@
+salesforce.CustomObjectTranslation ContentVersion_ja {
+  fullName = "ContentVersion-ja"
+  fields = [
+    {
+      label = ""
+      name = salesforce.ContentVersion.field.dfsle__GeneratedFileFormat__c
+      picklistValues = [
+        {
+          masterLabel = "PDF"
+          translation = "PDF"
+        },
+        {
+          masterLabel = "Word"
+          translation = "Word"
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.ContentVersion.field.dfsle__GeneratedFileName__c
+    },
+    {
+      label = ""
+      name = salesforce.ContentVersion.field.dfsle__GeneratedFileSuffix__c
+      picklistValues = [
+        {
+          masterLabel = "date"
+          translation = "日付"
+        },
+        {
+          masterLabel = "name"
+          translation = "名前"
+        },
+        {
+          masterLabel = "name_date"
+          translation = "名前_日付"
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.ContentVersion.field.dfsle__Rule__c
+    },
+  ]
+  _parent = [
+    salesforce.ContentVersion,
+  ]
+}

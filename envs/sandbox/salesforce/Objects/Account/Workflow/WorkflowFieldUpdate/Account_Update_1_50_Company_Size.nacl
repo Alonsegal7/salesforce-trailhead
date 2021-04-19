@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Update_1_50_Company_Size {
+  fullName = "Account.Update_1_50_Company_Size"
+  field = salesforce.Account.field.Company_Size__c
+  literalValue = "1-50"
+  name = "Update 1-50 Company Size"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle dfsle__CLMMappingObjectEvent {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "A Lightning Component Bundle"
+  fullName = "dfsle__CLMMappingObjectEvent"
+  type = "Event"
+  markup = "(hidden)"
+}

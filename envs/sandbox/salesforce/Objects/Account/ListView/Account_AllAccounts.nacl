@@ -1,0 +1,34 @@
+salesforce.ListView Account_AllAccounts {
+  fullName = "Account.AllAccounts"
+  columns = [
+    "ACCOUNT.NAME",
+    "Company__c",
+    "PARENT_NAME",
+    "ARR__c",
+    "of_Employees__c",
+    "Company_Size__c",
+    "CORE.USERS.FIRST_NAME",
+    "of_open_opps__c",
+    "ACCOUNT.ADDRESS1_COUNTRY_CODE",
+    "Company_Website__c",
+    "ACCOUNT.URL",
+    "Company_ARR__c",
+    "Company_Seats__c",
+    "Strategic_receiver__c",
+  ]
+  filterScope = "Mine"
+  filters = [
+    {
+      field = "ACCOUNT.RECORDTYPE"
+      operation = "equals"
+      value = "Account.Company"
+    },
+  ]
+  label = "All Companies"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Account,
+  ]
+}

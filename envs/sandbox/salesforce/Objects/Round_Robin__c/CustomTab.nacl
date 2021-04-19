@@ -1,0 +1,8 @@
+salesforce.CustomTab Round_Robin__c {
+  fullName = "Round_Robin__c"
+  customObject = true
+  motif = "Custom15: People"
+  _parent = [
+    salesforce.Round_Robin__c,
+  ]
+}

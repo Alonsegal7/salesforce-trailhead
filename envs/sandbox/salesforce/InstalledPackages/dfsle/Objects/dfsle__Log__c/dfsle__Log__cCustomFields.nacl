@@ -1,0 +1,116 @@
+type salesforce.dfsle__Log__c {
+  salesforce.Text dfsle__Class__c {
+    apiName = "dfsle__Log__c.dfsle__Class__c"
+    label = "Class"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    externalId = true
+    caseSensitive = false
+    length = 100
+    queryable = true
+  }
+  salesforce.Text dfsle__EntityId__c {
+    apiName = "dfsle__Log__c.dfsle__EntityId__c"
+    label = "DocuSign entity ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    externalId = true
+    caseSensitive = false
+    length = 36
+    queryable = true
+  }
+  salesforce.LongTextArea dfsle__Message__c {
+    apiName = "dfsle__Log__c.dfsle__Message__c"
+    label = "Message"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131072
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Text dfsle__Method__c {
+    apiName = "dfsle__Log__c.dfsle__Method__c"
+    label = "Method"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist dfsle__Severity__c {
+    apiName = "dfsle__Log__c.dfsle__Severity__c"
+    label = "Severity"
+    _required = false
+    valueSet = [
+      {
+        fullName = "DEBUG"
+        default = false
+        label = "DEBUG"
+      },
+      {
+        fullName = "INFO"
+        default = false
+        label = "INFO"
+      },
+      {
+        fullName = "WARN"
+        default = false
+        label = "WARN"
+      },
+      {
+        fullName = "ERROR"
+        default = false
+        label = "ERROR"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Text dfsle__SourceId__c {
+    apiName = "dfsle__Log__c.dfsle__SourceId__c"
+    label = "Salesforce source ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    externalId = true
+    caseSensitive = false
+    length = 18
+    queryable = true
+  }
+  salesforce.Text dfsle__TransactionId__c {
+    apiName = "dfsle__Log__c.dfsle__TransactionId__c"
+    label = "Transaction ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    externalId = true
+    caseSensitive = false
+    length = 36
+    queryable = true
+  }
+  salesforce.Text dfsle__Version__c {
+    apiName = "dfsle__Log__c.dfsle__Version__c"
+    label = "Class"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    externalId = true
+    caseSensitive = false
+    length = 20
+    queryable = true
+  }
+}

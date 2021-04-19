@@ -1,0 +1,8 @@
+salesforce.StaticResource zisf__test_PersonDetailRequest {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Private"
+  contentType = "text/xml"
+  description = "xml source"
+  fullName = "zisf__test_PersonDetailRequest"
+  content = file("salesforce/InstalledPackages/zisf/Records/StaticResource/zisf__test_PersonDetailRequest.xml")
+}

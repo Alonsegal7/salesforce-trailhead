@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Quote_Update_Quote_Status_as_Approved {
+  fullName = "Quote.Update_Quote_Status_as_Approved"
+  field = salesforce.Quote.field.Status
+  literalValue = "Approved"
+  name = "Update Quote Status as Approved"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Quote,
+  ]
+}

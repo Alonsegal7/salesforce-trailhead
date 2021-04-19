@@ -1,0 +1,39 @@
+salesforce.ListView Lead_Walmart_Leads {
+  fullName = "Lead.Walmart_Leads"
+  columns = [
+    "LEAD.COMPANY",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.TITLE",
+    "LEAD.STATUS",
+    "Trial_start__c",
+    "LEAD.LEAD_SOURCE",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.COMPANY"
+      operation = "contains"
+      value = "Walmart"
+    },
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead"
+    },
+    {
+      field = "CORE.USERS.FIRST_NAME"
+      operation = "equals"
+      value = "Harrison"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "equals"
+      value = "Outreach - Resurrect"
+    },
+  ]
+  label = "Walmart Leads"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

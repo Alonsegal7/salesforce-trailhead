@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Task_Activity_done_timestamp {
+  fullName = "Task.Activity_done_timestamp"
+  field = salesforce.Task.field.Activity_done_timestamp__c
+  formula = "today()"
+  name = "Activity done timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Task,
+  ]
+}

@@ -1,0 +1,15 @@
+salesforce.FieldSet Opportunity_Next_Strategy {
+  fullName = "Opportunity.Next_Strategy"
+  description = "StoryLog"
+  displayedFields = [
+    {
+      field = "NextStep"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Next Strategic Step"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

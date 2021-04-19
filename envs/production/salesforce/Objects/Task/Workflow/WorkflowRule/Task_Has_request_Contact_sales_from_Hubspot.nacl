@@ -1,0 +1,42 @@
+salesforce.WorkflowRule Task_Has_request_Contact_sales_from_Hubspot {
+  fullName = "Task.Has request - Contact sales from Hubspot"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Task_Contact_sales_from_Hubspot_Has_request
+      type = "Alert"
+    },
+  ]
+  active = true
+  booleanFilter = "2 and 5 and (1 OR 3 OR 4)"
+  criteriaItems = [
+    {
+      field = salesforce.Task.field.Subject
+      operation = "contains"
+      value = "Submitted Form"
+    },
+    {
+      field = salesforce.Task.field.OwnerId
+      operation = "notContain"
+      value = "BigBrain Bot,API Hubspot"
+    },
+    {
+      field = salesforce.Task.field.Subject
+      operation = "contains"
+      value = "Drift"
+    },
+    {
+      field = salesforce.Task.field.Subject
+      operation = "contains"
+      value = "Intercom"
+    },
+    {
+      field = salesforce.Task.field.Subject
+      operation = "notContain"
+      value = "Partner Application Form"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Task,
+  ]
+}

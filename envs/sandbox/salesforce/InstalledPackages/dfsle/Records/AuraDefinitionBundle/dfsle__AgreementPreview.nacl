@@ -1,0 +1,11 @@
+salesforce.AuraDefinitionBundle dfsle__AgreementPreview {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "AgreementPreview"
+  fullName = "dfsle__AgreementPreview"
+  type = "Component"
+  styleContent = "(hidden)"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

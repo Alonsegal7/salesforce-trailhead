@@ -1,0 +1,29 @@
+type salesforce.PersonalizationTargetInfo {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  string groupName {
+    _required = false
+  }
+  number priority {
+    _required = false
+  }
+  string targetType {
+    _required = false
+  }
+  string targetValue {
+    _required = false
+  }
+  metadataType = "PersonalizationTargetInfo"
+}

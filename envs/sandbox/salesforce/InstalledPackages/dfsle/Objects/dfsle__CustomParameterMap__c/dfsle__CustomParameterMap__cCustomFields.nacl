@@ -1,0 +1,70 @@
+type salesforce.dfsle__CustomParameterMap__c {
+  salesforce.MasterDetail dfsle__EnvelopeConfiguration__c {
+    apiName = "dfsle__CustomParameterMap__c.dfsle__EnvelopeConfiguration__c"
+    label = "DocuSign Envelope Configuration"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.dfsle__EnvelopeConfiguration__c,
+    ]
+    inlineHelpText = "DocuSign Envelope Configuration"
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+    description = "DocuSign Envelope Configuration"
+  }
+  salesforce.TextArea dfsle__Name__c {
+    apiName = "dfsle__CustomParameterMap__c.dfsle__Name__c"
+    label = "Name"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number dfsle__Order__c {
+    apiName = "dfsle__CustomParameterMap__c.dfsle__Order__c"
+    label = "Order"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text dfsle__SubValue__c {
+    apiName = "dfsle__CustomParameterMap__c.dfsle__SubValue__c"
+    label = "SubValue"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 99
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text dfsle__Type__c {
+    apiName = "dfsle__CustomParameterMap__c.dfsle__Type__c"
+    label = "Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 99
+    queryable = true
+    externalId = false
+  }
+  salesforce.TextArea dfsle__Value__c {
+    apiName = "dfsle__CustomParameterMap__c.dfsle__Value__c"
+    label = "Value"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

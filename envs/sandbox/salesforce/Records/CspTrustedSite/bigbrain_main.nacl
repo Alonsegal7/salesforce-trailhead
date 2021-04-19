@@ -1,0 +1,6 @@
+salesforce.CspTrustedSite bigbrain_main {
+  fullName = "bigbrain_main"
+  context = "All"
+  endpointUrl = "https://bigbrain.me"
+  isActive = true
+}

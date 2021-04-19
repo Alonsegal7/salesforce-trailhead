@@ -1,0 +1,10 @@
+salesforce.Role DevoteamGCloudPartnerUser {
+  fullName = "DevoteamGCloudPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Devoteam G Cloud Partner User"
+  mayForecastManagerShare = false
+  name = "Devoteam G Cloud Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.DevoteamGCloudPartnerManager
+}

@@ -1,0 +1,13 @@
+salesforce.WorkflowFieldUpdate Opportunity_Set_Summary_Email_Timestamp_to_NOW {
+  fullName = "Opportunity.Set_Summary_Email_Timestamp_to_NOW"
+  description = "When an opportunity summary is sent to the sales team, enter a timestamp so that the summary form won't be shown again."
+  field = salesforce.Opportunity.field.Summary_Email_Timestamp__c
+  formula = "now()"
+  name = "Set 'Summary Email Timestamp' to NOW()"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

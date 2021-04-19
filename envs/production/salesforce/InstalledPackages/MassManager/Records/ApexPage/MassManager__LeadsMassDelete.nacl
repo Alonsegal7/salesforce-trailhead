@@ -1,0 +1,9 @@
+salesforce.ApexPage MassManager__LeadsMassDelete {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 40
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Leads Mass Delete"
+  fullName = "MassManager__LeadsMassDelete"
+  content = file("salesforce/InstalledPackages/MassManager/Records/ApexPage/MassManager__LeadsMassDelete.page")
+}

@@ -1,0 +1,10 @@
+salesforce.Role GalaxySoftwareServicesGSSPartnerUser {
+  fullName = "GalaxySoftwareServicesGSSPartnerUser"
+  caseAccessLevel = "Read"
+  contactAccessLevel = "Edit"
+  description = "Galaxy Software Services (GSS) Partner User"
+  mayForecastManagerShare = false
+  name = "Galaxy Software Services (GSS) Partner User"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.GalaxySoftwareServicesGSSPartnerManager
+}

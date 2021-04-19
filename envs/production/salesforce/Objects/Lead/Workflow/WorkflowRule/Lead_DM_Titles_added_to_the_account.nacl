@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Lead_DM_Titles_added_to_the_account {
+  fullName = "Lead.DM Titles added to the account"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Lead_DM_Titles_Added_To_Account
+      type = "Alert"
+    },
+  ]
+  active = true
+  formula = "ISCHANGED(Number_of_titles_added__c) &&  Number_of_titles_added__c > 1"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

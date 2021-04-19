@@ -1,0 +1,20 @@
+salesforce.LightningComponentBundle fbc_quickChoiceCpe {
+  xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  description = "Quick Choice Cpe"
+  isExposed = true
+  masterLabel = "Quick Choice Cpe"
+  fullName = "fbc_quickChoiceCpe"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_quickChoiceCpe/fbc_quickChoiceCpe.html")
+        filePath = "lwc/fbc_quickChoiceCpe/fbc_quickChoiceCpe.html"
+      },
+      {
+        source = file("salesforce/Records/LightningComponentBundle/fbc_quickChoiceCpe/fbc_quickChoiceCpe.js")
+        filePath = "lwc/fbc_quickChoiceCpe/fbc_quickChoiceCpe.js"
+      },
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+salesforce.WorkflowRule Opportunity_Partner_lost_deal_over_10k {
+  fullName = "Opportunity.Partner lost deal over 10k"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Opportunity_Partner_lost_opp_over_10k
+      type = "Alert"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Opportunity.field.ARR_For_Reports__c
+      operation = "greaterOrEqual"
+      value = "\"USD 10,000\""
+    },
+    {
+      field = salesforce.Opportunity.field.RecordTypeId
+      operation = "equals"
+      value = "Partner Opportunity"
+    },
+    {
+      field = salesforce.Opportunity.field.StageName
+      operation = "equals"
+      value = "Closed Lost"
+    },
+    {
+      field = salesforce.Opportunity.field.Owner_Is_Partner__c
+      operation = "equals"
+      value = "True"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,31 @@
+salesforce.StandardValueSet OpportunityType {
+  fullName = "OpportunityType"
+  sorted = false
+  standardValue = [
+    {
+      fullName = "New Business"
+      default = false
+      label = "New Business"
+    },
+    {
+      fullName = "Expansion"
+      default = false
+      label = "Expansion"
+    },
+    {
+      fullName = "Cross sale"
+      default = false
+      label = "Cross sale"
+    },
+    {
+      fullName = "Renewal"
+      default = false
+      label = "Renewal"
+    },
+    {
+      fullName = "Downgrade"
+      default = false
+      label = "Downgrade"
+    },
+  ]
+}

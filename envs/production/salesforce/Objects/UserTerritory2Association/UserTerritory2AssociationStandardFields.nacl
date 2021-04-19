@@ -1,0 +1,82 @@
+type salesforce.UserTerritory2Association {
+  serviceid Id {
+    apiName = "UserTerritory2Association.Id"
+    label = "User Territory Association ID"
+    _required = false
+    queryable = true
+    _hidden = true
+    updateable = false
+    createable = false
+  }
+  salesforce.Lookup UserId {
+    apiName = "UserTerritory2Association.UserId"
+    label = "User ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Lookup Territory2Id {
+    apiName = "UserTerritory2Association.Territory2Id"
+    label = "Territory ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Territory2,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Checkbox IsActive {
+    apiName = "UserTerritory2Association.IsActive"
+    label = "Active"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+  }
+  salesforce.Picklist RoleInTerritory2 {
+    apiName = "UserTerritory2Association.RoleInTerritory2"
+    label = "Role in Territory"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.DateTime LastModifiedDate {
+    apiName = "UserTerritory2Association.LastModifiedDate"
+    label = "Last Modified Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup LastModifiedById {
+    apiName = "UserTerritory2Association.LastModifiedById"
+    label = "Last Modified By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime SystemModstamp {
+    apiName = "UserTerritory2Association.SystemModstamp"
+    label = "System Modstamp"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+}

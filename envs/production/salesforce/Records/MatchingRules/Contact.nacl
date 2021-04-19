@@ -1,0 +1,15 @@
+salesforce.MatchingRules Contact {
+  fullName = "Contact"
+  matchingRules = [
+    {
+      fullName = "Same_contact_email"
+      label = "Same contact email"
+      matchingRuleItems = {
+        blankValueBehavior = "NullNotAllowed"
+        fieldName = "Email"
+        matchingMethod = "Exact"
+      }
+      ruleStatus = "Active"
+    },
+  ]
+}

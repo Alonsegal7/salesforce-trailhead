@@ -1,0 +1,156 @@
+salesforce.Layout Territory_Layout {
+  fullName = "Territory2-Territory Layout"
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "Name"
+            },
+            {
+              behavior = "Required"
+              field = "Territory2TypeId"
+            },
+            {
+              behavior = "Required"
+              field = "ParentTerritory2Id"
+            },
+            {
+              behavior = "Edit"
+              field = "Description"
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "DeveloperName"
+            },
+            {
+              behavior = "Required"
+              field = "Territory2ModelId"
+            },
+            {
+              behavior = "Edit"
+              field = "ForecastUserId"
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = "LastModifiedById"
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = "LastModifiedDate"
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Territory Access Levels"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "AccountAccessLevel"
+            },
+            {
+              behavior = "Required"
+              field = "ContactAccessLevel"
+            },
+            {
+              behavior = "Required"
+              field = "OpportunityAccessLevel"
+            },
+            {
+              behavior = "Required"
+              field = "CaseAccessLevel"
+            },
+          ]
+        },
+      ]
+      style = "OneColumn"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      fields = [
+        "FULL_NAME",
+        "CORE.USERS.USERNAME",
+        "CORE.USERS.EMAIL",
+        "CORE.USERS.ACTIVE",
+        "ROLE_IN_TERRITORY",
+        "IS_FORECAST_USER",
+      ]
+      relatedList = "Territory2AssignedUsersRelatedList"
+    },
+    {
+      fields = [
+        "ACCOUNT.NAME",
+      ]
+      relatedList = "Territory2ManualAccountsRelatedList"
+    },
+    {
+      fields = [
+        "NAME",
+        "ISACTIVE",
+        "RULE.PARENT_TERRITORY",
+        "LASTMODIFIEDDATE",
+      ]
+      relatedList = "Territory2InheritedRulesRelatedList"
+    },
+    {
+      fields = [
+        "NAME",
+        "ISACTIVE",
+        "ISINHERITED",
+        "LASTMODIFIEDDATE",
+      ]
+      relatedList = "Territory2LocalRulesRelatedList"
+    },
+    {
+      fields = [
+        "TERR_NAME",
+      ]
+      relatedList = "Territory2ChildTerritoriesRelatedList"
+    },
+  ]
+  showEmailCheckbox = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+}

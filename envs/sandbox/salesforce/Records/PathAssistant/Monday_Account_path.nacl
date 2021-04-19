@@ -1,0 +1,41 @@
+salesforce.PathAssistant Monday_Account_path {
+  fullName = "Monday_Account_path"
+  active = true
+  entityName = "Account"
+  fieldName = "Monday_Account_Lifecycle__c"
+  masterLabel = "Monday Account path"
+  pathAssistantSteps = [
+    {
+      fieldNames = [
+        "WAPP_Goal_For_Adoption__c",
+      ]
+      info = "<p><span style=\"font-family: Arial; font-size: 11pt;\">Consecutive 4 weeks hitting </span><b style=\"font-family: Arial; font-size: 11pt;\">WAPP</b><span style=\"font-family: Arial; font-size: 11pt;\"> goal </span></p>"
+      picklistValueName = "Adoption"
+    },
+    {
+      fieldNames = [
+        "Of_Champions__c",
+        "of_QBR_EBR__c",
+        "WAPP_Goal_For_Engagement__c",
+      ]
+      info = "<p><b><i><u>QBR / EBR</u></i></b></p><p>For accounts over 100K 2 EBR is requested</p><p><span style=\"font-size: 13px;\">For accounts below 100K 1 EBR is requested</span></p><p><br></p><p><b><i><u>WAPP Goal For Engagement</u></i></b> </p><p><span style=\"font-size: 11pt; font-family: Arial;\">Consecutive 4 weeks hitting </span><b style=\"font-size: 11pt; font-family: Arial;\">WAPP</b><span style=\"font-size: 11pt; font-family: Arial;\"> goal</span></p>"
+      picklistValueName = "Engagement"
+    },
+    {
+      fieldNames = [
+        "Go_live_date__c",
+        "of_meetings_in_Onboarding__c",
+      ]
+      info = "<p>Go live date s<span style=\"font-family: Arial; font-size: 11pt;\">hould take maximum 60 days from the kickoff meeting date</span></p>"
+      picklistValueName = "Onboarding"
+    },
+    {
+      fieldNames = [
+        "Renewal_Certainty__c",
+      ]
+      info = "<p>How certain you are that the account will renew his contract? </p>"
+      picklistValueName = "Renewal / Expansion"
+    },
+  ]
+  recordTypeName = "Monday_Account"
+}

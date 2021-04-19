@@ -1,0 +1,8 @@
+salesforce.CustomTab Field_Trip__Object_Analysis__c {
+  fullName = "Field_Trip__Object_Analysis__c"
+  customObject = true
+  motif = "Custom38: Camera"
+  _parent = [
+    salesforce.Field_Trip__Object_Analysis__c,
+  ]
+}

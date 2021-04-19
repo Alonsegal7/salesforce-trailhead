@@ -1,0 +1,22 @@
+salesforce.EmailTemplate unfiled_public_SQL_Opportunity_is_Won {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "SQL Opportunity is Won"
+  style = "freeForm"
+  subject = "SDR pass opportunity: {!Opportunity.Name} is now closed won!"
+  textOnly = '''
+Congrats {!Opportunity.SDR_Name__c}!
+
+
+This SDR pass opportunity: {!Opportunity.Name} was closed won!
+The contribution to ARR is: {!Opportunity.Amount}
+
+Great pass! :)
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/SQL_Opportunity_is_Won"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/SQL_Opportunity_is_Won.email")
+}

@@ -1,0 +1,23 @@
+salesforce.ContentAsset Sales_leadersship {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  isVisibleByExternalUsers = false
+  language = "en_US"
+  masterLabel = "Sales_leadersship"
+  relationships = [
+    {
+      organization = {
+        access = "VIEWER"
+      }
+    },
+  ]
+  versions = {
+    version = [
+      {
+        number = "1"
+        pathOnClient = "Sales_leadersship.png"
+      },
+    ]
+  }
+  fullName = "Sales_leadersship"
+  content = file("salesforce/Records/ContentAsset/Sales_leadersship.asset")
+}

@@ -1,0 +1,246 @@
+<apex:page label="Rollup Helper Health Check" title="Lookup Helper Health Check" controller="LH.LH_HealthCheck_Controller" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <apex:includeScript value="{! URLFOR($Resource.HS_Jquery, 'jquery-1.12.1.min.js')}" />
+        <style>        
+            .popoverNubbinAlignment{
+                left: -1.26em; 
+                top: 0.8em;
+            }
+            
+            .popoverDefault{
+                display:none;
+                max-height:0px; 
+                overflow:visible;   
+                overflow-y:visible; 
+                position:relative; 
+                white-space:normal;
+                z-index:99;  
+
+            }
+    </style>
+    </head>
+    <apex:form >
+        <apex:slds />
+        <div class="slds-scope" role="main">
+            <div class="slds-card">
+                <header class="slds-card__header">
+                    <nav role="navigation">
+                        <ol class="slds-breadcrumb slds-list_horizontal">
+                            <li class="slds-list__item slds-text-heading_label home-crumb"><a href="{!URLFOR($Page.LH_landingPage)}">Home</a></li>
+                            <li class="slds-list__item slds-text-heading_label setting-crumb"><a href="{!URLFOR($Page.LH_All_Settings)}">All Lookup Settings</a></li>
+                        </ol>
+                    </nav>
+                </header>
+            </div>
+        
+
+            <div class="slds-card">
+                <header class="slds-card__header slds-theme_alt-inverse">
+                    <h3 class="slds-text-heading_medium">Lookup Helper Health Check</h3>
+                </header>
+                <section class="slds-card__body">
+                    <h3 style="margin-left:15px; padding-bottom:15px;" class="slds-text-heading_small">Current Lookup Helper Status:</h3>
+                            <div style="margin-left:15px; width:33%;" class="{!IF(highRiskExist, 'slds-box slds-box_x-small slds-theme_error', IF(!highRiskExist && (mediumRiskExist || (lowRiskCount > 2)), 'slds-box slds-box_x-small slds-theme_warning', 'slds-box slds-box_x-small slds-theme_success'))}">
+                                <apex:outputPanel rendered="{!if(totalIssueCount > 0, true, false)}" > 
+                                    <apex:outputPanel rendered="{!highRiskExist}">
+                                        {!highRiskCount} high risk item
+                                        <apex:outputText rendered="{!IF(highRiskCount > 1, true, false)}">s</apex:outputText>
+                                        <apex:outputText rendered="{!AND(mediumRiskExist, lowRiskExist)}">, </apex:outputText>
+                                        <apex:outputText rendered="{!OR(AND(lowRiskExist, !mediumRiskExist), AND(!lowRiskExist, mediumRiskExist))}"> and </apex:outputText>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!mediumRiskExist}">
+                                        {!mediumRiskCount} medium risk item
+                                        <apex:outputText rendered="{!IF(mediumRiskCount > 1, true, false)}">s</apex:outputText>
+                                        <apex:outputText rendered="{!AND(highRiskExist, lowRiskExist)}">,</apex:outputText>
+                                        <apex:outputText rendered="{!lowRiskExist}"> and </apex:outputText>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!lowRiskExist}">
+                                        {!lowRiskCount} low risk item
+                                        <apex:outputText rendered="{!IF(lowRiskCount > 1, true, false)}">s</apex:outputText>
+                                    </apex:outputPanel>
+                                    need<apex:outputText rendered="{!IF(totalIssueCount == 1, true, false)}">s</apex:outputText> to be addressed.
+                                </apex:outputPanel>   
+                                <apex:outputPanel rendered="{!if(totalIssueCount == 0, true, false)}">
+                                    There are currently 0 common Lookup Helper issues detected!
+                                </apex:outputPanel>
+                            </div>
+                            <table class="slds-table slds-no-row-hover slds-table_bordered" style="width:98%; margin-left:auto; margin-right:auto;">
+                                <thead>
+                                    <tr>
+                                        <th>Risk Level</th>
+                                        <th>Issue Found</th>
+                                        <th>Issue Summary</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!issuesToDisplay}" var="i">
+                                        <tr>
+                                            <td>
+                                                {!i.severity}
+                                            </td>
+                                            <td>
+                                                {!i.issueName}
+                                            </td>
+                                            <apex:outputPanel rendered="{!IF(contains(i.issueName, 'Lookup Helper exceptions'), true, false)}"> 
+                                                <td id="exctab">
+                                                    <p class="slds-text-heading_label"> 
+                                                    <a onmouseover="$('#help-exctab-{!i.uniqueId}').toggle();" onmouseout="$('#help-exctab-{!i.uniqueId}').toggle();" >
+                                                    <img class="slds-icon slds-icon_x-small" src="/apexpages/slds/latest/assets/icons/utility/info_60.png"></img>
+                                                    </a>Exceptions Found</p>
+                                                    
+                                                    <div class="slds-col popoverDefault" id="help-exctab-{!i.uniqueId}">
+                                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left popoverNubbinAlignment" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                        Lookup Helper has encountered one or more exception(s) recently.  Please visit the Lookup Helper Exceptions page for more detailed 
+                                                        information regarding the specific errors.  
+                                                        
+                                                        If you have any questions regarding a specific exception encountered, please feel free to contact our support team at support@passagetech.com.
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(contains(i.issueName, 'has not been run'), true, false)}"> 
+                                                <td id="setrun">
+                                                    <p class="slds-text-heading_label"> 
+                                                    <a onmouseover="$('#help-setrun-{!i.uniqueId}').toggle();" onmouseout="$('#help-setrun-{!i.uniqueId}').toggle();" >
+                                                    <img class="slds-icon slds-icon_x-small" src="/apexpages/slds/latest/assets/icons/utility/info_60.png"></img>
+                                                    </a>This setting hasn't been run.</p>
+                                                    
+                                                    <div class="slds-col popoverDefault" id="help-setrun-{!i.uniqueId}">
+                                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left popoverNubbinAlignment" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                        This setting hasn't been run since it was created.
+                                                        It needs to be run to ensure that all existing records have accurate lookups.
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(contains(i.issueName, 'only run manually'), true, false)}"> 
+                                                <td id="schedreal">
+                                                    <p class="slds-text-heading_label"> 
+                                                    <a onmouseover="$('#help-schedreal-{!i.uniqueId}').toggle();" onmouseout="$('#help-schedreal-{!i.uniqueId}').toggle();" >
+                                                    <img class="slds-icon slds-icon_x-small" src="/apexpages/slds/latest/assets/icons/utility/info_60.png"></img>
+                                                    </a>Only runs manually.</p>
+                                                    
+                                                    <div class="slds-col popoverDefault" id="help-schedreal-{!i.uniqueId}">
+                                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left popoverNubbinAlignment" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                        This setting isn't scheduled to run and doesn't have realtime enabled.
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(contains(i.issueName, 'not appear to be selecting existing records'), true, false)}"> 
+                                                <td id="selexrec">
+                                                    <p class="slds-text-heading_label"> 
+                                                    <a onmouseover="$('#help-selexrec-{!i.uniqueId}').toggle();" onmouseout="$('#help-selexrec-{!i.uniqueId}').toggle();" >
+                                                    <img class="slds-icon slds-icon_x-small" src="/apexpages/slds/latest/assets/icons/utility/info_60.png"></img>
+                                                    </a>Could not find existing records.</p>
+                                                    
+                                                    <div class="slds-col popoverDefault" id="help-selexrec-{!i.uniqueId}">
+                                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left popoverNubbinAlignment" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                        This setting does not appear to have any matching child or parent records.
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(contains(i.issueName, 'attempting to determine query validity'), true, false)}"> 
+                                                <td id="selexrec">
+                                                    <p class="slds-text-heading_label">
+                                                    <a onmouseover="$('#help-selexrec-{!i.uniqueId}').toggle();" onmouseout="$('#help-selexrec-{!i.uniqueId}').toggle();" >
+                                                    <img class="slds-icon slds-icon_x-small" src="/apexpages/slds/latest/assets/icons/utility/info_60.png"></img>
+                                                    </a>Exception occurred while trying to query existing records.</p>
+                                                    
+                                                    <div class="slds-col popoverDefault" id="help-selexrec-{!i.uniqueId}">
+                                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left popoverNubbinAlignment" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                        Exception occurred while trying to query existing records, one or more fields or objects appear to be invalid.
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </apex:outputPanel>
+ 
+                                            <apex:outputPanel rendered="{!IF(contains(i.issueName, 'using an existing object'), true, false)}"> 
+                                                <td id="selexrec">
+                                                    <p class="slds-text-heading_label">
+                                                    <a onmouseover="$('#help-selexrec-{!i.uniqueId}').toggle();" onmouseout="$('#help-selexrec-{!i.uniqueId}').toggle();" >
+                                                    <img class="slds-icon slds-icon_x-small" src="/apexpages/slds/latest/assets/icons/utility/info_60.png"></img>
+                                                    </a>Objects referenced in the Lookup Helper setting do not eppear to exist.</p>
+                                                    
+                                                    <div class="slds-col popoverDefault" id="help-selexrec-{!i.uniqueId}">
+                                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left popoverNubbinAlignment" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                        Child or Parent objects do not appear to exist.
+                                                        If an object or field was renamed, the affected setting will need to be updated with the new object or field name.
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(contains(i.issueName, 'Exception Monitor'), true, false)}">
+                                                    <td id="excMonitor">                                                    
+                                                        <p class="slds-text-heading_label">           
+                                                        <a onmouseover="$('#help-excMonitor').toggle();" onmouseout="$('#help-excMonitor').toggle();" >
+                                                        <img class="slds-icon slds-icon_x-small" src="/apexpages/slds/latest/assets/icons/utility/info_60.png"></img>
+                                                        </a>Exception Monitor Job Needs Configuration</p> 
+                
+                                                        <div class="slds-col popoverDefault" id="help-excMonitor">
+                                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left popoverNubbinAlignment" role="dialog" >
+                                                            <div class="slds-popover__body">The Lookup Helper Exception Monitor job, which checks for, reports, and cleans up various error conditions in the app, is currently not optimally scheduled.  Please click the 'Schedule Job' link to ensure that the job is scheduled correctly.</div>
+                                                        </div>
+                                                        </div>
+                                                                                        
+                                                    </td>
+                                                </apex:outputPanel>
+                                            <td>
+                                                <apex:outputLink target="_blank" rendered="{!IF(i.action == 'View Exceptions', true, false)}" value="{!URLFOR($Page.LH__LH_viewExceptions)}">{!i.action}</apex:outputLink>
+                                                
+                                                <apex:outputPanel rendered="{!IF(i.action == 'Run Lookup', true, false)}">
+                                                    <apex:outputLink target="_blank" value="{!URLFOR($Page.LH__LH_NewSetting_ChildObject, null, [s=i.lookupObject])}">{!i.action}</apex:outputLink>
+                                                    &nbsp;|&nbsp;
+                                                    <apex:commandLink action="{!ignoreSettingNotRun}" value="Ignore">
+                                                        <apex:param name="selectedLookupName" assignTo="{!selectedLookupName}" value="{!i.lookupName}" />
+                                                    </apex:commandLink>
+                                                </apex:outputPanel>
+
+                                                <apex:outputPanel rendered="{!IF(i.action == 'Setup Realtime', true, false)}">
+                                                    <apex:outputLink target="_blank" value="{!URLFOR($Page.LH__LH_Realtime_Enablement, null, [mast=i.lookupChildObject])}">{!i.action}</apex:outputLink>
+                                                    &nbsp;|&nbsp;
+                                                    <apex:commandLink action="{!ignoreSuggestion}" value="Ignore">
+                                                        <apex:param name="selectedLookupName" assignTo="{!selectedLookupName}" value="{!i.lookupName}" />
+                                                        <apex:param name="selectedSuggestion" assignTo="{!selectedSuggestion}" value="setupRealtime" />
+                                                    </apex:commandLink>
+                                                </apex:outputPanel>
+ 
+                                                <apex:commandLink rendered="{!IF(i.action == 'Schedule Job', true, false)}" value="Schedule Job" action="{!doRescheduleExceptionMonitor}" oncomplete="location.reload();"/>
+                                                
+                                                <apex:outputLink target="_blank" rendered="{!IF(i.action == 'View Setting', true, false)}" value="{!URLFOR($Page.LH__LH_NewSetting_SettingType, null, [s=i.lookupObject])}">{!i.action}</apex:outputLink>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                </section>
+                <footer class="slds-card__footer slds-text-align_left"><h3 class="slds-text-heading_label">If you have any questions...</h3>
+                    <p>If you have any questions or are experiencing an issue that is not addressed by this page, please feel free to <a href="mailto:support@passagetech.com">Contact Support</a> at any time for assistance.</p>
+                    <h3 class="slds-text-heading_label">If you would like to receive notifications...</h3>
+                    <apex:commandLink action="{!createNotificationJob}" rendered="{!NOT(healthCheckNotificationsEnabled)}" value="Enable Notifications" styleClass="slds-button slds-button_brand" style="margin-top:10px;" oncomplete="location.reload();"/> 
+                    <apex:outputText rendered="{!healthCheckNotificationsEnabled}">Health Check notifications are currently enabled for this environment.  To disable, navigate to the Scheduled Jobs page and abort the job "Lookup Helper Health Check."</apex:outputText>
+                    <br /><br />
+                    <h3 class="slds-text-heading_label">If you would like the Exception Monitor to be able to disable invalid settings...</h3>
+                    <apex:inputCheckbox id="EMCanDisableSettingsCheckbox" value="{!org.LH__Exception_Monitor_Can_Disable_Settings__c}" onchange="setEMDisableSettings()" /> Allow Exception Monitor to disable settings where errors are found.
+                    <apex:actionFunction action="{!setEMCanDisableSettings}" name="setEMDisableSettings" rerender="EMCanDisableSettingsCheckbox" />
+                </footer>
+            </div>
+        </div>
+    </apex:form>
+    </html>
+</apex:page>

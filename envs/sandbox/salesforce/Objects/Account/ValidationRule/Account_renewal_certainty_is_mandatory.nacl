@@ -1,0 +1,10 @@
+salesforce.ValidationRule Account_renewal_certainty_is_mandatory {
+  fullName = "Account.renewal_certainty_is_mandatory"
+  active = true
+  errorConditionFormula = "ISPICKVAL( Monday_Account_Lifecycle__c , \"Renewal / Expansion\") &&  ISPICKVAL( Renewal_Certainty__c, \"\"  )  &&  $Profile.Name ='CSM'"
+  errorDisplayField = "Renewal_Certainty__c"
+  errorMessage = "When the account is under 'Renewal / Expansion' stage you must provide 'Renewal Certainty'"
+  _parent = [
+    salesforce.Account,
+  ]
+}

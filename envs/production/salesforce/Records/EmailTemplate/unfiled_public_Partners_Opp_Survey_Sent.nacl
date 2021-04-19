@@ -1,0 +1,12 @@
+salesforce.EmailTemplate unfiled_public_Partners_Opp_Survey_Sent {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  name = "Partners: Opp Survey Sent"
+  style = "none"
+  subject = "Partners: Opp Survey Email Sent"
+  type = "text"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Partners_Opp_Survey_Sent"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Partners_Opp_Survey_Sent.email")
+}

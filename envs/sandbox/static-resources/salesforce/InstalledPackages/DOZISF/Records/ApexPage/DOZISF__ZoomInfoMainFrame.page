@@ -1,0 +1,3 @@
+<apex:page controller="DOZISF.InlineIframController" sidebar="false">
+        <c:InlineIframe route="app"/>
+</apex:page>

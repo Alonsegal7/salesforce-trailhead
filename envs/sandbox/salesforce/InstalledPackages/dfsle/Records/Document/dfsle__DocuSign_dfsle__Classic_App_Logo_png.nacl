@@ -1,0 +1,8 @@
+salesforce.Document dfsle__DocuSign_dfsle__Classic_App_Logo_png {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  internalUseOnly = false
+  name = "Classic_App_Logo"
+  public = true
+  fullName = "dfsle__DocuSign/dfsle__Classic_App_Logo.png"
+  content = file("salesforce/InstalledPackages/dfsle/Records/Document/dfsle__DocuSign/dfsle__Classic_App_Logo.png")
+}

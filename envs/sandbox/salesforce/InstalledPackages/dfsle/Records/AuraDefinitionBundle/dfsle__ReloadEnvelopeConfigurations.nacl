@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle dfsle__ReloadEnvelopeConfigurations {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "ReloadEnvelopeConfigurations"
+  fullName = "dfsle__ReloadEnvelopeConfigurations"
+  type = "Event"
+  markup = "(hidden)"
+}

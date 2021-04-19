@@ -1,0 +1,192 @@
+salesforce.Flow Partners_Manually_Signed_SO {
+  fullName = "Partners_Manually_Signed_SO"
+  interviewLabel = "Partners: Manually Signed SO {!$Flow.CurrentDateTime}"
+  label = "Partners: Manually Signed SO"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordLookups = [
+    {
+      name = "Get_Opp"
+      label = "Get Opp"
+      locationX = 173
+      locationY = 204
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Manually_Signed_SO"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RecordID"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Opportunity
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_Opp"
+      label = "Update Opp"
+      locationX = 176
+      locationY = 499
+      connector = {
+        targetReference = "Success_Message"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RecordID"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "DH_Date_of_Signature__c"
+          value = {
+            elementReference = "Signature_Date"
+          }
+        },
+        {
+          field = "DH_Signer_Name_c__c"
+          value = {
+            elementReference = "Signer_Name"
+          }
+        },
+        {
+          field = "DH_Signer_Title__c"
+          value = {
+            elementReference = "Signer_Title"
+          }
+        },
+        {
+          field = "Is_SO_Signed__c"
+          value = {
+            elementReference = "Manually_Signed.value"
+          }
+        },
+      ]
+      object = salesforce.Opportunity
+    },
+  ]
+  screens = [
+    {
+      name = "Manually_Signed_SO"
+      label = "Manually Signed SO"
+      locationX = 174
+      locationY = 346
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "Update_Opp"
+      }
+      fields = [
+        {
+          name = "Manually_Signed"
+          extensionName = "flowruntime:toggle"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "label"
+              value = {
+                stringValue = "Is SO Manually Signed?"
+              }
+            },
+            {
+              name = "messageToggleActive"
+              value = {
+                stringValue = "Yes"
+              }
+            },
+            {
+              name = "messageToggleInactive"
+              value = {
+                stringValue = "No"
+              }
+            },
+          ]
+          isRequired = true
+          storeOutputAutomatically = true
+        },
+        {
+          name = "Signature_Date"
+          dataType = "Date"
+          fieldText = "Signature Date"
+          fieldType = "InputField"
+          isRequired = true
+        },
+        {
+          name = "Signer_Name"
+          dataType = "String"
+          fieldText = "Signer Name"
+          fieldType = "InputField"
+          isRequired = true
+        },
+        {
+          name = "Signer_Title"
+          dataType = "String"
+          fieldText = "Signer Title"
+          fieldType = "InputField"
+          isRequired = true
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Success_Message"
+      label = "Success Message"
+      locationX = 178
+      locationY = 635
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "Success_Message1"
+          fieldText = "<p style=\"text-align: center;\"><b style=\"color: rgb(81, 199, 38); font-size: 16px;\">All done! Now you can close won your opportunity.</b></p><p style=\"text-align: center;\"><br></p><p style=\"text-align: center;\"><b style=\"color: rgb(81, 199, 38); font-size: 16px;\">﻿</b><img src=\"https://monday--c.documentforce.com/sfc/servlet.shepherd/version/download/0683X00000HnQOS?asPdf=false&amp;operationContext=CHATTER\"></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "Get_Opp"
+    }
+  }
+  status = "Active"
+  variables = [
+    {
+      name = "RecordID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+  ]
+}

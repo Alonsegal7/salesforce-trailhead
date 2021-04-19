@@ -1,0 +1,10 @@
+salesforce.Role HypeDexterPartnerManager {
+  fullName = "HypeDexterPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Hype & Dexter Partner Manager"
+  mayForecastManagerShare = false
+  name = "Hype & Dexter Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__CustomParameterMap__c_fr {
+  fullName = "dfsle__CustomParameterMap__c-fr"
+  _parent = [
+    salesforce.dfsle__CustomParameterMap__c,
+  ]
+}

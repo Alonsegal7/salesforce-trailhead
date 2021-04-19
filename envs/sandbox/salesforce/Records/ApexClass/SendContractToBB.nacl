@@ -1,0 +1,7 @@
+salesforce.ApexClass SendContractToBB {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  status = "Active"
+  fullName = "SendContractToBB"
+  content = file("salesforce/Records/ApexClass/SendContractToBB.cls")
+}

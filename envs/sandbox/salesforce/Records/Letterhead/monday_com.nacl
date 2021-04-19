@@ -1,0 +1,31 @@
+salesforce.Letterhead monday_com {
+  fullName = "monday_com"
+  available = true
+  backgroundColor = "#FFFFFF"
+  bodyColor = "#FFFFFF"
+  bottomLine = {
+    color = "#FFFFFF"
+    height = 5
+  }
+  footer = {
+    backgroundColor = "#FFFFFF"
+    height = 100
+    horizontalAlignment = "Left"
+    verticalAlignment = "Top"
+  }
+  header = {
+    backgroundColor = "#FFFFFF"
+    height = 100
+    horizontalAlignment = "Center"
+    verticalAlignment = "Middle"
+  }
+  middleLine = {
+    color = "#FFFFFF"
+    height = 5
+  }
+  name = "monday.com"
+  topLine = {
+    color = "#FFCC00"
+    height = 5
+  }
+}

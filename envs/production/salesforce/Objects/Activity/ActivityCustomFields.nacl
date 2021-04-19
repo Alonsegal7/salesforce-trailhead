@@ -1,0 +1,451 @@
+type salesforce.Activity {
+  salesforce.Checkbox Account_Recycling_Activity__c {
+    apiName = "Activity.Account_Recycling_Activity__c"
+    defaultValue = false
+    label = "Account Recycling Activity"
+  }
+  salesforce.Date Activity_done_timestamp__c {
+    apiName = "Activity.Activity_done_timestamp__c"
+    label = "Activity done timestamp"
+    _required = false
+  }
+  salesforce.FormulaCheckbox Am_I_the_Assigned_User__c {
+    apiName = "Activity.Am_I_the_Assigned_User__c"
+    formula = "if( Owner:User.Id = $User.Id , TRUE, FALSE)"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Am I the Assigned User?"
+  }
+  salesforce.FormulaCheckbox Am_I_the_CSM_of_the_Account__c {
+    apiName = "Activity.Am_I_the_CSM_of_the_Account__c"
+    formula = "if($User.Id =  Opportunity__r.Account.CSM__r.Id  , true, false)  ||  if( $User.Id = Company__r.CSM__r.Id , true, false)"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Am I the CSM of the Account?"
+    _generated_dependencies = [
+      salesforce.Activity.field.Opportunity__c,
+      salesforce.Activity.field.Company__c,
+      salesforce.Account.field.CSM__c,
+    ]
+  }
+  salesforce.TextArea Attendees__c {
+    apiName = "Activity.Attendees__c"
+    inlineHelpText = "Who attended the meeting?"
+    label = "Attendees"
+    _required = false
+  }
+  salesforce.Checkbox Booked_By_Prospect_CP__c {
+    apiName = "Activity.Booked_By_Prospect_CP__c"
+    defaultValue = false
+    description = "Chilipiper sync field - Mark a meeting booked by a prospect from an online booking link or from your website. It will be checked if booked by the prospect themselves. It is unchecked if the meeting is booked via the Instant Booker by one of your users."
+    inlineHelpText = "Chilipiper sync field"
+    label = "Booked by Prospect"
+  }
+  salesforce.DateTime Call_End_Time__c {
+    apiName = "Activity.Call_End_Time__c"
+    label = "Call End Time"
+    _required = false
+  }
+  salesforce.Picklist Call_Sentiment__c {
+    apiName = "Activity.Call_Sentiment__c"
+    label = "Call Sentiment"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Demo Scheduled"
+        default = false
+        label = "Demo Scheduled"
+      },
+      {
+        fullName = "Gatekeeper - No contact with prospect"
+        default = false
+        label = "Gatekeeper - No contact with prospect"
+      },
+      {
+        fullName = "No Answer"
+        default = false
+        label = "No Answer"
+      },
+      {
+        fullName = "No Interest"
+        default = false
+        label = "No Interest"
+      },
+      {
+        fullName = "Not Relevant- Timeline"
+        default = false
+        label = "Not Relevant- Timeline"
+      },
+      {
+        fullName = "Reassigned to Partner"
+        default = false
+        label = "Reassigned to Partner"
+      },
+      {
+        fullName = "Referred to Other Contact"
+        default = false
+        label = "Referred to Other Contact"
+      },
+      {
+        fullName = "Rescheduling"
+        default = false
+        label = "Rescheduling"
+      },
+      {
+        fullName = "Not Relevant- Budget"
+        default = false
+        label = "Not Relevant- Budget"
+      },
+      {
+        fullName = "Not Relevant- Authority"
+        default = false
+        label = "Not Relevant- Authority"
+      },
+    ]
+    sorted = false
+    restricted = true
+  }
+  salesforce.Picklist Call_Source__c {
+    apiName = "Activity.Call_Source__c"
+    label = "Call Source"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Aircall"
+        default = false
+        label = "Aircall"
+      },
+      {
+        fullName = "Salesloft"
+        default = false
+        label = "Salesloft"
+      },
+    ]
+    sorted = false
+    restricted = true
+  }
+  salesforce.DateTime Call_Start_Time__c {
+    apiName = "Activity.Call_Start_Time__c"
+    label = "Call Start Time"
+    _required = false
+  }
+  salesforce.Checkbox Canceled_CP__c {
+    apiName = "Activity.Canceled_CP__c"
+    defaultValue = false
+    description = "Meeting canceled sync from Chilipiper"
+    inlineHelpText = "Chilipiper meeting canceled sync field"
+    label = "Meeting Canceled"
+  }
+  salesforce.FormulaText Company_Name__c {
+    apiName = "Activity.Company_Name__c"
+    externalId = false
+    formula = "Company__r.Name"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Company Name"
+    _required = false
+    unique = false
+    _generated_dependencies = [
+      salesforce.Activity.field.Company__c,
+    ]
+  }
+  salesforce.Lookup Company__c {
+    apiName = "Activity.Company__c"
+    label = "Company"
+    referenceTo = [
+      salesforce.Account,
+    ]
+    _required = false
+  }
+  salesforce.Checkbox Confirmed_CP__c {
+    apiName = "Activity.Confirmed_CP__c"
+    defaultValue = false
+    description = "Chilipiper sync field - Track if a meeting is confirmed via SMS - only used if using Twilio SMS Integration*"
+    inlineHelpText = "Chilipiper sync field - Track if a meeting is confirmed via SMS - only used if using Twilio SMS Integration*"
+    label = "Confirmed_via_SMS_CP"
+  }
+  salesforce.FormulaCheckbox Contact_Sales_From_Today__c {
+    apiName = "Activity.Contact_Sales_From_Today__c"
+    formula = "(datevalue(CreatedDate) = today()) &&  (CONTAINS( Subject , \"Drift Conversation\") ||  CONTAINS( Subject , \"Submitted Form\"))"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Contact Sales From Today?"
+  }
+  salesforce.FormulaText DB_Activity_Type__c {
+    apiName = "Activity.DB_Activity_Type__c"
+    description = "This is a field that is installed by and used with the Adoption Dashboard AppExchange package. If your org already has a similar field, you can change the reports that are part of the Adoption Dashboard package to use your custom field and then delete this field."
+    externalId = false
+    formula = "IF(CONTAINS( Subject , \"Email\"), \"Email\", IF(CONTAINS( Subject , \"Cold Call\"), \"Cold Call\", IF(CONTAINS( Subject , \"Call\"), \"Call\", IF(CONTAINS( Subject , \"Meeting\"), \"Meeting\", IF(CONTAINS( Subject , \"On Site Visit\"), \"Site Visit\", IF(CONTAINS( Subject , \"Quote\"), \"Send Letter/Quote\", \"Other\"))))))"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "DB Activity Type"
+    _required = false
+    unique = false
+  }
+  salesforce.FormulaText Day_of_the_week__c {
+    apiName = "Activity.Day_of_the_week__c"
+    externalId = false
+    formula = '''
+CASE( MOD( ActivityDate  - DATE(1900, 1, 7), 7), 0, "Sunday", 1, "Monday", 2, "Tuesday", 3,
+"Wednesday", 4, "Thursday", 5, "Friday", 6, "Saturday","Error")
+'''
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Day of the week"
+    _required = false
+    unique = false
+  }
+  salesforce.FormulaCheckbox Due_Date_Today__c {
+    apiName = "Activity.Due_Date_Today__c"
+    formula = "ActivityDate < Today()"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Due Date < Today"
+  }
+  salesforce.Checkbox Email_Bounced__c {
+    apiName = "Activity.Email_Bounced__c"
+    defaultValue = false
+    label = "Email Bounced"
+  }
+  salesforce.Text InviteeUuid__c {
+    apiName = "Activity.InviteeUuid__c"
+    externalId = false
+    label = "InviteeUuid"
+    length = 255
+    _required = false
+    unique = false
+  }
+  salesforce.Text MA_Lifecycle_Stage_on_Completion__c {
+    apiName = "Activity.MA_Lifecycle_Stage_on_Completion__c"
+    externalId = false
+    label = "MA Lifecycle Stage on Completion"
+    length = 100
+    _required = false
+    unique = false
+  }
+  salesforce.Text Meeting_Series_CP__c {
+    apiName = "Activity.Meeting_Series_CP__c"
+    description = "Chilipiper sync field - Track that an Event was booked via a Meeting Series - Optional for Meeting Series Use-Case*"
+    externalId = false
+    inlineHelpText = "Chilipiper sync field - Track that an Event was booked via a Meeting Series - Optional for Meeting Series Use-Case*"
+    label = "Meeting_Series_CP"
+    length = 255
+    _required = false
+    unique = false
+  }
+  salesforce.Text Meeting_Type_CP__c {
+    apiName = "Activity.Meeting_Type_CP__c"
+    description = "Chilipiper sync field"
+    externalId = false
+    inlineHelpText = "Meeting type from Chilipiper"
+    label = "Meeting Type"
+    length = 255
+    _required = false
+    unique = false
+  }
+  salesforce.Text Migration_Id__c {
+    apiName = "Activity.Migration_Id__c"
+    externalId = false
+    label = "Migration Id"
+    length = 255
+    _required = false
+    unique = false
+  }
+  salesforce.FormulaText Monday_account_stage__c {
+    apiName = "Activity.Monday_account_stage__c"
+    externalId = false
+    formula = "text(Company__r.Monday_Account_Lifecycle__c)"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Monday account stage"
+    _required = false
+    unique = false
+    _generated_dependencies = [
+      salesforce.Activity.field.Company__c,
+      salesforce.Account.field.Monday_Account_Lifecycle__c,
+    ]
+  }
+  salesforce.Checkbox No_Show_CP__c {
+    apiName = "Activity.No_Show_CP__c"
+    defaultValue = false
+    description = "No show sync field from Chilipiper"
+    inlineHelpText = "Chilipiper sync field"
+    label = "No Show"
+  }
+  salesforce.Lookup Opportunity__c {
+    apiName = "Activity.Opportunity__c"
+    label = "Original Opportunity"
+    referenceTo = [
+      salesforce.Opportunity,
+    ]
+    _required = false
+  }
+  salesforce.Email Owner_Manager_Email__c {
+    apiName = "Activity.Owner_Manager_Email__c"
+    externalId = false
+    label = "Owner Manager Email"
+    _required = false
+    unique = false
+  }
+  salesforce.FormulaText Owner_Name__c {
+    apiName = "Activity.Owner_Name__c"
+    externalId = false
+    formula = "Owner:User.FirstName &\" \"&  Owner:User.LastName"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Owner Name"
+    _required = false
+    unique = false
+  }
+  salesforce.FormulaText Owner_Profile__c {
+    apiName = "Activity.Owner_Profile__c"
+    externalId = false
+    formula = "Owner:User.Profile.Name"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Owner Profile"
+    _required = false
+    unique = false
+  }
+  salesforce.Picklist Owner_Team__c {
+    apiName = "Activity.Owner_Team__c"
+    label = "Owner Team"
+    _required = false
+    valueSetName = salesforce.GlobalValueSet.instance.Sales_Teams_Managers
+    restricted = true
+  }
+  salesforce.FormulaText Owner_s_Manager__c {
+    apiName = "Activity.Owner_s_Manager__c"
+    externalId = false
+    formula = "Owner:User.Manager.Full_Name__c"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Owner's Manager"
+    _required = false
+    unique = false
+  }
+  salesforce.FormulaNumber Power_of_1__c {
+    apiName = "Activity.Power_of_1__c"
+    externalId = false
+    formula = "1"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Power of 1"
+    precision = 18
+    _required = false
+    scale = 0
+    unique = false
+  }
+  salesforce.Text Queue_Name_CP__c {
+    apiName = "Activity.Queue_Name_CP__c"
+    description = "Chilipiper sync field - Track the Queue a Meeting was Booked from"
+    externalId = false
+    inlineHelpText = "Chilipiper sync field - Track the Queue a Meeting was Booked from"
+    label = "Queue Name CP"
+    length = 255
+    _required = false
+    unique = false
+  }
+  salesforce.Number Rescheduled_CP__c {
+    apiName = "Activity.Rescheduled_CP__c"
+    defaultValueFormula = "0"
+    description = "Chilipiper sync field - Track how many times a meeting was rescheduled"
+    externalId = false
+    inlineHelpText = "Chilipiper sync field - Track how many times a meeting was rescheduled"
+    label = "# Rescheduled"
+    precision = 5
+    _required = false
+    scale = 0
+    unique = false
+  }
+  salesforce.Text Response_Status_CP__c {
+    apiName = "Activity.Response_Status_CP__c"
+    description = "Chilipiper sync field - Track if an Event is Accepted, Declined, NotResponded, or Maybe/Tentative."
+    externalId = false
+    inlineHelpText = "Chilipiper sync field - Track if an Event is Accepted, Declined, NotResponded, or Maybe/Tentative."
+    label = "Response_Status_CP"
+    length = 255
+    _required = false
+    unique = false
+  }
+  salesforce.Text SMS_Response_CP__c {
+    apiName = "Activity.SMS_Response_CP__c"
+    description = "Chilipiper sync field - Track the Response of an SMS Message - only used if using Twilio SMS Integration*"
+    externalId = false
+    inlineHelpText = "Chilipiper sync field - Track the Response of an SMS Message - only used if using Twilio SMS Integration*"
+    label = "SMS_Response_CP"
+    length = 255
+    _required = false
+    unique = false
+  }
+  salesforce.TextArea Short_Summary__c {
+    apiName = "Activity.Short_Summary__c"
+    inlineHelpText = "Up to 255 characters"
+    label = "Short Summary"
+    _required = false
+  }
+  salesforce.Picklist Task_Time_Zone__c {
+    apiName = "Activity.Task_Time_Zone__c"
+    label = "Task Time Zone"
+    _required = false
+    valueSetName = salesforce.GlobalValueSet.instance.Time_Zones
+    restricted = true
+  }
+  salesforce.FormulaText Team_Manager__c {
+    apiName = "Activity.Team_Manager__c"
+    externalId = false
+    formula = "Owner:User.Team_Manager__c"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Team Manager"
+    _required = false
+    unique = false
+  }
+  salesforce.Time Time__c {
+    apiName = "Activity.Time__c"
+    label = "Time"
+    _required = false
+  }
+  salesforce.Text Type_2__c {
+    apiName = "Activity.Type_2__c"
+    externalId = false
+    label = "Activity Type"
+    length = 100
+    _required = false
+    unique = false
+  }
+  salesforce.Lookup User__c {
+    apiName = "Activity.User__c"
+    description = "Chilipiper sync field - Track which user booked a meeting"
+    inlineHelpText = "Chilipiper sync field - Track which user booked a meeting"
+    label = "User"
+    referenceTo = [
+      salesforce.User,
+    ]
+    _required = false
+  }
+  salesforce.FormulaCheckbox Viewer_in_Owner_s_Team__c {
+    apiName = "Activity.Viewer_in_Owner_s_Team__c"
+    formula = "TEXT( $User.Team__c ) =  TEXT( Owner:User.Team__c )"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Viewer in Owner's Team"
+  }
+  salesforce.FormulaCheckbox Viewer_is_Owner__c {
+    apiName = "Activity.Viewer_is_Owner__c"
+    formula = "Owner:User.Id =  $User.Id"
+    formulaTreatBlanksAs = "BlankAsZero"
+    label = "Viewer is Owner"
+  }
+  salesforce.FormulaText local_time__c {
+    apiName = "Activity.local_time__c"
+    description = "(time_zone_offset__c = NULL) || (TEXT(time_zone_offset__c) = '') || ISBLANK(TEXT(time_zone_offset__c)))"
+    externalId = false
+    formula = '''
+IF( isblank( time_zone_offset__c ),"",
+LEFT(TEXT(TIMEVALUE(NOW() + (time_zone_offset__c/24))), 5)
+)
+'''
+    label = "local time"
+    _required = false
+    unique = false
+    _generated_dependencies = [
+      salesforce.Activity.field.time_zone_offset__c,
+    ]
+  }
+  salesforce.Number time_zone_offset__c {
+    apiName = "Activity.time_zone_offset__c"
+    externalId = false
+    label = "time zone offset"
+    precision = 18
+    _required = false
+    scale = 0
+    unique = false
+  }
+}

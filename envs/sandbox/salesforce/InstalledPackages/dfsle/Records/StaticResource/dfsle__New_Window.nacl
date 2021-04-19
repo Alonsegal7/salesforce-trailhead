@@ -1,0 +1,8 @@
+salesforce.StaticResource dfsle__New_Window {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "image/svg+xml"
+  description = "NewWindow.svg"
+  fullName = "dfsle__New_Window"
+  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__New_Window.svg")
+}

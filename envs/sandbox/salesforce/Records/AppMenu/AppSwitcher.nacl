@@ -1,0 +1,277 @@
+salesforce.AppMenu AppSwitcher {
+  fullName = "AppSwitcher"
+  appMenuItems = [
+    {
+      name = "standard__Platform"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__Sales"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__Chatter"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__Marketing"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__Service"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__Community"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__ServiceConsole"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__LightningSales"
+      type = "CustomApplication"
+    },
+    {
+      name = "Relationship_Management"
+      type = "CustomApplication"
+    },
+    {
+      name = "Lead_Generation"
+      type = "CustomApplication"
+    },
+    {
+      name = "Sales_Operations"
+      type = "CustomApplication"
+    },
+    {
+      name = "Sales_Leadership"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__LightningBolt"
+      type = "CustomApplication"
+    },
+    {
+      name = "CPQIntegrationUserApp"
+      type = "ConnectedApp"
+    },
+    {
+      name = "BigBrain"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Monday"
+      type = "CustomApplication"
+    },
+    {
+      name = "DEVHUB_pelgjcmdh8kmqy5hhm45"
+      type = "ConnectedApp"
+    },
+    {
+      name = "aircall__Aircall_Lightning"
+      type = "CustomApplication"
+    },
+    {
+      name = "SalesforceIQ"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Yesware_Dashboard"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Chatter_Desktop"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Chatter_for_Android"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Chatter_for_BlackBerry"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Chatter_for_iOS"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Salesforce1_for_Windows"
+      type = "ConnectedApp"
+    },
+    {
+      name = "SalesforceA"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Salesforce_Chatterbox"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Dataloader_Bulk"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Dataloader_Partner"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Forcecom_IDE"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Forcecom_Migration_Tool"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Salesforce_Mobile_Dashboards"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Salesforce_Touch"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Salesforce_for_Outlook"
+      type = "ConnectedApp"
+    },
+    {
+      name = "Workbench"
+      type = "ConnectedApp"
+    },
+    {
+      name = "rh2__PS_Rollup_Helper"
+      type = "CustomApplication"
+    },
+    {
+      name = "rh2__Rollup_Helper_Lightning"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__SalesforceCMS"
+      type = "CustomApplication"
+    },
+    {
+      name = "HubSpot_Inc__HubSpot_Sync"
+      type = "CustomApplication"
+    },
+    {
+      name = "HubSpot"
+      type = "ConnectedApp"
+    },
+    {
+      name = "LH__Lookup_Helper"
+      type = "CustomApplication"
+    },
+    {
+      name = "LH__Lookup_Helper_Lightning"
+      type = "CustomApplication"
+    },
+    {
+      name = "Channel_Managers"
+      type = "CustomApplication"
+    },
+    {
+      name = "leadconvertchtr__Lead_Convert_Chatter"
+      type = "CustomApplication"
+    },
+    {
+      name = "zaapit__Dedup_Manager"
+      type = "CustomApplication"
+    },
+    {
+      name = "zaapit__Dedup_Manager_Lightning"
+      type = "CustomApplication"
+    },
+    {
+      name = "zaapit__Mass_Update"
+      type = "CustomApplication"
+    },
+    {
+      name = "zaapit__Mass_Update_Lightning"
+      type = "CustomApplication"
+    },
+    {
+      name = "zaapit__Smart_Activity_Manager"
+      type = "CustomApplication"
+    },
+    {
+      name = "zaapit__Smart_Activity_Manager_Lightning"
+      type = "CustomApplication"
+    },
+    {
+      name = "zaapit__Zaapit_Console"
+      type = "CustomApplication"
+    },
+    {
+      name = "Managers"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__LightningService"
+      type = "CustomApplication"
+    },
+    {
+      name = "valt__Valooto"
+      type = "CustomApplication"
+    },
+    {
+      name = "Valooto_Prod"
+      type = "ConnectedApp"
+    },
+    {
+      name = "DOZISF__ZoomInfo"
+      type = "CustomApplication"
+    },
+    {
+      name = "zisf__ZoomClean"
+      type = "CustomApplication"
+    },
+    {
+      name = "monday_automations"
+      type = "ConnectedApp"
+    },
+    {
+      name = "standard__AllTabSet"
+      type = "CustomApplication"
+    },
+    {
+      name = "OIQ_Integration"
+      type = "ConnectedApp"
+    },
+    {
+      name = "monday_CS"
+      type = "CustomApplication"
+    },
+    {
+      name = "standard__AppLauncher"
+      type = "CustomApplication"
+    },
+    {
+      name = "Monday_Account_Management"
+      type = "CustomApplication"
+    },
+    {
+      name = "LSNLY__Lessonly"
+      type = "CustomApplication"
+    },
+    {
+      name = "LSNLY__Lessonly_Lightning"
+      type = "CustomApplication"
+    },
+    {
+      name = "Lessonly"
+      type = "ConnectedApp"
+    },
+    {
+      name = "squivr__Squivr"
+      type = "CustomApplication"
+    },
+    {
+      name = "dfsle__DocuSignForSalesforceCore"
+      type = "CustomApplication"
+    },
+  ]
+}

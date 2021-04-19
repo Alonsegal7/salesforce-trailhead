@@ -1,0 +1,12 @@
+salesforce.ValidationRule Lead_Owner_cant_be_contact_sales_queue {
+  fullName = "Lead.Owner_cant_be_contact_sales_queue"
+  active = false
+  errorConditionFormula = "Owner:Queue.QueueName =\"Contact sales\" &&  not(or(ISPICKVAL( Status , \"Received\"),ISPICKVAL( Status , \"Unqualified\")))"
+  errorMessage = '''
+THE OWNER CAN"T BE CONTACT SALES.
+PLEASE CHANGE IT TO YOURSELF
+'''
+  _parent = [
+    salesforce.Lead,
+  ]
+}

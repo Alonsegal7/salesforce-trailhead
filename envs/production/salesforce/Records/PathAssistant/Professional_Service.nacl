@@ -1,0 +1,8 @@
+salesforce.PathAssistant Professional_Service {
+  fullName = "Professional_Service"
+  active = true
+  entityName = "Professional_Service_Request__c"
+  fieldName = "Status__c"
+  masterLabel = "Professional Service"
+  recordTypeName = "__MASTER__"
+}

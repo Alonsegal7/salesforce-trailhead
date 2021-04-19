@@ -1,0 +1,1757 @@
+<apex:page language="en" StandardController="Account" showHeader="false" applyHtmlTag="false" standardStylesheets="true" sidebar="false"
+           extensions="zisf.StartupExtension,zisf.ZoomAccountExtension" action="{!appInit}">
+    <style>
+        body {
+            height: 525px !important;
+        }
+    </style>
+    <script type="text/javascript">
+      function httpGet(theUrl)
+        {
+            return jQuery.get(theUrl);
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    //amplitude.getInstance().init("3538409eea2df00393d78a76ba767fe6");
+      var user_id = getRandomInt(0,9007199254740991);
+      function sendUpdateEvent(source, showCreditError, isSessionExpired) {
+          if(isSessionExpired){
+              logout();
+              return;
+          }
+          else if(showCreditError)
+          {
+            if (confirm("You have reached your import limit.\nTo continue, you may import the selected records using your Bulk Export Package."))
+            {
+            callUpdateFieldWithExtraCharge();
+            }
+            else{
+                return;
+            }
+          }
+          if(source != ''){
+            var url = 'https://api.amplitude.com/httpapi?api_key=3538409eea2df00393d78a76ba767fe6&event=[{"user_id":"'+user_id+'", "event_type":"update","page":"Accounts","source":"'+source+'", "time":'+Date.now()+'}]';
+            httpGet(url);
+          }
+      }
+
+       function sendUpdateEventAll(source, showCreditError, isSessionExpired) {
+        if(isSessionExpired){
+            logout();
+            return;
+        }
+        else if(showCreditError)
+        {
+            if (confirm("You have reached your import limit.\nTo continue, you may import the selected records using your Bulk Export Package."))
+            {
+            callUpdateAllWithExtraCharge();
+            }
+            else{
+                return;
+            }
+        }
+            var url = 'https://api.amplitude.com/httpapi?api_key=3538409eea2df00393d78a76ba767fe6&event=[{"user_id":"'+user_id+'", "event_type":"update","page":"Accounts","source":"'+source+'", "time":'+Date.now()+'}]';
+            httpGet(url);
+      }
+
+
+    </script>
+    <c:coreCSS />
+    <apex:includeScript value="{!URLFOR($Resource.zisf__jqueryUI, 'jquery-ui-1.12.1/jquery-ui.js' )}"/>
+    <apex:includeScript value="{!URLFOR($Resource.zisf__jqueryUI, 'jquery-ui-1.12.1/jquery-ui.min.js' )}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.zisf__jqueryUI, 'jquery-ui-1.12.1/jquery-ui.min.css' )}"/>
+    <style type="text/css">
+        [id*=pageErrorsBlock] h4 { /* temporary work arround so that erro messages wont be height then 3 lines and push out the frame content down */
+            display: none !important;
+        }
+
+        .accounts_tab {
+            height: 46px;
+            border: none;
+            background: transperent;
+            width: 90%;
+            vertical-align: top;
+            text-align: center;
+            margin-top: -50px;
+            position: static;
+            float: left;
+            width: 84px;
+        }
+
+        .zoom_gridcolumn1 {
+            width: 100px;
+            vertical-align: top
+        }
+
+        .zoom_gridcolumn2 {
+            width: 80%;
+            vertical-align: top
+        }
+
+        .zoom_status_item {
+            line-height: 24px;
+            vertical-align: middle
+        }
+
+        .zoom_not_found2 {
+            color: red;
+            text-align: left;
+            font-size: 110%;
+            font-style: italic
+        }
+
+        #LocationTree ul.dynatree-container {
+            overflow: auto;
+            width: 90%;
+            height: auto;
+            background: inherit;
+            border: 0;
+            color: white
+        }
+
+        #jobFunctionTree ul.dynatree-container {
+            overflow: auto;
+            width: 90%;
+            height: auto;
+            background: inherit;
+            border: 0;
+            color: white
+        }
+
+        #managementLevelTree ul.dynatree-container {
+            overflow: auto;
+            width: 90%;
+            height: auto;
+            background: inherit;
+            border: 0;
+            color: white
+        }
+
+        .rich-toolbar {
+            border: 0;
+            padding: 0;
+            background: inherit;
+        }
+
+        .rich-toolbar-item {
+            padding: 1px 10px 1px 10px;
+        }
+
+        [id*=zoom_search_results_frame] {
+            background-color: white;
+            margin-left: 10px;
+            border: 1px solid silver;
+            height: 388px;
+            overflow: hidden;
+            display: block;
+        }
+
+        [id*=zoom_more_contacts_tab] .leftPanel {
+            display: block;
+            float: left;
+            width: 190px;
+            padding-top: 43px;
+            background-color: #407F97;
+            overflow: hidden;
+        }
+
+        [id*=zoom_more_contacts_tab] .leftPanel .options {
+            height: 93%;
+            padding: 0 15px;
+        }
+
+        [id*=zoom_more_contacts_tab] .leftPanel .options .header {
+            display: block;
+            height: 28px;
+            line-height: 28px;
+            padding-left: 8px;
+            vertical-align: middle;
+            margin: 0;
+        }
+
+        [id*=zoom_more_contacts_tab] .leftPanel .options .panel {
+            display: block;
+        //margin-top: 10px;
+        //margin: 5px 0 5px 10px;
+        }
+
+        [id*=zoom_more_contacts_tab] .leftPanel .actions {
+            height: 7%;
+            line-height: 7%;
+            padding-top: 2px;
+            width: 100%;
+            vertical-align: middle;
+            text-align: left;
+            border-bottom: 4px solid #DBDBDB;
+        }
+
+        .action {
+            width: 75px;
+            height: 13px;
+            color: #6d6e71;
+            font-weight: 400;
+            line-height: 8px;
+        }
+
+        .header_sign {
+            font-size: 13px;
+            font-size: 13px;
+        }
+
+        [id*=zoom_more_contacts_tab] .rightPanel {
+            display: block;
+            margin-left: 200px;
+            overflow: hidden;
+            background-color: white;
+            -moz-border-radius: 8px;
+        }
+
+        [id*=zoom_more_contacts_tab] .rightPanel .error_message {
+            display: block;
+            width: 100%;
+            height: 509px;
+            background-color: white;
+            color: red;
+        }
+
+        [id*=zoom_more_contacts_tab] .rightPanel .error_message .wrapper {
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+        }
+
+        [id*=search_results_table_wrap] {
+            height: 93%;
+        }
+
+        #search_results_table {
+            width: 100%;
+            background-color: #DCDDDE;
+            margin-top: 37px;
+            display: flex;
+            flex-direction: column;
+            border-spacing: 0px 4px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #search_results_table tr {
+            height: 33.5px;
+        }
+
+        #search_results_table tr td{
+            height: 33.5px;
+            line-height: 33.5px;
+        }
+        #search_results_table input[type="checkbox"]:hover {
+            cursor: hand;
+            cursor: pointer;
+        }
+
+        #search_results_table .head {
+            display: table-header-group;
+        }
+
+        #search_results_table .head span {
+            display: table-cell;
+            padding-left: 4px;
+            padding-right: 4px;
+            height: 28px;
+            border-left: 1px solid #DDD;
+            vertical-align: middle;
+            text-align: center;
+            color: #6d6e71
+        }
+
+        #search_results_table .head span:first-child {
+            border: none;
+        }
+
+        #search_results_table .row {
+            display: table-row;
+            height: 33.5px;
+            background-color: #F5F5F5;
+            margin-bottom: 4px;
+            transition: background-color 500ms;
+            display: flex;
+            align-items: center;
+            -moz-transition: background-color 500ms; /* Firefox 4 */
+            -webkit-transition: background-color 500ms; /* Safari and Chrome */
+            -o-transition: background-color 500ms; /* Opera */
+        }
+
+        /* Chrome and Safari overrides */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            #search_results_table .row {
+                height: 34px;
+            }
+        }
+
+        #search_results_table .row:hover {
+            background-color: #E3E3E3;
+        }
+
+        #search_results_table .cell {
+            display: table-cell;
+            padding-left: 8px;
+            vertical-align: middle;
+            border-spacing: 0;
+            cellpadding: 0;
+            color: #6d6e71;
+        }
+
+        #search_results_table .checkboxColumn {
+            width: 2%;
+        }
+
+        #search_results_table .cell.nameColumn {
+            width: 23%;
+        }
+
+        #search_results_table .cell.nameColumn .content {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+            -moz-binding: url('ellipsis.xml#ellipsis');
+            border-right: 1px solid #cbc5c5;
+            line-height: 28px;
+            color: #6d6e71;
+        }
+        #search_results_table .cell.nameColumn .content a:-webkit-any-link {
+            color: #6d6e71 !important;
+        }
+        #search_results_table .cell.nameColumn .icon {
+            float: right;
+            margin: 0 4px;
+        }
+
+        #search_results_table .titleColumn {
+            width: 40%;
+        }
+
+        #search_results_table .cell.titleColumn .content {
+            overflow: hidden;
+            /*white-space: nowrap;*/
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+            -moz-binding: url('ellipsis.xml#ellipsis');
+            height: 28px;
+            border-right: 1px solid #cbc5c5;
+            line-height: 28px;
+            color: #6d6e71;
+        }
+
+        #search_results_table .infoColumn {
+            width:15%;
+        }
+
+        #search_results_table .infoColumn img:first-child {
+            margin-right: 4px;
+        }
+
+        #search_results_table .updateColumn {
+            width: 10%;
+            min-width: 6em;
+            text-align: center;
+        }
+
+        #search_results_table .matchColumn {
+            width: 10%;
+            min-width: 4.5em;
+        }
+
+        #search_results_table .matchColumn a {
+            display: block;
+            text-align: center;
+        }
+
+        [id*=search_footer] {
+            height: 5%;
+            line-height: 28px;
+            position: fixed;
+            width: 100%;
+            vertical-align: middle;
+            text-align: left;
+            background-color: white;
+            width: 100%;
+            bottom:0;
+        }
+
+        [id*=footer] {
+            background: white;
+        }
+
+        /*
+        #zoom_search_results_content {
+            height: 362px;
+            overflow: hidden;
+            width: 100%;
+        }
+        #zoom_search_results_content table {
+            height: 362px;
+            overflow: hidden;
+            width: 100%;
+        }
+        #zoom_search_results_content tbody {
+            width: 100%;
+        }
+        #zoom_search_results_content tr {
+            white-space: nowrap;
+            overflow: hidden;
+            height: 33.2px;
+            max-height: 33.2px;
+        }
+        #zoom_search_results_content tr td {
+            vertical-align: center;
+            padding-left: 5px;
+            height: 33.2px;
+        }
+        #zoom_search_results_content .checkboxColumn {
+            width: 24px;
+        }
+        #zoom_search_results_content .nameColumn {
+            min-width: 18em;
+        }
+
+        #zoom_search_results_content .nameColumn .icon {
+            float: right;
+            margin: 0 4px;
+        }
+        #zoom_search_results_content .titleColumn  {
+            width: 100%;
+            max-width: 20em;
+        }
+        #zoom_search_results_content .titleColumn .content {
+            width: 90%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+            -moz-binding: url('ellipsis.xml#ellipsis');
+        }
+        #zoom_search_results_content .infoColumn {
+            min-width: 40px;
+            width: 40px;
+        }
+        #zoom_search_results_content .updateColumn {
+        }
+        #zoom_search_results_content .matchColumn {
+            width: 80px;
+        }
+        */
+        /* dynatree style override */
+        #managementLevelTree ul.dynatree-container {
+            height: auto !important;
+        }
+
+        .rich-tab-active {
+            background-color: #407F97;
+            color: white;
+            background-image: none;
+        }
+
+        .myInactiveTab {
+            background-color: white;
+            color: black;
+            background-image: none;
+        }
+
+        .whiteBG {
+            background-color: white;
+        }
+
+        .bPageBlock {
+            background-color: white !important;
+        }
+
+        .left_panel_space {
+            width: 100px;
+        }
+
+        .search_button {
+            padding: 4px;
+            background-color: #59C09B; /* Green */
+            border: none;
+            color: white !important;
+            text-align: center;
+            text-decoration: none !important;
+            display: inline-block;
+            font-size: 13px;
+            width: 241.5px;
+            line-height: 75px;
+            position: absolute;
+            bottom: 17px;
+            left:0;
+            height: 75px;
+            font-size: 20px !important;
+            font-weight: 300 !important;
+            font-style: normal;
+            font-variant-ligatures: normal;
+            font-variant-caps: normal;
+            font-variant-numeric: normal;
+            font-stretch: normal;
+        }
+        .progress_label {
+            color: yellow;
+        }
+
+        .rich-tabhdr-side-border, .rich-tabhdr-side-cell, .rich-tab-bottom-line {
+            border: none !important;
+            border-top-width: 0px;
+            background-image: none !important;
+        }
+
+        a {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .zoom_tab_padding {
+            margin-bottom: 20px;
+        }
+
+        .zoom_tab {
+            width: 103.5px;
+        }
+
+        .left_padding {
+            background: black;
+        }
+
+        .right_padding {
+            background: white;
+        }
+
+        .zoom_header_actions {
+            z-index: 100;
+            right: -20px;
+            top: 35px;
+        }
+
+        .filter_drop {
+            background: #F3F3F3;
+            border: 1px solid #CCCDCE;
+            font-size: 13px;
+            color: #F36F3A;
+            -webkit-appearance: none;
+            -webkit-border-radius: 0px;
+            padding: 4px 15px;
+        }
+
+        .input_search {
+            width: 100%;
+            height: 26px;
+            background-color: white;
+            border: 1px solid #bfc2c3;
+            border-radius: 2px;
+            margin-bottom: 13px;
+            color: black;
+            font-family: Open Sans;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 8px;
+        }
+
+        .input_search::placeholder {
+            color: rgba(109, 110, 113, 0.5);
+        }
+
+        ::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
+            color: rgba(109, 110, 113, 0.5);
+            margin-left: 12px;
+            font-family: OpenSans;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 8px;
+        }
+
+        .contact_icon {
+            height: 17px;
+            color: #6d6e70;
+            font-weight: 400;
+            line-height: 28px;
+        }
+
+        .email_icon {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .phone_icon {
+            font-size: 17px;
+            margin-right: 7px;
+        }
+
+        .direct {
+            font-family: OpenSans !important;
+            font-size: 13px;
+        }
+
+        .zoom_tab_content {
+            font-size: 13px;
+        }
+
+        .zoom_low_padding {
+            padding-top:15px;
+        }
+        select {
+            border-radius: 0;
+        }
+
+        .check_sign {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 28px;
+            width: 17px;
+            height: 17px;
+            color: #78dec0;
+        }
+
+        .zoom_logo {
+            width: 145px;
+            height: 31px;
+        }
+
+        .update_all {
+            position: absolute;
+            bottom: 10px;
+            right: -10px;
+        }
+
+        .filter_drop_label {
+            position:relative;
+        }
+
+        .filter_drop_label:after {
+            content: '\f0d7';
+            font-family: 'FontAwesome';
+            color: #F36F3A;
+            /* position: fixed; */
+            right: 5px;
+            top: 4px;
+            /* padding: 0 0 2px; */
+            position: absolute;
+        }
+
+        @media screen and (-moz-images-in-menus:0) {
+            .filter_drop_label:after {
+                top: 2px !important;
+            }
+        }
+
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+           .filter_drop_label:after {
+            content: '';
+            }
+            table {
+                table-layout:fixed;
+            }
+        }
+        .pbBody {
+            color: #6d6e71;
+        }
+
+        .zoom_different_list {
+            font-weight:600;
+        }
+
+        .overview_header {
+            margin-left: 10px;
+        }
+
+        .clear_all_button{
+            color: #DCDDDE !important;
+            padding: 5px !important;
+            background: transparent !important;
+            outline: none !important;
+            border: 1px solid #b5b5b5 !important;
+            font-size: 10px !important;
+            font-weight: 300 !important;
+            width:auto !important;
+            border-radius: 4px !important;
+            margin:5px 0 5px 0 !important;
+            cursor: pointer !important;
+        }
+
+        .not_right {
+            border: none !important;
+            background: transparent !important;
+        }
+
+        .sort_order_button {
+            position: relative;
+        }
+
+        .sort_order_button:after {
+            font-family: FontAwesome;
+            left:-5px;
+            position:absolute;
+            top:0;
+        }
+
+        .sort_order_button_asc:after {
+           content:"\f15d";
+        }
+
+        .sort_order_button_desc:after {
+           content:"\f15e";
+        }
+        .ui-slider-horizontal .ui-slider-handle {
+            top: -0.41em;
+            margin-left: -.6em;
+        }
+        .ui-widget-header {
+            background:#DCDDDE;
+        }
+
+        .ui-slider-horizontal {
+            height: 0.4em;
+        }
+
+        .ui-state-default, .ui-widget-content .ui-state-default{
+            border: none!important;
+            background:#59C09B !important;
+            border-radius: 50px;
+            outline:none;
+        }
+        .wrapper {
+            position: absolute;
+            left: 249px;
+            top: 29px;
+        }
+        .message.infoM3 {
+            position: absolute;
+            width: 20%;
+            left: 251px;
+            top: 18px;
+        }
+
+        @-moz-document url-prefix() {
+            @media screen and (max-width: 1087px) {
+                #search_results_table .row {
+                    height: 32px;
+                }
+            }
+        }
+
+        td input[type=radio]+label {
+            font-weight: 700;
+        }
+    </style>
+
+    <script type="text/JavaScript">
+
+        if (typeof String.prototype.endsWith !== 'function') {
+            String.prototype.endsWith = function(suffix) {
+                return this.indexOf(suffix, this.length - suffix.length) !== -1;
+            };
+        }
+
+        jQuery( document ).ready(function() {
+            //jQuery('.wrong_company').innerHTML = "Wrong Company";
+            jQuery('.wrong_company').hide();
+
+            var isNotRightShown = false;
+            jQuery('.not_right').click(function () {
+                jQuery('.wrong_company').show();
+                jQuery('.wrong_company').click();
+                jQuery('.search_button2').click();
+                jQuery('.find_more_contacts').hide();
+                return false;
+            });
+            jQuery('.overview_tab').click(function() {
+                if (jQuery('.wrong_company').innerHTML!="") {
+                    jQuery('.find_more_contacts').show();
+                    jQuery('.wrong_company').hide();
+                }
+            });
+
+            jQuery('.persist_search').change(function() {
+                var $input = jQuery(this);
+                document.cookie = $input.attr('id')+"="+$input.val();
+            });
+            //persisting input fields.
+            var firstTime = true;
+            jQuery('.persist_search').val(function(index,elem) {
+                var inputElem = jQuery(this);
+                var allCookies = document.cookie.split(";");
+                var cookie = allCookies.filter(function(x) {
+                    if (x.includes(inputElem.prop('id'))) {
+                        return true;
+                    }
+                });
+                if (firstTime) firstTime = false;
+                else setTimeout(function() { searchPeople();return false;},0);
+                if (cookie == undefined || cookie=='') return;
+                var inputCookie = cookie[0].split('=')[1];
+                if (inputCookie == '') return;
+
+                return inputCookie;
+            });
+        });
+    </script>
+
+    <apex:outputPanel layout="block" rendered="{!AND(isLoginRequired,isLightning)}">
+        You are not logged in to ZoomInfo. Please login on the Zoominfo Tab.
+        <!--<a href="/apex/login?callbackUrl={!CallbackUrl}"-->
+           <!--style="color:#0000EE">-->
+            <!--Go To Login Page-->
+        <!--</a>-->
+        <apex:form >
+            <apex:commandLink action="{!logout}" target="_self" value="Go To Login Page"
+                                      styleClass="action">
+            </apex:commandLink>
+        </apex:form>
+    </apex:outputPanel>
+    <apex:form style="background-color:white !important;" styleClass="zoom_noselect" id="zoom_form"
+               rendered="{!NOT(AND(isLoginRequired,isLightning))}">
+        <basefont color="red" size="5"/>
+        <apex:actionStatus id="workingStatus">
+            <apex:facet name="start">
+                <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.80;width:100%;">
+                    <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                        <img class="waitingImage" src="/img/loading.gif" title="Loading Data From ZoomInfo...."/>
+                        <span id="statusText" style="font-size: 16px" class="waitingDescription">Loading Data From ZoomInfo....</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:pageMessage title="Your partner key is not valid."
+                          summary="Please try again. If these errors continue, contact your Salesforce.com administrator."
+                          severity="error" strength="3" rendered="{!NOT(ValidKey)}"/>
+        <apex:pageMessage title="ZoomInfo connection error: {!ZoomCompanyRecord.ErrorMessage}"
+                          summary="Please try again. If these errors continue, contact your Salesforce.com administrator."
+                          severity="error" strength="3" rendered="{!AND(ValidKey, ZoomCompanyRecord.HasError)}"/>
+
+        <apex:pageBlock id="mainPage">
+            <apex:outputPanel id="pageErrorsBlock">
+                <apex:includeScript value="/support/console/37.0/integration.js"/>
+                <apex:outputPanel id="refreshPage" rendered="{!refreshPage==true}">
+                    <script>
+                        window.reloadParentFrame = function () {
+                        //                try {if (getIsError()==true) return; } catch(err) {}
+                            if (sforce.console.isInConsole()) {
+                                sforce.console.getFocusedSubtabId(function(subResult) {
+                                    sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+                                        sforce.console.refreshPrimaryTabById(primaryResult.id,true);
+                                        sforce.console.refreshSubtabById(subResult.id,true);
+                                    });
+                                });
+
+                            }
+                            else {
+                                //do nothing (page refrence will refresh)
+                                //window.location.reload();
+                                window.top.location = '/{!Account.id}';
+                            }
+                        };
+                        window.reloadParentFrame();
+                    </script>
+                </apex:outputPanel>
+                <!--  workaround to stop page refresh if there is an error when a field is updated -->
+                <script type="text/javascript">
+//                    window.reloadParentFrame = function () {
+//                        alert('in there');
+//                        return;
+//                    };
+                </script>
+                <apex:pageMessages id="pageMessages"/>
+            </apex:outputPanel>
+
+            <apex:outputPanel layout="block" id="zoom_title_panel">
+                <apex:image styleClass="zoom_logo" value="{!URLFOR($Resource.zisf__bundle, 'bundle/images/logo.png')}"/>
+                <span class="zoom_header_actions" display="flex" justify-content="space-between">
+                        <i class="fa fa-comment header_sign" aria-hidden="true"></i>
+                        <a href="mailto:websupport@zoominfo.com?subject={!$Label.feedbackEmailSubject}"
+                           styleClass="action"
+                           target="_blank">{!$Label.feedbackEmailTitle}</a>
+                        &nbsp;
+                        <i class="fa fa-sign-out header_sign" aria-hidden="true"></i>
+                        <apex:commandLink action="{!logout}" target="_self" value="{!$Label.zisf__actionlogout}"
+                                          styleClass="action">
+                        </apex:commandLink>
+                </span>
+            </apex:outputPanel>
+            <!--  Overview tab -->
+            <apex:tabPanel switchType="client"
+                           selectedTab="{!tabCust_SelectedTab}"
+                           value="{!tabCust_SelectedTab}"
+                           id="zoomTabPanel"
+                           contentClass="zoom_tab_content zoom_low_padding"
+                           styleClass="zoom_tab_panel"
+                           tabClass="zoom_tab"
+                           activeTabClass="zoom_active_tab"
+                           inactiveTabClass="zoom_inactive_tab"
+                           style="position:static;font-size:97%;">
+                <apex:tab label="Overview" name="Overview" rendered="{!(tabCust_Disable_Overview=='false')}"
+                          id="zoom_summary_tab" styleClass="overview_tab">
+                    <apex:outputLabel >
+                        <apex:outputText styleClass="overview_header zoom_title"
+                                         value="{!ZoomCompanyRecord.CompanyName} |"/>
+                        <apex:commandButton styleClass="not_right" value="Not the right company?"/>
+                    </apex:outputLabel>
+                    <div id="titleSeperator" width="100px;" style="border-bottom:1px solid"/>
+                    <div class="zoom_tab_child" style="width:99%;height:500px;padding: 16px 10px 10px 10px; justify-content:space-between; overflow: auto;">
+                        <apex:outputPanel styleClass="zoom_not_found"
+                                          rendered="{!AND(NOT(ZoomCompanyRecord.HasError), ISNULL(ZoomCompanyRecord.CompanyID))}">
+                            <apex:outputText value="We did not find this account in our database.  Please visit "/>
+                            <a href="http://www.zoominfo.com" target="_blank" style="color: blue;">zoominfo.com</a>
+                            <apex:outputText value=" to conduct a wider search."/>
+                        </apex:outputPanel>
+                        <div style="display:flex; flex-direction:column; max-width:25%;width:25%">
+                            <apex:outputPanel rendered="{!NOT(ISNULL(ZoomCompanyRecord.CompanyID))}" styleClass="zoom_key_value" style="align-items:stretch">
+                                <div style="flex-shrink: 0;align-self: center;">
+                                    <apex:outputLabel value="Name:" for="zoom_name"/>
+
+                                    <apex:outputPanel >
+                                        <a href="http://subscriber.zoominfo.com/zoominfo/#search/profile/company?companyId={!ZoomCompanyRecord.CompanyID}&targetid=profile" id="zoom_link" class="{!IF(ShowName, 'zoom_different_link', '')} zoom_value" target="_blank">{!ZoomCompanyRecord.CompanyName}</a>
+                                        <!--<apex:outputLink value="{!ZoomCompanyRecord.ZoomCompanyUrl}" id="zoom_link"-->
+                                           <!--styleClass="{!IF(ShowName, 'zoom_different_link', '')} zoom_value"-->
+                                           <!--target="_blank">-->
+                                                <!--{!ZoomCompanyRecord.CompanyName}-->
+                                        <!--</apex:outputLink>-->
+                                        &nbsp;&nbsp;
+                                        <!-- disabled by Yonatan's request
+                                        <apex:outputLink styleClass="help" value="http://www.facebook.com/srch.php?nm={!ZoomContactRecord.FirstName}+{!ZoomContactRecord.LastName}" target="_blank" title="Find {!ZoomContactRecord.FirstName} {!ZoomContactRecord.LastName} on Facebook">
+                                            <apex:image styleClass="FacebookIcon" url="{!URLFOR($Resource.bundle, 'bundle/images/facebook.png')}"/>
+                                        </apex:outputLink>
+                                        &nbsp;
+                                        -->
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!AND(ShowName == true,DisabledName==false)}">
+                                        &nbsp;
+                                        <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            value=""
+                                                            title="Click to update SFDC account name to '{!ZoomCompanyRecord.CompanyName}'"
+                                                            rerender="pageErrorsBlock"
+                                                            oncomplete="return sendUpdateEvent('name', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired})"
+                                                            style="padding-left:5px;">
+                                            <apex:param name="fieldToUpdate" value="CompanyName"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                    </apex:outputPanel>
+                                </div>
+                                <div style="display:flex">
+                                    <a styleClass="help" href="http://subscriber.zoominfo.com/zoominfo/#search/profile/company?companyId={!ZoomCompanyRecord.CompanyID}&targetid=profile"
+                                       target="_blank"
+                                       title="Find {!ZoomCompanyRecord.CompanyName} on ZoomInfo">
+                                        <apex:image styleClass="PinWheelIcon"
+                                                    url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/wheel.png')}"/>
+                                    </a>
+
+                                    <a href="https://www.linkedin.com/search/results/companies/?keywords={!ZoomCompanyRecord.CompanyName}"
+                                       styleClass="help" target="_blank"
+                                       title="Find {!ZoomCompanyRecord.CompanyName} on LinkedIn">
+                                        <apex:image styleClass="linkedInIcon" style="margin-left:5px;"
+                                                    url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/linkedin.png')}"/>
+                                    </a>
+
+
+
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel styleClass="zoom_key_value"
+                                              rendered="{!ZoomCompanyRecord.CompanyAddress.FullAddress != ''}">
+                                <div>
+                                    <apex:outputLabel value="Location (HQ):" for="zoom_address"/>
+
+                                    <apex:outputPanel >
+                                        <apex:outputText styleClass="{!IF(ShowAddress, 'zoom_different', '')} zoom_value"
+                                                value="{!ZoomCompanyRecord.CompanyAddress.FullAddress}"
+                                                id="zoom_address"/>
+                                    </apex:outputPanel>
+                                </div>
+                                <div>
+                                    <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                        value=""
+                                                        title="Click to update SFDC address to '{!ZoomCompanyRecord.CompanyAddress.FullAddress}'"
+                                                        rendered="{!AND(ShowAddress == true,DisabledAddress == false)}"
+                                                        rerender="pageErrorsBlock"
+                                                        oncomplete="return sendUpdateEvent('address', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired})"
+                                    >
+                                        <apex:param name="fieldToUpdate" value="Address"
+                                                    assignTo="{!fieldToUpdate}"/>
+                                    </apex:commandButton>
+                                </div>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel styleClass="zoom_key_value"
+                                              rendered="{!ZoomCompanyRecord.Website != ''}">
+
+                                <div>
+                                    <apex:outputLabel value="URL:" for="zoom_website"/>
+                                    <apex:outputPanel >
+                                        <a href="http://{!ZoomCompanyRecord.Website}" id="zoom_link" class="{!IF(ShowWebsite, 'zoom_different_link', '') } zoom_value" target="_blank">{!ZoomCompanyRecord.Website}</a>
+                                        <!--<apex:outputLink value="http://{!ZoomCompanyRecord.Website}" id="zoom_website"-->
+                                           <!--styleClass="{!IF(ShowWebsite, 'zoom_different_link', '') } zoom_value">-->
+                                                <!--{!ZoomCompanyRecord.Website}-->
+                                        <!--</apex:outputLink>-->
+                                        <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            value=""
+                                                            title="Click to update SFDC website to '{!ZoomCompanyRecord.Website}'"
+                                                            rendered="{!AND(ShowWebsite == true,DisabledWebsite == false)}"
+                                                            rerender="pageErrorsBlock"
+                                                            oncomplete="return sendUpdateEvent('website', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired})">
+                                            <apex:param name="fieldToUpdate" value="website"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel styleClass="zoom_key_value"
+                                              rendered="{!ZoomCompanyRecord.Phone != ''}">
+                                <div>
+                                    <apex:outputLabel value="Phone" for="zoom_phone"/>
+
+                                    <apex:outputPanel >
+                                        <apex:outputText styleClass="{!IF(ShowPhone, 'zoom_different', '')} zoom_value"
+                                                         value="{!ZoomCompanyRecord.Phone}" id="zoom_phone"/>
+                                        &nbsp;
+                                        <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            value=""
+                                                            title="Click to update SFDC phone to {!ZoomCompanyRecord.Phone}"
+                                                            rendered="{!AND(ShowPhone == true, DisabledPhone == false)}"
+                                                            rerender="pageErrorsBlock"
+                                                            oncomplete="return sendUpdateEvent('phone', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                            <apex:param name="fieldToUpdate" value="phone"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel styleClass="zoom_key_value" rendered="{!ZoomCompanyRecord.Fax != ''}">
+                                <div>
+                                    <apex:outputLabel value="Fax" for="zoom_fax"/>
+
+                                    <apex:outputPanel >
+                                        <apex:outputText styleClass="{!IF(ShowFax, 'zoom_different', '')} zoom_value"
+                                                         value="{!ZoomCompanyRecord.Fax}" id="zoom_fax"/>
+                                        &nbsp;
+                                        <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            value=""
+                                                            title="Click to update SFDC fax to {!ZoomCompanyRecord.Fax}"
+                                                            rendered="{!AND(ShowFax == true, DisabledFax == false)}"
+                                                            rerender="pageErrorsBlock"
+                                                            oncomplete="return sendUpdateEvent('fax', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                            <apex:param name="fieldToUpdate" value="fax"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="false">
+                                <apex:outputLabel value="ZoomID" for="zoom_id"/>
+                                <apex:outputText value="{!ZoomCompanyRecord.CompanyID}" id="zoom_id"/>
+                            </apex:outputPanel>
+                            <apex:outputPanel styleClass="zoom_key_value"
+                                              rendered="{!AND(NOT(ISNULL(ZoomCompanyRecord.Employees)), ZoomCompanyRecord.Employees != 0)}">
+                                <div>
+                                    <apex:outputLabel value="Employees:" for="zoom_employees"/>
+
+                                    <apex:outputPanel >
+                                        <apex:outputText styleClass="{!IF(ShowEmployees, 'zoom_different', '')} zoom_value"
+                                                style="margin-right:5px;"
+                                                value="{!ZoomCompanyRecord.Employees}"
+                                                id="zoom_employees"/>
+                                        <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            value=""
+                                                            title="Click to update SFDC employee count to '{!ZoomCompanyRecord.Employees}'"
+                                                            rendered="{!AND(ShowEmployees == true, DisabledEmployees == false)}"
+                                                            rerender="pageErrorsBlock"
+                                                            oncomplete="return sendUpdateEvent('employees', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                            <apex:param name="fieldToUpdate" value="Employees"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel styleClass="zoom_key_value"
+                                              rendered="{!ZoomCompanyRecord.Revenue != ''}">
+                                <div>
+                                    <apex:outputLabel value="Revenue" for="zoom_revenue"/>
+
+                                    <apex:outputPanel >
+                                        <apex:outputText styleClass="{!IF(ShowRevenue, 'zoom_different', '')} zoom_value"
+                                                value="{!ZoomCompanyRecord.Revenue}" id="zoom_revenue"/>
+                                        &nbsp;
+                                        <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            value=""
+                                                            title="Click to update SFDC revenue to '{!ZoomCompanyRecord.Revenue}'"
+                                                            rendered="{!AND(ShowRevenue == true, DisabledRevenue == false)}"
+                                                            rerender="pageErrorsBlock"
+                                                            oncomplete="return sendUpdateEvent('revenue', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                            <apex:param name="fieldToUpdate" value="Revenue"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                        <div style="display:flex; flex-direction: column; max-width:25%;width:25%">
+                            <apex:outputPanel styleClass="zoom_key_value"
+                                              rendered="{!ZoomCompanyRecord.CompanyTicker != ''}">
+                                <div>
+                                    <apex:outputLabel value="Ticker" for="zoom_ticker"/>
+
+                                    <apex:outputPanel >
+
+                                        <apex:outputText styleClass="{!IF(ShowTicker, 'zoom_different', '')} zoom_value"
+                                                         style="margin-right: 5px;"
+                                                         value="{!ZoomCompanyRecord.CompanyTicker}" id="zoom_ticker"/>
+                                        <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            value=""
+                                                            title="Click to update SFDC ticker to '{!ZoomCompanyRecord.CompanyTicker}'"
+                                                            rendered="{!AND(ShowTicker == true, DisabledTicker == false)}"
+                                                            rerender="pageErrorsBlock"
+                                                            oncomplete="return sendUpdateEvent('ticker', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                            <apex:param name="fieldToUpdate" value="CompanyTicker"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel styleClass="zoom_key_value"
+                                              rendered="{!ZoomCompanyRecord.CompanyRankingInlined != ''}">
+                                <div>
+                                    <apex:outputLabel value="Ranking" for="zoom_ranking"/>
+
+                                    <apex:outputText value="{!ZoomCompanyRecord.CompanyRankingInlined}"
+                                                     styleClass="zoom_value"
+                                                     id="zoom_ranking"/>
+                                </div>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel layout="block" styleClass="zoom_key_value"
+                                              rendered="{!ZoomCompanyRecord.Industry.size != 0}">
+                                <div>
+                                    <apex:outputLabel value="Industry" for="zoom_industry"/>
+                                    <apex:outputPanel style="display:flex" layout="block">
+
+                                        <apex:selectRadio value="{!ZoomCompanyRecord.IndustryChosen}"
+                                                          styleClass="{!IF(ShowIndustry, 'zoom_different_list', 'zoom_list')} zoom_value"
+                                                          id="zoom_industry" layout="pageDirection">
+                                            <apex:selectOptions value="{!ZoomCompanyRecord.IndustryOptions}"/>
+                                        </apex:selectRadio>
+                                    </apex:outputPanel>
+                                </div>
+                                <div>
+                                    <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                        value=""
+                                                        title="Click to update SFDC industry value with selected industry."
+                                                        rerender="pageErrorsBlock"
+                                                        rendered="{!IF(ZoomCompanyRecord.IndustryOptions!=null, true, false) && DisabledIndustry == false}"
+                                                        oncomplete="return sendUpdateEvent('', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                        <apex:param name="fieldToUpdate" value="Industry"
+                                                    assignTo="{!fieldToUpdate}"/>
+                                    </apex:commandButton>
+
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+
+                        <div style="display:flex; flex-direction: column; max-width:40%;width:40%;justify-content:space-between">
+                            <apex:outputPanel styleClass="zoom_key_value"
+                                              rendered="{!AND(ZoomCompanyRecord.CompanyDescription != '', ZoomCompanyRecord.CompanyDescription != null)}">
+                                <div>
+                                    <apex:outputLabel value="Description" for="zoom_description"/>
+
+                                    <apex:outputPanel >
+                                        <apex:outputText styleClass="{!IF(ShowDescription, 'zoom_different', '')} zoom_value"
+                                                value="{!ZoomCompanyRecord.CompanyDescription}"
+                                                id="zoom_description"/>
+                                        &nbsp;
+                                        <apex:commandButton styleClass="update_button" action="{!checkIfCanUpdateField}"
+                                                            value=""
+                                                            title="Click to update SFDC description"
+                                                            rendered="{!AND(ShowDescription == true, DisabledDescription == false)}"
+                                                            accesskey="" rerender="pageErrorsBlock"
+                                                            oncomplete="return sendUpdateEvent('description', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});">
+                                            <apex:param name="fieldToUpdate" value="CompanyDescription"
+                                                        assignTo="{!fieldToUpdate}"/>
+                                        </apex:commandButton>
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                    <div class="update_all" style="">
+                        <apex:variable var="updateAllButtonTooltipText" rendered="{!CanUpdateAll}"
+                                       value="Update All"/>
+                        <apex:variable var="updateAllButtonTooltipText"
+                                       rendered="{!NOT(CanUpdateAll) && NOT(CanUpdateNone)}"
+                                       value="Due to insufficient permissions, some of your fields cannot be updated. Please contact your Salesforce administrator if you believe this to be in error."/>
+                        <apex:variable var="updateAllButtonTooltipText" rendered="{!CanUpdateNone}"
+                                       value="Due to insufficient permissions, you cannot update this record. Please contact your Salesforce administrator if you believe this to be in error."/>
+                        <apex:commandButton action="{!checkIfCanUpdateAccount}"
+                                            value=""
+                                            id="copyCompanyToSalesforceButton"
+                                            title="{!updateAllButtonTooltipText}"
+                                            rendered="{!NOT(ISNULL(ZoomCompanyRecord.CompanyID))}"
+                                            rerender="pageErrorsBlock,refreshPage"
+                                            oncomplete="return sendUpdateEventAll('all', {!CheckIfToChargeExtraCredits}, {!startupExtension.isSessionExpired});"
+                                            styleClass="update_all_button"
+                                            style="position: absolute;right: 5px;bottom: 5px;"/>
+                    </div>
+                </apex:tab>
+                <apex:tab label="Find More Contacts" name="Find More Contacts"
+                          rendered="{!(tabCust_Disable_FMC=='false')}" id="zoom_more_contacts_tab"
+                          styleClass="find_more_contacts"
+                          style="display:flex;flex-direction:column;padding: 0;background-color:#407F97">
+
+                    <apex:outputPanel id="tabPanel" layout="block" styleClass="fmcTabPanel"
+                                      style="display:flex;justify-content:flex-start;align-items:stretch;">
+                        <apex:outputText value="{!ZoomCompanyRecord.CompanyName}" id="zoom_title"
+                                         style="left:260px;position:absolute;top:6px;" styleClass="zoom_title"/>
+                        <apex:outputPanel id="left_panel" style="flex-basis:249px;flex-shrink:0;"
+                                          styleClass="leftPanel">
+                            <apex:actionFunction name="rerenderTopPanel" rerender="locationInput"/>
+                            <script>
+                                var locationInputDisabled = false;
+                                function toggleLocationInput() {
+                                    locationInputDisabled = !locationInputDisabled;
+                                    document.getElementById('locationInput').disabled = locationInputDisabled;
+                                }
+                            </script>
+                            <div class="options" id="left_panel">
+                                <apex:outputPanel styleClass="panel">
+                                    <apex:inputText id="cNameField"
+                                                    value="{!PeopleSearchParameters.selectedContactName}"
+                                                    html-placeholder="  Contact Name"
+                                                    onkeypress="return onenter(event);"
+                                                    styleClass="input_search"/>
+                                    <apex:inputText id="cTitleField" value="{!PeopleSearchParameters.TitleSelected}"
+                                                    html-placeholder="  Job Title"
+                                                    onkeypress="return onenter(event);"
+                                                    styleClass="{!IF(tabCust_Persist_FMC_Search=='true','persist_search','')} input_search"/>
+                                    <apex:inputText id="locationInput"
+                                                    value="{!PeopleSearchParameters.selectedLocationInput}"
+                                                    html-placeholder="  City / State / ZIP"
+                                                    onkeypress="return onenter(event);"
+                                                    styleClass="{!IF(tabCust_Persist_FMC_Search=='true','persist_search','')} input_search"
+                                    />
+                                    <br/>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel styleClass="panel" style="overflow:auto;max-height:200px;">
+                                    <apex:outputPanel layout="block">
+                                        <c:ZoomTree id="LocationTree" TreeId="LocationTree" selectable="true"
+                                                    value="{!Location}" isPreserve="{!tabCust_Persist_FMC_Search}"
+                                                    JsonData="{!LocationTreeJson}"/>
+                                        <br/>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block">
+                                        <c:ZoomTree TreeId="jobFunctionTree" selectable="true" isPreserve="{!tabCust_Persist_FMC_Search}"
+                                                    value="{!PeopleSearchParameters.selectedJobFunctionTreeKeys}"
+                                                    JsonData="{!JobFunctionTreeJson}"/>
+                                        <br/>
+                                    </apex:outputPanel>
+                                    <c:ZoomTree TreeId="managementLevelTree" selectable="true" isPreserve="{!tabCust_Persist_FMC_Search}"
+                                                value="{!PeopleSearchParameters.selectedManagementLevelTreeKeys}"
+                                                JsonData="{!TitleSeniorityTreeJson}"/>
+                                </apex:outputPanel>
+                                <div style="text-align: right;position:relative;">
+                                    <script>
+                                    function deleteAllCookies() {
+                                        var cookies = document.cookie.split(";");
+
+                                        for (var i = 0; i < cookies.length; i++) {
+                                            var cookie = cookies[i];
+                                            var eqPos = cookie.indexOf("=");
+                                            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                                            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                                        }
+                                    }
+                                    var clearForm = function() {
+                                        jQuery('.input_search').each(function(index,doc) {doc.value="" });
+                                        jSlide$("#LocationTree").dynatree("getRoot").visit(function(node){
+                                            node.select(false);
+                                        });
+                                        jSlide$("#jobFunctionTree").dynatree("getRoot").visit(function(node){
+                                            node.select(false);
+                                        });
+                                        jSlide$("#managementLevelTree").dynatree("getRoot").visit(function(node){
+                                            node.select(false);
+                                        });
+                                        deleteAllCookies();
+                                    }
+                                    
+
+
+
+
+
+
+
+
+
+                                    </script>
+                                    <apex:commandButton action="{!setEmptyResults}" value="Clear Form"
+                                                        rerender="search_results_table" onclick="clearForm();"
+                                                        styleClass="clear_all_button"
+                                                        style="position:absolute;right:0;top:6px;"/>
+                                </div>
+                                <span class="left_panel_space">
+                                    <apex:commandLink styleClass="search_button"
+                                                      action="{!searchMorePeople}"
+                                                      value="Find People" id="searchMorePeople"
+                                                      rerender="pageErrorsBlock, search_results_table, status"
+                                                      status="workingStatus">
+                                    </apex:commandLink>
+                                    <apex:actionFunction name="searchPeople" action="{!searchMorePeople}"
+                                                         status="workingStatus"
+                                                         reRender="pageErrorsBlock, search_results_table, status"/>
+                                </span>
+                            </div>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel layout="block" id="search_results_table" style="flex-grow:1;margin-left:1px"
+                                          styleClass="rightPanel">
+                            <apex:outputPanel id="search_results_table_wrap"
+                                              layout="block"
+                                              rendered="{!ZoomPeopleSearchResults.TotalResults > 0 && emptyResults==false}">
+                                <div id="search_results_table" style="height: 472px;">
+                                    <div style="background:#DCDDDE;" class="head">
+                                            <span class="checkboxColumn">
+                                                <apex:outputPanel title="Toggle All Rows">
+                                                    <input type="checkbox" id="checkAllBox" onclick="checkAll(this); "/>
+                                                </apex:outputPanel>
+                                            </span>
+                                        <span class="nameColumn">
+                                                <span>
+                                                    <script type="text/JavaScript">
+                                                        function setCheckAllBoxPerson(rowNum) {
+                                                            var checkAllBox = document.getElementById('checkAllBox');
+                                                            var selectedCount = document.getElementById('{!$Component.selectedCount}');
+                                                            var checkedCount = 0;
+                                                            var checked = true;
+                                                            var import2many = false;
+                                                            if (checkboxElem = document.getElementsByClassName("checkboxItem"))
+                                                             {
+                                                                for (var i = 0, len = checkboxElem.length; i < len; i++)
+                                                                {
+                                                                    if ((checkbox = checkboxElem[i]) && (checkbox.id.indexOf("checkedone") != -1))
+                                                                     {
+                                                                        if (checkbox.checked)
+                                                                        {
+                                                                            if('{!UserType}' == 'Team' && ({!selectedCountMinusCurrentPage} + checkedCount == 25))
+                                                                            {
+                                                                                checkbox.checked = false;
+                                                                                  import2many = true;
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                checkedCount++;
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            checked = false;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            checkAllBox.checked = checked;
+                                                            / *Team Edition start*/
+                                                            if (import2many)
+                                                            {
+                                                                checkAllBox.checked = false;
+                                                                alert('You can only select 25 records.');
+                                                            }
+                                                            / *Team Edition end*/
+                                                            selectedCount.innerHTML = ({!selectedCountMinusCurrentPage} + checkedCount) +' selected';
+                                                        }
+                                                        function checkImportNum() {
+                                                            var selectedCount = document.getElementById('{!$Component.selectedCount}');
+                                                            var selectedCountNum = parseInt(selectedCount.innerHTML.split(" ")[0]);
+                                                            if (selectedCountNum ==0) {
+                                                                alert('please choose positive number of contacts to import');
+                                                            }
+                                                            if (selectedCountNum > 30) {
+                                                                alert('You cannot import more than 30 contacts at a time.');
+                                                            }
+                                                        }
+                                                        function initSelectedCount(isSessionExpired) {
+                                                            if(isSessionExpired){
+                                                                logout();
+                                                                return;
+                                                            }
+                                                            else if({!CheckIfToChargeExtraCredits})
+                                                            {
+                                                                if (confirm("You have reached your import limit.\nTo continue, you may import the selected records using your Bulk Export Package."))
+                                                                 {
+                                                                     callAddMorePeopleToSalesforceWithExtraCharge();
+                                                                 }
+                                                                 else{
+                                                                     return;
+                                                                 }
+                                                            }
+                                                            var selectedCount = document.getElementById('{!$Component.selectedCount}');
+                                                            var checkedCount = 0;
+                                                            if (checkboxElem = document.getElementsByClassName("checkboxItem")) {
+                                                                for (var i = 0, len = checkboxElem.length; i < len; i++) {
+                                                                    if ((checkbox = checkboxElem[i]) && (checkbox.id.indexOf("checkedone") != -1)) {
+                                                                        if (checkbox.checked) {
+                                                                            checkedCount++;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            selectedCount.innerHTML = checkedCount + ' selected';
+                                                        }
+                                                    </script>
+                                                    <apex:outputText id="selectedCount" styleClass="zoom_status_item"
+                                                                     value="{!personSelectedCount} selected"/>
+                                                    <apex:actionFunction name="processChecked"
+                                                                         action="{!processCurrentPageResults}"
+                                                                         reRender="."/>
+
+                                                    <apex:actionFunction name="callAddMorePeopleToSalesforceWithExtraCharge"
+                                                                         action="{!addMorePeopleToSalesforceWithExtraCharge}"/>
+
+                                                    <apex:actionFunction name="callUpdateFieldWithExtraCharge"
+                                                                         action="{!updateFieldWithExtraCharge}"/>
+
+                                                    <apex:actionFunction name="callUpdateAllWithExtraCharge"
+                                                                         action="{!UpdateAccountWithExtraCharge}"/>
+
+                                                    <apex:actionFunction name="logout"
+                                                                         action="{!startupExtension.logoutWithError}"/>
+
+                                                </span>
+                                                <span>
+                                                    <apex:actionFunction name="getIsError" action="geterrorOnAddPeople"/>
+                                                    <apex:variable var="importButtonTooltipText"
+                                                                   rendered="{!CanCreateContactRecord}"
+                                                                   value="Copy selected contacts to Salesforce"/>
+                                                    <apex:variable var="importButtonTooltipText"
+                                                                   rendered="{!NOT(CanCreateContactRecord)}"
+                                                                   value="Due to insufficient permissions, you cannot create contacts. Please contact your Salesforce administrator if you believe this to be in error."/>
+                                                    <apex:commandButton action="{!checkHasEnoughCredits}"
+                                                                        onClick="checkImportNum()"
+                                                                        value="Import Contacts"
+                                                                        id="addMorePeopleToSalesforceButton"
+                                                                        disabled="{!NOT(CanCreateContactRecord)}"
+                                                                        title="{!importButtonTooltipText}"
+                                                                        status="workingStatus"
+                                                                        styleClass="import_button"
+                                                                        rerender="search_results_table, selectedCount,pageErrorsBlock"
+                                                                        onComplete="initSelectedCount({!startupExtension.isSessionExpired})"/>
+                                                </span>
+                                            </span>
+                                        <span class="titleColumn" style="width:220px;">
+                                                <apex:commandLink action="{!toggleSortOrder}" id="sortOrderButton"
+                                                                  rerender="pageErrorsBlock, search_results_table, status, selectedCount"
+                                                                  status="workingStatus">
+                                                    <i class="fa {!IF(sortingOrderAsc, 'fa-sort-alpha-asc','fa-sort-alpha-desc')}"
+                                                       style="color:#F36F3A;margin-right:6px;" aria-hidden="true"></i>
+                                                </apex:commandLink>
+                                                <apex:outputText value="Sort by"/>
+                                                <apex:selectList value="{!sortingSelected}" size="1"
+                                                                 style="border:none;background:none;font-size:small;color:#F36F3A;-webkit-appearance: none;margin-left: 6px;">
+                                                    <apex:actionSupport event="onchange" action="{!newSortingSelected}"
+                                                                        rerender="pageErrorsBlock, search_results_table, status"
+                                                                        status="workingStatus"/>
+                                                    <apex:selectOptions value="{!SortingOptions}"/>
+                                                </apex:selectList>
+                                            </span>
+                                        <span class="infoColumn">
+                                                <apex:outputText value="Contact Info:"/>
+                                                <br/>
+                                                <label class="filter_drop_label">
+                                                    <apex:selectList value="{!filterContactSelected}" size="1"
+                                                                     styleClass="filter_drop" style="width:100px">
+                                                        <apex:actionSupport event="onchange" action="{!refreshTable}"
+                                                                            rerender="pageErrorsBlock, search_results_table, status"
+                                                                            status="workingStatus"/>
+                                                        <apex:selectOptions value="{!ContactFilterOptions}"/>
+                                                    </apex:selectList>
+                                                </label>
+                                            </span>
+                                        <span class="updateColumn">
+                                                <apex:outputText value="Last Update:"/>
+                                                <br/>
+                                                <label class="filter_drop_label">
+                                                <apex:selectList value="{!filterUpdatedSelected}" size="1"
+                                                                 styleClass="filter_drop">
+                                                    <apex:actionSupport event="onchange" action="{!refreshTable}"
+                                                                        rerender="pageErrorsBlock, search_results_table, status"
+                                                                        status="workingStatus"/>
+                                                    <apex:selectOptions value="{!LastUpdateFilterOptions}"/>
+                                                </apex:selectList>
+                                                </label>
+                                            </span>
+                                        <span class="matchColumn">
+                                                <apex:outputText value="Record Exists As:"/>
+                                                <br/>
+                                            <!--<label class="filter_drop_label">-->
+                                            <!--<apex:selectList value="{!filterMatchedSelected}" size="1" styleClass="filter_drop">-->
+                                            <!--<apex:actionSupport event="onchange" action="{!refreshTable}"rerender="pageErrorsBlock, search_results_table, status" status="search_status"/>-->
+                                            <!--<apex:selectOptions value="{!MatchedFilterOptions}"/>-->
+                                            <!--</apex:selectList>-->
+                                            <!--</label>-->
+                                            </span>
+                                    </div>
+                                    <div style="display:flex;    flex-direction: column;">
+                                        <apex:variable value="{!0}" var="rowNum"/>
+                                        <apex:repeat value="{!PeopleSearchResults}" var="p">
+                                            <div class="row">
+                                                    <span class="cell checkboxColumn">
+                                                        <apex:inputCheckbox value="{!p.Selected}"
+                                                                            selected="{!p.Selected}"
+                                                                            styleClass="checkboxItem"
+                                                                            title="Select" id="checkedone"
+                                                                            accesskey=""
+                                                                            rendered="{!ISNULL(p.SalesforceID)}"
+                                                                            onclick="setCheckAllBoxPerson({!rowNum});processChecked();"/>
+                                                        <apex:inputCheckbox disabled="true"
+                                                                            rendered="{!p.SalesforceID != null}"
+                                                                            styleClass="checkboxItem"
+                                                                            title="This record is already found in your Salesforce.com account"/>
+                                                    </span>
+                                                <span class="cell nameColumn">
+                                                        <div class="content">
+                                                            <a target="_blank" href="http://subscriber.zoominfo.com/zoominfo/#search/profile/person?personId={!p.PersonID}&targetid=profile"
+                                                               title="{!p.FullName}">{!p.FullName}</a>
+                                                        </div>
+                                                    </span>
+                                                <span class="cell titleColumn">
+                                                        <apex:outputPanel styleClass="content" layout="block"
+                                                                          title="{!p.JobTitle}">
+                                                              <a styleClass="icon" href="http://subscriber.zoominfo.com/zoominfo/#search/profile/person?personId={!p.PersonID}&targetid=profile"
+                                                                 target="_blank"
+                                                                 title="Find {!p.FirstName} {!p.LastName} on ZoomInfo">
+                                                                <apex:image styleClass="PinWheelIcon"
+                                                                            url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/wheel.png')}"/>
+                                                                </a>
+                                                        &nbsp;
+                                                        <a styleClass="icon"
+                                                           href="https://www.linkedin.com/pub/dir/{!p.FirstName}/{!p.LastName}"
+                                                           target="_blank"
+                                                           title="Find {!p.FirstName} {!p.LastName} on LinkedIn">
+                                                            <apex:image styleClass="linkedInIcon"
+                                                                        url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/linkedin.png')}"/>
+                                                        </a>
+                                                        &nbsp;
+
+                                                                {!p.JobTitle}
+                                                        </apex:outputPanel>
+                                                    </span>
+                                                <span class="cell infoColumn">
+                                                        <apex:outputPanel layout="block"
+                                                                          style="border-right: 1px solid #cbc5c5;height: 28px;">
+                                                            <apex:outputPanel title="Email is available"
+                                                                              rendered="{!AND(NOT(ISNULL(p.Email)), p.Email!='')}">
+                                                                    <i class="fa fa-envelope contact_icon email_icon"
+                                                                       aria-hidden="true"></i>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel title="Phone is available"
+                                                                              rendered="{!AND(NOT(ISNULL(p.Phone)), p.Phone!='', p.PhoneDirectNotationForSearchResults = '')}">
+                                                                    <i class="fa fa-phone-square contact_icon phone_icon"
+                                                                       aria-hidden="true"></i>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel title="Direct Phone is available"
+                                                                              rendered="{!AND(NOT(ISNULL(p.Phone)), p.Phone!='', p.PhoneDirectNotationForSearchResults = '[Direct]')}">
+                                                                    <i class="fa fa-phone-square contact_icon phone_icon"
+                                                                       aria-hidden="true"></i>
+                                                                    <apex:outputText styleClass="direct"
+                                                                                     value="Direct"/>
+                                                            </apex:outputPanel>
+                                                        </apex:outputPanel>
+                                                    </span>
+                                                <span class="cell updateColumn">
+                                                        <apex:outputPanel layout="block"
+                                                                          style="border-right: 1px solid #cbc5c5;height: 28px;">
+                                                            <apex:outputText value="{!p.LastUpdatedDateFormatted}"
+                                                                             title="Last Update"/>
+                                                        </apex:outputPanel>
+                                                    </span>
+                                                <span class="cell matchColumn">
+                                                    <!--<apex:outputPanel layout="block" style="border-right: 1px solid #cbc5c5;height: 28px;">-->
+                                                        <apex:outputPanel rendered="{!AND(p.SalesforceID != null,p.isLead==true)}">
+                                                            <a target="_blank" href="/{!p.SalesforceID}">
+                                                                <!--<i class="fa fa-check check_sign" aria-hidden="true"></i>-->
+                                                                    <span style="color:#6d6e71 !important">Lead</span>
+                                                            </a>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!AND(p.SalesforceID != null,NOT(p.isLead==true))}">
+                                                            <a target="_blank" href="/{!p.SalesforceID}" style="#6d6e71 !important">
+                                                                <!--<i class="fa fa-check check_sign" aria-hidden="true"></i>-->
+                                                                    <span style="color:#6d6e71 !important">Contact</span>
+                                                            </a>
+                                                        </apex:outputPanel>
+                                                    <!--</apex:outputPanel>-->
+                                                </span>
+                                            </div>
+                                            <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                                        </apex:repeat>
+                                    </div>
+                                    <div class="row" style="margin-top:auto">
+                                        <span style="vertical-align:top">
+                                            <div id="search_footer">
+                                                <apex:outputPanel >
+                                                    <apex:outputText value="{!PagesString}"/>
+                                                    <apex:outputPanel style="display: inline-block; vertical-align: middle">
+                                                        <!-- FIRST PAGE -->
+                                                        <apex:commandLink action="{!goFirstPage}"
+                                                                          rerender="pageErrorsBlock, search_results_table, footer"
+                                                                          rendered="{!CurrentPage > 1}"
+                                                                          status="workingStatus">
+                                                            <apex:image title="First Page"
+                                                                        url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/fp.gif')}"/>
+                                                        </apex:commandLink>
+                                                        <apex:image title="First Page"
+                                                                    url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/fpg.gif')}"
+                                                                    rendered="{!CurrentPage <= 1}"/>
+                                                        <!-- PREV PAGE -->
+                                                        <apex:commandLink action="{!goPrevPage}"
+                                                                          rerender="pageErrorsBlock, search_results_table, footer"
+                                                                          rendered="{!CurrentPage > 1}"
+                                                                          status="workingStatus">
+                                                            <apex:image title="Previous Page"
+                                                                        url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/pp.gif')}"/>
+                                                        </apex:commandLink>
+                                                        <apex:image title="Previous Page"
+                                                                    url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/ppg.gif')}"
+                                                                    rendered="{!CurrentPage <= 1}"/>
+                                                        <!-- NEXT PAGE -->
+                                                        <apex:commandLink action="{!goNextPage}"
+                                                                          rerender="pageErrorsBlock, search_results_table, footer"
+                                                                          rendered="{!CurrentPage < PeopleSearchTotalPages}"
+                                                                          status="workingStatus">
+                                                            <apex:image title="Next Page"
+                                                                        url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/np.gif')}"/>
+                                                        </apex:commandLink>
+                                                        <apex:image title="Next Page"
+                                                                    url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/npg.gif')}"
+                                                                    rendered="{!CurrentPage >= PeopleSearchTotalPages}"/>
+                                                        <!-- LAST PAGE -->
+                                                        <apex:commandLink action="{!goLastPage}"
+                                                                          rerender="pageErrorsBlock, search_results_table, footer"
+                                                                          rendered="{!CurrentPage < PeopleSearchTotalPages}"
+                                                                          status="workingStatus">
+                                                            <apex:image title="Last Page"
+                                                                        url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/lp.gif')}"/>
+                                                        </apex:commandLink>
+                                                        <apex:image title="Last Page"
+                                                                    alt=""
+                                                                    url="{!URLFOR($Resource.zisf__bundle, 'bundle/images/lpg.gif')}"
+                                                                    rendered="{!CurrentPage >= PeopleSearchTotalPages}"/>
+                                                    </apex:outputPanel>
+
+                                                    <span style="vertical-align:top">
+                                            <apex:toolbar id="status">
+                                                <apex:actionStatus startStyle="margin-left:140px" id="search_status"
+                                                                   startText="Search in progress..."/>
+                                                <apex:toolbarGroup itemSeparator="none" location="right"
+                                                                   id="toolbarGroupForm">
+                                                </apex:toolbarGroup>
+                                            </apex:toolbar>
+                                        </span>
+                                        </apex:outputPanel>
+                                            </div>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!ZoomPeopleSearchResults.TotalResults == 0 && emptyResults==false}"
+                                    styleClass="error_message">
+                                <div class="wrapper">
+                                    <apex:outputText style="font-weight: bold" value="No Results Found."/>
+                                    <br/><br/>
+                                    <apex:outputText value="If you entered text into a search field, please check your spelling. Otherwise, try running your search on the "/>
+                                    <a href="http://www.zoominfo.com" target="_blank">ZoomInfo
+                                    </a>
+                                    <apex:outputText value=" website."/>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!emptyResults==true}"
+                                              styleClass="error_message">
+                                <div class="wrapper"
+                                     style="    margin-top: 70px;color: black;height: 20px;width: calc(100% - 270px);border-bottom: 1px solid;">
+                                    <apex:outputText style="font-weight: bold"
+                                                     value="No people criteria have been selected."/>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="block">
+
+                    </apex:outputPanel>
+                </apex:tab>
+                <apex:tab label="Wrong Company" name="wrongComp" id="zoom_wrong_company_tab" styleClass="wrong_company"
+                          style="display:flex;flex-direction:column;padding: 0;">
+                    <div>
+                        <apex:outputPanel id="messagePanelCompanies">
+                            <apex:pagemessages id="companyMessages"/>
+                        </apex:outputPanel>
+                        <div style="display:flex;">
+                            <div style="flex-basis:249px;flex-shrink:0;" styleClass="leftPanel">
+                                <c:AccountCompanySearchPanel basePageAttr="{!searchCtrl}" searchName="{!Account.Name}"/>
+                            </div>
+                            <div style="flex-basis:100%;">
+                                <c:AccountCompanySearchResults basePageAttr="{!searchCtrl}" companyBaseAttr="{!me}"/>
+                            </div>
+                        </div>
+                    </div>
+                </apex:tab>
+            </apex:tabPanel>
+        </apex:pageBlock>
+
+        <apex:actionFunction name="searchMorePeopleAF" action="{!searchMorePeople}"/>
+    </apex:form>
+
+    <c:coreJS />
+    <script type="text/javascript">
+        zi.ui.disableTextSelect();
+    </script>
+    <script type="text/javascript">
+        (function () {
+            window.checkAll = function (cb) {
+                if (inputElem = document.getElementsByTagName("input")) {
+                    for (var i = 0, len = inputElem.length; i < len; i++)
+                        (checkbox = inputElem[i]) && (checkbox.id.indexOf("checkedone") != -1) && (checkbox.checked = cb.checked);
+                }
+                setCheckAllBoxPerson('all');
+                processChecked();
+            }
+
+            window.resetToggleCheck = function () {
+                if (inputElem = document.getElementsByTagName("input")) {
+                    for (var i = 0, len = inputElem.length; i < len; i++)
+                        (checkbox = inputElem[i]) && (checkbox.id.indexOf("checkedone") != -1) && (inputElem[i].checked = false);
+                }
+            }
+
+            window.completeAddMorePeople = function () {
+                /*
+                 if ({!HasMessages} == false)
+                 zi.ui.reloadParent();
+                 */
+            }
+
+            window.onenter = function (ev) {
+                var keyCode = 0;
+                if (window.event) keyCode = window.event.keyCode;
+                else if (ev) keyCode = ev.which;
+
+                if (keyCode == 13) {
+                    searchPeople();
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        })();
+
+
+    </script>
+</apex:page>

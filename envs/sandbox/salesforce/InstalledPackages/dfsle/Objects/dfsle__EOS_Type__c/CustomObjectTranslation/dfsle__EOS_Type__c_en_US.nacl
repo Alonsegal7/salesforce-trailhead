@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__EOS_Type__c_en_US {
+  fullName = "dfsle__EOS_Type__c-en_US"
+  _parent = [
+    salesforce.dfsle__EOS_Type__c,
+  ]
+}

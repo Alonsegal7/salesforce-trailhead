@@ -1,0 +1,43 @@
+salesforce.ListView Lead_BB_stuck_leads_TEST {
+  fullName = "Lead.BB_stuck_leads_TEST"
+  booleanFilter = "(1 OR 2) AND 3"
+  columns = [
+    "Last_Activity_subject__c",
+    "LEAD.CREATED_DATE",
+    "CORE.USERS.FIRST_NAME",
+    "SDR_Name_for_reports__c",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.TITLE",
+    "LEAD.PHONE",
+    "LEAD.COMPANY",
+    "LEAD.COUNTRY",
+    "How_many_users_do_you_want_to_start_with__c",
+    "Company_Size__c",
+    "LEAD.STATUS",
+    "Cluster__c",
+    "LEAD.LEAD_SOURCE",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "CORE.USERS.FIRST_NAME"
+      operation = "contains"
+      value = "brain"
+    },
+    {
+      field = "CORE.USERS.FIRST_NAME"
+      operation = "contains"
+      value = "oran"
+    },
+    {
+      field = "Last_Activity_subject__c"
+      operation = "contains"
+      value = "Passed from CS"
+    },
+  ]
+  label = "BB stuck leads *TEST*"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

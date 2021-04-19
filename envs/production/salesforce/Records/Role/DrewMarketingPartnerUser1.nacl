@@ -1,0 +1,10 @@
+salesforce.Role DrewMarketingPartnerUser1 {
+  fullName = "DrewMarketingPartnerUser1"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Drew Marketing Partner User"
+  mayForecastManagerShare = false
+  name = "Drew Marketing Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.DrewMarketingPartnerManager
+}

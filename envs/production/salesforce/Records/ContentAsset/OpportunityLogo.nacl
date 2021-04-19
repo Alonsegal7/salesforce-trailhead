@@ -1,0 +1,16 @@
+salesforce.ContentAsset OpportunityLogo {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  isVisibleByExternalUsers = false
+  language = "en_US"
+  masterLabel = "OpportunityLogo"
+  versions = {
+    version = [
+      {
+        number = "1"
+        pathOnClient = "images/OpportunityLogo.png"
+      },
+    ]
+  }
+  fullName = "OpportunityLogo"
+  content = file("salesforce/Records/ContentAsset/OpportunityLogo.asset")
+}

@@ -1,0 +1,3416 @@
+salesforce.RecordType Lead_Internal_Lead {
+  fullName = "Lead.Internal_Lead"
+  active = true
+  businessProcess = salesforce.BusinessProcess.instance.Lead_monday_com
+  label = "Internal Lead"
+  picklistValues = [
+    {
+      picklist = "Authority__c"
+      values = [
+        {
+          fullName = "I don%27t know"
+          default = false
+        },
+        {
+          fullName = "No"
+          default = false
+        },
+        {
+          fullName = "Yes"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Average_Customer_Size__c"
+      values = [
+        {
+          fullName = "1%2C001%2B"
+          default = false
+        },
+        {
+          fullName = "100-500"
+          default = false
+        },
+        {
+          fullName = "5-50"
+          default = false
+        },
+        {
+          fullName = "50-100"
+          default = false
+        },
+        {
+          fullName = "500-1%2C000"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Business_Verticals__c"
+      values = [
+        {
+          fullName = "Accounting"
+          default = false
+        },
+        {
+          fullName = "Automotive"
+          default = false
+        },
+        {
+          fullName = "Aviation"
+          default = false
+        },
+        {
+          fullName = "Banking"
+          default = false
+        },
+        {
+          fullName = "Construction"
+          default = false
+        },
+        {
+          fullName = "Consumer Goods"
+          default = false
+        },
+        {
+          fullName = "Defence"
+          default = false
+        },
+        {
+          fullName = "Design"
+          default = false
+        },
+        {
+          fullName = "Education"
+          default = false
+        },
+        {
+          fullName = "Electronics"
+          default = false
+        },
+        {
+          fullName = "Emergency Services"
+          default = false
+        },
+        {
+          fullName = "Energy"
+          default = false
+        },
+        {
+          fullName = "Engineering"
+          default = false
+        },
+        {
+          fullName = "Fashion"
+          default = false
+        },
+        {
+          fullName = "FinTech"
+          default = false
+        },
+        {
+          fullName = "Financial Services"
+          default = false
+        },
+        {
+          fullName = "Food %26 Beverage"
+          default = false
+        },
+        {
+          fullName = "Government"
+          default = false
+        },
+        {
+          fullName = "Healthcare"
+          default = false
+        },
+        {
+          fullName = "Hospitality"
+          default = false
+        },
+        {
+          fullName = "Human Resources"
+          default = false
+        },
+        {
+          fullName = "IT %26 Technology"
+          default = false
+        },
+        {
+          fullName = "Insurance"
+          default = false
+        },
+        {
+          fullName = "Legal"
+          default = false
+        },
+        {
+          fullName = "Logistics"
+          default = false
+        },
+        {
+          fullName = "Manufacturing"
+          default = false
+        },
+        {
+          fullName = "Marketing"
+          default = false
+        },
+        {
+          fullName = "Media"
+          default = false
+        },
+        {
+          fullName = "Non profit"
+          default = false
+        },
+        {
+          fullName = "Oil %26 Gas"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Pharmaceutical"
+          default = false
+        },
+        {
+          fullName = "Public Sector"
+          default = false
+        },
+        {
+          fullName = "Raw materials"
+          default = false
+        },
+        {
+          fullName = "Real estate"
+          default = false
+        },
+        {
+          fullName = "Retail"
+          default = false
+        },
+        {
+          fullName = "Services"
+          default = false
+        },
+        {
+          fullName = "Sports %26 eSports"
+          default = false
+        },
+        {
+          fullName = "Telecommunications"
+          default = false
+        },
+        {
+          fullName = "Trade"
+          default = false
+        },
+        {
+          fullName = "Transportation %26 Travel"
+          default = false
+        },
+        {
+          fullName = "Utilities"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Capability_Functions__c"
+      values = [
+        {
+          fullName = "Alliances"
+          default = false
+        },
+        {
+          fullName = "Analytics %26 Data"
+          default = false
+        },
+        {
+          fullName = "Application Development"
+          default = false
+        },
+        {
+          fullName = "Application Outsourcing"
+          default = false
+        },
+        {
+          fullName = "Audit %26 Compliance"
+          default = false
+        },
+        {
+          fullName = "Business Operations"
+          default = false
+        },
+        {
+          fullName = "Business Process Outsourcing"
+          default = false
+        },
+        {
+          fullName = "Cloud %2F SaaS services"
+          default = false
+        },
+        {
+          fullName = "CyberSecurity"
+          default = false
+        },
+        {
+          fullName = "Digital"
+          default = false
+        },
+        {
+          fullName = "Infrastructure Outsourcing"
+          default = false
+        },
+        {
+          fullName = "Infrastructure Services"
+          default = false
+        },
+        {
+          fullName = "Innovation"
+          default = false
+        },
+        {
+          fullName = "Legal"
+          default = false
+        },
+        {
+          fullName = "Resource Management"
+          default = false
+        },
+        {
+          fullName = "Service Delivery"
+          default = false
+        },
+        {
+          fullName = "Strategy %26 Consulting"
+          default = false
+        },
+        {
+          fullName = "Systems %26 Tools"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Challenge__c"
+      values = [
+        {
+          fullName = "I don%27t know"
+          default = false
+        },
+        {
+          fullName = "No"
+          default = false
+        },
+        {
+          fullName = "Yes"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Channel_Lead_Source__c"
+      values = [
+        {
+          fullName = "Application"
+          default = false
+        },
+        {
+          fullName = "Contact Sales"
+          default = false
+        },
+        {
+          fullName = "Download"
+          default = false
+        },
+        {
+          fullName = "Event"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Outreach"
+          default = false
+        },
+        {
+          fullName = "Signup"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Channel__c"
+      values = [
+        {
+          fullName = "Application"
+          default = false
+        },
+        {
+          fullName = "Contact Sales"
+          default = false
+        },
+        {
+          fullName = "Download"
+          default = false
+        },
+        {
+          fullName = "Event"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Outreach"
+          default = false
+        },
+        {
+          fullName = "Signup"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Company_Size__c"
+      values = [
+        {
+          fullName = "1-50"
+          default = false
+        },
+        {
+          fullName = "100-250"
+          default = false
+        },
+        {
+          fullName = "1500%2B"
+          default = false
+        },
+        {
+          fullName = "251-1500"
+          default = false
+        },
+        {
+          fullName = "50-99"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Competing__c"
+      values = [
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Float"
+          default = false
+        },
+        {
+          fullName = "Freshworks"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "LeadSquared"
+          default = false
+        },
+        {
+          fullName = "MS project"
+          default = false
+        },
+        {
+          fullName = "Notion"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Service now"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "Teamwork"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Workday"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Competition_They_re_Evaluating__c"
+      values = [
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Float"
+          default = false
+        },
+        {
+          fullName = "Freshworks"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "LeadSquared"
+          default = false
+        },
+        {
+          fullName = "MS project"
+          default = false
+        },
+        {
+          fullName = "Notion"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Service now"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "Teamwork"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Workday"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Competitors_PL__c"
+      values = [
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Float"
+          default = false
+        },
+        {
+          fullName = "Freshworks"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "LeadSquared"
+          default = false
+        },
+        {
+          fullName = "MS project"
+          default = false
+        },
+        {
+          fullName = "Notion"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Service now"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "Teamwork"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Workday"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Department_Function__c"
+      values = [
+        {
+          fullName = "Accounting%2C tax and finance"
+          default = false
+        },
+        {
+          fullName = "Creative design and media"
+          default = false
+        },
+        {
+          fullName = "Customer support%2Fsuccess"
+          default = false
+        },
+        {
+          fullName = "Digital"
+          default = false
+        },
+        {
+          fullName = "HR"
+          default = false
+        },
+        {
+          fullName = "Information Technology"
+          default = false
+        },
+        {
+          fullName = "Innovation %26 Strategy"
+          default = false
+        },
+        {
+          fullName = "Legal"
+          default = false
+        },
+        {
+          fullName = "Marketing and communications"
+          default = false
+        },
+        {
+          fullName = "Operations%2C facilities and logistics"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Procurement"
+          default = false
+        },
+        {
+          fullName = "Product management"
+          default = false
+        },
+        {
+          fullName = "Production"
+          default = false
+        },
+        {
+          fullName = "Sales and business development"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Senior Leadership"
+          default = false
+        },
+        {
+          fullName = "Software development and engineering"
+          default = false
+        },
+        {
+          fullName = "Supply chain"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Distribution_reason__c"
+      values = [
+        {
+          fullName = "CS Pass"
+          default = false
+        },
+        {
+          fullName = "Duplicate"
+          default = false
+        },
+        {
+          fullName = "New lead"
+          default = false
+        },
+        {
+          fullName = "Reengage"
+          default = false
+        },
+        {
+          fullName = "Related"
+          default = false
+        },
+        {
+          fullName = "Signup - Contact Sales"
+          default = false
+        },
+        {
+          fullName = "Strategic"
+          default = false
+        },
+        {
+          fullName = "Website - Contact Sales"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Do_you_provide_Professional_Services_Lic__c"
+      values = [
+        {
+          fullName = "Both"
+          default = false
+        },
+        {
+          fullName = "Licenses"
+          default = false
+        },
+        {
+          fullName = "Professional Services"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Expected_Plan__c"
+      values = [
+        {
+          fullName = "Enterprise"
+          default = false
+        },
+        {
+          fullName = "Pro"
+          default = false
+        },
+        {
+          fullName = "Standard"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "G2C_Company_Size__c"
+      values = [
+        {
+          fullName = "10%2C001%2B employees"
+          default = false
+        },
+        {
+          fullName = "1001-5000 employees"
+          default = false
+        },
+        {
+          fullName = "11-50 employees"
+          default = false
+        },
+        {
+          fullName = "2-10 employees"
+          default = false
+        },
+        {
+          fullName = "201-500 employees"
+          default = false
+        },
+        {
+          fullName = "5001-10%2C000 employees"
+          default = false
+        },
+        {
+          fullName = "501-1000 employees"
+          default = false
+        },
+        {
+          fullName = "51-200 employees"
+          default = false
+        },
+        {
+          fullName = "Myself Only"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "How_did_you_hear_about_our_Partnership__c"
+      values = [
+        {
+          fullName = "Customer Support"
+          default = false
+        },
+        {
+          fullName = "Facebook"
+          default = false
+        },
+        {
+          fullName = "Friend%2FColleague"
+          default = false
+        },
+        {
+          fullName = "Google Search"
+          default = false
+        },
+        {
+          fullName = "LinkedIn"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Twitter"
+          default = false
+        },
+        {
+          fullName = "Website"
+          default = false
+        },
+        {
+          fullName = "Youtube"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "How_many_customers_do_you_have__c"
+      values = [
+        {
+          fullName = "1000%2B"
+          default = false
+        },
+        {
+          fullName = "101-300"
+          default = false
+        },
+        {
+          fullName = "26-50"
+          default = false
+        },
+        {
+          fullName = "301-500"
+          default = false
+        },
+        {
+          fullName = "501-1000"
+          default = false
+        },
+        {
+          fullName = "51-70"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "How_many_users_do_you_want_to_start_with__c"
+      values = [
+        {
+          fullName = "1-10"
+          default = false
+        },
+        {
+          fullName = "11-20"
+          default = false
+        },
+        {
+          fullName = "20-50"
+          default = false
+        },
+        {
+          fullName = "200%2B"
+          default = false
+        },
+        {
+          fullName = "50-200"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Industry"
+      values = [
+        {
+          fullName = "Accounting"
+          default = false
+        },
+        {
+          fullName = "Agriculture"
+          default = false
+        },
+        {
+          fullName = "Airlines%2FAviation"
+          default = false
+        },
+        {
+          fullName = "Alternative Dispute Resolution"
+          default = false
+        },
+        {
+          fullName = "Alternative Medicine"
+          default = false
+        },
+        {
+          fullName = "Animation"
+          default = false
+        },
+        {
+          fullName = "Apparel"
+          default = false
+        },
+        {
+          fullName = "Apparel %26 Fashion"
+          default = false
+        },
+        {
+          fullName = "Architecture %26 Planning"
+          default = false
+        },
+        {
+          fullName = "Arts and Crafts"
+          default = false
+        },
+        {
+          fullName = "Automotive"
+          default = false
+        },
+        {
+          fullName = "Aviation %26 Aerospace"
+          default = false
+        },
+        {
+          fullName = "Banking"
+          default = false
+        },
+        {
+          fullName = "Biotechnology"
+          default = false
+        },
+        {
+          fullName = "Broadcast Media"
+          default = false
+        },
+        {
+          fullName = "Building Materials"
+          default = false
+        },
+        {
+          fullName = "Business Supplies and Equipment"
+          default = false
+        },
+        {
+          fullName = "Capital Markets"
+          default = false
+        },
+        {
+          fullName = "Chemicals"
+          default = false
+        },
+        {
+          fullName = "Civic %26 Social Organization"
+          default = false
+        },
+        {
+          fullName = "Civil Engineering"
+          default = false
+        },
+        {
+          fullName = "Commercial Real Estate"
+          default = false
+        },
+        {
+          fullName = "Communications"
+          default = false
+        },
+        {
+          fullName = "Computer %26 Network Security"
+          default = false
+        },
+        {
+          fullName = "Computer Games"
+          default = false
+        },
+        {
+          fullName = "Computer Hardware"
+          default = false
+        },
+        {
+          fullName = "Computer Networking"
+          default = false
+        },
+        {
+          fullName = "Computer Software"
+          default = false
+        },
+        {
+          fullName = "Construction"
+          default = false
+        },
+        {
+          fullName = "Consulting"
+          default = false
+        },
+        {
+          fullName = "Consumer Electronics"
+          default = false
+        },
+        {
+          fullName = "Consumer Goods"
+          default = false
+        },
+        {
+          fullName = "Consumer Services"
+          default = false
+        },
+        {
+          fullName = "Cosmetics"
+          default = false
+        },
+        {
+          fullName = "Dairy"
+          default = false
+        },
+        {
+          fullName = "Defense %26 Space"
+          default = false
+        },
+        {
+          fullName = "Design"
+          default = false
+        },
+        {
+          fullName = "E-Learning"
+          default = false
+        },
+        {
+          fullName = "Education"
+          default = false
+        },
+        {
+          fullName = "Education Management"
+          default = false
+        },
+        {
+          fullName = "Electrical%2FElectronic Manufacturing"
+          default = false
+        },
+        {
+          fullName = "Electronics"
+          default = false
+        },
+        {
+          fullName = "Energy"
+          default = false
+        },
+        {
+          fullName = "Engineering"
+          default = false
+        },
+        {
+          fullName = "Entertainment"
+          default = false
+        },
+        {
+          fullName = "Environmental"
+          default = false
+        },
+        {
+          fullName = "Environmental Services"
+          default = false
+        },
+        {
+          fullName = "Events Services"
+          default = false
+        },
+        {
+          fullName = "Executive Office"
+          default = false
+        },
+        {
+          fullName = "Facilities Services"
+          default = false
+        },
+        {
+          fullName = "Farming"
+          default = false
+        },
+        {
+          fullName = "Finance"
+          default = false
+        },
+        {
+          fullName = "Financial Services"
+          default = false
+        },
+        {
+          fullName = "Fine Art"
+          default = false
+        },
+        {
+          fullName = "Fishery"
+          default = false
+        },
+        {
+          fullName = "Food %26 Beverage"
+          default = false
+        },
+        {
+          fullName = "Food %26 Beverages"
+          default = false
+        },
+        {
+          fullName = "Food Production"
+          default = false
+        },
+        {
+          fullName = "Fund-Raising"
+          default = false
+        },
+        {
+          fullName = "Furniture"
+          default = false
+        },
+        {
+          fullName = "Gambling %26 Casinos"
+          default = false
+        },
+        {
+          fullName = "Glass%2C Ceramics %26 Concrete"
+          default = false
+        },
+        {
+          fullName = "Government"
+          default = false
+        },
+        {
+          fullName = "Government Administration"
+          default = false
+        },
+        {
+          fullName = "Government Relations"
+          default = false
+        },
+        {
+          fullName = "Graphic Design"
+          default = false
+        },
+        {
+          fullName = "Health%2C Wellness and Fitness"
+          default = false
+        },
+        {
+          fullName = "Healthcare"
+          default = false
+        },
+        {
+          fullName = "Higher Education"
+          default = false
+        },
+        {
+          fullName = "Hospital %26 Health Care"
+          default = false
+        },
+        {
+          fullName = "Hospitality"
+          default = false
+        },
+        {
+          fullName = "Human Resources"
+          default = false
+        },
+        {
+          fullName = "Import and Export"
+          default = false
+        },
+        {
+          fullName = "Individual %26 Family Services"
+          default = false
+        },
+        {
+          fullName = "Industrial Automation"
+          default = false
+        },
+        {
+          fullName = "Information Services"
+          default = false
+        },
+        {
+          fullName = "Information Technology and Services"
+          default = false
+        },
+        {
+          fullName = "Insurance"
+          default = false
+        },
+        {
+          fullName = "International Affairs"
+          default = false
+        },
+        {
+          fullName = "International Trade and Development"
+          default = false
+        },
+        {
+          fullName = "Internet"
+          default = false
+        },
+        {
+          fullName = "Investment Banking"
+          default = false
+        },
+        {
+          fullName = "Investment Management"
+          default = false
+        },
+        {
+          fullName = "Judiciary"
+          default = false
+        },
+        {
+          fullName = "Law Enforcement"
+          default = false
+        },
+        {
+          fullName = "Law Practice"
+          default = false
+        },
+        {
+          fullName = "Legal Services"
+          default = false
+        },
+        {
+          fullName = "Legislative Office"
+          default = false
+        },
+        {
+          fullName = "Leisure%2C Travel %26 Tourism"
+          default = false
+        },
+        {
+          fullName = "Libraries"
+          default = false
+        },
+        {
+          fullName = "Logistics and Supply Chain"
+          default = false
+        },
+        {
+          fullName = "Luxury Goods %26 Jewelry"
+          default = false
+        },
+        {
+          fullName = "Machinery"
+          default = false
+        },
+        {
+          fullName = "Management Consulting"
+          default = false
+        },
+        {
+          fullName = "Manufacturing"
+          default = false
+        },
+        {
+          fullName = "Maritime"
+          default = false
+        },
+        {
+          fullName = "Market Research"
+          default = false
+        },
+        {
+          fullName = "Marketing and Advertising"
+          default = false
+        },
+        {
+          fullName = "Mechanical or Industrial Engineering"
+          default = false
+        },
+        {
+          fullName = "Media"
+          default = false
+        },
+        {
+          fullName = "Media Production"
+          default = false
+        },
+        {
+          fullName = "Medical Devices"
+          default = false
+        },
+        {
+          fullName = "Medical Practice"
+          default = false
+        },
+        {
+          fullName = "Mental Health Care"
+          default = false
+        },
+        {
+          fullName = "Military"
+          default = false
+        },
+        {
+          fullName = "Mining %26 Metals"
+          default = false
+        },
+        {
+          fullName = "Motion Pictures and Film"
+          default = false
+        },
+        {
+          fullName = "Museums and Institutions"
+          default = false
+        },
+        {
+          fullName = "Music"
+          default = false
+        },
+        {
+          fullName = "Nanotechnology"
+          default = false
+        },
+        {
+          fullName = "Newspapers"
+          default = false
+        },
+        {
+          fullName = "Non-Profit Organization Management"
+          default = false
+        },
+        {
+          fullName = "Not For Profit"
+          default = false
+        },
+        {
+          fullName = "Oil %26 Energy"
+          default = false
+        },
+        {
+          fullName = "Online Media"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Outsourcing%2FOffshoring"
+          default = false
+        },
+        {
+          fullName = "Package%2FFreight Delivery"
+          default = false
+        },
+        {
+          fullName = "Packaging and Containers"
+          default = false
+        },
+        {
+          fullName = "Paper %26 Forest Products"
+          default = false
+        },
+        {
+          fullName = "Performing Arts"
+          default = false
+        },
+        {
+          fullName = "Pharmaceuticals"
+          default = false
+        },
+        {
+          fullName = "Philanthropy"
+          default = false
+        },
+        {
+          fullName = "Photography"
+          default = false
+        },
+        {
+          fullName = "Plastics"
+          default = false
+        },
+        {
+          fullName = "Political Organization"
+          default = false
+        },
+        {
+          fullName = "Primary%2FSecondary Education"
+          default = false
+        },
+        {
+          fullName = "Printing"
+          default = false
+        },
+        {
+          fullName = "Professional Training %26 Coaching"
+          default = false
+        },
+        {
+          fullName = "Program Development"
+          default = false
+        },
+        {
+          fullName = "Public Policy"
+          default = false
+        },
+        {
+          fullName = "Public Relations and Communications"
+          default = false
+        },
+        {
+          fullName = "Public Safety"
+          default = false
+        },
+        {
+          fullName = "Publishing"
+          default = false
+        },
+        {
+          fullName = "Railroad Manufacture"
+          default = false
+        },
+        {
+          fullName = "Ranching"
+          default = false
+        },
+        {
+          fullName = "Real Estate"
+          default = false
+        },
+        {
+          fullName = "Recreation"
+          default = false
+        },
+        {
+          fullName = "Recreational Facilities and Services"
+          default = false
+        },
+        {
+          fullName = "Religious Institutions"
+          default = false
+        },
+        {
+          fullName = "Renewables %26 Environment"
+          default = false
+        },
+        {
+          fullName = "Research"
+          default = false
+        },
+        {
+          fullName = "Restaurants"
+          default = false
+        },
+        {
+          fullName = "Retail"
+          default = false
+        },
+        {
+          fullName = "Security and Investigations"
+          default = false
+        },
+        {
+          fullName = "Semiconductors"
+          default = false
+        },
+        {
+          fullName = "Shipbuilding"
+          default = false
+        },
+        {
+          fullName = "Shipping"
+          default = false
+        },
+        {
+          fullName = "Sporting Goods"
+          default = false
+        },
+        {
+          fullName = "Sports"
+          default = false
+        },
+        {
+          fullName = "Staffing and Recruiting"
+          default = false
+        },
+        {
+          fullName = "Supermarkets"
+          default = false
+        },
+        {
+          fullName = "Technology"
+          default = false
+        },
+        {
+          fullName = "Telecommunications"
+          default = false
+        },
+        {
+          fullName = "Textiles"
+          default = false
+        },
+        {
+          fullName = "Think Tanks"
+          default = false
+        },
+        {
+          fullName = "Tobacco"
+          default = false
+        },
+        {
+          fullName = "Translation and Localization"
+          default = false
+        },
+        {
+          fullName = "Transportation"
+          default = false
+        },
+        {
+          fullName = "Transportation%2FTrucking%2FRailroad"
+          default = false
+        },
+        {
+          fullName = "Utilities"
+          default = false
+        },
+        {
+          fullName = "Venture Capital %26 Private Equity"
+          default = false
+        },
+        {
+          fullName = "Veterinary"
+          default = false
+        },
+        {
+          fullName = "Warehousing"
+          default = false
+        },
+        {
+          fullName = "Wholesale"
+          default = false
+        },
+        {
+          fullName = "Wine and Spirits"
+          default = false
+        },
+        {
+          fullName = "Wireless"
+          default = false
+        },
+        {
+          fullName = "Writing and Editing"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Is_Relevant_Potential_Partner__c"
+      values = [
+        {
+          fullName = "Not Relevant"
+          default = false
+        },
+        {
+          fullName = "Relevant"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Language__c"
+      values = [
+        {
+          fullName = "English"
+          default = true
+        },
+        {
+          fullName = "French"
+          default = false
+        },
+        {
+          fullName = "Hebrew"
+          default = false
+        },
+        {
+          fullName = "Spanish"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "LeadSource"
+      values = [
+        {
+          fullName = "Big Brain - Signup"
+          default = false
+        },
+        {
+          fullName = "BigBrain - Sync"
+          default = false
+        },
+        {
+          fullName = "BigBrain - Sync %28Reengage%29"
+          default = false
+        },
+        {
+          fullName = "CS Pass"
+          default = false
+        },
+        {
+          fullName = "ChiliPiper"
+          default = false
+        },
+        {
+          fullName = "Cold Outbound"
+          default = false
+        },
+        {
+          fullName = "Contact Sales - Tech Partner"
+          default = false
+        },
+        {
+          fullName = "Contact Sales- Phone"
+          default = false
+        },
+        {
+          fullName = "Content"
+          default = false
+        },
+        {
+          fullName = "Corzdesk"
+          default = false
+        },
+        {
+          fullName = "Drift - Contact Sales"
+          default = false
+        },
+        {
+          fullName = "Emails - Contact sales"
+          default = false
+        },
+        {
+          fullName = "Event"
+          default = false
+        },
+        {
+          fullName = "Intercom"
+          default = false
+        },
+        {
+          fullName = "Linkedin Paid"
+          default = false
+        },
+        {
+          fullName = "Linkedin Sales Navigator"
+          default = false
+        },
+        {
+          fullName = "NGO request"
+          default = false
+        },
+        {
+          fullName = "Online Event"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Outreach - Part of paying account"
+          default = false
+        },
+        {
+          fullName = "Outreach - Resurrect"
+          default = false
+        },
+        {
+          fullName = "Partner"
+          default = false
+        },
+        {
+          fullName = "Partner Campaign"
+          default = false
+        },
+        {
+          fullName = "Partner Link"
+          default = false
+        },
+        {
+          fullName = "Platform"
+          default = false
+        },
+        {
+          fullName = "Podcast"
+          default = false
+        },
+        {
+          fullName = "Referral"
+          default = false
+        },
+        {
+          fullName = "Referred by colleague"
+          default = false
+        },
+        {
+          fullName = "Referred by existing partner"
+          default = false
+        },
+        {
+          fullName = "Refunneling"
+          default = false
+        },
+        {
+          fullName = "SelectHub"
+          default = false
+        },
+        {
+          fullName = "Signup - Contact Sales"
+          default = false
+        },
+        {
+          fullName = "Software Advice"
+          default = false
+        },
+        {
+          fullName = "TechnologyAdvice"
+          default = false
+        },
+        {
+          fullName = "Test"
+          default = false
+        },
+        {
+          fullName = "Unqualified refunneling"
+          default = false
+        },
+        {
+          fullName = "Webinar"
+          default = false
+        },
+        {
+          fullName = "Website - Contact Sales"
+          default = false
+        },
+        {
+          fullName = "Website - Request a Demo"
+          default = false
+        },
+        {
+          fullName = "Zoominfo"
+          default = false
+        },
+        {
+          fullName = "g2crowd"
+          default = false
+        },
+        {
+          fullName = "project-management%2Ecom"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Lead_Source_Type__c"
+      values = [
+        {
+          fullName = "Inbound"
+          default = false
+        },
+        {
+          fullName = "Outbound"
+          default = false
+        },
+        {
+          fullName = "Outreach"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Main_tool_we_re_replacing__c"
+      values = [
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Email"
+          default = false
+        },
+        {
+          fullName = "Excel"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Internal Tools"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "MS project"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Service now"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "Spreadsheet"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Whiteboard%2C Pen %26 Paper"
+          default = false
+        },
+        {
+          fullName = "Workday"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Manual_Trigger__c"
+      values = [
+        {
+          fullName = "Match Regions"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Money__c"
+      values = [
+        {
+          fullName = "I don%27t know"
+          default = false
+        },
+        {
+          fullName = "No"
+          default = false
+        },
+        {
+          fullName = "Yes"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Name"
+      values = [
+        {
+          fullName = "Dr%2E"
+          default = false
+        },
+        {
+          fullName = "Mr%2E"
+          default = false
+        },
+        {
+          fullName = "Mrs%2E"
+          default = false
+        },
+        {
+          fullName = "Ms%2E"
+          default = false
+        },
+        {
+          fullName = "Prof%2E"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Other_software_they_re_selling_Partner__c"
+      values = [
+        {
+          fullName = "AWS"
+          default = false
+        },
+        {
+          fullName = "Adobe"
+          default = false
+        },
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Alibaba cloud"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Atlassian"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Cisco"
+          default = false
+        },
+        {
+          fullName = "Dell Technologies"
+          default = false
+        },
+        {
+          fullName = "DocuSign"
+          default = false
+        },
+        {
+          fullName = "Dropbox"
+          default = false
+        },
+        {
+          fullName = "Freshworks"
+          default = false
+        },
+        {
+          fullName = "GitHub"
+          default = false
+        },
+        {
+          fullName = "GitLab"
+          default = false
+        },
+        {
+          fullName = "Google"
+          default = false
+        },
+        {
+          fullName = "Google Cloud"
+          default = false
+        },
+        {
+          fullName = "Google Maps"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "HPE"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "IBM"
+          default = false
+        },
+        {
+          fullName = "Intellij"
+          default = false
+        },
+        {
+          fullName = "LumApps"
+          default = false
+        },
+        {
+          fullName = "Magento"
+          default = false
+        },
+        {
+          fullName = "Mailchimp"
+          default = false
+        },
+        {
+          fullName = "Marketo"
+          default = false
+        },
+        {
+          fullName = "MavenLink"
+          default = false
+        },
+        {
+          fullName = "Microsoft"
+          default = false
+        },
+        {
+          fullName = "Microsoft Azure"
+          default = false
+        },
+        {
+          fullName = "Microsoft Dynamics 365"
+          default = false
+        },
+        {
+          fullName = "Microsoft Office"
+          default = false
+        },
+        {
+          fullName = "Microsoft Project"
+          default = false
+        },
+        {
+          fullName = "Microsoft Sharepoint"
+          default = false
+        },
+        {
+          fullName = "Microsoft Teams"
+          default = false
+        },
+        {
+          fullName = "MuleSoft"
+          default = false
+        },
+        {
+          fullName = "Okta"
+          default = false
+        },
+        {
+          fullName = "Oracle"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Qlik"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Redhat"
+          default = false
+        },
+        {
+          fullName = "SAP"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Salesloft"
+          default = false
+        },
+        {
+          fullName = "ServiceNow"
+          default = false
+        },
+        {
+          fullName = "Slack"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "Splunk"
+          default = false
+        },
+        {
+          fullName = "SugarCRM"
+          default = false
+        },
+        {
+          fullName = "Twilio"
+          default = false
+        },
+        {
+          fullName = "Typeform"
+          default = false
+        },
+        {
+          fullName = "VMware"
+          default = false
+        },
+        {
+          fullName = "VisualStudio"
+          default = false
+        },
+        {
+          fullName = "Whiteboard"
+          default = false
+        },
+        {
+          fullName = "Workday"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zapier"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zimbra"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Pains_PL__c"
+      values = [
+        {
+          fullName = "Ease of use"
+          default = false
+        },
+        {
+          fullName = "Efficiency %26 Productivity"
+          default = false
+        },
+        {
+          fullName = "No defined processes"
+          default = false
+        },
+        {
+          fullName = "No existing tool"
+          default = false
+        },
+        {
+          fullName = "Organization"
+          default = false
+        },
+        {
+          fullName = "Reporting"
+          default = false
+        },
+        {
+          fullName = "Resource Allocation"
+          default = false
+        },
+        {
+          fullName = "Team Visibility"
+          default = false
+        },
+        {
+          fullName = "Too many tools"
+          default = false
+        },
+        {
+          fullName = "Transparency"
+          default = false
+        },
+        {
+          fullName = "Unhappy with current tool"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Partner_Recruitment_Status__c"
+      values = [
+        {
+          fullName = "Attempting"
+          default = false
+        },
+        {
+          fullName = "Contacted"
+          default = false
+        },
+        {
+          fullName = "New Lead"
+          default = false
+        },
+        {
+          fullName = "Nurturing"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Partner_Type__c"
+      values = [
+        {
+          fullName = "Channel"
+          default = false
+        },
+        {
+          fullName = "GSI"
+          default = false
+        },
+        {
+          fullName = "Referral"
+          default = false
+        },
+        {
+          fullName = "Tech"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Pricing_Version__c"
+      values = [
+        {
+          fullName = "3"
+          default = false
+        },
+        {
+          fullName = "5"
+          default = false
+        },
+        {
+          fullName = "6"
+          default = false
+        },
+        {
+          fullName = "7"
+          default = true
+        },
+        {
+          fullName = "8"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Priority__c"
+      values = [
+        {
+          fullName = "I don%27t know"
+          default = false
+        },
+        {
+          fullName = "No"
+          default = false
+        },
+        {
+          fullName = "Yes"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Professional_Service_Capabilities__c"
+      values = [
+        {
+          fullName = "Consultancy"
+          default = false
+        },
+        {
+          fullName = "Custom development"
+          default = false
+        },
+        {
+          fullName = "Implementation"
+          default = false
+        },
+        {
+          fullName = "Integrations"
+          default = false
+        },
+        {
+          fullName = "Localization"
+          default = false
+        },
+        {
+          fullName = "Onboarding %26 training"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Qualified_for_Solution__c"
+      values = [
+        {
+          fullName = "Creative"
+          default = false
+        },
+        {
+          fullName = "Marketing"
+          default = false
+        },
+        {
+          fullName = "PMO"
+          default = false
+        },
+        {
+          fullName = "Sales Operations"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Rating"
+      values = [
+        {
+          fullName = "Cold"
+          default = false
+        },
+        {
+          fullName = "Hot"
+          default = false
+        },
+        {
+          fullName = "Warm"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Region__c"
+      values = [
+        {
+          fullName = "APAC"
+          default = false
+        },
+        {
+          fullName = "EMEA"
+          default = false
+        },
+        {
+          fullName = "LATAM"
+          default = false
+        },
+        {
+          fullName = "NAM"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Sync_status__c"
+      values = [
+        {
+          fullName = "Failed"
+          default = false
+        },
+        {
+          fullName = "Ready for sync"
+          default = false
+        },
+        {
+          fullName = "Succeed"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Test_1__c"
+      values = [
+        {
+          fullName = "1"
+          default = false
+        },
+        {
+          fullName = "2"
+          default = false
+        },
+        {
+          fullName = "3"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Test_2__c"
+      values = [
+        {
+          fullName = "1"
+          default = false
+        },
+        {
+          fullName = "2"
+          default = false
+        },
+        {
+          fullName = "3"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Timeline_to_Reengage__c"
+      values = [
+        {
+          fullName = "12 Months"
+          default = false
+        },
+        {
+          fullName = "3 Months"
+          default = false
+        },
+        {
+          fullName = "6 Months"
+          default = false
+        },
+        {
+          fullName = "9 Months"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Tools_in_their_Ecosystem__c"
+      values = [
+        {
+          fullName = "AWS"
+          default = false
+        },
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Atlassian"
+          default = false
+        },
+        {
+          fullName = "Azure DevOps"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Bitbucket"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Dropbox"
+          default = false
+        },
+        {
+          fullName = "Email"
+          default = false
+        },
+        {
+          fullName = "Excel"
+          default = false
+        },
+        {
+          fullName = "Git"
+          default = false
+        },
+        {
+          fullName = "GitHub"
+          default = false
+        },
+        {
+          fullName = "GitLab"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Intellij"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "MS Project"
+          default = false
+        },
+        {
+          fullName = "Mailchimp"
+          default = false
+        },
+        {
+          fullName = "MavenLink"
+          default = false
+        },
+        {
+          fullName = "Microsoft Suite"
+          default = false
+        },
+        {
+          fullName = "Microsoft Teams"
+          default = false
+        },
+        {
+          fullName = "Monday"
+          default = false
+        },
+        {
+          fullName = "NetSuite"
+          default = false
+        },
+        {
+          fullName = "Okta"
+          default = false
+        },
+        {
+          fullName = "One Note"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Outlook"
+          default = false
+        },
+        {
+          fullName = "Outreach"
+          default = false
+        },
+        {
+          fullName = "Pen %26 Paper"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "PoliteMail"
+          default = false
+        },
+        {
+          fullName = "Power BI"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Redhat"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Salesloft"
+          default = false
+        },
+        {
+          fullName = "Sharepoint"
+          default = false
+        },
+        {
+          fullName = "Sitecore"
+          default = false
+        },
+        {
+          fullName = "Skype"
+          default = false
+        },
+        {
+          fullName = "Slack"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "TFS"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Twilio"
+          default = false
+        },
+        {
+          fullName = "Typeform"
+          default = false
+        },
+        {
+          fullName = "VisualStudio"
+          default = false
+        },
+        {
+          fullName = "Whiteboard"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zapier"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+        {
+          fullName = "Zoom"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Type__c"
+      values = [
+        {
+          fullName = "New Business"
+          default = true
+        },
+        {
+          fullName = "Upsell"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Use_Cases_PL__c"
+      values = [
+        {
+          fullName = "Agile Management"
+          default = false
+        },
+        {
+          fullName = "Applicant Tracking System %28HR%29"
+          default = false
+        },
+        {
+          fullName = "Campaign Management"
+          default = false
+        },
+        {
+          fullName = "Client Projects"
+          default = false
+        },
+        {
+          fullName = "Creative and Production"
+          default = false
+        },
+        {
+          fullName = "Cross Functional Collaboration"
+          default = false
+        },
+        {
+          fullName = "Customer Success %26 Support"
+          default = false
+        },
+        {
+          fullName = "Digital Asset Management %28DAM%29"
+          default = false
+        },
+        {
+          fullName = "Event Management"
+          default = false
+        },
+        {
+          fullName = "External Teams"
+          default = false
+        },
+        {
+          fullName = "Grant Management"
+          default = false
+        },
+        {
+          fullName = "HR%2FRecruitment Process"
+          default = false
+        },
+        {
+          fullName = "IT Ticketing"
+          default = false
+        },
+        {
+          fullName = "Internal Workflows and Processes"
+          default = false
+        },
+        {
+          fullName = "Managing Budgets%2FCosts"
+          default = false
+        },
+        {
+          fullName = "Managing Requests"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Planning"
+          default = false
+        },
+        {
+          fullName = "Portfolio Management"
+          default = false
+        },
+        {
+          fullName = "Product Management"
+          default = false
+        },
+        {
+          fullName = "Project Management"
+          default = false
+        },
+        {
+          fullName = "Remote Collaboration"
+          default = false
+        },
+        {
+          fullName = "Reporting and Visibility"
+          default = false
+        },
+        {
+          fullName = "Resource Allocation"
+          default = false
+        },
+        {
+          fullName = "Sales %26 CRM"
+          default = false
+        },
+        {
+          fullName = "Tasks %26 To-do lists"
+          default = false
+        },
+        {
+          fullName = "Team Collaboration"
+          default = false
+        },
+        {
+          fullName = "Time Tracking"
+          default = false
+        },
+        {
+          fullName = "Tracking Approvals"
+          default = false
+        },
+        {
+          fullName = "Tracking Invoices"
+          default = false
+        },
+        {
+          fullName = "Work OS"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "What_else_are_they_selling__c"
+      values = [
+        {
+          fullName = "AWS"
+          default = false
+        },
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Atlassian"
+          default = false
+        },
+        {
+          fullName = "Azure DevOps"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Bitbucket"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Dropbox"
+          default = false
+        },
+        {
+          fullName = "Email"
+          default = false
+        },
+        {
+          fullName = "Excel"
+          default = false
+        },
+        {
+          fullName = "Git"
+          default = false
+        },
+        {
+          fullName = "GitHub"
+          default = false
+        },
+        {
+          fullName = "GitLab"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Intellij"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "MS Project"
+          default = false
+        },
+        {
+          fullName = "Mailchimp"
+          default = false
+        },
+        {
+          fullName = "MavenLink"
+          default = false
+        },
+        {
+          fullName = "Microsoft Suite"
+          default = false
+        },
+        {
+          fullName = "Microsoft Teams"
+          default = false
+        },
+        {
+          fullName = "Monday"
+          default = false
+        },
+        {
+          fullName = "NetSuite"
+          default = false
+        },
+        {
+          fullName = "One Note"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Outlook"
+          default = false
+        },
+        {
+          fullName = "Outreach"
+          default = false
+        },
+        {
+          fullName = "Pen %26 Paper"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "PoliteMail"
+          default = false
+        },
+        {
+          fullName = "Power BI"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Salesloft"
+          default = false
+        },
+        {
+          fullName = "Sharepoint"
+          default = false
+        },
+        {
+          fullName = "Sitecore"
+          default = false
+        },
+        {
+          fullName = "Skype"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "TFS"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Twilio"
+          default = false
+        },
+        {
+          fullName = "Typeform"
+          default = false
+        },
+        {
+          fullName = "VisualStudio"
+          default = false
+        },
+        {
+          fullName = "Whiteboard"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zapier"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoom"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Why_unqualified__c"
+      values = [
+        {
+          fullName = "Bad Geo"
+          default = false
+        },
+        {
+          fullName = "Bounced"
+          default = false
+        },
+        {
+          fullName = "COVID-19"
+          default = false
+        },
+        {
+          fullName = "Chose Competitor"
+          default = false
+        },
+        {
+          fullName = "Duplicate - same lead"
+          default = false
+        },
+        {
+          fullName = "Duplicate Lead"
+          default = false
+        },
+        {
+          fullName = "Fake Lead"
+          default = false
+        },
+        {
+          fullName = "For CS to handle"
+          default = false
+        },
+        {
+          fullName = "Long Timeline"
+          default = false
+        },
+        {
+          fullName = "Low Growth Potential"
+          default = false
+        },
+        {
+          fullName = "Missing Features"
+          default = false
+        },
+        {
+          fullName = "Mistake Trial"
+          default = false
+        },
+        {
+          fullName = "Never replied"
+          default = false
+        },
+        {
+          fullName = "No Authority"
+          default = false
+        },
+        {
+          fullName = "No Product Fit"
+          default = false
+        },
+        {
+          fullName = "No Show"
+          default = false
+        },
+        {
+          fullName = "No budget"
+          default = false
+        },
+        {
+          fullName = "Not Interested"
+          default = false
+        },
+        {
+          fullName = "Opt Out"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Personal Use"
+          default = false
+        },
+        {
+          fullName = "Request not for Sales%2FSupport"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Sent to Partner"
+          default = false
+        },
+        {
+          fullName = "Sent to partner to handle"
+          default = false
+        },
+        {
+          fullName = "Student"
+          default = false
+        },
+        {
+          fullName = "Support Request - Sent to CS"
+          default = false
+        },
+        {
+          fullName = "Test Lead"
+          default = false
+        },
+        {
+          fullName = "Wrong Lead Information"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Zone__c"
+      values = [
+        {
+          fullName = "Africa"
+          default = false
+        },
+        {
+          fullName = "Caribbean"
+          default = false
+        },
+        {
+          fullName = "Central America"
+          default = false
+        },
+        {
+          fullName = "Central Canada"
+          default = false
+        },
+        {
+          fullName = "Central US"
+          default = false
+        },
+        {
+          fullName = "East Asia"
+          default = false
+        },
+        {
+          fullName = "East Coast Canada"
+          default = false
+        },
+        {
+          fullName = "East Coast US"
+          default = false
+        },
+        {
+          fullName = "Eastern_Europe"
+          default = false
+        },
+        {
+          fullName = "Middle East"
+          default = false
+        },
+        {
+          fullName = "Oceania"
+          default = false
+        },
+        {
+          fullName = "South America"
+          default = false
+        },
+        {
+          fullName = "Southeast Asia"
+          default = false
+        },
+        {
+          fullName = "UK %2B Ireland"
+          default = false
+        },
+        {
+          fullName = "West Coast Canada"
+          default = false
+        },
+        {
+          fullName = "West Coast US"
+          default = false
+        },
+        {
+          fullName = "Western Europe"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "monday_account_status__c"
+      values = [
+        {
+          fullName = "Canceled"
+          default = false
+        },
+        {
+          fullName = "Churned"
+          default = false
+        },
+        {
+          fullName = "Free Tier"
+          default = false
+        },
+        {
+          fullName = "Paying Account"
+          default = false
+        },
+        {
+          fullName = "Trial Account"
+          default = false
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,174 @@
+salesforce.RecordType Task_LID__InMail {
+  fullName = "Task.LID__InMail"
+  active = true
+  compactLayoutAssignment = "LID__Tasks"
+  description = "Record type for LinkedIn inMails (sent to non-connections)"
+  label = "LinkedIn InMail"
+  picklistValues = [
+    {
+      picklist = "Call_Sentiment__c"
+      values = [
+        {
+          fullName = "Demo Scheduled"
+          default = false
+        },
+        {
+          fullName = "Gatekeeper - No contact with prospect"
+          default = false
+        },
+        {
+          fullName = "No Answer"
+          default = false
+        },
+        {
+          fullName = "No Interest"
+          default = false
+        },
+        {
+          fullName = "Not Relevant- Authority"
+          default = false
+        },
+        {
+          fullName = "Not Relevant- Budget"
+          default = false
+        },
+        {
+          fullName = "Not Relevant- Timeline"
+          default = false
+        },
+        {
+          fullName = "Reassigned to Partner"
+          default = false
+        },
+        {
+          fullName = "Referred to Other Contact"
+          default = false
+        },
+        {
+          fullName = "Rescheduling"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Call_Source__c"
+      values = [
+        {
+          fullName = "Aircall"
+          default = false
+        },
+        {
+          fullName = "Salesloft"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Priority"
+      values = [
+        {
+          fullName = "High"
+          default = false
+        },
+        {
+          fullName = "Low"
+          default = true
+        },
+        {
+          fullName = "Medium"
+          default = false
+        },
+        {
+          fullName = "Normal"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Status"
+      values = [
+        {
+          fullName = "Completed"
+          default = false
+        },
+        {
+          fullName = "Open"
+          default = true
+        },
+      ]
+    },
+    {
+      picklist = "Subject"
+      values = [
+        {
+          fullName = "New Task"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Type"
+      values = [
+        {
+          fullName = "CS Pass"
+          default = false
+        },
+        {
+          fullName = "Call"
+          default = false
+        },
+        {
+          fullName = "Demo"
+          default = false
+        },
+        {
+          fullName = "Email"
+          default = false
+        },
+        {
+          fullName = "Exploratory call"
+          default = false
+        },
+        {
+          fullName = "Meeting"
+          default = false
+        },
+        {
+          fullName = "Note"
+          default = false
+        },
+        {
+          fullName = "Office Hour"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Process %2F Boards Optimisation"
+          default = false
+        },
+        {
+          fullName = "QBR"
+          default = false
+        },
+        {
+          fullName = "Strategic Session"
+          default = false
+        },
+        {
+          fullName = "Task"
+          default = false
+        },
+        {
+          fullName = "Webinar"
+          default = false
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.Task,
+  ]
+}

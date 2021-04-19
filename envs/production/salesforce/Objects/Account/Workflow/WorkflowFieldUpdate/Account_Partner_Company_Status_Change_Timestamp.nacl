@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Partner_Company_Status_Change_Timestamp {
+  fullName = "Account.Partner_Company_Status_Change_Timestamp"
+  field = salesforce.Account.field.Partner_Company_Status_Change_Timestamp__c
+  formula = "TODAY()"
+  name = "Partner Company Status Change Timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

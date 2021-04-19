@@ -1,0 +1,6 @@
+salesforce.Territory2Type South_East_Asia {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  name = "South East Asia"
+  priority = 3
+  fullName = "South_East_Asia"
+}

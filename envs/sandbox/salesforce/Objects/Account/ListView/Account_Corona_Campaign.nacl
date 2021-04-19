@@ -1,0 +1,15 @@
+salesforce.ListView Account_Corona_Campaign {
+  fullName = "Account.Corona_Campaign"
+  columns = [
+    "ACCOUNT.NAME",
+    "ACCOUNT.ADDRESS1_STATE",
+    "ACCOUNT.PHONE1",
+    "ACCOUNT.TYPE",
+    "CORE.USERS.ALIAS",
+  ]
+  filterScope = "Mine"
+  label = "Corona Campaign"
+  _parent = [
+    salesforce.Account,
+  ]
+}

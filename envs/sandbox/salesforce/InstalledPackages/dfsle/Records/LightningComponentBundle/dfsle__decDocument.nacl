@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decDocument {
+  fullName = "dfsle__decDocument"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decDocument/decDocument.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decDocument/decDocument.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decDocument/decDocument.css"
+      },
+    ]
+  }
+}

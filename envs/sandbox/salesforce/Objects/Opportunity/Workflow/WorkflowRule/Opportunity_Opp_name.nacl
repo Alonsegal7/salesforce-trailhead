@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Opportunity_Opp_name {
+  fullName = "Opportunity.Opp name"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Opp_name
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "ISCHANGED(  AccountId )  || ISCHANGED(Expected_Plan_Name__c)  || ISCHANGED( Type ) || ISCHANGED( Pricing_Version__c  )"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

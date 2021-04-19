@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Account_Green_Bucket_Timestamp {
+  fullName = "Account.Green Bucket Timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Green_Bucket_Timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.Green_Bucket_Company__c
+      operation = "equals"
+      value = "True"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Account,
+  ]
+}

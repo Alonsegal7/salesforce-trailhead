@@ -1,0 +1,263 @@
+salesforce.QuickAction Lead_Relationship_Fields {
+  fullName = "Lead.Relationship_Fields"
+  label = "Relationship Fields"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Lead_created_date__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Sign_up_date__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "DB_Created_Date_without_Time__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Received_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Attempting_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Contacted_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "MQL_Timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SQL_Timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Qualified_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "unqualified_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Nurturing_Timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Sent_to_Hubspot_Timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Leftover_Timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "First_Contact_Sales_timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Last_Contact_Sales_Timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Account_Disabled_Timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SalesLoft1__Most_Recent_Cadence_Name__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Salesloft_Owner__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Received_Timestamp_DT__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Attempting_Timestamp_DT__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Contacted_Timestamp_DT__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Qualified_Timestamp_DT__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Converted_Timestamp_DT__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Unqualified_Timestamp_DT__c"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Time_to_Attempting__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "First_Touch_Time_Minutes__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Time_to_first_reach_out_mins__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Time_to_Contacted__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "First_Reachout_Timestamp__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Trial_start__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Trial_end__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Days_in_trial__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Days_left_in_trial__c"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Last_Call_Complete__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Last_SDR_Call__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Last_Meeting_Complete__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Last_Demo_Complete__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Last_Exploratory_Call__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Last_seen__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Date_of_Meeting__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Owner_edit_time__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SalesLoft1__Most_Recent_Last_Completed_Step__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "SalesLoft1__Most_Recent_Cadence_Next_Step_Due_Date__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = true
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "LastModifiedById"
+            uiBehavior = "Readonly"
+          },
+          {
+            emptySpace = false
+            field = "Chatbot_Playbook__c"
+            uiBehavior = "Readonly"
+          },
+        ]
+      },
+    ]
+  }
+  type = "Update"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

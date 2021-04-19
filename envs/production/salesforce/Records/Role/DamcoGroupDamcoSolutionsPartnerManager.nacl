@@ -1,0 +1,10 @@
+salesforce.Role DamcoGroupDamcoSolutionsPartnerManager {
+  fullName = "DamcoGroupDamcoSolutionsPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Damco Group / Damco Solutions Partner Manager"
+  mayForecastManagerShare = false
+  name = "Damco Group / Damco Solutions Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

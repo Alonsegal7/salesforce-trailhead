@@ -1,0 +1,22 @@
+<!--
+ - Created by TalGolan on 18/10/2016.
+ -->
+
+<apex:page controller="zisf.AllObjectsinOrg">
+    <!--<style>-->
+        <!--body {-->
+            <!--height: 525px !important;-->
+        <!--}-->
+    <!--</style>-->
+    <!--<apex:form >-->
+        <!--<apex:pageBlock id="pgblck">-->
+            <!--<apex:outputlabel value="Object Name" for="ObjPickList"/>           <apex:selectList value="{!ObjectSelected}" multiselect="false" id="ObjPickList" size="1">-->
+            <!--<apex:selectOptions value="{!ObjList}"/>-->
+            <!--<apex:actionSupport event="onchange"  action="{!fieldsofObject}" rerender="pgblck" />-->
+        <!--</apex:selectList><br/><br/>-->
+            <!--<apex:outputlabel value="Field Name" for="fldPickList" rendered="{!rendflag}"/>-->
+            <!--<apex:selectList value="{!fldselected}" multiselect="false" id="fldPickList" size="1" rendered="{!rendflag}">-->
+                <!--<apex:selectOptions value="{!FieldList}"/>                                 </apex:selectList>-->
+        <!--</apex:pageBlock>-->
+    <!--</apex:form>-->
+</apex:page>

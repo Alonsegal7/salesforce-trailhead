@@ -1,0 +1,101 @@
+salesforce.LightningPage Sales_UtilityBar {
+  fullName = "Sales_UtilityBar"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "eager"
+              type = "decorator"
+              value = "true"
+            },
+            {
+              name = "height"
+              type = "decorator"
+              value = "480"
+            },
+            {
+              name = "icon"
+              type = "decorator"
+              value = "call"
+            },
+            {
+              name = "label"
+              type = "decorator"
+              value = "Aircall"
+            },
+            {
+              name = "scrollable"
+              type = "decorator"
+              value = "true"
+            },
+            {
+              name = "width"
+              type = "decorator"
+              value = "340"
+            },
+          ]
+          componentName = "opencti:softPhone"
+        },
+        {
+          componentName = "notes:utilityBarNoteList"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "eager"
+              type = "decorator"
+              value = "false"
+            },
+            {
+              name = "entityNames"
+              value = "[\"Lead\",\"Opportunity\",\"Account\",\"Contact\"]"
+            },
+            {
+              name = "height"
+              type = "decorator"
+              value = "480"
+            },
+            {
+              name = "icon"
+              type = "decorator"
+              value = "fallback"
+            },
+            {
+              name = "label"
+              type = "decorator"
+              value = "Recent Items"
+            },
+            {
+              name = "maxRecords"
+              value = "3"
+            },
+            {
+              name = "scrollable"
+              type = "decorator"
+              value = "true"
+            },
+            {
+              name = "width"
+              type = "decorator"
+              value = "340"
+            },
+          ]
+          componentName = "flexipage:recentItems"
+        },
+      ]
+      name = "utilityItems"
+      type = "Region"
+    },
+    {
+      name = "backgroundComponents"
+      type = "Background"
+    },
+  ]
+  masterLabel = "Sales UtilityBar"
+  template = {
+    name = "one:utilityBarTemplateDesktop"
+  }
+  type = "UtilityBar"
+}

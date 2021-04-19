@@ -1,0 +1,26 @@
+type salesforce.ReputationLevel {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  salesforce.ReputationBranding branding {
+    _required = false
+  }
+  string label {
+    _required = false
+  }
+  number lowerThreshold {
+    _required = false
+  }
+  metadataType = "ReputationLevel"
+}

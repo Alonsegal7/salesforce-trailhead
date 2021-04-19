@@ -1,0 +1,7 @@
+salesforce.RemoteSiteSetting yw__app_yesware_com {
+  fullName = "yw__app_yesware_com"
+  description = "Used for Apex callout to Yesware Event sync"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://app.yesware.com"
+}

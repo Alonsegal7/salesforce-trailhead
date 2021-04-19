@@ -1,0 +1,6 @@
+salesforce.CustomTab LSNLY__Lessonly_Settings {
+  fullName = "LSNLY__Lessonly_Settings"
+  label = "Lessonly Settings"
+  motif = "Custom67: Gears"
+  page = "LSNLY__AdminSettings"
+}

@@ -1,0 +1,30 @@
+salesforce.ContentAsset cover_image_11 {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  isVisibleByExternalUsers = false
+  language = "en_US"
+  masterLabel = "cover_image_11"
+  originNetwork = "Monday Partners Portal"
+  relationships = [
+    {
+      network = {
+        access = "VIEWER"
+        name = "Monday Partners Portal"
+      }
+      workspace = {
+        access = "INFERRED"
+        isManagingWorkspace = true
+        name = "sfdc_asset_company_assets"
+      }
+    },
+  ]
+  versions = {
+    version = [
+      {
+        number = "1"
+        pathOnClient = "cover image (1).png"
+      },
+    ]
+  }
+  fullName = "cover_image_11"
+  content = file("salesforce/Records/ContentAsset/cover_image_11.asset")
+}

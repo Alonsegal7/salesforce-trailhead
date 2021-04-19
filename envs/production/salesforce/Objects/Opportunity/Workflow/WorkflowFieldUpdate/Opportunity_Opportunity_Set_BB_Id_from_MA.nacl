@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Opportunity_Set_BB_Id_from_MA {
+  fullName = "Opportunity.Opportunity_Set_BB_Id_from_MA"
+  field = salesforce.Opportunity.field.primary_pulse_account_id__c
+  formula = "Account.primary_pulse_account_id__c"
+  name = "Opportunity - Set BB Id from MA"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

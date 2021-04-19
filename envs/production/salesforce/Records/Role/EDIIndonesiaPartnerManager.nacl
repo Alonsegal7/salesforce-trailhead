@@ -1,0 +1,10 @@
+salesforce.Role EDIIndonesiaPartnerManager {
+  fullName = "EDIIndonesiaPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "EDI Indonesia Partner Manager"
+  mayForecastManagerShare = false
+  name = "EDI Indonesia Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

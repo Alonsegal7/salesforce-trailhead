@@ -1,0 +1,32 @@
+salesforce.CustomApplication valt__Valooto {
+  fullName = "valt__Valooto"
+  defaultLandingTab = "valt__Setup"
+  formFactors = [
+    "Large",
+  ]
+  isNavAutoTempTabsDisabled = false
+  isNavPersonalizationDisabled = false
+  label = "Valooto"
+  tabs = [
+    salesforce.CustomTab.instance.valt__Setup,
+    salesforce.CustomTab.instance.valt__Valooto,
+    "standard-Account",
+    "standard-Contact",
+    "standard-Dashboard",
+    "standard-Opportunity",
+    "standard-Pricebook2",
+    "standard-Order",
+    "standard-Product2",
+    salesforce.CustomTab.instance.Round_Robin__c,
+    salesforce.CustomTab.instance.Project__c,
+    salesforce.CustomTab.instance.Queue__c,
+    salesforce.CustomTab.instance.Allocation__c,
+    salesforce.CustomTab.instance.Billing_Entity__c,
+    salesforce.CustomTab.instance.Milestone__c,
+    salesforce.CustomTab.instance.StoryLogSnapshot__c,
+    salesforce.CustomTab.instance.Subscription__c,
+    salesforce.CustomTab.instance.Lead_Registration__c,
+    salesforce.CustomTab.instance.Professional_Service_Request__c,
+    salesforce.CustomTab.instance.GB_Threshold__c,
+  ]
+}

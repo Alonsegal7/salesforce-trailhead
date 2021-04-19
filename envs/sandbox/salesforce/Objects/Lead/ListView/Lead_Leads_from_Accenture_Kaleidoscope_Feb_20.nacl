@@ -1,0 +1,33 @@
+salesforce.ListView Lead_Leads_from_Accenture_Kaleidoscope_Feb_20 {
+  fullName = "Lead.Leads_from_Accenture_Kaleidoscope_Feb_20"
+  columns = [
+    "CORE.USERS.FIRST_NAME",
+    "LEAD.CREATED_DATE",
+    "Lead_name__c",
+    "LEAD.STATUS",
+    "Related_Company__c",
+    "LEAD.COUNTRY",
+    "LEAD.EMAIL",
+    "LEAD.RECORDTYPE",
+    "FULL_NAME",
+    "LEAD.TITLE",
+    "LEAD.LEAD_SOURCE",
+    "Why_unqualified__c",
+    "Event_Name__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Event_Name__c"
+      operation = "contains"
+      value = "Accenture"
+    },
+  ]
+  label = "Leads from Accenture Kaleidoscope Feb 20"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

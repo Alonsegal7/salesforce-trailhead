@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Target__c_Set_Target_Name {
+  fullName = "Target__c.Set Target Name"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Target__c_Set_Target_Name
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "isnew()||ischanged( Target_Date__c  ) || ischanged( User__c )|| ischanged( Period__c )"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Target__c,
+  ]
+}

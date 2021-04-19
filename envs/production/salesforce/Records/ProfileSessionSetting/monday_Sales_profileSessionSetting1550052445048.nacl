@@ -1,0 +1,9 @@
+salesforce.ProfileSessionSetting monday_Sales_profileSessionSetting1550052445048 {
+  fullName = "monday_Sales_profileSessionSetting1550052445048"
+  externalCommunityUserIdentityVerif = false
+  forceLogout = false
+  profile = "monday sales"
+  sessionPersistence = false
+  sessionTimeout = 0
+  sessionTimeoutWarning = false
+}

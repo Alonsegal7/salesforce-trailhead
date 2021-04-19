@@ -1,0 +1,8 @@
+salesforce.RecordType Survey__c_CSAT {
+  fullName = "Survey__c.CSAT"
+  active = true
+  label = "CSAT"
+  _parent = [
+    salesforce.Survey__c,
+  ]
+}

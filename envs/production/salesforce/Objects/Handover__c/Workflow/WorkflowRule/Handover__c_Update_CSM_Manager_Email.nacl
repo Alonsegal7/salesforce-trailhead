@@ -1,0 +1,20 @@
+salesforce.WorkflowRule Handover__c_Update_CSM_Manager_Email {
+  fullName = "Handover__c.Update CSM Manager Email"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Handover__c_Update_CSM_Manager_Email
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Handover__c.field.CSM__c
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Handover__c,
+  ]
+}

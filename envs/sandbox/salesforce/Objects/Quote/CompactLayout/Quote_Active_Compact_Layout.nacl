@@ -1,0 +1,15 @@
+salesforce.CompactLayout Quote_Active_Compact_Layout {
+  fullName = "Quote.Active_Compact_Layout"
+  fields = [
+    "QuoteNumber",
+    "IsSyncing",
+    "OpportunityId",
+    "AccountId",
+    "ARR__c",
+    "Status",
+  ]
+  label = "Active Compact Layout"
+  _parent = [
+    salesforce.Quote,
+  ]
+}

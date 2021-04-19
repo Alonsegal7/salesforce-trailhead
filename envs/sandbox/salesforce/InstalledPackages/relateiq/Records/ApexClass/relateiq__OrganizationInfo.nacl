@@ -1,0 +1,7 @@
+salesforce.ApexClass relateiq__OrganizationInfo {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 39
+  status = "Active"
+  fullName = "relateiq__OrganizationInfo"
+  content = file("salesforce/InstalledPackages/relateiq/Records/ApexClass/relateiq__OrganizationInfo.cls")
+}

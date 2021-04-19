@@ -1,0 +1,67 @@
+salesforce.GlobalValueSet Time_Zones {
+  fullName = "Time_Zones"
+  customValue = [
+    {
+      fullName = "Australia"
+      default = false
+      label = "Australia"
+    },
+    {
+      fullName = "Central Asia"
+      default = false
+      label = "Central Asia"
+    },
+    {
+      fullName = "Central Europe"
+      default = false
+      label = "Central Europe"
+    },
+    {
+      fullName = "China"
+      default = false
+      label = "China"
+    },
+    {
+      fullName = "Eastern Asia"
+      default = false
+      label = "Eastern Asia"
+    },
+    {
+      fullName = "Eastern Europe"
+      default = false
+      label = "Eastern Europe"
+    },
+    {
+      fullName = "Middle East"
+      default = false
+      label = "Middle East"
+    },
+    {
+      fullName = "CST"
+      default = false
+      label = "US - CST"
+    },
+    {
+      fullName = "EST"
+      default = false
+      label = "US - EST"
+    },
+    {
+      fullName = "MST"
+      default = false
+      label = "US - MST"
+    },
+    {
+      fullName = "PST"
+      default = false
+      label = "US - PST"
+    },
+    {
+      fullName = "Western Europe"
+      default = false
+      label = "Western Europe"
+    },
+  ]
+  masterLabel = "Time Zones"
+  sorted = false
+}

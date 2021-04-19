@@ -1,0 +1,51 @@
+type salesforce.zaapit__ZaapIT_Global_Settings__c {
+  annotations {
+    serviceid apiName {
+    }
+    serviceid metadataType {
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  }
+  apiName = "zaapit__ZaapIT_Global_Settings__c"
+  metadataType = "CustomObject"
+  label = "ZaapIT Settings"
+  
+  
+  
+  
+}

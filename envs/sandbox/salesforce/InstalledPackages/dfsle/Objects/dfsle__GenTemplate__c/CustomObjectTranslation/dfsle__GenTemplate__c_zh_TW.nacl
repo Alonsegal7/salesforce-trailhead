@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__GenTemplate__c_zh_TW {
+  fullName = "dfsle__GenTemplate__c-zh_TW"
+  _parent = [
+    salesforce.dfsle__GenTemplate__c,
+  ]
+}

@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Target__c_Update_Target_Unique_Key {
+  fullName = "Target__c.Update_Target_Unique_Key"
+  field = salesforce.Target__c.field.Target_Unique_Key__c
+  formula = "Target_Key__c"
+  name = "Update Target Unique Key"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Target__c,
+  ]
+}

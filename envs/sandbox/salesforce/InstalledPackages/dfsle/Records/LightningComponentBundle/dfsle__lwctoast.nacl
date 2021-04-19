@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__lwctoast {
+  fullName = "dfsle__lwctoast"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/lwctoast/lwctoast.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/lwctoast/lwctoast.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/lwctoast/lwctoast.html"
+      },
+    ]
+  }
+}

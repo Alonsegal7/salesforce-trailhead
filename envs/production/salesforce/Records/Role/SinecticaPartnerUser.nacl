@@ -1,0 +1,10 @@
+salesforce.Role SinecticaPartnerUser {
+  fullName = "SinecticaPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Sinectica Partner User"
+  mayForecastManagerShare = false
+  name = "Sinectica Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

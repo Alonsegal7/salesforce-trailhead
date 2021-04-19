@@ -1,0 +1,50 @@
+type salesforce.Contact {
+  salesforce.Currency rh2__Currency_Test__c {
+    apiName = "Contact.rh2__Currency_Test__c"
+    label = "Currency Test"
+    _required = false
+    inlineHelpText = "Test Description"
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+    description = "Test Description"
+  }
+  salesforce.Lookup rh2__Describe__c {
+    apiName = "Contact.rh2__Describe__c"
+    label = "Describe"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.rh2__PS_Describe__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCurrency rh2__Formula_Test__c {
+    apiName = "Contact.rh2__Formula_Test__c"
+    label = "Formula Test"
+    _required = false
+    formula = "rh2__Currency_Test__c"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number rh2__Integer_Test__c {
+    apiName = "Contact.rh2__Integer_Test__c"
+    label = "Integer Test"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+}

@@ -1,0 +1,17 @@
+salesforce.ContentAsset firma {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  isVisibleByExternalUsers = true
+  language = "en_US"
+  masterLabel = "firma"
+  originNetwork = "Monday Partners Portal"
+  versions = {
+    version = [
+      {
+        number = "1"
+        pathOnClient = "firma.png"
+      },
+    ]
+  }
+  fullName = "firma"
+  content = file("salesforce/Records/ContentAsset/firma.asset")
+}

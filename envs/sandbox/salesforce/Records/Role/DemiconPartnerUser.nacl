@@ -1,0 +1,10 @@
+salesforce.Role DemiconPartnerUser {
+  fullName = "DemiconPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Demicon Partner User"
+  mayForecastManagerShare = false
+  name = "Demicon Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.DemiconPartnerManager
+}

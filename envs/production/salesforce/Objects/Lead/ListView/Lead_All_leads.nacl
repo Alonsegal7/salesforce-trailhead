@@ -1,0 +1,35 @@
+salesforce.ListView Lead_All_leads {
+  fullName = "Lead.All_leads"
+  columns = [
+    "Lead_created_date__c",
+    "CORE.USERS.FIRST_NAME",
+    "LEAD.STATUS",
+    "Why_unqualified__c",
+    "of_employees__c",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "Related_Company__c",
+    "LEAD.PHONE",
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "Channel__c",
+    "LEAD.COUNTRY_CODE",
+    "Distributed_score__c",
+    "Number_of_titles_added__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "equals"
+      value = "CS Pass"
+    },
+  ]
+  label = "All leads"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

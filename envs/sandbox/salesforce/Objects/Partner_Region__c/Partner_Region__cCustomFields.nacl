@@ -1,0 +1,1289 @@
+type salesforce.Partner_Region__c {
+  salesforce.MasterDetail Partner_Company__c {
+    apiName = "Partner_Region__c.Partner_Company__c"
+    label = "Partner Company"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.Picklist Country__c {
+    apiName = "Partner_Region__c.Country__c"
+    label = "Country"
+    _required = false
+    valueSet = [
+      {
+        fullName = "A1"
+        default = false
+        label = "A1"
+      },
+      {
+        fullName = "AD"
+        default = false
+        label = "AD"
+      },
+      {
+        fullName = "AE"
+        default = false
+        label = "AE"
+      },
+      {
+        fullName = "AF"
+        default = false
+        label = "AF"
+      },
+      {
+        fullName = "AG"
+        default = false
+        label = "AG"
+      },
+      {
+        fullName = "AI"
+        default = false
+        label = "AI"
+      },
+      {
+        fullName = "AL"
+        default = false
+        label = "AL"
+      },
+      {
+        fullName = "AM"
+        default = false
+        label = "AM"
+      },
+      {
+        fullName = "AO"
+        default = false
+        label = "AO"
+      },
+      {
+        fullName = "AP"
+        default = false
+        label = "AP"
+      },
+      {
+        fullName = "AR"
+        default = false
+        label = "AR"
+      },
+      {
+        fullName = "AS"
+        default = false
+        label = "AS"
+      },
+      {
+        fullName = "AT"
+        default = false
+        label = "AT"
+      },
+      {
+        fullName = "AU"
+        default = false
+        label = "AU"
+      },
+      {
+        fullName = "AW"
+        default = false
+        label = "AW"
+      },
+      {
+        fullName = "AX"
+        default = false
+        label = "AX"
+      },
+      {
+        fullName = "AZ"
+        default = false
+        label = "AZ"
+      },
+      {
+        fullName = "BA"
+        default = false
+        label = "BA"
+      },
+      {
+        fullName = "BB"
+        default = false
+        label = "BB"
+      },
+      {
+        fullName = "BD"
+        default = false
+        label = "BD"
+      },
+      {
+        fullName = "BE"
+        default = false
+        label = "BE"
+      },
+      {
+        fullName = "BF"
+        default = false
+        label = "BF"
+      },
+      {
+        fullName = "BG"
+        default = false
+        label = "BG"
+      },
+      {
+        fullName = "BH"
+        default = false
+        label = "BH"
+      },
+      {
+        fullName = "BI"
+        default = false
+        label = "BI"
+      },
+      {
+        fullName = "BJ"
+        default = false
+        label = "BJ"
+      },
+      {
+        fullName = "BM"
+        default = false
+        label = "BM"
+      },
+      {
+        fullName = "BN"
+        default = false
+        label = "BN"
+      },
+      {
+        fullName = "BO"
+        default = false
+        label = "BO"
+      },
+      {
+        fullName = "BQ"
+        default = false
+        label = "BQ"
+      },
+      {
+        fullName = "BR"
+        default = false
+        label = "BR"
+      },
+      {
+        fullName = "BS"
+        default = false
+        label = "BS"
+      },
+      {
+        fullName = "BT"
+        default = false
+        label = "BT"
+      },
+      {
+        fullName = "BW"
+        default = false
+        label = "BW"
+      },
+      {
+        fullName = "BY"
+        default = false
+        label = "BY"
+      },
+      {
+        fullName = "BZ"
+        default = false
+        label = "BZ"
+      },
+      {
+        fullName = "CA"
+        default = false
+        label = "CA"
+      },
+      {
+        fullName = "CD"
+        default = false
+        label = "CD"
+      },
+      {
+        fullName = "CF"
+        default = false
+        label = "CF"
+      },
+      {
+        fullName = "CG"
+        default = false
+        label = "CG"
+      },
+      {
+        fullName = "CH"
+        default = false
+        label = "CH"
+      },
+      {
+        fullName = "CI"
+        default = false
+        label = "CI"
+      },
+      {
+        fullName = "CK"
+        default = false
+        label = "CK"
+      },
+      {
+        fullName = "CL"
+        default = false
+        label = "CL"
+      },
+      {
+        fullName = "CM"
+        default = false
+        label = "CM"
+      },
+      {
+        fullName = "CN"
+        default = false
+        label = "CN"
+      },
+      {
+        fullName = "CO"
+        default = false
+        label = "CO"
+      },
+      {
+        fullName = "CR"
+        default = false
+        label = "CR"
+      },
+      {
+        fullName = "CU"
+        default = false
+        label = "CU"
+      },
+      {
+        fullName = "CV"
+        default = false
+        label = "CV"
+      },
+      {
+        fullName = "CW"
+        default = false
+        label = "CW"
+      },
+      {
+        fullName = "CY"
+        default = false
+        label = "CY"
+      },
+      {
+        fullName = "CZ"
+        default = false
+        label = "CZ"
+      },
+      {
+        fullName = "DE"
+        default = false
+        label = "DE"
+      },
+      {
+        fullName = "DJ"
+        default = false
+        label = "DJ"
+      },
+      {
+        fullName = "DK"
+        default = false
+        label = "DK"
+      },
+      {
+        fullName = "DM"
+        default = false
+        label = "DM"
+      },
+      {
+        fullName = "DO"
+        default = false
+        label = "DO"
+      },
+      {
+        fullName = "DZ"
+        default = false
+        label = "DZ"
+      },
+      {
+        fullName = "EC"
+        default = false
+        label = "EC"
+      },
+      {
+        fullName = "EE"
+        default = false
+        label = "EE"
+      },
+      {
+        fullName = "EG"
+        default = false
+        label = "EG"
+      },
+      {
+        fullName = "ES"
+        default = false
+        label = "ES"
+      },
+      {
+        fullName = "ET"
+        default = false
+        label = "ET"
+      },
+      {
+        fullName = "EU"
+        default = false
+        label = "EU"
+      },
+      {
+        fullName = "FI"
+        default = false
+        label = "FI"
+      },
+      {
+        fullName = "FJ"
+        default = false
+        label = "FJ"
+      },
+      {
+        fullName = "FM"
+        default = false
+        label = "FM"
+      },
+      {
+        fullName = "FO"
+        default = false
+        label = "FO"
+      },
+      {
+        fullName = "FR"
+        default = false
+        label = "FR"
+      },
+      {
+        fullName = "GA"
+        default = false
+        label = "GA"
+      },
+      {
+        fullName = "GB"
+        default = false
+        label = "GB"
+      },
+      {
+        fullName = "GD"
+        default = false
+        label = "GD"
+      },
+      {
+        fullName = "GE"
+        default = false
+        label = "GE"
+      },
+      {
+        fullName = "GF"
+        default = false
+        label = "GF"
+      },
+      {
+        fullName = "GG"
+        default = false
+        label = "GG"
+      },
+      {
+        fullName = "GH"
+        default = false
+        label = "GH"
+      },
+      {
+        fullName = "GI"
+        default = false
+        label = "GI"
+      },
+      {
+        fullName = "GL"
+        default = false
+        label = "GL"
+      },
+      {
+        fullName = "GM"
+        default = false
+        label = "GM"
+      },
+      {
+        fullName = "GN"
+        default = false
+        label = "GN"
+      },
+      {
+        fullName = "GP"
+        default = false
+        label = "GP"
+      },
+      {
+        fullName = "GQ"
+        default = false
+        label = "GQ"
+      },
+      {
+        fullName = "GR"
+        default = false
+        label = "GR"
+      },
+      {
+        fullName = "GT"
+        default = false
+        label = "GT"
+      },
+      {
+        fullName = "GU"
+        default = false
+        label = "GU"
+      },
+      {
+        fullName = "GW"
+        default = false
+        label = "GW"
+      },
+      {
+        fullName = "GY"
+        default = false
+        label = "GY"
+      },
+      {
+        fullName = "HK"
+        default = false
+        label = "HK"
+      },
+      {
+        fullName = "HN"
+        default = false
+        label = "HN"
+      },
+      {
+        fullName = "HR"
+        default = false
+        label = "HR"
+      },
+      {
+        fullName = "HT"
+        default = false
+        label = "HT"
+      },
+      {
+        fullName = "HU"
+        default = false
+        label = "HU"
+      },
+      {
+        fullName = "ID"
+        default = false
+        label = "ID"
+      },
+      {
+        fullName = "IE"
+        default = false
+        label = "IE"
+      },
+      {
+        fullName = "IL"
+        default = false
+        label = "IL"
+      },
+      {
+        fullName = "IM"
+        default = false
+        label = "IM"
+      },
+      {
+        fullName = "IN"
+        default = false
+        label = "IN"
+      },
+      {
+        fullName = "IQ"
+        default = false
+        label = "IQ"
+      },
+      {
+        fullName = "IR"
+        default = false
+        label = "IR"
+      },
+      {
+        fullName = "IS"
+        default = false
+        label = "IS"
+      },
+      {
+        fullName = "IT"
+        default = false
+        label = "IT"
+      },
+      {
+        fullName = "JE"
+        default = false
+        label = "JE"
+      },
+      {
+        fullName = "JM"
+        default = false
+        label = "JM"
+      },
+      {
+        fullName = "JO"
+        default = false
+        label = "JO"
+      },
+      {
+        fullName = "JP"
+        default = false
+        label = "JP"
+      },
+      {
+        fullName = "KE"
+        default = false
+        label = "KE"
+      },
+      {
+        fullName = "KG"
+        default = false
+        label = "KG"
+      },
+      {
+        fullName = "KH"
+        default = false
+        label = "KH"
+      },
+      {
+        fullName = "KI"
+        default = false
+        label = "KI"
+      },
+      {
+        fullName = "KM"
+        default = false
+        label = "KM"
+      },
+      {
+        fullName = "KN"
+        default = false
+        label = "KN"
+      },
+      {
+        fullName = "KR"
+        default = false
+        label = "KR"
+      },
+      {
+        fullName = "KW"
+        default = false
+        label = "KW"
+      },
+      {
+        fullName = "KY"
+        default = false
+        label = "KY"
+      },
+      {
+        fullName = "KZ"
+        default = false
+        label = "KZ"
+      },
+      {
+        fullName = "LA"
+        default = false
+        label = "LA"
+      },
+      {
+        fullName = "LB"
+        default = false
+        label = "LB"
+      },
+      {
+        fullName = "LC"
+        default = false
+        label = "LC"
+      },
+      {
+        fullName = "LI"
+        default = false
+        label = "LI"
+      },
+      {
+        fullName = "LK"
+        default = false
+        label = "LK"
+      },
+      {
+        fullName = "LR"
+        default = false
+        label = "LR"
+      },
+      {
+        fullName = "LS"
+        default = false
+        label = "LS"
+      },
+      {
+        fullName = "LT"
+        default = false
+        label = "LT"
+      },
+      {
+        fullName = "LU"
+        default = false
+        label = "LU"
+      },
+      {
+        fullName = "LV"
+        default = false
+        label = "LV"
+      },
+      {
+        fullName = "LY"
+        default = false
+        label = "LY"
+      },
+      {
+        fullName = "MA"
+        default = false
+        label = "MA"
+      },
+      {
+        fullName = "MC"
+        default = false
+        label = "MC"
+      },
+      {
+        fullName = "MD"
+        default = false
+        label = "MD"
+      },
+      {
+        fullName = "ME"
+        default = false
+        label = "ME"
+      },
+      {
+        fullName = "MF"
+        default = false
+        label = "MF"
+      },
+      {
+        fullName = "MG"
+        default = false
+        label = "MG"
+      },
+      {
+        fullName = "MH"
+        default = false
+        label = "MH"
+      },
+      {
+        fullName = "MK"
+        default = false
+        label = "MK"
+      },
+      {
+        fullName = "ML"
+        default = false
+        label = "ML"
+      },
+      {
+        fullName = "MM"
+        default = false
+        label = "MM"
+      },
+      {
+        fullName = "MN"
+        default = false
+        label = "MN"
+      },
+      {
+        fullName = "MO"
+        default = false
+        label = "MO"
+      },
+      {
+        fullName = "MP"
+        default = false
+        label = "MP"
+      },
+      {
+        fullName = "MQ"
+        default = false
+        label = "MQ"
+      },
+      {
+        fullName = "MR"
+        default = false
+        label = "MR"
+      },
+      {
+        fullName = "MT"
+        default = false
+        label = "MT"
+      },
+      {
+        fullName = "MU"
+        default = false
+        label = "MU"
+      },
+      {
+        fullName = "MV"
+        default = false
+        label = "MV"
+      },
+      {
+        fullName = "MW"
+        default = false
+        label = "MW"
+      },
+      {
+        fullName = "MX"
+        default = false
+        label = "MX"
+      },
+      {
+        fullName = "MY"
+        default = false
+        label = "MY"
+      },
+      {
+        fullName = "MZ"
+        default = false
+        label = "MZ"
+      },
+      {
+        fullName = "NA"
+        default = false
+        label = "NA"
+      },
+      {
+        fullName = "NC"
+        default = false
+        label = "NC"
+      },
+      {
+        fullName = "NE"
+        default = false
+        label = "NE"
+      },
+      {
+        fullName = "NG"
+        default = false
+        label = "NG"
+      },
+      {
+        fullName = "NI"
+        default = false
+        label = "NI"
+      },
+      {
+        fullName = "NL"
+        default = false
+        label = "NL"
+      },
+      {
+        fullName = "NO"
+        default = false
+        label = "NO"
+      },
+      {
+        fullName = "NP"
+        default = false
+        label = "NP"
+      },
+      {
+        fullName = "NU"
+        default = false
+        label = "NU"
+      },
+      {
+        fullName = "NZ"
+        default = false
+        label = "NZ"
+      },
+      {
+        fullName = "OM"
+        default = false
+        label = "OM"
+      },
+      {
+        fullName = "PA"
+        default = false
+        label = "PA"
+      },
+      {
+        fullName = "PE"
+        default = false
+        label = "PE"
+      },
+      {
+        fullName = "PF"
+        default = false
+        label = "PF"
+      },
+      {
+        fullName = "PG"
+        default = false
+        label = "PG"
+      },
+      {
+        fullName = "PH"
+        default = false
+        label = "PH"
+      },
+      {
+        fullName = "PK"
+        default = false
+        label = "PK"
+      },
+      {
+        fullName = "PL"
+        default = false
+        label = "PL"
+      },
+      {
+        fullName = "PR"
+        default = false
+        label = "PR"
+      },
+      {
+        fullName = "PS"
+        default = false
+        label = "PS"
+      },
+      {
+        fullName = "PT"
+        default = false
+        label = "PT"
+      },
+      {
+        fullName = "PW"
+        default = false
+        label = "PW"
+      },
+      {
+        fullName = "PY"
+        default = false
+        label = "PY"
+      },
+      {
+        fullName = "QA"
+        default = false
+        label = "QA"
+      },
+      {
+        fullName = "RE"
+        default = false
+        label = "RE"
+      },
+      {
+        fullName = "RO"
+        default = false
+        label = "RO"
+      },
+      {
+        fullName = "RS"
+        default = false
+        label = "RS"
+      },
+      {
+        fullName = "RU"
+        default = false
+        label = "RU"
+      },
+      {
+        fullName = "RW"
+        default = false
+        label = "RW"
+      },
+      {
+        fullName = "SA"
+        default = false
+        label = "SA"
+      },
+      {
+        fullName = "SB"
+        default = false
+        label = "SB"
+      },
+      {
+        fullName = "SC"
+        default = false
+        label = "SC"
+      },
+      {
+        fullName = "SD"
+        default = false
+        label = "SD"
+      },
+      {
+        fullName = "SE"
+        default = false
+        label = "SE"
+      },
+      {
+        fullName = "SG"
+        default = false
+        label = "SG"
+      },
+      {
+        fullName = "SI"
+        default = false
+        label = "SI"
+      },
+      {
+        fullName = "SJ"
+        default = false
+        label = "SJ"
+      },
+      {
+        fullName = "SK"
+        default = false
+        label = "SK"
+      },
+      {
+        fullName = "SL"
+        default = false
+        label = "SL"
+      },
+      {
+        fullName = "SM"
+        default = false
+        label = "SM"
+      },
+      {
+        fullName = "SN"
+        default = false
+        label = "SN"
+      },
+      {
+        fullName = "SO"
+        default = false
+        label = "SO"
+      },
+      {
+        fullName = "SR"
+        default = false
+        label = "SR"
+      },
+      {
+        fullName = "SS"
+        default = false
+        label = "SS"
+      },
+      {
+        fullName = "ST"
+        default = false
+        label = "ST"
+      },
+      {
+        fullName = "SV"
+        default = false
+        label = "SV"
+      },
+      {
+        fullName = "SX"
+        default = false
+        label = "SX"
+      },
+      {
+        fullName = "SY"
+        default = false
+        label = "SY"
+      },
+      {
+        fullName = "SZ"
+        default = false
+        label = "SZ"
+      },
+      {
+        fullName = "TC"
+        default = false
+        label = "TC"
+      },
+      {
+        fullName = "TD"
+        default = false
+        label = "TD"
+      },
+      {
+        fullName = "TG"
+        default = false
+        label = "TG"
+      },
+      {
+        fullName = "TH"
+        default = false
+        label = "TH"
+      },
+      {
+        fullName = "TJ"
+        default = false
+        label = "TJ"
+      },
+      {
+        fullName = "TL"
+        default = false
+        label = "TL"
+      },
+      {
+        fullName = "TM"
+        default = false
+        label = "TM"
+      },
+      {
+        fullName = "TN"
+        default = false
+        label = "TN"
+      },
+      {
+        fullName = "TO"
+        default = false
+        label = "TO"
+      },
+      {
+        fullName = "TR"
+        default = false
+        label = "TR"
+      },
+      {
+        fullName = "TT"
+        default = false
+        label = "TT"
+      },
+      {
+        fullName = "TW"
+        default = false
+        label = "TW"
+      },
+      {
+        fullName = "TZ"
+        default = false
+        label = "TZ"
+      },
+      {
+        fullName = "UA"
+        default = false
+        label = "UA"
+      },
+      {
+        fullName = "UG"
+        default = false
+        label = "UG"
+      },
+      {
+        fullName = "US"
+        default = false
+        label = "US"
+      },
+      {
+        fullName = "UY"
+        default = false
+        label = "UY"
+      },
+      {
+        fullName = "UZ"
+        default = false
+        label = "UZ"
+      },
+      {
+        fullName = "VC"
+        default = false
+        label = "VC"
+      },
+      {
+        fullName = "VE"
+        default = false
+        label = "VE"
+      },
+      {
+        fullName = "VG"
+        default = false
+        label = "VG"
+      },
+      {
+        fullName = "VI"
+        default = false
+        label = "VI"
+      },
+      {
+        fullName = "VN"
+        default = false
+        label = "VN"
+      },
+      {
+        fullName = "VU"
+        default = false
+        label = "VU"
+      },
+      {
+        fullName = "WS"
+        default = false
+        label = "WS"
+      },
+      {
+        fullName = "XK"
+        default = false
+        label = "XK"
+      },
+      {
+        fullName = "YE"
+        default = false
+        label = "YE"
+      },
+      {
+        fullName = "YT"
+        default = false
+        label = "YT"
+      },
+      {
+        fullName = "ZA"
+        default = false
+        label = "ZA"
+      },
+      {
+        fullName = "ZM"
+        default = false
+        label = "ZM"
+      },
+      {
+        fullName = "ZW"
+        default = false
+        label = "ZW"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Lookup Main_User__c {
+    apiName = "Partner_Region__c.Main_User__c"
+    label = "Main User"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text BigBrain_Id__c {
+    apiName = "Partner_Region__c.BigBrain_Id__c"
+    label = "BigBrain Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Daily_Leads_Quota__c {
+    apiName = "Partner_Region__c.Daily_Leads_Quota__c"
+    label = "Daily Leads Quota"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Is_Leadpool_Priority__c {
+    apiName = "Partner_Region__c.Is_Leadpool_Priority__c"
+    label = "Partners Leadpool Priority"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text UTM_Campaign__c {
+    apiName = "Partner_Region__c.UTM_Campaign__c"
+    label = "UTM Campaign"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Region_Creation_Date__c {
+    apiName = "Partner_Region__c.Region_Creation_Date__c"
+    label = "Region Creation Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Active_Region__c {
+    apiName = "Partner_Region__c.Active_Region__c"
+    label = "Active Region"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Type__c {
+    apiName = "Partner_Region__c.Type__c"
+    label = "Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Channel"
+        default = true
+        label = "Channel"
+      },
+      {
+        fullName = "GSI"
+        default = false
+        label = "GSI"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.TextArea Last_Generated_UTM_Link__c {
+    apiName = "Partner_Region__c.Last_Generated_UTM_Link__c"
+    label = "Last Generated UTM Link"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Main_User_Email__c {
+    apiName = "Partner_Region__c.Main_User_Email__c"
+    label = "Main User Email"
+    _required = false
+    formula = "Main_User__r.Email"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+}

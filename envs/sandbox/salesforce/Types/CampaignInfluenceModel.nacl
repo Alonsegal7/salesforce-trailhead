@@ -1,0 +1,52 @@
+type salesforce.CampaignInfluenceModel {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  serviceid fullName {
+    _required = false
+  }
+  boolean isActive {
+    _required = false
+  }
+  boolean isDefaultModel {
+    _required = false
+  }
+  boolean isModelLocked {
+    _required = false
+  }
+  string modelDescription {
+    _required = false
+  }
+  string name {
+    _required = false
+  }
+  string recordPreference {
+    _required = false
+    _restriction = {
+      enforce_value = false
+      values = [
+        "AllRecords",
+        "RecordsWithAttribution",
+      ]
+    }
+  }
+  string internalId {
+    _required = false
+    _hidden = true
+    localOnly = true
+  }
+  suffix = "campaignInfluenceModel"
+  dirName = "campaignInfluenceModels"
+  metadataType = "CampaignInfluenceModel"
+}

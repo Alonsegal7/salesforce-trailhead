@@ -1,0 +1,481 @@
+salesforce.CustomObjectTranslation Activity_en_US {
+  fullName = "Activity-en_US"
+  fields = [
+    {
+      caseValues = {
+        plural = "false"
+        value = "Lead / Contact"
+      }
+      name = "name_activity"
+      startsWith = "Consonant"
+    },
+    {
+      caseValues = {
+        plural = "false"
+        value = "Opportunity / Company"
+      }
+      name = "related_to_activity"
+      startsWith = "Consonant"
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Account_Recycling_Activity__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Activity_done_timestamp__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Am_I_the_Assigned_User__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Am_I_the_CSM_of_the_Account__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.Booked_By_Prospect_CP__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Call_End_Time__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Call_Sentiment__c
+      picklistValues = [
+        {
+          masterLabel = "Demo Scheduled"
+          translation = ""
+        },
+        {
+          masterLabel = "Gatekeeper - No contact with prospect"
+          translation = ""
+        },
+        {
+          masterLabel = "No Answer"
+          translation = ""
+        },
+        {
+          masterLabel = "No Interest"
+          translation = ""
+        },
+        {
+          masterLabel = "Not Relevant- Authority"
+          translation = ""
+        },
+        {
+          masterLabel = "Not Relevant- Budget"
+          translation = ""
+        },
+        {
+          masterLabel = "Not Relevant- Timeline"
+          translation = ""
+        },
+        {
+          masterLabel = "Reassigned to Partner"
+          translation = ""
+        },
+        {
+          masterLabel = "Referred to Other Contact"
+          translation = ""
+        },
+        {
+          masterLabel = "Rescheduling"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Call_Source__c
+      picklistValues = [
+        {
+          masterLabel = "Aircall"
+          translation = ""
+        },
+        {
+          masterLabel = "Salesloft"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Call_Start_Time__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.Canceled_CP__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Company_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Company__c
+      relationshipLabel = ""
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.Confirmed_CP__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Contact_Sales_From_Today__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.DB_Activity_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Day_of_the_week__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Due_Date_Today__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Email_Bounced__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.InviteeUuid__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.LID__Date_Sent__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.LID__URL__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.MA_Lifecycle_Stage_on_Completion__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.Meeting_Series_CP__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.Meeting_Type_CP__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Migration_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Monday_account_stage__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.No_Show_CP__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Opportunity__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Owner_Manager_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Owner_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Owner_Profile__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Owner_Team__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Owner_s_Manager__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Power_of_1__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.Queue_Name_CP__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.Rescheduled_CP__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.Response_Status_CP__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.SMS_Response_CP__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__Call_Disposition__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__Call_Duration_in_Minutes__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__Call_Sentiment__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Cadence_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Clicked_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Connected_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Email_Template_Title__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Replies_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Step_Day__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Unique_Click_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Unique_Reply_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_Unique_View_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.SalesLoft1__SalesLoft_View_Count__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Task_Time_Zone__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Team_Manager__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Time__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.Type_2__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.User__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Answered_by__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Call_Recording__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Connection_status__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Country__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Detailed_type__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Has_connected__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Hour_of_the_day__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Is_Missed_call__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Is_Voicemail__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Missed_Call_Ratio__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Phone_number__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Timezone__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Transferred_to__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.aircall__Waiting_Time__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.dafadf__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.local_time__c
+    },
+    {
+      label = ""
+      name = salesforce.Activity.field.time_zone_offset__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__SyncedFromYesware__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareAttachmentOpens__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareBounces__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareFirstAttachmentOpenAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareFirstBounceAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareFirstLinkClickAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareFirstOpenAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareFirstPresentationViewAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareFirstReplyAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareLastAttachmentOpenAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareLastBounceAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareLastLinkClickAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareLastOpenAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareLastPresentationViewAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareLastReplyAt__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareLinkClicks__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareOpens__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswarePresentationViews__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Activity.field.yw__YeswareReplies__c
+    },
+  ]
+  _parent = [
+    salesforce.Activity,
+  ]
+}

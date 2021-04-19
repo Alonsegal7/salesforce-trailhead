@@ -1,0 +1,19 @@
+salesforce.WorkflowAlert Lead_DM_Titles_Added_To_Account {
+  fullName = "Lead.DM_Titles_Added_To_Account"
+  description = "DM Titles Added To Account"
+  protected = false
+  recipients = [
+    {
+      type = "owner"
+    },
+    {
+      recipient = "galom@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "DefaultWorkflowUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Titles_added_to_the_account
+  _parent = [
+    salesforce.Lead,
+  ]
+}

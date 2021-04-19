@@ -1,0 +1,3337 @@
+salesforce.RecordType Opportunity_Partner_Opportunity {
+  fullName = "Opportunity.Partner_Opportunity"
+  active = true
+  businessProcess = salesforce.BusinessProcess.instance.Opportunity_Inside_sales
+  compactLayoutAssignment = "New_Awesome_Companct_Layout"
+  label = "Partner Opportunity"
+  picklistValues = [
+    {
+      picklist = "CSM_Package__c"
+      values = [
+        {
+          fullName = "Bronze"
+          default = false
+        },
+        {
+          fullName = "Gold"
+          default = false
+        },
+        {
+          fullName = "Silver"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Competition_They_re_Evaluating__c"
+      values = [
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Float"
+          default = false
+        },
+        {
+          fullName = "Freshworks"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "LeadSquared"
+          default = false
+        },
+        {
+          fullName = "MS project"
+          default = false
+        },
+        {
+          fullName = "None"
+          default = false
+        },
+        {
+          fullName = "Notion"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Service now"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "Teamwork"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Workday"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Contract_Type__c"
+      values = [
+        {
+          fullName = "Change Existing Contract %28Pro-rated%29"
+          default = false
+        },
+        {
+          fullName = "New Contract"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Currency__c"
+      values = [
+        {
+          fullName = "AUD"
+          default = false
+        },
+        {
+          fullName = "BRL"
+          default = false
+        },
+        {
+          fullName = "CAD"
+          default = false
+        },
+        {
+          fullName = "EUR"
+          default = false
+        },
+        {
+          fullName = "GBP"
+          default = false
+        },
+        {
+          fullName = "ILS"
+          default = false
+        },
+        {
+          fullName = "MXN"
+          default = false
+        },
+        {
+          fullName = "NOK"
+          default = false
+        },
+        {
+          fullName = "SEK"
+          default = false
+        },
+        {
+          fullName = "USD"
+          default = false
+        },
+        {
+          fullName = "ZAR"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "DH_Dealroom_Status__c"
+      values = [
+        {
+          fullName = "Won"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "DH_Expected_Plan_Period__c"
+      values = [
+        {
+          fullName = "Monthly"
+          default = false
+        },
+        {
+          fullName = "Yearly"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "DH_Expected_Plan_Tier__c"
+      values = [
+        {
+          fullName = "Enterprise"
+          default = false
+        },
+        {
+          fullName = "Pro"
+          default = false
+        },
+        {
+          fullName = "Standard"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Blockers_1_Info__c"
+      values = [
+        {
+          fullName = "Account logs%2Factivity"
+          default = false
+        },
+        {
+          fullName = "Account permissions"
+          default = false
+        },
+        {
+          fullName = "Annotation"
+          default = false
+        },
+        {
+          fullName = "Automation permissions"
+          default = false
+        },
+        {
+          fullName = "Baseline%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Billing by department%2FWS"
+          default = false
+        },
+        {
+          fullName = "Board permissions"
+          default = false
+        },
+        {
+          fullName = "Boards management"
+          default = false
+        },
+        {
+          fullName = "Calendar"
+          default = false
+        },
+        {
+          fullName = "Communication audit"
+          default = false
+        },
+        {
+          fullName = "Critical path"
+          default = false
+        },
+        {
+          fullName = "Custom Recipes"
+          default = false
+        },
+        {
+          fullName = "Custom data retention"
+          default = false
+        },
+        {
+          fullName = "Custom permissions"
+          default = false
+        },
+        {
+          fullName = "Data Residency"
+          default = false
+        },
+        {
+          fullName = "Dependencies"
+          default = false
+        },
+        {
+          fullName = "Domain block"
+          default = false
+        },
+        {
+          fullName = "Emails"
+          default = false
+        },
+        {
+          fullName = "Encryption key management"
+          default = false
+        },
+        {
+          fullName = "Files %28upload%2C download%2C photos%2C preview etc%2E%29"
+          default = false
+        },
+        {
+          fullName = "Filters%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Formatting in updates%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Formulas"
+          default = false
+        },
+        {
+          fullName = "GPS%2Flocation capabilities"
+          default = false
+        },
+        {
+          fullName = "Gantt%2FTimeline"
+          default = false
+        },
+        {
+          fullName = "Integration permissions"
+          default = false
+        },
+        {
+          fullName = "Items linkage"
+          default = false
+        },
+        {
+          fullName = "Limited boards"
+          default = false
+        },
+        {
+          fullName = "Milestones"
+          default = false
+        },
+        {
+          fullName = "Missing app"
+          default = false
+        },
+        {
+          fullName = "Missing column support"
+          default = false
+        },
+        {
+          fullName = "Missing features in existing app"
+          default = false
+        },
+        {
+          fullName = "Missing features in existing recipes"
+          default = false
+        },
+        {
+          fullName = "Missing recipes"
+          default = false
+        },
+        {
+          fullName = "Multiple_accounts"
+          default = false
+        },
+        {
+          fullName = "My_week"
+          default = false
+        },
+        {
+          fullName = "Notification"
+          default = false
+        },
+        {
+          fullName = "Notifications"
+          default = false
+        },
+        {
+          fullName = "Offline mode"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Personal preferences"
+          default = false
+        },
+        {
+          fullName = "Planned VS Actual"
+          default = false
+        },
+        {
+          fullName = "Pulse%2FGroup view level permissions"
+          default = false
+        },
+        {
+          fullName = "Resource_allocation"
+          default = false
+        },
+        {
+          fullName = "Role based permissions"
+          default = false
+        },
+        {
+          fullName = "Rollup"
+          default = false
+        },
+        {
+          fullName = "Security %28encryption%2C sessions control etc%2E%29"
+          default = false
+        },
+        {
+          fullName = "Sharing"
+          default = false
+        },
+        {
+          fullName = "Speed%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Sub_tasks"
+          default = false
+        },
+        {
+          fullName = "Super%2FBilling Admin"
+          default = false
+        },
+        {
+          fullName = "Team permissions"
+          default = false
+        },
+        {
+          fullName = "Time reports%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Time_tracking"
+          default = false
+        },
+        {
+          fullName = "Timeline"
+          default = false
+        },
+        {
+          fullName = "User Engagement Stats"
+          default = false
+        },
+        {
+          fullName = "User provisioning %28SCIM%29"
+          default = false
+        },
+        {
+          fullName = "WS permissions"
+          default = false
+        },
+        {
+          fullName = "Workspaces"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Blockers_1__c"
+      values = [
+        {
+          fullName = "API"
+          default = false
+        },
+        {
+          fullName = "Admin"
+          default = false
+        },
+        {
+          fullName = "Automations"
+          default = false
+        },
+        {
+          fullName = "Board Linkage"
+          default = false
+        },
+        {
+          fullName = "Communication"
+          default = false
+        },
+        {
+          fullName = "Easy to Adopt"
+          default = false
+        },
+        {
+          fullName = "Files Management%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Integrations"
+          default = false
+        },
+        {
+          fullName = "KanBan"
+          default = false
+        },
+        {
+          fullName = "Mobile"
+          default = false
+        },
+        {
+          fullName = "Multiple Accounts Management"
+          default = false
+        },
+        {
+          fullName = "Other%2FNone"
+          default = false
+        },
+        {
+          fullName = "PMO"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Reporting"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Sub Folders"
+          default = false
+        },
+        {
+          fullName = "Subitems Support"
+          default = false
+        },
+        {
+          fullName = "Time Management"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Blockers_2_Info__c"
+      values = [
+        {
+          fullName = "Account logs%2Factivity"
+          default = false
+        },
+        {
+          fullName = "Account permissions"
+          default = false
+        },
+        {
+          fullName = "Annotation"
+          default = false
+        },
+        {
+          fullName = "Automation permissions"
+          default = false
+        },
+        {
+          fullName = "Baseline%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Billing by department%2FWS"
+          default = false
+        },
+        {
+          fullName = "Board permissions"
+          default = false
+        },
+        {
+          fullName = "Boards management"
+          default = false
+        },
+        {
+          fullName = "Calendar"
+          default = false
+        },
+        {
+          fullName = "Communication audit"
+          default = false
+        },
+        {
+          fullName = "Critical path"
+          default = false
+        },
+        {
+          fullName = "Custom Recipes"
+          default = false
+        },
+        {
+          fullName = "Custom data retention"
+          default = false
+        },
+        {
+          fullName = "Custom permissions"
+          default = false
+        },
+        {
+          fullName = "Data Residency"
+          default = false
+        },
+        {
+          fullName = "Dependencies"
+          default = false
+        },
+        {
+          fullName = "Domain block"
+          default = false
+        },
+        {
+          fullName = "Emails"
+          default = false
+        },
+        {
+          fullName = "Encryption key management"
+          default = false
+        },
+        {
+          fullName = "Files %28upload%2C download%2C photos%2C preview etc%2E%29"
+          default = false
+        },
+        {
+          fullName = "Filters%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Formatting in updates%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Formulas"
+          default = false
+        },
+        {
+          fullName = "GPS%2Flocation capabilities"
+          default = false
+        },
+        {
+          fullName = "Gantt%2FTimeline"
+          default = false
+        },
+        {
+          fullName = "Integration permissions"
+          default = false
+        },
+        {
+          fullName = "Items linkage"
+          default = false
+        },
+        {
+          fullName = "Limited boards"
+          default = false
+        },
+        {
+          fullName = "Milestones"
+          default = false
+        },
+        {
+          fullName = "Missing app"
+          default = false
+        },
+        {
+          fullName = "Missing column support"
+          default = false
+        },
+        {
+          fullName = "Missing features in existing app"
+          default = false
+        },
+        {
+          fullName = "Missing features in existing recipes"
+          default = false
+        },
+        {
+          fullName = "Missing recipes"
+          default = false
+        },
+        {
+          fullName = "Multiple_accounts"
+          default = false
+        },
+        {
+          fullName = "My_week"
+          default = false
+        },
+        {
+          fullName = "Notification"
+          default = false
+        },
+        {
+          fullName = "Notifications"
+          default = false
+        },
+        {
+          fullName = "Offline mode"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Personal preferences"
+          default = false
+        },
+        {
+          fullName = "Planned VS Actual"
+          default = false
+        },
+        {
+          fullName = "Pulse%2FGroup view level permissions"
+          default = false
+        },
+        {
+          fullName = "Resource_allocation"
+          default = false
+        },
+        {
+          fullName = "Role based permissions"
+          default = false
+        },
+        {
+          fullName = "Rollup"
+          default = false
+        },
+        {
+          fullName = "Security %28encryption%2C sessions control etc%2E%29"
+          default = false
+        },
+        {
+          fullName = "Sharing"
+          default = false
+        },
+        {
+          fullName = "Speed%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Sub_tasks"
+          default = false
+        },
+        {
+          fullName = "Super%2FBilling Admin"
+          default = false
+        },
+        {
+          fullName = "Team permissions"
+          default = false
+        },
+        {
+          fullName = "Time reports%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Time_tracking"
+          default = false
+        },
+        {
+          fullName = "Timeline"
+          default = false
+        },
+        {
+          fullName = "User Engagement Stats"
+          default = false
+        },
+        {
+          fullName = "User provisioning %28SCIM%29"
+          default = false
+        },
+        {
+          fullName = "WS permissions"
+          default = false
+        },
+        {
+          fullName = "Workspaces"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Blockers_2__c"
+      values = [
+        {
+          fullName = "API"
+          default = false
+        },
+        {
+          fullName = "Admin"
+          default = false
+        },
+        {
+          fullName = "Automations"
+          default = false
+        },
+        {
+          fullName = "Board Linkage"
+          default = false
+        },
+        {
+          fullName = "Communication"
+          default = false
+        },
+        {
+          fullName = "Easy to Adopt"
+          default = false
+        },
+        {
+          fullName = "Files Management%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Integrations"
+          default = false
+        },
+        {
+          fullName = "KanBan"
+          default = false
+        },
+        {
+          fullName = "Mobile"
+          default = false
+        },
+        {
+          fullName = "Multiple Accounts Management"
+          default = false
+        },
+        {
+          fullName = "Other%2FNone"
+          default = false
+        },
+        {
+          fullName = "PMO"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Reporting"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Sub Folders"
+          default = false
+        },
+        {
+          fullName = "Subitems Support"
+          default = false
+        },
+        {
+          fullName = "Time Management"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Blockers__c"
+      values = [
+        {
+          fullName = "API"
+          default = false
+        },
+        {
+          fullName = "Admin"
+          default = false
+        },
+        {
+          fullName = "Automations"
+          default = false
+        },
+        {
+          fullName = "Board_linkage"
+          default = false
+        },
+        {
+          fullName = "Calendar"
+          default = false
+        },
+        {
+          fullName = "Communication"
+          default = false
+        },
+        {
+          fullName = "Dependencies"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Gantt%2Ftimeline"
+          default = false
+        },
+        {
+          fullName = "Integrations"
+          default = false
+        },
+        {
+          fullName = "KanBan"
+          default = false
+        },
+        {
+          fullName = "Multiple_accounts"
+          default = false
+        },
+        {
+          fullName = "My_week"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Reporting"
+          default = false
+        },
+        {
+          fullName = "Resource_allocation"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Sub_folders"
+          default = false
+        },
+        {
+          fullName = "Sub_tasks"
+          default = false
+        },
+        {
+          fullName = "Time_tracking"
+          default = false
+        },
+        {
+          fullName = "Workspaces"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Enabler__c"
+      values = [
+        {
+          fullName = "API"
+          default = false
+        },
+        {
+          fullName = "Admin"
+          default = false
+        },
+        {
+          fullName = "Automations"
+          default = false
+        },
+        {
+          fullName = "Board_linkage"
+          default = false
+        },
+        {
+          fullName = "Calendar"
+          default = false
+        },
+        {
+          fullName = "Communication"
+          default = false
+        },
+        {
+          fullName = "Dependencies"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Gantt%2Ftimeline"
+          default = false
+        },
+        {
+          fullName = "Integrations"
+          default = false
+        },
+        {
+          fullName = "KanBan"
+          default = false
+        },
+        {
+          fullName = "Multiple_accounts"
+          default = false
+        },
+        {
+          fullName = "My_week"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Reporting"
+          default = false
+        },
+        {
+          fullName = "Resource_allocation"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Sub_folders"
+          default = false
+        },
+        {
+          fullName = "Sub_tasks"
+          default = false
+        },
+        {
+          fullName = "Time_tracking"
+          default = false
+        },
+        {
+          fullName = "Workspaces"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Enablers_1_Info__c"
+      values = [
+        {
+          fullName = "Account logs%2Factivity"
+          default = false
+        },
+        {
+          fullName = "Account permissions"
+          default = false
+        },
+        {
+          fullName = "Annotation"
+          default = false
+        },
+        {
+          fullName = "Automation permissions"
+          default = false
+        },
+        {
+          fullName = "Baseline%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Billing by department%2FWS"
+          default = false
+        },
+        {
+          fullName = "Board permissions"
+          default = false
+        },
+        {
+          fullName = "Boards management"
+          default = false
+        },
+        {
+          fullName = "Calendar"
+          default = false
+        },
+        {
+          fullName = "Communication audit"
+          default = false
+        },
+        {
+          fullName = "Critical path"
+          default = false
+        },
+        {
+          fullName = "Custom Recipes"
+          default = false
+        },
+        {
+          fullName = "Custom data retention"
+          default = false
+        },
+        {
+          fullName = "Custom permissions"
+          default = false
+        },
+        {
+          fullName = "Data Residency"
+          default = false
+        },
+        {
+          fullName = "Dependencies"
+          default = false
+        },
+        {
+          fullName = "Domain block"
+          default = false
+        },
+        {
+          fullName = "Emails"
+          default = false
+        },
+        {
+          fullName = "Encryption key management"
+          default = false
+        },
+        {
+          fullName = "Files %28upload%2C download%2C photos%2C preview etc%2E%29"
+          default = false
+        },
+        {
+          fullName = "Filters%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Formatting in updates%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Formulas"
+          default = false
+        },
+        {
+          fullName = "GPS%2Flocation capabilities"
+          default = false
+        },
+        {
+          fullName = "Gantt%2FTimeline"
+          default = false
+        },
+        {
+          fullName = "Integration permissions"
+          default = false
+        },
+        {
+          fullName = "Items linkage"
+          default = false
+        },
+        {
+          fullName = "Limited boards"
+          default = false
+        },
+        {
+          fullName = "Milestones"
+          default = false
+        },
+        {
+          fullName = "Missing app"
+          default = false
+        },
+        {
+          fullName = "Missing column support"
+          default = false
+        },
+        {
+          fullName = "Missing features in existing app"
+          default = false
+        },
+        {
+          fullName = "Missing features in existing recipes"
+          default = false
+        },
+        {
+          fullName = "Missing recipes"
+          default = false
+        },
+        {
+          fullName = "Multiple_accounts"
+          default = false
+        },
+        {
+          fullName = "My_week"
+          default = false
+        },
+        {
+          fullName = "Notification"
+          default = false
+        },
+        {
+          fullName = "Notifications"
+          default = false
+        },
+        {
+          fullName = "Offline mode"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Personal preferences"
+          default = false
+        },
+        {
+          fullName = "Planned VS Actual"
+          default = false
+        },
+        {
+          fullName = "Pulse%2FGroup view level permissions"
+          default = false
+        },
+        {
+          fullName = "Resource_allocation"
+          default = false
+        },
+        {
+          fullName = "Role based permissions"
+          default = false
+        },
+        {
+          fullName = "Rollup"
+          default = false
+        },
+        {
+          fullName = "Security %28encryption%2C sessions control etc%2E%29"
+          default = false
+        },
+        {
+          fullName = "Sharing"
+          default = false
+        },
+        {
+          fullName = "Speed%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Sub_tasks"
+          default = false
+        },
+        {
+          fullName = "Super%2FBilling Admin"
+          default = false
+        },
+        {
+          fullName = "Team permissions"
+          default = false
+        },
+        {
+          fullName = "Time reports%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Time_tracking"
+          default = false
+        },
+        {
+          fullName = "Timeline"
+          default = false
+        },
+        {
+          fullName = "User Engagement Stats"
+          default = false
+        },
+        {
+          fullName = "User provisioning %28SCIM%29"
+          default = false
+        },
+        {
+          fullName = "WS permissions"
+          default = false
+        },
+        {
+          fullName = "Workspaces"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Enablers_1__c"
+      values = [
+        {
+          fullName = "API"
+          default = false
+        },
+        {
+          fullName = "Admin"
+          default = false
+        },
+        {
+          fullName = "Automations"
+          default = false
+        },
+        {
+          fullName = "Board Linkage"
+          default = false
+        },
+        {
+          fullName = "Communication"
+          default = false
+        },
+        {
+          fullName = "Easy to Adopt"
+          default = false
+        },
+        {
+          fullName = "Files Management%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Integrations"
+          default = false
+        },
+        {
+          fullName = "KanBan"
+          default = false
+        },
+        {
+          fullName = "Mobile"
+          default = false
+        },
+        {
+          fullName = "Multiple Accounts Management"
+          default = false
+        },
+        {
+          fullName = "Other%2FNone"
+          default = false
+        },
+        {
+          fullName = "PMO"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Reporting"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Sub Folders"
+          default = false
+        },
+        {
+          fullName = "Subitems Support"
+          default = false
+        },
+        {
+          fullName = "Time Management"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Enablers_2_Info__c"
+      values = [
+        {
+          fullName = "Account logs%2Factivity"
+          default = false
+        },
+        {
+          fullName = "Account permissions"
+          default = false
+        },
+        {
+          fullName = "Annotation"
+          default = false
+        },
+        {
+          fullName = "Automation permissions"
+          default = false
+        },
+        {
+          fullName = "Baseline%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Billing by department%2FWS"
+          default = false
+        },
+        {
+          fullName = "Board permissions"
+          default = false
+        },
+        {
+          fullName = "Boards management"
+          default = false
+        },
+        {
+          fullName = "Calendar"
+          default = false
+        },
+        {
+          fullName = "Communication audit"
+          default = false
+        },
+        {
+          fullName = "Critical path"
+          default = false
+        },
+        {
+          fullName = "Custom Recipes"
+          default = false
+        },
+        {
+          fullName = "Custom data retention"
+          default = false
+        },
+        {
+          fullName = "Custom permissions"
+          default = false
+        },
+        {
+          fullName = "Data Residency"
+          default = false
+        },
+        {
+          fullName = "Dependencies"
+          default = false
+        },
+        {
+          fullName = "Domain block"
+          default = false
+        },
+        {
+          fullName = "Emails"
+          default = false
+        },
+        {
+          fullName = "Encryption key management"
+          default = false
+        },
+        {
+          fullName = "Files %28upload%2C download%2C photos%2C preview etc%2E%29"
+          default = false
+        },
+        {
+          fullName = "Filters%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Formatting in updates%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Formulas"
+          default = false
+        },
+        {
+          fullName = "GPS%2Flocation capabilities"
+          default = false
+        },
+        {
+          fullName = "Gantt%2FTimeline"
+          default = false
+        },
+        {
+          fullName = "Integration permissions"
+          default = false
+        },
+        {
+          fullName = "Items linkage"
+          default = false
+        },
+        {
+          fullName = "Limited boards"
+          default = false
+        },
+        {
+          fullName = "Milestones"
+          default = false
+        },
+        {
+          fullName = "Missing app"
+          default = false
+        },
+        {
+          fullName = "Missing column support"
+          default = false
+        },
+        {
+          fullName = "Missing features in existing app"
+          default = false
+        },
+        {
+          fullName = "Missing features in existing recipes"
+          default = false
+        },
+        {
+          fullName = "Missing recipes"
+          default = false
+        },
+        {
+          fullName = "Multiple_accounts"
+          default = false
+        },
+        {
+          fullName = "My_week"
+          default = false
+        },
+        {
+          fullName = "Notification"
+          default = false
+        },
+        {
+          fullName = "Notifications"
+          default = false
+        },
+        {
+          fullName = "Offline mode"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Personal preferences"
+          default = false
+        },
+        {
+          fullName = "Planned VS Actual"
+          default = false
+        },
+        {
+          fullName = "Pulse%2FGroup view level permissions"
+          default = false
+        },
+        {
+          fullName = "Resource_allocation"
+          default = false
+        },
+        {
+          fullName = "Role based permissions"
+          default = false
+        },
+        {
+          fullName = "Rollup"
+          default = false
+        },
+        {
+          fullName = "Security %28encryption%2C sessions control etc%2E%29"
+          default = false
+        },
+        {
+          fullName = "Sharing"
+          default = false
+        },
+        {
+          fullName = "Speed%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Sub_tasks"
+          default = false
+        },
+        {
+          fullName = "Super%2FBilling Admin"
+          default = false
+        },
+        {
+          fullName = "Team permissions"
+          default = false
+        },
+        {
+          fullName = "Time reports%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Time_tracking"
+          default = false
+        },
+        {
+          fullName = "Timeline"
+          default = false
+        },
+        {
+          fullName = "User Engagement Stats"
+          default = false
+        },
+        {
+          fullName = "User provisioning %28SCIM%29"
+          default = false
+        },
+        {
+          fullName = "WS permissions"
+          default = false
+        },
+        {
+          fullName = "Workspaces"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Enablers_2__c"
+      values = [
+        {
+          fullName = "API"
+          default = false
+        },
+        {
+          fullName = "Admin"
+          default = false
+        },
+        {
+          fullName = "Automations"
+          default = false
+        },
+        {
+          fullName = "Board Linkage"
+          default = false
+        },
+        {
+          fullName = "Communication"
+          default = false
+        },
+        {
+          fullName = "Easy to Adopt"
+          default = false
+        },
+        {
+          fullName = "Files Management%C2%A0"
+          default = false
+        },
+        {
+          fullName = "Forms"
+          default = false
+        },
+        {
+          fullName = "Integrations"
+          default = false
+        },
+        {
+          fullName = "KanBan"
+          default = false
+        },
+        {
+          fullName = "Mobile"
+          default = false
+        },
+        {
+          fullName = "Multiple Accounts Management"
+          default = false
+        },
+        {
+          fullName = "Other%2FNone"
+          default = false
+        },
+        {
+          fullName = "PMO"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Reporting"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Sub Folders"
+          default = false
+        },
+        {
+          fullName = "Subitems Support"
+          default = false
+        },
+        {
+          fullName = "Time Management"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Deal_Status__c"
+      values = [
+        {
+          fullName = "Complete"
+          default = false
+        },
+        {
+          fullName = "Expected"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "DepartmentFunction__c"
+      values = [
+        {
+          fullName = "Accounting%2C tax and finance"
+          default = false
+        },
+        {
+          fullName = "Creative%2C design and media"
+          default = false
+        },
+        {
+          fullName = "Customer support%2Fsuccess"
+          default = false
+        },
+        {
+          fullName = "Digital"
+          default = false
+        },
+        {
+          fullName = "HR"
+          default = false
+        },
+        {
+          fullName = "Information Technology"
+          default = false
+        },
+        {
+          fullName = "Innovation %26 Strategy"
+          default = false
+        },
+        {
+          fullName = "Legal"
+          default = false
+        },
+        {
+          fullName = "Marketing and communications"
+          default = false
+        },
+        {
+          fullName = "Operations%2C facilities and logistics"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Procurement"
+          default = false
+        },
+        {
+          fullName = "Product management"
+          default = false
+        },
+        {
+          fullName = "Production"
+          default = false
+        },
+        {
+          fullName = "Sales and business development"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Senior Leadership"
+          default = false
+        },
+        {
+          fullName = "Software development and engineering"
+          default = false
+        },
+        {
+          fullName = "Supply chain"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "ForecastCategoryName"
+      values = [
+        {
+          fullName = "Best Case"
+          default = false
+        },
+        {
+          fullName = "Closed"
+          default = false
+        },
+        {
+          fullName = "Commit"
+          default = false
+        },
+        {
+          fullName = "Omitted"
+          default = false
+        },
+        {
+          fullName = "Pipeline"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "LeadSource"
+      values = [
+        {
+          fullName = "Big Brain - Signup"
+          default = false
+        },
+        {
+          fullName = "BigBrain - Sync"
+          default = false
+        },
+        {
+          fullName = "BigBrain - Sync %28Reengage%29"
+          default = false
+        },
+        {
+          fullName = "CS Pass"
+          default = false
+        },
+        {
+          fullName = "ChiliPiper"
+          default = false
+        },
+        {
+          fullName = "Contact Sales - Tech Partner"
+          default = false
+        },
+        {
+          fullName = "Contact Sales- Phone"
+          default = false
+        },
+        {
+          fullName = "Corzdesk"
+          default = false
+        },
+        {
+          fullName = "Cross Sell"
+          default = false
+        },
+        {
+          fullName = "Drift - Contact Sales"
+          default = false
+        },
+        {
+          fullName = "Emails - Contact sales"
+          default = false
+        },
+        {
+          fullName = "Event"
+          default = false
+        },
+        {
+          fullName = "Intercom"
+          default = false
+        },
+        {
+          fullName = "Linkedin Paid"
+          default = false
+        },
+        {
+          fullName = "Linkedin Sales Navigator"
+          default = false
+        },
+        {
+          fullName = "NGO request"
+          default = false
+        },
+        {
+          fullName = "Online Event"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Outreach - Part of paying account"
+          default = false
+        },
+        {
+          fullName = "Outreach - Resurrect"
+          default = false
+        },
+        {
+          fullName = "Partner"
+          default = false
+        },
+        {
+          fullName = "Partners Website"
+          default = false
+        },
+        {
+          fullName = "Platform"
+          default = false
+        },
+        {
+          fullName = "Podcast"
+          default = false
+        },
+        {
+          fullName = "Signup - Contact Sales"
+          default = false
+        },
+        {
+          fullName = "Software Advice"
+          default = false
+        },
+        {
+          fullName = "Test"
+          default = false
+        },
+        {
+          fullName = "Unqualified refunneling"
+          default = false
+        },
+        {
+          fullName = "Webinar"
+          default = false
+        },
+        {
+          fullName = "Website - Contact Sales"
+          default = false
+        },
+        {
+          fullName = "Website - Request a Demo"
+          default = false
+        },
+        {
+          fullName = "g2crowd"
+          default = false
+        },
+        {
+          fullName = "project-management%2Ecom"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Lost_Reason__c"
+      values = [
+        {
+          fullName = "COVID-19"
+          default = false
+        },
+        {
+          fullName = "Couldn%27t get to decision maker"
+          default = false
+        },
+        {
+          fullName = "Data Residency"
+          default = false
+        },
+        {
+          fullName = "Duplicate Opportunity"
+          default = false
+        },
+        {
+          fullName = "Legal"
+          default = false
+        },
+        {
+          fullName = "Lost to Competitor"
+          default = false
+        },
+        {
+          fullName = "Missing features"
+          default = false
+        },
+        {
+          fullName = "No Budget %2F Lost Funding"
+          default = false
+        },
+        {
+          fullName = "No Decision %2F Non-Responsive"
+          default = false
+        },
+        {
+          fullName = "No growth potential"
+          default = false
+        },
+        {
+          fullName = "Price"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Timeline Too Long"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Main_tool_we_re_replacing__c"
+      values = [
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Email"
+          default = false
+        },
+        {
+          fullName = "Excel"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Internal Tools"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "MS project"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Service now"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "Spreadsheet"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Whiteboard%2C Pen %26 Paper"
+          default = false
+        },
+        {
+          fullName = "Workday"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Opportunity_Attribution__c"
+      values = [
+        {
+          fullName = "Account Engagement - Guest Abuse"
+          default = false
+        },
+        {
+          fullName = "Account Engagement - High WAPP"
+          default = false
+        },
+        {
+          fullName = "ENT Upgrade offering"
+          default = false
+        },
+        {
+          fullName = "G-Suite Integration offering"
+          default = false
+        },
+        {
+          fullName = "M%26C Use Case offering"
+          default = false
+        },
+        {
+          fullName = "Microsoft Integration offering"
+          default = false
+        },
+        {
+          fullName = "New team opened a trial account"
+          default = false
+        },
+        {
+          fullName = "Organic growth"
+          default = false
+        },
+        {
+          fullName = "Reach out due to high usage"
+          default = false
+        },
+        {
+          fullName = "Reach out due to product improvements"
+          default = false
+        },
+        {
+          fullName = "Resurrect"
+          default = false
+        },
+        {
+          fullName = "monday One offering"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Opportunity_Reseller__c"
+      values = [
+        {
+          fullName = "729"
+          default = false
+        },
+        {
+          fullName = "Babel"
+          default = false
+        },
+        {
+          fullName = "ESL"
+          default = false
+        },
+        {
+          fullName = "Eligeo"
+          default = false
+        },
+        {
+          fullName = "Entrypoint"
+          default = false
+        },
+        {
+          fullName = "Not a Reseller"
+          default = false
+        },
+        {
+          fullName = "Refresh Networks %28ZA%29"
+          default = false
+        },
+        {
+          fullName = "Right Decision  %28ES%29"
+          default = false
+        },
+        {
+          fullName = "SEOSEON %28FI%29"
+          default = false
+        },
+        {
+          fullName = "Soluma %28SR%29"
+          default = false
+        },
+        {
+          fullName = "Soluware %28CH%29"
+          default = false
+        },
+        {
+          fullName = "g-company"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Opportunity_status__c"
+      values = [
+        {
+          fullName = "1"
+          default = false
+        },
+        {
+          fullName = "2"
+          default = false
+        },
+        {
+          fullName = "3"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Other_software_they_re_selling__c"
+      values = [
+        {
+          fullName = "AWS"
+          default = false
+        },
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Atlassian"
+          default = false
+        },
+        {
+          fullName = "Azure DevOps"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Bitbucket"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Dropbox"
+          default = false
+        },
+        {
+          fullName = "Email"
+          default = false
+        },
+        {
+          fullName = "Excel"
+          default = false
+        },
+        {
+          fullName = "Git"
+          default = false
+        },
+        {
+          fullName = "GitHub"
+          default = false
+        },
+        {
+          fullName = "GitLab"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Intellij"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "MS Project"
+          default = false
+        },
+        {
+          fullName = "Mailchimp"
+          default = false
+        },
+        {
+          fullName = "MavenLink"
+          default = false
+        },
+        {
+          fullName = "Microsoft Suite"
+          default = false
+        },
+        {
+          fullName = "Microsoft Teams"
+          default = false
+        },
+        {
+          fullName = "NetSuite"
+          default = false
+        },
+        {
+          fullName = "One Note"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Outlook"
+          default = false
+        },
+        {
+          fullName = "Outreach"
+          default = false
+        },
+        {
+          fullName = "Pen %26 Paper"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "PoliteMail"
+          default = false
+        },
+        {
+          fullName = "Power BI"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Salesloft"
+          default = false
+        },
+        {
+          fullName = "Sharepoint"
+          default = false
+        },
+        {
+          fullName = "Sitecore"
+          default = false
+        },
+        {
+          fullName = "Skype"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "TFS"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Twilio"
+          default = false
+        },
+        {
+          fullName = "Typeform"
+          default = false
+        },
+        {
+          fullName = "VisualStudio"
+          default = false
+        },
+        {
+          fullName = "Whiteboard"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zapier"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoom"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Other_tools_they_re_using__c"
+      values = [
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Bitbucket"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Dropbox"
+          default = false
+        },
+        {
+          fullName = "Email"
+          default = false
+        },
+        {
+          fullName = "Excel"
+          default = false
+        },
+        {
+          fullName = "Git"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "MS Project"
+          default = false
+        },
+        {
+          fullName = "Mailchimp"
+          default = false
+        },
+        {
+          fullName = "MavenLink"
+          default = false
+        },
+        {
+          fullName = "Microsoft Suite"
+          default = false
+        },
+        {
+          fullName = "Microsoft Teams"
+          default = false
+        },
+        {
+          fullName = "NetSuite"
+          default = false
+        },
+        {
+          fullName = "One Note"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Outlook"
+          default = false
+        },
+        {
+          fullName = "Outreach"
+          default = false
+        },
+        {
+          fullName = "Pen %26 Paper"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "PoliteMail"
+          default = false
+        },
+        {
+          fullName = "Power BI"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Salesloft"
+          default = false
+        },
+        {
+          fullName = "Sharepoint"
+          default = false
+        },
+        {
+          fullName = "Sitecore"
+          default = false
+        },
+        {
+          fullName = "Skype"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "TFS"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Twilio"
+          default = false
+        },
+        {
+          fullName = "Typeform"
+          default = false
+        },
+        {
+          fullName = "Whiteboard"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zapier"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoom"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Pains_PL__c"
+      values = [
+        {
+          fullName = "Ease of use"
+          default = false
+        },
+        {
+          fullName = "Efficiency %26 Productivity"
+          default = false
+        },
+        {
+          fullName = "No defined processes"
+          default = false
+        },
+        {
+          fullName = "No existing tool"
+          default = false
+        },
+        {
+          fullName = "Organization"
+          default = false
+        },
+        {
+          fullName = "Reporting"
+          default = false
+        },
+        {
+          fullName = "Resource Allocation"
+          default = false
+        },
+        {
+          fullName = "Team Visibility"
+          default = false
+        },
+        {
+          fullName = "Too many tools"
+          default = false
+        },
+        {
+          fullName = "Transparency"
+          default = false
+        },
+        {
+          fullName = "Unhappy with current tool"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Pricing_Version__c"
+      values = [
+        {
+          fullName = "3"
+          default = false
+        },
+        {
+          fullName = "5"
+          default = false
+        },
+        {
+          fullName = "6"
+          default = false
+        },
+        {
+          fullName = "7"
+          default = false
+        },
+        {
+          fullName = "8"
+          default = true
+        },
+      ]
+    },
+    {
+      picklist = "Region__c"
+      values = [
+        {
+          fullName = "APAC"
+          default = false
+        },
+        {
+          fullName = "EMEA"
+          default = false
+        },
+        {
+          fullName = "LATAM"
+          default = false
+        },
+        {
+          fullName = "NAM"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Selling_competing_products__c"
+      values = [
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Clickup"
+          default = false
+        },
+        {
+          fullName = "Float"
+          default = false
+        },
+        {
+          fullName = "Freshworks"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "LeadSquared"
+          default = false
+        },
+        {
+          fullName = "MS project"
+          default = false
+        },
+        {
+          fullName = "Notion"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "Quickbase"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Service now"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "Teamwork"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Workday"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Send_to__c"
+      values = [
+        {
+          fullName = "Sales Team"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Sub_Attribution__c"
+      values = [
+        {
+          fullName = "Account Recycling"
+          default = false
+        },
+        {
+          fullName = "Guest Abuse"
+          default = false
+        },
+        {
+          fullName = "High WAPP"
+          default = false
+        },
+        {
+          fullName = "Marketing Creative Campaign"
+          default = false
+        },
+        {
+          fullName = "Microsoft Integration"
+          default = false
+        },
+        {
+          fullName = "MondayOne"
+          default = false
+        },
+        {
+          fullName = "Platform Features"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Test_picklist__c"
+      values = [
+        {
+          fullName = "A"
+          default = false
+        },
+        {
+          fullName = "B"
+          default = false
+        },
+        {
+          fullName = "C"
+          default = false
+        },
+        {
+          fullName = "D"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Type"
+      values = [
+        {
+          fullName = "Downgrade"
+          default = false
+        },
+        {
+          fullName = "Expansion"
+          default = false
+        },
+        {
+          fullName = "New Business"
+          default = false
+        },
+        {
+          fullName = "Renewal"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Use_Cases_PL__c"
+      values = [
+        {
+          fullName = "Agile Management"
+          default = false
+        },
+        {
+          fullName = "Campaign Management"
+          default = false
+        },
+        {
+          fullName = "Client Projects"
+          default = false
+        },
+        {
+          fullName = "Creative and Production"
+          default = false
+        },
+        {
+          fullName = "Cross Functional Collaboration"
+          default = false
+        },
+        {
+          fullName = "Customer Success %26 Support"
+          default = false
+        },
+        {
+          fullName = "Digital Asset Management %28DAM%29"
+          default = false
+        },
+        {
+          fullName = "Event Management"
+          default = false
+        },
+        {
+          fullName = "External Teams"
+          default = false
+        },
+        {
+          fullName = "Grant Management"
+          default = false
+        },
+        {
+          fullName = "HR%2FRecruitment Process"
+          default = false
+        },
+        {
+          fullName = "Internal Workflows and Processes"
+          default = false
+        },
+        {
+          fullName = "Managing Requests"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Planning"
+          default = false
+        },
+        {
+          fullName = "Portfolio Management"
+          default = false
+        },
+        {
+          fullName = "Product Management"
+          default = false
+        },
+        {
+          fullName = "Project Management"
+          default = false
+        },
+        {
+          fullName = "Remote Work"
+          default = false
+        },
+        {
+          fullName = "Reporting and Visibility"
+          default = false
+        },
+        {
+          fullName = "Resource Allocation"
+          default = false
+        },
+        {
+          fullName = "Sales %26 CRM"
+          default = false
+        },
+        {
+          fullName = "Tasks %26 To-do lists"
+          default = false
+        },
+        {
+          fullName = "Team Collaboration"
+          default = false
+        },
+        {
+          fullName = "Time Tracking"
+          default = false
+        },
+        {
+          fullName = "Tracking Approvals"
+          default = false
+        },
+        {
+          fullName = "Work OS"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Which_competitor__c"
+      values = [
+        {
+          fullName = "Airtable"
+          default = false
+        },
+        {
+          fullName = "Asana"
+          default = false
+        },
+        {
+          fullName = "Basecamp"
+          default = false
+        },
+        {
+          fullName = "Clarizen"
+          default = false
+        },
+        {
+          fullName = "Float"
+          default = false
+        },
+        {
+          fullName = "Freshworks"
+          default = false
+        },
+        {
+          fullName = "G-Suite"
+          default = false
+        },
+        {
+          fullName = "Google Suite"
+          default = false
+        },
+        {
+          fullName = "Hubspot"
+          default = false
+        },
+        {
+          fullName = "Jira"
+          default = false
+        },
+        {
+          fullName = "LeadSquared"
+          default = false
+        },
+        {
+          fullName = "MS Project"
+          default = false
+        },
+        {
+          fullName = "MavenLink"
+          default = false
+        },
+        {
+          fullName = "Notion"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Pipedrive"
+          default = false
+        },
+        {
+          fullName = "Salesforce"
+          default = false
+        },
+        {
+          fullName = "Service now"
+          default = false
+        },
+        {
+          fullName = "Sitecore"
+          default = false
+        },
+        {
+          fullName = "Smartsheet"
+          default = false
+        },
+        {
+          fullName = "Teamwork"
+          default = false
+        },
+        {
+          fullName = "Trello"
+          default = false
+        },
+        {
+          fullName = "Unknown"
+          default = false
+        },
+        {
+          fullName = "Workday"
+          default = false
+        },
+        {
+          fullName = "Workfront"
+          default = false
+        },
+        {
+          fullName = "Wrike"
+          default = false
+        },
+        {
+          fullName = "Zendesk"
+          default = false
+        },
+        {
+          fullName = "Zoho"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Which_features_were_missing__c"
+      values = [
+        {
+          fullName = "Automation"
+          default = false
+        },
+        {
+          fullName = "Communication"
+          default = false
+        },
+        {
+          fullName = "Cross board"
+          default = false
+        },
+        {
+          fullName = "Dependencies"
+          default = false
+        },
+        {
+          fullName = "Integration"
+          default = false
+        },
+        {
+          fullName = "Notification"
+          default = false
+        },
+        {
+          fullName = "Organization"
+          default = false
+        },
+        {
+          fullName = "Other"
+          default = false
+        },
+        {
+          fullName = "Permissions"
+          default = false
+        },
+        {
+          fullName = "Reporting"
+          default = false
+        },
+        {
+          fullName = "Security"
+          default = false
+        },
+        {
+          fullName = "Time Management"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "Zone__c"
+      values = [
+        {
+          fullName = "Africa"
+          default = false
+        },
+        {
+          fullName = "Caribbean"
+          default = false
+        },
+        {
+          fullName = "Central America"
+          default = false
+        },
+        {
+          fullName = "Central Canada"
+          default = false
+        },
+        {
+          fullName = "Central US"
+          default = false
+        },
+        {
+          fullName = "East Asia"
+          default = false
+        },
+        {
+          fullName = "East Coast Canada"
+          default = false
+        },
+        {
+          fullName = "East Coast US"
+          default = false
+        },
+        {
+          fullName = "Eastern_Europe"
+          default = false
+        },
+        {
+          fullName = "Middle East"
+          default = false
+        },
+        {
+          fullName = "Oceania"
+          default = false
+        },
+        {
+          fullName = "South America"
+          default = false
+        },
+        {
+          fullName = "Southeast Asia"
+          default = false
+        },
+        {
+          fullName = "UK %2B Ireland"
+          default = false
+        },
+        {
+          fullName = "West Coast Canada"
+          default = false
+        },
+        {
+          fullName = "West Coast US"
+          default = false
+        },
+        {
+          fullName = "Western Europe"
+          default = false
+        },
+      ]
+    },
+    {
+      picklist = "tci_csmrg__DeliveryInstallationStatus__c"
+      values = [
+        {
+          fullName = "Completed"
+          default = false
+        },
+        {
+          fullName = "In progress"
+          default = false
+        },
+        {
+          fullName = "Yet to begin"
+          default = false
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

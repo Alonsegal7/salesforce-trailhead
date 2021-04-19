@@ -1,0 +1,20 @@
+salesforce.WorkflowRule Account_Partner_s_Company {
+  fullName = "Account.Partner%27s Company"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Partner_s_Company
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.Partner__c
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Account,
+  ]
+}

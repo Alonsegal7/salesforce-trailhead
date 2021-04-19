@@ -1,0 +1,10 @@
+salesforce.Role SoluwarePartnerManager {
+  fullName = "SoluwarePartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Soluware Partner Manager"
+  mayForecastManagerShare = false
+  name = "Soluware Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

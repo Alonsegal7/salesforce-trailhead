@@ -1,0 +1,48 @@
+salesforce.ListView Lead_Contact_sales_Request_a_demo {
+  fullName = "Lead.Contact_sales_Request_a_demo"
+  columns = [
+    "MQL_Image__c",
+    "CORE.USERS.ALIAS",
+    "First_Lead_Source__c",
+    "LEAD.LEAD_SOURCE",
+    "Cluster__c",
+    "LEAD.CREATED_DATE",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.PHONE",
+    "LEAD.COUNTRY",
+    "Company_Size__c",
+    "LEAD.TITLE",
+    "Requested_Demo__c",
+    "How_many_users_do_you_want_to_start_with__c",
+    "Description_shortcut__c",
+  ]
+  filterScope = "Queue"
+  filters = [
+    {
+      field = "LEAD.STATUS"
+      operation = "notEqual"
+      value = "Unqualified"
+    },
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Received"
+    },
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "equals"
+      value = "Website - Request a Demo"
+    },
+  ]
+  label = "Contact sales - Request a demo"
+  queue = "Contact_sales"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

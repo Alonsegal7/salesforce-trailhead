@@ -1,0 +1,177 @@
+salesforce.LightningPage SDR1 {
+  fullName = "SDR1"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "Contact_sales_Lead"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "7"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "New_Leads"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "7"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Task"
+            },
+            {
+              name = "filterName"
+              value = "My_Tasks_today_overdue"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "30"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "XXlLipmADWitYKEEWPpuaWePbdnORg1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+      ]
+      name = "top"
+      type = "Region"
+    },
+    {
+      name = "bottomLeft"
+      type = "Region"
+    },
+    {
+      name = "bottomRight"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "XXlLipmADWitYKEEWPpuaWePbdnORg1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "SDRs_Round_robin_4f8"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "My_Handover_Leads_WP0"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+      ]
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "SDR Update home page"
+  template = {
+    name = "home:desktopTemplate"
+  }
+  type = "HomePage"
+}

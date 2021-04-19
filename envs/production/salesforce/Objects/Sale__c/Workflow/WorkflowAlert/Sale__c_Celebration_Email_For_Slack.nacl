@@ -1,0 +1,16 @@
+salesforce.WorkflowAlert Sale__c_Celebration_Email_For_Slack {
+  fullName = "Sale__c.Celebration_Email_For_Slack"
+  description = "Celebration Email For Slack"
+  protected = false
+  recipients = [
+    {
+      recipient = "oran@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "DefaultWorkflowUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_celebration_for_slack
+  _parent = [
+    salesforce.Sale__c,
+  ]
+}

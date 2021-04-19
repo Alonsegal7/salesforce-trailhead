@@ -1,0 +1,4 @@
+salesforce.CaseClassificationSettings {
+  fullName = "CaseClassification"
+  caseClassificationRecommendations = false
+}

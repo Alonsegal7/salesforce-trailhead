@@ -1,0 +1,23 @@
+type salesforce.CMSConnectPersonalization {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  string connectorPage {
+    _required = false
+  }
+  string connectorPageAsset {
+    _required = false
+  }
+  metadataType = "CMSConnectPersonalization"
+}

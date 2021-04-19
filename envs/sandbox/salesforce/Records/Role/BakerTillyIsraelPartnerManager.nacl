@@ -1,0 +1,10 @@
+salesforce.Role BakerTillyIsraelPartnerManager {
+  fullName = "BakerTillyIsraelPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Baker Tilly Israel Partner Manager"
+  mayForecastManagerShare = false
+  name = "Baker Tilly Israel Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

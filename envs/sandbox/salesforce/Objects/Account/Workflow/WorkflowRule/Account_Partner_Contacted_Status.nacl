@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Account_Partner_Contacted_Status {
+  fullName = "Account.Partner Contacted Status"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Partner_Contacted_Status
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.Partner_Company_Status__c
+      operation = "equals"
+      value = "Contacted"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Account,
+  ]
+}

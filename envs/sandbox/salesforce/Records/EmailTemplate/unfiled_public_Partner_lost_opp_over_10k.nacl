@@ -1,0 +1,27 @@
+salesforce.EmailTemplate unfiled_public_Partner_lost_opp_over_10k {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "Will be sent out to CPMs when their partner lost a 10k deal"
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "Partner lost opp over 10k"
+  style = "freeForm"
+  subject = "{!Opportunity.OwnerFullName} lost a {!Opportunity.ARR_For_Reports__c} deal with {!Opportunity.Company__c}"
+  textOnly = '''
+Hi {!Opportunity.Owner_s_Manager__c},
+
+{!Opportunity.OwnerFullName} lost a {!Opportunity.ARR_For_Reports__c} deal.
+
+Company: {!Opportunity.Company__c}
+Opportunity: {!Opportunity.Name}
+ARR: {!Opportunity.ARR_For_Reports__c}
+Date: {!Opportunity.Closed_Lost_timestamp__c}
+Reason: {!Opportunity.Lost_Reason__c} - {!Opportunity.Which_features_were_missing__c}{!Opportunity.Which_competitor__c}
+
+Link: {!Opportunity.Link}
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/Partner_lost_opp_over_10k"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/Partner_lost_opp_over_10k.email")
+}

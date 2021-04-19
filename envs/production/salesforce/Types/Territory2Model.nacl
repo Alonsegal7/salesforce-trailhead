@@ -1,0 +1,36 @@
+type salesforce.Territory2Model {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  salesforce.FieldValue customFields {
+    _required = false
+  }
+  string description {
+    _required = false
+  }
+  serviceid fullName {
+    _required = false
+  }
+  string name {
+    _required = false
+  }
+  string internalId {
+    _required = false
+    _hidden = true
+    localOnly = true
+  }
+  suffix = "territory2Model"
+  dirName = "territory2Models"
+  metadataType = "Territory2Model"
+}

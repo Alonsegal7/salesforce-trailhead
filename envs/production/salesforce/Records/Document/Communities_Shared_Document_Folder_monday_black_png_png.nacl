@@ -1,0 +1,8 @@
+salesforce.Document Communities_Shared_Document_Folder_monday_black_png_png {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  internalUseOnly = false
+  name = "monday_black.png"
+  public = true
+  fullName = "Communities_Shared_Document_Folder/monday_black_png.png"
+  content = file("salesforce/Records/Document/Communities_Shared_Document_Folder/monday_black_png.png")
+}

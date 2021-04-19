@@ -1,0 +1,279 @@
+type salesforce.dfsle__EnvelopeConfiguration__c {
+  salesforce.Picklist dfsle__Action__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__Action__c"
+    label = "Action"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Prepare"
+        default = true
+        label = "Prepare"
+      },
+      {
+        fullName = "Tag"
+        default = false
+        label = "Tag"
+      },
+      {
+        fullName = "Send"
+        default = false
+        label = "Send"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Checkbox dfsle__Active__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__Active__c"
+    label = "Active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox dfsle__AddSourceDocuments__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__AddSourceDocuments__c"
+    label = "Add Salesforce source documents"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox dfsle__AddSourceRecipients__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__AddSourceRecipients__c"
+    label = "Add Salesforce source recipients"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea dfsle__CustomFields__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__CustomFields__c"
+    label = "Custom Fields"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131072
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Text dfsle__DocuSignId__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__DocuSignId__c"
+    label = "DocuSign Template ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    externalId = true
+    caseSensitive = false
+    length = 36
+    queryable = true
+  }
+  salesforce.LongTextArea dfsle__EmailMessage__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__EmailMessage__c"
+    label = "Email message"
+    _required = false
+    createable = true
+    updateable = true
+    length = 2000
+    queryable = true
+    description = "Email Message"
+    visibleLines = 5
+  }
+  salesforce.Text dfsle__EmailSubject__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__EmailSubject__c"
+    label = "Email subject"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Email Subject"
+    externalId = false
+  }
+  salesforce.Number dfsle__ExpireAfterDays__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__ExpireAfterDays__c"
+    label = "Expire/void envelope in N day(s)"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number dfsle__ExpireWarnDays__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__ExpireWarnDays__c"
+    label = "Warn of expiration in N day(s) prior"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox dfsle__Expires__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__Expires__c"
+    label = "Expire/void envelope"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox dfsle__IsDraft__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__IsDraft__c"
+    label = "Is Draft"
+    defaultValue = true
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea dfsle__MergeFields__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__MergeFields__c"
+    label = "Merge Fields"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131072
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.LongTextArea dfsle__Notifications__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__Notifications__c"
+    label = "Notifications"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131072
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.TextArea dfsle__ObjectType__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__ObjectType__c"
+    label = "Object type"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea dfsle__Options__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__Options__c"
+    label = "Options"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131072
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number dfsle__RemindAfterDays__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__RemindAfterDays__c"
+    label = "Send reminder in N day(s)"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number dfsle__RemindFrequencyDays__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__RemindFrequencyDays__c"
+    label = "Remind every N day(s) until complete"
+    _required = false
+    precision = 3
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox dfsle__Remind__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__Remind__c"
+    label = "Remind signers via email"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea dfsle__SenderPermissions__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__SenderPermissions__c"
+    label = "Sender Permissions"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131072
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Checkbox dfsle__ShowChatterSettings__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__ShowChatterSettings__c"
+    label = "Show Chatter settings"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox dfsle__ShowEmailMessage__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__ShowEmailMessage__c"
+    label = "Show email message"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox dfsle__ShowEmailSubject__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__ShowEmailSubject__c"
+    label = "Show email subject"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox dfsle__ShowRemindExpire__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__ShowRemindExpire__c"
+    label = "Show remind and expire settings"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox dfsle__ShowSendButton__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__ShowSendButton__c"
+    label = "Show send button"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox dfsle__ShowTagButton__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__ShowTagButton__c"
+    label = "Show tag button"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text dfsle__SourceObject__c {
+    apiName = "dfsle__EnvelopeConfiguration__c.dfsle__SourceObject__c"
+    label = "Source Object"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+}

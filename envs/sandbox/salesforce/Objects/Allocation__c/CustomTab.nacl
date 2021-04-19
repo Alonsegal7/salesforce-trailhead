@@ -1,0 +1,8 @@
+salesforce.CustomTab Allocation__c {
+  fullName = "Allocation__c"
+  customObject = true
+  motif = "Custom77: Locked"
+  _parent = [
+    salesforce.Allocation__c,
+  ]
+}

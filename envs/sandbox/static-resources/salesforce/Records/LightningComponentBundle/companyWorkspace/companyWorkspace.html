@@ -1,0 +1,129 @@
+<template>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-var-p-around_xxx-small lgc-bg">
+                <lightning-card>
+                    <div class="slds-p-around_small lgc-bg">
+                        <div class="slds-grid slds-grid_align-spread slds-p-around_medium lgc-bg" id="progress-bar0">
+                            <span>Overall Company Readiness</span>
+                            <span aria-hidden="true">
+                            <strong>30% Complete</strong>
+                            </span>
+                        </div>
+                        <lightning-progress-bar class="razprogress" value="30" size="large"></lightning-progress-bar>
+                    </div>    
+                </lightning-card>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-p-around_x-small lgc-bg">
+                <lightning-card >
+                    <div class="slds-p-around_small lgc-bg">
+                        <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar1">
+                            <span>In Person Meeting</span>
+                            <span aria-hidden="true">
+                            <strong>25% Complete</strong>
+                            </span>
+                        </div>
+                        <lightning-progress-bar class="razprogress" value="25" size="large"></lightning-progress-bar>
+                    </div>
+                </lightning-card>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-p-around_x-small lgc-bg">
+                <lightning-card >
+                    <div class="slds-p-around_small lgc-bg">
+                        <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar2">
+                            <span>Security/Porcurement Process</span>
+                            <span aria-hidden="true">
+                            <strong>50% Complete</strong>
+                            </span>
+                        </div>
+                        <lightning-progress-bar value="50" size="large"></lightning-progress-bar>
+                    </div>
+                </lightning-card>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-p-around_x-small lgc-bg">
+                <lightning-card >
+                    <div class="slds-p-around_small lgc-bg">
+                        <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar3">
+                            <span>Consulting Seniority - Quarterly</span>
+                            <span aria-hidden="true">
+                            <strong>20% Complete</strong>
+                            </span>
+                        </div>
+                        <lightning-progress-bar value="20" size="large"></lightning-progress-bar>
+                    </div>
+                </lightning-card>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-p-around_x-small lgc-bg">
+                <lightning-card >
+                    <div class="slds-p-around_small lgc-bg">
+                                <lightning:layout vertical-align="center" class="x-large">
+                                    <lightning:layoutItem flexibility="auto" padding="around-small">
+                                        <div class="slds-p-around_medium lgc-bg">
+                                            <lightning-tile label="QBR" type="media">
+                                                <lightning-icon slot="media" icon-name="custom:custom48"></lightning-icon>
+                                                <p class="slds-truncate" title="7 Members" style="font-weight: bold">Q1-2020 : Complete</p>
+                                            </lightning-tile>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem flexibility="auto" padding="around-small">
+                                        <div class="slds-p-around_medium lgc-bg">
+                                            <lightning-tile label="QBR" type="media">
+                                                <lightning-icon slot="media" icon-name="custom:custom48"></lightning-icon>
+                                                <p class="slds-truncate" title="7 Members" style="font-weight: bold">Q2-2020 : Complete</p>
+                                            </lightning-tile>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem flexibility="auto" padding="around-small">
+                                        <div class="slds-p-around_medium lgc-bg">
+                                            <lightning-tile label="QBR" type="media">
+                                                <lightning-icon slot="media" icon-name="custom:custom95"></lightning-icon>
+                                                <p class="slds-truncate" title="7 Members" style="font-weight: bold">Q3-2020 : Open</p>
+                                            </lightning-tile>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                        <!--<template if:true={accounts}>
+                            <lightning-map map-markers={accounts}  markers-title={accounts}>
+                            </lightning-map>
+                        </template>-->
+                    </div>
+                </lightning-card>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-p-around_x-small lgc-bg">
+                <lightning-card title="Once" icon-name="standard:coaching">
+                    <div class="slds-p-around_small lgc-bg">
+                        <div class="slds-grid slds-grid_vertical">
+                            <div class="slds-col slds-p-around_small lgc-bg custom-box">
+                                <label for="swag" class="slds-form-element__label slds-no-flex cbGroupHeader">Onboarding</label> 
+                                <lightning-checkbox-group name="Checkbox Group"
+                                    options={OnboardingOptions}
+                                    value={valueOnboarding} style="font-size: medium;"
+                                    ></lightning-checkbox-group>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-p-around_x-small lgc-bg">
+                <lightning-card title="2/Y" icon-name="standard:einstein_replies">
+                    <div class="slds-p-around_small lgc-bg">
+                        <div class="slds-grid slds-grid_vertical">
+                            <div class="slds-col slds-p-around_small lgc-bg custom-box">
+                                <label for="swag" class="slds-form-element__label slds-no-flex cbGroupHeader">Resurrect Campaign</label> 
+                                <lightning-checkbox-group name="Checkbox Group"
+                                    options={resurrectOptions}
+                                    value={value} class="slds-size_large"
+                                    ></lightning-checkbox-group>
+                            </div>
+                            <div class="slds-col slds-p-around_small lgc-bg custom-box">
+                                <label for="swag" class="slds-form-element__label slds-no-flex cbGroupHeader">Swag Bomb</label>                                
+                                <lightning-checkbox-group id="swag" name="Checkbox Group"
+                                    options={resurrectOptions}
+                                    value={valueSwag} style="font-size: medium;"
+                                    ></lightning-checkbox-group>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+      </div>
+</template>

@@ -1,0 +1,9 @@
+salesforce.CanvasMetadata valt__Valooto_Prod_oauth_c4s__Valooto_Prod_oauth_c4sCanvas {
+  fullName = "valt__Valooto_Prod_oauth_c4s__Valooto_Prod_oauth_c4sCanvas"
+  module = "Valooto_Prod_oauth_c4s"
+  accessMethod = "Get"
+  canvasUrl = "https://service.valooto.com/"
+  lifecycleClass = "valt__canvasHandler"
+  locationOptions = "VF,AR"
+  samlInitiationMethod = "None"
+}

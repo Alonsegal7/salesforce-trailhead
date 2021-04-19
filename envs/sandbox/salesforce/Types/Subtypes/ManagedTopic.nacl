@@ -1,0 +1,40 @@
+type salesforce.ManagedTopic {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  serviceid fullName {
+    _required = false
+  }
+  string managedTopicType {
+    _required = false
+  }
+  string name {
+    _required = false
+  }
+  string parentName {
+    _required = false
+  }
+  number position {
+    _required = false
+  }
+  string topicDescription {
+    _required = false
+  }
+  string internalId {
+    _required = false
+    _hidden = true
+    localOnly = true
+  }
+  metadataType = "ManagedTopic"
+}

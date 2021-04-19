@@ -1,0 +1,14 @@
+salesforce.ApexClass rh2__PS_ContextLogic_Behavior {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 42
+  packageVersions = [
+    {
+      majorNumber = 13
+      minorNumber = 2
+      namespace = "rh2"
+    },
+  ]
+  status = "Active"
+  fullName = "rh2__PS_ContextLogic_Behavior"
+  content = "(hidden)"
+}

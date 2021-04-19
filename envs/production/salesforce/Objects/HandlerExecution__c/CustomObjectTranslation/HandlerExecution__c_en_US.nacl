@@ -1,0 +1,23 @@
+salesforce.CustomObjectTranslation HandlerExecution__c_en_US {
+  fullName = "HandlerExecution__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Handler Execution"
+    },
+    {
+      plural = true
+      value = "Handler Execution"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.HandlerExecution__c.field.Enabled__c
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.HandlerExecution__c,
+  ]
+}

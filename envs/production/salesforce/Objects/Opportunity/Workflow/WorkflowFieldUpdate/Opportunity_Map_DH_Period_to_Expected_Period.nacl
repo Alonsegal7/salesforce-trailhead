@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Map_DH_Period_to_Expected_Period {
+  fullName = "Opportunity.Map_DH_Period_to_Expected_Period"
+  field = salesforce.Opportunity.field.Expected_Plan_Period__c
+  formula = "TEXT (DH_Expected_Plan_Period__c )"
+  name = "Map DH Period to Expected Period"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

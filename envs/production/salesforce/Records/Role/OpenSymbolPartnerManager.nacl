@@ -1,0 +1,10 @@
+salesforce.Role OpenSymbolPartnerManager {
+  fullName = "OpenSymbolPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "OpenSymbol Partner Manager"
+  mayForecastManagerShare = false
+  name = "OpenSymbol Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

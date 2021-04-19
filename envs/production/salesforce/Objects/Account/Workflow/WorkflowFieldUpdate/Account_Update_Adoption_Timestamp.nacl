@@ -1,0 +1,13 @@
+salesforce.WorkflowFieldUpdate Account_Update_Adoption_Timestamp {
+  fullName = "Account.Update_Adoption_Timestamp"
+  description = "Update the Adoption Timestamp field under Account object with change date = today()"
+  field = salesforce.Account.field.Adoption_Timestamp__c
+  formula = "TODAY()"
+  name = "Update Adoption Timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

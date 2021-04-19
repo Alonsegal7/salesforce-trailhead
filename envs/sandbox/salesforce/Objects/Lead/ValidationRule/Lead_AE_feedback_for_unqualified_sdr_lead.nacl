@@ -1,0 +1,17 @@
+salesforce.ValidationRule Lead_AE_feedback_for_unqualified_sdr_lead {
+  fullName = "Lead.AE_feedback_for_unqualified_sdr_lead"
+  active = true
+  errorConditionFormula = '''
+SQL_Timestamp__c >  DATE(2019,07,22) && SQL__c =true && isblank( Feedback_on_SDR_Call__c )&&ispickval( Status ,"Unqualified")&& NOT(ISPICKVAL(Owner:User.Function__c ,"SDR"))&& 
+NOT(ISPICKVAL(Owner:User.Function__c ,"OPS"))&& NOT(ISPICKVAL(Owner:User.Function__c ,"BDR"))&&
+NOT(ISPICKVAL(Owner:User.Function__c ,"Partner"))
+'''
+  errorDisplayField = "Feedback_on_SDR_Call__c"
+  errorMessage = '''
+Dear AE
+Please provide more details why you Unqualified the lead
+'''
+  _parent = [
+    salesforce.Lead,
+  ]
+}

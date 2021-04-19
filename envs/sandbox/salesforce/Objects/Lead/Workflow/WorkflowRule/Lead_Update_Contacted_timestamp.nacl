@@ -1,0 +1,28 @@
+salesforce.WorkflowRule Lead_Update_Contacted_timestamp {
+  fullName = "Lead.Update Contacted timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Contacted_Timestamp_DT
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Update_contacted_timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Contacted_timestamp__c
+      operation = "equals"
+    },
+    {
+      field = salesforce.Lead.field.Qualified_timestamp__c
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

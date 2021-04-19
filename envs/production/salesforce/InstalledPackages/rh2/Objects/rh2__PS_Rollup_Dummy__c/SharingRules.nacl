@@ -1,0 +1,6 @@
+salesforce.SharingRules rh2__PS_Rollup_Dummy__c {
+  fullName = "rh2__PS_Rollup_Dummy__c"
+  _parent = [
+    salesforce.rh2__PS_Rollup_Dummy__c,
+  ]
+}

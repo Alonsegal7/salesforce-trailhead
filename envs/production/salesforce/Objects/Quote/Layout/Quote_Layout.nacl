@@ -1,0 +1,629 @@
+salesforce.Layout Quote_Layout {
+  fullName = "Quote-Quote Layout"
+  layoutSections = [
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Proposal Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Quote.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Quote.field.Document_Type__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Total_Seats__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Price_Per_Seat__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.DH_Tier__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.DH_Period__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Duration__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Total_Free_Months__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.CSM_Package__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Total_CSM_Package__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Addendum_to_SO__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Commercial_Comments__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Use_Photo_on_Proposal__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Approved_Indication__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Legal_Agreement_Type__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Temp_for_Data_Fix__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Pro_Rated_Different_Price__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Ballance_Carryover__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Quote.field.Payment_Terms__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.License_Product_Count__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Is_NGO__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.ExpirationDate
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Quote Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.OwnerId
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.QuoteNumber
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.OpportunityId
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.AccountId
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Company__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Is_Finalized__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Is_Manually_Signed__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Owner_s_Manager_Email__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Priority_SO_Final_Amount__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Discount__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Is_Published__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Owner_Manager_Email__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.DealRoom_Link__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.of_Options__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Total_Net_Price__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Primary_Option_Discount__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Get_Contract_Id__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Get_Contract_Tier__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Get_Contract_Discount__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Get_Contract_Unit_Price__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Get_Contract_Seats__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Get_Contract_Period__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Create_Contract_Upon_Finalized__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Monday_Account_Id__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.ContractId
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Pricing_Version__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Regional_Manager_s_Email__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.IsSyncing
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Status
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Description
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "Totals"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Subtotal
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Discount
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.TotalPrice
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.GrandTotal
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Billing Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Billing_Entity__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.CurrencyIsoCode
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.DH_Customer_Name__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Quote Status"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Payment_Terms_Code__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Quote_Type__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.DH_Quote_Status__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.DH_Date_of_Signature__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.DH_Signer_Name__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.DH_Signer_Title__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.LineItemCount
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Priority Integration Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Sync_Request_Timestamp_iConduct__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Priority_Order_No__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Sync_Status__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Last_Sync_iConduct__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Error_Message__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Quote.field.Priority_Customer_ID_Text__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Priority_Customer_ID_Formula__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.Priority_Agent_ID__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Quote.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  miniLayout = {
+    fields = [
+      "Name",
+      "OpportunityId",
+      "ExpirationDate",
+      "Status",
+      "Discount",
+      "GrandTotal",
+    ]
+  }
+  platformActionList = {
+    actionListContext = "Record"
+    platformActionListItems = [
+      {
+        actionName = "NewTask"
+        actionType = "QuickAction"
+        sortOrder = 0
+      },
+      {
+        actionName = "NewEvent"
+        actionType = "QuickAction"
+        sortOrder = 1
+      },
+      {
+        actionName = "LogACall"
+        actionType = "QuickAction"
+        sortOrder = 2
+      },
+      {
+        actionName = "FeedItem.ContentNote"
+        actionType = "QuickAction"
+        sortOrder = 3
+      },
+      {
+        actionName = "FeedItem.TextPost"
+        actionType = "QuickAction"
+        sortOrder = 4
+      },
+      {
+        actionName = "FeedItem.ContentPost"
+        actionType = "QuickAction"
+        sortOrder = 5
+      },
+      {
+        actionName = "NewContact"
+        actionType = "QuickAction"
+        sortOrder = 6
+      },
+      {
+        actionName = "NewOpportunity"
+        actionType = "QuickAction"
+        sortOrder = 7
+      },
+      {
+        actionName = "NewLead"
+        actionType = "QuickAction"
+        sortOrder = 8
+      },
+      {
+        actionName = "FeedItem.PollPost"
+        actionType = "QuickAction"
+        sortOrder = 9
+      },
+      {
+        actionName = "CreatePdf"
+        actionType = "StandardButton"
+        sortOrder = 10
+      },
+      {
+        actionName = "SyncQuote"
+        actionType = "StandardButton"
+        sortOrder = 11
+      },
+      {
+        actionName = "ChangeRecordType"
+        actionType = "StandardButton"
+        sortOrder = 12
+      },
+      {
+        actionName = "EmailQuote"
+        actionType = "StandardButton"
+        sortOrder = 13
+      },
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 14
+      },
+      {
+        actionName = "Delete"
+        actionType = "StandardButton"
+        sortOrder = 15
+      },
+    ]
+  }
+  relatedContent = {
+    relatedContentItems = [
+      {
+        layoutItem = {
+          behavior = "Readonly"
+          field = salesforce.Quote.field.ContactId
+        }
+      },
+      {
+        layoutItem = {
+          behavior = "Readonly"
+          field = salesforce.Quote.field.AccountId
+        }
+      },
+      {
+        layoutItem = {
+          behavior = "Readonly"
+          field = salesforce.Quote.field.OpportunityId
+        }
+      },
+    ]
+  }
+  relatedLists = [
+    {
+      fields = [
+        "QUOTE_LI.PRODUCT2",
+        "ARR__c",
+        "QUOTE_LI.QUANTITY",
+        "QUOTE_LI.SUBTOTAL",
+        "QUOTE_LI.DISCOUNT",
+        "QUOTE_LI.TOTAL_PRICE",
+        "QUOTE_LI.LIST_PRICE",
+      ]
+      relatedList = "RelatedQuoteLineItemList"
+    },
+    {
+      fields = [
+        "QUOTE_DOC.NAME",
+        "QUOTE_DOC.DISCOUNT",
+        "QUOTE_DOC.GRANDTOTAL",
+        "CreatedBy",
+      ]
+      relatedList = "RelatedQuoteDocumentList"
+    },
+    {
+      relatedList = "RelatedContentNoteList"
+    },
+    {
+      relatedList = "RelatedNoteList"
+    },
+    {
+      relatedList = "RelatedFileList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "TASK.PRIORITY",
+        "CORE.USERS.FULL_NAME",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "CORE.USERS.FULL_NAME",
+        "TASK.LAST_UPDATE",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+    {
+      fields = [
+        "NAME",
+      ]
+      relatedList = salesforce.Subscription__c.field.Source_Sales_Order__c
+    },
+  ]
+  showEmailCheckbox = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h1t000003PF84"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Quote,
+  ]
+}

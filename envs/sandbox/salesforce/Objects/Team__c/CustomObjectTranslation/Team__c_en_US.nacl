@@ -1,0 +1,66 @@
+salesforce.CustomObjectTranslation Team__c_en_US {
+  fullName = "Team__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Team"
+    },
+    {
+      plural = true
+      value = "Teams"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Team__c.field.CSM__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Team__c.field.Monday_Account__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Team__c.field.Pains__c
+    },
+    {
+      label = ""
+      name = salesforce.Team__c.field.Team_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Completed"
+          translation = ""
+        },
+        {
+          masterLabel = "Contacted"
+          translation = ""
+        },
+        {
+          masterLabel = "Onboarding in progress"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Team__c.field.Use_Case__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Team Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Team__c,
+  ]
+}

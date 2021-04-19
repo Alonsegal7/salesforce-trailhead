@@ -1,0 +1,10 @@
+salesforce.Role i4asiacorpPartnerManager {
+  fullName = "i4asiacorpPartnerManager"
+  caseAccessLevel = "Read"
+  contactAccessLevel = "Edit"
+  description = "i4asiacorp Partner Manager"
+  mayForecastManagerShare = false
+  name = "i4asiacorp Partner Manager"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

@@ -1,0 +1,37 @@
+salesforce.ListView Account_My_AEs_Monday_Accounts {
+  fullName = "Account.My_AEs_Monday_Accounts"
+  columns = [
+    "Owner_s_Function__c",
+    "CORE.USERS.FIRST_NAME",
+    "ACCOUNT.NAME",
+    "Keep_this_account__c",
+    "Why_Unassigned__c",
+    "Company__c",
+    "Company_Size__c",
+    "ACCOUNT.ADDRESS1_COUNTRY_CODE",
+    "ARR__c",
+    "Plan_Seats__c",
+    "Members__c",
+    "of_open_opps__c",
+    "Plan_Name__c",
+    "Plan_Period__c",
+    "Days_Left_in_Plan__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "ACCOUNT.RECORDTYPE"
+      operation = "equals"
+      value = "Account.Monday_Account"
+    },
+    {
+      field = "Owner_s_Manager__c"
+      operation = "contains"
+      value = "Gad"
+    },
+  ]
+  label = "My AEs Monday Accounts"
+  _parent = [
+    salesforce.Account,
+  ]
+}

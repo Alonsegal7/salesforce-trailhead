@@ -1,0 +1,252 @@
+type salesforce.Milestone__c {
+  salesforce.MasterDetail Project__c {
+    apiName = "Milestone__c.Project__c"
+    label = "Project"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.Project__c,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.Date Actual_Go_live_date__c {
+    apiName = "Milestone__c.Actual_Go_live_date__c"
+    label = "Actual Go live date (Hours)"
+    _required = false
+    inlineHelpText = "Please fill only if Milestone type is Summary"
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup Assignee__c {
+    apiName = "Milestone__c.Assignee__c"
+    label = "Assignee"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    inlineHelpText = "The assigned person for the milestone"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "The assigned person for the milestone"
+  }
+  salesforce.FormulaDate Go_Live_date__c {
+    apiName = "Milestone__c.Go_Live_date__c"
+    label = "Go Live date"
+    _required = false
+    formula = "Kickoff__r.Go_Live_Date__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Kickoff__c.field.Go_Live_Date__c,
+      salesforce.Milestone__c.field.Kickoff__c,
+    ]
+  }
+  salesforce.Checkbox Handshake_w_Sales__c {
+    apiName = "Milestone__c.Handshake_w_Sales__c"
+    label = "Handshake w/ Sales"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Intro_Email_Sent__c {
+    apiName = "Milestone__c.Intro_Email_Sent__c"
+    label = "Intro Email Sent?"
+    defaultValue = false
+    inlineHelpText = "Was an intro email sent to the customer?"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Was an intro email sent to the customer?"
+  }
+  salesforce.Lookup Kickoff__c {
+    apiName = "Milestone__c.Kickoff__c"
+    label = "Kickoff"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Kickoff__c,
+    ]
+    inlineHelpText = "Create a new Kickoff form"
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaDate Kickoff_date1__c {
+    apiName = "Milestone__c.Kickoff_date1__c"
+    label = "Kickoff date"
+    _required = false
+    formula = "Kickoff__r.Kickoff_meeting_date__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Milestone__c.field.Kickoff__c,
+      salesforce.Kickoff__c.field.Kickoff_meeting_date__c,
+    ]
+  }
+  salesforce.FormulaNumber Kickoff_milestone_duration__c {
+    apiName = "Milestone__c.Kickoff_milestone_duration__c"
+    label = "Kickoff milestone duration"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "IF( ISBLANK( Kickoff__c ) ,TODAY()- DATEVALUE(CreatedDate),Kickoff__r.Kickoff_meeting_date__c -  DATEVALUE(CreatedDate))"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Milestone__c.field.Kickoff__c,
+      salesforce.Kickoff__c.field.Kickoff_meeting_date__c,
+    ]
+  }
+  salesforce.Text Log_a_Session__c {
+    apiName = "Milestone__c.Log_a_Session__c"
+    label = "Meeting Recording Link"
+    _required = false
+    inlineHelpText = "Place your call with the customer"
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Place your call with the customer"
+    externalId = false
+  }
+  salesforce.LongTextArea Milestone_Summary__c {
+    apiName = "Milestone__c.Milestone_Summary__c"
+    label = "Milestone Summary"
+    _required = false
+    createable = true
+    updateable = true
+    length = 130000
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Picklist Milestone_type__c {
+    apiName = "Milestone__c.Milestone_type__c"
+    label = "Milestone type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Advanced Training"
+        default = false
+        label = "Advanced Training"
+      },
+      {
+        fullName = "Basic Training"
+        default = false
+        label = "Basic Training"
+      },
+      {
+        fullName = "Bug troubleshot"
+        default = false
+        label = "Bug troubleshot"
+      },
+      {
+        fullName = "Process/Boards Optimization"
+        default = false
+        label = "Process/Boards Optimization"
+      },
+      {
+        fullName = "Onboarding/Project Summery"
+        default = false
+        label = "Onboarding/Project Summery"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Date Session_Due_Date__c {
+    apiName = "Milestone__c.Session_Due_Date__c"
+    label = "Session Due Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "When was the session/ when it is planned for"
+  }
+  salesforce.Picklist Status__c {
+    apiName = "Milestone__c.Status__c"
+    label = "Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Open"
+        default = false
+        label = "Open"
+      },
+      {
+        fullName = "Closed"
+        default = false
+        label = "Closed"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Date Close_Date__c {
+    apiName = "Milestone__c.Close_Date__c"
+    label = "Close Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Actual_Time_Spent__c {
+    apiName = "Milestone__c.Actual_Time_Spent__c"
+    label = "Actual Time Spent (Hours)"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber Age_Days__c {
+    apiName = "Milestone__c.Age_Days__c"
+    label = "Age (Days)"
+    _required = false
+    precision = 18
+    scale = 2
+    formula = '''
+if( RecordType.DeveloperName=='Kickoff',
+if( ispickval(Status__c,'Closed'),
+Close_Date__c- Kickoff_date1__c , 
+today()-Kickoff_date1__c),
+
+if( ispickval(Status__c,'Closed'),
+Close_Date__c- Session_Due_Date__c  , 
+today()-Session_Due_Date__c)
+)
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+}

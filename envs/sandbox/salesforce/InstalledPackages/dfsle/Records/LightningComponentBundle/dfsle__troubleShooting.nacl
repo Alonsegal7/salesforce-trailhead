@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__troubleShooting {
+  fullName = "dfsle__troubleShooting"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/troubleShooting/troubleShooting.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/troubleShooting/troubleShooting.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/troubleShooting/troubleShooting.js"
+      },
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+salesforce.ListView rh2__PS_Rollup_Conditions__c_rh2__All {
+  fullName = "rh2__PS_Rollup_Conditions__c.rh2__All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.rh2__PS_Rollup_Conditions__c,
+  ]
+}

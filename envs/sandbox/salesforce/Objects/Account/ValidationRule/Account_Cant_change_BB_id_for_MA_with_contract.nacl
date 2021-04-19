@@ -1,0 +1,14 @@
+salesforce.ValidationRule Account_Cant_change_BB_id_for_MA_with_contract {
+  fullName = "Account.Cant_change_BB_id_for_MA_with_contract"
+  active = true
+  errorConditionFormula = '''
+(NOT(ISBLANK(PRIORVALUE(primary_pulse_account_id__c)))&&
+NOT(ISBLANK(Active_Contract__c ))&& ISCHANGED( primary_pulse_account_id__c ))
+&& $User.Id <>'0051t000003OiHnAAK'&& ($User.ProfileId <> '00e1t000001bu2u'  || $User.ProfileId <> '00e1t000000i6Zm')
+'''
+  errorDisplayField = "primary_pulse_account_id__c"
+  errorMessage = "You can't change the BigBrain Id for monday account that has contract"
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,149 @@
+salesforce.LightningPage Lead_Record_Page1 {
+  fullName = "Lead_Record_Page1"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "activityTabContent"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.activity"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "feedTabContent"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.collaborate"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "detailTabContent"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      mode = "Replace"
+      name = "tabs"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideUpdateButton"
+              value = "false"
+            },
+          ]
+          componentName = "runtime_sales_lead:pathAssistant"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "tabs"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      mode = "Replace"
+      name = "main"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "collapsed"
+              value = "false"
+            },
+          ]
+          componentName = "force:highlightsPanel"
+        },
+        {
+          componentName = "runtime_sales_merge:mergeCandidatesPreviewCard"
+        },
+      ]
+      mode = "Replace"
+      name = "leftsidebar"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "runtime_sales_activities:activityPanel"
+        },
+      ]
+      mode = "Replace"
+      name = "activityTabContent"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "forceChatter:recordFeedContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "feedTabContent"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+      ]
+      mode = "Replace"
+      name = "detailTabContent"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:relatedListQuickLinksContainer"
+        },
+        {
+          componentName = "force:relatedListContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "rightsidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Lead Record Page"
+  parentFlexiPage = "runtime_sales_lead__Lead_rec_L_3col"
+  sobjectType = "Lead"
+  template = {
+    name = "flexipage:recordHomeThreeColTemplateDesktop"
+  }
+  type = "RecordPage"
+}

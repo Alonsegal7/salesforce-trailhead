@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Lead_Map_Outbound_Leads {
+  fullName = "Lead.Map Outbound Leads"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Lead_Source_Type_Outbound
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "(ISPICKVAL( LeadSource , 'Partner Link') || ISPICKVAL(LeadSource, 'Partners Website'))&&  RecordType.DeveloperName ='Partner_Lead'"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

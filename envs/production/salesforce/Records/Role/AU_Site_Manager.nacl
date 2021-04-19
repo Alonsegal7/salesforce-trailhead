@@ -1,0 +1,9 @@
+salesforce.Role AU_Site_Manager {
+  fullName = "AU_Site_Manager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "AU Site Manager"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.IL_VP_Sales
+}

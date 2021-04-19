@@ -1,0 +1,10 @@
+salesforce.Role EligeoPartnerManager {
+  fullName = "EligeoPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Eligeo Business Solutions Partner Manager"
+  mayForecastManagerShare = false
+  name = "Eligeo Business Solutions Partner Manager"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

@@ -1,0 +1,26 @@
+type salesforce.zaapit__ZaapIT_General_Settings__c {
+  salesforce.TextArea zaapit__field1__c {
+    apiName = "zaapit__ZaapIT_General_Settings__c.zaapit__field1__c"
+    label = "field1"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__field2__c {
+    apiName = "zaapit__ZaapIT_General_Settings__c.zaapit__field2__c"
+    label = "field2"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.TextArea zaapit__field3__c {
+    apiName = "zaapit__ZaapIT_General_Settings__c.zaapit__field3__c"
+    label = "field3"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

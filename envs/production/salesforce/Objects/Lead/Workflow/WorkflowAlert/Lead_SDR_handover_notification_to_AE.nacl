@@ -1,0 +1,60 @@
+salesforce.WorkflowAlert Lead_SDR_handover_notification_to_AE {
+  fullName = "Lead.SDR_handover_notification_to_AE"
+  description = "SDR handover notification to AE"
+  protected = false
+  recipients = [
+    {
+      recipient = "alexd@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "galom@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "jamison@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "jurgen@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "nir@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "oran@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "razbe@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "yoni@monday.com"
+      type = "user"
+    },
+    {
+      field = salesforce.Lead.field.AE__c
+      type = "userLookup"
+    },
+    {
+      field = salesforce.Lead.field.Owner_s_Manager__c
+      type = "userLookup"
+    },
+    {
+      field = salesforce.Lead.field.SDR_Name__c
+      type = "userLookup"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_SDR_handover_notification
+  _parent = [
+    salesforce.Lead,
+  ]
+}

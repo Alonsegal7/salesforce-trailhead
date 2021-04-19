@@ -1,0 +1,12 @@
+<apex:page controller="yw.YeswareSettingController">
+    <h1>Yesware Salesforce Sync</h1>
+    <apex:form >
+        <apex:pageBlock >
+            <p>When Event Trigger execution is enabled, changes to Events within Salesforce will
+               synchronize back to supported calendars.</p>
+            <p><apex:inputCheckbox value="{!eventTriggerEnabled}"/> Enable Event Trigger Execution</p>
+
+            <p><apex:commandButton action="{!save}" value="Save"/></p>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

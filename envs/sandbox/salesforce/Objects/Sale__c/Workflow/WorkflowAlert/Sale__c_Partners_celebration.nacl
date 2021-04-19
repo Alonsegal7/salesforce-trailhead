@@ -1,0 +1,52 @@
+salesforce.WorkflowAlert Sale__c_Partners_celebration {
+  fullName = "Sale__c.Partners_celebration"
+  description = "Partners celebration"
+  protected = false
+  recipients = [
+    {
+      recipient = "avivc@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "galom@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "naomida@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "ophir@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "oran@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "orens@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "razbe@monday.com"
+      type = "user"
+    },
+    {
+      field = salesforce.Sale__c.field.Owner__c
+      type = "userLookup"
+    },
+    {
+      field = salesforce.Sale__c.field.Owner_s_Manager__c
+      type = "userLookup"
+    },
+  ]
+  senderType = "DefaultWorkflowUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_celebration_for_partners
+  _parent = [
+    salesforce.Sale__c,
+  ]
+}

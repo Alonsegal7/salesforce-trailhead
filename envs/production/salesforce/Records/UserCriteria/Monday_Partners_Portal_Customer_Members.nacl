@@ -1,0 +1,6 @@
+salesforce.UserCriteria Monday_Partners_Portal_Customer_Members {
+  fullName = "Monday Partners Portal.Customer_Members"
+  description = "Member criteria matches customer members"
+  masterLabel = "Customer Members"
+  userTypes = "Customer"
+}

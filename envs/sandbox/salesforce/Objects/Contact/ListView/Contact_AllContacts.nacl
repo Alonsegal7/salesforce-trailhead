@@ -1,0 +1,35 @@
+salesforce.ListView Contact_AllContacts {
+  fullName = "Contact.AllContacts"
+  columns = [
+    "FULL_NAME",
+    "ACCOUNT.NAME",
+    "CONTACT.TITLE",
+    "CONTACT.PHONE1",
+    "Enriched_phone__c",
+    "CONTACT.EMAIL",
+    "CORE.USERS.FIRST_NAME",
+    "CORE.USERS.LAST_NAME",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "CONTACT.FIRST_NAME"
+      operation = "contains"
+      value = "@"
+    },
+    {
+      field = "Synced_By__c"
+      operation = "contains"
+      value = "Big"
+    },
+    {
+      field = "CONTACT.CREATED_DATE"
+      operation = "greaterOrEqual"
+      value = "7/19/2020 12:00 AM"
+    },
+  ]
+  label = "All Contacts"
+  _parent = [
+    salesforce.Contact,
+  ]
+}

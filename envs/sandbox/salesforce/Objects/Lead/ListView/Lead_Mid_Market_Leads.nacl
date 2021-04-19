@@ -1,0 +1,61 @@
+salesforce.ListView Lead_Mid_Market_Leads {
+  fullName = "Lead.Mid_Market_Leads"
+  booleanFilter = "1 AND 2 AND 3 AND (4 OR 5) And 6"
+  columns = [
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.COMPANY",
+    "LEAD.COUNTRY",
+    "LEAD.PHONE",
+    "Enriched_phone__c",
+    "Current_score__c",
+    "Days_left_in_trial__c",
+    "Enabled_users__c",
+    "Engagement__c",
+    "Related_Company__c",
+    "LEAD.URL",
+    "LEAD.STATUS",
+    "Sign_up_date__c",
+    "LEAD.CREATED_DATE",
+  ]
+  filterScope = "Mine"
+  filters = [
+    {
+      field = "Days_left_in_trial__c"
+      operation = "lessOrEqual"
+      value = "12"
+    },
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "equals"
+      value = "Big Brain - Signup"
+    },
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Received"
+    },
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "equals"
+      value = "THIS_MONTH"
+    },
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "equals"
+      value = "LAST_MONTH"
+    },
+    {
+      field = "Company_Size__c"
+      operation = "equals"
+      value = "100-250,251-1500"
+    },
+  ]
+  label = "Mid Market Leads"
+  sharedTo = {
+    roleAndSubordinatesInternal = "Head_of_Sales"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

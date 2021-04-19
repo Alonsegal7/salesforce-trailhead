@@ -1,0 +1,8 @@
+salesforce.CustomTab Partner_Region__c {
+  fullName = "Partner_Region__c"
+  customObject = true
+  motif = "Custom65: Cup"
+  _parent = [
+    salesforce.Partner_Region__c,
+  ]
+}

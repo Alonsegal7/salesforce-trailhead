@@ -1,0 +1,274 @@
+salesforce.Flow Set_Contact_s_Company {
+  fullName = "Set_Contact_s_Company"
+  assignments = [
+    {
+      name = "Do_nothing"
+      label = "Do nothing"
+      locationX = 1051
+      locationY = 75
+      assignmentItems = [
+        {
+          assignToReference = "nothing"
+          operator = "Assign"
+          value = {
+            numberValue = 0
+          }
+        },
+      ]
+    },
+    {
+      name = "Set_Company_Account"
+      label = "Set Company = Account"
+      locationX = 990
+      locationY = 428
+      assignmentItems = [
+        {
+          assignToReference = "$Record.Company__c"
+          operator = "Assign"
+          value = {
+            elementReference = "$Record.AccountId"
+          }
+        },
+      ]
+    },
+    {
+      name = "Set_Company_Account_s_Parent"
+      label = "Set Company = Account's Parent"
+      locationX = 985
+      locationY = 614
+      assignmentItems = [
+        {
+          assignToReference = "$Record.Company__c"
+          operator = "Assign"
+          value = {
+            elementReference = "Get_Account_from_Account_Name.ParentId"
+          }
+        },
+      ]
+    },
+  ]
+  decisions = [
+    {
+      name = "Account_Name_is_company"
+      label = "Account Name is company"
+      locationX = 825
+      locationY = 362
+      defaultConnector = {
+        targetReference = "Do_nothing"
+      }
+      defaultConnectorLabel = "Other"
+      rules = [
+        {
+          name = "Is_Company"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "Get_Account_from_Account_Name.RecordTypeId"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "0121t000000IQTiAAO"
+              }
+            },
+            {
+              leftValueReference = "Get_Account_from_Account_Name.RecordTypeId"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "0121t000000IQTsAAO"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Company_Account"
+          }
+          label = "Is Company"
+        },
+        {
+          name = "Is_Monday_Account"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Get_Account_from_Account_Name.RecordTypeId"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "0121t000000IQTnAAO"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Account_s_parent_company"
+          }
+          label = "Is Monday Account"
+        },
+      ]
+    },
+    {
+      name = "Account_s_parent_company"
+      label = "Account's parent = company?"
+      locationX = 823
+      locationY = 548
+      defaultConnector = {
+        targetReference = "Do_nothing"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Company_is_different_than_the_Account_s_parent"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "$Record.Company__c"
+              operator = "NotEqualTo"
+              rightValue = {
+                elementReference = "Get_Account_from_Account_Name.ParentId"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Company_Account_s_Parent"
+          }
+          label = "Company is different than the Account's parent"
+        },
+      ]
+    },
+    {
+      name = "Has_monday_account"
+      label = "Has monday account?"
+      locationX = 624
+      locationY = 198
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Has_Monday_Account_Choice"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "$Record.AccountId"
+              operator = "StartsWith"
+              rightValue = {
+                stringValue = "001"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Get_Account_from_Account_Name"
+          }
+          label = "Has Monday Account"
+        },
+      ]
+    },
+    {
+      name = "hasaccount"
+      label = "hasaccount"
+      locationX = 475
+      locationY = 74
+      defaultConnector = {
+        targetReference = "Has_monday_account"
+      }
+      defaultConnectorLabel = "No Company"
+      rules = [
+        {
+          name = "has_account"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "$Record.Company__c"
+              operator = "StartsWith"
+              rightValue = {
+                stringValue = "001"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Do_nothing"
+          }
+          label = "Has Company"
+        },
+      ]
+    },
+  ]
+  interviewLabel = "Set Contact's Company {!$Flow.CurrentDateTime}"
+  label = "Set Contact's Company"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get_Account_from_Account_Name"
+      label = "Get Account from Account Name"
+      locationX = 832
+      locationY = 199
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Account_Name_is_company"
+      }
+      faultConnector = {
+        targetReference = "Do_nothing"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.AccountId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Account
+      storeOutputAutomatically = true
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 50
+    connector = {
+      targetReference = "hasaccount"
+    }
+    object = salesforce.Contact
+    triggerType = "RecordBeforeSave"
+  }
+  status = "Active"
+  variables = [
+    {
+      name = "CompanyID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      value = {
+        elementReference = "$Record.Company__c"
+      }
+    },
+    {
+      name = "ContactRolesCount"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      name = "nothing"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      scale = 0
+    },
+  ]
+}

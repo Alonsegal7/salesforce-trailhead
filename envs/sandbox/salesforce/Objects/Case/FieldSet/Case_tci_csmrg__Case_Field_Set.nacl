@@ -1,0 +1,92 @@
+salesforce.FieldSet Case_tci_csmrg__Case_Field_Set {
+  fullName = "Case.tci_csmrg__Case_Field_Set"
+  availableFields = [
+    {
+      field = "Description"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Origin"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ParentId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Priority"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Reason"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SuppliedCompany"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SuppliedEmail"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SuppliedName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SuppliedPhone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Type"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  description = "Mass Edit Cases VF Page"
+  displayedFields = [
+    {
+      field = "CaseNumber"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AccountId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ContactId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Subject"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Status"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Case Field Set"
+  _parent = [
+    salesforce.Case,
+  ]
+}

@@ -1,0 +1,10 @@
+salesforce.Role CloudConceptPartnerUser {
+  fullName = "CloudConceptPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Cloud Concept Partner User"
+  mayForecastManagerShare = false
+  name = "Cloud Concept Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

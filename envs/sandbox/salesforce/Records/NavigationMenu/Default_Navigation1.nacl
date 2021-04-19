@@ -1,0 +1,51 @@
+salesforce.NavigationMenu Default_Navigation1 {
+  fullName = "Default_Navigation1"
+  container = "Monday Partners Portal"
+  containerType = "Network"
+  label = "Default Navigation"
+  navigationMenuItem = [
+    {
+      label = "Leads"
+      position = 1
+      publiclyAvailable = false
+      target = "Lead"
+      type = "SalesforceObject"
+    },
+    {
+      defaultListViewId = "MyAccounts"
+      label = "Monday Accounts"
+      position = 2
+      publiclyAvailable = false
+      target = "Account"
+      type = "SalesforceObject"
+    },
+    {
+      label = "Opportunities"
+      position = 3
+      publiclyAvailable = false
+      target = "Opportunity"
+      type = "SalesforceObject"
+    },
+    {
+      label = "Tasks"
+      position = 4
+      publiclyAvailable = false
+      target = "Task"
+      type = "SalesforceObject"
+    },
+    {
+      label = "Reports"
+      position = 5
+      publiclyAvailable = false
+      target = "/report/Report/Recent"
+      type = "InternalLink"
+    },
+    {
+      label = "Dashboards"
+      position = 6
+      publiclyAvailable = false
+      target = "/dashboard/Dashboard/Recent"
+      type = "InternalLink"
+    },
+  ]
+}

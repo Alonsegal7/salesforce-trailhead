@@ -1,0 +1,37 @@
+salesforce.WorkflowRule Lead_Webinar_and_Podcast_Leads_to_SDR {
+  fullName = "Lead.Webinar and Podcast Leads to SDR"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Change_owner_to_chosen_SDR
+      type = "FieldUpdate"
+    },
+  ]
+  active = false
+  booleanFilter = "(1 or 2) AND 3 AND 4"
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.LeadSource
+      operation = "equals"
+      value = "Podcast,Webinar"
+    },
+    {
+      field = salesforce.Lead.field.First_Lead_Source__c
+      operation = "equals"
+      value = "Podcast,Webinar"
+    },
+    {
+      field = salesforce.Lead.field.Status
+      operation = "equals"
+      value = "Received"
+    },
+    {
+      field = salesforce.Lead.field.OwnerId
+      operation = "equals"
+      value = "API Hubspot,Oran Akron"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,21 @@
+salesforce.ListView Lead_Sarit_s_Partners_Leads_Database {
+  fullName = "Lead.Sarit_s_Partners_Leads_Database"
+  columns = [
+    "LEAD.COMPANY",
+    "CORE.USERS.ALIAS",
+    "FULL_NAME",
+    "LEAD.LAST_ACTIVITY",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "CORE.USERS.ALIAS"
+      operation = "equals"
+      value = "saritc"
+    },
+  ]
+  label = "Sarit's Partners Leads Database"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

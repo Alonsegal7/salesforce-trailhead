@@ -1,0 +1,22 @@
+salesforce.Workflow Contact {
+  fullName = "Contact"
+  fieldUpdates = [
+    salesforce.WorkflowFieldUpdate.instance.Contact_Set_Survey_Contact,
+  ]
+  rules = [
+    salesforce.WorkflowRule.instance.Contact_Mark_Contact_as_Survey_Contact,
+    salesforce.WorkflowRule.instance.Contact_zaapit__Call_Contact,
+    salesforce.WorkflowRule.instance.Contact_zaapit__Email_Contact,
+    salesforce.WorkflowRule.instance.Contact_zaapit__Send_Letter_Contact,
+    salesforce.WorkflowRule.instance.Contact_zaapit__Send_Quote_Contact,
+  ]
+  tasks = [
+    salesforce.WorkflowTask.instance.Contact_zaapit__Call_Contact,
+    salesforce.WorkflowTask.instance.Contact_zaapit__Email_Contact,
+    salesforce.WorkflowTask.instance.Contact_zaapit__Send_Letter_Contact,
+    salesforce.WorkflowTask.instance.Contact_zaapit__Send_Quote_Contact,
+  ]
+  _parent = [
+    salesforce.Contact,
+  ]
+}

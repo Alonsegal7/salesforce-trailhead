@@ -1,0 +1,7 @@
+salesforce.ApexClass squivr__OrgChartController {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  status = "Active"
+  fullName = "squivr__OrgChartController"
+  content = file("salesforce/InstalledPackages/squivr/Records/ApexClass/squivr__OrgChartController.cls")
+}

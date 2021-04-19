@@ -1,0 +1,13 @@
+salesforce.EmailTemplate unfiled_public_SUPPORTCaseResponsewithSolutionSAMPLE {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "Standard template for responses to customer inquiries."
+  encodingKey = "ISO-8859-1"
+  name = "SUPPORT: Case Response with Solution (SAMPLE)"
+  style = "none"
+  subject = "Case {!Case.CaseNumber}:  {!Case.Subject}"
+  type = "text"
+  uiType = "Aloha"
+  fullName = "unfiled$public/SUPPORTCaseResponsewithSolutionSAMPLE"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/SUPPORTCaseResponsewithSolutionSAMPLE.email")
+}

@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Update_Expected_Plan_Name {
+  fullName = "Opportunity.Update_Expected_Plan_Name"
+  field = salesforce.Opportunity.field.Expected_Plan_Name__c
+  formula = "Expected_Plan_Tier__c & \" -- \"&\"Up to \"& TEXT(Expected_Plan_Seats__c) &\" users (\"& Expected_Plan_Period__c &\")\""
+  name = "Update Expected Plan Name"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

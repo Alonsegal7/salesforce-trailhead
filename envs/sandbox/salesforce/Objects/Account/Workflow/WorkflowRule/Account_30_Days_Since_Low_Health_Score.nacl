@@ -1,0 +1,50 @@
+salesforce.WorkflowRule Account_30_Days_Since_Low_Health_Score {
+  fullName = "Account.30 Days Since Low Health Score"
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.Low_Health_Timestemp__c
+      operation = "notEqual"
+    },
+    {
+      field = salesforce.Account.field.RecordTypeId
+      operation = "equals"
+      value = "Monday Account"
+    },
+    {
+      field = salesforce.Account.field.Monday_Account_Lifecycle__c
+      operation = "notEqual"
+      value = "Handover,Onboarding"
+    },
+    {
+      field = salesforce.Account.field.Health_Score_Bucket__c
+      operation = "equals"
+      value = "Low"
+    },
+    {
+      field = salesforce.Account.field.CSM__c
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  workflowTimeTriggers = [
+    {
+      actions = [
+        {
+          name = salesforce.WorkflowAlert.instance.Account_Low_Health_Accounts_more_then_30_days
+          type = "Alert"
+        },
+        {
+          name = salesforce.WorkflowFieldUpdate.instance.Account_at_risk_more_then_30_days
+          type = "FieldUpdate"
+        },
+      ]
+      offsetFromField = salesforce.Account.field.Low_Health_Timestemp__c
+      timeLength = "30"
+      workflowTimeTriggerUnit = "Days"
+    },
+  ]
+  _parent = [
+    salesforce.Account,
+  ]
+}

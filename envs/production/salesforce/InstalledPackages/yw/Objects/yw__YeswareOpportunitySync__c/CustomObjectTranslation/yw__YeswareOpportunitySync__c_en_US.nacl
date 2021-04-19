@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation yw__YeswareOpportunitySync__c_en_US {
+  fullName = "yw__YeswareOpportunitySync__c-en_US"
+  _parent = [
+    salesforce.yw__YeswareOpportunitySync__c,
+  ]
+}

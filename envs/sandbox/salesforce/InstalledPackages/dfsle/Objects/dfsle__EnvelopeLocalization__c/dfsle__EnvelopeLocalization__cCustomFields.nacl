@@ -1,0 +1,39 @@
+type salesforce.dfsle__EnvelopeLocalization__c {
+  salesforce.LongTextArea dfsle__EmailMessage__c {
+    apiName = "dfsle__EnvelopeLocalization__c.dfsle__EmailMessage__c"
+    label = "Email Message"
+    _required = false
+    createable = true
+    updateable = true
+    length = 2000
+    queryable = true
+    description = "Email Message"
+    visibleLines = 5
+  }
+  salesforce.Text dfsle__EmailSubject__c {
+    apiName = "dfsle__EnvelopeLocalization__c.dfsle__EmailSubject__c"
+    label = "Email Subject"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Email Subject"
+    externalId = false
+  }
+  salesforce.Text dfsle__Language__c {
+    apiName = "dfsle__EnvelopeLocalization__c.dfsle__Language__c"
+    label = "Language Code"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    caseSensitive = false
+    length = 30
+    queryable = true
+    description = "Language Code"
+    externalId = false
+  }
+}

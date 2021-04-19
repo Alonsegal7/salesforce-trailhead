@@ -1,0 +1,25 @@
+salesforce.WorkflowRule Lead_Company_size_1500_ {
+  fullName = "Lead.Company size 1500%2B"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Company_size_1500
+      type = "FieldUpdate"
+    },
+  ]
+  active = false
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.of_employees__c
+      operation = "greaterOrEqual"
+      value = "1500"
+    },
+    {
+      field = salesforce.Lead.field.Company_Size__c
+      operation = "equals"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

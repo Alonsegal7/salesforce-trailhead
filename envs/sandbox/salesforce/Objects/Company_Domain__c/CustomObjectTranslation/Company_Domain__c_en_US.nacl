@@ -1,0 +1,42 @@
+salesforce.CustomObjectTranslation Company_Domain__c_en_US {
+  fullName = "Company_Domain__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Company Domain"
+    },
+    {
+      plural = true
+      value = "Company Domains"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Company_Domain__c.field.Company__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Company_Domain__c.field.Domain__c
+    },
+    {
+      label = ""
+      name = salesforce.Company_Domain__c.field.Status__c
+      picklistValues = [
+        {
+          masterLabel = "Active"
+          translation = ""
+        },
+        {
+          masterLabel = "Inactive"
+          translation = ""
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Company_Domain__c,
+  ]
+}

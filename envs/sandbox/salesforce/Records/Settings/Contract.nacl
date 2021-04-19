@@ -1,0 +1,6 @@
+salesforce.ContractSettings {
+  fullName = "Contract"
+  autoCalculateEndDate = false
+  enableContractHistoryTracking = false
+  notifyOwnersOnContractExpiration = false
+}

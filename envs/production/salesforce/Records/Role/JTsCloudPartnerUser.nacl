@@ -1,0 +1,10 @@
+salesforce.Role JTsCloudPartnerUser {
+  fullName = "JTsCloudPartnerUser"
+  caseAccessLevel = "Read"
+  contactAccessLevel = "Edit"
+  description = "JT's Cloud Partner User"
+  mayForecastManagerShare = false
+  name = "JT's Cloud Partner User"
+  opportunityAccessLevel = "Read"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

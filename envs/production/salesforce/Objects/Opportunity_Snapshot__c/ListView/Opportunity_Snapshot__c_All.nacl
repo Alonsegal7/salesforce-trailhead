@@ -1,0 +1,8 @@
+salesforce.ListView Opportunity_Snapshot__c_All {
+  fullName = "Opportunity_Snapshot__c.All"
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.Opportunity_Snapshot__c,
+  ]
+}

@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decRoleRecipient {
+  fullName = "dfsle__decRoleRecipient"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRoleRecipient/sendingRoleRecipient.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRoleRecipient/decRoleRecipient.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRoleRecipient/decRoleRecipient.js"
+      },
+    ]
+  }
+}

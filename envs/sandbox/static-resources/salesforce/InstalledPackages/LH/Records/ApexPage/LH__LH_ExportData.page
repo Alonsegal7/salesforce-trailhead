@@ -1,0 +1,206 @@
+<apex:page label="Lookup Helper Export" title="Lookup Helper Export" controller="LH.LH_ExportData_Controller" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <apex:stylesheet value="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
+        <apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" />
+        <apex:includeScript value="{! URLFOR($Resource.PT_Resources_v1, '/js/hs_breadcrumbs.js')}" />
+    </head>
+
+    <script type="text/javascript">
+    
+        $(document).ready(function(){
+            selectBreadcrumb_HS();
+            if(window.localStorage.getItem('LHExpSortField') == null || window.localStorage.getItem('LHExpSortDirection') == null){
+                var sortField = '{!sortField}';
+                window.localStorage.setItem('LHExpSortField', sortField);
+                window.localStorage.setItem('LHExpSortDirection', 'asc');
+            }
+            sortLookups(window.localStorage.getItem('LHExpSortField'), window.localStorage.getItem('LHExpSortDirection'));
+        });
+
+        function replacePageRefDL(){ 
+            if(window.location.replace){     
+                window.location.replace("LH_ExportFile");
+            } else { 
+                window.location.href="LH_ExportFile";
+            }
+        }   
+
+        function saveSort(sortField, sortDirection){
+            window.localStorage.setItem('LHExpSortField', sortField);
+            window.localStorage.setItem('LHExpSortDirection', sortDirection);
+        }
+    
+    </script>
+    <apex:form >
+    <apex:actionFunction name="sortLookups" action="{!doSettingSort}" reRender="lookupTable">
+        <apex:param name="fieldSort" value="" assignTo="{!sortField}"/>
+        <apex:param name="directionSort" value="" assignTo="{!sortDirection}"/>
+    </apex:actionFunction>
+    <apex:slds />
+    <div class ="slds-scope">
+        <apex:pageBlock rendered="{!!hasVisibilityToExportLookupsObject}">
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                <span class="slds-assistive-text">error</span>
+                <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small">
+                    <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                    </svg>
+                </span>
+                <apex:outputText >The Lookup Helper All Access permission set, which allows lookups to be exported, is not assigned to your user. Please contact your Salesforce admin for assistance.</apex:outputText>
+            </div>
+        </apex:pageBlock>
+    </div>
+    <apex:actionFunction action="{!deleteAllExportedLookups}" name="deleteExportedLookupAF" rerender="exportTable, buttonWrapper" status="inprogress"/>
+    <div class="slds-scope" role="main" >             
+        <div class="slds-card">
+            <header class="slds-card__header">
+                <nav role="navigation">
+                    <ol class="slds-breadcrumb slds-list_horizontal">
+                        <li class="slds-list__item slds-text-heading_label home-crumb"><a href="{!URLFOR($Page.LH_landingPage)}">Home</a></li>
+                        <li class="slds-list__item slds-text-heading_label setting-crumb"><a href="{!URLFOR($Page.LH_All_Settings)}">All Lookup Settings</a></li>
+                    </ol>
+                </nav>
+            </header>
+        </div>
+        <div class="slds-card">
+            <header class="slds-card__header ">
+                <div >
+                    <h3 class="slds-text-heading_small slds-truncate">Select Lookups for Export</h3>               
+                </div>
+                <div style="float:right;">
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" value="Export Selected" action="{! regExport }" rerender="exportedLookups, exportTable, buttonWrapper" status="inprogress"/>
+                    &nbsp;
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" value="Export All" action="{! allExport }" rerender="exportedLookups, lookupToExport, exportTable, buttonWrapper" status="inprogress"/>
+                </div>
+            </header>
+            
+            <apex:outputPanel id="lookupTable">
+                <apex:outputPanel style="width:100%;" id="lookupExport">
+                    <div>
+                        <c:Paginate pageController="{! lookupPaginateController }" renderedComponent="lookupTable" />
+                    </div>		
+                </apex:outputPanel>
+                <section class="slds-card__body">
+                    <table class="slds-table slds-table_bordered hideFullColumn" style="table-layout:fixed;" id="allLookups">
+                        <thead>
+                        <tr style="width:100%;">
+                            <th class="slds-text-heading_label slds-truncate" style="width:7%; min-width: 100px;">
+                                <span title="Select All">
+                                    <apex:inputCheckbox value="{!allSelectCheck}" id="select-all">
+                                        <apex:actionSupport event="onchange" rerender="lookupTable"/>
+                                    </apex:inputCheckbox>
+                                </span>
+                                &nbsp;Select
+                            </th>   
+                            <th class="slds-text-heading_label slds-truncate" style="width:33%; min-width: 100px;" scope="col">
+                                <apex:commandLink value="Setting Name" action="{! doSettingSort }" oncomplete="saveSort('{!sortField}', '{!sortDirection}');" rerender="lookupTable"> 
+                                    <apex:param name="sortField" value="Name" assignTo="{!sortField}"/> 
+                                    <apex:outputText value="{!IF(sortField=='Name', IF(sortDirection=='asc', ' ▲', ' ▼'),'')}"/>
+                                </apex:commandLink> 
+                            </th>
+                            <th class="slds-text-heading_label slds-truncate" style="width:15%; min-width: 100px;" scope="col">
+                                <apex:commandLink value="Parent Field" action="{! doSettingSort }" oncomplete="saveSort('{!sortField}', '{!sortDirection}');" rerender="lookupTable"> 
+                                    <apex:param name="sortField" value="Parent_Object__c" assignTo="{!sortField}"/> 
+                                    <apex:outputText value="{!IF(sortField=='Parent_Object__c', IF(sortDirection=='asc', ' ▲', ' ▼'),'')}"/>
+                                </apex:commandLink> 
+                            </th>
+                            <th class="slds-text-heading_label slds-truncate" style="width:13%; min-width: 100px;" scope="col">
+                                <apex:commandLink value="Child Object" action="{! doSettingSort }" oncomplete="saveSort('{!sortField}', '{!sortDirection}');" rerender="lookupTable"> 
+                                    <apex:param name="sortField" value="Child_Object__c" assignTo="{!sortField}"/> 
+                                    <apex:outputText value="{!IF(sortField=='Child_Object__c', IF(sortDirection=='asc', ' ▲', ' ▼'),'')}"/>
+                                </apex:commandLink> 
+                            </th>
+                            <th class="slds-text-heading_label slds-truncate" style="width:20%; min-width: 100px;" scope="col">
+                                <apex:commandLink value="Lookup Field Being Updated" action="{! doSettingSort }" oncomplete="saveSort('{!sortField}', '{!sortDirection}');" rerender="lookupTable"> 
+                                    <apex:param name="sortField" value="Lookup_Field__c" assignTo="{!sortField}"/> 
+                                    <apex:outputText value="{!IF(sortField=='Lookup_Field__c', IF(sortDirection=='asc', ' ▲', ' ▼'),'')}"/>
+                                </apex:commandLink> 
+                            </th>
+                            <th class="slds-text-heading_label slds-truncate" style="min-width: 100px;" scope="col">
+                                <apex:commandLink value="Lookup Source" action="{! doSettingSort }" oncomplete="saveSort('{!sortField}', '{!sortDirection}');" rerender="lookupTable"> 
+                                    <apex:param name="sortField" value="Lookup_Source__c" assignTo="{!sortField}"/> 
+                                    <apex:outputText value="{!IF(sortField=='Lookup_Source__c', IF(sortDirection=='asc', ' ▲', ' ▼'),'')}"/>
+                                </apex:commandLink> 
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!PaginatedListForLookups}" var="item">
+                            <tr>           					
+                                <td><apex:inputCheckbox value="{!item.selected}" id="inputId"/></td>
+                                <td class="slds-truncate" data-label="Setting Name">{! item.lhs.Name }</td>
+                                <td class="slds-truncate" data-label="Parent Obj">{! item.lhs.Parent_Object__c }</td>
+                                <td class="slds-truncate" data-label="Child Obj">{! item.lhs.Child_Object__c }</td>              					
+                                <td class="slds-truncate" data-label="Lookup Field">{! item.lhs.Lookup_Field__c }</td>
+                                <td class="slds-truncate" data-label="Lookup Source">{! item.lhs.Lookup_Source__c }</td>
+                            </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                </section>
+                <footer> 
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;<b>Please Note: Imported Lookup Settings will automatically be set to inactive. Please activate imported Lookup Settings in the All Settings page to ensure all records have accurate lookups.</b><br/><br/>
+                </footer>
+            </apex:outputPanel>          	
+        </div>
+        <div class="slds-card">
+            <header class="slds-card__header ">
+                <div>
+                    <h3 class="slds-text-heading_small slds-truncate">Lookups To Be Exported</h3> 
+                    <apex:outputPanel id="buttonWrapper">
+                        <div class="slds-text-body_medium"> <apex:actionStatus startText="Processing..." id="inprogress"/> </div>
+                        <div style="float:right;">
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" value="Download"  onclick="replacePageRefDL();" oncomplete="deleteExportedLookupAF();"  rerender="false" status="inprogress" rendered="{!hasVisibilityToExportLookupsObject && exportList.size > 0}"/>						
+                            &nbsp;                   
+                            <apex:commandButton styleClass="slds-button slds-button_neutral"  value="Clear" action="{!deleteAllExportedLookups}" rerender="exportTable, buttonWrapper" status="inprogress" rendered="{!exportList.size > 0}"/>                   
+                        </div>
+                    </apex:outputPanel>
+                </div> 
+            </header>
+            <apex:outputpanel id="exportTable">
+                <apex:outputPanel style="width:100%;">
+                    <div>
+                        <c:Paginate pageController="{! exportPaginateController }" renderedComponent="exportTable" />
+                    </div>	
+                </apex:outputPanel> 
+                <section class="slds-card__body "> 
+                    <table class="slds-table slds-table_bordered hideFullColumn" id="allLookups">
+                        <thead>
+                        <tr style="width:100%;">
+                            <th class="slds-text-heading_label">
+                                <span>LH_Export_Lookups ID</span>
+                            </th>
+                            <th class="slds-text-heading_label">
+                                <span>Parent Object</span>
+                            </th>
+                            <th class="slds-text-heading_label">
+                                <span>Child Object</span>
+                            </th>
+                            <th class="slds-text-heading_label">
+                                <span>Lookup Field Being Updated</span>
+                            </th>
+                            <th class="slds-text-heading_label">
+                                <span>Lookup Source</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!PaginatedListForExportLookups}" var="expLookup">
+                            <tr>
+                            <td>{!expLookup.lhExportLookup.name} </td>
+                            <td>{!expLookup.parentObj} </td>
+                            <td>{!expLookup.childObj} </td>
+                            <td>{!expLookup.lookupField} </td>
+                            <td>{!expLookup.lookupSource} </td>
+                            </tr>                 			
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                </section>
+            </apex:outputpanel>
+        </div>
+    </div>
+    </apex:form>
+    </html>
+</apex:page>

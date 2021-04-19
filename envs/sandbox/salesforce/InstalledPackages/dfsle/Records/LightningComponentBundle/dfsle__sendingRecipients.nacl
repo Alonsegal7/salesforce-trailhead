@@ -1,0 +1,15 @@
+salesforce.LightningComponentBundle dfsle__sendingRecipients {
+  fullName = "dfsle__sendingRecipients"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingRecipients/sendingRecipients.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingRecipients/sendingRecipients.js"
+      },
+    ]
+  }
+}

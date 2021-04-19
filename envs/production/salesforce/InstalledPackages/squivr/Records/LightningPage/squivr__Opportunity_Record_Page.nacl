@@ -1,0 +1,116 @@
+salesforce.LightningPage squivr__Opportunity_Record_Page {
+  fullName = "squivr__Opportunity_Record_Page"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "collapsed"
+              value = "true"
+            },
+          ]
+          componentName = "force:highlightsPanel"
+        },
+      ]
+      mode = "Replace"
+      name = "header"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+      ]
+      name = "Facet-5601e9c4-1195-4055-bf8d-4acdb0ed30d2"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "forceChatter:recordFeedContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "feedTabContent"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-5601e9c4-1195-4055-bf8d-4acdb0ed30d2"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "feedTabContent"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.collaborate"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      mode = "Replace"
+      name = "tabs"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "tabs"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      mode = "Replace"
+      name = "main"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "squivr:Timeline"
+        },
+      ]
+      mode = "Replace"
+      name = "subheader"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:relatedListContainer"
+        },
+      ]
+      mode = "Replace"
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Opportunity Record Page"
+  parentFlexiPage = "sfa__Opportunity_rec_L"
+  sobjectType = "Opportunity"
+  template = {
+    name = "flexipage:recordHomeWithSubheaderTemplateDesktop"
+  }
+  type = "RecordPage"
+}

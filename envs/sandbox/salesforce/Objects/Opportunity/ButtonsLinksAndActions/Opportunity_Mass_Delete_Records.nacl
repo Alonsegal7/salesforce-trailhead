@@ -1,0 +1,18 @@
+salesforce.WebLink Opportunity_Mass_Delete_Records {
+  fullName = "Opportunity.Mass_Delete_Records"
+  availability = "online"
+  description = "Mass delete records"
+  displayType = "massActionButton"
+  linkType = "page"
+  masterLabel = "Mass Delete"
+  openType = "replace"
+  page = "Mass_Delete_Opportunity"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Opportunity,
+  ]
+  _generated_dependencies = [
+    salesforce.ApexPage.instance.Mass_Delete_Opportunity,
+  ]
+}

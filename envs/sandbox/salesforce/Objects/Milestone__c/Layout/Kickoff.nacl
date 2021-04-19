@@ -1,0 +1,164 @@
+salesforce.Layout Kickoff {
+  fullName = "Milestone__c-Kickoff"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.RecordTypeId
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Milestone__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Milestone__c.field.Assignee__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Handshake_w_Sales__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Intro_Email_Sent__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Status__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Actual_Time_Spent__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Milestone__c.field.Age_Days__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Milestone__c.field.Project__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Kickoff__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Milestone__c.field.Kickoff_date1__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Milestone__c.field.Go_Live_date__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Milestone__c.field.Kickoff_milestone_duration__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Close_Date__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Milestone__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Milestone__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  relatedLists = [
+    {
+      excludeButtons = [
+        "NewTask",
+      ]
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "TASK.PRIORITY",
+        "CORE.USERS.FULL_NAME",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      excludeButtons = [
+        "LogCall",
+      ]
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "CORE.USERS.FULL_NAME",
+        "TASK.LAST_UPDATE",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+    {
+      relatedList = "RelatedEntityHistoryList"
+    },
+    {
+      relatedList = "RelatedFileList"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000jKOoY"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Milestone__c,
+  ]
+}

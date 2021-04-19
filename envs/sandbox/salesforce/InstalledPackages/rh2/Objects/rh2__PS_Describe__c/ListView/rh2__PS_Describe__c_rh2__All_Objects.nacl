@@ -1,0 +1,13 @@
+salesforce.ListView rh2__PS_Describe__c_rh2__All_Objects {
+  fullName = "rh2__PS_Describe__c.rh2__All_Objects"
+  columns = [
+    "rh2__Label__c",
+    "rh2__Object__c",
+  ]
+  filterScope = "Everything"
+  label = "All Objects"
+  language = "en_US"
+  _parent = [
+    salesforce.rh2__PS_Describe__c,
+  ]
+}

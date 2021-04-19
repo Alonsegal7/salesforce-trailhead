@@ -1,0 +1,3 @@
+<apex:page sidebar="false" extensions="HubSpot_Inc.HubSpotController" standardController="Opportunity">
+    <apex:iframe height="315px" width="100%" scrolling="true" src="https://api.hubapi.com/sfdc/v1/visualforce/{!$Organization.Id}/{!recordId}/{!$User.Email}" />
+</apex:page>

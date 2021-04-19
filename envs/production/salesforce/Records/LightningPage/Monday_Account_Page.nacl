@@ -1,0 +1,128 @@
+salesforce.LightningPage Monday_Account_Page {
+  fullName = "Monday_Account_Page"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "decorate"
+              value = "true"
+            },
+            {
+              name = "richTextValue"
+              value = "<p><b style=\"color: rgb(218, 54, 13);\">Monday Account</b></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideUpdateButton"
+              value = "false"
+            },
+            {
+              name = "variant"
+              value = "linear"
+            },
+          ]
+          componentName = "runtime_sales_pathassistant:pathAssistant"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideHeader"
+              value = "false"
+            },
+          ]
+          componentName = "force:relatedListQuickLinksContainer"
+        },
+      ]
+      name = "header"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+      ]
+      name = "Facet-a016458e-8ac7-4cd9-a6a4-bc1cd8ba44ef"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-a016458e-8ac7-4cd9-a6a4-bc1cd8ba44ef"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-8fd488cb-7aba-4751-b098-2d33d323e31d"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://new.bigbrain.me/crm/sales/account"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "BigBrainEmbed"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-8fd488cb-7aba-4751-b098-2d33d323e31d"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      name = "main"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Monday Account Page"
+  sobjectType = "Account"
+  template = {
+    name = "flexipage:recordHomeSimpleViewTemplate"
+  }
+  type = "RecordPage"
+}

@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting amielpc {
+  fullName = "amielpc"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://amiel.ngrok.io"
+}

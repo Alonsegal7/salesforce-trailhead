@@ -1,0 +1,11 @@
+salesforce.LightningComponentBundle dfsle__queryUtils {
+  fullName = "dfsle__queryUtils"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/queryUtils/queryUtils.js"
+      },
+    ]
+  }
+}

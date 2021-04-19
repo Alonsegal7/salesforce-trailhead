@@ -1,0 +1,169 @@
+salesforce.CustomObjectTranslation Milestone__c_en_US {
+  fullName = "Milestone__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Milestone"
+    },
+    {
+      plural = true
+      value = "Milestones"
+    },
+  ]
+  fields = [
+    {
+      help = ""
+      label = ""
+      name = salesforce.Milestone__c.field.Actual_Go_live_date__c
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Actual_Time_Spent__c
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Age_Days__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Milestone__c.field.Assignee__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Close_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Go_Live_date__c
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Handshake_w_Sales__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Milestone__c.field.Intro_Email_Sent__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Milestone__c.field.Kickoff__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Kickoff_date1__c
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Kickoff_milestone_duration__c
+    },
+    {
+      help = ""
+      label = ""
+      name = salesforce.Milestone__c.field.Log_a_Session__c
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Milestone_Summary__c
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Milestone_type__c
+      picklistValues = [
+        {
+          masterLabel = "Advanced Training"
+          translation = ""
+        },
+        {
+          masterLabel = "Basic Training"
+          translation = ""
+        },
+        {
+          masterLabel = "Bug troubleshot"
+          translation = ""
+        },
+        {
+          masterLabel = "Onboarding/Project Summery"
+          translation = ""
+        },
+        {
+          masterLabel = "Process/Boards Optimization"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Project__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Session_Due_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Milestone__c.field.Status__c
+      picklistValues = [
+        {
+          masterLabel = "Closed"
+          translation = ""
+        },
+        {
+          masterLabel = "Open"
+          translation = ""
+        },
+      ]
+    },
+  ]
+  layouts = [
+    {
+      layout = "Kickoff"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+    {
+      layout = "Milestone Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  recordTypes = [
+    {
+      description = ""
+      label = ""
+      name = salesforce.RecordType.instance.Milestone__c_Kickoff
+    },
+    {
+      description = ""
+      label = ""
+      name = salesforce.RecordType.instance.Milestone__c_Session
+    },
+  ]
+  startsWith = "Consonant"
+  validationRules = [
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Milestone__c_Actual_Go_live_date_is_mandatory
+    },
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Milestone__c_Set_Time_Spent_on_Close
+    },
+  ]
+  _parent = [
+    salesforce.Milestone__c,
+  ]
+}

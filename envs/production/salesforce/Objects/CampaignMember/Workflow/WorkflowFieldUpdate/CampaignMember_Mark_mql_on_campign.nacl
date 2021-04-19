@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate CampaignMember_Mark_mql_on_campign {
+  fullName = "CampaignMember.Mark_mql_on_campign"
+  field = salesforce.CampaignMember.field.MQL__c
+  literalValue = "1"
+  name = "Mark mql on campign"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.CampaignMember,
+  ]
+}

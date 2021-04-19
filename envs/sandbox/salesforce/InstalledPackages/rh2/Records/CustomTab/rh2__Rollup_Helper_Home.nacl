@@ -1,0 +1,6 @@
+salesforce.CustomTab rh2__Rollup_Helper_Home {
+  fullName = "rh2__Rollup_Helper_Home"
+  label = "Rollup Helper Home"
+  motif = "Custom33: Desk"
+  page = "rh2__PS_landingPage"
+}

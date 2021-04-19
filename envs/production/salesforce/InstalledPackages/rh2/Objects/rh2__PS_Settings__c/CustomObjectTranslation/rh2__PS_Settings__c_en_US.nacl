@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation rh2__PS_Settings__c_en_US {
+  fullName = "rh2__PS_Settings__c-en_US"
+  _parent = [
+    salesforce.rh2__PS_Settings__c,
+  ]
+}

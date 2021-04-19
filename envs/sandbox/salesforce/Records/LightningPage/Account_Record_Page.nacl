@@ -1,0 +1,375 @@
+salesforce.LightningPage Account_Record_Page {
+  fullName = "Account_Record_Page"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "decorate"
+              value = "true"
+            },
+            {
+              name = "richTextValue"
+              value = "<p><b style=\"font-family: verdana; font-size: 20px; color: rgb(89, 90, 212);\">Company</b></p>"
+            },
+          ]
+          componentName = "flexipage:richText"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "collapsed"
+              value = "false"
+            },
+            {
+              name = "enableActionsConfiguration"
+              value = "false"
+            },
+            {
+              name = "hideChatterActions"
+              value = "false"
+            },
+          ]
+          componentName = "force:highlightsPanel"
+        },
+        {
+          componentName = "companyWorkspace"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "boardId"
+              value = "161675517"
+            },
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "500px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://monday.monday.com/"
+            },
+            {
+              name = "itemView"
+              value = "false"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "mondayEmbed"
+        },
+        {
+          componentName = "squivr:Timeline"
+        },
+      ]
+      mode = "Replace"
+      name = "header"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "force:detailPanel"
+        },
+      ]
+      name = "Facet-84ebfec8-d5ab-4df0-8398-29a644517ab2"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+          ]
+          componentName = "force:relatedListContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "parentFieldApiName"
+              value = "Account.Id"
+            },
+            {
+              name = "relatedListApiName"
+              value = "Histories"
+            },
+            {
+              name = "relatedListComponentOverride"
+              value = "NONE"
+            },
+            {
+              name = "rowsToDisplay"
+              value = "10"
+            },
+            {
+              name = "showActionBar"
+              value = "true"
+            },
+          ]
+          componentName = "force:relatedListSingleContainer"
+        },
+      ]
+      name = "Facet-9ad57572-4a74-4ee2-9896-3f34eb8a2287"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "runtime_sales_activities:activityPanel"
+        },
+      ]
+      name = "Facet-caef1824-ee94-4a8a-8745-2b69c286143e"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "enabledObjects"
+              value = "Accounts and Contacts"
+            },
+          ]
+          componentName = "squivr:OrgChart"
+        },
+      ]
+      name = "Facet-8b9f8b2f-3acd-4927-97fb-af9b19ed5cd0"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-84ebfec8-d5ab-4df0-8398-29a644517ab2"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.detail"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-9ad57572-4a74-4ee2-9896-3f34eb8a2287"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.relatedLists"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-caef1824-ee94-4a8a-8745-2b69c286143e"
+            },
+            {
+              name = "title"
+              value = "Standard.Tab.activity"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-8b9f8b2f-3acd-4927-97fb-af9b19ed5cd0"
+            },
+            {
+              name = "title"
+              value = "Org Chart"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-dba65d9e-8809-417d-ac7d-b7b3b2a8ffd9"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "AccountHierarchy"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-dba65d9e-8809-417d-ac7d-b7b3b2a8ffd9"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      mode = "Replace"
+      name = "main"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "displayOption"
+              value = "BOTH"
+            },
+          ]
+          componentName = "runtime_sales_merge:mergeCandidatesPreviewCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "hideHeader"
+              value = "false"
+            },
+          ]
+          componentName = "force:relatedListQuickLinksContainer"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "flowArguments"
+              value = "[{\"label\":\"recordId\",\"dataType\":\"String\",\"supportsRecordId\":true,\"value\":\"{!Record.Id}\"}]"
+            },
+            {
+              name = "flowLayout"
+              value = "oneColumn"
+            },
+            {
+              name = "flowName"
+              value = "Company_Score_Workspace"
+            },
+          ]
+          componentName = "flowruntime:interview"
+          visibilityRule = {
+            booleanFilter = "1 OR 2 OR 3"
+            criteria = [
+              {
+                leftValue = "{!Record.Current_User_is_Ops__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+              {
+                leftValue = "{!Record.Current_User_is_the_Owner__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+              {
+                leftValue = "{!Record.AM_i_the_CSM__c}"
+                operator = "EQUAL"
+                rightValue = "true"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportFilter"
+              value = "ACCOUNT_ID"
+            },
+            {
+              name = "reportName"
+              value = "Company_Scores_sxk"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportFilter"
+              value = "PARENT_ID"
+            },
+            {
+              name = "reportName"
+              value = "Company_accounts_ARR_dnh"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportFilter"
+              value = "PARENT_ID"
+            },
+            {
+              name = "reportName"
+              value = "Company_Accounts_WAPP_HFR"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+      ]
+      mode = "Replace"
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Account Record Page"
+  parentFlexiPage = "sfa__Account_rec_L"
+  sobjectType = "Account"
+  template = {
+    name = "flexipage:recordHomeTemplateDesktop"
+  }
+  type = "RecordPage"
+}

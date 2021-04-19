@@ -1,0 +1,10 @@
+salesforce.Role OboAgencyPartnerManager {
+  fullName = "OboAgencyPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Obo Agency Partner Manager"
+  mayForecastManagerShare = false
+  name = "Obo Agency Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

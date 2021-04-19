@@ -1,0 +1,16 @@
+salesforce.ListView dfsle__Log__c_dfsle__All {
+  fullName = "dfsle__Log__c.dfsle__All"
+  columns = [
+    "CREATED_DATE",
+    "CREATEDBY_USER",
+    "dfsle__EntityId__c",
+    "dfsle__SourceId__c",
+    "dfsle__Severity__c",
+    "dfsle__Message__c",
+  ]
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.dfsle__Log__c,
+  ]
+}

@@ -1,0 +1,39 @@
+salesforce.ListView Lead_AD_TLV_Unhandled_SQLs {
+  fullName = "Lead.AD_TLV_Unhandled_SQLs"
+  columns = [
+    "FULL_NAME",
+    "LEAD.PHONE",
+    "LEAD.EMAIL",
+    "SDR_Name_for_reports__c",
+    "CORE.USERS.FIRST_NAME",
+    "AE__c",
+    "Owner_s_Manager__c",
+    "LEAD.COMPANY",
+    "LEAD.STATUS",
+    "LEAD.CREATED_DATE",
+    "Date_of_Meeting__c",
+    "Next_activity_date__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "equals"
+      value = "Drift - Contact Sales"
+    },
+    {
+      field = "SDR_Name_for_reports__c"
+      operation = "equals"
+      value = "Josh Benjamin"
+    },
+    {
+      field = "LEAD.CREATED_DATE"
+      operation = "greaterOrEqual"
+      value = "8/1/2020 12:00 AM"
+    },
+  ]
+  label = "AD- TLV TEMP list"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

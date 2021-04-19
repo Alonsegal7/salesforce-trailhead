@@ -1,0 +1,1085 @@
+salesforce.Flow Handover {
+  fullName = "Handover"
+  assignments = [
+    {
+      name = "Assign_Current_Parent_Company_Owner_ID"
+      label = "Assign Current Parent Company Owner ID"
+      locationX = 723
+      locationY = 231
+      assignmentItems = [
+        {
+          assignToReference = "Parent_Company_Owner_ID"
+          operator = "Assign"
+          value = {
+            elementReference = "GetCurrentOpportunity.Account.Parent.OwnerId"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Handover_Notes"
+      }
+    },
+  ]
+  choices = [
+    {
+      name = "No"
+      choiceText = "No"
+      dataType = "String"
+      value = {
+        stringValue = "No"
+      }
+    },
+    {
+      name = "Yes"
+      choiceText = "Yes"
+      dataType = "String"
+      value = {
+        stringValue = "Yes"
+      }
+    },
+  ]
+  decisions = [
+    {
+      name = "Is_AM_Manager"
+      label = "Company Owner Is AM/Manager?"
+      locationX = 459
+      locationY = 225
+      defaultConnector = {
+        targetReference = "Handover_Notes"
+      }
+      defaultConnectorLabel = "Other"
+      rules = [
+        {
+          name = "Owner_s_function_is_AM"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "GetCurrentOpportunity.Account.Parent.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Enterprise AM"
+              }
+            },
+            {
+              leftValueReference = "GetCurrentOpportunity.Account.Parent.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AM"
+              }
+            },
+            {
+              leftValueReference = "GetCurrentOpportunity.Account.Parent.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Manager"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Assign_Current_Parent_Company_Owner_ID"
+          }
+          label = "Owner's function is AM?"
+        },
+      ]
+    },
+  ]
+  dynamicChoiceSets = [
+    {
+      name = "Competition"
+      dataType = "Multipicklist"
+      picklistField = salesforce.Opportunity.field.Competition_They_re_Evaluating__c
+      picklistObject = salesforce.Opportunity
+    },
+    {
+      name = "Services"
+      dataType = "Picklist"
+      picklistField = salesforce.Handover__c.field.Which_Kind_of_CSM__c
+      picklistObject = salesforce.Handover__c
+    },
+  ]
+  interviewLabel = "Handover {!$Flow.CurrentDateTime}"
+  label = "Handover Screen"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "Flow"
+  recordCreates = [
+    {
+      name = "CreateNewHandover"
+      label = "CreateNewHandover"
+      locationX = 919
+      locationY = 61
+      connector = {
+        targetReference = "Update_CSM_Package_on_Opp"
+      }
+      faultConnector = {
+        targetReference = "Something_Went_Wrong"
+      }
+      inputAssignments = [
+        {
+          field = "AE_Notes_to_CSM__c"
+          value = {
+            elementReference = "Notes_to_CSM"
+          }
+        },
+        {
+          field = "AM_Manager_Email__c"
+          value = {
+            elementReference = "New_Account_Manager.Manager.Email"
+          }
+        },
+        {
+          field = "AM__c"
+          value = {
+            elementReference = "New_Account_Manager.Id"
+          }
+        },
+        {
+          field = "Account_Users_Potential__c"
+          value = {
+            elementReference = "Account_Seats_Potential"
+          }
+        },
+        {
+          field = "Client_Complexity__c"
+          value = {
+            elementReference = "Client_Complexity"
+          }
+        },
+        {
+          field = "Company__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Company__c"
+          }
+        },
+        {
+          field = "Competition_They_re_Evaluating__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Competition_They_re_Evaluating__c"
+          }
+        },
+        {
+          field = "Core_Business__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Core_Business__c"
+          }
+        },
+        {
+          field = "DM_Process__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.DM_process__c"
+          }
+        },
+        {
+          field = "Deal_Blockers_1_Info__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Deal_Blockers_1_Info__c"
+          }
+        },
+        {
+          field = "Deal_Blockers_1__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Deal_Blockers_1__c"
+          }
+        },
+        {
+          field = "Deal_Blockers_2_Info__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Deal_Blockers_2_Info__c"
+          }
+        },
+        {
+          field = "Deal_Blockers_2__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Deal_Blockers_2__c"
+          }
+        },
+        {
+          field = "Deal_Enablers_1_Info__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Deal_Enablers_1_Info__c"
+          }
+        },
+        {
+          field = "Deal_Enablers_1__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Deal_Enablers_1__c"
+          }
+        },
+        {
+          field = "Deal_Enablers_2__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Deal_Enablers_2__c"
+          }
+        },
+        {
+          field = "Deal_Enablers_2_info__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Deal_Enablers_2_Info__c"
+          }
+        },
+        {
+          field = "Department_Function__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.DepartmentFunction__c"
+          }
+        },
+        {
+          field = "Example_of_Projects__c"
+          value = {
+            elementReference = "Example_of_Projects"
+          }
+        },
+        {
+          field = "Extra_Information__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Extra_Information__c"
+          }
+        },
+        {
+          field = "Handover_Notes__c"
+          value = {
+            elementReference = "AE_Notes_to_AM"
+          }
+        },
+        {
+          field = "Involve_CSM__c"
+          value = {
+            elementReference = "InvolveCSMvalue"
+          }
+        },
+        {
+          field = "Long_Term_Growth_AE__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Long_Term_Growth_AE__c"
+          }
+        },
+        {
+          field = "Main_Point_of_Contacts__c"
+          value = {
+            elementReference = "Main_Point_of_Contact"
+          }
+        },
+        {
+          field = "Monday_Account__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.AccountId"
+          }
+        },
+        {
+          field = "Opportunity__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Id"
+          }
+        },
+        {
+          field = "Pains_PL__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Pains_PL__c"
+          }
+        },
+        {
+          field = "Pains__c"
+          value = {
+            elementReference = "Pains_and_Impact"
+          }
+        },
+        {
+          field = "Retention_Score_AE__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Retention_Score_AE__c"
+          }
+        },
+        {
+          field = "Risks__c"
+          value = {
+            elementReference = "Risks"
+          }
+        },
+        {
+          field = "Short_Term_Growth_AE__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Short_Term_Growth_AE__c"
+          }
+        },
+        {
+          field = "Success_Metrics__c"
+          value = {
+            elementReference = "Success_Metrics"
+          }
+        },
+        {
+          field = "Timeline__c"
+          value = {
+            elementReference = "Timeline_and_Compelling_Event"
+          }
+        },
+        {
+          field = "Tools_in_Ecosystem__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Other_tools_they_re_using__c"
+          }
+        },
+        {
+          field = "Types_of_Projects__c"
+          value = {
+            elementReference = "Types_of_Projects"
+          }
+        },
+        {
+          field = "Use_Cases_PL__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Use_Cases_PL__c"
+          }
+        },
+        {
+          field = "Use_Cases__c"
+          value = {
+            elementReference = "Use_Cases"
+          }
+        },
+        {
+          field = "Which_Kind_of_CSM__c"
+          value = {
+            elementReference = "WhichServiceValue"
+          }
+        },
+        {
+          field = "Workflow__c"
+          value = {
+            elementReference = "Their_Workflow"
+          }
+        },
+      ]
+      object = salesforce.Handover__c
+    },
+  ]
+  recordLookups = [
+    {
+      name = "GetCurrentOpportunity"
+      label = "GetCurrentOpportunity"
+      locationX = 163
+      locationY = 215
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "OpportunityDetails"
+      }
+      faultConnector = {
+        targetReference = "Something_Went_Wrong"
+      }
+      filters = [
+        {
+          field = "Long_Opportunity_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "recordId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.Opportunity
+      storeOutputAutomatically = true
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_CSM_Package_on_Opp"
+      label = "Update CSM Package on Opp"
+      locationX = 1127
+      locationY = 69
+      connector = {
+        targetReference = "Handover_Created_Successfully"
+      }
+      faultConnector = {
+        targetReference = "Something_Went_Wrong"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "GetCurrentOpportunity.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "CSM_Package__c"
+          value = {
+            elementReference = "WhichServiceValue"
+          }
+        },
+        {
+          field = "Handed_Over__c"
+          value = {
+            booleanValue = true
+          }
+        },
+        {
+          field = "Long_Term_Growth_AE__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Long_Term_Growth_AE__c"
+          }
+        },
+        {
+          field = "Retention_Score_AE__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Retention_Score_AE__c"
+          }
+        },
+        {
+          field = "Short_Term_Growth_AE__c"
+          value = {
+            elementReference = "GetCurrentOpportunity.Short_Term_Growth_AE__c"
+          }
+        },
+      ]
+      object = salesforce.Opportunity
+    },
+  ]
+  screens = [
+    {
+      name = "Handover_Created_Successfully"
+      label = "Handover Created Successfully"
+      locationX = 1371
+      locationY = 68
+      allowBack = false
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "Success"
+          fieldText = "<p>New handover for {!GetCurrentOpportunity.Account.Name} was created successfully!</p><p>An e-mail has been sent to everyone involved.</p><p><br></p><p>Great job!</p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Handover_Notes"
+      label = "Handover Notes"
+      locationX = 723
+      locationY = 61
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      connector = {
+        targetReference = "CreateNewHandover"
+      }
+      fields = [
+        {
+          name = "Projects"
+          fieldText = "<p><b><u>Projects</u></b></p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Types_of_Projects"
+          fieldText = "Types of Projects"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
+        {
+          name = "Example_of_Projects"
+          fieldText = "Example of Projects"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
+        {
+          name = "GutScoreHeader"
+          fieldText = "<p><b><u>What's the potential of this account in your opinion?</u></b></p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "longterm"
+          extensionName = "flowruntime:slider"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "value"
+              value = {
+                elementReference = "GetCurrentOpportunity.Long_Term_Growth_AE__c"
+              }
+            },
+            {
+              name = "max"
+              value = {
+                numberValue = 10
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Long Term Growth Potential"
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "GetCurrentOpportunity.Long_Term_Growth_AE__c"
+              name = "value"
+            },
+          ]
+        },
+        {
+          name = "shortterm"
+          extensionName = "flowruntime:slider"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "max"
+              value = {
+                numberValue = 10
+              }
+            },
+            {
+              name = "value"
+              value = {
+                elementReference = "GetCurrentOpportunity.Short_Term_Growth_AE__c"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Short Term Growth Potential"
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "GetCurrentOpportunity.Short_Term_Growth_AE__c"
+              name = "value"
+            },
+          ]
+        },
+        {
+          name = "retentionpotential"
+          extensionName = "flowruntime:slider"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "max"
+              value = {
+                numberValue = 10
+              }
+            },
+            {
+              name = "value"
+              value = {
+                elementReference = "GetCurrentOpportunity.Retention_Score_AE__c"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Retention Potential"
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "GetCurrentOpportunity.Retention_Score_AE__c"
+              name = "value"
+            },
+          ]
+        },
+        {
+          name = "Account_Seats_Potential"
+          dataType = "Number"
+          defaultValue = {
+            elementReference = "GetCurrentOpportunity.Account_User_Potential__c"
+          }
+          fieldText = "Account Seats Potential"
+          fieldType = "InputField"
+          isRequired = true
+          scale = 0
+        },
+        {
+          name = "AccountManagerment"
+          fieldText = "<p><b><u>Account Manager</u></b></p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Account_Manager"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "CreatedById"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Account Manager"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "Opportunity"
+              }
+            },
+            {
+              name = "recordId"
+              value = {
+                elementReference = "Parent_Company_Owner_ID"
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "New_Account_Manager.Id"
+              name = "recordId"
+            },
+            {
+              assignToReference = "New_Account_Manager.Name"
+              name = "recordName"
+            },
+          ]
+        },
+        {
+          name = "AE_Notes_to_AM"
+          fieldText = "AE Notes to AM"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
+        {
+          name = "CS"
+          fieldText = "<p><b><u>Customer Success</u></b></p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "WhichServices"
+          extensionName = "flowruntime:dependentPicklists"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "dependencyWrapperApiName"
+              value = {
+                stringValue = "Handover__c"
+              }
+            },
+            {
+              name = "topPicklistApiName"
+              value = {
+                stringValue = "Involve_CSM__c"
+              }
+            },
+            {
+              name = "middlePicklistApiName"
+              value = {
+                stringValue = "Which_Kind_of_CSM__c"
+              }
+            },
+            {
+              name = "topLabel"
+              value = {
+                stringValue = "Involve CSM?"
+              }
+            },
+            {
+              name = "middleLabel"
+              value = {
+                stringValue = "Which Kind of Service?"
+              }
+            },
+            {
+              name = "topRequired"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "middleRequired"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "bottomPicklistApiName"
+              value = {
+                stringValue = "Client_Complexity__c"
+              }
+            },
+            {
+              name = "bottomLabel"
+              value = {
+                stringValue = "Client Complexity"
+              }
+            },
+            {
+              name = "bottomRequired"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          isRequired = true
+          outputParameters = [
+            {
+              assignToReference = "InvolveCSMvalue"
+              name = "topValue"
+            },
+            {
+              assignToReference = "WhichServiceValue"
+              name = "middleValue"
+            },
+            {
+              assignToReference = "Client_Complexity"
+              name = "bottomValue"
+            },
+          ]
+        },
+        {
+          name = "Notes_to_CSM"
+          fieldText = "Notes to CSM"
+          fieldType = "LargeTextArea"
+          isRequired = false
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      description = "This is where we fill the handover fields"
+      name = "OpportunityDetails"
+      label = "Opportunity Details"
+      locationX = 319
+      locationY = 223
+      allowBack = true
+      allowFinish = true
+      allowPause = true
+      connector = {
+        targetReference = "Is_AM_Manager"
+      }
+      fields = [
+        {
+          name = "OpportunityNameHeader"
+          fieldText = "<p><b><u>{!GetCurrentOpportunity.Name} - Handover</u></b></p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Which_Company"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "Company__c"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Company Name"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "Account"
+              }
+            },
+            {
+              name = "recordId"
+              value = {
+                elementReference = "GetCurrentOpportunity.Account.Company__c"
+              }
+            },
+            {
+              name = "required"
+              value = {
+                booleanValue = true
+              }
+            },
+          ]
+          isRequired = true
+        },
+        {
+          name = "Which_Monday_Account"
+          extensionName = "flowruntime:lookup"
+          fieldType = "ComponentInstance"
+          inputParameters = [
+            {
+              name = "fieldApiName"
+              value = {
+                stringValue = "AccountId"
+              }
+            },
+            {
+              name = "label"
+              value = {
+                stringValue = "Monday Account"
+              }
+            },
+            {
+              name = "objectApiName"
+              value = {
+                stringValue = "Opportunity"
+              }
+            },
+            {
+              name = "required"
+              value = {
+                booleanValue = true
+              }
+            },
+            {
+              name = "recordId"
+              value = {
+                elementReference = "GetCurrentOpportunity.AccountId"
+              }
+            },
+          ]
+          isRequired = true
+        },
+        {
+          name = "Core_Business"
+          dataType = "String"
+          defaultValue = {
+            elementReference = "GetCurrentOpportunity.Core_Business__c"
+          }
+          fieldText = "Core Business"
+          fieldType = "InputField"
+          isRequired = true
+        },
+        {
+          name = "Use_Cases"
+          defaultValue = {
+            stringValue = "{!GetCurrentOpportunity.Use_cases__c}"
+          }
+          fieldText = "Use Cases"
+          fieldType = "LargeTextArea"
+          isRequired = true
+        },
+        {
+          name = "Use_Cases_PL"
+          fieldText = "<p><u>Use Cases (from list): </u></p><p>{!GetCurrentOpportunity.Use_Cases_PL__c}<span class=\"ql-cursor\">﻿</span></p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Pains_and_Impact"
+          defaultValue = {
+            stringValue = "{!GetCurrentOpportunity.Pains__c}"
+          }
+          fieldText = "Pains and Impact"
+          fieldType = "LargeTextArea"
+          isRequired = true
+        },
+        {
+          name = "Pains_PL"
+          fieldText = "<p><u>Pains (from list):</u></p><p>{!GetCurrentOpportunity.Pains_PL__c}</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Timeline_and_Compelling_Event"
+          defaultValue = {
+            stringValue = "{!GetCurrentOpportunity.Timeline__c}"
+          }
+          fieldText = "Timeline and Compelling Event"
+          fieldType = "LargeTextArea"
+          isRequired = true
+        },
+        {
+          name = "Their_Workflow"
+          defaultValue = {
+            stringValue = "{!GetCurrentOpportunity.Workflow__c}"
+          }
+          fieldText = "Their Workflow"
+          fieldType = "LargeTextArea"
+          isRequired = true
+        },
+        {
+          name = "Success_Metrics"
+          defaultValue = {
+            stringValue = "{!GetCurrentOpportunity.Success_Metrics__c}"
+          }
+          fieldText = "Success Metrics"
+          fieldType = "LargeTextArea"
+          isRequired = true
+        },
+        {
+          name = "Risks"
+          defaultValue = {
+            stringValue = "{!GetCurrentOpportunity.Risks__c}"
+          }
+          fieldText = "Risks"
+          fieldType = "LargeTextArea"
+          isRequired = true
+        },
+        {
+          name = "Main_Point_of_Contact"
+          dataType = "String"
+          defaultValue = {
+            elementReference = "GetCurrentOpportunity.Main_Point_of_Contacts__c"
+          }
+          fieldText = "Main Point of Contact"
+          fieldType = "InputField"
+          isRequired = false
+        },
+        {
+          name = "Competition_They_Were_Evaluating"
+          fieldText = "<p><u>Competition they were evaluating: </u></p><p>{!GetCurrentOpportunity.Competition_They_re_Evaluating__c}</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Tools"
+          fieldText = "<p><u>Tools in their ecosystem: </u></p><p>{!GetCurrentOpportunity.Other_tools_they_re_using__c}</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Enablers_and_Blockers"
+          fieldText = "<p><u style=\"font-family: var(--lwc-fontFamily,&quot;Salesforce Sans&quot;, Arial, sans-serif); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(62, 62, 60)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));\">Top deal enabler:</u></p><p><span style=\"font-family: var(--lwc-fontFamily,&quot;Salesforce Sans&quot;, Arial, sans-serif); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(62, 62, 60)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));\">{!GetCurrentOpportunity.Deal_Enablers_1__c} ({!GetCurrentOpportunity.Deal_Enablers_1_Info__c})</span></p><p><br></p><p><u style=\"font-family: var(--lwc-fontFamily,&quot;Salesforce Sans&quot;, Arial, sans-serif); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(62, 62, 60)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));\">Top deal blocker:</u></p><p>{!GetCurrentOpportunity.Deal_Blockers_1__c} ({!GetCurrentOpportunity.Deal_Blockers_1_Info__c})</p>"
+          fieldType = "DisplayText"
+        },
+        {
+          name = "Extra_Information"
+          dataType = "String"
+          defaultValue = {
+            elementReference = "GetCurrentOpportunity.Extra_Information__c"
+          }
+          fieldText = "Extra Information"
+          fieldType = "InputField"
+          isRequired = false
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+    {
+      name = "Something_Went_Wrong"
+      label = "Something Went Wrong"
+      locationX = 933
+      locationY = 387
+      allowBack = true
+      allowFinish = true
+      allowPause = false
+      fields = [
+        {
+          name = "ErrorMessage"
+          fieldText = "<p>Something went wrong:</p><p><span style=\"color: rgb(255, 0, 0);\">{!$Flow.FaultMessage}</span></p>"
+          fieldType = "DisplayText"
+        },
+      ]
+      showFooter = true
+      showHeader = true
+    },
+  ]
+  start = {
+    locationX = 37
+    locationY = 51
+    connector = {
+      targetReference = "GetCurrentOpportunity"
+    }
+  }
+  status = "Active"
+  variables = [
+    {
+      name = "Client_Complexity"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "Handover_Monday_Account"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "InvolveCSMvalue"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      description = "Handover Monday Account"
+      name = "Monday_Account"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "New_Account_Manager"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.User
+    },
+    {
+      name = "New_CSM"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.User
+    },
+    {
+      name = "NewAM"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.User
+    },
+    {
+      name = "NewCSM"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.User
+    },
+    {
+      name = "Parent_Company_Owner_ID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      description = "Opportunity Id that is passed to the flow from the opportunity"
+      name = "recordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      value = {
+        elementReference = "$Flow.CurrentRecord"
+      }
+    },
+    {
+      name = "WhichServiceValue"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+  ]
+}

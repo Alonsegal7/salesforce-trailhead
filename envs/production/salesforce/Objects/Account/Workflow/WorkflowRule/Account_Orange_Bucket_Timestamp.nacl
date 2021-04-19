@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Account_Orange_Bucket_Timestamp {
+  fullName = "Account.Orange Bucket Timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Company_Orange_Bucket_Timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.Orange_Bucket_Company__c
+      operation = "equals"
+      value = "True"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Account,
+  ]
+}

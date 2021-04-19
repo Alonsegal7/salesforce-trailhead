@@ -1,0 +1,20 @@
+salesforce.LightningMessageChannel dfsle__DecUpdateSourceFiles {
+  fullName = "dfsle__DecUpdateSourceFiles"
+  description = "Saves changes made to Source Files on Envelope Configuration"
+  isExposed = true
+  lightningMessageFields = [
+    {
+      description = "Flag to determine whether to attach files from the record"
+      fieldName = "attachSourceFiles"
+    },
+    {
+      description = "Document data to be placed at a specific sequence."
+      fieldName = "document"
+    },
+    {
+      description = "Sequence or routing order for the documents that are part of envelope configuration"
+      fieldName = "index"
+    },
+  ]
+  masterLabel = "DecUpdateSourceFiles"
+}

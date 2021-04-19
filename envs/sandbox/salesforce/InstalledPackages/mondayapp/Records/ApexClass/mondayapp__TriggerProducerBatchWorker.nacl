@@ -1,0 +1,14 @@
+salesforce.ApexClass mondayapp__TriggerProducerBatchWorker {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 48
+  packageVersions = [
+    {
+      majorNumber = 1
+      minorNumber = 7
+      namespace = "mondayapp"
+    },
+  ]
+  status = "Active"
+  fullName = "mondayapp__TriggerProducerBatchWorker"
+  content = file("salesforce/InstalledPackages/mondayapp/Records/ApexClass/mondayapp__TriggerProducerBatchWorker.cls")
+}

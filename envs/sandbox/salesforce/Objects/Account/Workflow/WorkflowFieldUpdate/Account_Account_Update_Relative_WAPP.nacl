@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Account_Update_Relative_WAPP {
+  fullName = "Account.Account_Update_Relative_WAPP"
+  field = salesforce.Account.field.Relative_WAPP__c
+  formula = "WAPP__c"
+  name = "Account - Update Relative WAPP"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

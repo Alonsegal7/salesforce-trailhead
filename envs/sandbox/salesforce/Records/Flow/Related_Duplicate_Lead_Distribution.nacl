@@ -1,0 +1,1690 @@
+salesforce.Flow Related_Duplicate_Lead_Distribution {
+  fullName = "Related_Duplicate_Lead_Distribution"
+  actionCalls = [
+    {
+      name = "Didnt_find_Local_Company"
+      label = "Didnt find Local Company"
+      locationX = 213
+      locationY = 941
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      connector = {
+        targetReference = "Regional_Company_Owner_Validation"
+      }
+      faultConnector = {
+        targetReference = "Regional_Company_Owner_Validation"
+      }
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "DidntFindLocalCompanyText"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "Didn't Find Local Company"
+          }
+        },
+      ]
+    },
+    {
+      name = "ErrorEmailAction"
+      label = "ErrorEmail"
+      locationX = 209
+      locationY = 676
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      
+      
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "errorEmail"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "Error in duplicated/related flow"
+          }
+        },
+      ]
+    },
+    {
+      name = "Found_Local_Company"
+      label = "Found Local Company"
+      locationX = 224
+      locationY = 1160
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      connector = {
+        targetReference = "Local_Company_Owner_Validation"
+      }
+      faultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "FoundLocalCompanyText"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "Found Local Company"
+          }
+        },
+      ]
+    },
+    {
+      name = "Found_Regional_Company"
+      label = "Found Regional Company"
+      locationX = 14
+      locationY = 764
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      connector = {
+        targetReference = "Get_Local_Company"
+      }
+      faultConnector = {
+        targetReference = "Get_Local_Company"
+      }
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "FoundRegionalCompanyBody"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "Found Regional Company"
+          }
+        },
+      ]
+    },
+    {
+      name = "FoundLeadEmail"
+      label = "FoundLeadEmail"
+      locationX = 360
+      locationY = 365
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      connector = {
+        targetReference = "Get_Regional_Company"
+      }
+      faultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "FoundLeadEmailBody"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "Found lead"
+          }
+        },
+      ]
+    },
+    {
+      name = "Ready_to_update_lead"
+      label = "Ready to update lead"
+      locationX = 1276
+      locationY = 965
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      connector = {
+        targetReference = "Update_Lead"
+      }
+      faultConnector = {
+        targetReference = "Update_Lead"
+      }
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "ReadyToUpdate"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "Ready to update lead"
+          }
+        },
+      ]
+    },
+    {
+      name = "Updated_Successfully"
+      label = "Updated Successfully"
+      locationX = 2240
+      locationY = 952
+      actionName = "emailSimple"
+      actionType = "emailSimple"
+      inputParameters = [
+        {
+          name = "emailBody"
+          value = {
+            elementReference = "SuccessfullyUpdatedLeadOwner"
+          }
+        },
+        {
+          name = "emailAddresses"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "senderAddress"
+          value = {
+            stringValue = "galom@monday.com"
+          }
+        },
+        {
+          name = "emailSubject"
+          value = {
+            stringValue = "Successfully Changed Owner"
+          }
+        },
+      ]
+    },
+  ]
+  assignments = [
+    {
+      name = "Do_Nothing"
+      label = "Do Nothing"
+      locationX = 316
+      locationY = 675
+      assignmentItems = [
+        {
+          assignToReference = "Nothing"
+          operator = "Assign"
+          value = {
+            numberValue = 1
+          }
+        },
+      ]
+      connector = {
+        targetReference = "ErrorEmailAction"
+      }
+    },
+    {
+      name = "Global_Lead_Receiver_as_Owner"
+      label = "Global Lead Receiver as Owner"
+      locationX = 1048
+      locationY = 655
+      assignmentItems = [
+        {
+          assignToReference = "NewOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "GlobalCompany.Strategic_receiver__c"
+          }
+        },
+        {
+          assignToReference = "NewOwnerManagerId"
+          operator = "Assign"
+          value = {
+            elementReference = "GlobalCompany.Strategic_receiver__r.ManagerId"
+          }
+        },
+        {
+          assignToReference = "DistributionReason"
+          operator = "Assign"
+          value = {
+            stringValue = "Global Company Lead Receiver"
+          }
+        },
+        {
+          assignToReference = "RelatedRecordId"
+          operator = "Assign"
+          value = {
+            elementReference = "GlobalCompany.Long_Account_ID__c"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Ready_to_update_lead"
+      }
+    },
+    {
+      name = "Global_Owner_as_Owner"
+      label = "Global Owner as Owner"
+      locationX = 1050
+      locationY = 530
+      assignmentItems = [
+        {
+          assignToReference = "NewOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "GlobalCompany.OwnerId"
+          }
+        },
+        {
+          assignToReference = "NewOwnerManagerId"
+          operator = "Assign"
+          value = {
+            elementReference = "GlobalCompany.Owner_s_Manager__r.Long_User_ID__c"
+          }
+        },
+        {
+          assignToReference = "RelatedRecordId"
+          operator = "Assign"
+          value = {
+            elementReference = "GlobalCompany.Long_Account_ID__c"
+          }
+        },
+        {
+          assignToReference = "DistributionReason"
+          operator = "Assign"
+          value = {
+            stringValue = "Global Company Owner"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Update_Lead"
+      }
+    },
+    {
+      name = "Local_Lead_Receiver_as_Owner"
+      label = "Local Lead Receiver as Owner"
+      locationX = 961
+      locationY = 1162
+      assignmentItems = [
+        {
+          assignToReference = "NewOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "LocalCompany.Strategic_receiver__c"
+          }
+        },
+        {
+          assignToReference = "NewOwnerManagerId"
+          operator = "Assign"
+          value = {
+            elementReference = "LocalCompany.Strategic_receiver__r.ManagerId"
+          }
+        },
+        {
+          assignToReference = "DistributionReason"
+          operator = "Assign"
+          value = {
+            stringValue = "Local Company Lead Receiver"
+          }
+        },
+        {
+          assignToReference = "RelatedRecordId"
+          operator = "Assign"
+          value = {
+            elementReference = "LocalCompany.Long_Account_ID__c"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Ready_to_update_lead"
+      }
+    },
+    {
+      name = "Local_Owner_as_Owner"
+      label = "Local Owner as Owner"
+      locationX = 965
+      locationY = 1031
+      assignmentItems = [
+        {
+          assignToReference = "NewOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "LocalCompany.OwnerId"
+          }
+        },
+        {
+          assignToReference = "NewOwnerManagerId"
+          operator = "Assign"
+          value = {
+            elementReference = "LocalCompany.Owner_s_Manager__c"
+          }
+        },
+        {
+          assignToReference = "DistributionReason"
+          operator = "Assign"
+          value = {
+            stringValue = "Local Company Owner"
+          }
+        },
+        {
+          assignToReference = "RelatedRecordId"
+          operator = "Assign"
+          value = {
+            elementReference = "LocalCompany.Long_Account_ID__c"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Ready_to_update_lead"
+      }
+    },
+    {
+      name = "MA_Owner_as_Owner"
+      label = "MA Owner as Owner"
+      locationX = 1288
+      locationY = 45
+      assignmentItems = [
+        {
+          assignToReference = "NewOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "First_Owned_Monday_Account.OwnerId"
+          }
+        },
+        {
+          assignToReference = "NewOwnerManagerId"
+          operator = "Assign"
+          value = {
+            elementReference = "First_Owned_Monday_Account.Owner_s_Manager__r.Id"
+          }
+        },
+        {
+          assignToReference = "RelatedRecordId"
+          operator = "Assign"
+          value = {
+            elementReference = "First_Owned_Monday_Account.Long_Account_ID__c"
+          }
+        },
+        {
+          assignToReference = "DistributionReason"
+          operator = "Assign"
+          value = {
+            stringValue = "No Companies, Paying Monday Account"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Ready_to_update_lead"
+      }
+    },
+    {
+      name = "Opp_Owner_as_Owner"
+      label = "Opp Owner as Owner"
+      locationX = 1203
+      locationY = 362
+      assignmentItems = [
+        {
+          assignToReference = "NewOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "FirstOpenOpp.OwnerId"
+          }
+        },
+        {
+          assignToReference = "NewOwnerManagerId"
+          operator = "Assign"
+          value = {
+            elementReference = "FirstOpenOpp.Owner_s_Manager__r.Id"
+          }
+        },
+        {
+          assignToReference = "DistributionReason"
+          operator = "Assign"
+          value = {
+            stringValue = "No Company Ownership, Open Opportunity"
+          }
+        },
+        {
+          assignToReference = "RelatedRecordId"
+          operator = "Assign"
+          value = {
+            elementReference = "FirstOpenOpp.Long_Opportunity_ID__c"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Ready_to_update_lead"
+      }
+    },
+    {
+      name = "Regional_Lead_Receiver_as_Owner"
+      label = "Regional Lead Receiver as Owner"
+      locationX = 951
+      locationY = 742
+      assignmentItems = [
+        {
+          assignToReference = "NewOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "RegionalCompany.Strategic_receiver__c"
+          }
+        },
+        {
+          assignToReference = "NewOwnerManagerId"
+          operator = "Assign"
+          value = {
+            elementReference = "RegionalCompany.Strategic_receiver__r.ManagerId"
+          }
+        },
+        {
+          assignToReference = "DistributionReason"
+          operator = "Assign"
+          value = {
+            stringValue = "Regional Company Lead Receiver"
+          }
+        },
+        {
+          assignToReference = "RelatedRecordId"
+          operator = "Assign"
+          value = {
+            elementReference = "RegionalCompany.Long_Account_ID__c"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Ready_to_update_lead"
+      }
+    },
+    {
+      name = "Regional_Owner_as_Owner"
+      label = "Regional Owner as Owner"
+      locationX = 955
+      locationY = 878
+      assignmentItems = [
+        {
+          assignToReference = "NewOwnerId"
+          operator = "Assign"
+          value = {
+            elementReference = "RegionalCompany.OwnerId"
+          }
+        },
+        {
+          assignToReference = "NewOwnerManagerId"
+          operator = "Assign"
+          value = {
+            elementReference = "RegionalCompany.Owner_s_Manager__r.Id"
+          }
+        },
+        {
+          assignToReference = "RelatedRecordId"
+          operator = "Assign"
+          value = {
+            elementReference = "RegionalCompany.Long_Account_ID__c"
+          }
+        },
+        {
+          assignToReference = "DistributionReason"
+          operator = "Assign"
+          value = {
+            stringValue = "Regional Company Owner"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Ready_to_update_lead"
+      }
+    },
+    {
+      name = "Set_Chosen_Monday_Account"
+      label = "Set Chosen Monday Account"
+      locationX = 838
+      locationY = 44
+      assignmentItems = [
+        {
+          assignToReference = "First_Owned_Monday_Account"
+          operator = "Assign"
+          value = {
+            elementReference = "Loop_over_paying_monday_accounts"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "MA_Owner_as_Owner"
+      }
+    },
+    {
+      name = "Set_Chosen_Opp"
+      label = "Set Chosen Opp"
+      locationX = 1203
+      locationY = 223
+      assignmentItems = [
+        {
+          assignToReference = "FirstOpenOpp"
+          operator = "Assign"
+          value = {
+            elementReference = "Loop_over_open_opps"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Opp_Owner_as_Owner"
+      }
+    },
+  ]
+  decisions = [
+    {
+      name = "Found_Local_Records"
+      label = "Found Local Records"
+      locationX = 109
+      locationY = 1061
+      defaultConnector = {
+        targetReference = "Found_Local_Company"
+      }
+      defaultConnectorLabel = "Found records"
+      rules = [
+        {
+          name = "Didn_t_find_local_records"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "LocalCompany"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Didnt_find_Local_Company"
+          }
+          label = "Didn't find records"
+        },
+      ]
+    },
+    {
+      name = "Found_Regional_Records"
+      label = "Found Regional Records?"
+      locationX = 3
+      locationY = 577
+      defaultConnector = {
+        targetReference = "Found_Regional_Company"
+      }
+      defaultConnectorLabel = "Found records"
+      rules = [
+        {
+          name = "Didn_t_find_records"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "RegionalCompany"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Get_Global_Company_From_Lead_Territory"
+          }
+          label = "Didn't find records"
+        },
+      ]
+    },
+    {
+      name = "Global_Company_Owner_Validation"
+      label = "Global Company Owner Validation"
+      locationX = 526
+      locationY = 448
+      defaultConnector = {
+        targetReference = "Get_Paying_MAs_From_Same_Country"
+      }
+      defaultConnectorLabel = "Other"
+      rules = [
+        {
+          name = "Owner_is_Active_and_AM_AE_Manager_0_0"
+          conditionLogic = "1 AND (2 or 3 or 4 or 5 or 6)"
+          conditions = [
+            {
+              leftValueReference = "GlobalCompany.Owner_is_Active_reports__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              leftValueReference = "GlobalCompany.Owner.Function__c"
+              operator = "EqualTo"
+            },
+            {
+              leftValueReference = "GlobalCompany.Owner.Function__c"
+              operator = "EqualTo"
+            },
+            {
+              leftValueReference = "GlobalCompany.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AM"
+              }
+            },
+            {
+              leftValueReference = "GlobalCompany.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AE"
+              }
+            },
+            {
+              leftValueReference = "GlobalCompany.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Manager"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Regional_Company_Has_Lead_Receiver_0"
+          }
+          label = "Owner is Active and AM/AE/Manager"
+        },
+      ]
+    },
+    {
+      name = "Global_Lead_Receiver_is_Active_Decision"
+      label = "Global Lead Receiver is Active"
+      locationX = 841
+      locationY = 593
+      defaultConnector = {
+        targetReference = "Global_Owner_as_Owner"
+      }
+      defaultConnectorLabel = "No Lead Receiver"
+      rules = [
+        {
+          name = "Global_Lead_Receiver_is_Active"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "GlobalCompany.Strategic_receiver__r.IsActive"
+              operator = "EqualTo"
+            },
+          ]
+          connector = {
+            targetReference = "Global_Lead_Receiver_as_Owner"
+          }
+          label = "Lead Receiver is Active"
+        },
+      ]
+    },
+    {
+      name = "Local_Company_Has_Lead_Receiver"
+      label = "Local Company Has Lead Receiver"
+      locationX = 503
+      locationY = 1029
+      defaultConnector = {
+        targetReference = "Local_Owner_as_Owner"
+      }
+      defaultConnectorLabel = "No Lead Receiver"
+      rules = [
+        {
+          name = "Has_Lead_Receiver"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "LocalCompany.Strategic_receiver__c"
+              operator = "StartsWith"
+              rightValue = {
+                stringValue = "005"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Local_Lead_Receiver_is_Active_Decision"
+          }
+          label = "Has Local Lead Receiver"
+        },
+      ]
+    },
+    {
+      name = "Local_Company_Owner_Validation"
+      label = "Local Company Owner Validation"
+      locationX = 361
+      locationY = 1162
+      defaultConnector = {
+        targetReference = "Regional_Company_Owner_Validation"
+      }
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Owner_is_Active_and_AM_AE_Manager"
+          conditionLogic = "1 AND 2"
+          conditions = [
+            {
+              leftValueReference = "LocalCompany.Owner_is_Active_reports__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              leftValueReference = "LocalCompany.Owner.Function_Ownership_Score__c"
+              operator = "GreaterThanOrEqualTo"
+              rightValue = {
+                numberValue = 4
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Local_Company_Has_Lead_Receiver"
+          }
+          label = "Owner is Active and AM/AE/Manager"
+        },
+      ]
+    },
+    {
+      name = "Local_Lead_Receiver_is_Active_Decision"
+      label = "Local Lead Receiver is Active"
+      locationX = 685
+      locationY = 1115
+      defaultConnector = {
+        targetReference = "Local_Owner_as_Owner"
+      }
+      defaultConnectorLabel = "No Active Lead Receiver"
+      rules = [
+        {
+          name = "Local_Lead_Receiver_is_Active_outcome"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "LocalCompany.Strategic_receiver__r.IsActive"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Local_Lead_Receiver_as_Owner"
+          }
+          label = "Lead Receiver is Active"
+        },
+      ]
+    },
+    {
+      name = "Monday_Account_Owner_Validation"
+      label = "Monday Account Owner Validation"
+      locationX = 828
+      locationY = 203
+      defaultConnector = {
+        targetReference = "Get_Paying_MAs_From_Same_Country"
+      }
+      defaultConnectorLabel = "Other"
+      rules = [
+        {
+          name = "Owner_is_Active_and_AM_AE_Manager_0_0_0"
+          conditionLogic = "1 AND (2 or 3 or 4 or 5 or 6)"
+          conditions = [
+            {
+              leftValueReference = "Loop_over_paying_monday_accounts.Owner_is_Active_reports__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              leftValueReference = "Loop_over_paying_monday_accounts.Owner.Function__c"
+              operator = "EqualTo"
+            },
+            {
+              leftValueReference = "Loop_over_paying_monday_accounts.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Enterprise AE"
+              }
+            },
+            {
+              leftValueReference = "Loop_over_paying_monday_accounts.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AM"
+              }
+            },
+            {
+              leftValueReference = "Loop_over_paying_monday_accounts.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AE"
+              }
+            },
+            {
+              leftValueReference = "Loop_over_paying_monday_accounts.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Manager"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Chosen_Monday_Account"
+          }
+          label = "Owner is Active and AM/AE/Manager"
+        },
+      ]
+    },
+    {
+      name = "Opp_Owner_Validation"
+      label = "Opp Owner Validation"
+      locationX = 1088
+      locationY = 222
+      defaultConnector = {
+        targetReference = "Get_Open_Opps_From_Same_Country_and_Company"
+      }
+      defaultConnectorLabel = "Other"
+      rules = [
+        {
+          name = "Owner_is_Active_and_AM_AE_Manager_0_0_0_0"
+          conditionLogic = "1 AND (2 or 3 or 4 or 5 or 6)"
+          conditions = [
+            {
+              leftValueReference = "Loop_over_open_opps.Owner.IsActive"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              leftValueReference = "Loop_over_open_opps.Owner.Function__c"
+              operator = "EqualTo"
+            },
+            {
+              leftValueReference = "Loop_over_open_opps.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Enterprise AE"
+              }
+            },
+            {
+              leftValueReference = "Loop_over_open_opps.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AM"
+              }
+            },
+            {
+              leftValueReference = "Loop_over_open_opps.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AE"
+              }
+            },
+            {
+              leftValueReference = "Loop_over_open_opps.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Manager"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Chosen_Opp"
+          }
+          label = "Owner is Active and AM/AE/Manager"
+        },
+      ]
+    },
+    {
+      name = "Regional_Company_Has_Lead_Receiver"
+      label = "Regional Company Has Lead Receiver"
+      locationX = 504
+      locationY = 876
+      defaultConnector = {
+        targetReference = "Regional_Owner_as_Owner"
+      }
+      defaultConnectorLabel = "No Lead Receiver"
+      rules = [
+        {
+          name = "Has_Regional_Lead_Receiver"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "RegionalCompany.Strategic_receiver__c"
+              operator = "StartsWith"
+              rightValue = {
+                stringValue = "005"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Regional_Lead_Receiver_is_Active"
+          }
+          label = "Has Regional Lead Receiver"
+        },
+      ]
+    },
+    {
+      name = "Regional_Company_Has_Lead_Receiver_0"
+      label = "Regional Company Has Lead Receiver"
+      locationX = 678
+      locationY = 535
+      defaultConnector = {
+        targetReference = "Global_Owner_as_Owner"
+      }
+      defaultConnectorLabel = "No Lead Receiver"
+      rules = [
+        {
+          name = "Has_Global_Lead_Receiver"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "GlobalCompany.Strategic_receiver__c"
+              operator = "StartsWith"
+              rightValue = {
+                stringValue = "005"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Global_Lead_Receiver_is_Active_Decision"
+          }
+          label = "Has Global Lead Receiver"
+        },
+      ]
+    },
+    {
+      name = "Regional_Company_Owner_Validation"
+      label = "Regional Company Owner Validation"
+      locationX = 354
+      locationY = 879
+      defaultConnector = {
+        targetReference = "Get_Global_Company_From_Lead_Territory"
+      }
+      defaultConnectorLabel = "Other"
+      rules = [
+        {
+          name = "Owner_is_Active_and_AM_AE_Manager_0"
+          conditionLogic = "1 AND (2 or 3 or 4 or 5 or 6)"
+          conditions = [
+            {
+              leftValueReference = "RegionalCompany.Owner_is_Active_reports__c"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+            {
+              leftValueReference = "RegionalCompany.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Enterprise AM"
+              }
+            },
+            {
+              leftValueReference = "RegionalCompany.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Enterprise AE"
+              }
+            },
+            {
+              leftValueReference = "RegionalCompany.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AM"
+              }
+            },
+            {
+              leftValueReference = "RegionalCompany.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Mid-Market AE"
+              }
+            },
+            {
+              leftValueReference = "RegionalCompany.Owner.Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "Manager"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Regional_Company_Has_Lead_Receiver"
+          }
+          label = "Owner is Active and AM/AE/Manager"
+        },
+      ]
+    },
+    {
+      name = "Regional_Lead_Receiver_is_Active"
+      label = "Regional Lead Receiver is Active"
+      locationX = 678
+      locationY = 768
+      defaultConnector = {
+        targetReference = "Regional_Owner_as_Owner"
+      }
+      defaultConnectorLabel = "No Active Lead Receiver"
+      rules = [
+        {
+          name = "Lead_Receiver_is_Active"
+          conditionLogic = "or"
+          conditions = [
+            {
+              leftValueReference = "RegionalCompany.Strategic_receiver__r.IsActive"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Regional_Lead_Receiver_as_Owner"
+          }
+          label = "Lead Receiver is Active"
+        },
+      ]
+    },
+  ]
+  description = "This is a fix in SF to route the related/duplicate leads to regional/local owners of the same company in different territories, based on the company ownership."
+  interviewLabel = "Related/Duplicate Lead Distribution {!$Flow.CurrentDateTime}"
+  label = "Related/Duplicate Lead Distribution"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "CanvasMode"
+      value = {
+        stringValue = "FREE_FORM_CANVAS"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get_Global_Company_From_Lead_Territory"
+      label = "Get Global Company From Lead Territory"
+      locationX = 536
+      locationY = 585
+      assignNullValuesIfNoRecordsFound = true
+      connector = {
+        targetReference = "Global_Company_Owner_Validation"
+      }
+      faultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      filters = [
+        {
+          field = "Account_Territory__c"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Global"
+          }
+        },
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Related_Company__r.Id"
+          }
+        },
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Related_Company__r.Long_Account_ID__c"
+          }
+        },
+      ]
+      object = salesforce.Account
+      outputReference = "GlobalCompany"
+      queriedFields = [
+        salesforce.Account.field.Id,
+        salesforce.Account.field.OwnerId,
+        salesforce.Account.field.ParentId,
+        salesforce.Account.field.Long_Account_ID__c,
+        salesforce.Account.field.Owner_s_Function__c,
+        salesforce.Account.field.Owner_s_Manager__c,
+        salesforce.Account.field.Strategic__c,
+        salesforce.Account.field.Strategic_receiver__c,
+        salesforce.Account.field.Name,
+        salesforce.Account.field.Company_Owner__c,
+        salesforce.Account.field.Owner_is_Active_reports__c,
+      ]
+      sortField = salesforce.Account.field.Name
+      sortOrder = "Desc"
+    },
+    {
+      name = "Get_Local_Company"
+      label = "Get Local Company from Lead Country"
+      locationX = 3
+      locationY = 960
+      assignNullValuesIfNoRecordsFound = true
+      connector = {
+        targetReference = "Found_Local_Records"
+      }
+      faultConnector = {
+        targetReference = "Found_Local_Records"
+      }
+      filters = [
+        {
+          field = "Account_Territory__c"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Local"
+          }
+        },
+        {
+          field = "ParentId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RegionalCompany.Id"
+          }
+        },
+        {
+          field = "BillingCountryCode"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.CountryCode"
+          }
+        },
+        {
+          field = "BillingCountry"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Country"
+          }
+        },
+        {
+          field = "ParentId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "RegionalCompany.Long_Account_ID__c"
+          }
+        },
+      ]
+      object = salesforce.Account
+      outputReference = "LocalCompany"
+      queriedFields = [
+        salesforce.Account.field.Id,
+        salesforce.Account.field.OwnerId,
+        salesforce.Account.field.Owner_s_Manager__c,
+        salesforce.Account.field.Strategic_receiver__c,
+        salesforce.Account.field.Company__c,
+        salesforce.Account.field.ParentId,
+        salesforce.Account.field.Owner_is_Active_reports__c,
+        salesforce.Account.field.Name,
+        salesforce.Account.field.Account_Territory__c,
+        salesforce.Account.field.Region__c,
+        "BillingCountryCode",
+        salesforce.Account.field.Long_Account_ID__c,
+        "BillingCountry",
+      ]
+    },
+    {
+      name = "Get_Open_Opps_From_Same_Country_and_Company"
+      label = "Get Open Opps From Same Country and Company"
+      locationX = 993
+      locationY = 355
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Loop_over_open_opps"
+      }
+      faultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      filters = [
+        {
+          field = "Company_Long_Id__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Related_Company__r.Long_Account_ID__c"
+          }
+        },
+        {
+          field = "StageName"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = "Closed Lost"
+          }
+        },
+        {
+          field = "StageName"
+          operator = "NotEqualTo"
+          value = {
+            stringValue = "Closed Won"
+          }
+        },
+        {
+          field = "Country__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Country"
+          }
+        },
+      ]
+      getFirstRecordOnly = false
+      object = salesforce.Opportunity
+      sortField = salesforce.Opportunity.field.CreatedDate
+      sortOrder = "Desc"
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_Paying_MAs_From_Same_Country"
+      label = "Get Paying MAs From Same Country"
+      locationX = 688
+      locationY = 357
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Loop_over_paying_monday_accounts"
+      }
+      faultConnector = {
+        targetReference = "Get_Open_Opps_From_Same_Country_and_Company"
+      }
+      filters = [
+        {
+          field = "Company_Long_ID__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Related_Company__r.Long_Account_ID__c"
+          }
+        },
+        {
+          field = "ParentId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Related_Company__r.Id"
+          }
+        },
+        {
+          field = "BillingCountry"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Country"
+          }
+        },
+        {
+          field = "BillingCountryCode"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.CountryCode"
+          }
+        },
+      ]
+      getFirstRecordOnly = false
+      object = salesforce.Account
+      sortField = salesforce.Account.field.ARR__c
+      sortOrder = "Desc"
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Get_Regional_Company"
+      label = "Get Regional Company From Lead Territory"
+      locationX = 138
+      locationY = 366
+      assignNullValuesIfNoRecordsFound = true
+      connector = {
+        targetReference = "Found_Regional_Records"
+      }
+      faultConnector = {
+        targetReference = "Found_Regional_Records"
+      }
+      filters = [
+        {
+          field = "Account_Territory__c"
+          operator = "EqualTo"
+          value = {
+            stringValue = "Regional"
+          }
+        },
+        {
+          field = "ParentId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Related_Company__r.Id"
+          }
+        },
+        {
+          field = "Region__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Region__c"
+          }
+        },
+      ]
+      object = salesforce.Account
+      outputReference = "RegionalCompany"
+      queriedFields = [
+        salesforce.Account.field.Id,
+        salesforce.Account.field.Company__c,
+        salesforce.Account.field.ParentId,
+        salesforce.Account.field.OwnerId,
+        salesforce.Account.field.Owner_s_Manager__c,
+        salesforce.Account.field.Owner_is_Active_reports__c,
+        salesforce.Account.field.Strategic_receiver__c,
+        salesforce.Account.field.Name,
+        salesforce.Account.field.Long_Account_ID__c,
+        "BillingCountryCode",
+      ]
+      sortField = salesforce.Account.field.Name
+      sortOrder = "Desc"
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_Lead"
+      label = "Update Lead"
+      locationX = 2104
+      locationY = 953
+      connector = {
+        targetReference = "Updated_Successfully"
+      }
+      faultConnector = {
+        targetReference = "Do_Nothing"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.Id"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "OwnerId"
+          value = {
+            elementReference = "NewOwnerId"
+          }
+        },
+        {
+          field = "Owner_s_Manager__c"
+          value = {
+            elementReference = "NewOwnerManagerId"
+          }
+        },
+        {
+          field = "Related_Distribution_Reason__c"
+          value = {
+            elementReference = "DistributionReason"
+          }
+        },
+        {
+          field = "Related_Record_URL__c"
+          value = {
+            elementReference = "RelatedRecordId"
+          }
+        },
+      ]
+      object = salesforce.Lead
+    },
+  ]
+  start = {
+    locationX = 5
+    locationY = 117
+    connector = {
+      targetReference = "FoundLeadEmail"
+    }
+    filters = [
+      {
+        field = "Distribution_reason__c"
+        operator = "EqualTo"
+        value = {
+          stringValue = "Related"
+        }
+      },
+      {
+        field = "Distribution_reason__c"
+        operator = "EqualTo"
+        value = {
+          stringValue = "Strategic"
+        }
+      },
+    ]
+    object = salesforce.Lead
+    triggerType = "RecordAfterSave"
+  }
+  status = "Draft"
+  textTemplates = [
+    {
+      name = "DidntFindLocalCompanyText"
+      text = "<p>Didn't find local company</p><p>Record Country: {!$Record.Country}</p><p><br></p>"
+    },
+    {
+      name = "errorEmail"
+      text = '''
+There was an error:
+{!$Flow.FaultMessage}
+'''
+    },
+    {
+      name = "FoundLeadEmailBody"
+      text = '''
+Found Lead:
+{!$Record.FirstName} {!$Record.LastName}
+{!$Record.Company}
+{!$Record.Email}
+{!$Flow.CurrentStage} - {!$Flow.FaultMessage}
+'''
+    },
+    {
+      name = "FoundLocalCompanyText"
+      text = "<p>Found Local Company</p><p>{!LocalCompany.Name}</p><p><br></p><p>Error:</p><p>{!$Flow.FaultMessage}</p>"
+    },
+    {
+      name = "FoundRegionalCompanyBody"
+      text = "<p>Found Regional Company</p><p>{!RegionalCompany.Name}</p><p><br></p><p>{!$Flow.FaultMessage}</p>"
+    },
+    {
+      name = "ReadyToUpdate"
+      text = "<p>Ready to update lead</p>"
+    },
+    {
+      name = "SuccessfullyUpdatedLeadOwner"
+      text = "<p>Successfully updated lead with new owner!</p><p><br></p><p>In case of error, error message:</p><p>{!$Flow.FaultMessage}</p>"
+    },
+    {
+      name = "WentToOther"
+      text = "<p>Went to 'other' after checking regional company owner.</p><p>Either inactive, or not AM/AE/Manager.</p><p><br></p><p>{!$Flow.FaultMessage}</p>"
+    },
+  ]
+  variables = [
+    {
+      name = "DistributionReason"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "First_Owned_Monday_Account"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "FirstOpenOpp"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Opportunity
+    },
+    {
+      name = "GlobalCompany"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.Account
+    },
+    {
+      name = "LastStage"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "LocalCompany"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "NewOwnerId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "NewOwnerManagerId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "Nothing"
+      dataType = "Number"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      scale = 0
+      value = {
+        numberValue = 0
+      }
+    },
+    {
+      name = "OurLead"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Lead
+    },
+    {
+      name = "RegionalCompany"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.Account
+    },
+    {
+      name = "RelatedRecordId"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+  ]
+  loops = [
+    {
+      name = "Loop_over_open_opps"
+      label = "Loop over open opps"
+      locationX = 1103
+      locationY = 355
+      collectionReference = "Get_Open_Opps_From_Same_Country_and_Company"
+      iterationOrder = "Asc"
+      nextValueConnector = {
+        targetReference = "Opp_Owner_Validation"
+      }
+    },
+    {
+      name = "Loop_over_paying_monday_accounts"
+      label = "Loop over paying monday accounts"
+      locationX = 838
+      locationY = 350
+      collectionReference = "Get_Paying_MAs_From_Same_Country"
+      iterationOrder = "Asc"
+      nextValueConnector = {
+        targetReference = "Monday_Account_Owner_Validation"
+      }
+      noMoreValuesConnector = {
+        targetReference = "Get_Open_Opps_From_Same_Country_and_Company"
+      }
+    },
+  ]
+}

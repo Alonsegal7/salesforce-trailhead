@@ -1,0 +1,339 @@
+type salesforce.QuoteLineItem {
+  salesforce.Number ARR__c {
+    apiName = "QuoteLineItem.ARR__c"
+    label = "ARR"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Expected added ARR for this line item"
+    externalId = false
+  }
+  salesforce.Picklist Product_Type__c {
+    apiName = "QuoteLineItem.Product_Type__c"
+    label = "Product Type"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Product_Type
+  }
+  salesforce.Picklist CSM__c {
+    apiName = "QuoteLineItem.CSM__c"
+    label = "CSM"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Bronze"
+        default = false
+        label = "Bronze"
+      },
+      {
+        fullName = "Silver"
+        default = false
+        label = "Silver"
+      },
+      {
+        fullName = "Gold"
+        default = false
+        label = "Gold"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist DH_Option_Quote_Type__c {
+    apiName = "QuoteLineItem.DH_Option_Quote_Type__c"
+    label = "DH Option Quote Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "New Contract"
+        default = false
+        label = "New Contract"
+      },
+      {
+        fullName = "Pro-rated"
+        default = false
+        label = "Pro-rated"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Currency DealHub_Net_Price__c {
+    apiName = "QuoteLineItem.DealHub_Net_Price__c"
+    label = "DealHub Net Price"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number Added_Seats__c {
+    apiName = "QuoteLineItem.Added_Seats__c"
+    label = "Added Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date End_Date__c {
+    apiName = "QuoteLineItem.End_Date__c"
+    label = "End Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Error_Message__c {
+    apiName = "QuoteLineItem.Error_Message__c"
+    label = "Error Message"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Is_Primary__c {
+    apiName = "QuoteLineItem.Is_Primary__c"
+    label = "Is Primary"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Last_Sync_Date__c {
+    apiName = "QuoteLineItem.Last_Sync_Date__c"
+    label = "Last Sync Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Option_Contract_Type__c {
+    apiName = "QuoteLineItem.Option_Contract_Type__c"
+    label = "Option Contract Type"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Quote_Type
+  }
+  salesforce.Picklist Option_Quote_Type__c {
+    apiName = "QuoteLineItem.Option_Quote_Type__c"
+    label = "Option Quote Type"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Quote_Type
+  }
+  salesforce.Text Option__c {
+    apiName = "QuoteLineItem.Option__c"
+    label = "Option"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Plan_Period__c {
+    apiName = "QuoteLineItem.Plan_Period__c"
+    label = "Plan Period"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Monthly"
+        default = false
+        label = "Monthly"
+      },
+      {
+        fullName = "Yearly"
+        default = false
+        label = "Yearly"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Seats__c {
+    apiName = "QuoteLineItem.Seats__c"
+    label = "Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Sync_Status__c {
+    apiName = "QuoteLineItem.Sync_Status__c"
+    label = "Sync Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Transferred"
+        default = false
+        label = "Transferred"
+      },
+      {
+        fullName = "Created Successfully"
+        default = false
+        label = "Created Successfully"
+      },
+      {
+        fullName = "Error"
+        default = false
+        label = "Error"
+      },
+      {
+        fullName = "Need to Transfer"
+        default = false
+        label = "Need to Transfer"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Picklist Tier__c {
+    apiName = "QuoteLineItem.Tier__c"
+    label = "Tier"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Standard"
+        default = false
+        label = "Standard"
+      },
+      {
+        fullName = "Pro"
+        default = false
+        label = "Pro"
+      },
+      {
+        fullName = "Enterprise"
+        default = false
+        label = "Enterprise"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.DateTime Trigger_sync_quote_line_to_priority__c {
+    apiName = "QuoteLineItem.Trigger_sync_quote_line_to_priority__c"
+    label = "Trigger sync quote line to priority"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Unique_Key__c {
+    apiName = "QuoteLineItem.Unique_Key__c"
+    label = "Unique Key"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Opportunity_Line_Item_ID__c {
+    apiName = "QuoteLineItem.Opportunity_Line_Item_ID__c"
+    label = "Opportunity Line Item Id"
+    _required = false
+    formula = "CASESAFEID(OpportunityLineItem.Id)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number Duration__c {
+    apiName = "QuoteLineItem.Duration__c"
+    label = "Duration"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Training_Hours__c {
+    apiName = "QuoteLineItem.Training_Hours__c"
+    label = "Training Hours"
+    _required = false
+    precision = 18
+    scale = 1
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number List_Price__c {
+    apiName = "QuoteLineItem.List_Price__c"
+    label = "List Price (Custom)"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Unit_Price__c {
+    apiName = "QuoteLineItem.Unit_Price__c"
+    label = "Unit Price (Custom)"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+}

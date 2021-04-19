@@ -1,0 +1,15 @@
+salesforce.WebLink Contact_MassManager__Mass_Update {
+  fullName = "Contact.MassManager__Mass_Update"
+  availability = "online"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Mass Update"
+  openType = "sidebar"
+  page = "MassManager__ContactsMassUpdate"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Contact,
+  ]
+}

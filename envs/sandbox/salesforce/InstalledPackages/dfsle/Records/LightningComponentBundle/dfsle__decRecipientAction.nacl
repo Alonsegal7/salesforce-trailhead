@@ -1,0 +1,15 @@
+salesforce.LightningComponentBundle dfsle__decRecipientAction {
+  fullName = "dfsle__decRecipientAction"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRecipientAction/decRecipientAction.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRecipientAction/decRecipientAction.html"
+      },
+    ]
+  }
+}

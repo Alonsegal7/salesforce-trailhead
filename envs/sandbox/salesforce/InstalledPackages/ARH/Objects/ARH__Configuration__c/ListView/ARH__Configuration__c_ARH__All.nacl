@@ -1,0 +1,18 @@
+salesforce.ListView ARH__Configuration__c_ARH__All {
+  fullName = "ARH__Configuration__c.ARH__All"
+  columns = [
+    "NAME",
+    "ARH__Object__c",
+    "ARH__Relationship_Field__c",
+    "ARH__Detail_Field_1__c",
+    "ARH__Detail_Field_2__c",
+    "ARH__Detail_Field_3__c",
+    "ARH__Detail_Field_4__c",
+    "ARH__Detail_Field_5__c",
+  ]
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.ARH__Configuration__c,
+  ]
+}

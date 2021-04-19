@@ -1,0 +1,163 @@
+salesforce.Layout Sale_Snapshot_Layout {
+  fullName = "Sale_Snapshot__c-Sale Snapshot Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Sale_Snapshot__c.field.Name
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Sale_Owner__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Final_Sale_Status__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Sale_Snapshot__c.field.Sale__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.GB_Forecast_ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Probability__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Sale_Cycle__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Expected_Plan_Seats__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Close_Data__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.GB_Sale__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.CurrencyIsoCode
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Sale_Status__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Sale_Created_Date__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Sale_Snapshot__c.field.Snapshot_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Sale_Record_Type__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Owner_Manager__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Owner_Team__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Owner_Office__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.OwnerId
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Bi_Weekly_Snapshot__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.Start_of_Month__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Sale_Snapshot__c.field.End_of_Month__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Sale_Snapshot__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Sale_Snapshot__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h1t000002ZcHP"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Sale_Snapshot__c,
+  ]
+}

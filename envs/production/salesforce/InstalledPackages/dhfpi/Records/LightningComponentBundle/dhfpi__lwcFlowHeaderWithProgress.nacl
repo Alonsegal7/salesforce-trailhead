@@ -1,0 +1,15 @@
+salesforce.LightningComponentBundle dhfpi__lwcFlowHeaderWithProgress {
+  fullName = "dhfpi__lwcFlowHeaderWithProgress"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/lwcFlowHeaderWithProgress/lwcFlowHeaderWithProgress.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/lwcFlowHeaderWithProgress/lwcFlowHeaderWithProgress.html"
+      },
+    ]
+  }
+}

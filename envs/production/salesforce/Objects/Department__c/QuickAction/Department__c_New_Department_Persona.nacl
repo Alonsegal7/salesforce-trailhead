@@ -1,0 +1,65 @@
+salesforce.QuickAction Department__c_New_Department_Persona {
+  fullName = "Department__c.New_Department_Persona"
+  label = "New Department Persona"
+  optionsCreateFeedItem = true
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Name"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Title"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Email"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Phone"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Company__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "AccountId"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Department_Lookup__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Description"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  successMessage = "Persona created successfully!"
+  targetObject = salesforce.Contact
+  targetParentField = "Department_Lookup__c"
+  type = "Create"
+  _parent = [
+    salesforce.Department__c,
+  ]
+}

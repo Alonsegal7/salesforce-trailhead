@@ -1,0 +1,100 @@
+salesforce.LightningPage Biz_Ops_Workspace {
+  fullName = "Biz_Ops_Workspace"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "boardId"
+              value = "553741753"
+            },
+            {
+              name = "dashboardId"
+              value = "4564201"
+            },
+            {
+              name = "frameBorder"
+              value = "0"
+            },
+            {
+              name = "height"
+              value = "600px"
+            },
+            {
+              name = "iframeUrl"
+              value = "https://monday.monday.com"
+            },
+            {
+              name = "sandbox"
+              value = "allow-same-origin allow-scripts allow-forms"
+            },
+            {
+              name = "scrolling"
+              value = "auto"
+            },
+            {
+              name = "style"
+              value = "border: none; overflow: scroll;"
+            },
+            {
+              name = "viewId"
+              value = "7896288"
+            },
+            {
+              name = "width"
+              value = "100%"
+            },
+          ]
+          componentName = "mondayEmbed"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "numUZinlWyrQlEDNyPpWBrjjnyAEvI1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "BanENLcrROxQtvpLjOrNuQyIdKwXrr"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "flowLayout"
+              value = "oneColumn"
+            },
+            {
+              name = "flowName"
+              value = "Run_Manual_Account_Snapshot"
+            },
+          ]
+          componentName = "flowruntime:interview"
+        },
+      ]
+      name = "main"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Biz Ops Workspace"
+  template = {
+    name = "flexipage:defaultAppHomeTemplate"
+  }
+  type = "AppPage"
+}

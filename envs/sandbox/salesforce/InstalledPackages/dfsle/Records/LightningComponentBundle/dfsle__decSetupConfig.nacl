@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decSetupConfig {
+  fullName = "dfsle__decSetupConfig"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decSetupConfig/decSetupConfig.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decSetupConfig/decSetupConfig.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decSetupConfig/decSetupConfig.js"
+      },
+    ]
+  }
+}

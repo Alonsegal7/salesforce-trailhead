@@ -1,0 +1,25 @@
+salesforce.ContentAsset logo_black {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  isVisibleByExternalUsers = true
+  language = "en_US"
+  masterLabel = "logo_black"
+  relationships = [
+    {
+      workspace = {
+        access = "INFERRED"
+        isManagingWorkspace = true
+        name = "sfdc_asset_company_assets"
+      }
+    },
+  ]
+  versions = {
+    version = [
+      {
+        number = "1"
+        pathOnClient = "logo_black.png"
+      },
+    ]
+  }
+  fullName = "logo_black"
+  content = file("salesforce/Records/ContentAsset/logo_black.asset")
+}

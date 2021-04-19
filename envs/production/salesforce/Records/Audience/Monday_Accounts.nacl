@@ -1,0 +1,27 @@
+salesforce.Audience Monday_Accounts {
+  fullName = "Monday_Accounts"
+  audienceName = "Monday Accounts"
+  container = salesforce.Network.instance.Monday_Partners_Portal
+  criteria = {
+    criterion = [
+      {
+        criterionValue = {
+          entityField = "RecordType.Id"
+          entityType = "Account"
+          fieldValue = "Account.Monday_Account"
+        }
+        operator = "Equal"
+        type = "FieldBased"
+      },
+    ]
+  }
+  formulaFilterType = "AllCriteriaMatch"
+  targets = {
+    target = {
+      groupName = "bcf7ccb8-f34d-40f3-be70-a130d3b60153"
+      priority = 2
+      targetType = "ExperienceVariation"
+      targetValue = "Account_Detail_Monday_Account_Page"
+    }
+  }
+}

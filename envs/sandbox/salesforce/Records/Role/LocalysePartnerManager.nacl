@@ -1,0 +1,10 @@
+salesforce.Role LocalysePartnerManager {
+  fullName = "LocalysePartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Localyse Partner Manager"
+  mayForecastManagerShare = false
+  name = "Localyse Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

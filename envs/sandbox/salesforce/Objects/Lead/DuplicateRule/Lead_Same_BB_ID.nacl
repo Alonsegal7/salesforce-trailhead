@@ -1,0 +1,19 @@
+salesforce.DuplicateRule Lead_Same_BB_ID {
+  fullName = "Lead.Same_BB_ID"
+  actionOnInsert = "Block"
+  actionOnUpdate = "Block"
+  alertText = "duplicate primary_pulse_account_id"
+  duplicateRuleMatchRules = [
+    {
+      matchRuleSObjectType = "Lead"
+      matchingRule = "Same_BB_ID"
+    },
+  ]
+  isActive = true
+  masterLabel = "Same BB ID"
+  securityOption = "EnforceSharingRules"
+  sortOrder = 3
+  _parent = [
+    salesforce.Lead,
+  ]
+}

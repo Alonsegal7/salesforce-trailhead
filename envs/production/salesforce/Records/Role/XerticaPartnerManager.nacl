@@ -1,0 +1,10 @@
+salesforce.Role XerticaPartnerManager {
+  fullName = "XerticaPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Xertica Partner Manager"
+  mayForecastManagerShare = false
+  name = "Xertica Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

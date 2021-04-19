@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_Update_Next_Step_Timestamp {
+  fullName = "Opportunity.Update_Next_Step_Timestamp"
+  field = salesforce.Opportunity.field.Next_Step_Timestamp__c
+  formula = "NOW()"
+  name = "Update Next Step Timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,27 @@
+salesforce.WorkflowRule Account_Low_Account_Health_Score {
+  fullName = "Account.Low Account Health Score"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Update_Low_Healthscore_Timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.Health_Score_Bucket__c
+      operation = "equals"
+      value = "Low"
+    },
+    {
+      field = salesforce.Account.field.RecordTypeId
+      operation = "equals"
+      value = "Monday Account"
+    },
+  ]
+  description = "Updates the field once the account has low HS"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Account,
+  ]
+}

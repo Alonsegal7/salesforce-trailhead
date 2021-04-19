@@ -1,0 +1,652 @@
+salesforce.LightningPage Managers_Homepage {
+  fullName = "Managers_Homepage"
+  flexiPageRegions = [
+    {
+      name = "region1"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "RkNvSgbFqSbqqmfkAHplicObbbjNhe111"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "EQUAL"
+                rightValue = "Will"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "RkNvSgbFqSbqqmfkAHplicObbbjNhe11"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "CONTAINS"
+                rightValue = "Davidi"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl2143"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "EQUAL"
+                rightValue = "Turino"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "aWbZKCTvOgIdGAoOvKAkNiPLZkTMzR"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "EQUAL"
+                rightValue = "Eduardo"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl2242"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "EQUAL"
+                rightValue = "Romero"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "RkNvSgbFqSbqqmfkAHplicObbbjNhe"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "CONTAINS"
+                rightValue = "Amar"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl121"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "CONTAINS"
+                rightValue = "Goldstein"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl12"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "CONTAINS"
+                rightValue = "Jamison"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            booleanFilter = "1 OR 2"
+            criteria = [
+              {
+                leftValue = "{!$User.Profile.Name}"
+                operator = "CONTAINS"
+                rightValue = "Admin"
+              },
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "EQUAL"
+                rightValue = "Yoni"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl21"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "CONTAINS"
+                rightValue = "Yoav"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl2"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "CONTAINS"
+                rightValue = "Jason"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "RkNvSgbFqSbqqmfkAHplicObbbjNhe1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "CONTAINS"
+                rightValue = "Mitchell"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "CONTAINS"
+                rightValue = "Leanni"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "RkNvSgbFqSbqqmfkAHplicObbbjNhe"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.FirstName}"
+                operator = "CONTAINS"
+                rightValue = "Gad Amar"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl22"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.LastName}"
+                operator = "EQUAL"
+                rightValue = "Suresh"
+              },
+            ]
+          }
+        },
+      ]
+      name = "region2"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "My_Team_This_Month_Quota_Attainment_TbU"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "ENmabmoATaIyztXouGWKExaVoTnLxj"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "RkNvSgbFqSbqqmfkAHplicObbbjNhe111"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl2242"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl22"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl2"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl21"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "aWbZKCTvOgIdGAoOvKAkNiPLZkTMzR"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl2143"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "RkNvSgbFqSbqqmfkAHplicObbbjNhe11"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "RkNvSgbFqSbqqmfkAHplicObbbjNhe1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "taMMBsQWeWwISCfmoRwUcPpbGskEMS"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "ItuOCPYenSUQKCjKcJoIUbhoHEfLPE1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "rKXxYxjUafpQAFOEhObLhfmoOwkYvZ"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "oWbeNkewCBToTFVkVDFsQnRiTUvEUP"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "TqJAmdeCEXykwBGcakOSquLSVGDQeu"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "kSFpvGufrpAUsdrHiJYjXKcFpthJph"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "AAYayYmlTilBsiwBNyuHRqTwLqVdMX"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "AAYayYmlTilBsiwBNyuHRqTwLqVdMX2"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "YJbSifuaHzZfDxwrGdejpzsoJXvtnE"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "RsngMIrNgTOZdAtzfhMUzQEOfqBhBv"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+      ]
+      name = "region3"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Managers Homepage"
+  template = {
+    name = "flexipage:appHomeTemplateHeaderTwoColumns"
+  }
+  type = "AppPage"
+}

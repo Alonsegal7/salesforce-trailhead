@@ -1,0 +1,6 @@
+salesforce.SharingRules Account_Activity__c {
+  fullName = "Account_Activity__c"
+  _parent = [
+    salesforce.Account_Activity__c,
+  ]
+}

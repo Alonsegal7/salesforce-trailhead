@@ -1,0 +1,23 @@
+salesforce.WebLink Task_zaapit__Create_Follow_Up_Task {
+  fullName = "Task.zaapit__Create_Follow_Up_Task"
+  availability = "online"
+  description = "Create Follow-Up Task & copy description!"
+  displayType = "button"
+  encodingKey = "UTF-8"
+  hasMenubar = false
+  hasScrollbars = true
+  hasToolbar = false
+  height = 600
+  isResizable = true
+  linkType = "url"
+  masterLabel = "Create Follow-Up Task"
+  openType = "newWindow"
+  position = "none"
+  protected = false
+  showsLocation = false
+  showsStatus = false
+  url = "/{!Task.Id}/e?clone=1&tsk12=Not Started&retURL=/{!Task.Id}"
+  _parent = [
+    salesforce.Task,
+  ]
+}

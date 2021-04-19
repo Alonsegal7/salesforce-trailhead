@@ -1,0 +1,10 @@
+salesforce.ApexPage Exception {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  availableInTouch = false
+  confirmationTokenRequired = false
+  description = "Default Lightning Platformm page for post-authentication errors"
+  label = "Exception"
+  fullName = "Exception"
+  content = file("salesforce/Records/ApexPage/Exception.page")
+}

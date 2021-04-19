@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Update_status_to_received {
+  fullName = "Lead.Update_status_to_received"
+  field = salesforce.Lead.field.Status
+  literalValue = "Received"
+  name = "Update status to received"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

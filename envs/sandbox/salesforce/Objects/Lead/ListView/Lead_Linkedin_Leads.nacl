@@ -1,0 +1,40 @@
+salesforce.ListView Lead_Linkedin_Leads {
+  fullName = "Lead.Linkedin_Leads"
+  columns = [
+    "CORE.USERS.FIRST_NAME",
+    "SDR_Name_for_reports__c",
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.TITLE",
+    "LEAD.PHONE",
+    "LEAD.COMPANY",
+    "LEAD.COUNTRY",
+    "How_many_users_do_you_want_to_start_with__c",
+    "Company_Size__c",
+    "LEAD.STATUS",
+    "LEAD.CREATED_DATE",
+    "Cluster__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.LEAD_SOURCE"
+      operation = "equals"
+      value = "Linkedin Paid"
+    },
+    {
+      field = "LEAD.STATUS"
+      operation = "equals"
+      value = "Received"
+    },
+    {
+      field = "LEAD.COUNTRY"
+      operation = "equals"
+      value = "USA,United States,Canada,CA,US"
+    },
+  ]
+  label = "Linkedin Leads US"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

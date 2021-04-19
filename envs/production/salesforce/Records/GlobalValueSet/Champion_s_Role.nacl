@@ -1,0 +1,67 @@
+salesforce.GlobalValueSet Champion_s_Role {
+  fullName = "Champion_s_Role"
+  customValue = [
+    {
+      fullName = "Business Owner"
+      default = false
+      label = "Business Owner"
+    },
+    {
+      fullName = "CISO"
+      default = false
+      label = "CISO"
+    },
+    {
+      fullName = "C-level"
+      default = false
+      label = "C-level"
+    },
+    {
+      fullName = "Director"
+      default = false
+      label = "Director"
+    },
+    {
+      fullName = "Head of Department"
+      default = false
+      label = "Head of Department"
+    },
+    {
+      fullName = "IT/System Administrator"
+      default = false
+      label = "IT/System Administrator"
+    },
+    {
+      fullName = "Manager"
+      default = false
+      label = "Manager"
+    },
+    {
+      fullName = "Operations Manager"
+      default = false
+      label = "Operations Manager"
+    },
+    {
+      fullName = "Other"
+      default = false
+      label = "Other"
+    },
+    {
+      fullName = "Project Manager"
+      default = false
+      label = "Project Manager"
+    },
+    {
+      fullName = "Team Lead"
+      default = false
+      label = "Team Lead"
+    },
+    {
+      fullName = "VP"
+      default = false
+      label = "VP"
+    },
+  ]
+  masterLabel = "Champion's Role"
+  sorted = false
+}

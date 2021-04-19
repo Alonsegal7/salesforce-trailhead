@@ -1,0 +1,16 @@
+salesforce.WorkflowAlert Lead_SDR_handover_notification_to_AE_TEST {
+  fullName = "Lead.SDR_handover_notification_to_AE_TEST"
+  description = "SDR handover notification to AE TEST"
+  protected = false
+  recipients = [
+    {
+      recipient = "galom@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_SDR_handover_notification
+  _parent = [
+    salesforce.Lead,
+  ]
+}

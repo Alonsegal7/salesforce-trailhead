@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Quote_Update_DH_Quote_Status_to_Won {
+  fullName = "Quote.Update_DH_Quote_Status_to_Won"
+  field = salesforce.Quote.field.DH_Quote_Status__c
+  literalValue = "Won"
+  name = "Update DH Quote Status to Won"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Quote,
+  ]
+}

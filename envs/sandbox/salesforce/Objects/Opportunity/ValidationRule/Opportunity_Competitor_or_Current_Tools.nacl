@@ -1,0 +1,10 @@
+salesforce.ValidationRule Opportunity_Competitor_or_Current_Tools {
+  fullName = "Opportunity.Competitor_or_Current_Tools"
+  active = true
+  errorConditionFormula = "ISPICKVAL(StageName, \"Closed Lost\") &&   LastModifiedDate >   DATETIMEVALUE( DATE(2020,08,22) ) &&  (ISPICKVAL( Lost_Reason__c , \"Sticking with internal tool\")||ISPICKVAL( Lost_Reason__c , \"Lost to Competitor\")) && ISPICKVAL( Which_competitor__c,\"\")"
+  errorDisplayField = "Which_competitor__c"
+  errorMessage = "Update why you lost the opportunity and which tool did they choose or are sticking with"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

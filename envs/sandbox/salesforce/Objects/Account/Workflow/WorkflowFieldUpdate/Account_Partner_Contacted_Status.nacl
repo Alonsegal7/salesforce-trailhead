@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Partner_Contacted_Status {
+  fullName = "Account.Partner_Contacted_Status"
+  field = salesforce.Account.field.Partner_Contacted_Timestamp__c
+  formula = "today()"
+  name = "Partner Contacted Status"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,16 @@
+salesforce.WorkflowAlert Lead_Has_Request_ALERT {
+  fullName = "Lead.Has_Request_ALERT"
+  description = "Has Request ALERT"
+  protected = false
+  recipients = [
+    {
+      recipient = "oran@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "DefaultWorkflowUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Has_Request_ALERT
+  _parent = [
+    salesforce.Lead,
+  ]
+}

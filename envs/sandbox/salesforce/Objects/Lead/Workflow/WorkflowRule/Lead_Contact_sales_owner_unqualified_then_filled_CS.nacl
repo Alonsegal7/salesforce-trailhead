@@ -1,0 +1,51 @@
+salesforce.WorkflowRule Lead_Contact_sales_owner_unqualified_then_filled_CS {
+  fullName = "Lead.Contact sales owner%2C unqualified then filled CS"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Update_status_to_received
+      type = "FieldUpdate"
+    },
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_owner
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  booleanFilter = "1 AND 2 AND 3 AND 4 AND 5 and 6"
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Is_Company_Size_100__c
+      operation = "equals"
+      value = "True"
+    },
+    {
+      field = salesforce.Lead.field.RecordTypeId
+      operation = "equals"
+      value = "Internal Lead,Partner Lead"
+    },
+    {
+      field = salesforce.Lead.field.Status
+      operation = "equals"
+      value = "Unqualified"
+    },
+    {
+      field = salesforce.Lead.field.Filled_Contact_Sales_Today__c
+      operation = "equals"
+      value = "True"
+    },
+    {
+      field = salesforce.Lead.field.Unqualified_today__c
+      operation = "equals"
+      value = "False"
+    },
+    {
+      field = salesforce.Lead.field.unqualified_timestamp__c
+      operation = "notEqual"
+    },
+  ]
+  description = "For Unqualified Leads who filled CS"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Account_Partner_New_Status {
+  fullName = "Account.Partner New Status"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Account_Partner_New_Status
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.Partner_Company_Status__c
+      operation = "equals"
+      value = "New"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Account,
+  ]
+}

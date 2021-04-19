@@ -1,0 +1,10 @@
+salesforce.ApexPage yw__sendMobileEmailiOS {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 31
+  availableInTouch = true
+  confirmationTokenRequired = false
+  description = "Deprecated"
+  label = "sendMobileEmailiOS"
+  fullName = "yw__sendMobileEmailiOS"
+  content = file("salesforce/InstalledPackages/yw/Records/ApexPage/yw__sendMobileEmailiOS.page")
+}

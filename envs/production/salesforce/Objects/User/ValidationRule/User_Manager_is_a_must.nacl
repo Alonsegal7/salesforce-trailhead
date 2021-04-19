@@ -1,0 +1,10 @@
+salesforce.ValidationRule User_Manager_is_a_must {
+  fullName = "User.Manager_is_a_must"
+  active = true
+  errorConditionFormula = "isblank(ManagerId )&& Profile.Name <> 'System Administrator'"
+  errorDisplayField = "ManagerId"
+  errorMessage = "You must put the user's manager. for partner users it's the channel manager."
+  _parent = [
+    salesforce.User,
+  ]
+}

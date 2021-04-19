@@ -1,0 +1,13 @@
+salesforce.WorkflowTask Account_zaapit__Call {
+  fullName = "Account.zaapit__Call"
+  assignedToType = "owner"
+  dueDateOffset = 1
+  notifyAssignee = true
+  priority = "Normal"
+  protected = false
+  status = "Not Started"
+  subject = "Call"
+  _parent = [
+    salesforce.Account,
+  ]
+}

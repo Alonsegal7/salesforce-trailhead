@@ -1,0 +1,13 @@
+salesforce.CompactLayout Relationship__c_Relationship_Compact_Layout {
+  fullName = "Relationship__c.Relationship_Compact_Layout"
+  fields = [
+    "Name",
+    "OwnerId",
+    "Contact__c",
+    "Relationship_Level__c",
+  ]
+  label = "Relationship Compact Layout"
+  _parent = [
+    salesforce.Relationship__c,
+  ]
+}

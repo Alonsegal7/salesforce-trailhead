@@ -1,0 +1,6 @@
+<apex:page controller="LH.LH_ExportFile_Controller" action="{!fetch}" sidebar="false" contentType="text/plain/#lookups.csv" cache="false" showHeader="true">
+        Type__c,LookupData__c,LookupKey__c
+    <apex:repeat value="{!exportLookups}" var="expLookup">
+        {!expLookup.LH__Type__c},{!expLookup.LH__LookupData__c}, {!expLookup.LH__LookupKey__c}
+    </apex:repeat>
+</apex:page>

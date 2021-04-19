@@ -1,0 +1,779 @@
+salesforce.Layout Internal_Opportunity_Layout {
+  fullName = "Opportunity-Internal Opportunity Layout"
+  customButtons = [
+    "valt__valooto_prod",
+    "valt__View_Quotes",
+  ]
+  excludeButtons = [
+    "Submit",
+  ]
+  feedLayout = {
+    autocollapsePublisher = true
+    compactFeed = true
+    feedFilterPosition = "CenterDropDown"
+    feedFilters = [
+      {
+        feedFilterType = "AllUpdates"
+      },
+      {
+        feedFilterType = "FeedItemType"
+        feedItemType = "TextPost"
+      },
+    ]
+    fullWidthFeed = true
+    hideSidebar = false
+    highlightExternalFeedItems = true
+    rightComponents = [
+      {
+        componentType = "Following"
+      },
+      {
+        componentType = "Followers"
+      },
+      {
+        componentType = "Topics"
+      },
+      {
+        componentType = "CustomLinks"
+      },
+      {
+        componentType = "CustomButtons"
+      },
+    ]
+    useInlineFiltersInConsole = true
+  }
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Opportunity Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.NextStep
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Forecasted__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Top_Opportunity__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Basic Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.OwnerId
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.Company__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.AccountId
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.Type
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Pricing_Version__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.LeadSource
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Monday_Solutions_Offered__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.CloseDate
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.StageName
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Probability
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Enterprise_38__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Expected_Discount__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Green_Bucket_ARR__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Forecast_ARR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Expected_ARR__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Key Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Core_Business__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.DepartmentFunction__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Use_Cases_PL__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Workflow__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Competition_They_re_Evaluating__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Other_tools_they_re_using__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Current_Tool__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Pains_PL__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Account_User_Potential__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Main_Point_of_Contacts__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.DM_process__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Success_Metrics__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Timeline__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Risks__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Budget_Text__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Opportunity_Attribution__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = false
+      label = "Notes"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Lead_Notes__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Extra_Information__c
+            },
+          ]
+        },
+      ]
+      style = "OneColumn"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = false
+      label = "New Key Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Deal_Enablers_1__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Deal_Blockers_1__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Deal_Enablers_1_Info__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Deal_Blockers_1_Info__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "SDR Handover"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.SDR_Name__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Link_to_Call__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.SDR_Notes__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Feedback_on_SDR_Call__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Manager Section"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Key_Deal__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Push_Count__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Manager_s_notes__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.VP_Notes__c
+            },
+          ]
+        },
+      ]
+      style = "OneColumn"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "Lost / Won feedback"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.Lost_Reason__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.Which_competitor__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Opportunity.field.Which_features_were_missing__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = true
+      editHeading = true
+      label = "To Be Removed"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.SDR_Name_for_reports__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Use_Case_SDR__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Pains_SDR__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Authority_SDR__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Timeline_SDR__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Opportunity_Size__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Departments__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Competition__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Current_tools_SDR__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Notes_from_Lead__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Pains__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Use_cases__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Description Information"
+      style = "OneColumn"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Other Information"
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = true
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.Opportunity_Age__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.RecordTypeId
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Opportunity.field.SyncedQuoteId
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Downgrade_Opportunity__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Professional_Service__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.PS_Request_Provider__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Request_a_Sales_Engineer__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Sales_Engineer__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Opportunity.field.Parent_Opportunity__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  miniLayout = {
+    fields = [
+      "Name",
+      "Type",
+      "CloseDate",
+      "StageName",
+      "Probability",
+      "AccountId",
+      "Which_competitor__c",
+      "Lost_Reason__c",
+      "Which_features_were_missing__c",
+    ]
+  }
+  platformActionList = {
+    actionListContext = "Record"
+    platformActionListItems = [
+      {
+        actionName = "Opportunity.Create_Quote"
+        actionType = "QuickAction"
+        sortOrder = 0
+      },
+      {
+        actionName = "Opportunity.View_Quotes"
+        actionType = "QuickAction"
+        sortOrder = 1
+      },
+      {
+        actionName = "Opportunity.Handover"
+        actionType = "QuickAction"
+        sortOrder = 2
+      },
+      {
+        actionName = "Opportunity.Expansion_Opportunity"
+        actionType = "QuickAction"
+        sortOrder = 3
+      },
+      {
+        actionName = "Opportunity.Create_Relate_Billing_Entity"
+        actionType = "QuickAction"
+        sortOrder = 4
+      },
+      {
+        actionName = "Opportunity.Request_SE_Support"
+        actionType = "QuickAction"
+        sortOrder = 5
+      },
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 6
+      },
+      {
+        actionName = "Clone"
+        actionType = "StandardButton"
+        sortOrder = 7
+      },
+      {
+        actionName = "NewTask"
+        actionType = "QuickAction"
+        sortOrder = 8
+      },
+      {
+        actionName = "LogACall"
+        actionType = "QuickAction"
+        sortOrder = 9
+      },
+      {
+        actionName = "FeedItem.ContentNote"
+        actionType = "QuickAction"
+        sortOrder = 10
+      },
+      {
+        actionName = "FeedItem.TextPost"
+        actionType = "QuickAction"
+        sortOrder = 11
+      },
+      {
+        actionName = "FeedItem.ContentPost"
+        actionType = "QuickAction"
+        sortOrder = 12
+      },
+      {
+        actionName = "Delete"
+        actionType = "StandardButton"
+        sortOrder = 13
+      },
+      {
+        actionName = "Opportunity.Clone_with_Products"
+        actionType = "QuickAction"
+        sortOrder = 14
+      },
+    ]
+  }
+  quickActionList = {
+    quickActionListItems = [
+      {
+        quickActionName = "FeedItem.ContentPost"
+      },
+      {
+        quickActionName = "FeedItem.LinkPost"
+      },
+      {
+        quickActionName = "FeedItem.PollPost"
+      },
+      {
+        quickActionName = "FeedItem.TextPost"
+      },
+      {
+        quickActionName = "LogACall"
+      },
+      {
+        quickActionName = "NewEvent"
+      },
+      {
+        quickActionName = "NewTask"
+      },
+      {
+        quickActionName = "Opportunity.Request_a_Sales_Engineer"
+      },
+    ]
+  }
+  relatedLists = [
+    {
+      fields = [
+        "NAME",
+      ]
+      relatedList = salesforce.Handover__c.field.Opportunity__c
+    },
+    {
+      fields = [
+        "ContactName",
+        "Role",
+        "ContactTitle",
+        "IsPrimary",
+        "ContactPhone",
+        "ContactEmail",
+        "ContactAccountName",
+      ]
+      relatedList = "RelatedContactRoleList"
+    },
+    {
+      relatedList = "RelatedOpportunityHistoryList"
+    },
+    {
+      relatedList = "RelatedEntityHistoryList"
+    },
+    {
+      relatedList = "RelatedContentNoteList"
+    },
+    {
+      excludeButtons = [
+        "NewQuote",
+      ]
+      fields = [
+        "QUOTE.QUOTENUMBER",
+        "QUOTE.NAME",
+        "QUOTE.ISSYNCING",
+        "Document_Type__c",
+        "QUOTE.TOTALPRICE",
+        "Total_Seats__c",
+        "Price_Per_Seat__c",
+        "DH_Tier__c",
+      ]
+      relatedList = "RelatedQuoteList"
+      sortField = "QUOTE.ISSYNCING"
+      sortOrder = "Desc"
+    },
+    {
+      excludeButtons = [
+        "ChoosePricebook",
+        "EditAllProduct",
+        "MultiAdd",
+        "MultiEdit",
+        "Sort",
+        "SortLineItem",
+      ]
+      fields = [
+        "Product2",
+        "ARR__c",
+      ]
+      relatedList = "RelatedLineItemList"
+    },
+    {
+      relatedList = "RelatedFileList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.TYPE",
+        "TASK.STATUS",
+        "TASK.PRIORITY",
+        "CORE.USERS.FULL_NAME",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.TYPE",
+        "TASK.DUE_DATE",
+        "CORE.USERS.FULL_NAME",
+        "TASK.WHO_NAME",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+    {
+      fields = [
+        "MemberName",
+        "OppAccessLevel",
+        "TeamMemberRole",
+      ]
+      relatedList = "RelatedOpportunitySalesTeam"
+    },
+  ]
+  relatedObjects = [
+    "AccountId",
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h1t000002NCzI"
+    sizeX = 4
+    sizeY = 2
+    summaryLayoutItems = [
+      {
+        field = salesforce.Opportunity.field.AccountId
+        posX = 0
+        posY = 0
+      },
+      {
+        field = salesforce.Opportunity.field.OwnerId
+        posX = 0
+        posY = 1
+      },
+      {
+        field = salesforce.Opportunity.field.StageName
+        posX = 1
+        posY = 0
+      },
+      {
+        field = salesforce.Opportunity.field.CloseDate
+        posX = 1
+        posY = 1
+      },
+      {
+        field = salesforce.Opportunity.field.Green_Bucket_ARR__c
+        posX = 2
+        posY = 0
+      },
+    ]
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,202 @@
+salesforce.FieldSet Account_MassManager__AccountsMassEditFieldSet {
+  fullName = "Account.MassManager__AccountsMassEditFieldSet"
+  availableFields = [
+    {
+      field = "AccountNumber"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AccountSource"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingCity"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingCountry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingGeocodeAccuracy"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingLatitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingLongitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingPostalCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingState"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingStreet"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CreatedById"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CreatedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Fax"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Id"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastActivityDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastModifiedById"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastModifiedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastReferencedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Ownership"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingCity"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingCountry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingGeocodeAccuracy"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingLatitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingLongitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingPostalCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingState"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingStreet"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Sic"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SicDesc"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Site"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  description = "Mass edit button on account list."
+  displayedFields = [
+    {
+      field = "Name"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Type"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Website"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Industry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "NumberOfEmployees"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Phone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AnnualRevenue"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "AccountsMassEditFieldSet"
+  _parent = [
+    salesforce.Account,
+  ]
+}

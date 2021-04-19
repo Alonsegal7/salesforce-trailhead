@@ -1,0 +1,6 @@
+salesforce.SharingRules StoryLogSetting__c {
+  fullName = "StoryLogSetting__c"
+  _parent = [
+    salesforce.StoryLogSetting__c,
+  ]
+}

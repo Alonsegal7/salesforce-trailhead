@@ -1,0 +1,238 @@
+type salesforce.PlatformEventChannelMember {
+  annotations {
+    serviceid metadataType {
+    }
+    boolean hasMetaFile {
+    }
+    string folderType {
+    }
+    string folderContentType {
+    }
+    string suffix {
+    }
+    string dirName {
+    }
+  }
+  serviceid fullName {
+    _required = false
+  }
+  string eventChannel {
+    _required = false
+    _restriction = {
+      enforce_value = false
+      values = [
+        "ActivityEngagementVirtualChannel",
+        "ChangeDataStandardSales",
+        "ChangeEvents",
+        "CommerceChangeEvents",
+        "ConsentCDCChannel",
+        "ConversationIntelligenceVirtualChannel",
+        "CreChangeEvents",
+        "EinsteinDiscoveryWBChannel",
+        "EinsteinPlatformStandardChannel",
+        "FTestStandardChannel",
+        "FTestStandardInternalChannel",
+        "GlobalIdentityStandard",
+        "IsotopeStandardChangeEvents",
+        "PardotSyncStdChannel",
+        "WorkPlansCDCEventChannel",
+      ]
+    }
+    foreignKeyDomain = [
+      salesforce.PlatformEventChannel,
+    ]
+  }
+  string selectedEntity {
+    _required = false
+    _restriction = {
+      enforce_value = false
+      values = [
+        "ARH__Configuration__ChangeEvent",
+        "AccountChangeEvent",
+        "AccountContactRoleChangeEvent",
+        "Account_Snapshot__ChangeEvent",
+        "Allocation__ChangeEvent",
+        "AssetChangeEvent",
+        "AuthorizationFormConsentChangeEvent",
+        "Billing_Entity__ChangeEvent",
+        "Business_Review__ChangeEvent",
+        "CalendlyAction__ChangeEvent",
+        "CampaignChangeEvent",
+        "CampaignMemberChangeEvent",
+        "CampaignMemberStatusChangeEvent",
+        "CaseChangeEvent",
+        "Company_Billing__ChangeEvent",
+        "Company_Domain__ChangeEvent",
+        "ContactChangeEvent",
+        "ContactPointAddressChangeEvent",
+        "ContactPointConsentChangeEvent",
+        "ContactPointEmailChangeEvent",
+        "ContactPointPhoneChangeEvent",
+        "ContactPointTypeConsentChangeEvent",
+        "ContractChangeEvent",
+        "Country_Region_Mapping__ChangeEvent",
+        "Customer_Address__ChangeEvent",
+        "DOZISF__Complete_Setting__ChangeEvent",
+        "EventChangeEvent",
+        "EventRelationChangeEvent",
+        "ExchangeRate__ChangeEvent",
+        "Field_Trip__Field_Analysis__ChangeEvent",
+        "Field_Trip__Field_Analytic_Config__ChangeEvent",
+        "Field_Trip__Logistics__ChangeEvent",
+        "Field_Trip__Object_Analysis__ChangeEvent",
+        "GB_Threshold__ChangeEvent",
+        "HandlerExecution__ChangeEvent",
+        "Handover__ChangeEvent",
+        "HubSpot_Inc__HubSpot_Favorites__ChangeEvent",
+        "IndividualChangeEvent",
+        "Kickoff__ChangeEvent",
+        "LH__LH_Export_Lookups__ChangeEvent",
+        "LH__LH_Queue__ChangeEvent",
+        "LH__Lookup_Helper_App_Settings__ChangeEvent",
+        "LH__Lookup_Helper_Error__ChangeEvent",
+        "LH__Lookup_Helper_Filter_Group__ChangeEvent",
+        "LH__Lookup_Helper_Filter__ChangeEvent",
+        "LH__Lookup_Helper_Object_Data__ChangeEvent",
+        "LH__Lookup_Helper_Record_Creation__ChangeEvent",
+        "LH__Lookup_Helper_Setting_Filter_Association__ChangeEvent",
+        "LH__Lookup_Helper_Setting_Tracking__ChangeEvent",
+        "LH__Lookup_Helper_Setting__ChangeEvent",
+        "LSNLY__Job__ChangeEvent",
+        "LSNLY__Lessonly_Assignment__ChangeEvent",
+        "LSNLY__Lessonly_Content_Tag__ChangeEvent",
+        "LSNLY__Lessonly_Content__ChangeEvent",
+        "LSNLY__Lessonly_Custom_Field_Mapping__ChangeEvent",
+        "LSNLY__Lessonly_Group_Member__ChangeEvent",
+        "LSNLY__Lessonly_Group__ChangeEvent",
+        "LSNLY__Lessonly_Library_Attempt__ChangeEvent",
+        "LSNLY__Lessonly_Settings__ChangeEvent",
+        "LSNLY__Lessonly_Tag__ChangeEvent",
+        "LSNLY__Lessonly_User__ChangeEvent",
+        "LSNLY__Users__ChangeEvent",
+        "Last_Viewed_Account__ChangeEvent",
+        "LeadChangeEvent",
+        "Lead_Registration__ChangeEvent",
+        "LineItem_Sync__ChangeEvent",
+        "ListEmailChangeEvent",
+        "Milestone__ChangeEvent",
+        "Monday_Account__ChangeEvent",
+        "OpportunitiesMondayAccountsLink__ChangeEvent",
+        "OpportunityChangeEvent",
+        "OpportunityContactRoleChangeEvent",
+        "Opportunity_Snapshot__ChangeEvent",
+        "OrderChangeEvent",
+        "OrderItemChangeEvent",
+        "Partner_Region__ChangeEvent",
+        "Partner_SO_Request__ChangeEvent",
+        "Product2ChangeEvent",
+        "Professional_Service_Request__ChangeEvent",
+        "Project__ChangeEvent",
+        "Queue__ChangeEvent",
+        "QuoteChangeEvent",
+        "QuoteLineItemChangeEvent",
+        "Relationship__ChangeEvent",
+        "Round_Robin__ChangeEvent",
+        "Sale_Snapshot__ChangeEvent",
+        "Sale__ChangeEvent",
+        "StoryLogItemSetting__ChangeEvent",
+        "StoryLogSetting__ChangeEvent",
+        "StoryLogSnapshot__ChangeEvent",
+        "Subscription__ChangeEvent",
+        "Survey__ChangeEvent",
+        "Target__ChangeEvent",
+        "TaskChangeEvent",
+        "TaskRelationChangeEvent",
+        "Team__ChangeEvent",
+        "UserChangeEvent",
+        "dfsle__AccountSettings__ChangeEvent",
+        "dfsle__AgreementConfiguration__ChangeEvent",
+        "dfsle__BulkList__ChangeEvent",
+        "dfsle__BulkStatus__ChangeEvent",
+        "dfsle__ChatterSettings__ChangeEvent",
+        "dfsle__CustomParameterMap__ChangeEvent",
+        "dfsle__CustomRecipient__ChangeEvent",
+        "dfsle__Document__ChangeEvent",
+        "dfsle__EOS_Type__ChangeEvent",
+        "dfsle__EnvelopeConfigurationDocument__ChangeEvent",
+        "dfsle__EnvelopeConfigurationRecipient__ChangeEvent",
+        "dfsle__EnvelopeConfiguration__ChangeEvent",
+        "dfsle__EnvelopeLocalization__ChangeEvent",
+        "dfsle__EnvelopeSettings__ChangeEvent",
+        "dfsle__EnvelopeStatus__ChangeEvent",
+        "dfsle__Envelope__ChangeEvent",
+        "dfsle__GenMigrationSettings__ChangeEvent",
+        "dfsle__GenTemplate__ChangeEvent",
+        "dfsle__LogSettings__ChangeEvent",
+        "dfsle__Log__ChangeEvent",
+        "dfsle__OnlineEditorRoot__ChangeEvent",
+        "dfsle__ProductRoleSettings__ChangeEvent",
+        "dfsle__ProductSettings__ChangeEvent",
+        "dfsle__RecipientStatus__ChangeEvent",
+        "dfsle__Recipient__ChangeEvent",
+        "dfsle__RoleSettings__ChangeEvent",
+        "dfsle__UserSettings__ChangeEvent",
+        "dfsle__User_Activity__ChangeEvent",
+        "leadconvertchtr__LeadConvertChatter__ChangeEvent",
+        "mondayapp__IntegrationWebhookSubscription__ChangeEvent",
+        "rh2__Date_Sync__ChangeEvent",
+        "rh2__Filter__ChangeEvent",
+        "rh2__PS_Async_Monitor__ChangeEvent",
+        "rh2__PS_Describe__ChangeEvent",
+        "rh2__PS_Exception__ChangeEvent",
+        "rh2__PS_Export_Rollups__ChangeEvent",
+        "rh2__PS_Object_Realtime__ChangeEvent",
+        "rh2__PS_Queue__ChangeEvent",
+        "rh2__PS_Rollup_Conditions__ChangeEvent",
+        "rh2__PS_Rollup_Dummy__ChangeEvent",
+        "rh2__PS_Settings__ChangeEvent",
+        "rh2__RH_Job__ChangeEvent",
+        "rh2__Rollup_Helper_Record_Scope__ChangeEvent",
+        "valt__Valooto_Opportunity_Answer__ChangeEvent",
+        "valt__Valooto_Quote_Answer__ChangeEvent",
+        "valt__Valooto_Quote_Workflow__ChangeEvent",
+        "valt__Valooto_Workflow__ChangeEvent",
+        "yw__YeswareContactSync__ChangeEvent",
+        "yw__YeswareEventSync__ChangeEvent",
+        "yw__YeswareHistoricalSync__ChangeEvent",
+        "yw__YeswareOpportunitySync__ChangeEvent",
+        "yw__YeswareTaskSync__ChangeEvent",
+        "zaapit__GeneralZPSets__ChangeEvent",
+        "zaapit__View_Style__ChangeEvent",
+        "zaapit__ZaapIT_General_Settings__ChangeEvent",
+        "zaapit__ZaapIT_Global_Settings__ChangeEvent",
+        "zaapit__ZaapIT_Related_List_Tabs1__ChangeEvent",
+        "zaapit__ZaapIT_Table_user_configuration__ChangeEvent",
+        "zaapit__zaapit_editable_table2__ChangeEvent",
+        "zaapit__zaapit_editable_table__ChangeEvent",
+        "zaapit__zaapit_editable_tb__ChangeEvent",
+        "zisf__CleanTokenStorage__ChangeEvent",
+        "zisf__FmcDefaultValue__ChangeEvent",
+        "zisf__ZISFLog__ChangeEvent",
+        "zisf__ZISFSettings__ChangeEvent",
+        "zisf__ZoomAppTokenStorage__ChangeEvent",
+        "zisf__ZoomInfoComplete__ChangeEvent",
+        "zisf__ZoomInfo_Clean_Settings__ChangeEvent",
+        "zisf__ZoomInfo_Custom_Settings__ChangeEvent",
+        "zisf__ZoomInfo_Inbound_Settings__ChangeEvent",
+        "zisf__ZoomInfo__ChangeEvent",
+        "zisf__ZoomSession__ChangeEvent",
+        "zisf__ZoomSessions__ChangeEvent",
+        "zisf__ZoomTokenStorage__ChangeEvent",
+        "zisf__Zoom_Scheduler__ChangeEvent",
+        "zisf__ZoominfoSalesforceApp__ChangeEvent",
+        "zisf__zicCleanJob__ChangeEvent",
+      ]
+    }
+    foreignKeyDomain = [
+      "CustomObject",
+    ]
+  }
+  string internalId {
+    _required = false
+    _hidden = true
+    localOnly = true
+  }
+  suffix = "platformEventChannelMember"
+  dirName = "platformEventChannelMembers"
+  metadataType = "PlatformEventChannelMember"
+}

@@ -1,0 +1,8 @@
+salesforce.StaticResource dfsle__jquery {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Private"
+  contentType = "application/javascript"
+  description = "jQuery min"
+  fullName = "dfsle__jquery"
+  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__jquery.js")
+}

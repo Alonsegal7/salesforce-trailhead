@@ -1,0 +1,20 @@
+salesforce.RecordType StoryLogItemSetting__c_RelatedFile {
+  fullName = "StoryLogItemSetting__c.RelatedFile"
+  active = true
+  description = "Track notes or related files"
+  label = "Related File"
+  picklistValues = [
+    {
+      picklist = "FileTypesToTrack__c"
+      values = [
+        {
+          fullName = "SNOTE"
+          default = false
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.StoryLogItemSetting__c,
+  ]
+}

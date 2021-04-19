@@ -1,0 +1,95 @@
+salesforce.Flow SalesLoft1__Auto_Populate_PrimaryContact_from_Contact_Role_Object {
+  fullName = "SalesLoft1__Auto_Populate_PrimaryContact_from_Contact_Role_Object"
+  description = "Automatically populate 'Primary Contact' lookup field on Opportunity record using Contact Role Object."
+  interviewLabel = "Automatically populate 'Primary Contact' lookup field on Opportunity record using Contact Role Object. {!$Flow.CurrentDateTime}"
+  isTemplate = true
+  label = "Auto_Populate_PrimaryContact_from_Contact_Role_Object"
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Find_Primary_Opportunity_Contact_Role_ID"
+      label = "Find Primary Opportunity Contact Role ID"
+      locationX = 352
+      locationY = 154
+      assignNullValuesIfNoRecordsFound = true
+      connector = {
+        targetReference = "Update_Opportunity_with_Contact_ID"
+      }
+      filters = [
+        {
+          field = "IsPrimary"
+          operator = "EqualTo"
+          value = {
+            booleanValue = true
+          }
+        },
+        {
+          field = "OpportunityId"
+          operator = "EqualTo"
+          value = {
+            elementReference = "varOpportunityID"
+          }
+        },
+      ]
+      object = salesforce.OpportunityContactRole
+      outputAssignments = [
+        {
+          assignToReference = "varContactID"
+          field = "ContactId"
+        },
+      ]
+    },
+  ]
+  recordUpdates = [
+    {
+      name = "Update_Opportunity_with_Contact_ID"
+      label = "Update Opportunity with Contact ID"
+      locationX = 352
+      locationY = 280
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "varOpportunityID"
+          }
+        },
+      ]
+      inputAssignments = [
+        {
+          field = "SalesLoft1__Primary_Contact__c"
+          value = {
+            elementReference = "varContactID"
+          }
+        },
+      ]
+      object = salesforce.Opportunity
+    },
+  ]
+  startElementReference = "Find_Primary_Opportunity_Contact_Role_ID"
+  status = "Active"
+  variables = [
+    {
+      name = "varContactID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+    {
+      name = "varOpportunityID"
+      dataType = "String"
+      isCollection = false
+      isInput = true
+      isOutput = true
+    },
+  ]
+}

@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Lead_Partners_Outbound_Lead_turn_to_be_a_paying_account {
+  fullName = "Lead.Partners Outbound Lead turn to be a paying account"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Lead_Partners_Outbound_Lead_turn_to_be_a_paying_account
+      type = "Alert"
+    },
+  ]
+  active = true
+  formula = "ischanged( monday_account_status__c )&& ispickval(monday_account_status__c, 'Paying Account')&&  ispickval(Lead_Source_Type__c , 'Outbound') &&  RecordTypeId ='0121t000000IQTE'"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

@@ -1,0 +1,183 @@
+salesforce.Layout Partner_Region_Layout {
+  fullName = "Partner_Region__c-Partner Region Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Partner_Region__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_Region__c.field.Partner_Company__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Partner_Region__c.field.Country__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_Region__c.field.Main_User__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Partner_Region__c.field.Daily_Leads_Quota__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Partner_Region__c.field.UTM_Campaign__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Partner_Region__c.field.Last_Generated_UTM_Link__c
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Partner_Region__c.field.Active_Region__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Partner_Region__c.field.Is_Leadpool_Priority__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Partner_Region__c.field.BigBrain_Id__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Partner_Region__c.field.Region_Creation_Date__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Partner_Region__c.field.CreatedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = false
+      label = "."
+      style = "OneColumn"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  platformActionList = {
+    actionListContext = "Record"
+    platformActionListItems = [
+      {
+        actionName = "NewTask"
+        actionType = "QuickAction"
+        sortOrder = 0
+      },
+      {
+        actionName = "NewEvent"
+        actionType = "QuickAction"
+        sortOrder = 1
+      },
+      {
+        actionName = "LogACall"
+        actionType = "QuickAction"
+        sortOrder = 2
+      },
+      {
+        actionName = "SendEmail"
+        actionType = "QuickAction"
+        sortOrder = 3
+      },
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 4
+      },
+      {
+        actionName = "Partner_Region__c.Generate_UTM_Link"
+        actionType = "QuickAction"
+        sortOrder = 5
+      },
+      {
+        actionName = "FeedItem.PollPost"
+        actionType = "QuickAction"
+        sortOrder = 6
+      },
+      {
+        actionName = "FeedItem.ContentPost"
+        actionType = "QuickAction"
+        sortOrder = 7
+      },
+      {
+        actionName = "NewOpportunity"
+        actionType = "QuickAction"
+        sortOrder = 8
+      },
+      {
+        actionName = "NewLead"
+        actionType = "QuickAction"
+        sortOrder = 9
+      },
+      {
+        actionName = "FeedItem.TextPost"
+        actionType = "QuickAction"
+        sortOrder = 10
+      },
+      {
+        actionName = "ChangeRecordType"
+        actionType = "StandardButton"
+        sortOrder = 11
+      },
+      {
+        actionName = "ChangeOwnerOne"
+        actionType = "StandardButton"
+        sortOrder = 12
+      },
+    ]
+  }
+  relatedLists = [
+    {
+      relatedList = "RelatedEntityHistoryList"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000jKU2R"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Partner_Region__c,
+  ]
+}

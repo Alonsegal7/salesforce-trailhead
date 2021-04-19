@@ -1,0 +1,8 @@
+salesforce.ApexComponent SiteLogin {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  description = "Default Salesforce Sites Login component"
+  label = "SiteLogin"
+  fullName = "SiteLogin"
+  content = file("salesforce/Records/ApexComponent/SiteLogin.component")
+}

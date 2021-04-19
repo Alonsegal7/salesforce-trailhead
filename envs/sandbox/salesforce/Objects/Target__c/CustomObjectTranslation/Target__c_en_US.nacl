@@ -1,0 +1,81 @@
+salesforce.CustomObjectTranslation Target__c_en_US {
+  fullName = "Target__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Target"
+    },
+    {
+      plural = true
+      value = "Targets"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Target__c.field.Am_I_the_Manager__c
+    },
+    {
+      label = ""
+      name = salesforce.Target__c.field.Amount__c
+    },
+    {
+      label = ""
+      name = salesforce.Target__c.field.Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Target__c.field.Period__c
+      picklistValues = [
+        {
+          masterLabel = "Monthly"
+          translation = ""
+        },
+        {
+          masterLabel = "Quarterly"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Target__c.field.Target_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Target__c.field.Target_Key__c
+    },
+    {
+      label = ""
+      name = salesforce.Target__c.field.Target_Unique_Key__c
+    },
+    {
+      label = ""
+      name = salesforce.Target__c.field.Total_Actual__c
+    },
+    {
+      label = ""
+      name = salesforce.Target__c.field.User_Id__c
+    },
+    {
+      label = ""
+      name = salesforce.Target__c.field.User__c
+      relationshipLabel = ""
+    },
+  ]
+  layouts = [
+    {
+      layout = "Target Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Target__c,
+  ]
+}

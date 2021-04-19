@@ -1,0 +1,14 @@
+salesforce.ListView dfsle__EnvelopeConfiguration__c_dfsle__All {
+  fullName = "dfsle__EnvelopeConfiguration__c.dfsle__All"
+  columns = [
+    "NAME",
+    "dfsle__SourceObject__c",
+    "dfsle__IsDraft__c",
+    "CREATED_DATE",
+  ]
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.dfsle__EnvelopeConfiguration__c,
+  ]
+}

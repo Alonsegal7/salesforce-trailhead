@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Update_AM_assignment_timestamp {
+  fullName = "Account.Update_AM_assignment_timestamp"
+  field = salesforce.Account.field.AM_Assignment_Timestamp__c
+  formula = "today()"
+  name = "Update AM assignment timestamp"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

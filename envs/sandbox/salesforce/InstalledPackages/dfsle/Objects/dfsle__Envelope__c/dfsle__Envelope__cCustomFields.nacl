@@ -1,0 +1,211 @@
+type salesforce.dfsle__Envelope__c {
+  salesforce.Text dfsle__DocuSignId__c {
+    apiName = "dfsle__Envelope__c.dfsle__DocuSignId__c"
+    label = "DocuSign Envelope ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    externalId = true
+    caseSensitive = false
+    length = 36
+    queryable = true
+  }
+  salesforce.LongTextArea dfsle__EmailMessage__c {
+    apiName = "dfsle__Envelope__c.dfsle__EmailMessage__c"
+    label = "Email message"
+    _required = false
+    inlineHelpText = '''
+Edit this email message Text (up to 2,000 characters) and it will appear in the notification to sign for
+			your DocuSign Recipient.
+		
+'''
+    createable = true
+    updateable = true
+    length = 2000
+    queryable = true
+    description = "Email Message"
+    visibleLines = 5
+  }
+  salesforce.Text dfsle__EmailSubject__c {
+    apiName = "dfsle__Envelope__c.dfsle__EmailSubject__c"
+    label = "Email subject"
+    _required = false
+    defaultValueFormula = "\"Documents for your DocuSign Signature\""
+    inlineHelpText = '''
+Change this default email subject text and it will appear as the Subject Line in the notification to Sign
+			for your DocuSign Recipients.
+		
+'''
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "Email Subject"
+    externalId = false
+  }
+  salesforce.Lookup dfsle__EnvelopeConfiguration__c {
+    apiName = "dfsle__Envelope__c.dfsle__EnvelopeConfiguration__c"
+    label = "Envelope Configuration"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.dfsle__EnvelopeConfiguration__c,
+    ]
+    inlineHelpText = "The configuration used to generate this envelope."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number dfsle__ExpireAfterDays__c {
+    apiName = "dfsle__Envelope__c.dfsle__ExpireAfterDays__c"
+    label = "Expire/void envelope in N day(s)"
+    _required = false
+    precision = 3
+    scale = 0
+    inlineHelpText = "Indicate the number of days until this transaction is expired."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Days before Envelope is Expired/Voided"
+    externalId = false
+  }
+  salesforce.Number dfsle__ExpireWarnDays__c {
+    apiName = "dfsle__Envelope__c.dfsle__ExpireWarnDays__c"
+    label = "Warn of expiration in N day(s) prior"
+    _required = false
+    precision = 3
+    scale = 0
+    inlineHelpText = '''
+Indicate how many days prior to expiration you want an email message to alert recipients that a deadline
+			approaches for completion. This is sent only to recipients who have not yet completed the transaction.
+		
+'''
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = '''
+An email message to alert recipients that a deadline approaches for completing an envelope. This is
+			sent only to recipients who have not yet completed the envelope.
+'''
+    externalId = false
+  }
+  salesforce.Checkbox dfsle__Expires__c {
+    apiName = "dfsle__Envelope__c.dfsle__Expires__c"
+    label = "Expire envelope"
+    defaultValue = false
+    inlineHelpText = "At times, you may need to encourage your recipients to complete an envelope more rapidly. After an envelope expires, DocuSign voids the envelope and sends a notification to both sender and recipient."
+    createable = true
+    updateable = true
+    queryable = true
+    description = "At times, you may need to encourage your recipients to complete an envelope more rapidly. After an envelope expires, DocuSign voids the envelope and sends a notification to both sender and recipient."
+  }
+  salesforce.LongTextArea dfsle__Options__c {
+    apiName = "dfsle__Envelope__c.dfsle__Options__c"
+    label = "Options"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131072
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number dfsle__RemindAfterDays__c {
+    apiName = "dfsle__Envelope__c.dfsle__RemindAfterDays__c"
+    label = "Send reminder in N day(s)"
+    _required = false
+    precision = 3
+    scale = 0
+    inlineHelpText = "Indicate how many days should pass before the first reminder is sent"
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = '''
+Reminder Interval in Days to remind them
+			to review and complete the document(s).
+'''
+    externalId = false
+  }
+  salesforce.Number dfsle__RemindFrequencyDays__c {
+    apiName = "dfsle__Envelope__c.dfsle__RemindFrequencyDays__c"
+    label = "Remind every N day(s) until complete"
+    _required = false
+    precision = 3
+    scale = 0
+    inlineHelpText = "Indicate how often (in days) the reminder should repeat until the transaction is complete."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = '''
+Reminder Repeat Interval in Days to remind them
+			to review and complete the document(s).
+'''
+    externalId = false
+  }
+  salesforce.Checkbox dfsle__Remind__c {
+    apiName = "dfsle__Envelope__c.dfsle__Remind__c"
+    label = "Remind signers via email"
+    defaultValue = false
+    inlineHelpText = '''
+Check this box to have an email reminder sent to recipients of the envelope who have not yet completed
+			their task.
+		
+'''
+    createable = true
+    updateable = true
+    queryable = true
+    description = '''
+Should a reminder be sent periodically to recipients
+			who have not yet completed the envelope?
+'''
+  }
+  salesforce.LongTextArea dfsle__SenderPermissions__c {
+    apiName = "dfsle__Envelope__c.dfsle__SenderPermissions__c"
+    label = "Sender Permissions"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131072
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.DateTime dfsle__Sent__c {
+    apiName = "dfsle__Envelope__c.dfsle__Sent__c"
+    label = "Sent"
+    _required = false
+    inlineHelpText = "Date and time sent"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Date and time when envelope was sent"
+  }
+  salesforce.Text dfsle__SourceId__c {
+    apiName = "dfsle__Envelope__c.dfsle__SourceId__c"
+    label = "Salesforce source ID"
+    _required = false
+    inlineHelpText = "Salesforce source ID"
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 18
+    queryable = true
+    description = "Salesforce source ID"
+    externalId = false
+  }
+  salesforce.Checkbox dfsle__UpdateChatter__c {
+    apiName = "dfsle__Envelope__c.dfsle__UpdateChatter__c"
+    label = "Enable Chatter status updates"
+    defaultValue = false
+    inlineHelpText = "Check to show chatter during DocuSign signature workflow."
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

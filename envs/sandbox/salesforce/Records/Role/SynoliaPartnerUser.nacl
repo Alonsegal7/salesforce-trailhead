@@ -1,0 +1,10 @@
+salesforce.Role SynoliaPartnerUser {
+  fullName = "SynoliaPartnerUser"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Synolia Partner User"
+  mayForecastManagerShare = false
+  name = "Synolia Partner User"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

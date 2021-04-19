@@ -1,0 +1,22 @@
+salesforce.ListView Account_Fulfilment_Database {
+  fullName = "Account.Fulfilment_Database"
+  columns = [
+    "CORE.USERS.ALIAS",
+    "ACCOUNT.NAME",
+    "Partner_Company_Status__c",
+    "ACCOUNT.ADDRESS1_COUNTRY",
+    "Company_Website__c",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "Partner_Type__c"
+      operation = "equals"
+      value = "Fulfillment"
+    },
+  ]
+  label = "Fulfilment Database"
+  _parent = [
+    salesforce.Account,
+  ]
+}

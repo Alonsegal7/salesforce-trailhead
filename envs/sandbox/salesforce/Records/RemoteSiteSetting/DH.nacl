@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting DH {
+  fullName = "DH"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://service.valooto.com"
+}

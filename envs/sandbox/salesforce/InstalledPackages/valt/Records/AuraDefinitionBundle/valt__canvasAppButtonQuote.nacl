@@ -1,0 +1,10 @@
+salesforce.AuraDefinitionBundle valt__canvasAppButtonQuote {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 42
+  description = "A Lightning Component Bundle"
+  fullName = "valt__canvasAppButtonQuote"
+  type = "Component"
+  controllerContent = "(hidden)"
+  designContent = "(hidden)"
+  markup = "(hidden)"
+}

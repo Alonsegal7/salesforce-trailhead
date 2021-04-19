@@ -1,0 +1,147 @@
+salesforce.FieldSet Contract_tci_csmrg__Contract_Field_Set {
+  fullName = "Contract.tci_csmrg__Contract_Field_Set"
+  availableFields = [
+    {
+      field = "ActivatedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingCity"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingCountry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingGeocodeAccuracy"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingLatitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingLongitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingPostalCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingState"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "BillingStreet"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Description"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingCity"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingCountry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingGeocodeAccuracy"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingLatitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingLongitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingPostalCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingState"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ShippingStreet"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "SpecialTerms"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "StatusCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  description = "Mass Edit Contracts VF Page"
+  displayedFields = [
+    {
+      field = "Name"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ContractNumber"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AccountId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "ContractTerm"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "StartDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Status"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "Contract Field Set"
+  _parent = [
+    salesforce.Contract,
+  ]
+}

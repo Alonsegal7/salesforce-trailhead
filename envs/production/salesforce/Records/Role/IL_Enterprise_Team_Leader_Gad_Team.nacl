@@ -1,0 +1,9 @@
+salesforce.Role IL_Enterprise_Team_Leader_Gad_Team {
+  fullName = "IL_Enterprise_Team_Leader_Gad_Team"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "IL Enterprise Team Leader - Gad Team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.IL_VP_Sales
+}

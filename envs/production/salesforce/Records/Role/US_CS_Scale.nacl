@@ -1,0 +1,10 @@
+salesforce.Role US_CS_Scale {
+  fullName = "US_CS_Scale"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "US CS Scale"
+  mayForecastManagerShare = false
+  name = "US CS Scale"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.US_CS_Scale_Manager
+}

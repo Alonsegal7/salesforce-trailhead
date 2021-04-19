@@ -1,0 +1,15 @@
+salesforce.LightningComponentBundle dfsle__conditionalLogic {
+  fullName = "dfsle__conditionalLogic"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/conditionalLogic/conditionalLogic.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/conditionalLogic/conditionalLogic.html"
+      },
+    ]
+  }
+}

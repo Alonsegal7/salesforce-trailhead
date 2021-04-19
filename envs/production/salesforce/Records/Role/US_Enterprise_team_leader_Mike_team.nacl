@@ -1,0 +1,9 @@
+salesforce.Role US_Enterprise_team_leader_Mike_team {
+  fullName = "US_Enterprise_team_leader_Mike_team"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  mayForecastManagerShare = false
+  name = "US Enterprise team leader - Mike team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.US_VP_Sales
+}

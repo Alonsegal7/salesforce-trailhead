@@ -1,0 +1,263 @@
+salesforce.LightningPage Account_Manager_Homepage {
+  fullName = "Account_Manager_Homepage"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "New_Leads"
+            },
+            {
+              name = "hideActionBar"
+              value = "true"
+            },
+            {
+              name = "hideSearchBar"
+              value = "true"
+            },
+            {
+              name = "pageSize"
+              value = "20"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "Contact_sales_Australia"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "6"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+          visibilityRule = {
+            criteria = [
+              {
+                leftValue = "{!$User.UserRole.Name}"
+                operator = "EQUAL"
+                rightValue = "Australia Site Manager"
+              },
+            ]
+          }
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Task"
+            },
+            {
+              name = "filterName"
+              value = "My_Tasks_today_overdue"
+            },
+            {
+              name = "hideActionBar"
+              value = "true"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "20"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Opportunity"
+            },
+            {
+              name = "filterName"
+              value = "My_open_opportunities1"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "10"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "context"
+              value = "NEWS"
+            },
+          ]
+          componentName = "forceChatter:exposedFeed"
+        },
+      ]
+      mode = "Replace"
+      name = "top"
+      type = "Region"
+    },
+    {
+      mode = "Replace"
+      name = "bottomLeft"
+      type = "Region"
+    },
+    {
+      mode = "Replace"
+      name = "bottomRight"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "My_private_dashboard"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "AAYayYmlTilBsiwBNyuHRqTwLqVdMX22"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "My_Attainment_for_this_month_LQM"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "Quota_Attainment_per_month"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "My_50_new_opp_every_week_huI"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "My_Activities_Per_Week_Vb0"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+      ]
+      mode = "Replace"
+      name = "sidebar"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Account Manager Homepage"
+  parentFlexiPage = "home__desktopDefault"
+  template = {
+    name = "home:desktopTemplate"
+  }
+  type = "HomePage"
+}

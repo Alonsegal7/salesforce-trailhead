@@ -1,0 +1,50 @@
+type salesforce.Company_Domain__c {
+  salesforce.Text Domain__c {
+    apiName = "Company_Domain__c.Domain__c"
+    label = "Domain"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.MasterDetail Company__c {
+    apiName = "Company_Domain__c.Company__c"
+    label = "Company"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.Picklist Status__c {
+    apiName = "Company_Domain__c.Status__c"
+    label = "Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Active"
+        default = false
+        label = "Active"
+      },
+      {
+        fullName = "Inactive"
+        default = false
+        label = "Inactive"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+}

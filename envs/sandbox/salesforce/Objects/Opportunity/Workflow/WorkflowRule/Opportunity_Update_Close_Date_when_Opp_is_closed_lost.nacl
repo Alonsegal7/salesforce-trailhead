@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Opportunity_Update_Close_Date_when_Opp_is_closed_lost {
+  fullName = "Opportunity.Update Close Date when Opp is closed lost"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Update_Close_Date_to_Closed_Lost_Date
+      type = "FieldUpdate"
+    },
+  ]
+  active = false
+  formula = "if(ispickval(StageName,\"Closed Lost\") && CloseDate <>  Closed_Lost_timestamp__c && not(isblank(CloseDate)) && not(isblank(Closed_Lost_timestamp__c)) && isblank(Closed_Won_timestamp__c), True, False)"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

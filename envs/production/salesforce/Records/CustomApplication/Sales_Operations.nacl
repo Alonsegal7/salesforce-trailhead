@@ -1,0 +1,1016 @@
+salesforce.CustomApplication Sales_Operations {
+  fullName = "Sales_Operations"
+  brand = {
+    headerColor = "#0070D2"
+    logo = salesforce.ContentAsset.instance.Sales_operation
+    logoVersion = 1
+    shouldOverrideOrgTheme = false
+  }
+  description = "Customize and automate the sales process, and analyze your data to make informed business decisions."
+  formFactors = [
+    "Large",
+  ]
+  isNavAutoTempTabsDisabled = false
+  isNavPersonalizationDisabled = false
+  label = "Sales Operations"
+  navType = "Standard"
+  profileActionOverrides = [
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Channel Managers"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Chatter External User"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Chatter Free User"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Chatter Moderator User"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "ContractManager"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "CPQ Integration User"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "CSM"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "CSM Managers"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Finance"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Hubspot Selective User"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Integration Administrator"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Guest License User"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Managers monday sales"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Marketing monday"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "MarketingProfile"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Monday Partners Portal Profile"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "monday Sales"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Onboarding Team"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Partner Community Custom"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Partner Community User"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Partner Portal Profile"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "PDR"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "ReadOnly"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Sales Insights Integration User"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Screens"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Screens- Read Only"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "SDR / BDR"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "SolutionManager"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Standard"
+    },
+    {
+      actionName = "View"
+      content = "Account_Snapshot_Record_Page1"
+      formFactor = "Large"
+      pageOrSobjectType = "Account_Snapshot__c"
+      type = "Flexipage"
+      profile = "Admin"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Admin"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Standard"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "SolutionManager"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "SDR / BDR"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Screens- Read Only"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Screens"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Sales Insights Integration User"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "ReadOnly"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "PDR"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Partner Portal Profile"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Partner Community User"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Partner Community Custom"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Onboarding Team"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "monday Sales"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Monday Partners Portal Profile"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "MarketingProfile"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Marketing monday"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Managers monday sales"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Integration Administrator"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Hubspot Selective User"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Guest License User"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Finance"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "CSM Managers"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "CSM"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "CPQ Integration User"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "ContractManager"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Chatter Moderator User"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Chatter Free User"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Chatter External User"
+    },
+    {
+      actionName = "View"
+      content = "Relationship_Record_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Relationship__c"
+      type = "Flexipage"
+      profile = "Channel Managers"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Channel Managers"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Chatter External User"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Chatter Free User"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Chatter Moderator User"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "ContractManager"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "CPQ Integration User"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "CSM"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Guest License User"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Finance"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "CSM Managers"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Hubspot Selective User"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Integration Administrator"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Managers monday sales"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Marketing monday"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Monday Partners Portal Profile"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "MarketingProfile"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "monday Sales"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Partner Community Custom"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Partner Community User"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Partner Portal Profile"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "ReadOnly"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "PDR"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Screens- Read Only"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "SDR / BDR"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "SolutionManager"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Standard"
+    },
+    {
+      actionName = "View"
+      content = "Partner_Company_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Partner_Company
+      type = "Flexipage"
+      profile = "Admin"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Chatter External User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "CPQ Integration User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "ContractManager"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Chatter Moderator User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Chatter Free User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Finance"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Guest License User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Integration Administrator"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Managers monday sales"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "MarketingProfile"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "monday Sales"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Partner Community User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Channel Managers"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "ReadOnly"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "SDR / BDR"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "SolutionManager"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Standard"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Admin"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Screens- Read Only"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "PDR"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Partner Portal Profile"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "CSM"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "CSM Managers"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Hubspot Selective User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Marketing monday"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Monday Partners Portal Profile"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Version_3"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Partner Community Custom"
+    },
+  ]
+  tabs = [
+    "standard-home",
+    "standard-Dashboard",
+    "standard-report",
+    "standard-Pricebook2",
+    "standard-Product2",
+    "standard-CollaborationGroup",
+    salesforce.CustomTab.instance.Sale__c,
+    salesforce.CustomTab.instance.Handover__c,
+    salesforce.CustomTab.instance.Opportunity_Snapshot__c,
+    salesforce.CustomTab.instance.Sale_Snapshot__c,
+    salesforce.CustomTab.instance.Team__c,
+    salesforce.CustomTab.instance.Companies,
+    salesforce.CustomTab.instance.Monday_Accounts,
+    salesforce.CustomTab.instance.Target__c,
+    salesforce.CustomTab.instance.ExchangeRate__c,
+    salesforce.CustomTab.instance.Round_Robin__c,
+    salesforce.CustomTab.instance.Project__c,
+    salesforce.CustomTab.instance.Queue__c,
+    salesforce.CustomTab.instance.Allocation__c,
+    salesforce.CustomTab.instance.Billing_Entity__c,
+    salesforce.CustomTab.instance.Milestone__c,
+    salesforce.CustomTab.instance.StoryLogSnapshot__c,
+    salesforce.CustomTab.instance.Subscription__c,
+    salesforce.CustomTab.instance.Lead_Registration__c,
+    salesforce.CustomTab.instance.Professional_Service_Request__c,
+    salesforce.CustomTab.instance.Department__c,
+    salesforce.CustomTab.instance.LSNLY__Lessonly_User__c,
+  ]
+  uiType = "Lightning"
+  utilityBar = "Sales_Operations_UtilityBar"
+}

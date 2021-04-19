@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation rh2__Filter__c_en_US {
+  fullName = "rh2__Filter__c-en_US"
+  _parent = [
+    salesforce.rh2__Filter__c,
+  ]
+}

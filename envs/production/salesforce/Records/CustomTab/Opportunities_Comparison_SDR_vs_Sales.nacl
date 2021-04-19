@@ -1,0 +1,10 @@
+salesforce.CustomTab Opportunities_Comparison_SDR_vs_Sales {
+  fullName = "Opportunities_Comparison_SDR_vs_Sales"
+  description = "Created by Lightning App Builder"
+  flexiPage = "Leads_Analysis"
+  label = "Opportunities Comparison - SDR vs Sales"
+  motif = "Custom17: Sack"
+  _generated_dependencies = [
+    salesforce.LightningPage.instance.Leads_Analysis,
+  ]
+}

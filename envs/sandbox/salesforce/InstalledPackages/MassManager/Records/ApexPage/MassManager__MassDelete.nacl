@@ -1,0 +1,9 @@
+salesforce.ApexPage MassManager__MassDelete {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 39
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Mass Delete"
+  fullName = "MassManager__MassDelete"
+  content = file("salesforce/InstalledPackages/MassManager/Records/ApexPage/MassManager__MassDelete.page")
+}

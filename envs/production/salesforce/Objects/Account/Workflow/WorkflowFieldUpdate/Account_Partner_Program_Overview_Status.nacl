@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Account_Partner_Program_Overview_Status {
+  fullName = "Account.Partner_Program_Overview_Status"
+  field = salesforce.Account.field.Partner_Program_Overview_Timestamp__c
+  formula = "TODAY()"
+  name = "Partner Program Overview Status"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Account,
+  ]
+}

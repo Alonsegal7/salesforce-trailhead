@@ -1,0 +1,25 @@
+<apex:page standardController="Asset" recordSetVar="Assets" extensions="tci_csmrg.MassEditAssets" sidebar="false">
+  <apex:form id="theform">
+ <apex:pagemessages id="msg"/>
+       <apex:pageBlock title="Mass Edit - Assets" mode="edit">     
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveRecords}" value="Save" />            
+                <apex:commandButton value="Cancel" action="{!ccancel}"/>
+            </apex:pageBlockButtons>     
+                          
+                <apex:pageBlockTable value="{!Assets}" var="Asset">                
+                <apex:repeat value="{!$ObjectType.Asset.FieldSets.tci_csmrg__Asset_Field_Set}" var="f">  
+                        <apex:column rendered="{!$ObjectType.Asset.Fields[f].accessible}">
+                               <apex:facet name="header">
+                                    <apex:outputPanel >
+                                        <apex:outputText value="{!$ObjectType['Asset'].Fields[f].label}" />
+                                    </apex:outputPanel>
+                                </apex:facet>
+                                <apex:inputField value="{!Asset[f]}"/>
+                            </apex:column>               
+                 </apex:repeat>
+                </apex:pageBlockTable><br/>
+        <apex:outputLabel ><b>&nbsp;&nbsp; Total Records Selected:&nbsp;{!size} </b></apex:outputLabel>
+        </apex:pageBlock>
+      </apex:form> 
+</apex:page>

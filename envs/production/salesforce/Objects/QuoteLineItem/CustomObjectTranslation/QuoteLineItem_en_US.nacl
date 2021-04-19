@@ -1,0 +1,207 @@
+salesforce.CustomObjectTranslation QuoteLineItem_en_US {
+  fullName = "QuoteLineItem-en_US"
+  fieldSets = [
+    {
+      label = ""
+      name = salesforce.FieldSet.instance.QuoteLineItem_UpdateCalloutFields
+    },
+  ]
+  fields = [
+    {
+      caseValues = {
+        plural = "false"
+        value = "List Price"
+      }
+      name = "quotelineitem_subtotal"
+      startsWith = "Consonant"
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Added_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.CSM__c
+      picklistValues = [
+        {
+          masterLabel = "Bronze"
+          translation = ""
+        },
+        {
+          masterLabel = "Gold"
+          translation = ""
+        },
+        {
+          masterLabel = "Silver"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.DH_List_Price__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.DH_Option_Quote_Type__c
+      picklistValues = [
+        {
+          masterLabel = "New Contract"
+          translation = ""
+        },
+        {
+          masterLabel = "Pro-rated"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.DH_Unit_Price__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.DealHub_Net_Price__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Duration__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.End_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Error_Message__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Is_Primary__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Last_Sync_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Opportunity_Line_Item_ID__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Option_Contract_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Option_Quote_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Option__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Plan_Period__c
+      picklistValues = [
+        {
+          masterLabel = "Monthly"
+          translation = ""
+        },
+        {
+          masterLabel = "Yearly"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Product_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Sync_Status__c
+      picklistValues = [
+        {
+          masterLabel = "Created Successfully"
+          translation = ""
+        },
+        {
+          masterLabel = "Error"
+          translation = ""
+        },
+        {
+          masterLabel = "Need to Transfer"
+          translation = ""
+        },
+        {
+          masterLabel = "Transferred"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Tier__c
+      picklistValues = [
+        {
+          masterLabel = "Enterprise"
+          translation = ""
+        },
+        {
+          masterLabel = "Pro"
+          translation = ""
+        },
+        {
+          masterLabel = "Standard"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Training_Hours__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Trigger_sync_quote_line_to_priority__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Unique_Key__c
+    },
+    {
+      label = ""
+      name = salesforce.QuoteLineItem.field.Unit_Price__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Quote Line Item Layout"
+      sections = [
+        {
+          label = ""
+          section = "Commercial Terms"
+        },
+        {
+          label = ""
+          section = "New Section"
+        },
+        {
+          label = ""
+          section = "Priority Status"
+        },
+      ]
+    },
+  ]
+  _parent = [
+    salesforce.QuoteLineItem,
+  ]
+}

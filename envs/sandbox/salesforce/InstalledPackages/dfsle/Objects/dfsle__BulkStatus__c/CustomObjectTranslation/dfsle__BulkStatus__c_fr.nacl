@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__BulkStatus__c_fr {
+  fullName = "dfsle__BulkStatus__c-fr"
+  _parent = [
+    salesforce.dfsle__BulkStatus__c,
+  ]
+}

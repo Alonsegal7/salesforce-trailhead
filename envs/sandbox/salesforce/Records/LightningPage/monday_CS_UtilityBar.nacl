@@ -1,0 +1,18 @@
+salesforce.LightningPage monday_CS_UtilityBar {
+  fullName = "monday_CS_UtilityBar"
+  flexiPageRegions = [
+    {
+      name = "utilityItems"
+      type = "Region"
+    },
+    {
+      name = "backgroundComponents"
+      type = "Background"
+    },
+  ]
+  masterLabel = "monday CS UtilityBar"
+  template = {
+    name = "one:utilityBarTemplateDesktop"
+  }
+  type = "UtilityBar"
+}

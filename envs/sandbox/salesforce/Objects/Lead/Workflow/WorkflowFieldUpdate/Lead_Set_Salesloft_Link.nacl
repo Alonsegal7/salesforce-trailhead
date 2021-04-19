@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Set_Salesloft_Link {
+  fullName = "Lead.Set_Salesloft_Link"
+  field = salesforce.Lead.field.Salesloft_Import_Link__c
+  formula = "\"https://app.salesloft.com/app/import/crm?lead=\"& Long_Lead_ID__c"
+  name = "Set Salesloft Link"
+  notifyAssignee = false
+  operation = "Formula"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

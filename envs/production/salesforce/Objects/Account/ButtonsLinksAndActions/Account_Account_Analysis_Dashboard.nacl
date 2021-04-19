@@ -1,0 +1,22 @@
+salesforce.WebLink Account_Account_Analysis_Dashboard {
+  fullName = "Account.Account_Analysis_Dashboard"
+  availability = "online"
+  displayType = "link"
+  encodingKey = "UTF-8"
+  hasMenubar = false
+  hasScrollbars = true
+  hasToolbar = false
+  height = 600
+  isResizable = true
+  linkType = "url"
+  masterLabel = "Account Analysis Dashboard"
+  openType = "newWindow"
+  position = "none"
+  protected = false
+  showsLocation = false
+  showsStatus = false
+  url = "https://looker.bigbrain.me/embed/dashboards/1076?Account%20Id={!Account.primary_pulse_account_id__c}&filter_config=%7B\"Account%20Id\":%5B%7B\"type\":\"%3D\",\"values\":%5B%7B\"constant\":\"ACCOUNT_ID\"%7D,%7B%7D%5D,\"id\":2%7D%5D%7D"
+  _parent = [
+    salesforce.Account,
+  ]
+}

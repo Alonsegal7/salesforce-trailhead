@@ -1,0 +1,437 @@
+salesforce.Flow Opportunity_Match_GB_Threshold {
+  fullName = "Opportunity_Match_GB_Threshold"
+  assignments = [
+    {
+      name = "Set_GB_Threshold"
+      label = "Set GB Threshold"
+      locationX = 1222
+      locationY = 134
+      assignmentItems = [
+        {
+          assignToReference = "$Record.GB_Threshold__c"
+          operator = "Assign"
+          value = {
+            elementReference = "Matching_Threshold.Id"
+          }
+        },
+      ]
+    },
+    {
+      name = "Set_Selected_Threshold"
+      label = "Set Matching Threshold"
+      locationX = 585
+      locationY = 662
+      assignmentItems = [
+        {
+          assignToReference = "Matching_Threshold"
+          operator = "Assign"
+          value = {
+            elementReference = "Loop_Over_Threshold"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "Loop_Over_Threshold"
+      }
+    },
+  ]
+  decisions = [
+    {
+      name = "Function_Matches"
+      label = "Function Matches?"
+      locationX = 1234
+      locationY = 672
+      defaultConnector = {
+        targetReference = "Loop_Over_Threshold"
+      }
+      defaultConnectorLabel = "Function No"
+      rules = [
+        {
+          name = "Function_Matches_Yes"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Loop_Over_Threshold.Owner_Function__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "Opp_Owner_Details.Function__c"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Selected_Threshold"
+          }
+          label = "Function Matches"
+        },
+      ]
+    },
+    {
+      name = "Match_Already_Found"
+      label = "Match Already Found?"
+      locationX = 707
+      locationY = 430
+      defaultConnector = {
+        targetReference = "Set_Selected_Threshold"
+      }
+      defaultConnectorLabel = "Not Yet"
+      rules = [
+        {
+          name = "Yes_Found"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Matching_Threshold"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Loop_Over_Threshold"
+          }
+          label = "Yes Found"
+        },
+      ]
+    },
+    {
+      name = "Office_Matches"
+      label = "Office Matches?"
+      locationX = 1227
+      locationY = 303
+      defaultConnector = {
+        targetReference = "Loop_Over_Threshold"
+      }
+      defaultConnectorLabel = "Office Doesn't Match"
+      rules = [
+        {
+          name = "Yes_Matches"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Loop_Over_Threshold.Office__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "Opp_Owner_Details.Office__c"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Selected_Threshold"
+          }
+          label = "Office Matches"
+        },
+      ]
+    },
+    {
+      name = "Opp_is_Open"
+      label = "Opp is Open"
+      locationX = 354
+      locationY = 272
+      defaultConnectorLabel = "Default Outcome"
+      rules = [
+        {
+          name = "Open"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "$Record.IsClosed"
+              operator = "EqualTo"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+            {
+              leftValueReference = "$Record.GB_Threshold__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = true
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Opp_Owner_Details"
+          }
+          label = "Open"
+        },
+      ]
+    },
+    {
+      name = "Source_Type_Matches"
+      label = "Source Type Matches?"
+      locationX = 1226
+      locationY = 469
+      defaultConnector = {
+        targetReference = "Loop_Over_Threshold"
+      }
+      defaultConnectorLabel = "Source Type No"
+      rules = [
+        {
+          name = "Source_Type_Yes"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Loop_Over_Threshold.Source_Type__c"
+              operator = "EqualTo"
+              rightValue = {
+                elementReference = "$Record.Account_Source_Type__c"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Set_Selected_Threshold"
+          }
+          label = "Source Type Yes"
+        },
+      ]
+    },
+    {
+      name = "Threshold_Contains_Function"
+      label = "Threshold Contains Function"
+      locationX = 979
+      locationY = 714
+      defaultConnector = {
+        targetReference = "Match_Already_Found"
+      }
+      defaultConnectorLabel = "Not Contains Function"
+      rules = [
+        {
+          name = "Contains_Function"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Loop_Over_Threshold.Owner_Function__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Function_Matches"
+          }
+          label = "Contains Function"
+        },
+      ]
+    },
+    {
+      name = "Threshold_Contains_Source_Type"
+      label = "Threshold Contains Source Type"
+      locationX = 977
+      locationY = 520
+      defaultConnector = {
+        targetReference = "Threshold_Contains_Function"
+      }
+      defaultConnectorLabel = "No Source Type"
+      rules = [
+        {
+          name = "Contains_Type"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Loop_Over_Threshold.Source_Type__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Source_Type_Matches"
+          }
+          label = "Contains Source Type"
+        },
+      ]
+    },
+    {
+      name = "Threshold_Has_Office"
+      label = "Threshold Contains Office"
+      locationX = 927
+      locationY = 283
+      defaultConnector = {
+        targetReference = "Threshold_Contains_Source_Type"
+      }
+      defaultConnectorLabel = "No Office"
+      rules = [
+        {
+          name = "Yes"
+          conditionLogic = "and"
+          conditions = [
+            {
+              leftValueReference = "Loop_Over_Threshold.Office__c"
+              operator = "IsNull"
+              rightValue = {
+                booleanValue = false
+              }
+            },
+          ]
+          connector = {
+            targetReference = "Office_Matches"
+          }
+          label = "Yes Office"
+        },
+      ]
+    },
+  ]
+  description = "Including Source Type"
+  interviewLabel = "Opportunity Match GB Threshold {!$Flow.CurrentDateTime}"
+  label = "Opportunity Match GB Threshold"
+  loops = [
+    {
+      name = "Loop_Over_Threshold"
+      label = "Loop Over Threshold"
+      locationX = 793
+      locationY = 133
+      collectionReference = "Get_Active_GB_Threshold"
+      iterationOrder = "Asc"
+      nextValueConnector = {
+        targetReference = "Threshold_Has_Office"
+      }
+      noMoreValuesConnector = {
+        targetReference = "Set_GB_Threshold"
+      }
+    },
+  ]
+  processMetadataValues = [
+    {
+      name = "BuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+    {
+      name = "CanvasMode"
+      value = {
+        stringValue = "FREE_FORM_CANVAS"
+      }
+    },
+    {
+      name = "OriginBuilderType"
+      value = {
+        stringValue = "LightningFlowBuilder"
+      }
+    },
+  ]
+  processType = "AutoLaunchedFlow"
+  recordLookups = [
+    {
+      name = "Get_Active_GB_Threshold"
+      label = "Get Active GB Threshold"
+      locationX = 178
+      locationY = 563
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Loop_Over_Threshold"
+      }
+      filters = [
+        {
+          field = "Is_Active__c"
+          operator = "EqualTo"
+          value = {
+            booleanValue = true
+          }
+        },
+        {
+          field = "Opportunity_Record_Type__c"
+          operator = "EqualTo"
+          value = {
+            elementReference = "Record_Type_Details.DeveloperName"
+          }
+        },
+      ]
+      getFirstRecordOnly = false
+      object = salesforce.GB_Threshold__c
+      queriedFields = [
+        salesforce.GB_Threshold__c.field.Id,
+        salesforce.GB_Threshold__c.field.Office__c,
+        salesforce.GB_Threshold__c.field.Opportunity_Record_Type__c,
+        salesforce.GB_Threshold__c.field.Source_Type__c,
+        salesforce.GB_Threshold__c.field.Owner_Function__c,
+      ]
+      sortField = salesforce.GB_Threshold__c.field.CreatedDate
+      sortOrder = "Desc"
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Opp_Owner_Details"
+      label = "Opp Owner Details"
+      locationX = 180
+      locationY = 276
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Record_Type_Details"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.OwnerId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = salesforce.User
+      queriedFields = [
+        salesforce.User.field.Id,
+        salesforce.User.field.Office__c,
+        salesforce.User.field.Function__c,
+      ]
+      storeOutputAutomatically = true
+    },
+    {
+      name = "Record_Type_Details"
+      label = "Record Type Details"
+      locationX = 181
+      locationY = 420
+      assignNullValuesIfNoRecordsFound = false
+      connector = {
+        targetReference = "Get_Active_GB_Threshold"
+      }
+      filters = [
+        {
+          field = "Id"
+          operator = "EqualTo"
+          value = {
+            elementReference = "$Record.RecordTypeId"
+          }
+        },
+      ]
+      getFirstRecordOnly = true
+      object = "RecordType"
+      queriedFields = [
+        "Id",
+        "DeveloperName",
+      ]
+      storeOutputAutomatically = true
+    },
+  ]
+  start = {
+    locationX = 50
+    locationY = 25
+    connector = {
+      targetReference = "Opp_is_Open"
+    }
+    object = salesforce.Opportunity
+    triggerType = "RecordBeforeSave"
+  }
+  status = "Draft"
+  variables = [
+    {
+      name = "Matching_Threshold"
+      dataType = "SObject"
+      isCollection = false
+      isInput = false
+      isOutput = false
+      objectType = salesforce.GB_Threshold__c
+    },
+    {
+      name = "MatchingThresholdCount"
+      dataType = "Number"
+      isCollection = false
+      isInput = false
+      isOutput = false
+      scale = 2
+    },
+  ]
+}

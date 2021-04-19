@@ -1,0 +1,187 @@
+salesforce.CustomApplication rh2__Rollup_Helper_Lightning {
+  fullName = "rh2__Rollup_Helper_Lightning"
+  brand = {
+    headerColor = "#C72121"
+    logo = salesforce.ContentAsset.instance.rh2__AppIcon_PTRH
+    logoVersion = 1
+    shouldOverrideOrgTheme = false
+  }
+  description = "Roll up information from any object with clicks and not code."
+  formFactors = [
+    "Large",
+  ]
+  isNavAutoTempTabsDisabled = false
+  isNavPersonalizationDisabled = false
+  label = "Rollup Helper"
+  navType = "Standard"
+  profileActionOverrides = [
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Chatter External User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "CPQ Integration User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "ContractManager"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Chatter Moderator User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Chatter Free User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Finance"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Guest License User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Integration Administrator"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Managers monday sales"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "MarketingProfile"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "monday Sales"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Partner Community User"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Channel Managers"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "ReadOnly"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "SDR / BDR"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "SolutionManager"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Standard"
+    },
+    {
+      actionName = "View"
+      content = "Monday_Account_Page"
+      formFactor = "Large"
+      pageOrSobjectType = "Account"
+      recordType = salesforce.RecordType.instance.Account_Monday_Account
+      type = "Flexipage"
+      profile = "Admin"
+    },
+  ]
+  tabs = [
+    salesforce.CustomTab.instance.rh2__PS_Rollup_Helper,
+    salesforce.CustomTab.instance.rh2__Rollup_Helper_Help,
+    salesforce.CustomTab.instance.rh2__PS_All_Rollups,
+  ]
+  uiType = "Lightning"
+}

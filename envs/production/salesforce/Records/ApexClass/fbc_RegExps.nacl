@@ -1,0 +1,7 @@
+salesforce.ApexClass fbc_RegExps {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 33
+  status = "Active"
+  fullName = "fbc_RegExps"
+  content = file("salesforce/Records/ApexClass/fbc_RegExps.cls")
+}

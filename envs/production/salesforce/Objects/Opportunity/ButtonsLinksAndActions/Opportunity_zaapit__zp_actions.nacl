@@ -1,0 +1,13 @@
+salesforce.WebLink Opportunity_zaapit__zp_actions {
+  fullName = "Opportunity.zaapit__zp_actions"
+  availability = "online"
+  displayType = "button"
+  linkType = "javascript"
+  masterLabel = "ZP Actions"
+  openType = "onClickJavaScript"
+  protected = false
+  url = "{!requireScript($Label.zaapit__zp_action_link)}"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

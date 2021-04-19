@@ -1,0 +1,28 @@
+salesforce.WorkflowAlert Quote_Notification_when_new_quote_Sales_order_is_created_Partners {
+  fullName = "Quote.Notification_when_new_quote_Sales_order_is_created_Partners"
+  description = "Notification when new quote/ Sales order is created- Partners"
+  protected = false
+  recipients = [
+    {
+      field = salesforce.Quote.field.Owner_s_Manager_Email__c
+      type = "email"
+    },
+    {
+      recipient = "Admins"
+      type = "group"
+    },
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "orens@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Quote_was_created
+  _parent = [
+    salesforce.Quote,
+  ]
+}

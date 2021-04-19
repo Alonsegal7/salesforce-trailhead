@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__signingOrder {
+  fullName = "dfsle__signingOrder"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/signingOrder/signingOrder.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/signingOrder/signingOrder.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/signingOrder/signingOrder.js"
+      },
+    ]
+  }
+}

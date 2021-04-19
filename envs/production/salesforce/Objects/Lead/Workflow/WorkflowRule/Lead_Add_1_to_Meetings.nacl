@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Lead_Add_1_to_Meetings {
+  fullName = "Lead.Add 1 to Meetings"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Add_1_to_lead_meetings
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "ischanged(Last_Meeting_Complete__c) && not(isnull(Last_Meeting_Complete__c))"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

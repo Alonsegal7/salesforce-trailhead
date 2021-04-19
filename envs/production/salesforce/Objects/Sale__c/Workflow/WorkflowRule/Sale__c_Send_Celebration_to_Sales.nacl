@@ -1,0 +1,9 @@
+salesforce.WorkflowRule Sale__c_Send_Celebration_to_Sales {
+  fullName = "Sale__c.Send Celebration to Sales"
+  active = false
+  formula = "Sale_Record_type_ID__c ='0121t000000IQYO' &&  ISPICKVAL( FinalSaleStatus__c , 'Complete') &&  ARR__c >0 &&  ISCHANGED(ARR__c)"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Sale__c,
+  ]
+}

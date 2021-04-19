@@ -1,0 +1,17 @@
+salesforce.ContentAsset Image_20200310_173814 {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  isVisibleByExternalUsers = true
+  language = "en_US"
+  masterLabel = "Image_20200310_173814"
+  originNetwork = "Monday Partners Portal"
+  versions = {
+    version = [
+      {
+        number = "1"
+        pathOnClient = "Image_2020-03-10_17-38-14.png"
+      },
+    ]
+  }
+  fullName = "Image_20200310_173814"
+  content = file("salesforce/Records/ContentAsset/Image_20200310_173814.asset")
+}

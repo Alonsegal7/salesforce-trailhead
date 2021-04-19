@@ -1,0 +1,272 @@
+<apex:page controller="LH.LH_New_Setting_Controller" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head> 
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <apex:stylesheet value="{! URLFOR($Resource.PT_Resources_v1, '/font-awesome/css/font-awesome.min.css') }" />  
+    <apex:stylesheet value="{! URLFOR($Resource.HS_Jquery, 'jquery-ui.min.css')}" />
+    <apex:includeScript value="{! URLFOR($Resource.HS_Jquery, 'jquery-1.12.1.min.js')}" />
+    <apex:includeScript value="{! URLFOR($Resource.HS_Jquery, 'jquery-ui.min.js')}" />  
+    <style>
+    .slds-card.grayBlock, .slds-table.grayBlock{
+        background-color: #f4f6f9; 
+    }
+    </style>
+</head>
+<script type="text/javascript">
+    var lh = lh || {};
+    lh.j$ = jQuery.noConflict();
+
+    function loading(val) {
+        if(val){
+            document.getElementById('loading').style.display = 'block';
+        }else{
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
+
+    function postValidationProcessingJS(requiredFieldError){
+        if(!requiredFieldError){
+            postValidation();
+        }
+    }
+</script>
+<apex:slds />
+<apex:form >
+    <apex:actionStatus id="loading" onstart="loading(true)" onstop="loading(false)" />
+    
+    <div class="slds slds-p-around_medium slds-size--10-of-12 slds-container--center" role="main">
+        <div class="slds-card grayBlock slds-m-bottom--medium" style="height: auto;">
+            <div class="slds-scope" style="margin-top: 10px; margin-left: 5px; margin-right: 5px;">
+                <div class="slds-grid">
+                    <div class="slds-tabs--path" role="application">
+                        <ul class="slds-tabs--path__nav" role="tablist">
+            
+                            <li class="slds-tabs--path__item slds-is-complete" role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-99" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="/apex/LH_LandingPage" aria-live="assertive">
+                                    <span class="slds-tabs--path__stage">Home</span>
+                                    <span class="slds-tabs--path__title">Home</span>
+                                </a>
+                            </li>
+                            
+                            <li class="slds-tabs--path__item slds-is-complete" role="presentation">
+                                <apex:commandLink action="{!goToPreviousStep}" styleClass="slds-tabs--path__link" id="tabs-path-96">
+                                    <apex:param value="lh_newsetting_childobject" assignTo="{!previousStepPage}"></apex:param>
+                                    <apex:outputPanel rendered="{!ISBLANK(selectedChildObject )}">
+                                        <span class="slds-tabs--path__stage">Select Child Object</span>
+                                        <span class="slds-tabs--path__title">Select Child Object</span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!NOT(ISBLANK(selectedChildObject ))}">
+                                        <span class="slds-tabs--path__stage">Child Object is {!ChildObjLabel }</span>
+                                        <span class="slds-tabs--path__title">Child Object is {!ChildObjLabel }</span>
+                                    </apex:outputPanel>
+                                </apex:commandLink>
+                            </li>
+            
+                            <li class="slds-tabs--path__item slds-is-complete" role="presentation">
+                                <apex:commandLink action="{!goToPreviousStep}" styleClass="slds-tabs--path__link" id="tabs-path-97">
+                                    <apex:param value="lh_newsetting_lookupfield" assignTo="{!previousStepPage}"></apex:param>
+                                    <apex:outputPanel rendered="{!ISBLANK(childRelationship)}">
+                                        <span class="slds-tabs--path__stage">Select or Create Lookup Field</span>
+                                        <span class="slds-tabs--path__title">Select or Create Lookup Field</span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!NOT(ISBLANK(childRelationship))}">
+                                        <span class="slds-tabs--path__stage">Lookup Field is {!childRelationship}</span>
+                                        <span class="slds-tabs--path__title">Lookup Field is {!childRelationship}</span>
+                                    </apex:outputPanel>
+                                </apex:commandLink>
+                            </li>
+            
+                            <li class="slds-tabs--path__item slds-is-complete" role="presentation">
+                                <apex:commandLink action="{!goToPreviousStep}" styleClass="slds-tabs--path__link" id="tabs-path-98">
+                                    <apex:param value="lh_newsetting_settingType" assignTo="{!previousStepPage}"></apex:param>
+                                <span class="slds-tabs--path__stage">Lookup Helper Setting Type</span>
+                                <span class="slds-tabs--path__title">Lookup Helper Setting Type</span>
+                                </apex:commandLink>
+                            </li>
+
+                            <li class="slds-tabs--path__item slds-is-current" role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-100" aria-controls="content-path-1" aria-selected="true" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                    <span class="slds-tabs--path__stage">Category Record Creation</span>
+                                    <span class="slds-tabs--path__title">Category Record Creation</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate" style="border-radius:4px !important;">
+                        <h3 class="slds-text-heading_small">Category Record Configuration</h3>
+                    </header>
+                </div>
+                <section class="slds-card__body slds-card__body_inner">
+                    <apex:outputPanel id="categoryCreateOnField" style="padding-top:5px;">
+                        <apex:actionRegion >
+                            <apex:inputCheckbox value="{!enableCategoryRecordsCheckbox}">
+                                <apex:actionSupport event="onchange" rerender="requiredFields" status="loading"/>
+                            </apex:inputCheckbox>
+                        </apex:actionRegion>
+                        <label class="slds-form-element__label" for="lookup">Enable creation of category records?</label>
+                    </apex:outputPanel>
+                    <br/><br/>
+                    <apex:outputPanel id="requiredFields">
+                        <apex:outputPanel rendered="{!IF(enableCategoryRecordsCheckbox = true, true, false)}">
+                            <div class="slds-text-body--regular">&nbsp;
+                                <span style="width:25px;" title="When creating new records, required field values will need to be populated with a value. Please note: New records created by Lookup Helper will automatically be named using the value in the child records category field selected previously.">
+                                    <i class="fa fa-info-circle fa-lg" style="color:#16325c;"></i>   
+                                </span>  Populate field values for new <b>{!cleanParentObjName}</b> records created by Lookup Helper (optional):
+                            </div>             
+                            <label style="margin-left:25px;" class="slds-form-element__label" for="lookup">Field to Populate:</label>
+                            <apex:actionRegion >
+                                <apex:selectList id="customFields" styleclass="slds-picklist slds-max-small-buttons--stretch" value="{!selectedFilterField}" multiselect="false" size="1">
+                                    <apex:actionSupport event="onchange" rerender="arrow1, filterCondition, value, fieldValue, arrow2, addField"/>
+                                    <apex:selectOptions value="{!AvailableParentFields}"/>
+                                </apex:selectList>
+                            </apex:actionRegion>
+                            <apex:outputPanel id="arrow1">
+                                <apex:outputPanel rendered="{!selectedFilterField != ''}">
+                                    <span class="glyphicon glyphicon-minus"/>
+                                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"/>
+                                </apex:outputPanel> 
+                            </apex:outputPanel> 
+                            <apex:outputPanel id="filterCondition">
+                                <apex:outputPanel rendered="{!selectedFilterField != ''}">    
+                                    <apex:actionRegion >
+                                        <apex:selectList styleclass="slds-picklist slds-max-small-buttons--stretch" value="{!selectedFilterCondition}" multiselect="false" size="1">
+                                            <apex:actionSupport event="onchange" rerender="arrow2, value, addField, fieldValue"/>
+                                            <apex:selectOptions value="{!FieldLogicOptions}"/>
+                                        </apex:selectList>
+                                    </apex:actionRegion>
+                                    <apex:outputPanel id="arrow2">
+                                        <apex:outputPanel rendered="{!selectedFilterField != ''}">
+                                            <span class="glyphicon glyphicon-minus"/>
+                                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"/>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </apex:outputPanel>      
+                            <apex:outputPanel id="value">
+                                <apex:outputpanel rendered="{!AND(selectedFilterField != '', NOT(selectedFilterCondition == '->'))}">  
+                                    <apex:actionRegion >
+                                        <apex:outputPanel rendered="{! IsFieldRecordTypeId}" >
+                                            <apex:selectList styleclass="slds-picklist slds-max-small-buttons--stretch" value="{!selectedFilterValue}" multiselect="false" size="1">
+                                                <apex:selectOptions value="{! RecordTypes}"/>
+                                            </apex:selectList>
+                                        </apex:outputPanel>  
+                                        <apex:outputPanel rendered="{! !IsFieldRecordTypeId}" >
+                                            <apex:inputText styleclass="slds-input slds-input--small " value="{!selectedFilterValue}" style="width:25%"/>
+                                        </apex:outputPanel> 
+                                    </apex:actionRegion>
+                                </apex:outputpanel>
+                            </apex:outputPanel>        
+                            <apex:outputPanel id="fieldValue">
+                                <apex:outputpanel rendered="{!AND(selectedFilterField != '', selectedFilterCondition == '->')}">
+                                    <apex:actionRegion >
+                                        <apex:selectList styleclass="slds-picklist slds-max-small-buttons--stretch" value="{!selectedFilterValue}" multiselect="false" size="1">
+                                            <apex:selectOptions value="{!MappingSourceFieldList}"/>
+                                        </apex:selectList>
+                                    </apex:actionRegion>
+                                </apex:outputpanel>
+                            </apex:outputPanel>
+                            &nbsp;
+                            <apex:outputpanel id="addField"> 
+                                <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--small" action="{!addCriteria}" value="Add Field" rendered="{!selectedFilterField != ''}" rerender="requiredFields, requiredFieldNullNotice" status="working"/>
+                            </apex:outputpanel> 
+                            <br/><br/> 
+                            <apex:outputPanel id="requiredFieldError">
+                                <apex:outputPanel rendered="{!requiredFieldValueError}" style="float:right; padding:15px">
+                                    <font color="red">Please populate all of the required field values below.</font>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                            <apex:outputPanel id="requiredFieldNullNotice">
+                                <apex:outputPanel rendered="{!requiredFieldEqualsFieldPresent}" style="float:right; padding:15px">
+                                    <strong> **If a required field is set to equal a field whose value is null, a parent record may fail to be created.</strong>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                            <div style="width:95%; margin-left:auto; margin-right:auto;">
+                                <apex:outputPanel id="filterTable">
+                                    <apex:outputPanel rendered="{!IF(requiredFields.size == 0, false, true)}">
+                                        <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+                                            <thead>
+                                                <tr>
+                                                    <th class="slds-size_1-of-3 slds-text-heading--label" scope="col">Action</th>
+                                                    <th class="slds-size_1-of-3 slds-text-heading--label" scope="col">{!cleanParentObjName} Field</th>
+                                                    <th class="slds-size_1-of-3 slds-text-heading--label" scope="col">Value To Populate In Field</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <div class="slds-scrollable--y" style="width:100%; height:270px; margin-left:auto; margin-right:auto;">
+                                            <table class="slds-table slds-table--bordered slds-max-medium-table--stacked" >
+                                                <tbody>
+                                                    <apex:repeat value="{! requiredFields }" var="item">
+                                                        <tr> 
+                                                            <td class="slds-size_1-of-3">
+                                                                <apex:actionregion >
+                                                                    <apex:commandLink rerender="requiredFields, customFields, filterCondition, value, arrow1, arrow2, addField" action="{!editFilter}" immediate="true">
+                                                                        <apex:param name="filterId" value="{! item.field }"/>
+                                                                        Edit
+                                                                    </apex:commandLink>
+                                                                </apex:actionregion> 
+                                                                &nbsp; / &nbsp;
+                                                                <apex:actionRegion >
+                                                                    <apex:outputPanel rendered="{!item.required == 'No'}">
+                                                                        <apex:commandLink action="{!removeFilter}" reRender="requiredFields, filterTable">   
+                                                                            <apex:param name="filterId" value="{! item.field }"/>
+                                                                            Delete
+                                                                        </apex:commandLink>
+                                                                    </apex:outputPanel>
+                                                                    <apex:outputPanel rendered="{!item.required == 'Yes'}">
+                                                                        <font style="color:red;">Required</font>
+                                                                    </apex:outputPanel>
+                                                                </apex:actionRegion>
+                                                            </td>
+                                                            <td class="slds-size_1-of-3"> {! item.field } </td>
+                                                            <td class="slds-size_1-of-3"> 
+                                                                <apex:outputPanel rendered="{!AND(item.value == '', item.required == 'Yes')}">
+                                                                    <font style="color:red;">Value is required.</font>
+                                                                </apex:outputPanel>
+                                                                {! item.value }
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </section>
+                <footer class="slds-card__footer">
+                    <center>
+                        <apex:actionFunction action="{!goToPreviousStep}" name="postValidation" status="loading"/>
+                        <apex:commandLink action="{!goToPreviousStep}" styleclass="slds-button slds-button--neutral" value="Previous">
+                            <apex:param value="lh_newsetting_settingType" assignTo="{!previousStepPage}"></apex:param>
+                        </apex:commandLink>
+                        <apex:commandButton action="{!validateFilters}" styleclass="slds-button slds-button--neutral" value="Save" rerender="requiredFieldError" oncomplete="postValidationProcessingJS({!requiredFieldValueError});"/>
+                    </center>
+                </footer>
+                <div id="loading" style="display:none">
+                    <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container" style="min-width: 50px; width: 100px;">
+                            <div class="slds-modal__header" style="border-bottom: 0 none; height:20px; important!">
+                                <center>
+                                    <div class="slds-spinner_large" background="#16325c">
+                                        <img src="/apexpages/slds/latest/assets/images/spinners/slds_spinner_brand.gif" alt="Loading..." />
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="slds-modal__content slds-p-around_small" style="height:46px;"/>
+                        </div>
+                    </div>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </div>
+        </div>
+
+        <c:LH_additionalInformation />
+    </div>
+</apex:form>
+</html>
+
+</apex:page>

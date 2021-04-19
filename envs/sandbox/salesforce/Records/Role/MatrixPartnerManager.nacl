@@ -1,0 +1,10 @@
+salesforce.Role MatrixPartnerManager {
+  fullName = "MatrixPartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "Matrix Partner Manager"
+  mayForecastManagerShare = false
+  name = "Matrix Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

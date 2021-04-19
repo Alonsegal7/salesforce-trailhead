@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__BulkList__c_pt_BR {
+  fullName = "dfsle__BulkList__c-pt_BR"
+  _parent = [
+    salesforce.dfsle__BulkList__c,
+  ]
+}

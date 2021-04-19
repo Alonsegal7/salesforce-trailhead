@@ -1,0 +1,127 @@
+<apex:page language="en" docType="html-5.0"
+           showHeader="true"
+           sidebar="true"
+           controller="zisf.ZoomCleanAdminController">
+    <apex:includeScript value="{!URLFOR($Resource.zisf__jqueryUI, 'jquery-ui-1.12.1/jquery-ui.js' )}"/>
+    <apex:includeScript value="{!URLFOR($Resource.zisf__jqueryUI, 'jquery-ui-1.12.1/jquery-ui.min.js' )}"/>
+    <apex:includeScript value="{!URLFOR($Resource.zisf__jQuery)}"/>
+    <style>
+        .tab_content {
+            font-size: 100%;
+            background-image:none !important;
+            background-color: #F8F8F8;
+            padding-left: 0;
+            padding-right:0;
+            padding-bottom: 0;
+            padding-top:0;
+        }
+        
+        .inactive_tab_color {
+            color: #0c90ce;
+            font-family: OpenSans;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 8px;
+            background: #F8F8F8 !important;
+        }
+        //.active_tab_color {
+        //  background-color: #0c90ce !important;
+        //}
+        
+        .mapping_header {
+            display:flex;
+            margin-bottom:17px;
+            margin-top:67px;
+        }
+        body {
+            overflow: auto !important;
+        }
+        .settings_row {
+            border-color: #e0e3e5;
+            border: 1px solid #ededed;
+            padding: 4px 2px 4px 5px;
+            background: white;
+        }
+        
+        .settings_hover:hover {
+            background: #E7F5FE;
+        }
+        table.jobTable {
+            border-collapse: collapse;
+            border: 1px solid gray;
+        }
+        .jobTable th,
+        .jobTable td
+        {
+            border: 1px solid gray;
+            padding: 5px;
+            text-align: left;
+        }
+        .odd {
+            background-color: #f5f5f5;
+        }
+    </style>
+    <c:cleanCoreCSS />
+    <apex:outputPanel id="all_page" layout="block" styleClass="all_page">
+        <apex:sectionHeader title="{!$Label.zisf__cleansettingslabel}"/>
+        <apex:outputPanel layout="block" styleClass="all_page" style="padding-bottom:10px;">
+            <apex:outputPanel layout="block" id="tokenHeader" styleClass="mapping_header">
+                <apex:image styleClass="PinWheelIcon" style="width: 40px;height: 48px;margin-top:9px;margin-right:6px;"
+                            url="{!URLFOR($Resource.zisf__cleanBundle, 'bundle/images/wheel.png')}"/>
+                <apex:outputPanel >
+                    <apex:outputText value="ZoomInfo Clean Settings" style="color: #4a4a56;font-family: Arial;font-size: 11px;font-weight: 700;line-height: 30px;"/>
+                    <br/>
+                    <apex:outputText value="Authentication Settings" style="color: #000101;font-family: Arial;font-size: 21px;font-weight: 400;line-height: 30px;"/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:outputPanel id="loginBlock" layout="block" style="padding:5px;background-color: #f8f8f8;border: 1px solid #e0e3e5;border-radius: 2px 1px 1px 2px;margin-top:15px;">
+                <apex:outputPanel layout="block" style="display:flex">
+                    <apex:form >
+                        <apex:outputLabel style="margin-right:10px;">Pc: </apex:outputLabel>
+                        <apex:inputText value="{!pc}" html-placeholder="enter Partner code" styleClass="fields filter_drop"/>
+                        <apex:outputLabel style="margin-right:10px;">Pass: </apex:outputLabel>
+                        <!--<apex:inputText style="margin-right:10px;" value="{!pass}" html-placeholder="enter Parnter password" styleClass="fields filter_drop"/>-->
+                        <apex:inputSecret style="margin-right:10px;" value="{!pass}" html-placeholder="enter Partner password" styleClass="fields filter_drop" rendered="{!pass==null}"/>
+                        <apex:inputSecret style="margin-right:10px;" value="{!pass}" html-placeholder="password hidden" styleClass="fields filter_drop" rendered="{!pass!=null}"/>
+                        <apex:commandButton value="login" action="{!saveAuth}" reRender="loginBlock,all_page"/>
+                        <apex:commandButton value="logout" action="{!removeAuth}" reRender="loginBlock,all_page"/>
+                        <apex:outputLabel style="color: red;margin-left:5px" rendered="{!loginFailed==true}">{!validationMessage}</apex:outputLabel>
+                        <apex:outputLabel style="margin-left:5px" rendered="{!loginSuccess==true}">{!loginValidationMessage}</apex:outputLabel>
+                        <apex:outputLabel style="margin-left:5px" rendered="{!logoutSuccess==true}">{!logoutValidationMessage}</apex:outputLabel>
+                    </apex:form>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:outputPanel>
+
+
+        <apex:outputPanel layout="block" rendered="{!showMapping}" id="mappingHeader" styleClass="mapping_header">
+            <apex:image styleClass="PinWheelIcon" style="width: 40px;height: 48px;margin-top:9px;margin-right:6px;"
+                        url="{!URLFOR($Resource.zisf__cleanBundle, 'bundle/images/wheel.png')}"/>
+            <apex:outputPanel >
+                <apex:outputText value="Custom Settings" style="color: #4a4a56;font-family: Arial;font-size: 11px;font-weight: 700;line-height: 30px;"/>
+                <br/>
+                <apex:outputText value="Update Rules, Column Mapping And Scheduling" style="color: #000101;font-family: Arial;font-size: 21px;font-weight: 400;line-height: 30px;"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:outputPanel layout="block" rendered="{!showMapping}" style="padding:5px;background-color: #f8f8f8;border: 1px solid #e0e3e5;border-radius: 2px 1px 1px 2px;margin-top:15px;">
+            <apex:tabPanel switchType="server"
+                selectedTab="{!ActiveTab}"
+                id="theTabPanel"
+                contentClass="tab_content"
+                styleClass="zoom_tab_panel"
+                tabClass="zoom_tab"
+                activeTabClass="active_tab_color zoom_active_tab"
+                inactiveTabClass="inactive_tab_color zoom_inactive_tab">
+                <apex:tab label="Accounts" name="accountsTab" id="accountsTab">
+                    <c:CleanMappingPage mapping-class="{!accountMapping}"/>
+                </apex:tab>
+                <apex:tab label="Contacts" name="contactsTab" id="contactsTab">
+                    <c:CleanMappingPage mapping-class="{!contactMapping}"/>
+                </apex:tab>
+                <apex:tab label="Leads" name="leadsTab" id="leadsTab">
+                    <c:CleanMappingPage mapping-class="{!leadMapping}"/>
+                </apex:tab>
+            </apex:tabPanel>
+        </apex:outputPanel>
+    </apex:outputPanel>
+</apex:page>

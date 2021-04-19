@@ -1,0 +1,25 @@
+salesforce.WorkflowRule Lead_MQL_from_Hubspot_created {
+  fullName = "Lead.MQL from Hubspot created"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Lead_MQL_from_Hubspot_created
+      type = "Alert"
+    },
+  ]
+  active = false
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.OwnerId
+      operation = "contains"
+      value = "Hubspot"
+    },
+    {
+      field = salesforce.Lead.field.Hubspot_Lifecycle_stage__c
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

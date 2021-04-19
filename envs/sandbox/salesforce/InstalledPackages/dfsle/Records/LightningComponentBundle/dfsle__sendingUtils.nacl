@@ -1,0 +1,11 @@
+salesforce.LightningComponentBundle dfsle__sendingUtils {
+  fullName = "dfsle__sendingUtils"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingUtils/sendingUtils.js"
+      },
+    ]
+  }
+}

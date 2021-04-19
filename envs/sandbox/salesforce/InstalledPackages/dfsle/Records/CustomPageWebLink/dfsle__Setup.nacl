@@ -1,0 +1,10 @@
+salesforce.CustomPageWebLink dfsle__Setup {
+  fullName = "dfsle__Setup"
+  availability = "online"
+  displayType = "link"
+  linkType = "page"
+  masterLabel = "DocuSign Setup"
+  openType = "replace"
+  page = "dfsle__Setup"
+  protected = false
+}

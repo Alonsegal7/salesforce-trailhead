@@ -1,0 +1,19 @@
+salesforce.ListView Lead_BB_Signups_Alex {
+  fullName = "Lead.BB_Signups_Alex"
+  columns = [
+    "FULL_NAME",
+    "LEAD.EMAIL",
+    "LEAD.COMPANY",
+    "LEAD.STATUS",
+    "LEAD.CREATED_DATE",
+    "CORE.USERS.FIRST_NAME",
+  ]
+  filterScope = "Mine"
+  label = "BB Signups - Alex"
+  sharedTo = {
+    roleAndSubordinatesInternal = "IL_SDR_Team_Leader"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

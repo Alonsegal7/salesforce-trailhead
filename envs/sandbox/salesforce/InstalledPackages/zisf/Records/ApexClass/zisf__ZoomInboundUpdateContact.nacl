@@ -1,0 +1,14 @@
+salesforce.ApexClass zisf__ZoomInboundUpdateContact {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 40
+  packageVersions = [
+    {
+      majorNumber = 2
+      minorNumber = 5174
+      namespace = "zisf"
+    },
+  ]
+  status = "Active"
+  fullName = "zisf__ZoomInboundUpdateContact"
+  content = "(hidden)"
+}

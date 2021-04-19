@@ -1,0 +1,13 @@
+salesforce.CompactLayout Account_Partner_Company_Compact_Layout {
+  fullName = "Account.Partner_Company_Compact_Layout"
+  fields = [
+    "Name",
+    "tci_csmrg__Active__c",
+    "Website",
+    "of_Employees__c",
+  ]
+  label = "Partner Company Compact Layout"
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,8 @@
+salesforce.ApexComponent rh2__RemoteSiteHelper {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 33
+  description = "This is a generic template for Visualforce Component.  With this template, you may adjust the default elements and values and add new elements and values."
+  label = "RemoteSiteHelper"
+  fullName = "rh2__RemoteSiteHelper"
+  content = "(hidden)"
+}

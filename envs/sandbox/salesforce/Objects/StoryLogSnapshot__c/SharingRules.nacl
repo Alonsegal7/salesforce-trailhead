@@ -1,0 +1,6 @@
+salesforce.SharingRules StoryLogSnapshot__c {
+  fullName = "StoryLogSnapshot__c"
+  _parent = [
+    salesforce.StoryLogSnapshot__c,
+  ]
+}

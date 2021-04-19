@@ -1,0 +1,13 @@
+salesforce.CompactLayout Opportunity_Potential_Partner_Compact_Layout {
+  fullName = "Opportunity.Potential_Partner_Compact_Layout"
+  fields = [
+    "Company__c",
+    "Region__c",
+    "Country__c",
+    "CloseDate",
+  ]
+  label = "Potential Partner Compact Layout"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

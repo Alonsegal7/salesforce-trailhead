@@ -1,0 +1,26 @@
+type salesforce.dfsle__BulkList__c {
+  salesforce.Text dfsle__DocuSignId__c {
+    apiName = "dfsle__BulkList__c.dfsle__DocuSignId__c"
+    label = "DocuSign bulk list ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    externalId = true
+    caseSensitive = false
+    length = 36
+    queryable = true
+  }
+  salesforce.Text dfsle__SourceId__c {
+    apiName = "dfsle__BulkList__c.dfsle__SourceId__c"
+    label = "Salesforce source ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 18
+    queryable = true
+    externalId = false
+  }
+}

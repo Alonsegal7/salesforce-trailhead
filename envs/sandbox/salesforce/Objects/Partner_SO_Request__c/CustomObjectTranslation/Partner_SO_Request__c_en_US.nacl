@@ -1,0 +1,2241 @@
+salesforce.CustomObjectTranslation Partner_SO_Request__c_en_US {
+  fullName = "Partner_SO_Request__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Partner SO Request"
+    },
+    {
+      plural = true
+      value = "Partner SO Request"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Addendum_to_SO__c
+      picklistValues = [
+        {
+          masterLabel = "Contingency"
+          translation = ""
+        },
+        {
+          masterLabel = "Governing Law and Jurisdiction"
+          translation = ""
+        },
+        {
+          masterLabel = "None"
+          translation = ""
+        },
+        {
+          masterLabel = "Subscription Auto-renewal"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Additional_Seats_v7__c
+      picklistValues = [
+        {
+          masterLabel = "100"
+          translation = ""
+        },
+        {
+          masterLabel = "1000"
+          translation = ""
+        },
+        {
+          masterLabel = "125"
+          translation = ""
+        },
+        {
+          masterLabel = "150"
+          translation = ""
+        },
+        {
+          masterLabel = "175"
+          translation = ""
+        },
+        {
+          masterLabel = "200"
+          translation = ""
+        },
+        {
+          masterLabel = "225"
+          translation = ""
+        },
+        {
+          masterLabel = "25"
+          translation = ""
+        },
+        {
+          masterLabel = "250"
+          translation = ""
+        },
+        {
+          masterLabel = "275"
+          translation = ""
+        },
+        {
+          masterLabel = "300"
+          translation = ""
+        },
+        {
+          masterLabel = "325"
+          translation = ""
+        },
+        {
+          masterLabel = "350"
+          translation = ""
+        },
+        {
+          masterLabel = "375"
+          translation = ""
+        },
+        {
+          masterLabel = "400"
+          translation = ""
+        },
+        {
+          masterLabel = "425"
+          translation = ""
+        },
+        {
+          masterLabel = "450"
+          translation = ""
+        },
+        {
+          masterLabel = "475"
+          translation = ""
+        },
+        {
+          masterLabel = "50"
+          translation = ""
+        },
+        {
+          masterLabel = "500"
+          translation = ""
+        },
+        {
+          masterLabel = "525"
+          translation = ""
+        },
+        {
+          masterLabel = "550"
+          translation = ""
+        },
+        {
+          masterLabel = "575"
+          translation = ""
+        },
+        {
+          masterLabel = "600"
+          translation = ""
+        },
+        {
+          masterLabel = "625"
+          translation = ""
+        },
+        {
+          masterLabel = "650"
+          translation = ""
+        },
+        {
+          masterLabel = "675"
+          translation = ""
+        },
+        {
+          masterLabel = "700"
+          translation = ""
+        },
+        {
+          masterLabel = "725"
+          translation = ""
+        },
+        {
+          masterLabel = "75"
+          translation = ""
+        },
+        {
+          masterLabel = "750"
+          translation = ""
+        },
+        {
+          masterLabel = "775"
+          translation = ""
+        },
+        {
+          masterLabel = "800"
+          translation = ""
+        },
+        {
+          masterLabel = "825"
+          translation = ""
+        },
+        {
+          masterLabel = "850"
+          translation = ""
+        },
+        {
+          masterLabel = "875"
+          translation = ""
+        },
+        {
+          masterLabel = "900"
+          translation = ""
+        },
+        {
+          masterLabel = "925"
+          translation = ""
+        },
+        {
+          masterLabel = "950"
+          translation = ""
+        },
+        {
+          masterLabel = "975"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Additional_Seats_v8__c
+      picklistValues = [
+        {
+          masterLabel = "10"
+          translation = ""
+        },
+        {
+          masterLabel = "100"
+          translation = ""
+        },
+        {
+          masterLabel = "1000"
+          translation = ""
+        },
+        {
+          masterLabel = "105"
+          translation = ""
+        },
+        {
+          masterLabel = "110"
+          translation = ""
+        },
+        {
+          masterLabel = "115"
+          translation = ""
+        },
+        {
+          masterLabel = "120"
+          translation = ""
+        },
+        {
+          masterLabel = "125"
+          translation = ""
+        },
+        {
+          masterLabel = "130"
+          translation = ""
+        },
+        {
+          masterLabel = "135"
+          translation = ""
+        },
+        {
+          masterLabel = "140"
+          translation = ""
+        },
+        {
+          masterLabel = "145"
+          translation = ""
+        },
+        {
+          masterLabel = "15"
+          translation = ""
+        },
+        {
+          masterLabel = "150"
+          translation = ""
+        },
+        {
+          masterLabel = "155"
+          translation = ""
+        },
+        {
+          masterLabel = "160"
+          translation = ""
+        },
+        {
+          masterLabel = "165"
+          translation = ""
+        },
+        {
+          masterLabel = "170"
+          translation = ""
+        },
+        {
+          masterLabel = "175"
+          translation = ""
+        },
+        {
+          masterLabel = "180"
+          translation = ""
+        },
+        {
+          masterLabel = "185"
+          translation = ""
+        },
+        {
+          masterLabel = "190"
+          translation = ""
+        },
+        {
+          masterLabel = "195"
+          translation = ""
+        },
+        {
+          masterLabel = "20"
+          translation = ""
+        },
+        {
+          masterLabel = "200"
+          translation = ""
+        },
+        {
+          masterLabel = "205"
+          translation = ""
+        },
+        {
+          masterLabel = "210"
+          translation = ""
+        },
+        {
+          masterLabel = "215"
+          translation = ""
+        },
+        {
+          masterLabel = "220"
+          translation = ""
+        },
+        {
+          masterLabel = "225"
+          translation = ""
+        },
+        {
+          masterLabel = "230"
+          translation = ""
+        },
+        {
+          masterLabel = "235"
+          translation = ""
+        },
+        {
+          masterLabel = "240"
+          translation = ""
+        },
+        {
+          masterLabel = "245"
+          translation = ""
+        },
+        {
+          masterLabel = "25"
+          translation = ""
+        },
+        {
+          masterLabel = "250"
+          translation = ""
+        },
+        {
+          masterLabel = "255"
+          translation = ""
+        },
+        {
+          masterLabel = "260"
+          translation = ""
+        },
+        {
+          masterLabel = "265"
+          translation = ""
+        },
+        {
+          masterLabel = "270"
+          translation = ""
+        },
+        {
+          masterLabel = "275"
+          translation = ""
+        },
+        {
+          masterLabel = "280"
+          translation = ""
+        },
+        {
+          masterLabel = "285"
+          translation = ""
+        },
+        {
+          masterLabel = "290"
+          translation = ""
+        },
+        {
+          masterLabel = "295"
+          translation = ""
+        },
+        {
+          masterLabel = "30"
+          translation = ""
+        },
+        {
+          masterLabel = "300"
+          translation = ""
+        },
+        {
+          masterLabel = "305"
+          translation = ""
+        },
+        {
+          masterLabel = "310"
+          translation = ""
+        },
+        {
+          masterLabel = "315"
+          translation = ""
+        },
+        {
+          masterLabel = "320"
+          translation = ""
+        },
+        {
+          masterLabel = "325"
+          translation = ""
+        },
+        {
+          masterLabel = "330"
+          translation = ""
+        },
+        {
+          masterLabel = "335"
+          translation = ""
+        },
+        {
+          masterLabel = "340"
+          translation = ""
+        },
+        {
+          masterLabel = "345"
+          translation = ""
+        },
+        {
+          masterLabel = "35"
+          translation = ""
+        },
+        {
+          masterLabel = "350"
+          translation = ""
+        },
+        {
+          masterLabel = "355"
+          translation = ""
+        },
+        {
+          masterLabel = "360"
+          translation = ""
+        },
+        {
+          masterLabel = "365"
+          translation = ""
+        },
+        {
+          masterLabel = "370"
+          translation = ""
+        },
+        {
+          masterLabel = "375"
+          translation = ""
+        },
+        {
+          masterLabel = "380"
+          translation = ""
+        },
+        {
+          masterLabel = "385"
+          translation = ""
+        },
+        {
+          masterLabel = "390"
+          translation = ""
+        },
+        {
+          masterLabel = "395"
+          translation = ""
+        },
+        {
+          masterLabel = "40"
+          translation = ""
+        },
+        {
+          masterLabel = "400"
+          translation = ""
+        },
+        {
+          masterLabel = "405"
+          translation = ""
+        },
+        {
+          masterLabel = "410"
+          translation = ""
+        },
+        {
+          masterLabel = "415"
+          translation = ""
+        },
+        {
+          masterLabel = "420"
+          translation = ""
+        },
+        {
+          masterLabel = "425"
+          translation = ""
+        },
+        {
+          masterLabel = "430"
+          translation = ""
+        },
+        {
+          masterLabel = "435"
+          translation = ""
+        },
+        {
+          masterLabel = "440"
+          translation = ""
+        },
+        {
+          masterLabel = "445"
+          translation = ""
+        },
+        {
+          masterLabel = "45"
+          translation = ""
+        },
+        {
+          masterLabel = "450"
+          translation = ""
+        },
+        {
+          masterLabel = "455"
+          translation = ""
+        },
+        {
+          masterLabel = "460"
+          translation = ""
+        },
+        {
+          masterLabel = "465"
+          translation = ""
+        },
+        {
+          masterLabel = "470"
+          translation = ""
+        },
+        {
+          masterLabel = "475"
+          translation = ""
+        },
+        {
+          masterLabel = "480"
+          translation = ""
+        },
+        {
+          masterLabel = "485"
+          translation = ""
+        },
+        {
+          masterLabel = "490"
+          translation = ""
+        },
+        {
+          masterLabel = "495"
+          translation = ""
+        },
+        {
+          masterLabel = "5"
+          translation = ""
+        },
+        {
+          masterLabel = "50"
+          translation = ""
+        },
+        {
+          masterLabel = "500"
+          translation = ""
+        },
+        {
+          masterLabel = "505"
+          translation = ""
+        },
+        {
+          masterLabel = "510"
+          translation = ""
+        },
+        {
+          masterLabel = "515"
+          translation = ""
+        },
+        {
+          masterLabel = "520"
+          translation = ""
+        },
+        {
+          masterLabel = "525"
+          translation = ""
+        },
+        {
+          masterLabel = "530"
+          translation = ""
+        },
+        {
+          masterLabel = "535"
+          translation = ""
+        },
+        {
+          masterLabel = "540"
+          translation = ""
+        },
+        {
+          masterLabel = "545"
+          translation = ""
+        },
+        {
+          masterLabel = "55"
+          translation = ""
+        },
+        {
+          masterLabel = "550"
+          translation = ""
+        },
+        {
+          masterLabel = "555"
+          translation = ""
+        },
+        {
+          masterLabel = "560"
+          translation = ""
+        },
+        {
+          masterLabel = "565"
+          translation = ""
+        },
+        {
+          masterLabel = "570"
+          translation = ""
+        },
+        {
+          masterLabel = "575"
+          translation = ""
+        },
+        {
+          masterLabel = "580"
+          translation = ""
+        },
+        {
+          masterLabel = "585"
+          translation = ""
+        },
+        {
+          masterLabel = "590"
+          translation = ""
+        },
+        {
+          masterLabel = "595"
+          translation = ""
+        },
+        {
+          masterLabel = "60"
+          translation = ""
+        },
+        {
+          masterLabel = "600"
+          translation = ""
+        },
+        {
+          masterLabel = "605"
+          translation = ""
+        },
+        {
+          masterLabel = "610"
+          translation = ""
+        },
+        {
+          masterLabel = "615"
+          translation = ""
+        },
+        {
+          masterLabel = "620"
+          translation = ""
+        },
+        {
+          masterLabel = "625"
+          translation = ""
+        },
+        {
+          masterLabel = "630"
+          translation = ""
+        },
+        {
+          masterLabel = "635"
+          translation = ""
+        },
+        {
+          masterLabel = "640"
+          translation = ""
+        },
+        {
+          masterLabel = "645"
+          translation = ""
+        },
+        {
+          masterLabel = "65"
+          translation = ""
+        },
+        {
+          masterLabel = "650"
+          translation = ""
+        },
+        {
+          masterLabel = "655"
+          translation = ""
+        },
+        {
+          masterLabel = "660"
+          translation = ""
+        },
+        {
+          masterLabel = "665"
+          translation = ""
+        },
+        {
+          masterLabel = "670"
+          translation = ""
+        },
+        {
+          masterLabel = "675"
+          translation = ""
+        },
+        {
+          masterLabel = "680"
+          translation = ""
+        },
+        {
+          masterLabel = "685"
+          translation = ""
+        },
+        {
+          masterLabel = "690"
+          translation = ""
+        },
+        {
+          masterLabel = "695"
+          translation = ""
+        },
+        {
+          masterLabel = "70"
+          translation = ""
+        },
+        {
+          masterLabel = "700"
+          translation = ""
+        },
+        {
+          masterLabel = "705"
+          translation = ""
+        },
+        {
+          masterLabel = "710"
+          translation = ""
+        },
+        {
+          masterLabel = "715"
+          translation = ""
+        },
+        {
+          masterLabel = "720"
+          translation = ""
+        },
+        {
+          masterLabel = "725"
+          translation = ""
+        },
+        {
+          masterLabel = "730"
+          translation = ""
+        },
+        {
+          masterLabel = "735"
+          translation = ""
+        },
+        {
+          masterLabel = "740"
+          translation = ""
+        },
+        {
+          masterLabel = "745"
+          translation = ""
+        },
+        {
+          masterLabel = "75"
+          translation = ""
+        },
+        {
+          masterLabel = "750"
+          translation = ""
+        },
+        {
+          masterLabel = "755"
+          translation = ""
+        },
+        {
+          masterLabel = "760"
+          translation = ""
+        },
+        {
+          masterLabel = "765"
+          translation = ""
+        },
+        {
+          masterLabel = "770"
+          translation = ""
+        },
+        {
+          masterLabel = "775"
+          translation = ""
+        },
+        {
+          masterLabel = "780"
+          translation = ""
+        },
+        {
+          masterLabel = "785"
+          translation = ""
+        },
+        {
+          masterLabel = "790"
+          translation = ""
+        },
+        {
+          masterLabel = "795"
+          translation = ""
+        },
+        {
+          masterLabel = "80"
+          translation = ""
+        },
+        {
+          masterLabel = "800"
+          translation = ""
+        },
+        {
+          masterLabel = "805"
+          translation = ""
+        },
+        {
+          masterLabel = "810"
+          translation = ""
+        },
+        {
+          masterLabel = "815"
+          translation = ""
+        },
+        {
+          masterLabel = "820"
+          translation = ""
+        },
+        {
+          masterLabel = "825"
+          translation = ""
+        },
+        {
+          masterLabel = "830"
+          translation = ""
+        },
+        {
+          masterLabel = "835"
+          translation = ""
+        },
+        {
+          masterLabel = "840"
+          translation = ""
+        },
+        {
+          masterLabel = "845"
+          translation = ""
+        },
+        {
+          masterLabel = "85"
+          translation = ""
+        },
+        {
+          masterLabel = "850"
+          translation = ""
+        },
+        {
+          masterLabel = "855"
+          translation = ""
+        },
+        {
+          masterLabel = "860"
+          translation = ""
+        },
+        {
+          masterLabel = "865"
+          translation = ""
+        },
+        {
+          masterLabel = "870"
+          translation = ""
+        },
+        {
+          masterLabel = "875"
+          translation = ""
+        },
+        {
+          masterLabel = "880"
+          translation = ""
+        },
+        {
+          masterLabel = "885"
+          translation = ""
+        },
+        {
+          masterLabel = "890"
+          translation = ""
+        },
+        {
+          masterLabel = "895"
+          translation = ""
+        },
+        {
+          masterLabel = "90"
+          translation = ""
+        },
+        {
+          masterLabel = "900"
+          translation = ""
+        },
+        {
+          masterLabel = "905"
+          translation = ""
+        },
+        {
+          masterLabel = "910"
+          translation = ""
+        },
+        {
+          masterLabel = "915"
+          translation = ""
+        },
+        {
+          masterLabel = "920"
+          translation = ""
+        },
+        {
+          masterLabel = "925"
+          translation = ""
+        },
+        {
+          masterLabel = "930"
+          translation = ""
+        },
+        {
+          masterLabel = "935"
+          translation = ""
+        },
+        {
+          masterLabel = "940"
+          translation = ""
+        },
+        {
+          masterLabel = "945"
+          translation = ""
+        },
+        {
+          masterLabel = "95"
+          translation = ""
+        },
+        {
+          masterLabel = "950"
+          translation = ""
+        },
+        {
+          masterLabel = "955"
+          translation = ""
+        },
+        {
+          masterLabel = "960"
+          translation = ""
+        },
+        {
+          masterLabel = "965"
+          translation = ""
+        },
+        {
+          masterLabel = "970"
+          translation = ""
+        },
+        {
+          masterLabel = "975"
+          translation = ""
+        },
+        {
+          masterLabel = "980"
+          translation = ""
+        },
+        {
+          masterLabel = "985"
+          translation = ""
+        },
+        {
+          masterLabel = "990"
+          translation = ""
+        },
+        {
+          masterLabel = "995"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Additional_commercial_comments__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Balance_carry_over__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Billing_City__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Billing_Country__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Billing_State__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Billing_Street__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Customer_Success_Package__c
+      picklistValues = [
+        {
+          masterLabel = "Bronze"
+          translation = ""
+        },
+        {
+          masterLabel = "Gold"
+          translation = ""
+        },
+        {
+          masterLabel = "None"
+          translation = ""
+        },
+        {
+          masterLabel = "Silver"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Customer_payed_by_wire_transfer_before__c
+      picklistValues = [
+        {
+          masterLabel = "No"
+          translation = ""
+        },
+        {
+          masterLabel = "Yes"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Discount__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Duration__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.End_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Finance_Contact_Email__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Finance_Contact_Phone__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Financial_Customer_Name__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.NGO__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Partner_Opportunity__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Payment_Term__c
+      picklistValues = [
+        {
+          masterLabel = "Net"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 30"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 45"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 60"
+          translation = ""
+        },
+        {
+          masterLabel = "Net 90"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Period__c
+      picklistValues = [
+        {
+          masterLabel = "Monthly"
+          translation = ""
+        },
+        {
+          masterLabel = "Yearly"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Price_per_Seat__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Seats_v7__c
+      picklistValues = [
+        {
+          masterLabel = "100"
+          translation = ""
+        },
+        {
+          masterLabel = "1000"
+          translation = ""
+        },
+        {
+          masterLabel = "125"
+          translation = ""
+        },
+        {
+          masterLabel = "150"
+          translation = ""
+        },
+        {
+          masterLabel = "175"
+          translation = ""
+        },
+        {
+          masterLabel = "200"
+          translation = ""
+        },
+        {
+          masterLabel = "225"
+          translation = ""
+        },
+        {
+          masterLabel = "25"
+          translation = ""
+        },
+        {
+          masterLabel = "250"
+          translation = ""
+        },
+        {
+          masterLabel = "275"
+          translation = ""
+        },
+        {
+          masterLabel = "300"
+          translation = ""
+        },
+        {
+          masterLabel = "325"
+          translation = ""
+        },
+        {
+          masterLabel = "350"
+          translation = ""
+        },
+        {
+          masterLabel = "375"
+          translation = ""
+        },
+        {
+          masterLabel = "400"
+          translation = ""
+        },
+        {
+          masterLabel = "425"
+          translation = ""
+        },
+        {
+          masterLabel = "450"
+          translation = ""
+        },
+        {
+          masterLabel = "475"
+          translation = ""
+        },
+        {
+          masterLabel = "50"
+          translation = ""
+        },
+        {
+          masterLabel = "500"
+          translation = ""
+        },
+        {
+          masterLabel = "525"
+          translation = ""
+        },
+        {
+          masterLabel = "550"
+          translation = ""
+        },
+        {
+          masterLabel = "575"
+          translation = ""
+        },
+        {
+          masterLabel = "600"
+          translation = ""
+        },
+        {
+          masterLabel = "625"
+          translation = ""
+        },
+        {
+          masterLabel = "650"
+          translation = ""
+        },
+        {
+          masterLabel = "675"
+          translation = ""
+        },
+        {
+          masterLabel = "700"
+          translation = ""
+        },
+        {
+          masterLabel = "725"
+          translation = ""
+        },
+        {
+          masterLabel = "75"
+          translation = ""
+        },
+        {
+          masterLabel = "750"
+          translation = ""
+        },
+        {
+          masterLabel = "775"
+          translation = ""
+        },
+        {
+          masterLabel = "800"
+          translation = ""
+        },
+        {
+          masterLabel = "825"
+          translation = ""
+        },
+        {
+          masterLabel = "850"
+          translation = ""
+        },
+        {
+          masterLabel = "875"
+          translation = ""
+        },
+        {
+          masterLabel = "900"
+          translation = ""
+        },
+        {
+          masterLabel = "925"
+          translation = ""
+        },
+        {
+          masterLabel = "950"
+          translation = ""
+        },
+        {
+          masterLabel = "975"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Seats_v8__c
+      picklistValues = [
+        {
+          masterLabel = "10"
+          translation = ""
+        },
+        {
+          masterLabel = "100"
+          translation = ""
+        },
+        {
+          masterLabel = "1000"
+          translation = ""
+        },
+        {
+          masterLabel = "105"
+          translation = ""
+        },
+        {
+          masterLabel = "110"
+          translation = ""
+        },
+        {
+          masterLabel = "115"
+          translation = ""
+        },
+        {
+          masterLabel = "120"
+          translation = ""
+        },
+        {
+          masterLabel = "125"
+          translation = ""
+        },
+        {
+          masterLabel = "130"
+          translation = ""
+        },
+        {
+          masterLabel = "135"
+          translation = ""
+        },
+        {
+          masterLabel = "140"
+          translation = ""
+        },
+        {
+          masterLabel = "145"
+          translation = ""
+        },
+        {
+          masterLabel = "15"
+          translation = ""
+        },
+        {
+          masterLabel = "150"
+          translation = ""
+        },
+        {
+          masterLabel = "155"
+          translation = ""
+        },
+        {
+          masterLabel = "160"
+          translation = ""
+        },
+        {
+          masterLabel = "165"
+          translation = ""
+        },
+        {
+          masterLabel = "170"
+          translation = ""
+        },
+        {
+          masterLabel = "175"
+          translation = ""
+        },
+        {
+          masterLabel = "180"
+          translation = ""
+        },
+        {
+          masterLabel = "185"
+          translation = ""
+        },
+        {
+          masterLabel = "190"
+          translation = ""
+        },
+        {
+          masterLabel = "195"
+          translation = ""
+        },
+        {
+          masterLabel = "20"
+          translation = ""
+        },
+        {
+          masterLabel = "200"
+          translation = ""
+        },
+        {
+          masterLabel = "205"
+          translation = ""
+        },
+        {
+          masterLabel = "210"
+          translation = ""
+        },
+        {
+          masterLabel = "215"
+          translation = ""
+        },
+        {
+          masterLabel = "220"
+          translation = ""
+        },
+        {
+          masterLabel = "225"
+          translation = ""
+        },
+        {
+          masterLabel = "230"
+          translation = ""
+        },
+        {
+          masterLabel = "235"
+          translation = ""
+        },
+        {
+          masterLabel = "240"
+          translation = ""
+        },
+        {
+          masterLabel = "245"
+          translation = ""
+        },
+        {
+          masterLabel = "25"
+          translation = ""
+        },
+        {
+          masterLabel = "250"
+          translation = ""
+        },
+        {
+          masterLabel = "255"
+          translation = ""
+        },
+        {
+          masterLabel = "260"
+          translation = ""
+        },
+        {
+          masterLabel = "265"
+          translation = ""
+        },
+        {
+          masterLabel = "270"
+          translation = ""
+        },
+        {
+          masterLabel = "275"
+          translation = ""
+        },
+        {
+          masterLabel = "280"
+          translation = ""
+        },
+        {
+          masterLabel = "285"
+          translation = ""
+        },
+        {
+          masterLabel = "290"
+          translation = ""
+        },
+        {
+          masterLabel = "295"
+          translation = ""
+        },
+        {
+          masterLabel = "30"
+          translation = ""
+        },
+        {
+          masterLabel = "300"
+          translation = ""
+        },
+        {
+          masterLabel = "305"
+          translation = ""
+        },
+        {
+          masterLabel = "310"
+          translation = ""
+        },
+        {
+          masterLabel = "315"
+          translation = ""
+        },
+        {
+          masterLabel = "320"
+          translation = ""
+        },
+        {
+          masterLabel = "325"
+          translation = ""
+        },
+        {
+          masterLabel = "330"
+          translation = ""
+        },
+        {
+          masterLabel = "335"
+          translation = ""
+        },
+        {
+          masterLabel = "340"
+          translation = ""
+        },
+        {
+          masterLabel = "345"
+          translation = ""
+        },
+        {
+          masterLabel = "35"
+          translation = ""
+        },
+        {
+          masterLabel = "350"
+          translation = ""
+        },
+        {
+          masterLabel = "355"
+          translation = ""
+        },
+        {
+          masterLabel = "360"
+          translation = ""
+        },
+        {
+          masterLabel = "365"
+          translation = ""
+        },
+        {
+          masterLabel = "370"
+          translation = ""
+        },
+        {
+          masterLabel = "375"
+          translation = ""
+        },
+        {
+          masterLabel = "380"
+          translation = ""
+        },
+        {
+          masterLabel = "385"
+          translation = ""
+        },
+        {
+          masterLabel = "390"
+          translation = ""
+        },
+        {
+          masterLabel = "395"
+          translation = ""
+        },
+        {
+          masterLabel = "40"
+          translation = ""
+        },
+        {
+          masterLabel = "400"
+          translation = ""
+        },
+        {
+          masterLabel = "405"
+          translation = ""
+        },
+        {
+          masterLabel = "410"
+          translation = ""
+        },
+        {
+          masterLabel = "415"
+          translation = ""
+        },
+        {
+          masterLabel = "420"
+          translation = ""
+        },
+        {
+          masterLabel = "425"
+          translation = ""
+        },
+        {
+          masterLabel = "430"
+          translation = ""
+        },
+        {
+          masterLabel = "435"
+          translation = ""
+        },
+        {
+          masterLabel = "440"
+          translation = ""
+        },
+        {
+          masterLabel = "445"
+          translation = ""
+        },
+        {
+          masterLabel = "45"
+          translation = ""
+        },
+        {
+          masterLabel = "450"
+          translation = ""
+        },
+        {
+          masterLabel = "455"
+          translation = ""
+        },
+        {
+          masterLabel = "460"
+          translation = ""
+        },
+        {
+          masterLabel = "465"
+          translation = ""
+        },
+        {
+          masterLabel = "470"
+          translation = ""
+        },
+        {
+          masterLabel = "475"
+          translation = ""
+        },
+        {
+          masterLabel = "480"
+          translation = ""
+        },
+        {
+          masterLabel = "485"
+          translation = ""
+        },
+        {
+          masterLabel = "490"
+          translation = ""
+        },
+        {
+          masterLabel = "495"
+          translation = ""
+        },
+        {
+          masterLabel = "5"
+          translation = ""
+        },
+        {
+          masterLabel = "50"
+          translation = ""
+        },
+        {
+          masterLabel = "500"
+          translation = ""
+        },
+        {
+          masterLabel = "505"
+          translation = ""
+        },
+        {
+          masterLabel = "510"
+          translation = ""
+        },
+        {
+          masterLabel = "515"
+          translation = ""
+        },
+        {
+          masterLabel = "520"
+          translation = ""
+        },
+        {
+          masterLabel = "525"
+          translation = ""
+        },
+        {
+          masterLabel = "530"
+          translation = ""
+        },
+        {
+          masterLabel = "535"
+          translation = ""
+        },
+        {
+          masterLabel = "540"
+          translation = ""
+        },
+        {
+          masterLabel = "545"
+          translation = ""
+        },
+        {
+          masterLabel = "55"
+          translation = ""
+        },
+        {
+          masterLabel = "550"
+          translation = ""
+        },
+        {
+          masterLabel = "555"
+          translation = ""
+        },
+        {
+          masterLabel = "560"
+          translation = ""
+        },
+        {
+          masterLabel = "565"
+          translation = ""
+        },
+        {
+          masterLabel = "570"
+          translation = ""
+        },
+        {
+          masterLabel = "575"
+          translation = ""
+        },
+        {
+          masterLabel = "580"
+          translation = ""
+        },
+        {
+          masterLabel = "585"
+          translation = ""
+        },
+        {
+          masterLabel = "590"
+          translation = ""
+        },
+        {
+          masterLabel = "595"
+          translation = ""
+        },
+        {
+          masterLabel = "60"
+          translation = ""
+        },
+        {
+          masterLabel = "600"
+          translation = ""
+        },
+        {
+          masterLabel = "605"
+          translation = ""
+        },
+        {
+          masterLabel = "610"
+          translation = ""
+        },
+        {
+          masterLabel = "615"
+          translation = ""
+        },
+        {
+          masterLabel = "620"
+          translation = ""
+        },
+        {
+          masterLabel = "625"
+          translation = ""
+        },
+        {
+          masterLabel = "630"
+          translation = ""
+        },
+        {
+          masterLabel = "635"
+          translation = ""
+        },
+        {
+          masterLabel = "640"
+          translation = ""
+        },
+        {
+          masterLabel = "645"
+          translation = ""
+        },
+        {
+          masterLabel = "65"
+          translation = ""
+        },
+        {
+          masterLabel = "650"
+          translation = ""
+        },
+        {
+          masterLabel = "655"
+          translation = ""
+        },
+        {
+          masterLabel = "660"
+          translation = ""
+        },
+        {
+          masterLabel = "665"
+          translation = ""
+        },
+        {
+          masterLabel = "670"
+          translation = ""
+        },
+        {
+          masterLabel = "675"
+          translation = ""
+        },
+        {
+          masterLabel = "680"
+          translation = ""
+        },
+        {
+          masterLabel = "685"
+          translation = ""
+        },
+        {
+          masterLabel = "690"
+          translation = ""
+        },
+        {
+          masterLabel = "695"
+          translation = ""
+        },
+        {
+          masterLabel = "70"
+          translation = ""
+        },
+        {
+          masterLabel = "700"
+          translation = ""
+        },
+        {
+          masterLabel = "705"
+          translation = ""
+        },
+        {
+          masterLabel = "710"
+          translation = ""
+        },
+        {
+          masterLabel = "715"
+          translation = ""
+        },
+        {
+          masterLabel = "720"
+          translation = ""
+        },
+        {
+          masterLabel = "725"
+          translation = ""
+        },
+        {
+          masterLabel = "730"
+          translation = ""
+        },
+        {
+          masterLabel = "735"
+          translation = ""
+        },
+        {
+          masterLabel = "740"
+          translation = ""
+        },
+        {
+          masterLabel = "745"
+          translation = ""
+        },
+        {
+          masterLabel = "75"
+          translation = ""
+        },
+        {
+          masterLabel = "750"
+          translation = ""
+        },
+        {
+          masterLabel = "755"
+          translation = ""
+        },
+        {
+          masterLabel = "760"
+          translation = ""
+        },
+        {
+          masterLabel = "765"
+          translation = ""
+        },
+        {
+          masterLabel = "770"
+          translation = ""
+        },
+        {
+          masterLabel = "775"
+          translation = ""
+        },
+        {
+          masterLabel = "780"
+          translation = ""
+        },
+        {
+          masterLabel = "785"
+          translation = ""
+        },
+        {
+          masterLabel = "790"
+          translation = ""
+        },
+        {
+          masterLabel = "795"
+          translation = ""
+        },
+        {
+          masterLabel = "80"
+          translation = ""
+        },
+        {
+          masterLabel = "800"
+          translation = ""
+        },
+        {
+          masterLabel = "805"
+          translation = ""
+        },
+        {
+          masterLabel = "810"
+          translation = ""
+        },
+        {
+          masterLabel = "815"
+          translation = ""
+        },
+        {
+          masterLabel = "820"
+          translation = ""
+        },
+        {
+          masterLabel = "825"
+          translation = ""
+        },
+        {
+          masterLabel = "830"
+          translation = ""
+        },
+        {
+          masterLabel = "835"
+          translation = ""
+        },
+        {
+          masterLabel = "840"
+          translation = ""
+        },
+        {
+          masterLabel = "845"
+          translation = ""
+        },
+        {
+          masterLabel = "85"
+          translation = ""
+        },
+        {
+          masterLabel = "850"
+          translation = ""
+        },
+        {
+          masterLabel = "855"
+          translation = ""
+        },
+        {
+          masterLabel = "860"
+          translation = ""
+        },
+        {
+          masterLabel = "865"
+          translation = ""
+        },
+        {
+          masterLabel = "870"
+          translation = ""
+        },
+        {
+          masterLabel = "875"
+          translation = ""
+        },
+        {
+          masterLabel = "880"
+          translation = ""
+        },
+        {
+          masterLabel = "885"
+          translation = ""
+        },
+        {
+          masterLabel = "890"
+          translation = ""
+        },
+        {
+          masterLabel = "895"
+          translation = ""
+        },
+        {
+          masterLabel = "90"
+          translation = ""
+        },
+        {
+          masterLabel = "900"
+          translation = ""
+        },
+        {
+          masterLabel = "905"
+          translation = ""
+        },
+        {
+          masterLabel = "910"
+          translation = ""
+        },
+        {
+          masterLabel = "915"
+          translation = ""
+        },
+        {
+          masterLabel = "920"
+          translation = ""
+        },
+        {
+          masterLabel = "925"
+          translation = ""
+        },
+        {
+          masterLabel = "930"
+          translation = ""
+        },
+        {
+          masterLabel = "935"
+          translation = ""
+        },
+        {
+          masterLabel = "940"
+          translation = ""
+        },
+        {
+          masterLabel = "945"
+          translation = ""
+        },
+        {
+          masterLabel = "95"
+          translation = ""
+        },
+        {
+          masterLabel = "950"
+          translation = ""
+        },
+        {
+          masterLabel = "955"
+          translation = ""
+        },
+        {
+          masterLabel = "960"
+          translation = ""
+        },
+        {
+          masterLabel = "965"
+          translation = ""
+        },
+        {
+          masterLabel = "970"
+          translation = ""
+        },
+        {
+          masterLabel = "975"
+          translation = ""
+        },
+        {
+          masterLabel = "980"
+          translation = ""
+        },
+        {
+          masterLabel = "985"
+          translation = ""
+        },
+        {
+          masterLabel = "990"
+          translation = ""
+        },
+        {
+          masterLabel = "995"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Shipping_City__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Shipping_Country__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Shipping_State__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Shipping_Street__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Shipping_Zip_Postal_Code__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Start_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Tier__c
+      picklistValues = [
+        {
+          masterLabel = "Enterprise"
+          translation = ""
+        },
+        {
+          masterLabel = "Pro"
+          translation = ""
+        },
+        {
+          masterLabel = "Standard"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Type_of_Engagement__c
+      picklistValues = [
+        {
+          masterLabel = "Change Tier in the Same Term"
+          translation = ""
+        },
+        {
+          masterLabel = "New Contract"
+          translation = ""
+        },
+        {
+          masterLabel = "Pro-Rated - Additional Seats"
+          translation = ""
+        },
+      ]
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.VAT_Text__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.VAT__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.Zip_Postal_Code__c
+    },
+    {
+      label = ""
+      name = salesforce.Partner_SO_Request__c.field.of_Free_Months__c
+      picklistValues = [
+        {
+          masterLabel = "0"
+          translation = ""
+        },
+        {
+          masterLabel = "1"
+          translation = ""
+        },
+        {
+          masterLabel = "2"
+          translation = ""
+        },
+        {
+          masterLabel = "3"
+          translation = ""
+        },
+      ]
+    },
+  ]
+  layouts = [
+    {
+      layout = "Partner Sales Order Layout"
+      sections = [
+        {
+          label = ""
+          section = "Billing Customer"
+        },
+        {
+          label = ""
+          section = "Custom Links"
+        },
+        {
+          label = ""
+          section = "Sales Order"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  validationRules = [
+    {
+      errorMessage = ""
+      name = salesforce.ValidationRule.instance.Partner_SO_Request__c_Customer_payed_by_wire_transfer_before
+    },
+  ]
+  _parent = [
+    salesforce.Partner_SO_Request__c,
+  ]
+}

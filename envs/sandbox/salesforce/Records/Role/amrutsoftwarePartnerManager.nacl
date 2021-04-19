@@ -1,0 +1,10 @@
+salesforce.Role amrutsoftwarePartnerManager {
+  fullName = "amrutsoftwarePartnerManager"
+  caseAccessLevel = "None"
+  contactAccessLevel = "Edit"
+  description = "amrutsoftware Partner Manager"
+  mayForecastManagerShare = false
+  name = "amrutsoftware Partner Manager"
+  opportunityAccessLevel = "None"
+  parentRole = salesforce.Role.instance.Channel_Managers
+}

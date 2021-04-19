@@ -1,0 +1,28 @@
+salesforce.WebLink Solution_tci_csmrg__Mass_Edit {
+  fullName = "Solution.tci_csmrg__Mass_Edit"
+  availability = "online"
+  displayType = "massActionButton"
+  linkType = "javascript"
+  masterLabel = "Mass Edit"
+  openType = "onClickJavaScript"
+  protected = false
+  requireRowSelection = true
+  url = '''
+{!REQUIRESCRIPT("/soap/ajax/19.0/connection.js")}
+
+var records = {!GETRECORDIDS($ObjectType.Solution)};
+
+if (records[0] == null) {
+
+alert("Please select at least one Solution to edit.");
+} 
+
+else {
+
+window.location = '/apex/tci_csmrg__MassEditSolutions?recs='+records.join(',');
+}
+'''
+  _parent = [
+    salesforce.Solution,
+  ]
+}

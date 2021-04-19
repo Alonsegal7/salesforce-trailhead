@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decRecipientsModal {
+  fullName = "dfsle__decRecipientsModal"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRecipientsModal/decRecipientsModal.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRecipientsModal/decRecipientsModal.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decRecipientsModal/decRecipientsModal.js"
+      },
+    ]
+  }
+}

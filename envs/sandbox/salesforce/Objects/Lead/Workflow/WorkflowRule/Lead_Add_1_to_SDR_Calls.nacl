@@ -1,0 +1,15 @@
+salesforce.WorkflowRule Lead_Add_1_to_SDR_Calls {
+  fullName = "Lead.Add 1 to SDR Calls"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Add_1_to_SDR_Calls
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = "ischanged( Last_SDR_Call__c  ) && not(isnull(Last_SDR_Call__c ))"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

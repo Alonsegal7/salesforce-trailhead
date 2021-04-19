@@ -1,0 +1,6 @@
+salesforce.SharingRules LSNLY__Job__c {
+  fullName = "LSNLY__Job__c"
+  _parent = [
+    salesforce.LSNLY__Job__c,
+  ]
+}

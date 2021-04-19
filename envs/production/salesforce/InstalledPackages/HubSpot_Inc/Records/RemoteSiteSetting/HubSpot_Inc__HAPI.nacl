@@ -1,0 +1,7 @@
+salesforce.RemoteSiteSetting HubSpot_Inc__HAPI {
+  fullName = "HubSpot_Inc__HAPI"
+  description = "Allows Salesforce to communicate with HubSpot's production API."
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://hubapi.com"
+}

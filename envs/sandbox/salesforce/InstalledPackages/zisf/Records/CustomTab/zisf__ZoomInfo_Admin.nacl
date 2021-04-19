@@ -1,0 +1,7 @@
+salesforce.CustomTab zisf__ZoomInfo_Admin {
+  fullName = "zisf__ZoomInfo_Admin"
+  description = "Admin tab to configure the ZISF app"
+  label = "ZoomInfo Admin"
+  motif = "Custom67: Gears"
+  page = "zisf__ZoomAdminPage"
+}

@@ -1,0 +1,16 @@
+salesforce.WorkflowAlert Account_Send_Owner_has_been_unassigned_to_manager {
+  fullName = "Account.Send_Owner_has_been_unassigned_to_manager"
+  description = "Send Owner has been unassigned to manager"
+  protected = false
+  recipients = [
+    {
+      recipient = "galom@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Account_Owner_Unassigned
+  _parent = [
+    salesforce.Account,
+  ]
+}

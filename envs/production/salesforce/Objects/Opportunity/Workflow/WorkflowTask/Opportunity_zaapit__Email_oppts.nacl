@@ -1,0 +1,13 @@
+salesforce.WorkflowTask Opportunity_zaapit__Email_oppts {
+  fullName = "Opportunity.zaapit__Email_oppts"
+  assignedToType = "owner"
+  dueDateOffset = 1
+  notifyAssignee = true
+  priority = "Normal"
+  protected = false
+  status = "Not Started"
+  subject = "Email"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

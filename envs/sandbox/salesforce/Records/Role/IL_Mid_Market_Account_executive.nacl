@@ -1,0 +1,10 @@
+salesforce.Role IL_Mid_Market_Account_executive {
+  fullName = "IL_Mid_Market_Account_executive"
+  caseAccessLevel = "Edit"
+  contactAccessLevel = "Edit"
+  description = "IL Mid Market Account executive- Leanni team"
+  mayForecastManagerShare = false
+  name = "IL Mid Market Account executive- Leanni team"
+  opportunityAccessLevel = "Edit"
+  parentRole = salesforce.Role.instance.IL_Mid_Market_team_leader
+}

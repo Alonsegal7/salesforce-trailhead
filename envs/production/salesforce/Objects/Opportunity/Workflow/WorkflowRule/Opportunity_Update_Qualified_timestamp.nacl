@@ -1,0 +1,24 @@
+salesforce.WorkflowRule Opportunity_Update_Qualified_timestamp {
+  fullName = "Opportunity.Update Qualified timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Opportunity_Update_qualified_timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Opportunity.field.Qualified_timestamp__c
+      operation = "equals"
+    },
+    {
+      field = salesforce.Opportunity.field.Evaluation_timestamp__c
+      operation = "notEqual"
+    },
+  ]
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle setExpId {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  description = "Sample Event for setExpId"
+  fullName = "setExpId"
+  type = "Event"
+  markup = file("salesforce/Records/AuraDefinitionBundle/setExpId/setExpId.evt")
+}

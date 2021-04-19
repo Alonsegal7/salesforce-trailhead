@@ -1,0 +1,58 @@
+type salesforce.LSNLY__Lessonly_Content_Tag__c {
+  salesforce.MasterDetail LSNLY__Lessonly_Tag__c {
+    apiName = "LSNLY__Lessonly_Content_Tag__c.LSNLY__Lessonly_Tag__c"
+    label = "Lessonly Tag"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.LSNLY__Lessonly_Tag__c,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.MasterDetail LSNLY__Lessonly_Content__c {
+    apiName = "LSNLY__Lessonly_Content_Tag__c.LSNLY__Lessonly_Content__c"
+    label = "Lessonly Content"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = false
+    referenceTo = [
+      salesforce.LSNLY__Lessonly_Content__c,
+    ]
+    createable = true
+    updateable = false
+    relationshipOrder = 1
+    queryable = true
+  }
+  salesforce.FormulaText LSNLY__Content_Title__c {
+    apiName = "LSNLY__Lessonly_Content_Tag__c.LSNLY__Content_Title__c"
+    label = "Content Title"
+    _required = false
+    formula = "LSNLY__Lessonly_Content__r.LSNLY__Title__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText LSNLY__Tag_Name__c {
+    apiName = "LSNLY__Lessonly_Content_Tag__c.LSNLY__Tag_Name__c"
+    label = "Tag Name"
+    _required = false
+    formula = "LSNLY__Lessonly_Tag__r.LSNLY__Name__c"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+}

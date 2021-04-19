@@ -1,0 +1,68 @@
+type salesforce.zaapit__zaapit_editable_tb__c {
+  annotations {
+    serviceid apiName {
+    }
+    serviceid metadataType {
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  }
+  apiName = "zaapit__zaapit_editable_tb__c"
+  metadataType = "CustomObject"
+  label = "ZaapIT Table"
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+}

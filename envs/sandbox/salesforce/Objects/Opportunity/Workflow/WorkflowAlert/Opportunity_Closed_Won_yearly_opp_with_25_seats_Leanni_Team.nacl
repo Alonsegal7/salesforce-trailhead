@@ -1,0 +1,32 @@
+salesforce.WorkflowAlert Opportunity_Closed_Won_yearly_opp_with_25_seats_Leanni_Team {
+  fullName = "Opportunity.Closed_Won_yearly_opp_with_25_seats_Leanni_Team"
+  description = "Closed Won yearly opp with 25+ seats- Leanni team"
+  protected = false
+  recipients = [
+    {
+      recipient = "leanni@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "nir@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "oran@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "yoni@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "DefaultWorkflowUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Closed_Won_Opps
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

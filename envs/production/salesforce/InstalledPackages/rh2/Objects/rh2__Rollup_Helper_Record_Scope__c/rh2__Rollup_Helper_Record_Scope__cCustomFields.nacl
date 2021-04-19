@@ -1,0 +1,30 @@
+type salesforce.rh2__Rollup_Helper_Record_Scope__c {
+  salesforce.Checkbox rh2__Encountered_Error_During_Batch__c {
+    apiName = "rh2__Rollup_Helper_Record_Scope__c.rh2__Encountered_Error_During_Batch__c"
+    label = "Encountered Error During Batch"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox rh2__Override__c {
+    apiName = "rh2__Rollup_Helper_Record_Scope__c.rh2__Override__c"
+    label = "Override"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number rh2__Record_Scope__c {
+    apiName = "rh2__Rollup_Helper_Record_Scope__c.rh2__Record_Scope__c"
+    label = "Record Scope"
+    _required = false
+    precision = 4
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+}

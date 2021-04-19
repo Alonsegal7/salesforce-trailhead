@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle setStartUrl {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 44
+  description = "Sample Event for setStartUrl"
+  fullName = "setStartUrl"
+  type = "Event"
+  markup = file("salesforce/Records/AuraDefinitionBundle/setStartUrl/setStartUrl.evt")
+}

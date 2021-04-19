@@ -1,0 +1,11 @@
+salesforce.AuraDefinitionBundle dfsle__Users {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "DESCRIPTION"
+  fullName = "dfsle__Users"
+  type = "Component"
+  styleContent = "(hidden)"
+  helperContent = "(hidden)"
+  controllerContent = "(hidden)"
+  markup = "(hidden)"
+}

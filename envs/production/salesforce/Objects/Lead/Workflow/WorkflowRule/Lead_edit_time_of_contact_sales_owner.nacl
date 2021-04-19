@@ -1,0 +1,19 @@
+salesforce.WorkflowRule Lead_edit_time_of_contact_sales_owner {
+  fullName = "Lead.edit time of contact sales owner"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_owner_edit_time
+      type = "FieldUpdate"
+    },
+  ]
+  active = true
+  formula = '''
+or(NOT(ISBLANK( Owner:User.Id )), 
+ISPICKVAL( Status , "Unqualified") )&&
+isblank(Owner_edit_time__c)
+'''
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

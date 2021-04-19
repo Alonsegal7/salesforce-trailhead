@@ -1,0 +1,68 @@
+type salesforce.zaapit__ZaapIT_Table_user_configuration__c {
+  annotations {
+    serviceid apiName {
+    }
+    serviceid metadataType {
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  }
+  apiName = "zaapit__ZaapIT_Table_user_configuration__c"
+  metadataType = "CustomObject"
+  label = "ZaapIT Table user configuration"
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+}

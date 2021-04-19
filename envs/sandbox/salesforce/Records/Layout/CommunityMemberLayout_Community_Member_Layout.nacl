@@ -1,0 +1,183 @@
+salesforce.Layout Community_Member_Layout {
+  fullName = "CommunityMemberLayout-Community Member Layout"
+  layoutSections = [
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Basic Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "Name"
+            },
+            {
+              behavior = "Required"
+              field = "Alias"
+            },
+            {
+              behavior = "Required"
+              field = "Username"
+            },
+            {
+              behavior = "Required"
+              field = "ProfileId"
+            },
+            {
+              behavior = "Edit"
+              field = "Language__c"
+            },
+            {
+              behavior = "Readonly"
+              field = "Profile_ID__c"
+            },
+            {
+              behavior = "Readonly"
+              field = "Full_Name__c"
+            },
+            {
+              behavior = "Readonly"
+              field = "Team_Manager__c"
+            },
+            {
+              behavior = "Edit"
+              field = "Dealhub_User__c"
+            },
+            {
+              behavior = "Readonly"
+              field = "Function_Ownership_Score__c"
+            },
+            {
+              behavior = "Edit"
+              field = "Dealhub_User_Since__c"
+            },
+            {
+              behavior = "Readonly"
+              field = "Rep_Maturity__c"
+            },
+            {
+              behavior = "Edit"
+              field = "Start_Date__c"
+            },
+            {
+              behavior = "Readonly"
+              field = "Days_at_Monday__c"
+            },
+            {
+              behavior = "Edit"
+              field = "Job_End_Date__c"
+            },
+            {
+              behavior = "Edit"
+              field = "Use_my_photo_for_proposals__c"
+            },
+            {
+              behavior = "Edit"
+              field = "Personal_Monday_Board_Id__c"
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "Email"
+            },
+            {
+              behavior = "Required"
+              field = "CommunityNickname"
+            },
+            {
+              behavior = "Required"
+              field = "ContactId"
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Language And Locale Settings"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "TimeZoneSidKey"
+            },
+            {
+              behavior = "Required"
+              field = "EmailEncodingKey"
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "LocaleSidKey"
+            },
+            {
+              behavior = "Required"
+              field = "LanguageLocaleKey"
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Chatter Settings"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "DigestFrequency"
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = "DefaultGroupNotificationFrequency"
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsLeftToRight"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = false
+      style = "CustomLinks"
+    },
+  ]
+  showEmailCheckbox = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  _generated_dependencies = [
+    salesforce.User.field.Use_my_photo_for_proposals__c,
+    salesforce.User.field.Function_Ownership_Score__c,
+    salesforce.User.field.Dealhub_User__c,
+    salesforce.User.field.Team_Manager__c,
+    salesforce.User.field.Full_Name__c,
+    salesforce.User.field.Profile_ID__c,
+    salesforce.User.field.Language__c,
+    salesforce.User.field.Job_End_Date__c,
+    salesforce.User.field.Days_at_Monday__c,
+    salesforce.User.field.Start_Date__c,
+    salesforce.User.field.Rep_Maturity__c,
+    salesforce.User.field.Dealhub_User_Since__c,
+  ]
+}

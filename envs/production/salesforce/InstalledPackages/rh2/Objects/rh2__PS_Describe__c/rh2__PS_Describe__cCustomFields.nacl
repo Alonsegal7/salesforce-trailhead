@@ -1,0 +1,1200 @@
+type salesforce.rh2__PS_Describe__c {
+  salesforce.Lookup rh2__Account__c {
+    apiName = "rh2__PS_Describe__c.rh2__Account__c"
+    label = "Account"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox rh2__Asynchronous__c {
+    apiName = "rh2__PS_Describe__c.rh2__Asynchronous__c"
+    label = "Asynchronous"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup rh2__Contact2__c {
+    apiName = "rh2__PS_Describe__c.rh2__Contact2__c"
+    label = "Contact2"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contact,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup rh2__Contact3__c {
+    apiName = "rh2__PS_Describe__c.rh2__Contact3__c"
+    label = "Contact3"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contact,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup rh2__Contact__c {
+    apiName = "rh2__PS_Describe__c.rh2__Contact__c"
+    label = "Contact"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contact,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text rh2__Data_Type__c {
+    apiName = "rh2__PS_Describe__c.rh2__Data_Type__c"
+    label = "Last Record Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox rh2__Disable_Realtime__c {
+    apiName = "rh2__PS_Describe__c.rh2__Disable_Realtime__c"
+    label = "Disable Realtime"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCurrency rh2__Foreign_Key_Test_Currency__c {
+    apiName = "rh2__PS_Describe__c.rh2__Foreign_Key_Test_Currency__c"
+    label = "Test Currency with Foreign Key"
+    _required = false
+    formula = "rh2__Contact__r.rh2__Currency_Test__c"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup rh2__Hierarchy_Test_2__c {
+    apiName = "rh2__PS_Describe__c.rh2__Hierarchy_Test_2__c"
+    label = "Hierarchy Test 2"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.rh2__PS_Describe__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Lookup rh2__Hierarchy_Test__c {
+    apiName = "rh2__PS_Describe__c.rh2__Hierarchy_Test__c"
+    label = "Test Hierarchy"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.rh2__PS_Describe__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text rh2__Label__c {
+    apiName = "rh2__PS_Describe__c.rh2__Label__c"
+    label = "Label"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Name__c {
+    apiName = "rh2__PS_Describe__c.rh2__Name__c"
+    label = "Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = true
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Object__c {
+    apiName = "rh2__PS_Describe__c.rh2__Object__c"
+    label = "Object"
+    _required = true
+    createable = true
+    updateable = true
+    unique = true
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox rh2__Real_Time__c {
+    apiName = "rh2__PS_Describe__c.rh2__Real_Time__c"
+    label = "Real Time"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text rh2__Rollup_10__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_10__c"
+    label = "Rollup 10"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_11__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_11__c"
+    label = "Rollup 11"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_12__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_12__c"
+    label = "Rollup 12"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_13__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_13__c"
+    label = "Rollup 13"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_14__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_14__c"
+    label = "Rollup 14"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_15__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_15__c"
+    label = "Rollup 15"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_16__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_16__c"
+    label = "Rollup 16"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_17__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_17__c"
+    label = "Rollup 17"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_18__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_18__c"
+    label = "Rollup 18"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_19__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_19__c"
+    label = "Rollup 19"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_1__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_1__c"
+    label = "Asynchronous Reason"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_20__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_20__c"
+    label = "Rollup 20"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_21__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_21__c"
+    label = "Rollup 21"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_22__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_22__c"
+    label = "Rollup 22"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_23__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_23__c"
+    label = "Rollup 23"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_24__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_24__c"
+    label = "Rollup 24"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_25__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_25__c"
+    label = "Rollup 25"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_26__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_26__c"
+    label = "Rollup 26"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_27__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_27__c"
+    label = "Rollup 27"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_28__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_28__c"
+    label = "Rollup 28"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_29__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_29__c"
+    label = "Rollup 29"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_2__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_2__c"
+    label = "Rollup 02"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_30__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_30__c"
+    label = "Rollup 30"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_31__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_31__c"
+    label = "Rollup 31"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_32__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_32__c"
+    label = "Rollup 32"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_33__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_33__c"
+    label = "Rollup 33"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_34__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_34__c"
+    label = "Rollup 34"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_35__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_35__c"
+    label = "Rollup 35"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_36__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_36__c"
+    label = "Rollup 36"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_37__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_37__c"
+    label = "Rollup 37"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_38__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_38__c"
+    label = "Rollup 38"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_39__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_39__c"
+    label = "Rollup 39"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_3__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_3__c"
+    label = "Rollup 03"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_40__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_40__c"
+    label = "Rollup 40"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_41__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_41__c"
+    label = "Rollup 41"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_42__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_42__c"
+    label = "Rollup 42"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_43__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_43__c"
+    label = "Rollup 43"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_44__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_44__c"
+    label = "Rollup 44"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_45__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_45__c"
+    label = "Rollup 45"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_46__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_46__c"
+    label = "Rollup 46"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_47__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_47__c"
+    label = "Rollup 47"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_48__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_48__c"
+    label = "Rollup 48"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_49__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_49__c"
+    label = "Rollup 49"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_4__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_4__c"
+    label = "Rollup 04"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_50__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_50__c"
+    label = "Rollup 50"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_51__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_51__c"
+    label = "Rollup 51"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_52__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_52__c"
+    label = "Rollup 52"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_53__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_53__c"
+    label = "Rollup 53"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_54__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_54__c"
+    label = "Rollup 54"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_55__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_55__c"
+    label = "Rollup 55"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_56__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_56__c"
+    label = "Rollup 56"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_57__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_57__c"
+    label = "Rollup 57"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_58__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_58__c"
+    label = "Rollup 58"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_59__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_59__c"
+    label = "Rollup 59"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_5__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_5__c"
+    label = "Rollup 05"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_60__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_60__c"
+    label = "Rollup 60"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_61__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_61__c"
+    label = "Rollup 61"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_62__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_62__c"
+    label = "Rollup 62"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_63__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_63__c"
+    label = "Rollup 63"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_64__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_64__c"
+    label = "Rollup 64"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_65__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_65__c"
+    label = "Rollup 65"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_66__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_66__c"
+    label = "Rollup 66"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_6__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_6__c"
+    label = "Rollup 06"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_7__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_7__c"
+    label = "Rollup 07"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_8__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_8__c"
+    label = "Rollup 08"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text rh2__Rollup_9__c {
+    apiName = "rh2__PS_Describe__c.rh2__Rollup_9__c"
+    label = "Rollup 09"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox rh2__Selected__c {
+    apiName = "rh2__PS_Describe__c.rh2__Selected__c"
+    label = "zDeprecated"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber rh2__Sum_Integer_Double__c {
+    apiName = "rh2__PS_Describe__c.rh2__Sum_Integer_Double__c"
+    label = "Sum Integer Double"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "rh2__Test_Integer__c +  rh2__Test_Double__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Checkbox rh2__Test_Checkbox__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Checkbox__c"
+    label = "Test Checkbox"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Currency rh2__Test_Currency__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Currency__c"
+    label = "Test Currency"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.DateTime rh2__Test_Date_Time__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Date_Time__c"
+    label = "Test Date Time"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date rh2__Test_Date__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Date__c"
+    label = "Test Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Date field created for unit testing purposes."
+  }
+  salesforce.Number rh2__Test_Double__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Double__c"
+    label = "Test Double"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date rh2__Test_End_Date__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_End_Date__c"
+    label = "Test End Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCurrency rh2__Test_Formula_FK_Currency__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Formula_FK_Currency__c"
+    label = "Test Formula FK Formula"
+    _required = false
+    formula = "rh2__Contact__r.rh2__Formula_Test__c"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaCurrency rh2__Test_Formula__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Formula__c"
+    label = "Test Formula"
+    _required = false
+    formula = "1.00"
+    createable = false
+    updateable = false
+    scale = 0
+    precision = 18
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Number rh2__Test_Integer2__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Integer2__c"
+    label = "Test Integer2"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Used in validation rule exception test methods"
+    externalId = false
+  }
+  salesforce.Number rh2__Test_Integer__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Integer__c"
+    label = "Test Integer"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.LongTextArea rh2__Test_Long_Text__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Long_Text__c"
+    label = "Test_Long_Text"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.MultiselectPicklist rh2__Test_Multi_Picklist__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Multi_Picklist__c"
+    label = "Test Multi-Picklist"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Test 1"
+        default = false
+        label = "Test 1"
+      },
+      {
+        fullName = "Test 2"
+        default = false
+        label = "Test 2"
+      },
+    ]
+    restricted = false
+    visibleLines = 4
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Percent rh2__Test_Percent__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Percent__c"
+    label = "Test Percent"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Picklist rh2__Test_Picklist__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Picklist__c"
+    label = "Test Picklist"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Test 1"
+        default = false
+        label = "Test 1"
+      },
+      {
+        fullName = "Test 2"
+        default = false
+        label = "Test 2"
+      },
+      {
+        fullName = "Test, Comma"
+        default = false
+        label = "Test, Comma"
+      },
+      {
+        fullName = "Test,CommaNoSpace"
+        default = false
+        label = "Test,CommaNoSpace"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Html rh2__Test_Rich_Text__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Rich_Text__c"
+    label = "Test Rich Text"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 25
+  }
+  salesforce.FormulaNumber rh2__Test_Small_Number__c {
+    apiName = "rh2__PS_Describe__c.rh2__Test_Small_Number__c"
+    label = "Test Small Number"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "1"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup rh2__User__c {
+    apiName = "rh2__PS_Describe__c.rh2__User__c"
+    label = "User"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number rh2__Validation_Test_Int__c {
+    apiName = "rh2__PS_Describe__c.rh2__Validation_Test_Int__c"
+    label = "Validation Test Int"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    description = "Used in validation rule exception test methods"
+    externalId = false
+  }
+}

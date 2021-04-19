@@ -1,0 +1,43 @@
+salesforce.WorkflowAlert Quote_Notification_when_Sales_Oder_is_signed_Partners {
+  fullName = "Quote.Notification_when_Sales_Oder_is_signed_Partners"
+  description = "Notification when Sales Oder is signed- Partners"
+  protected = false
+  recipients = [
+    {
+      field = salesforce.Quote.field.Owner_s_Manager_Email__c
+      type = "email"
+    },
+    {
+      field = salesforce.Quote.field.Regional_Manager_s_Email__c
+      type = "email"
+    },
+    {
+      recipient = "Admins"
+      type = "group"
+    },
+    {
+      type = "owner"
+    },
+    {
+      recipient = "avivc@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "omriyo@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "orens@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_SO_was_signed
+  _parent = [
+    salesforce.Quote,
+  ]
+}

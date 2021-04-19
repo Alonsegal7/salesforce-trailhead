@@ -1,0 +1,38 @@
+type salesforce.zaapit__ZaapIT_Table_user_configuration__c {
+  salesforce.Text zaapit__Favorite_View__c {
+    apiName = "zaapit__ZaapIT_Table_user_configuration__c.zaapit__Favorite_View__c"
+    label = "Favorite View"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    
+  }
+  salesforce.Lookup zaapit__ZaapIT_Table_View__c {
+    apiName = "zaapit__ZaapIT_Table_user_configuration__c.zaapit__ZaapIT_Table_View__c"
+    label = "ZaapIT Table - View"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.zaapit__zaapit_editable_tb__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text zaapit__text1__c {
+    apiName = "zaapit__ZaapIT_Table_user_configuration__c.zaapit__text1__c"
+    label = "text1"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    
+  }
+}

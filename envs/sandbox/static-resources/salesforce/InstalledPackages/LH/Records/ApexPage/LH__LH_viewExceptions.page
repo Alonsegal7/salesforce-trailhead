@@ -1,0 +1,106 @@
+<apex:page controller="LH.LH_ExceptionDisplay_Controller" title="Lookup Helper Errors" standardStylesheets="false"  sidebar="false" applyBodyTag="false" docType="html-5.0" showHeader="true">
+    <apex:includeScript value="{! URLFOR($Resource.PT_Resources_v1, '/js/hs_breadcrumbs.js')}" />   
+
+    <apex:slds />
+    <div class="slds-scope" role="main" >
+                   
+        <div class="slds-card slds-card_empty">
+            <header class="slds-card__header slds-grid grid_flex-spread">
+                <nav role="navigation">
+                    <ol class="slds-breadcrumb slds-list_horizontal">
+                        <li class="slds-list__item slds-text-heading_label home-crumb"><a href="{!$Page.LH_LandingPage}">Home</a></li>
+                        <li class="slds-list__item slds-text-heading_label setting-crumb"><a href="{!URLFOR($Page.LH_All_Settings)}">All Lookup Settings</a></li>
+                        
+                        <li class="slds-list__item slds-text-heading_label"> <a class="slds-text-link_reset" href="{!URLFOR($Page.LH_viewExceptions)}">View Exceptions</a></li>
+                    </ol>
+                </nav>
+            </header>
+        </div> 
+        
+        <div class="slds slds-p-top_medium"> 
+            <div class="slds-card ">
+                <header class="slds-card__header slds-grid">
+                    <div class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <h4 class="slds-text-heading_small slds-truncate">Lookup Helper Errors</h4>
+                        </div>                    		
+                    </div>
+                </header>
+                
+                <section class="slds-card__body">
+                    <apex:form >  
+                        <div class="slds-box slds-box_x-small slds-theme_default slds-m-around_large" style="width:95%; margin-right: auto; margin-left: auto;">Please select a lookup setting from the list to view exceptions that have occurred.</div>
+                        <apex:outputPanel id="exceptionMonitorWarning" rendered="{!NOT(isExceptionMonitorScheduled)}">
+                            <div class="slds-box slds-box_x-small slds-theme_default slds-m-around_large" style="width:95%; margin-right: auto; margin-left: auto;"><span>The Lookup Helper exception monitor is not currently scheduled. </span>
+                                <apex:commandLink styleClass="" action="{!scheduleExceptionMonitor}" rerender="exceptionMonitorWarning" value="Submit Exception Monitor job" oncomplete="location.reload();"></apex:commandLink>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:actionStatus id="objectSelectListStatus">
+                            <apex:facet name="stop">
+                                <apex:selectList value="{!selectedSetting}" size="1" styleclass="slds-align_absolute-center" style="width:95%; margin-right: auto; margin-left: auto;" >
+                                    <apex:actionSupport event="onchange" rerender="exceptionContainer" status="objectSelectListStatus"/>             
+                                    <apex:selectOptions value="{!settingsWithExceptionSelectOption}"/>
+                                </apex:selectList>
+                            </apex:facet>
+                            <apex:facet name="start" >
+                                <select class="slds-align_absolute-center" style="width:95%; margin-right: auto; margin-left: auto;" disabled="true">
+                                    <option>Processing...</option>
+                                </select>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <br />
+                        
+                        <apex:outputPanel id="exceptionContainer" >       
+                            
+                            <c:Paginate pageController="{! paginatedFormattedErrors }" renderedComponent="exceptionContainer" statusDisplay="objectSelectListStatus"/>
+                            
+                            <apex:outputPanel rendered="{!OR(errorsToDisplay == null, errorsToDisplay.size == 0)}">
+                                No Error Records
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!AND(errorsToDisplay != null, errorsToDisplay.size > 0)}">
+                                
+                                <table class="slds-table slds-table_bordered slds-max-medium-table_stacked"> 
+                                    <thead>
+                                        <tr style="width:100%;">
+
+                                            <th class="slds-text-heading_label slds-cell-wrap" style="width:80%;">Exception Description</th> 
+                                            <th class="slds-text-heading_label slds-cell-wrap" style="width:10%;">Occurrences</th>
+                                            <th class="slds-text-heading_label slds-cell-wrap" style="width:10%;">Last Date Occurred</th>
+                                        </tr>	
+                                    </thead>
+                                    
+                                    
+                                    
+                                    <apex:repeat value="{!errorsToDisplay}" var="entry">
+                                        <tr>
+    
+                                            
+                                            <td class="slds-cell-wrap" style="width:80%;">
+                                                <apex:outputLink value="/{!entry.errRec.id}" target="_blank"> {!entry.errRec.LH__Error_Description__c} </apex:outputLink> 
+                                            </td>
+                                            
+                                            <td class="slds-cell-wrap" style="width:10%; word-break: break-all;">
+                                                {!entry.occurrence}
+                                            </td>
+                                            
+                                            <td class="slds-cell-wrap" style="width:10%; word-break: break-all;"> 
+                                                <apex:outputField value="{!entry.errRec.createddate}"/> 
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                    
+                                </table>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:form>  
+                </section>
+            </div>
+        </div>
+        
+    </div>
+        
+    <script>
+      selectBreadcrumb_HS();
+    </script>
+    
+</apex:page>

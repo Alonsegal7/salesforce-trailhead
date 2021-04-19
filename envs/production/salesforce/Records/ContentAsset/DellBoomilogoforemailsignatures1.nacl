@@ -1,0 +1,17 @@
+salesforce.ContentAsset DellBoomilogoforemailsignatures1 {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  isVisibleByExternalUsers = true
+  language = "en_US"
+  masterLabel = "DellBoomilogoforemailsignatures1"
+  originNetwork = "Monday Partners Portal"
+  versions = {
+    version = [
+      {
+        number = "1"
+        pathOnClient = "Dell-Boomi-logo-for-email-signatures-1.png"
+      },
+    ]
+  }
+  fullName = "DellBoomilogoforemailsignatures1"
+  content = file("salesforce/Records/ContentAsset/DellBoomilogoforemailsignatures1.asset")
+}

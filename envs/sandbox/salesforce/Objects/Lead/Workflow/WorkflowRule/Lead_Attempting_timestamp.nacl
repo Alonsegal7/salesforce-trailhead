@@ -1,0 +1,21 @@
+salesforce.WorkflowRule Lead_Attempting_timestamp {
+  fullName = "Lead.Attempting timestamp"
+  actions = [
+    {
+      name = salesforce.WorkflowFieldUpdate.instance.Lead_Attempting_timestamp
+      type = "FieldUpdate"
+    },
+  ]
+  active = false
+  criteriaItems = [
+    {
+      field = salesforce.Lead.field.Status
+      operation = "equals"
+      value = "Attempting"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

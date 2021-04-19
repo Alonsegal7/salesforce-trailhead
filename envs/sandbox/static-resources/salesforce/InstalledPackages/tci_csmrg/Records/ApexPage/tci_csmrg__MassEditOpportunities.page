@@ -1,0 +1,24 @@
+<apex:page standardController="Opportunity" recordSetVar="Opportunities" extensions="tci_csmrg.MassEditOpportunities" sidebar="false">
+ <apex:form >
+       <apex:pageBlock title="Mass Edit - Opportunities" mode="edit">     
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveRecords}" value="Save" disabled="!{!$ObjectType.Account.accessible}"/>               
+                <apex:commandButton value="Cancel" action="{!ccancel}"/>
+            </apex:pageBlockButtons>     
+                          
+                <apex:pageBlockTable value="{!Opportunities}" var="Opportunity">                
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.tci_csmrg__Opportunity_Field_Set}" var="f">  
+                        <apex:column >
+                               <apex:facet name="header">
+                                    <apex:outputPanel >
+                                        <apex:outputText value="{!$ObjectType['Opportunity'].Fields[f].label}" />
+                                    </apex:outputPanel>
+                                </apex:facet>
+                                <apex:inputField value="{!Opportunity[f]}"/>
+                            </apex:column>               
+                 </apex:repeat>
+                </apex:pageBlockTable><br/>
+        <apex:outputLabel ><b>&nbsp;&nbsp; Total Records Selected:&nbsp;{!size} </b></apex:outputLabel>
+        </apex:pageBlock>
+      </apex:form> 
+</apex:page>

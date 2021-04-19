@@ -1,0 +1,15 @@
+salesforce.CustomApplication standard__TrustCard {
+  fullName = "standard__TrustCard"
+  formFactors = [
+    "Large",
+  ]
+  isNavAutoTempTabsDisabled = false
+  isNavPersonalizationDisabled = false
+  label = "Trust Card"
+  navType = "Standard"
+  tabs = [
+    "standard-LocationTrustMeasure",
+    "standard-Location",
+  ]
+  uiType = "Lightning"
+}

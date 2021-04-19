@@ -1,0 +1,57 @@
+salesforce.QuickAction Account_CSM_Update {
+  fullName = "Account.CSM_Update"
+  label = "CSM Update"
+  optionsCreateFeedItem = false
+  quickActionLayout = {
+    layoutSectionStyle = "TwoColumnsLeftToRight"
+    quickActionLayoutColumns = [
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "WAPP_Goal_For_Adoption__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "WAPP_Goal_For_Engagement__c"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Name"
+            uiBehavior = "Required"
+          },
+          {
+            emptySpace = false
+            field = "Phone"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Industry"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+      {
+        quickActionLayoutItems = [
+          {
+            emptySpace = false
+            field = "Type"
+            uiBehavior = "Edit"
+          },
+          {
+            emptySpace = false
+            field = "Website"
+            uiBehavior = "Edit"
+          },
+        ]
+      },
+    ]
+  }
+  type = "Update"
+  _parent = [
+    salesforce.Account,
+  ]
+}

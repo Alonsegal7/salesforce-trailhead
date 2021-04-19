@@ -1,0 +1,30 @@
+salesforce.CustomSite Partner_Portal {
+  fullName = "Partner_Portal"
+  active = false
+  allowHomePage = false
+  allowStandardAnswersPages = false
+  allowStandardIdeasPages = false
+  allowStandardLookups = false
+  allowStandardPortalPages = true
+  allowStandardSearch = false
+  authorizationRequiredPage = salesforce.ApexPage.instance.CommunitiesLogin
+  bandwidthExceededPage = salesforce.ApexPage.instance.BandwidthExceeded
+  browserXssProtection = true
+  clickjackProtectionLevel = "SameOriginOnly"
+  contentSniffingProtection = true
+  cspUpgradeInsecureRequests = true
+  enableAuraRequests = true
+  fileNotFoundPage = salesforce.ApexPage.instance.FileNotFound
+  genericErrorPage = salesforce.ApexPage.instance.Exception
+  inMaintenancePage = salesforce.ApexPage.instance.InMaintenance
+  indexPage = salesforce.ApexPage.instance.CommunitiesLanding
+  masterLabel = "Partner Portal"
+  referrerPolicyOriginWhenCrossOrigin = true
+  requireHttps = true
+  
+  selfRegPage = salesforce.ApexPage.instance.CommunitiesSelfReg
+  siteAdmin = "maayany@monday.com"
+  siteType = "ChatterNetwork"
+  subdomain = "monday"
+  urlPathPrefix = "test"
+}

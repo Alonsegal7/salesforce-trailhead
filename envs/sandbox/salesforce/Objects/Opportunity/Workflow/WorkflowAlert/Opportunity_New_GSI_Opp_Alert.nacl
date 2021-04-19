@@ -1,0 +1,23 @@
+salesforce.WorkflowAlert Opportunity_New_GSI_Opp_Alert {
+  fullName = "Opportunity.New_GSI_Opp_Alert"
+  ccEmails = [
+    "naomida@monday.com",
+  ]
+  description = "New GSI Opp Alert"
+  protected = false
+  recipients = [
+    {
+      recipient = "avivc@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "eyalz@monday.com"
+      type = "user"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_New_GSI_Opp_Alert
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

@@ -1,0 +1,10 @@
+salesforce.CustomTab Managers_Homepage {
+  fullName = "Managers_Homepage"
+  description = "Created by Lightning App Builder"
+  flexiPage = "Managers_Homepage"
+  label = "Managers Homepage"
+  motif = "Custom11: Star"
+  _generated_dependencies = [
+    salesforce.LightningPage.instance.Managers_Homepage,
+  ]
+}

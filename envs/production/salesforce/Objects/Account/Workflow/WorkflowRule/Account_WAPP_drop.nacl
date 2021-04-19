@@ -1,0 +1,46 @@
+salesforce.WorkflowRule Account_WAPP_drop {
+  fullName = "Account.WAPP%25 drop"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Account_WAPP_Drop_ALERT
+      type = "Alert"
+    },
+  ]
+  active = true
+  booleanFilter = "1 AND 2 AND 3 AND 4 AND 5 AND 6"
+  criteriaItems = [
+    {
+      field = salesforce.Account.field.CSM__c
+      operation = "notEqual"
+    },
+    {
+      field = salesforce.Account.field.Monday_Account_Status__c
+      operation = "equals"
+      value = "Paying Account"
+    },
+    {
+      field = salesforce.Account.field.WAPP_Drop__c
+      operation = "equals"
+      value = "True"
+    },
+    {
+      field = salesforce.Account.field.X60_D_after_plan_started_date__c
+      operation = "equals"
+      value = "True"
+    },
+    {
+      field = salesforce.Account.field.WAPP__c
+      operation = "notEqual"
+      value = "0"
+    },
+    {
+      field = salesforce.Account.field.CSM_Function__c
+      operation = "notEqual"
+      value = "Scaled Touch"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Account,
+  ]
+}

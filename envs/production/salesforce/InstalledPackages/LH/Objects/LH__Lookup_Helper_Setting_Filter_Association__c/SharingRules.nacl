@@ -1,0 +1,6 @@
+salesforce.SharingRules LH__Lookup_Helper_Setting_Filter_Association__c {
+  fullName = "LH__Lookup_Helper_Setting_Filter_Association__c"
+  _parent = [
+    salesforce.LH__Lookup_Helper_Setting_Filter_Association__c,
+  ]
+}

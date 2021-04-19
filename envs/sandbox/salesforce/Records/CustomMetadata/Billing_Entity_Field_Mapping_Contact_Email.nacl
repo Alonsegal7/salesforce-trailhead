@@ -1,0 +1,11 @@
+salesforce.CustomMetadata Billing_Entity_Field_Mapping_Contact_Email {
+  fullName = "Billing_Entity_Field_Mapping.Contact_Email"
+  label = "Contact_Email__c"
+  protected = false
+  values = [
+    {
+      field = "Partner_SO_Request_Field__c"
+      value = "Finance_Contact_Email__c"
+    },
+  ]
+}

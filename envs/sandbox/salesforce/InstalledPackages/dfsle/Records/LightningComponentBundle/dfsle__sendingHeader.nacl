@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__sendingHeader {
+  fullName = "dfsle__sendingHeader"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingHeader/sendingHeader.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingHeader/sendingHeader.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/sendingHeader/sendingHeader.html"
+      },
+    ]
+  }
+}

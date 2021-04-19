@@ -1,0 +1,13 @@
+salesforce.WorkflowTask Account_zaapit__SendLetterAccount {
+  fullName = "Account.zaapit__SendLetterAccount"
+  assignedToType = "owner"
+  dueDateOffset = 1
+  notifyAssignee = true
+  priority = "Normal"
+  protected = false
+  status = "Not Started"
+  subject = "Send Letter"
+  _parent = [
+    salesforce.Account,
+  ]
+}

@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__decTagger {
+  fullName = "dfsle__decTagger"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/decTagger/decTagger.html"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decTagger/decTagger.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/decTagger/decTagger.js"
+      },
+    ]
+  }
+}

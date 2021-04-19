@@ -1,0 +1,14 @@
+salesforce.ApexClass dfsle__DataSourceLookupController {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  packageVersions = [
+    {
+      majorNumber = 2
+      minorNumber = 6
+      namespace = "dfsle"
+    },
+  ]
+  status = "Active"
+  fullName = "dfsle__DataSourceLookupController"
+  content = "(hidden)"
+}

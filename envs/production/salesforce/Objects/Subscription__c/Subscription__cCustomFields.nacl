@@ -1,0 +1,475 @@
+type salesforce.Subscription__c {
+  salesforce.Number ARR_Gain__c {
+    apiName = "Subscription__c.ARR_Gain__c"
+    label = "ARR Gain"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number ARR__c {
+    apiName = "Subscription__c.ARR__c"
+    label = "ARR"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Activation_Date__c {
+    apiName = "Subscription__c.Activation_Date__c"
+    label = "Activation Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.LongTextArea Billing_Ids__c {
+    apiName = "Subscription__c.Billing_Ids__c"
+    label = "Billing Ids"
+    _required = false
+    createable = true
+    updateable = true
+    length = 131072
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.Number Collection__c {
+    apiName = "Subscription__c.Collection__c"
+    label = "Collection"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Contract__c {
+    apiName = "Subscription__c.Contract__c"
+    label = "Contract"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contract,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Date Deactivation_Date__c {
+    apiName = "Subscription__c.Deactivation_Date__c"
+    label = "Deactivation Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Percent Discount__c {
+    apiName = "Subscription__c.Discount__c"
+    label = "Discount"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 6
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number Exchange_Rate__c {
+    apiName = "Subscription__c.Exchange_Rate__c"
+    label = "Exchange Rate"
+    _required = false
+    precision = 18
+    scale = 6
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Date Expiration_Date__c {
+    apiName = "Subscription__c.Expiration_Date__c"
+    label = "Expiration Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Number Free_Months__c {
+    apiName = "Subscription__c.Free_Months__c"
+    label = "Free Months"
+    _required = false
+    precision = 6
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox Is_Active__c {
+    apiName = "Subscription__c.Is_Active__c"
+    label = "Is Active"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox Is_Claimed__c {
+    apiName = "Subscription__c.Is_Claimed__c"
+    label = "Is Claimed"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Currency List_Price__c {
+    apiName = "Subscription__c.List_Price__c"
+    label = "List Price"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 6
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number Migrated_Seats__c {
+    apiName = "Subscription__c.Migrated_Seats__c"
+    label = "Migrated Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Monday_Account__c {
+    apiName = "Subscription__c.Monday_Account__c"
+    label = "Monday Account"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Opportunity_Product_Id__c {
+    apiName = "Subscription__c.Opportunity_Product_Id__c"
+    label = "Opportunity Product Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Paid_Months__c {
+    apiName = "Subscription__c.Paid_Months__c"
+    label = "Paid Months"
+    _required = false
+    precision = 6
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Payment_Method__c {
+    apiName = "Subscription__c.Payment_Method__c"
+    label = "Payment Method"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Period__c {
+    apiName = "Subscription__c.Period__c"
+    label = "Period"
+    _required = false
+    valueSet = [
+      {
+        fullName = "yearly"
+        default = false
+        label = "yearly"
+      },
+      {
+        fullName = "monthly"
+        default = false
+        label = "monthly"
+      },
+      {
+        fullName = "two_yearly"
+        default = false
+        label = "two_yearly"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Pricing_Version__c {
+    apiName = "Subscription__c.Pricing_Version__c"
+    label = "Pricing Version"
+    _required = false
+    precision = 6
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Pulse_Account_Id__c {
+    apiName = "Subscription__c.Pulse_Account_Id__c"
+    label = "Pulse Account Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Pulse_Contract_Id__c {
+    apiName = "Subscription__c.Pulse_Contract_Id__c"
+    label = "Pulse Contract Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Seats__c {
+    apiName = "Subscription__c.Seats__c"
+    label = "Seats"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Status__c {
+    apiName = "Subscription__c.Status__c"
+    label = "Status"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Tier__c {
+    apiName = "Subscription__c.Tier__c"
+    label = "Tier"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Currency Unit_Price__c {
+    apiName = "Subscription__c.Unit_Price__c"
+    label = "Unit Price"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 6
+    precision = 18
+    queryable = true
+  }
+  salesforce.Percent Migrated_Discount__c {
+    apiName = "Subscription__c.Migrated_Discount__c"
+    label = "Migrated Discount"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number Migrated_Free_Months__c {
+    apiName = "Subscription__c.Migrated_Free_Months__c"
+    label = "Migrated Free Months"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Migrated_Paid_Months__c {
+    apiName = "Subscription__c.Migrated_Paid_Months__c"
+    label = "Migrated Paid Months"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Currency Migrated_Unit_Price__c {
+    apiName = "Subscription__c.Migrated_Unit_Price__c"
+    label = "Migrated Unit Price"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 6
+    precision = 18
+    queryable = true
+  }
+  salesforce.Checkbox Include_in_CC_Claim__c {
+    apiName = "Subscription__c.Include_in_CC_Claim__c"
+    label = "Include in CC Claim"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Product_Code__c {
+    apiName = "Subscription__c.Product_Code__c"
+    label = "Product Code"
+    _required = false
+    formula = '''
+'MON-V'&text(Pricing_Version__c)&'-'&
+case(Tier__c,'pro','PRO','enterprise','ENT','standard','ST','basic','ST','')
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup Claimed_On_Opportunity__c {
+    apiName = "Subscription__c.Claimed_On_Opportunity__c"
+    label = "Claimed On Opportunity"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Opportunity,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Name_for_CC_Claim__c {
+    apiName = "Subscription__c.Name_for_CC_Claim__c"
+    label = "Name for CC Claim"
+    _required = false
+    formula = '''
+text(Activation_Date__c)&" - "&Tier__c&" "&left(Seats__c,len(Seats__c)-2)&" "&text(Period__c)&" - $"&
+if(ARR_Gain__c>=0,text(round(ARR_Gain__c,2)),"("&text(round(abs(ARR_Gain__c),2))&")")
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Long_Subscription_Id__c {
+    apiName = "Subscription__c.Long_Subscription_Id__c"
+    label = "Long Subscription Id"
+    _required = false
+    formula = "CASESAFEID(Id)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text BigBrain_Id__c {
+    apiName = "Subscription__c.BigBrain_Id__c"
+    label = "BigBrain ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Source_Sales_Order__c {
+    apiName = "Subscription__c.Source_Sales_Order__c"
+    label = "Source Sales Order"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Quote,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Manual_Trigger__c {
+    apiName = "Subscription__c.Manual_Trigger__c"
+    label = "Manual Trigger"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Create Active Contract"
+        default = false
+        label = "Create Active Contract"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaCheckbox Seats_Mismatch__c {
+    apiName = "Subscription__c.Seats_Mismatch__c"
+    label = "Seats Mismatch"
+    formula = "round(value(Seats__c),0) != Contract__r.Seats__c"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+}

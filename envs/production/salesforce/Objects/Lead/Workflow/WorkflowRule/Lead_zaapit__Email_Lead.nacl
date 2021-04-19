@@ -1,0 +1,10 @@
+salesforce.WorkflowRule Lead_zaapit__Email_Lead {
+  fullName = "Lead.zaapit__Email Lead"
+  active = false
+  description = "Email Lead - by ZaapIT"
+  formula = "false"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

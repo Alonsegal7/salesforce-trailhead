@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation leadconvertchtr__LeadConvertChatter__c_en_US {
+  fullName = "leadconvertchtr__LeadConvertChatter__c-en_US"
+  _parent = [
+    salesforce.leadconvertchtr__LeadConvertChatter__c,
+  ]
+}

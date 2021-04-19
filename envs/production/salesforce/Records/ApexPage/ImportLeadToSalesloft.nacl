@@ -1,0 +1,9 @@
+salesforce.ApexPage ImportLeadToSalesloft {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 42
+  availableInTouch = false
+  confirmationTokenRequired = false
+  label = "ImportLeadToSalesloft"
+  fullName = "ImportLeadToSalesloft"
+  content = file("salesforce/Records/ApexPage/ImportLeadToSalesloft.page")
+}

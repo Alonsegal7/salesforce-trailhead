@@ -1,0 +1,6 @@
+salesforce.UserCriteria Partner_Portal_Customer_Members {
+  fullName = "Partner Portal.Customer_Members"
+  description = "Member criteria matches customer members"
+  masterLabel = "Customer Members"
+  userTypes = "Customer"
+}

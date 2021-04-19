@@ -1,0 +1,19 @@
+salesforce.LightningComponentBundle dfsle__helpVideoImageBox {
+  fullName = "dfsle__helpVideoImageBox"
+  lwcResources = {
+    lwcResource = [
+      {
+        source = "(hidden)"
+        filePath = "lwc/helpVideoImageBox/helpVideoImageBox.css"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/helpVideoImageBox/helpVideoImageBox.js"
+      },
+      {
+        source = "(hidden)"
+        filePath = "lwc/helpVideoImageBox/helpVideoImageBox.html"
+      },
+    ]
+  }
+}

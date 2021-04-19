@@ -1,0 +1,40 @@
+salesforce.WorkflowAlert Account_Low_Health_Accounts_more_then_30_days {
+  fullName = "Account.Low_Health_Accounts_more_then_30_days"
+  description = "Low Health Accounts more then 30 days"
+  protected = false
+  recipients = [
+    {
+      recipient = "maayany@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "nirf@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "saar@monday.com"
+      type = "user"
+    },
+    {
+      recipient = "tom@monday.com"
+      type = "user"
+    },
+    {
+      field = salesforce.Account.field.AM__c
+      type = "userLookup"
+    },
+    {
+      field = salesforce.Account.field.CSM__c
+      type = "userLookup"
+    },
+    {
+      field = salesforce.Account.field.Low_Touch_CS__c
+      type = "userLookup"
+    },
+  ]
+  senderType = "CurrentUser"
+  template = salesforce.EmailTemplate.instance.unfiled_public_Low_Account_Health_Score_Notification
+  _parent = [
+    salesforce.Account,
+  ]
+}

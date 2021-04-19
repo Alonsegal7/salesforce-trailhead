@@ -1,0 +1,9 @@
+salesforce.ApexPage zisf__Login {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 38
+  availableInTouch = true
+  confirmationTokenRequired = false
+  label = "Login"
+  fullName = "zisf__Login"
+  content = file("salesforce/InstalledPackages/zisf/Records/ApexPage/zisf__Login.page")
+}

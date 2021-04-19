@@ -1,0 +1,31 @@
+salesforce.WorkflowRule Sale__c_Send_Celebration_to_Partner {
+  fullName = "Sale__c.Send Celebration to Partner"
+  actions = [
+    {
+      name = salesforce.WorkflowAlert.instance.Sale__c_Partners_celebration
+      type = "Alert"
+    },
+  ]
+  active = true
+  criteriaItems = [
+    {
+      field = salesforce.Sale__c.field.FinalSaleStatus__c
+      operation = "equals"
+      value = "Complete"
+    },
+    {
+      field = salesforce.Sale__c.field.Sale_Record_type_ID__c
+      operation = "equals"
+      value = "0121t000000IQYT"
+    },
+    {
+      field = salesforce.Sale__c.field.ARR__c
+      operation = "greaterThan"
+      value = "0"
+    },
+  ]
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Sale__c,
+  ]
+}

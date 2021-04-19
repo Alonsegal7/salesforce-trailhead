@@ -1,0 +1,208 @@
+type salesforce.Event {
+  salesforce.Text aircall__Answered_by__c {
+    apiName = "Event.aircall__Answered_by__c"
+    label = "Answered by"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.Url aircall__Call_Recording__c {
+    apiName = "Event.aircall__Call_Recording__c"
+    label = "Call Recording"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText aircall__Connection_status__c {
+    apiName = "Event.aircall__Connection_status__c"
+    label = "Connection status"
+    _required = false
+    formula = "IF( aircall__Has_connected__c , 'Connected', 'Not connected')"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+  }
+  salesforce.Text aircall__Country__c {
+    apiName = "Event.aircall__Country__c"
+    label = "Country"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.FormulaText aircall__Detailed_type__c {
+    apiName = "Event.aircall__Detailed_type__c"
+    label = "Detailed type"
+    _required = false
+    formula = '''
+IF(CONTAINS(LOWER(Subject), 'missed'), 'Missed call',
+ IF(CONTAINS(LOWER(Subject), 'voicemail'), 'Voicemail',
+ IF(CONTAINS(LOWER(Subject), 'outbound unanswered'), 'Outbound unanswered',
+ IF(CONTAINS(LOWER(Subject), 'outbound'), 'Outbound answered',
+ IF(CONTAINS(LOWER(Subject), 'inbound'), 'Inbound answered',
+  TEXT(CallType) 
+)))))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+  }
+  salesforce.FormulaCheckbox aircall__Has_connected__c {
+    apiName = "Event.aircall__Has_connected__c"
+    label = "Has connected"
+    formula = "ISPICKVAL(CallType, 'Inbound') &&  !aircall__Is_Missed_call__c &&  !aircall__Is_Voicemail__c"
+    createable = false
+    updateable = false
+    queryable = true
+  }
+  salesforce.FormulaText aircall__Hour_of_the_day__c {
+    apiName = "Event.aircall__Hour_of_the_day__c"
+    label = "Hour of the day"
+    _required = false
+    formula = "LEFT(TEXT(TIMEVALUE(DATETIMEVALUE(CreatedDate) + aircall__Timezone__c/24)), 2)+':00'"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+  }
+  salesforce.FormulaCheckbox aircall__Is_Missed_call__c {
+    apiName = "Event.aircall__Is_Missed_call__c"
+    label = "Is Missed call"
+    formula = "BEGINS(LOWER(Subject), 'missed call')"
+    createable = false
+    updateable = false
+    queryable = true
+  }
+  salesforce.FormulaCheckbox aircall__Is_Voicemail__c {
+    apiName = "Event.aircall__Is_Voicemail__c"
+    label = "Is Voicemail"
+    formula = "BEGINS('voicemail', LOWER(Subject))"
+    createable = false
+    updateable = false
+    queryable = true
+  }
+  salesforce.FormulaText aircall__Missed_Call_Ratio__c {
+    apiName = "Event.aircall__Missed_Call_Ratio__c"
+    label = "Missed Call Ratio"
+    _required = false
+    formula = '''
+IF(CONTAINS(CallDisposition, "out_of_opening_hours"), "Out of opening hours", 
+IF(CONTAINS(CallDisposition, "no_available_agent"), "No available agent", 
+IF(CONTAINS(CallDisposition, "abandoned_in_ivr"), "Abandoned in IVR", 
+IF(CONTAINS(CallDisposition, "short_abandoned"), "Short abandoned", 
+IF(CONTAINS(CallDisposition, "agents_did_not_answer"), "Agents did not response", NULL)))))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+  }
+  salesforce.Phone aircall__Phone_number__c {
+    apiName = "Event.aircall__Phone_number__c"
+    label = "Aircall number"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber aircall__Timezone__c {
+    apiName = "Event.aircall__Timezone__c"
+    label = "Timezone"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 00:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 01:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 02:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 03:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 04:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 05:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 06:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 07:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 08:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 09:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 10:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 11:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 12:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 13:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 14:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 15:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 16:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 17:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 18:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 19:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 20:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 21:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 22:00:00")) - TODAY()) + 
+
+(DATEVALUE(DATETIMEVALUE(TEXT(TODAY())+" 23:00:00")) - TODAY())
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+  }
+  salesforce.Text aircall__Transferred_to__c {
+    apiName = "Event.aircall__Transferred_to__c"
+    label = "Transferred to"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.Number aircall__Waiting_Time__c {
+    apiName = "Event.aircall__Waiting_Time__c"
+    label = "Waiting Time"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+}

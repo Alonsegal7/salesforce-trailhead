@@ -1,0 +1,21 @@
+type salesforce.User {
+  salesforce.Checkbox zaapit__Enable_ZaapIT_s_Layout_Editor__c {
+    apiName = "User.zaapit__Enable_ZaapIT_s_Layout_Editor__c"
+    label = "Enable ZaapIT's Layout Editor"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Enable the user to change ZaapIT's Layout Editor for smart tables/update"
+  }
+  salesforce.Checkbox zaapit__Enable_ZaapIT_s_View_Editor__c {
+    apiName = "User.zaapit__Enable_ZaapIT_s_View_Editor__c"
+    label = "Enable ZaapIT's View Editor"
+    defaultValue = true
+    inlineHelpText = "Enable ZaapIT's View Editor for none admin users (don't mark with enable layout editor for the same user)"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "Enable ZaapIT's View Editor for none admin users"
+  }
+}

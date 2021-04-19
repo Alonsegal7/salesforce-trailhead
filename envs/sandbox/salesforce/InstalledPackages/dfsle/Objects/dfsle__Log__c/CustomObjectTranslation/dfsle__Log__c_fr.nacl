@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation dfsle__Log__c_fr {
+  fullName = "dfsle__Log__c-fr"
+  _parent = [
+    salesforce.dfsle__Log__c,
+  ]
+}

@@ -1,0 +1,114 @@
+type salesforce.OpportunityLineItem {
+  salesforce.Number ARR__c {
+    apiName = "OpportunityLineItem.ARR__c"
+    label = "ARR"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Lookup Contract__c {
+    apiName = "OpportunityLineItem.Contract__c"
+    label = "Contract"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Contract,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Product_Type__c {
+    apiName = "OpportunityLineItem.Product_Type__c"
+    label = "Product Type"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Product_Type
+  }
+  salesforce.Lookup Quote_Line_Item__c {
+    apiName = "OpportunityLineItem.Quote_Line_Item__c"
+    label = "Quote Line Item"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.QuoteLineItem,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Tier__c {
+    apiName = "OpportunityLineItem.Tier__c"
+    label = "Tier"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Seats__c {
+    apiName = "OpportunityLineItem.Seats__c"
+    label = "Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Plan_Period__c {
+    apiName = "OpportunityLineItem.Plan_Period__c"
+    label = "Plan Period"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Monthly"
+        default = false
+        label = "Monthly"
+      },
+      {
+        fullName = "Yearly"
+        default = false
+        label = "Yearly"
+      },
+    ]
+    restricted = false
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Lookup Subscription__c {
+    apiName = "OpportunityLineItem.Subscription__c"
+    label = "Subscription"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Subscription__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Checkbox CC_Claim_Product__c {
+    apiName = "OpportunityLineItem.CC_Claim_Product__c"
+    label = "CC Claim Product"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+}

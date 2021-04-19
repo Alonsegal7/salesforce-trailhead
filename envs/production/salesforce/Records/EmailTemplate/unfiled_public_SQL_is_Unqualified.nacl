@@ -1,0 +1,38 @@
+salesforce.EmailTemplate unfiled_public_SQL_is_Unqualified {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "SQL is Unqualified"
+  style = "formalLetter"
+  subject = "Unqualified SQL"
+  textOnly = '''
+Hi {!Lead.SDR_Name_for_reports__c},
+{!Lead.AE__c} has unqualified {!Lead.Company}
+
+Unqualified reason: {!Lead.Why_unqualified__c}
+
+Lead Name: {!Lead.Name}, {!Lead.Title}, {!Lead.Seniority__c}
+
+Distributed Score: {!Lead.Distributed_score__c}
+
+Current Score: {!Lead.Current_score__c}
+
+Engagement: {!Lead.Engagement__c}
+
+Enabled Users: {!Lead.Enabled_users__c}
+
+Phone Number: {!Lead.Phone}
+
+Signup Date: {!Lead.Lead_created_date__c}
+
+Cluster: {!Lead.Cluster__c}
+
+
+Feedback from AE to SDR: {!Lead.Feedback_on_SDR_Call__c}
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/SQL_is_Unqualified"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/SQL_is_Unqualified.email")
+}

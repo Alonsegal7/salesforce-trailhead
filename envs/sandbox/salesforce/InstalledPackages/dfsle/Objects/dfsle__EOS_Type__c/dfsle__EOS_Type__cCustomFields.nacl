@@ -1,0 +1,87 @@
+type salesforce.dfsle__EOS_Type__c {
+  salesforce.Text dfsle__FolderNameFormat__c {
+    apiName = "dfsle__EOS_Type__c.dfsle__FolderNameFormat__c"
+    label = "Folder Name Format"
+    _required = false
+    inlineHelpText = '''
+A field to store the format of the folder name that maps a Salesforce object to a folder in
+		SpringCM.
+'''
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "A field to store the format of the folder name that maps a Salesforce object to a folder in SpringCM."
+    externalId = false
+  }
+  salesforce.Text dfsle__FolderName__c {
+    apiName = "dfsle__EOS_Type__c.dfsle__FolderName__c"
+    label = "Folder Name"
+    _required = true
+    inlineHelpText = "A field to store the folder name generated during the object mapping process."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "A field to store the folder name generated during the object mapping process."
+    externalId = false
+  }
+  salesforce.Text dfsle__PathFormat__c {
+    apiName = "dfsle__EOS_Type__c.dfsle__PathFormat__c"
+    label = "Path Format"
+    _required = false
+    inlineHelpText = '''
+A field to store the path format of the folder name that maps a Salesforce object to a folder in
+		SpringCM.
+'''
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = '''
+A field to store the path format of the folder name that maps a Salesforce object to a folder in
+		SpringCM.
+'''
+    externalId = false
+  }
+  salesforce.Text dfsle__Path__c {
+    apiName = "dfsle__EOS_Type__c.dfsle__Path__c"
+    label = "Path"
+    _required = true
+    inlineHelpText = '''
+A field to store the folder path in SpringCM, generated during the object mapping process within
+		Salesforce.
+'''
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = '''
+A field to store the folder path in SpringCM, generated during the object mapping process within
+		Salesforce.
+'''
+    externalId = false
+  }
+  salesforce.Text dfsle__Variables__c {
+    apiName = "dfsle__EOS_Type__c.dfsle__Variables__c"
+    label = "Variables"
+    _required = false
+    inlineHelpText = "A field to store the variable folder names."
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+    description = "A field to store the variable folder names."
+    externalId = false
+  }
+}

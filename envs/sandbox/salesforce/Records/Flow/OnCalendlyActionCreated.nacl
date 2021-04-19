@@ -1,0 +1,342 @@
+salesforce.Flow OnCalendlyActionCreated {
+  fullName = "OnCalendlyActionCreated"
+  actionCalls = [
+    {
+      processMetadataValues = [
+        {
+          name = "ActionCallType"
+          value = {
+            stringValue = "flow"
+          }
+        },
+        {
+          name = "flowSelection"
+          value = {
+            stringValue = "CreateEvent"
+          }
+        },
+      ]
+      name = "myRule_1_A1"
+      label = "Run Create Event Flow"
+      locationX = 100
+      locationY = 200
+      actionName = "CreateEvent"
+      actionType = "flow"
+      inputParameters = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "SObject"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "NewCalendlyAction"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = "CalendlyAction__c"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "SObject"
+              }
+            },
+          ]
+          name = "NewCalendlyAction"
+          value = {
+            elementReference = "myVariable_current"
+          }
+        },
+      ]
+    },
+    {
+      processMetadataValues = [
+        {
+          name = "ActionCallType"
+          value = {
+            stringValue = "flow"
+          }
+        },
+        {
+          name = "flowSelection"
+          value = {
+            stringValue = "CancelEvent"
+          }
+        },
+      ]
+      name = "myRule_3_A1"
+      label = "Run Cancel Event Flow"
+      locationX = 300
+      locationY = 200
+      actionName = "CancelEvent"
+      actionType = "flow"
+      inputParameters = [
+        {
+          processMetadataValues = [
+            {
+              name = "dataType"
+              value = {
+                stringValue = "SObject"
+              }
+            },
+            {
+              name = "isRequired"
+              value = {
+                booleanValue = false
+              }
+            },
+            {
+              name = "leftHandSideLabel"
+              value = {
+                stringValue = "NewCalendlyAction"
+              }
+            },
+            {
+              name = "maxOccurs"
+              value = {
+                numberValue = 1
+              }
+            },
+            {
+              name = "objectType"
+              value = {
+                stringValue = "CalendlyAction__c"
+              }
+            },
+            {
+              name = "rightHandSideType"
+              value = {
+                stringValue = "SObject"
+              }
+            },
+          ]
+          name = "NewCalendlyAction"
+          value = {
+            elementReference = "myVariable_current"
+          }
+        },
+      ]
+    },
+  ]
+  assignments = [
+    {
+      name = "myVariable_waitStartTimeAssignment"
+      label = "myVariable_waitStartTimeAssignment"
+      locationX = 0
+      locationY = 0
+      assignmentItems = [
+        {
+          assignToReference = "myVariable_waitStartTimeVariable"
+          operator = "Assign"
+          value = {
+            elementReference = "$Flow.CurrentDateTime"
+          }
+        },
+      ]
+      connector = {
+        targetReference = "myDecision"
+      }
+    },
+  ]
+  decisions = [
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 0
+        }
+      }
+      name = "myDecision"
+      label = "myDecision"
+      locationX = 50
+      locationY = 0
+      defaultConnector = {
+        targetReference = "myDecision2"
+      }
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_1"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Name"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "invitee.created"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_1_A1"
+          }
+          label = "invitee.created"
+        },
+      ]
+    },
+    {
+      processMetadataValues = {
+        name = "index"
+        value = {
+          numberValue = 1
+        }
+      }
+      name = "myDecision2"
+      label = "myDecision2"
+      locationX = 50
+      locationY = 0
+      defaultConnectorLabel = "default"
+      rules = [
+        {
+          name = "myRule_3"
+          conditionLogic = "and"
+          conditions = [
+            {
+              processMetadataValues = [
+                {
+                  name = "inputDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "leftHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "operatorDataType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+                {
+                  name = "rightHandSideType"
+                  value = {
+                    stringValue = "String"
+                  }
+                },
+              ]
+              leftValueReference = "myVariable_current.Name"
+              operator = "EqualTo"
+              rightValue = {
+                stringValue = "invitee.canceled"
+              }
+            },
+          ]
+          connector = {
+            targetReference = "myRule_3_A1"
+          }
+          label = "invitee.canceled"
+        },
+      ]
+    },
+  ]
+  description = "When Calendly Creates a Record in Salesforce, run certain flows."
+  interviewLabel = "OnCalendlyActionCreated-3_CalendlyAction__c"
+  label = "OnCalendlyActionCreated"
+  processMetadataValues = [
+    {
+      name = "ObjectType"
+      value = {
+        stringValue = "CalendlyAction__c"
+      }
+    },
+    {
+      name = "ObjectVariable"
+      value = {
+        elementReference = "myVariable_current"
+      }
+    },
+    {
+      name = "OldObjectVariable"
+      value = {
+        elementReference = "myVariable_old"
+      }
+    },
+    {
+      name = "TriggerType"
+      value = {
+        stringValue = "onCreateOnly"
+      }
+    },
+  ]
+  processType = "Workflow"
+  startElementReference = "myVariable_waitStartTimeAssignment"
+  status = "Active"
+  variables = [
+    {
+      name = "myVariable_current"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = true
+      objectType = salesforce.CalendlyAction__c
+    },
+    {
+      name = "myVariable_old"
+      dataType = "SObject"
+      isCollection = false
+      isInput = true
+      isOutput = false
+      objectType = salesforce.CalendlyAction__c
+    },
+    {
+      name = "myVariable_waitStartTimeVariable"
+      dataType = "DateTime"
+      isCollection = false
+      isInput = false
+      isOutput = false
+      value = {
+        elementReference = "$Flow.CurrentDateTime"
+      }
+    },
+  ]
+}

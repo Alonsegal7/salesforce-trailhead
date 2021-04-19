@@ -1,0 +1,10 @@
+salesforce.WorkflowRule Account_zaapit__Call_Account_Exmaple_by_ZaapIT_ {
+  fullName = "Account.zaapit__Call  - Account %28Exmaple by ZaapIT%29"
+  active = false
+  description = "Call Account - by ZaapIT"
+  formula = "false"
+  triggerType = "onCreateOrTriggeringUpdate"
+  _parent = [
+    salesforce.Account,
+  ]
+}

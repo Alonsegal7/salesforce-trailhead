@@ -1,0 +1,36 @@
+salesforce.ListView Lead_My_MarketingProfs_Webinar_Leads {
+  fullName = "Lead.My_MarketingProfs_Webinar_Leads"
+  columns = [
+    "Related_Company__c",
+    "Company_Size__c",
+    "LEAD.COUNTRY",
+    "FULL_NAME",
+    "LEAD.TITLE",
+    "LEAD.EMAIL",
+    "LEAD.PHONE",
+    "Event_Name__c",
+    "LEAD.LEAD_SOURCE",
+    "LEAD.STATUS",
+    "Why_unqualified__c",
+    "CORE.USERS.FIRST_NAME",
+    "LEAD.CREATED_DATE",
+  ]
+  filterScope = "Everything"
+  filters = [
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead"
+    },
+  ]
+  label = "My MarketingProfs Webinar Leads"
+  sharedTo = {
+    role = [
+      "Marketing",
+    ]
+    roleAndSubordinatesInternal = "US_Enterprise_SDR"
+  }
+  _parent = [
+    salesforce.Lead,
+  ]
+}

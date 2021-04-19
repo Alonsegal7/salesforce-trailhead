@@ -1,0 +1,74 @@
+salesforce.EmailTemplate unfiled_public_SDR_handover_notification {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  available = true
+  description = "New SDR Handover for {!Lead.Company}"
+  encodingKey = "ISO-8859-1"
+  letterhead = "monday_com"
+  name = "SDR handover notification"
+  style = "freeForm"
+  subject = "New SDR Handover for {!Lead.Company}"
+  textOnly = '''
+{!Lead.SDR_Name_for_reports__c}  handed over a lead to {!Lead.AE__c} from {!Lead.Company}
+
+Lead details:
+
+Full name:
+{!Lead.Name}, {!Lead.Title}
+
+Lead source:
+{!Lead.LeadSource}
+
+UTM source:
+{!Lead.utm_source__c}
+
+Country:
+{!Lead.Country}
+
+Use case:
+{!Lead.Use_Cases_PL__c}
+
+Pains:
+{!Lead.Pains_PL__c}
+
+Long term potential seats:
+{!Lead.Expected_Seats_Upgrade_Potential__c}
+
+Company size:
+{!Lead.Company_Size__c}
+({!Lead.of_employees__c} employees)
+
+DM signer details & process:
+{!Lead.DM_Signer_Details_and_Process__c}
+
+Budget:
+{!Lead.Budget_Text__c}
+
+Timeline:
+{!Lead.Timeline__c}
+
+Competition:
+{!Lead.Competition_They_re_Evaluating__c}
+
+Expected plan / ARR:
+{!Lead.Expected_Plan__c} - {!Lead.Expected_Plan_Seats__c} seats
+{!Lead.Expected_ARR__c} ARR
+
+SDR notes:
+{!Lead.SDR_Notes__c}
+
+Date of meeting:
+{!Lead.Date_of_Meeting__c}
+
+Attendees:
+{!Lead.Attendees__c}
+
+Link to call:
+{!Lead.Link_to_Call__c}
+
+Click here to view the lead
+'''
+  type = "html"
+  uiType = "Aloha"
+  fullName = "unfiled$public/SDR_handover_notification"
+  content = file("salesforce/Records/EmailTemplate/unfiled$public/SDR_handover_notification.email")
+}

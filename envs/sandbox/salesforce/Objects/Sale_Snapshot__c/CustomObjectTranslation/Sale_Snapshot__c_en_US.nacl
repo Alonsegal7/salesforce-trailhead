@@ -1,0 +1,115 @@
+salesforce.CustomObjectTranslation Sale_Snapshot__c_en_US {
+  fullName = "Sale_Snapshot__c-en_US"
+  caseValues = [
+    {
+      plural = false
+      value = "Sale Snapshot"
+    },
+    {
+      plural = true
+      value = "Sale Snapshots"
+    },
+  ]
+  fields = [
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Bi_Weekly_Snapshot__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Close_Data__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.End_of_Month__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Expected_Plan_Seats__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Final_Sale_Status__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.GB_Forecast_ARR__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.GB_Sale__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Owner_Manager__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Owner_Office__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Owner_Team__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Probability__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Record_Type_Number__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Sale_Created_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Sale_Cycle__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Sale_Owner__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Sale_Record_Type__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Sale_Status__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Sale__c
+      relationshipLabel = ""
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Snapshot_Date__c
+    },
+    {
+      label = ""
+      name = salesforce.Sale_Snapshot__c.field.Start_of_Month__c
+    },
+  ]
+  layouts = [
+    {
+      layout = "Sale Snapshot Layout"
+      sections = [
+        {
+          label = ""
+          section = "Custom Links"
+        },
+      ]
+    },
+  ]
+  startsWith = "Consonant"
+  _parent = [
+    salesforce.Sale_Snapshot__c,
+  ]
+}

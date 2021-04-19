@@ -1,0 +1,15 @@
+salesforce.WebLink Opportunity_MassManager__Mass_Edit_Standard_Fields {
+  fullName = "Opportunity.MassManager__Mass_Edit_Standard_Fields"
+  availability = "online"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Mass Edit"
+  openType = "sidebar"
+  page = "MassManager__OpportunitiesMassEdit"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

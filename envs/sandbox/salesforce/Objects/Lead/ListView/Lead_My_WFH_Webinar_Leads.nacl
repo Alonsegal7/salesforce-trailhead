@@ -1,0 +1,36 @@
+salesforce.ListView Lead_My_WFH_Webinar_Leads {
+  fullName = "Lead.My_WFH_Webinar_Leads"
+  columns = [
+    "Related_Company__c",
+    "Company_Size__c",
+    "LEAD.COUNTRY",
+    "FULL_NAME",
+    "LEAD.TITLE",
+    "Requested_Demo__c",
+    "LEAD.EMAIL",
+    "LEAD.PHONE",
+    "Event_Name__c",
+    "LEAD.LEAD_SOURCE",
+    "LEAD.STATUS",
+    "Why_unqualified__c",
+    "CORE.USERS.FIRST_NAME",
+    "LEAD.CREATED_DATE",
+  ]
+  filterScope = "Mine"
+  filters = [
+    {
+      field = "Event_Name__c"
+      operation = "contains"
+      value = "WFH Webinar"
+    },
+    {
+      field = "LEAD.RECORDTYPE"
+      operation = "equals"
+      value = "Lead.Internal_Lead"
+    },
+  ]
+  label = "My WFH Webinar Leads"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

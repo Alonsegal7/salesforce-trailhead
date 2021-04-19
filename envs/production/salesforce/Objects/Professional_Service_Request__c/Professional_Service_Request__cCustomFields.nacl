@@ -1,0 +1,196 @@
+type salesforce.Professional_Service_Request__c {
+  salesforce.Picklist Status__c {
+    apiName = "Professional_Service_Request__c.Status__c"
+    label = "Status"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Initial Discovery"
+        default = true
+        label = "Initial Discovery"
+      },
+      {
+        fullName = "Partner Discovery"
+        default = false
+        label = "Partner Discovery"
+      },
+      {
+        fullName = "PO"
+        default = false
+        label = "PO"
+      },
+      {
+        fullName = "SOW"
+        default = false
+        label = "SOW"
+      },
+      {
+        fullName = "Delivered"
+        default = false
+        label = "Delivered"
+      },
+      {
+        fullName = "Lost"
+        default = false
+        label = "Lost"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number PO_of_Hours__c {
+    apiName = "Professional_Service_Request__c.PO_of_Hours__c"
+    label = "PO # of Hours"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Currency PO_Amount__c {
+    apiName = "Professional_Service_Request__c.PO_Amount__c"
+    label = "PO $ Amount"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.Picklist Service_Type__c {
+    apiName = "Professional_Service_Request__c.Service_Type__c"
+    label = "Service Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Integration"
+        default = false
+        label = "Integration"
+      },
+      {
+        fullName = "Consulting"
+        default = false
+        label = "Consulting"
+      },
+      {
+        fullName = "App"
+        default = false
+        label = "App"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Delivery_of_Hours__c {
+    apiName = "Professional_Service_Request__c.Delivery_of_Hours__c"
+    label = "Delivery # of Hours"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Currency Delivery_Amount__c {
+    apiName = "Professional_Service_Request__c.Delivery_Amount__c"
+    label = "Delivery $ Amount"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.MasterDetail Partner_Company__c {
+    apiName = "Professional_Service_Request__c.Partner_Company__c"
+    label = "Partner Company"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.MasterDetail Opportunity__c {
+    apiName = "Professional_Service_Request__c.Opportunity__c"
+    label = "Opportunity"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = true
+    referenceTo = [
+      salesforce.Opportunity,
+    ]
+    createable = true
+    updateable = true
+    relationshipOrder = 1
+    queryable = true
+  }
+  salesforce.Picklist Why_Lost__c {
+    apiName = "Professional_Service_Request__c.Why_Lost__c"
+    label = "Why Lost?"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Pricing"
+        default = false
+        label = "Pricing"
+      },
+      {
+        fullName = "Timeline"
+        default = false
+        label = "Timeline"
+      },
+    ]
+    restricted = true
+    fieldDependency = {
+      controllingField = "Status__c"
+      valueSettings = [
+        {
+          valueName = "Pricing"
+          controllingFieldValue = [
+            "Lost",
+          ]
+        },
+        {
+          valueName = "Timeline"
+          controllingFieldValue = [
+            "Lost",
+          ]
+        },
+      ]
+    }
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.FormulaNumber Opportunity_ARR__c {
+    apiName = "Professional_Service_Request__c.Opportunity_ARR__c"
+    label = "Opportunity ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Opportunity__r.Green_Bucket_ARR__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+}

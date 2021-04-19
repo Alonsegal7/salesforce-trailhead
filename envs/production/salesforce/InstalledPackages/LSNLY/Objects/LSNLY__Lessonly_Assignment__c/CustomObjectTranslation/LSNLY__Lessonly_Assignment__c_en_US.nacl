@@ -1,0 +1,6 @@
+salesforce.CustomObjectTranslation LSNLY__Lessonly_Assignment__c_en_US {
+  fullName = "LSNLY__Lessonly_Assignment__c-en_US"
+  _parent = [
+    salesforce.LSNLY__Lessonly_Assignment__c,
+  ]
+}

@@ -1,0 +1,8 @@
+salesforce.StaticResource dfsle__CLMGetStarted {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  cacheControl = "Public"
+  contentType = "image/png"
+  description = "CLM - Get started illustration."
+  fullName = "dfsle__CLMGetStarted"
+  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__CLMGetStarted.png")
+}

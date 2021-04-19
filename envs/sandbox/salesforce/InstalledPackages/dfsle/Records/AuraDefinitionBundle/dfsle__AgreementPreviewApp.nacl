@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle dfsle__AgreementPreviewApp {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "Agreement Preview"
+  fullName = "dfsle__AgreementPreviewApp"
+  type = "Application"
+  markup = "(hidden)"
+}

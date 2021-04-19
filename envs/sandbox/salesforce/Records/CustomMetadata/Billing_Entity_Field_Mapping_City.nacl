@@ -1,0 +1,11 @@
+salesforce.CustomMetadata Billing_Entity_Field_Mapping_City {
+  fullName = "Billing_Entity_Field_Mapping.City"
+  label = "City__c"
+  protected = false
+  values = [
+    {
+      field = "Partner_SO_Request_Field__c"
+      value = "Billing_City__c"
+    },
+  ]
+}

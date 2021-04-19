@@ -1,0 +1,15 @@
+salesforce.ListView dfsle__GenTemplate__c_dfsle__All {
+  fullName = "dfsle__GenTemplate__c.dfsle__All"
+  columns = [
+    "NAME",
+    "dfsle__SourceObject__c",
+    "dfsle__IsSample__c",
+    "dfsle__TemplateType__c",
+    "UPDATEDBY_USER",
+  ]
+  filterScope = "Everything"
+  label = "All"
+  _parent = [
+    salesforce.dfsle__GenTemplate__c,
+  ]
+}

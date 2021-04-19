@@ -1,0 +1,274 @@
+salesforce.LightningPage Admin_Homepage_Gal {
+  fullName = "Admin_Homepage_Gal"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "Nurturing_Monitoring_syJ"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "Leftovers_P25"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+      ]
+      name = "Facet-6f2e8625-33a4-435c-a5f9-727b553addb5"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "dashboardName"
+              value = "zZLUXqtvtxpggdggOMFgNTvxtCmlDl1"
+            },
+            {
+              name = "hideOnError"
+              value = "true"
+            },
+          ]
+          componentName = "desktopDashboards:embeddedDashboard"
+        },
+      ]
+      name = "Facet-b97a6a21-b973-4cce-bac0-bf0f603cb3e3"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "SDRs_Round_Robin_Chili_Piper_NOH"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+      ]
+      name = "Facet-2d1a8663-0368-496b-8abc-e786c233e20f"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "Closed_Opps_without_summary_sDA"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "cacheAge"
+              value = "1440"
+            },
+            {
+              name = "reportName"
+              value = "Closed_Opportunities_Summary_6Gc"
+            },
+            {
+              name = "showRefreshButton"
+              value = "true"
+            },
+          ]
+          componentName = "flexipage:reportChart"
+        },
+      ]
+      name = "Facet-uejvxfxs1xc"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "enableInlineEdit"
+              value = "true"
+            },
+            {
+              name = "entityName"
+              value = "Lead"
+            },
+            {
+              name = "filterName"
+              value = "API_Hubspot_leads"
+            },
+            {
+              name = "hideActionBar"
+              value = "false"
+            },
+            {
+              name = "hideSearchBar"
+              value = "false"
+            },
+            {
+              name = "pageSize"
+              value = "3"
+            },
+          ]
+          componentName = "flexipage:filterListCard"
+        },
+      ]
+      name = "Facet-2e0ae4de-7035-412f-9987-93609c69e9de"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "active"
+              value = "true"
+            },
+            {
+              name = "body"
+              value = "Facet-6f2e8625-33a4-435c-a5f9-727b553addb5"
+            },
+            {
+              name = "title"
+              value = "Leads Nurturing"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-b97a6a21-b973-4cce-bac0-bf0f603cb3e3"
+            },
+            {
+              name = "title"
+              value = "Group Dashboard"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-2d1a8663-0368-496b-8abc-e786c233e20f"
+            },
+            {
+              name = "title"
+              value = "Round Robin"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-uejvxfxs1xc"
+            },
+            {
+              name = "title"
+              value = "Opportunity Summary"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+        {
+          componentInstanceProperties = [
+            {
+              name = "body"
+              value = "Facet-2e0ae4de-7035-412f-9987-93609c69e9de"
+            },
+            {
+              name = "title"
+              value = "API Hubspot Leads"
+            },
+          ]
+          componentName = "flexipage:tab"
+        },
+      ]
+      name = "Facet-c3a60798-7ad4-4ff9-b6df-eed95e7f5aaf"
+      type = "Facet"
+    },
+    {
+      componentInstances = [
+        {
+          componentInstanceProperties = [
+            {
+              name = "tabs"
+              value = "Facet-c3a60798-7ad4-4ff9-b6df-eed95e7f5aaf"
+            },
+          ]
+          componentName = "flexipage:tabset"
+        },
+      ]
+      name = "top"
+      type = "Region"
+    },
+    {
+      name = "left"
+      type = "Region"
+    },
+    {
+      name = "middle"
+      type = "Region"
+    },
+    {
+      componentInstances = [
+        {
+          componentName = "home:recentRecordContainer"
+        },
+      ]
+      name = "right"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Admin Homepage - Gal"
+  template = {
+    name = "home:desktopTemplateHeaderThreeColumns"
+  }
+  type = "HomePage"
+}

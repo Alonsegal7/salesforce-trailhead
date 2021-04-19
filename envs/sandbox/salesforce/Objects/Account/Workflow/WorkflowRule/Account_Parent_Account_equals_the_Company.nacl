@@ -1,0 +1,9 @@
+salesforce.WorkflowRule Account_Parent_Account_equals_the_Company {
+  fullName = "Account.Parent Account equals the Company"
+  active = false
+  formula = "NOT(ISBLANK(  Company__c )) || ISCHANGED(Company__c)"
+  triggerType = "onAllChanges"
+  _parent = [
+    salesforce.Account,
+  ]
+}

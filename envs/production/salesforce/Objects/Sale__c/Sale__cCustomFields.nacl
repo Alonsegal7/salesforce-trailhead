@@ -1,0 +1,745 @@
+type salesforce.Sale__c {
+  salesforce.FormulaNumber GB_Forecast_ARR__c {
+    apiName = "Sale__c.GB_Forecast_ARR__c"
+    label = "Forecast Sale ARR"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "ARR__c * Probability__c"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    description = "The Sale ARR * last opportunity's probability"
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Probability__c,
+      salesforce.Sale__c.field.ARR__c,
+    ]
+  }
+  salesforce.Date Close_Date__c {
+    apiName = "Sale__c.Close_Date__c"
+    label = "Close Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Picklist Type__c {
+    apiName = "Sale__c.Type__c"
+    label = "Type"
+    _required = false
+    valueSet = [
+      {
+        fullName = "Sales"
+        default = false
+        label = "Sales"
+      },
+      {
+        fullName = "Partner"
+        default = false
+        label = "Partner"
+      },
+    ]
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    sorted = false
+  }
+  salesforce.Number Expected_Plan_Id__c {
+    apiName = "Sale__c.Expected_Plan_Id__c"
+    label = "Expected_Plan_Id"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Picklist Sale_Status_Override__c {
+    apiName = "Sale__c.Sale_Status_Override__c"
+    label = "Sale Status Override"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Sale_Status
+  }
+  salesforce.Picklist Sale_Status__c {
+    apiName = "Sale__c.Sale_Status__c"
+    label = "Sale Status"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Sale_Status
+  }
+  salesforce.MasterDetail Company__c {
+    apiName = "Sale__c.Company__c"
+    label = "Company"
+    _required = false
+    writeRequiresMasterRead = false
+    reparentableMasterDetail = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    relationshipOrder = 0
+    queryable = true
+  }
+  salesforce.Lookup Owner__c {
+    apiName = "Sale__c.Owner__c"
+    label = "Owner"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Percent Probability__c {
+    apiName = "Sale__c.Probability__c"
+    label = "Probability"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 0
+    precision = 18
+    queryable = true
+  }
+  salesforce.Number ARR__c {
+    apiName = "Sale__c.ARR__c"
+    label = "Sale ARR"
+    _required = false
+    precision = 18
+    scale = 1
+    inlineHelpText = "Aggregates all the opportunities under the monday account that bring this sale over the green bucket threshold."
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Expected_Plan_Name__c {
+    apiName = "Sale__c.Expected_Plan_Name__c"
+    label = "Expected_Plan_Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 80
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Expected_Plan_Period__c {
+    apiName = "Sale__c.Expected_Plan_Period__c"
+    label = "Expected_Plan_Period"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number Expected_Plan_Seats__c {
+    apiName = "Sale__c.Expected_Plan_Seats__c"
+    label = "Expected_Plan_Seats"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Expected_Plan_Tier__c {
+    apiName = "Sale__c.Expected_Plan_Tier__c"
+    label = "Expected_Plan_Tier"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text Primary_Pulse_Account_Id__c {
+    apiName = "Sale__c.Primary_Pulse_Account_Id__c"
+    label = "Primary Pulse Account Id"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Checkbox RecalculateSale__c {
+    apiName = "Sale__c.RecalculateSale__c"
+    label = "Recalculate Sale"
+    defaultValue = false
+    inlineHelpText = "this is a temp patch, when changing this field it will re calculate the sale"
+    createable = true
+    updateable = true
+    queryable = true
+    description = "this is a temp patch, when changing this field it will re calculate the sale"
+  }
+  salesforce.Picklist FinalSaleStatus__c {
+    apiName = "Sale__c.FinalSaleStatus__c"
+    label = "Final Sale Status"
+    _required = false
+    restricted = true
+    createable = true
+    updateable = true
+    queryable = true
+    valueSetName = salesforce.GlobalValueSet.instance.Sale_Status
+  }
+  salesforce.FormulaCheckbox My_Sale__c {
+    apiName = "Sale__c.My_Sale__c"
+    label = "My Sale"
+    formula = "Owner__c =  $User.Id"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Owner__c,
+    ]
+  }
+  salesforce.FormulaNumber Sale_cycle__c {
+    apiName = "Sale__c.Sale_cycle__c"
+    label = "Sale cycle"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Close_Date__c -  DATEVALUE(CreatedDate)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Close_Date__c,
+    ]
+  }
+  salesforce.FormulaDate Created_Date__c {
+    apiName = "Sale__c.Created_Date__c"
+    label = "Created Date"
+    _required = false
+    formula = "CreatedDate"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Long_Sale_ID__c {
+    apiName = "Sale__c.Long_Sale_ID__c"
+    label = "Long Sale ID"
+    _required = false
+    formula = "CASESAFEID(Id)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup Monday_Account__c {
+    apiName = "Sale__c.Monday_Account__c"
+    label = "Monday Account"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Account,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaNumber Company_Size__c {
+    apiName = "Sale__c.Company_Size__c"
+    label = "Company Size"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "Company__r.NumberOfEmployees"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Company__c,
+    ]
+  }
+  salesforce.FormulaText Closed_Month__c {
+    apiName = "Sale__c.Closed_Month__c"
+    label = "Closed Month"
+    _required = false
+    formula = '''
+CASE(MONTH(Close_Date__c),
+1, "January",
+2, "February",
+3, "March",
+ 4, "April",
+ 5, "May",
+ 6, "June",
+7, "July",
+8, "August",
+9, "September",
+10, "October",
+11, "November",
+12, "December", "None")
+'''
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Close_Date__c,
+    ]
+  }
+  salesforce.FormulaNumber gb_sale__c {
+    apiName = "Sale__c.gb_sale__c"
+    label = "GB Sale"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if(or(ispickval( Sale_Status__c ,\"Complete\"),ispickval(Sale_Status__c ,\"Expected Complete\")),1,0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+    _generated_dependencies = [
+      salesforce.Sale__c.field.Sale_Status__c,
+    ]
+  }
+  salesforce.Number of_Connected_Opportunities__c {
+    apiName = "Sale__c.of_Connected_Opportunities__c"
+    label = "# of Connected Opportunities"
+    _required = false
+    precision = 18
+    scale = 0
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText User_id__c {
+    apiName = "Sale__c.User_id__c"
+    label = "User id"
+    _required = false
+    formula = "Owner__r.Id"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup Target__c {
+    apiName = "Sale__c.Target__c"
+    label = "Target"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Target__c,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText monday_account_country__c {
+    apiName = "Sale__c.monday_account_country__c"
+    label = "Monday Account Country"
+    _required = false
+    formula = "Monday_Account__r.BillingCountry"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup CSM__c {
+    apiName = "Sale__c.CSM__c"
+    label = "CSM"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText Current_Account_Plan__c {
+    apiName = "Sale__c.Current_Account_Plan__c"
+    label = "Current Account Plan"
+    _required = false
+    formula = "if(isblank(Monday_Account__r.Plan_Name__c),\"No Plan Yet\",Monday_Account__r.Plan_Name__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.LongTextArea Celebration_Status__c {
+    apiName = "Sale__c.Celebration_Status__c"
+    label = "Celebration Status"
+    _required = false
+    createable = true
+    updateable = true
+    length = 32768
+    queryable = true
+    visibleLines = 3
+  }
+  salesforce.FormulaText CSM_Email__c {
+    apiName = "Sale__c.CSM_Email__c"
+    label = "CSM Email"
+    _required = false
+    formula = "if(isnull( Monday_Account__c ),\"\",if(isnull( Monday_Account__r.CSM__c ),\"\",if(ispickval(Monday_Account__r.CSM__r.Function__c , \"Enterprise CSM\") || ISPICKVAL(Monday_Account__r.CSM__r.Function__c , \"Mid-Market CSM\"),Monday_Account__r.CSM__r.Email,\"\")))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Is_Sale_Complete__c {
+    apiName = "Sale__c.Is_Sale_Complete__c"
+    label = "Is Final Sale Status=Complete?"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if ( ispickval(FinalSaleStatus__c , 'Complete'), 1, 0)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText CSM_Id__c {
+    apiName = "Sale__c.CSM_Id__c"
+    label = "CSM id"
+    _required = false
+    formula = "if(isnull( Monday_Account__c ),\"\",if(isnull( Monday_Account__r.CSM__c ),\"\",if(ispickval(Monday_Account__r.CSM__r.Function__c , \"Enterprise CSM\") || ISPICKVAL(Monday_Account__r.CSM__r.Function__c , \"Mid-Market CSM\")||ispickval(Monday_Account__r.CSM__r.Function__c , \"Low touch CS\"),Monday_Account__r.CSM__r.Long_User_ID__c,\"\")))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber Sale_Age__c {
+    apiName = "Sale__c.Sale_Age__c"
+    label = "Sale Age"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = '''
+iF( ISPICKVAL(FinalSaleStatus__c, "Complete") ,(
+ Close_Date__c  - DATEVALUE(CreatedDate)),
+TODAY() - DATEVALUE(CreatedDate))
+'''
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Sale_Record_type_ID__c {
+    apiName = "Sale__c.Sale_Record_type_ID__c"
+    label = "Sale Record type ID"
+    _required = false
+    formula = "RecordTypeId"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Record_Type_Number__c {
+    apiName = "Sale__c.Record_Type_Number__c"
+    label = "Record Type Number"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "if( RecordTypeId ='0121t000000IQYO',1,if( RecordTypeId='0121t000000IQYT',2,0))"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Email csm_email_for_notification__c {
+    apiName = "Sale__c.csm_email_for_notification__c"
+    label = "csm email for notification"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Partner_Source_Type__c {
+    apiName = "Sale__c.Partner_Source_Type__c"
+    label = "Partner Source Type"
+    _required = false
+    formula = "text(Monday_Account__r.Account_Source_Type__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Lookup Owner_s_Manager__c {
+    apiName = "Sale__c.Owner_s_Manager__c"
+    label = "Owner's Manager"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaText CSM_Name__c {
+    apiName = "Sale__c.CSM_Name__c"
+    label = "CSM Name"
+    _required = false
+    formula = "if(isnull( Monday_Account__c ),\"\",if(isnull( Monday_Account__r.CSM__c ),\"\",if(ispickval(Monday_Account__r.CSM__r.Function__c , \"Enterprise CSM\") || ISPICKVAL(Monday_Account__r.CSM__r.Function__c , \"Mid-Market CSM\"),  Monday_Account__r.CSM__r.Full_Name__c,\"\")))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text SDR_Name__c {
+    apiName = "Sale__c.SDR_Name__c"
+    label = "SDR Name"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.Text SDR_ID__c {
+    apiName = "Sale__c.SDR_ID__c"
+    label = "SDR ID"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 50
+    queryable = true
+    externalId = false
+  }
+  salesforce.Number ARR_Temp__c {
+    apiName = "Sale__c.ARR_Temp__c"
+    label = "ARR Temp"
+    _required = false
+    precision = 18
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaText Account_Type__c {
+    apiName = "Sale__c.Account_Type__c"
+    label = "Account Type"
+    _required = false
+    formula = "Text(Monday_Account__r.Account_Source_Type__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.DateTime Sent_Celebration_to_Slack__c {
+    apiName = "Sale__c.Sent_Celebration_to_Slack__c"
+    label = "Sent Celebration to Slack"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox Close_date_This_Month__c {
+    apiName = "Sale__c.Close_date_This_Month__c"
+    label = "Close date = This Month"
+    formula = "(MONTH( Close_Date__c ) = MONTH(TODAY())) && (YEAR( Close_Date__c ) = YEAR(TODAY()))"
+    createable = false
+    updateable = false
+    queryable = true
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Owner_CPM_For_Reports__c {
+    apiName = "Sale__c.Owner_CPM_For_Reports__c"
+    label = "Owner CPM (For Reports)"
+    _required = false
+    formula = "if( ispickval( Owner__r.Function__c,\"Partner\"), Owner__r.Manager.Full_Name__c , Owner__r.Full_Name__c )"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Text Account_Source_Type__c {
+    apiName = "Sale__c.Account_Source_Type__c"
+    label = "Account Source Type"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 100
+    queryable = true
+    externalId = false
+  }
+  salesforce.FormulaNumber Close_Date_Day__c {
+    apiName = "Sale__c.Close_Date_Day__c"
+    label = "Close Date Day"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "day(Close_Date__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Close_Date_Month__c {
+    apiName = "Sale__c.Close_Date_Month__c"
+    label = "Close Date Month"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "month(Close_Date__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaNumber Close_Date_Year__c {
+    apiName = "Sale__c.Close_Date_Year__c"
+    label = "Close Date Year"
+    _required = false
+    precision = 18
+    scale = 0
+    formula = "year(Close_Date__c)"
+    createable = false
+    updateable = false
+    unique = false
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.FormulaText Account_Region__c {
+    apiName = "Sale__c.Account_Region__c"
+    label = "Account Region"
+    _required = false
+    formula = "text(Monday_Account__r.Region__c)"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+    formulaTreatBlanksAs = "BlankAsZero"
+  }
+  salesforce.Checkbox Trigger_Slack_Celebration__c {
+    apiName = "Sale__c.Trigger_Slack_Celebration__c"
+    label = "Trigger Slack Celebration"
+    defaultValue = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.FormulaCheckbox AM_I_the_CPM__c {
+    apiName = "Sale__c.AM_I_the_CPM__c"
+    label = "AM I the CPM"
+    formula = "if( Owner_s_Manager__c =  $User.Id , TRUE, FALSE)"
+    createable = false
+    updateable = false
+    queryable = true
+  }
+  salesforce.FormulaText Close_Date_Week_Number__c {
+    apiName = "Sale__c.Close_Date_Week_Number__c"
+    label = "Close Date Week Number"
+    _required = false
+    formula = "if( DAY( Close_Date__c ) <8, \"Week 1\", if(DAY( Close_Date__c ) <15, \"Week 2\", if(DAY( Close_Date__c ) <22, \"Week 3\", \"Week 4\")))"
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 1300
+    queryable = true
+    externalId = false
+  }
+}

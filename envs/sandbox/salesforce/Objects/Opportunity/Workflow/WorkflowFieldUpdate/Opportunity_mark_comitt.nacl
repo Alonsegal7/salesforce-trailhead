@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Opportunity_mark_comitt {
+  fullName = "Opportunity.mark_comitt"
+  field = salesforce.Opportunity.field.Forecasted__c
+  literalValue = "1"
+  name = "mark comitt"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Opportunity,
+  ]
+}

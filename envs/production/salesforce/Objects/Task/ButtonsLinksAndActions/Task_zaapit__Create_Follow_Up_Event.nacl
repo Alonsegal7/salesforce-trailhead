@@ -1,0 +1,23 @@
+salesforce.WebLink Task_zaapit__Create_Follow_Up_Event {
+  fullName = "Task.zaapit__Create_Follow_Up_Event"
+  availability = "online"
+  description = "Create Follow-Up Event & copy description!"
+  displayType = "button"
+  encodingKey = "UTF-8"
+  hasMenubar = false
+  hasScrollbars = true
+  hasToolbar = false
+  height = 600
+  isResizable = true
+  linkType = "url"
+  masterLabel = "Create Follow-Up Event"
+  openType = "newWindow"
+  position = "none"
+  protected = false
+  showsLocation = false
+  showsStatus = false
+  url = "/00U/e?who_id={!Task.Who}&what_id={!Task.What}&evt5={!JSINHTMLENCODE((Task.Subject))}&evt6={!SUBSTITUTE(JSINHTMLENCODE(Task.Description),'\\n',' ')}&retURL=/{!Task.Id}"
+  _parent = [
+    salesforce.Task,
+  ]
+}

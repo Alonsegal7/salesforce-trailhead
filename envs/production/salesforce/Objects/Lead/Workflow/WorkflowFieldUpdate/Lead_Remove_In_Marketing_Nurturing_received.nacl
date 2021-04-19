@@ -1,0 +1,12 @@
+salesforce.WorkflowFieldUpdate Lead_Remove_In_Marketing_Nurturing_received {
+  fullName = "Lead.Remove_In_Marketing_Nurturing_received"
+  field = salesforce.Lead.field.In_Marketing_Nurturing__c
+  literalValue = "0"
+  name = "Remove 'In Marketing Nurturing' received"
+  notifyAssignee = false
+  operation = "Literal"
+  protected = false
+  _parent = [
+    salesforce.Lead,
+  ]
+}

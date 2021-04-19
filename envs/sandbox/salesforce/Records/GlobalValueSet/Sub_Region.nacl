@@ -1,0 +1,99 @@
+salesforce.GlobalValueSet Sub_Region {
+  fullName = "Sub_Region"
+  customValue = [
+    {
+      fullName = "East Asia"
+      default = false
+      label = "East Asia"
+    },
+    {
+      fullName = "Oceania"
+      default = false
+      label = "Oceania"
+    },
+    {
+      fullName = "Southeast Asia"
+      default = false
+      label = "Southeast Asia"
+    },
+    {
+      fullName = "Africa"
+      default = false
+      label = "Africa"
+    },
+    {
+      fullName = "Eastern_Europe"
+      default = false
+      label = "Eastern Europe"
+    },
+    {
+      fullName = "Western Europe"
+      default = false
+      label = "Western Europe"
+    },
+    {
+      fullName = "Middle East"
+      default = false
+      label = "Middle East"
+    },
+    {
+      fullName = "UK + Ireland"
+      default = false
+      label = "UK + Ireland"
+    },
+    {
+      fullName = "Caribbean"
+      default = false
+      label = "Caribbean"
+    },
+    {
+      fullName = "Central America"
+      default = false
+      label = "Central America"
+    },
+    {
+      fullName = "South America"
+      default = false
+      label = "South America"
+    },
+    {
+      fullName = "East Coast US"
+      default = false
+      label = "East Coast US"
+    },
+    {
+      fullName = "West Coast US"
+      default = false
+      label = "West Coast US"
+    },
+    {
+      fullName = "Central Canada"
+      default = false
+      label = "Central Canada"
+    },
+    {
+      fullName = "Central US"
+      default = false
+      label = "Central US"
+    },
+    {
+      fullName = "East Coast Canada"
+      default = false
+      label = "East Coast Canada"
+    },
+    {
+      fullName = "West Coast Canada"
+      default = false
+      label = "West Coast Canada"
+    },
+    {
+      fullName = "Northern Canada"
+      default = false
+      isActive = false
+      label = "Northern Canada"
+    },
+  ]
+  description = "Customer’s sub region within the selected region—for sales operations use only."
+  masterLabel = "Sub Region"
+  sorted = false
+}

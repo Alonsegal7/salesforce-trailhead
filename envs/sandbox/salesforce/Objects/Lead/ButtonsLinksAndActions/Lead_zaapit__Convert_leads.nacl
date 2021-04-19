@@ -1,0 +1,23 @@
+salesforce.WebLink Lead_zaapit__Convert_leads {
+  fullName = "Lead.zaapit__Convert_leads"
+  availability = "online"
+  description = "used inside zaapit's app"
+  displayType = "button"
+  encodingKey = "UTF-8"
+  hasMenubar = false
+  hasScrollbars = true
+  hasToolbar = false
+  height = 600
+  isResizable = true
+  linkType = "url"
+  masterLabel = "Convert"
+  openType = "newWindow"
+  position = "none"
+  protected = false
+  showsLocation = false
+  showsStatus = false
+  url = "/**/convertlead1();"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

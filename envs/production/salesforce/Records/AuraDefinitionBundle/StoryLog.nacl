@@ -1,0 +1,15 @@
+salesforce.AuraDefinitionBundle StoryLog {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 47
+  description = "A Lightning Component Bundle"
+  fullName = "StoryLog"
+  type = "Component"
+  SVGContent = file("salesforce/Records/AuraDefinitionBundle/StoryLog/StoryLog.svg")
+  rendererContent = file("salesforce/Records/AuraDefinitionBundle/StoryLog/StoryLogRenderer.js")
+  documentationContent = file("salesforce/Records/AuraDefinitionBundle/StoryLog/StoryLog.auradoc")
+  helperContent = file("salesforce/Records/AuraDefinitionBundle/StoryLog/StoryLogHelper.js")
+  controllerContent = file("salesforce/Records/AuraDefinitionBundle/StoryLog/StoryLogController.js")
+  markup = file("salesforce/Records/AuraDefinitionBundle/StoryLog/StoryLog.cmp")
+  designContent = file("salesforce/Records/AuraDefinitionBundle/StoryLog/StoryLog.design")
+  styleContent = file("salesforce/Records/AuraDefinitionBundle/StoryLog/StoryLog.css")
+}

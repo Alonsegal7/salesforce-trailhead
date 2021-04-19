@@ -1,0 +1,6 @@
+salesforce.RemoteSiteSetting redash {
+  fullName = "redash"
+  disableProtocolSecurity = false
+  isActive = true
+  url = "https://redash.bigbrain.me"
+}

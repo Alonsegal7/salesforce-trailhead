@@ -1,0 +1,14 @@
+salesforce.ValidationRule Milestone__c_Set_Time_Spent_on_Close {
+  fullName = "Milestone__c.Set_Time_Spent_on_Close"
+  active = true
+  errorConditionFormula = '''
+ischanged( Status__c )&&
+ispickval(Status__c,'Closed')&&
+isblank(Actual_Time_Spent__c )
+'''
+  errorDisplayField = "Actual_Time_Spent__c"
+  errorMessage = "Please fill in the actual time spent on this milestone."
+  _parent = [
+    salesforce.Milestone__c,
+  ]
+}

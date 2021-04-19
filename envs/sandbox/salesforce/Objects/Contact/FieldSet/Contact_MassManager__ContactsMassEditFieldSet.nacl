@@ -1,0 +1,232 @@
+salesforce.FieldSet Contact_MassManager__ContactsMassEditFieldSet {
+  fullName = "Contact.MassManager__ContactsMassEditFieldSet"
+  availableFields = [
+    {
+      field = "AssistantName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AssistantPhone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Birthdate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CreatedById"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "CreatedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Description"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "EmailBouncedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "EmailBouncedReason"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Fax"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "HasOptedOutOfEmail"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "HomePhone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastActivityDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastCURequestDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastCUUpdateDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastModifiedById"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastModifiedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastReferencedDate"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MailingCity"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MailingCountry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MailingGeocodeAccuracy"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MailingLatitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MailingLongitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MailingPostalCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MailingState"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MailingStreet"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Name"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OtherCountry"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OtherGeocodeAccuracy"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OtherLatitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OtherLongitude"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OtherPhone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OtherPostalCode"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OtherStreet"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Phone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Salutation"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  description = "ContactsMassEditFieldSet"
+  displayedFields = [
+    {
+      field = "FirstName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LastName"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "AccountId"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Email"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Title"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "MobilePhone"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "Department"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "LeadSource"
+      isFieldManaged = false
+      isRequired = false
+    },
+    {
+      field = "OwnerId"
+      isFieldManaged = false
+      isRequired = false
+    },
+  ]
+  label = "ContactsMassEditFieldSet"
+  _parent = [
+    salesforce.Contact,
+  ]
+}

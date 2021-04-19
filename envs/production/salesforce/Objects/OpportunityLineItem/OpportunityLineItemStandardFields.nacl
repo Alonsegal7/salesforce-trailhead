@@ -1,0 +1,291 @@
+type salesforce.OpportunityLineItem {
+  serviceid Id {
+    apiName = "OpportunityLineItem.Id"
+    label = "Line Item ID"
+    _required = false
+    queryable = true
+    _hidden = true
+    updateable = false
+    createable = false
+  }
+  salesforce.Lookup OpportunityId {
+    apiName = "OpportunityLineItem.OpportunityId"
+    label = "Opportunity ID"
+    _required = true
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Opportunity,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Number SortOrder {
+    apiName = "OpportunityLineItem.SortOrder"
+    label = "Sort Order"
+    _required = false
+    precision = 9
+    createable = true
+    updateable = true
+    scale = 0
+    unique = false
+    queryable = true
+  }
+  salesforce.Lookup PricebookEntryId {
+    apiName = "OpportunityLineItem.PricebookEntryId"
+    label = "Price Book Entry ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.PricebookEntry,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Lookup Product2Id {
+    apiName = "OpportunityLineItem.Product2Id"
+    label = "Product ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.Product2,
+    ]
+    createable = true
+    updateable = false
+    queryable = true
+  }
+  salesforce.Text ProductCode {
+    apiName = "OpportunityLineItem.ProductCode"
+    label = "Product Code"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.Text Name {
+    apiName = "OpportunityLineItem.Name"
+    label = "Opportunity Product Name"
+    _required = false
+    createable = false
+    updateable = false
+    unique = false
+    caseSensitive = false
+    length = 376
+    queryable = true
+  }
+  salesforce.Picklist CurrencyIsoCode {
+    apiName = "OpportunityLineItem.CurrencyIsoCode"
+    label = "Currency ISO Code"
+    _required = false
+    valueSet = [
+      {
+        fullName = "AUD"
+        default = false
+        label = "Australian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "BRL"
+        default = false
+        label = "Brazilian Real"
+        isActive = true
+      },
+      {
+        fullName = "GBP"
+        default = false
+        label = "British Pound"
+        isActive = true
+      },
+      {
+        fullName = "CAD"
+        default = false
+        label = "Canadian Dollar"
+        isActive = true
+      },
+      {
+        fullName = "DKK"
+        default = false
+        label = "Danish Krone"
+        isActive = true
+      },
+      {
+        fullName = "EUR"
+        default = false
+        label = "Euro"
+        isActive = true
+      },
+      {
+        fullName = "ILS"
+        default = false
+        label = "Israeli Shekel"
+        isActive = true
+      },
+      {
+        fullName = "MXN"
+        default = false
+        label = "Mexican Peso"
+        isActive = true
+      },
+      {
+        fullName = "SEK"
+        default = false
+        label = "Swedish Krona"
+        isActive = true
+      },
+      {
+        fullName = "USD"
+        default = true
+        label = "U.S. Dollar"
+        isActive = true
+      },
+    ]
+    restricted = true
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Number Quantity {
+    apiName = "OpportunityLineItem.Quantity"
+    label = "Quantity"
+    _required = true
+    precision = 12
+    scale = 2
+    createable = true
+    updateable = true
+    unique = false
+    queryable = true
+  }
+  salesforce.Percent Discount {
+    apiName = "OpportunityLineItem.Discount"
+    label = "Discount"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 5
+    queryable = true
+  }
+  salesforce.Currency TotalPrice {
+    apiName = "OpportunityLineItem.TotalPrice"
+    label = "Total Price"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Currency UnitPrice {
+    apiName = "OpportunityLineItem.UnitPrice"
+    label = "Sales Price"
+    _required = false
+    createable = true
+    updateable = true
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Currency ListPrice {
+    apiName = "OpportunityLineItem.ListPrice"
+    label = "List Price"
+    _required = false
+    createable = false
+    updateable = false
+    scale = 2
+    precision = 18
+    queryable = true
+  }
+  salesforce.Date ServiceDate {
+    apiName = "OpportunityLineItem.ServiceDate"
+    label = "Date"
+    _required = false
+    createable = true
+    updateable = true
+    queryable = true
+  }
+  salesforce.Text Description {
+    apiName = "OpportunityLineItem.Description"
+    label = "Line Description"
+    _required = false
+    createable = true
+    updateable = true
+    unique = false
+    caseSensitive = false
+    length = 255
+    queryable = true
+  }
+  salesforce.DateTime CreatedDate {
+    apiName = "OpportunityLineItem.CreatedDate"
+    label = "Created Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup CreatedById {
+    apiName = "OpportunityLineItem.CreatedById"
+    label = "Created By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime LastModifiedDate {
+    apiName = "OpportunityLineItem.LastModifiedDate"
+    label = "Last Modified Date"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Lookup LastModifiedById {
+    apiName = "OpportunityLineItem.LastModifiedById"
+    label = "Last Modified By ID"
+    _required = false
+    allowLookupRecordDeletion = true
+    referenceTo = [
+      salesforce.User,
+    ]
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.DateTime SystemModstamp {
+    apiName = "OpportunityLineItem.SystemModstamp"
+    label = "System Modstamp"
+    _required = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+  }
+  salesforce.Checkbox IsDeleted {
+    apiName = "OpportunityLineItem.IsDeleted"
+    label = "Deleted"
+    defaultValue = false
+    createable = false
+    updateable = false
+    queryable = true
+    _hidden = true
+    _required = false
+  }
+  salesforce.Unknown Subtotal {
+    apiName = "OpportunityLineItem.Subtotal"
+    queryable = false
+    updateable = false
+    createable = false
+  }
+}

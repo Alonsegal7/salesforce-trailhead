@@ -1,0 +1,8 @@
+salesforce.AuraDefinitionBundle dfsle__GenTemplateDeleteApp {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 49
+  description = "GenTemplateDeleteApp"
+  fullName = "dfsle__GenTemplateDeleteApp"
+  type = "Application"
+  markup = "(hidden)"
+}

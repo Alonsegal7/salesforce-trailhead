@@ -1,0 +1,14 @@
+salesforce.AuraDefinitionBundle datatableFSC {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 45
+  description = "Flow Screen Component"
+  fullName = "datatableFSC"
+  type = "Component"
+  styleContent = file("salesforce/Records/AuraDefinitionBundle/datatableFSC/datatableFSC.css")
+  documentationContent = file("salesforce/Records/AuraDefinitionBundle/datatableFSC/datatableFSC.auradoc")
+  rendererContent = file("salesforce/Records/AuraDefinitionBundle/datatableFSC/datatableFSCRenderer.js")
+  designContent = file("salesforce/Records/AuraDefinitionBundle/datatableFSC/datatableFSC.design")
+  helperContent = file("salesforce/Records/AuraDefinitionBundle/datatableFSC/datatableFSCHelper.js")
+  controllerContent = file("salesforce/Records/AuraDefinitionBundle/datatableFSC/datatableFSCController.js")
+  markup = file("salesforce/Records/AuraDefinitionBundle/datatableFSC/datatableFSC.cmp")
+}

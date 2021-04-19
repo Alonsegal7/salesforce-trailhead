@@ -1,0 +1,232 @@
+salesforce.Layout Milestone_Layout {
+  fullName = "Milestone__c-Milestone Layout"
+  excludeButtons = [
+    "Submit",
+  ]
+  layoutSections = [
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Required"
+              field = salesforce.Milestone__c.field.Name
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Milestone__c.field.Project__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Assignee__c
+            },
+            {
+              behavior = "Required"
+              field = salesforce.Milestone__c.field.Milestone_type__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Actual_Go_live_date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Session_Due_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Log_a_Session__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Milestone_Summary__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Status__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Close_Date__c
+            },
+            {
+              behavior = "Edit"
+              field = salesforce.Milestone__c.field.Actual_Time_Spent__c
+            },
+            {
+              behavior = "Readonly"
+              field = salesforce.Milestone__c.field.Age_Days__c
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = false
+      detailHeading = false
+      editHeading = true
+      label = "System Information"
+      layoutColumns = [
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Milestone__c.field.CreatedById
+            },
+          ]
+        },
+        {
+          layoutItems = [
+            {
+              behavior = "Readonly"
+              field = salesforce.Milestone__c.field.LastModifiedById
+            },
+          ]
+        },
+      ]
+      style = "TwoColumnsTopToBottom"
+    },
+    {
+      customLabel = true
+      detailHeading = false
+      editHeading = true
+      label = "Custom Links"
+      style = "CustomLinks"
+    },
+  ]
+  platformActionList = {
+    actionListContext = "Record"
+    platformActionListItems = [
+      {
+        actionName = "NewEvent"
+        actionType = "QuickAction"
+        sortOrder = 0
+      },
+      {
+        actionName = "FeedItem.ContentNote"
+        actionType = "QuickAction"
+        sortOrder = 1
+      },
+      {
+        actionName = "FeedItem.PollPost"
+        actionType = "QuickAction"
+        sortOrder = 2
+      },
+      {
+        actionName = "FeedItem.ContentPost"
+        actionType = "QuickAction"
+        sortOrder = 3
+      },
+      {
+        actionName = "NewContact"
+        actionType = "QuickAction"
+        sortOrder = 4
+      },
+      {
+        actionName = "NewOpportunity"
+        actionType = "QuickAction"
+        sortOrder = 5
+      },
+      {
+        actionName = "NewLead"
+        actionType = "QuickAction"
+        sortOrder = 6
+      },
+      {
+        actionName = "FeedItem.TextPost"
+        actionType = "QuickAction"
+        sortOrder = 7
+      },
+      {
+        actionName = "ChangeOwnerOne"
+        actionType = "StandardButton"
+        sortOrder = 8
+      },
+      {
+        actionName = "Submit"
+        actionType = "StandardButton"
+        sortOrder = 9
+      },
+      {
+        actionName = "Delete"
+        actionType = "StandardButton"
+        sortOrder = 10
+      },
+      {
+        actionName = "PrintableView"
+        actionType = "StandardButton"
+        sortOrder = 11
+      },
+      {
+        actionName = "Edit"
+        actionType = "StandardButton"
+        sortOrder = 12
+      },
+      {
+        actionName = "ChangeRecordType"
+        actionType = "StandardButton"
+        sortOrder = 13
+      },
+      {
+        actionName = "Clone"
+        actionType = "StandardButton"
+        sortOrder = 14
+      },
+    ]
+  }
+  relatedLists = [
+    {
+      excludeButtons = [
+        "NewTask",
+      ]
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "TASK.STATUS",
+        "TASK.PRIORITY",
+        "CORE.USERS.FULL_NAME",
+      ]
+      relatedList = "RelatedActivityList"
+    },
+    {
+      excludeButtons = [
+        "LogCall",
+      ]
+      fields = [
+        "TASK.SUBJECT",
+        "TASK.WHO_NAME",
+        "ACTIVITY.TASK",
+        "TASK.DUE_DATE",
+        "CORE.USERS.FULL_NAME",
+        "TASK.LAST_UPDATE",
+      ]
+      relatedList = "RelatedHistoryList"
+    },
+    {
+      relatedList = "RelatedEntityHistoryList"
+    },
+    {
+      relatedList = "RelatedFileList"
+    },
+  ]
+  showEmailCheckbox = false
+  showHighlightsPanel = false
+  showInteractionLogPanel = false
+  showRunAssignmentRulesCheckbox = false
+  showSubmitAndAttachButton = false
+  summaryLayout = {
+    masterLabel = "00h3X00000jKOoa"
+    sizeX = 4
+    sizeY = 0
+    summaryLayoutStyle = "Default"
+  }
+  _parent = [
+    salesforce.Milestone__c,
+  ]
+}

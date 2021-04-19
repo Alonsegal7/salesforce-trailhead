@@ -1,0 +1,19 @@
+salesforce.WebLink Lead_Import_Selected_to_SalesLoft2 {
+  fullName = "Lead.Import_Selected_to_SalesLoft2"
+  availability = "online"
+  description = "Import Selected to SalesLoft- New"
+  displayType = "massActionButton"
+  height = 600
+  linkType = "page"
+  masterLabel = "Import Selected to SalesLoft"
+  openType = "sidebar"
+  page = "ImportLeadsToSalesloft"
+  protected = false
+  requireRowSelection = true
+  _parent = [
+    salesforce.Lead,
+  ]
+  _generated_dependencies = [
+    salesforce.ApexPage.instance.ImportLeadsToSalesloft,
+  ]
+}

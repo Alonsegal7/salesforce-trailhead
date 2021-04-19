@@ -1,0 +1,16 @@
+envs {
+  envs = [
+    {
+      name = "sandbox"
+      services = [
+        "salesforce",
+      ]
+    },
+    {
+      name = "production"
+      services = [
+        "salesforce",
+      ]
+    },
+  ]
+}

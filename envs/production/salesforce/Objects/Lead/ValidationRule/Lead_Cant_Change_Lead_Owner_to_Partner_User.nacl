@@ -1,0 +1,13 @@
+salesforce.ValidationRule Lead_Cant_Change_Lead_Owner_to_Partner_User {
+  fullName = "Lead.Cant_Change_Lead_Owner_to_Partner_User"
+  active = false
+  errorConditionFormula = '''
+Owner:User.Profile.Name = 'Partner Community Custom'&&  RecordType.DeveloperName = 'Internal_Lead'&&
+$Profile.Name <> 'System Administrator' && $Profile.Name <>'Integration Administrator'
+'''
+  errorDisplayField = "OwnerId"
+  errorMessage = "For changing the lead owner- please contact sales ops team"
+  _parent = [
+    salesforce.Lead,
+  ]
+}

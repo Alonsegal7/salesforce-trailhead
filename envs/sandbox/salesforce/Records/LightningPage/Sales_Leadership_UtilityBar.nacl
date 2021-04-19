@@ -1,0 +1,22 @@
+salesforce.LightningPage Sales_Leadership_UtilityBar {
+  fullName = "Sales_Leadership_UtilityBar"
+  flexiPageRegions = [
+    {
+      componentInstances = [
+        {
+          componentName = "notes:utilityBarNoteList"
+        },
+        {
+          componentName = "console:history"
+        },
+      ]
+      name = "utilityItems"
+      type = "Region"
+    },
+  ]
+  masterLabel = "Sales Leadership UtilityBar"
+  template = {
+    name = "one:utilityBarTemplateDesktop"
+  }
+  type = "UtilityBar"
+}

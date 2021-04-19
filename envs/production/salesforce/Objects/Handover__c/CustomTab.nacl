@@ -1,0 +1,8 @@
+salesforce.CustomTab Handover__c {
+  fullName = "Handover__c"
+  customObject = true
+  motif = "Custom32: Factory"
+  _parent = [
+    salesforce.Handover__c,
+  ]
+}

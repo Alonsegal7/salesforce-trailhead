@@ -1,0 +1,7 @@
+salesforce.ApexClass zisf__ZoomJWT {
+  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
+  apiVersion = 40
+  status = "Active"
+  fullName = "zisf__ZoomJWT"
+  content = "(hidden)"
+}

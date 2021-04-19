@@ -1,0 +1,8 @@
+salesforce.CustomTab Opportunity_Snapshot__c {
+  fullName = "Opportunity_Snapshot__c"
+  customObject = true
+  motif = "Custom6: Triangle"
+  _parent = [
+    salesforce.Opportunity_Snapshot__c,
+  ]
+}
