@@ -12,7 +12,22 @@ public with sharing class LeadRegistration_Handler {
     static List<Account> realtedRegionalCompany = null;
     
     public static void isBeforeInsert(List<Lead_Registration__c> newLeadRegs, Map<Id, Lead_Registration__c> oldLeadRegs){
-        leadReg_MapRegions(newLeadRegs, oldLeadRegs);
+        system.debug('### in beofre insert: ');
+        Boolean executeBefore = false;
+
+        for(Lead_Registration__c lReg : newLeadRegs){
+            if(lReg.Status__c != 'Approved'){
+                system.debug('### in Status__c: ' + lReg.Status__c);
+                executeBefore = true;
+            }
+        }
+
+        system.debug('### executeBefore: ' + executeBefore);
+
+        if(executeBefore == true){
+            system.debug('### executeBefore_v1: ' + executeBefore);
+            leadReg_MapRegions(newLeadRegs, oldLeadRegs);
+        }
     }
 
     public static void isBeforeUpdate(List<Lead_Registration__c> newLeadRegs, Map<Id, Lead_Registration__c> oldLeadRegs){
@@ -127,7 +142,7 @@ public with sharing class LeadRegistration_Handler {
                     insert newLead;
                     system.debug('### Inserted Lead Id = ' +newLead);
     
-                    List<Lead> leads = [SELECT Id FROM Lead WHERE Id IN: newLead];
+                    /*List<Lead> leads = [SELECT Id FROM Lead WHERE Id IN: newLead];
                     List<Database.LeadConvert> leadsToConvert = new List<Database.LeadConvert>();
                     LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
                     for(Lead l : leads){
@@ -142,7 +157,7 @@ public with sharing class LeadRegistration_Handler {
                         system.debug('### getAccountId: ' + lctemp.getAccountId());
                         system.debug('### getContactId' + lctemp.getContactId());
                         system.debug('### getContactId' + lctemp.getOpportunityId());
-                    }
+                    }*/
                 }
             }
         }
@@ -199,7 +214,7 @@ public with sharing class LeadRegistration_Handler {
                 insert newLead;
                 system.debug('### Inserted Lead Id = ' +newLead);
 
-                List<Lead> leads = [SELECT Id FROM Lead WHERE Id IN: newLead];
+                /*List<Lead> leads = [SELECT Id FROM Lead WHERE Id IN: newLead];
                 List<Database.LeadConvert> leadsToConvert = new List<Database.LeadConvert>();
                 LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
                 for(Lead l : leads){
@@ -214,7 +229,7 @@ public with sharing class LeadRegistration_Handler {
                     system.debug('### getAccountId: ' + lctemp.getAccountId());
                     system.debug('### getContactId' + lctemp.getContactId());
                     system.debug('### getContactId' + lctemp.getOpportunityId());
-                }
+                }*/
             }
         }
     }
@@ -377,7 +392,7 @@ public with sharing class LeadRegistration_Handler {
                     }
                     List<Account> regionalCompanyAccounts = [SELECT Id, Name, OwnerId, Owner.name, Company__c, Region__c, Owner.Function__c, ParentId
                                                             FROM Account
-                                                            WHERE ParentId IN: companyDomain AND RecordType.DeveloperName = 'Company' AND Region__c IN: regionsMappingDelReg]; //regional company with Global Parent
+                                                            WHERE ParentId IN: companyDomain AND RecordType.DeveloperName = 'Company' AND Region__c IN: regionsMappingDelReg AND Account_Territory__c =: 'Regional']; //regional company with Global Parent
                     system.debug('### regionalCompanyAccounts: ' + regionalCompanyAccounts);
                     if(regionalCompanyAccounts.isEmpty() || regionalCompanyAccounts.size() == 0 || regionalCompanyAccounts == null){
                         regionalCompany = true;
@@ -651,7 +666,7 @@ public with sharing class LeadRegistration_Handler {
                                     regionalAccount.Owner.Function__c != 'Enterprise AM' && regionalAccount.Owner.Function__c != 'Enterprise AE' && regionalAccount.Owner.Function__c != 'Partner')){
                                         regionalCompany = true;
                                         
-                                        system.debug('### maAccount: ' + maAccount);
+                                        system.debug('### regionalCompany: ' + regionalCompany);
                                 }
 
                                 else if(regionalAccount.Owner.Function__c == 'Mid-Market AM' || regionalAccount.Owner.Function__c == 'Mid-Market AE' ||
@@ -662,6 +677,7 @@ public with sharing class LeadRegistration_Handler {
                                 }
 
                                 leadReg.Global_Company__c = regionalAccount.ParentId;
+                                leadReg.Regional_Company__c = regionalAccount.Id;
                             }
                         }
 
@@ -673,7 +689,7 @@ public with sharing class LeadRegistration_Handler {
                                         globalAcc.Owner.Function__c != 'Enterprise AM' && globalAcc.Owner.Function__c != 'Enterprise AE' && globalAcc.Owner.Function__c != 'Partner')){
                                             globalCompany = true;
                                             
-                                            system.debug('### maAccount: ' + maAccount);
+                                            system.debug('### globalAcc: ' + globalAcc);
                                     }
 
                                     else if(globalAcc.Owner.Function__c == 'Mid-Market AM' || globalAcc.Owner.Function__c == 'Mid-Market AE' ||
@@ -697,7 +713,7 @@ public with sharing class LeadRegistration_Handler {
                                     globalAcc.Owner.Function__c != 'Enterprise AM' && globalAcc.Owner.Function__c != 'Enterprise AE' && globalAcc.Owner.Function__c != 'Partner')){
                                         globalCompany = true;
                                         
-                                        system.debug('### maAccount: ' + maAccount);
+                                        system.debug('### globalAcc: ' + globalAcc);
                                 }
 
                                 else if(globalAcc.Owner.Function__c == 'Mid-Market AM' || globalAcc.Owner.Function__c == 'Mid-Market AE' ||
