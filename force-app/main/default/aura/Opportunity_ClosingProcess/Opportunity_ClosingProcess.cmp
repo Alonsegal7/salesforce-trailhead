@@ -1,5 +1,4 @@
 <aura:component controller="Opportunity_ClosingProcess" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
-    $$$
     <lightning:overlayLibrary aura:id="overlayLib"/>
     
     <!--File upload attributes-->
@@ -13,43 +12,21 @@
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <aura:attribute name="isClosedLost" type="Boolean" default="false"/>
     <aura:attribute name="isClosedWon" type="Boolean" default="false"/>
-    <aura:attribute name="stage_ClosedLost" type="String" default=""/>
-    <aura:attribute name="stage_ClosedWon" type="String" default=""/>
-    <aura:attribute name="nextStep" type="Boolean" default="false"/>
-    <aura:attribute name="nextStep_v2" type="Boolean" default="false"/>
     <aura:attribute name="hasWonSO_SubClaimCC" type="Boolean" default="false"/>
-    <aura:attribute name="isOpen" type="Boolean" default="false" />
-    <aura:attribute name="showBBPickers" type="Boolean" default="false" />
     <aura:attribute name="isPrioritySO" type="String" default="null" />
     <aura:attribute name="soWithoutSubscription" type="Boolean" default="false" />
     <aura:attribute name="oppData" type="Opportunity" default=""/>
-    <aura:attribute name="opportunityRecord" type="Object" default=""/>
     <aura:attribute name="isModalOpen" type="Boolean" default="false"/>
     <aura:attribute name="confetti" type="Boolean" default="false"/>
     <aura:attribute name="closedFields" type="Object"/>
-    <aura:attribute name="isOpen_v2" type="Boolean" default="false" />
-    <aura:attribute name="withoutSO" type="Boolean" default="false" />
-    <aura:attribute name="Stage-BBPicker" type="Boolean" default="false" />
-    <aura:attribute name="Stage-CCClaim" type="Boolean" default="false" />
-    <aura:attribute name="showHandoverFlow" type="Boolean" default="fales"/>
-    <aura:attribute name="chooseStage" type="String" default=""/>
-    <aura:attribute name="setStage" type="Boolean" default="false"/>
     <aura:attribute name="showCCClaim" type="Boolean" default="false"/>
     <aura:attribute name="variant" type="String" default="non-linear"/>
     <aura:attribute name="hideUpdateButton" type="Boolean" default="false"/>
     <aura:attribute name="hideUpdateButton_ClosedProcess" type="Boolean" default="false"/>
-    <aura:attribute name="showPrimaryPath" type="Boolean" default="true"/>
     <aura:attribute name="innerPathValue" type="String"/>
-    <aura:attribute name="picklistFieldInnerPath" type="Object"/>
     <aura:attribute name="showWhatSigned" type="Boolean" default="false"/>
-    <aura:attribute name="opp" type="Opportunity"/>
     <aura:attribute name="showHandover" type="boolean" default="false"/>
-    <aura:attribute name="quoteUser" type="user" default="{'sobjectType' : 'User'}" />
-    <aura:attribute name="quoteUserId" type="Id" default=""/>
     <aura:attribute name="record" type="Object"/>
-    <aura:attribute name="claimPath" type="String" default=""/>
-    <aura:attribute name="showMessage" type="Boolean" default="false"/>
-    <aura:attribute name="errorMessage" type="String" default=""/>
     
     <lightning:quickActionAPI aura:id="quickActionAPI" />
     <lightning:notificationsLibrary aura:id="notifLib"/>
@@ -58,14 +35,16 @@
     
     <force:recordData aura:id="recordEditor"
         layoutType="FULL"
-        fields="StageName,Is_SO_Signed__c,DH_Date_of_Signature__c,DH_Signer_Name_c__c,DH_Signer_Title__c,Manual_Signature_Reason__c,Lost_Reason__c,Which_competitor__c,Which_features_were_missing__c,What_Would_You_Like_To_Claim__c,Close_Process_Path__c"
+        fields="StageName,Probability,Is_SO_Signed__c,DH_Date_of_Signature__c,DH_Signer_Name_c__c,DH_Signer_Title__c,Manual_Signature_Reason__c,Lost_Reason__c,Which_competitor__c,Which_features_were_missing__c,What_Would_You_Like_To_Claim__c,Close_Process_Path__c"
         recordId="{!v.recordId}"
         targetRecord="{!v.record}"
         targetFields="{!v.closedFields}"
         mode="EDIT"/>
         
-    <aura:if isTrue="{!and(!v.hideUpdateButton_ClosedProcess, v.oppData.StageName != 'Closed Won', v.oppData.StageName != 'Closed Lost')}">
-        <lightning:path aura:id="path" recordId="{!v.recordId}" variant="linear" hideUpdateButton="{!v.hideUpdateButton}" onselect="{!c.handleSelect_TestPath}"/>
+    <aura:if isTrue="{!and(!v.hideUpdateButton_ClosedProcess, v.oppData.StageName != 'Closed Won')}">
+        <aura:if isTrue="{!v.oppData.StageName != 'Closed Lost'}">
+            <lightning:path aura:id="path" recordId="{!v.recordId}" variant="linear" hideUpdateButton="{!v.hideUpdateButton}" onselect="{!c.handleSelect_TestPath}"/>
+        </aura:if>
     </aura:if>
 
     <aura:if isTrue="{!v.hideUpdateButton_ClosedProcess}">
@@ -75,12 +54,6 @@
     <aura:if isTrue="{!and(!v.hideUpdateButton_ClosedProcess, or(v.oppData.StageName == 'Closed Won', v.oppData.StageName == 'Closed Lost'))}">
         <lightning:path aura:id="path" recordId="{!v.recordId}" variant="linear" hideUpdateButton="{!v.hideUpdateButton}" onselect="{!c.handleSelect_TestPath}"/>
     </aura:if>
-
-    <!-- <div>
-        <aura:if isTrue="{!and(v.oppData.StageName == 'Closed Won', v.oppData.Close_Process_Path__c != 'Done')}">
-            <lightning:button variant="brand-outline" label="Continue Close Process" title="Continue Close Process" onclick="{! c.handleClick }" />
-        </aura:if>
-    </div> -->
 
     <aura:if isTrue="{!v.isModalOpen}">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_small slds-fade-in-open">
@@ -121,9 +94,6 @@
                         </aura:if>
                     </aura:if>
                     <aura:if isTrue="{!v.isClosedWon}">
-                        <!-- <aura:if isTrue="{!v.showMessage}">
-                            {!v.errorMessage}
-                        </aura:if> -->
                         <aura:if isTrue="{!v.innerPathValue != 'continueToSummary'}">
                             <lightning:progressIndicator currentStep="{!v.innerPathValue}" type="path" variant="base">
                                 <aura:if isTrue="{!v.oppData.Is_Primary_SO_Signed__c}">
@@ -131,7 +101,7 @@
                                 </aura:if>
                                 <aura:if isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, v.innerPathValue != 'continueToSummary')}">
                                     <lightning:progressStep label="Claim" value="Claim"/>
-                                </aura:if><!--v.claimPath != 'CC Payments', -->
+                                </aura:if>
                                 <aura:if isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, or(v.closedFields.What_Would_You_Like_To_Claim__c == 'Sales Order ARR + CC Payments', v.closedFields.What_Would_You_Like_To_Claim__c == 'Sales Order ARR'))}">
                                     <lightning:progressStep label="Manual Signature" value="ManualSignature"/>
                                 </aura:if>
@@ -140,9 +110,6 @@
                                         <lightning:progressStep label="BigBrain Pickers" value="BBPickers"/>
                                     </aura:if>
                                 </aura:if>
-                                <!-- <aura:if isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, v.closedFields.What_Would_You_Like_To_Claim__c != 'CC Payments')}">
-                                    <lightning:progressStep label="BigBrain Pickers" value="BBPickers"/>
-                                </aura:if> -->
                                 <lightning:progressStep label="CC Claim" value="CCClaim"/>
                                 <aura:if isTrue="{!and(v.oppData.RecordType.Name == 'Internal Opportunity', v.showHandover == true)}">
                                     <lightning:progressStep label="Handover" value="Handover"/>
@@ -347,9 +314,6 @@
                                     <lightning:outputField iconName="quotes" fieldName="SyncedQuoteId"/>
                                 </lightning:recordEditForm>
                                    
-                                <!-- <span><lightning:input label="Owner Name" value="{!v.oppData.SyncedQuote.Name}" disable="true"/></span><lightning:avatar src="{!v.quoteUser.SmallPhotoUrl}" variant="circle" fallbackIconName="standard:person_account"/> -->
-                                <!-- <lightning:avatar src="{!v.quoteUser.SmallPhotoUrl}" variant="circle" fallbackIconName="standard:person_account"/> -->
-                                <!-- <lightning:output label="Owner Name" value="{!v.oppData.SyncedQuote.Owner.Name}" disabled="true"/> -->
                                 <lightning:input label="DH Tier" value="{!v.oppData.SyncedQuote.DH_Tier__c}" disabled="true"/>
                                 <lightning:input label="Total Seats" value="{!v.oppData.SyncedQuote.Total_Seats__c}" disabled="true"/>
                                 <lightning:input label="DH Period" value="{!v.oppData.SyncedQuote.DH_Period__c}" disabled="true"/>
@@ -376,9 +340,9 @@
                                     <lightning:messages aura:id="oppMessage"/>
                     
                                     <!-- <lightning:inputField aura:id="newOpportunityField" fieldName="StageName" value="{!v.closedFields.StageName}" required="false"/> -->
-                                    <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Date_of_Signature__c" value="{!v.closedFields.DH_Date_of_Signature__c}" required="true" onchange="{!c.saveManualFields}"/>
-                                    <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Signer_Name_c__c" value="{!v.closedFields.DH_Signer_Name_c__c}" required="true" onchange="{!c.saveManualFields}"/>
-                                    <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Signer_Title__c" value="{!v.closedFields.DH_Signer_Title__c}" required="true" onchange="{!c.saveManualFields}"/>
+                                    <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Date_of_Signature__c" value="{!v.closedFields.DH_Date_of_Signature__c}" required="true" onchange="{!c.saveManual}"/>
+                                    <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Signer_Name_c__c" value="{!v.closedFields.DH_Signer_Name_c__c}" required="true" onchange="{!c.saveManual}"/>
+                                    <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Signer_Title__c" value="{!v.closedFields.DH_Signer_Title__c}" required="true" onchange="{!c.saveManual}"/>
                                     <lightning:inputField aura:id="newOpportunityField" fieldName="Manual_Signature_Reason__c" value="{!v.closedFields.Manual_Signature_Reason__c}" onchange="{!c.savePrioritySO}" required="true"/>
                     
                                     <lightning:fileUpload label="Attachment"

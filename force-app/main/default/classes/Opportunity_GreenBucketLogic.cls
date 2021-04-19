@@ -48,15 +48,18 @@ public without sharing class Opportunity_GreenBucketLogic {
     public static Boolean isGBPlanCalc(Opportunity opp){
         Boolean gbPlan=false;
         try{
-            boolean newPVs=opp.Pricing_Version__c=='6'||opp.Pricing_Version__c=='8'||opp.Pricing_Version__c=='9';
-            system.debug('Raz Ben Ron OGBL Opp details: newPVs: '+newPVs+' Plan: '+opp.Expected_Plan_Seats__c+' '+opp.Expected_Plan_Tier__c+' '+opp.Expected_Plan_Period__c);
-            if(opp.RecordTypeId==internalRecordTypeId){
-                gbPlan=(opp.Expected_Plan_Seats__c>=50||
-                            (newPVs&&opp.Expected_Plan_Tier__c.toLowercase()=='enterprise'&&opp.Expected_Plan_Seats__c>=20)||
-                            (!newPVs&&opp.Expected_Plan_Tier__c.toLowercase()=='enterprise'&&opp.Expected_Plan_Seats__c>=25))&&
-                            opp.Expected_Plan_Period__c.toLowercase()!='monthly';
-            }else if(opp.RecordTypeId==partnerRecordTypeId){
-                gbPlan=opp.Expected_Plan_Seats__c>=50;
+            if(opp.Expected_Plan_Name__c!=null&&opp.Pricing_Version__c!=null&&
+                opp.Expected_Plan_Seats__c!=null&&opp.Expected_Plan_Tier__c!=null&&
+                opp.Expected_Plan_Period__c!=null){
+                boolean newPVs=opp.Pricing_Version__c=='6'||opp.Pricing_Version__c=='8'||opp.Pricing_Version__c=='9';
+                system.debug('Raz Ben Ron OGBL Opp details: newPVs: '+newPVs+' Plan: '+opp.Expected_Plan_Seats__c+' '+opp.Expected_Plan_Tier__c+' '+opp.Expected_Plan_Period__c);
+                if(opp.RecordTypeId==internalRecordTypeId){
+                    gbPlan=(opp.Expected_Plan_Seats__c>=50||
+                                (newPVs&&opp.Expected_Plan_Tier__c.toLowercase()=='enterprise'&&opp.Expected_Plan_Seats__c>=20)||
+                                (!newPVs&&opp.Expected_Plan_Tier__c.toLowercase()=='enterprise'&&opp.Expected_Plan_Seats__c>=25));
+                }else if(opp.RecordTypeId==partnerRecordTypeId){
+                    gbPlan=opp.Expected_Plan_Seats__c>=50;
+                }
             }
             system.debug('Raz Ben Ron OGBL gbPlan: '+gbPlan);
         }catch(Exception e){
@@ -71,12 +74,14 @@ public without sharing class Opportunity_GreenBucketLogic {
     public static boolean isValidOpp(Opportunity opp,GB_Threshold__c gbth){
         string oppType=opp.Type==null?'':opp.Type;
         boolean isValid=(gbth!=null&&
-                        opp.Expected_Plan_Name__c!=null&&
+                        /*opp.Expected_Plan_Name__c!=null&&
                         opp.Pricing_Version__c!=null&&
                         opp.Expected_Plan_Seats__c!=null&&
                         opp.Expected_Plan_Tier__c!=null&&
-                        opp.Expected_Plan_Period__c!=null&&
-                        !oppType.contains('Downgrade'));
+                        opp.Expected_Plan_Period__c!=null&&*/
+                        !oppType.contains('Downgrade')&&
+                        !(opp.Expected_Plan_Period__c!=null&&
+                            opp.RecordTypeId==internalRecordTypeId&&opp.Expected_Plan_Period__c.toLowercase()=='monthly'));
         system.debug('Raz Ben Ron OGBL isValid opp: '+opp);
         system.debug('Raz Ben Ron OGBL isValid: '+isValid);
         return isValid;

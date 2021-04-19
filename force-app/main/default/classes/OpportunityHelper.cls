@@ -19,21 +19,19 @@ public class OpportunityHelper {
                 
                 if(isManagedByDealhub(opp)){
                     opp.Expected_ARR__c = opp.Quote_ARR__c;
-                    //
-                    /*if(opp.Co_Sell_Opportunity__c!=null&&opp.Main_Co_Sell_Opportunity__c==false&&opp.Co_Sell_Products_ARR_Sum__c!=null)//secondary co-sell opp
-                        opp.Expected_ARR__c+=opp.Co_Sell_Products_ARR_Sum__c;
-                    if(opp.CC_Products_ARR_Sum__c!=null)
-                        opp.Expected_ARR__c+=opp.CC_Products_ARR_Sum__c;
-                    */
-                    //
-                    if(opp.Is_Primary_SO_Signed__c||(opp.Co_Sell_Opportunity__c!=null&&opp.Main_Co_Sell_Opportunity__c==false)) {//secondary co-sell opp
+
+                    if(opp.Is_Primary_SO_Signed__c) {
+                        opp.Claimed_ARR__c = opp.Product_ARR__c; 
+                    } 
+                    else if(opp.Co_Sell_Opportunity__c!=null&&opp.Main_Co_Sell_Opportunity__c==false){//secondary co-sell opp
+                        opp.Expected_ARR__c = opp.Product_ARR__c;
                         opp.Claimed_ARR__c = opp.Product_ARR__c; 
                     }
                 }
-                //
+
                 if(opp.Claimed_ARR_Override__c!=null)
                     opp.Claimed_ARR__c =opp.Claimed_ARR_Override__c;
-                //
+
                 if(opp.RecordTypeId==partnerRecordTypeId&&
                     (oldMap==null||opp.OwnerId!=oldMap.get(opp.Id).OwnerId)){
                         userIds.add(opp.OwnerId);
@@ -74,19 +72,14 @@ public class OpportunityHelper {
         
         if(oldOpps == null){ //for insert
             determineOppType(opportunities);
-        }
-
-        else{
+        }else{
             for(Opportunity opp : opportunities) { 
                 if(opp.Is_Account_Green_Bucket_New__c != oldOpps.get(opp.Id).Is_Account_Green_Bucket_New__c){
                     oppsToUpdate.add(opp);
-
                 }
             }
-
             if(!oppsToUpdate.isEmpty()){
                 determineOppType(oppsToUpdate);
-
             } 
         }
     }
@@ -95,9 +88,7 @@ public class OpportunityHelper {
         for(Opportunity opp : opportunities) { 
             if(opp.Is_Account_Green_Bucket_New__c){
                 opp.Opportunity_Type__c  = 'Expansion';
-            }
-
-            else{
+            }else{
                 opp.Opportunity_Type__c  = 'New Business';
             }
         }
@@ -119,18 +110,14 @@ public class OpportunityHelper {
             MarkQuotesSigned(SignedQuotes);
         if(!masterCosellOpps.isEmpty())
             cloneOlisForCoSell(masterCosellOpps);
-            //cloneOlisForCoSell(Json.serialize(masterCosellOpps));
     }
 
     public static boolean isManagedByDealhub(Opportunity opp){
         return (opp.Quote_Count__c != null && opp.Quote_Count__c != 0) || (opp.Product_Count__c != null && opp.Product_Count__c != 0);
     }
 
-    //@future
-    //public static void cloneOlisForCoSell(String masterCosellOppsJson){
     public static void cloneOlisForCoSell(list<Opportunity> masterCosellOpps){
         try{
-            //list<Opportunity>  masterCosellOpps = (list<Opportunity> ) JSON.deserialize(masterCosellOppsJson, list<Opportunity>.class);
             list<opportunitylineitem> olisToCreate= new list<opportunitylineitem>();
             map<Id,Opportunity> oppsToUpdate = new map<Id,Opportunity> ();
             Pricebook2 mainPB=Utilities.getMainPB();
@@ -240,10 +227,14 @@ public class OpportunityHelper {
 
     public static void oppCounter(List<Opportunity> opportunities, Map<Id,Opportunity> oldOpps){
         system.debug('into function');
-
+        Set<Id> accs = new Set<Id>();
         // List<Opportunity> old = [SELECT Id, StageName FROM Opportunity WHERE Id IN: oldOpps]
+        // for(Opportunity opp : opportunities){
+        //     accs.add(opp.AccountId); 2
+        // }
 
-        
+        // List<Opportunity> opps = [SELECT Id, Name FROM Opportunity WHERE AccountId IN: accs]; 10. 2
+        // system.debug('### opps: ' + opps.size());
 
         List<Opportunity> closedWonOpps = [
             SELECT Id, StageName, Opp_Number_In_Account_GB__c, Opp_Number_In_Account_New_Business__c, Opp_Number_In_Account_Expansion__c, Opp_Number_In_Account__c, Account.of_won_opps__c, 

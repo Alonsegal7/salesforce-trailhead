@@ -154,25 +154,12 @@
                 console.log('### not succes manual');
 				console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
 				var errorMessage =  JSON.stringify(saveResult.error);
-				component.set('v.showMessage', true);
-				if(component.get('v.showMessage') == true){
-					console.log('### showMessageeee: ' + component.get('v.showMessage'));
-					component.find('notifLib').showNotice({
-						"variant": "error",
-						"header": "Problem saving record:",
-						"message": errorMessage,
-						closeCallback : function(){
-							component.set('v.showMessage', false);
-						}
-					});
-				}
-				
-				// else{
-				// 	helper.setStageUpdateToast(component, event, helper);
-				// }
-				console.log('### showMessage_v3' + component.get('v.showMessage'));
-				// component.set('v.errorMessage' + errorMessage);
-				// console.log('### errorMessage: ' + errorMessage);
+				console.log('### showMessageeee: ' + errorMessage);
+				component.find('notifLib').showNotice({
+					"variant": "error",
+					"header": "Problem saving record:",
+					"message": errorMessage,
+				});
             }
 		}));
 	},
@@ -242,5 +229,26 @@
                 }
             }
         }
+	},
+
+	updateProbability : function(component, event, helper){
+		var oppId = component.get('v.recordId');
+		console.log('### in probability');
+		if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+			var action = component.get("c.updateProbability");
+			action.setParams({ 
+				recordId : oppId,
+				oppStageName : component.get('v.closedFields.StageName')
+
+			});
+			action.setCallback(this, function(response) {
+				var state = response.getState();
+				console.log('### hello' + state);
+				if (state === "SUCCESS") {
+					console.log('### state_1111111: ' + response.getReturnValue());
+				}
+			});
+			$A.enqueueAction(action);
+		}
 	}
 })

@@ -49,7 +49,7 @@ public with sharing class BigBrian_GraphQLService {
                 integer i=1/0;
             }
         }catch(Exception e){
-            Utilities.sendSlackMessage(':bomb::bomb: A very important error message from class xxxxx :bomb::bomb:','test-raz',null,e,null,null,'12345678');
+            //Utilities.sendSlackMessage(':bomb::bomb: A very important error message from class xxxxx :bomb::bomb:','test-raz',null,e,null,null,'12345678');
         }
         return resList;
         

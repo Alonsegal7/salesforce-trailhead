@@ -20,6 +20,7 @@ public class Opportunity_ClosingProcess_Test {
         insert o;
         
 		Opportunity_ClosingProcess.getInitialParameters(o.Id);
-        Opportunity_ClosingProcess.saveInnerPicklistPath(o.Id, 'CC Claim');
+		Opportunity_ClosingProcess.saveInnerPicklistPath(o.Id, 'CC Claim');
+		Opportunity_ClosingProcess.updateProbability(o.Id, 'Closed Won');
     }  
 }

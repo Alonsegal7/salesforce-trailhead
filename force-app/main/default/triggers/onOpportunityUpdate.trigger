@@ -2,6 +2,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     if(Trigger.isBefore && Trigger.isInsert){
         OpportunityHelper.beforeInsert(trigger.new,trigger.oldmap);
         OpportunityHelper.updateOppType(trigger.new,trigger.oldmap);
+        OpportunityHelper.oppCounter(trigger.new,trigger.oldmap);
         TargetsService.TargetsServiceOnOpps(trigger.new,trigger.oldmap);
         Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(trigger.new,trigger.oldmap);
     }
@@ -10,6 +11,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         OpportunityHelper.beforeUpdate(Trigger.new, Trigger.oldmap);
         TargetsService.TargetsServiceOnOpps(trigger.new,trigger.oldmap);
         OpportunityHelper.updateOppType(trigger.new,trigger.oldmap);
+        OpportunityHelper.oppCounter(trigger.new,trigger.oldmap);
         Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(trigger.new,trigger.oldmap);
     }
     

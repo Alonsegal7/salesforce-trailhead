@@ -67,4 +67,18 @@ public with sharing class Opportunity_ClosingProcess {
         update opp;
         return opp;
     }
+
+    @AuraEnabled
+    public static Opportunity updateProbability(Id recordId, String oppStageName){
+        Map<String, Decimal> stageMap = new Map<String, Decimal>();
+        for(OpportunityStage oStage : [SELECT MasterLabel, DefaultProbability FROM OpportunityStage WHERE isActive = true AND MasterLabel =: oppStageName]){
+            stageMap.put(oStage.MasterLabel, oStage.DefaultProbability);
+        }
+        
+        Opportunity opp = [SELECT Name, StageName, Probability FROM Opportunity WHERE Id =: recordId];
+                                        
+        opp.Probability = stageMap.get(opp.StageName);
+        update opp;
+        return opp;
+    }
 }
