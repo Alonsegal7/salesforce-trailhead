@@ -180,6 +180,7 @@
             component.set('v.isModalOpen', true);
             component.set('v.isClosedLost', true);
             component.set('v.innerPathValue', 'LostInfo');
+            component.set('v.lostStage', 'Closed Lost');
         }
         
         else if(stepName === 'Closed Won'){
@@ -291,10 +292,17 @@
     submitDetails : function(component, event, helper) {
         event.preventDefault();
         var oppId = component.get('v.recordId');
+        if(component.get('v.isClosedLost')){
+            if(component.get('v.innerPathValue') == 'continueToSummary'){
+                component.set('v.innerPathValue', 'OppSummary');
+                console.log('### oppSummary_v3:' + component.get('v.innerPathValue'));
+                helper.getOpportunitySummary(component, event, helper);
+            }
+        }
+
         if(component.get('v.isClosedWon')){
             if(component.get('v.innerPathValue') == 'Claim'){
                 if(component.get('v.closedFields.What_Would_You_Like_To_Claim__c') == 'CC Payments'){
-                    // component.set('v.showCCClaim', true);
                     component.set('v.innerPathValue', 'CCClaim');
 
                     if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
@@ -303,7 +311,6 @@
                 }
 
                 else{
-                    // component.set('v.showCCClaim', false);
                     component.set('v.innerPathValue', 'ManualSignature');
                     if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
                         helper.setInnerPicklistPath(component, event, helper, 'Manual Signature');
@@ -315,7 +322,6 @@
                 var showValidationError = false;
                 var fields = component.find("newOpportunityField");
                 var vaildationFailReason = 'Please fill in all the required fields: ';
-                // var isClosedWon = false;
                 var updateStageName = 'Please update the Stage to be: Closed Won';
                 
                 fields.forEach(function (field) {
@@ -402,9 +408,7 @@
                             }));
                         }
                         component.set('v.innerPathValue', 'continueToSummary');
-                        // component.set('v.innerPathValue', 'OppSummary');
                         console.log('### innerPathValue_v3:' + component.get('v.innerPathValue'));
-                        // helper.getOpportunitySummary(component, event, helper);
                     }
 
                     else{
@@ -470,70 +474,78 @@
                 }
             });
 
-            if(showValidationError_ClosedLost === true) { //if NOT all the fields are populated
+            if(showValidationError_ClosedLost == true) { //if NOT all the fields are populated
                 vaildationFailReason_ClosedLost += '* Why Closed Lost? \n * Which Tool? \n * Which features are missing?';
                 component.find('lostMessage').setError(vaildationFailReason_ClosedLost);
             }
 
-            else if(showValidationError_WhichTool === true) { //if NOT all the fields are populated
+            else if(showValidationError_WhichTool == true) { //if NOT all the fields are populated
                 vaildationFailReason_ClosedLost += '* Which Tool?';
                 component.find('lostMessage').setError(vaildationFailReason_ClosedLost);
             }
 
-            else if(showValidationError_WhichFeature === true) { //if NOT all the fields are populated
+            else if(showValidationError_WhichFeature == true) { //if NOT all the fields are populated
                 vaildationFailReason_ClosedLost += '* Which features are missing?';
                 component.find('lostMessage').setError(vaildationFailReason_ClosedLost);
             }
 
             else{
                 // component.find("closedLostFields").submit();
-                component.set('v.closedFields.StageName', 'Closed Lost');
-                component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
-                    if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
-                        if(component.get('v.oppData.Green_Bucket_ARR__c') >= 10000){
-                            console.log('### 111111_v12');
-                            // component.set("v.oppData.StageName", 'Closed Lost');
-                            component.set('v.innerPathValue', 'OppSummary');
-                            helper.getOpportunitySummary(component, event, helper);
-                        }
-                        
-                        else{
-                            console.log('### no GB');
-                            component.set('v.isModalOpen', false);
-                            component.set("v.closedFields.Close_Process_Path__c", 'Done');
-                            component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
-                                if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
-                                    console.log('### succes before bb');
+                console.log('### innerPathValue lost: ' + component.get('v.innerPathValue'));
+                if(component.get('v.innerPathValue') != 'continueToSummary'){
+                    if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+                        component.set('v.showSpinner', true);
+                        component.set('v.closedFields.StageName', 'Closed Lost');
+                        component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
+                            if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
+                                if(component.get('v.oppData.Green_Bucket_ARR__c') >= 10000){
+                                    component.set('v.showSpinner', false);
+                                    console.log('### 111111_v12');
+                                    // component.set("v.oppData.StageName", 'Closed Lost');
                                     helper.updateProbability(component, event, helper);
+                                    component.set('v.innerPathValue', 'continueToSummary');
+                                    // component.set('v.innerPathValue', 'OppSummary');
+                                    // helper.getOpportunitySummary(component, event, helper);
                                 }
-
-                                else {
-                                    console.log('### not succes before bb');
-                                    console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
+                                
+                                else{
+                                    console.log('### no GB');
+                                    component.set('v.isModalOpen', false);
+                                    component.set("v.closedFields.Close_Process_Path__c", 'Done');
+                                    component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
+                                        if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
+                                            console.log('### succes before bb');
+                                            helper.updateProbability(component, event, helper);
+                                        }
+        
+                                        else {
+                                            console.log('### not succes before bb');
+                                            console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
+                                        }
+                                    }));
+                                    helper.setStageUpdateToast(component, event, helper);
                                 }
-                            }));
-                            helper.setStageUpdateToast(component, event, helper);
-                        }
+                            }
+        
+                            else {
+                                console.log('### FAILED' + saveResult.state);
+                                var errors = "";
+                                for (var i = 0; saveResult.error.length > i; i++){
+                                    errors = errors + saveResult.error[i].message;
+                                }            
+                                console.log('### errors: ' + errors);
+                                var resultsToast = $A.get("e.force:showToast");
+                                resultsToast.setParams({
+                                    "type":"error",
+                                    "title": "Error!",
+                                    "message": errors                        
+                                });
+                                resultsToast.fire();
+                                console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
+                            }
+                        }));
                     }
-
-                    else {
-                        console.log('### FAILED' + saveResult.state);
-                        var errors = "";
-                        for (var i = 0; saveResult.error.length > i; i++){
-                            errors = errors + saveResult.error[i].message;
-                        }            
-                        console.log('### errors: ' + errors);
-                        var resultsToast = $A.get("e.force:showToast");
-                        resultsToast.setParams({
-                            "type":"error",
-                            "title": "Error!",
-                            "message": errors                        
-                        });
-                        resultsToast.fire();
-                        console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
-                    }
-                        
-                }));
+                }
             }
         }
     }

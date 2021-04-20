@@ -29,6 +29,10 @@ public without sharing class Account_SetCompanyDomains {
                 existingDomains.put(cd.Domain__c, cd);
             }
 
+            // for(Account acc : [SELECT Id, ParentId FROM Account WHERE Id IN: relevantAccs]){
+            //     if()
+            // }
+
             for(Account acc : relevantAccs){
                 List<String> cleanDomainsList = new List<String>();
 

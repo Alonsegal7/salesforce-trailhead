@@ -19,6 +19,9 @@
 
     <aura:attribute name="fields" type="List" default="[]"/>
     <aura:attribute name="partnerFieldSetForm" type="List" description="Partner - New Deal Registration Form"/>
+    <aura:attribute name="companyDetailsFieldSet" type="List" description="Partner - New Deal Registration Form"/>
+    <aura:attribute name="contactDetailsFieldSet" type="List" description="Partner - New Deal Registration Form"/>
+    <aura:attribute name="opportunityInformationFieldSet" type="List" description="Partner - New Deal Registration Form"/>
 
     <lightning:navigation aura:id="navService"/>
     
@@ -38,14 +41,57 @@
                         onsubmit="{!c.handleSubmit}"
                         aura:id="recordEditForm">
                         <lightning:messages />
-
-                        <aura:iteration items="{! v.partnerFieldSetForm }" var="field" indexVar="i">
+                        <!--Company Details - Get fields from CompanyDetails field set on Deal Registration object-->
+                        <div class="slds-section">
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small">Company Details:</span>
+                            </h3>
+                        </div>
+                        
+                        <aura:iteration items="{!v.companyDetailsFieldSet}" var="field" indexVar="i">
                             <div class="slds-grid slds-gutters">
                                 <div class="slds-col slds-size_1-of-1">
-                                    <lightning:inputField aura:id="fieldSet" rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                    <lightning:inputField aura:id="fieldSet" rendered="" variant="label-inline" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
                                 </div>
                             </div>
                         </aura:iteration>
+
+                        <!--Contact Details - Get fields from ContactDetails field set on Deal Registration object-->
+                        <div class="slds-section">
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small">Contact Details:</span>
+                            </h3>
+                        </div>
+                        
+                        <aura:iteration items="{!v.contactDetailsFieldSet}" var="field" indexVar="i">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <lightning:inputField aura:id="fieldSet" rendered="" variant="label-inline" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                </div>
+                            </div>
+                        </aura:iteration>
+
+                        <!--Opportunity Information - Get fields from OpportunityDetails field set on Deal Registration object-->
+                        <div class="slds-section">
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small">Opportunity Information:</span>
+                            </h3>
+                        </div>
+                        
+                        <aura:iteration items="{!v.opportunityInformationFieldSet}" var="field" indexVar="i">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <lightning:inputField aura:id="fieldSet" rendered="" variant="label-inline" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                </div>
+                            </div>
+                        </aura:iteration>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1">
+                                <lightning:inputField aura:id="fieldSet" fieldName="Comments__c" variant="label-inline"/>
+                            </div>
+                        </div>
+
                         <div class="slds-align_absolute-center">
                             <lightning:button variant="brand" label="Submit" type="submit" />
                         </div>

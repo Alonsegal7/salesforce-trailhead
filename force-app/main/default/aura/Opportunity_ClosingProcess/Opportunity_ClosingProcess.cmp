@@ -27,6 +27,7 @@
     <aura:attribute name="showWhatSigned" type="Boolean" default="false"/>
     <aura:attribute name="showHandover" type="boolean" default="false"/>
     <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="lostStage" type="String"/>
     
     <lightning:quickActionAPI aura:id="quickActionAPI" />
     <lightning:notificationsLibrary aura:id="notifLib"/>
@@ -69,9 +70,11 @@
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     <aura:if isTrue="{!v.isClosedLost}">
                         <lightning:progressIndicator currentStep="{!v.innerPathValue}" type="path" variant="base">
-                            <lightning:progressStep label="Lost Information" value="LostInfo"/>
-                            <aura:if isTrue="{!greaterthanorequal(v.oppData.Green_Bucket_ARR__c, 10000)}">
-                                <lightning:progressStep label="Opportunity Summary" value="OppSummary"/>
+                            <aura:if isTrue="{!v.innerPathValue != 'continueToSummary'}">
+                                <lightning:progressStep label="Lost Information" value="LostInfo"/>
+                                <aura:if isTrue="{!greaterthanorequal(v.oppData.Green_Bucket_ARR__c, 10000)}">
+                                    <lightning:progressStep label="Opportunity Summary" value="OppSummary"/>
+                                </aura:if>
                             </aura:if>
                         </lightning:progressIndicator>
                         <aura:if isTrue="{!v.innerPathValue == 'LostInfo'}">
@@ -82,15 +85,33 @@
                                         aura:id="closedLostFields">
                                     <lightning:messages aura:id="lostMessage"/>
                     
-                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" value="{!v.closedFields.StageName}" required="true"/>
-                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Lost_Reason__c" value="{!v.closedFields.Lost_Reason__c}"  required="true"/>
-                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_competitor__c" value="{!v.closedFields.Which_competitor__c}"  required="true"/>
-                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_features_were_missing__c" value="{!v.closedFields.Which_features_were_missing__c}"  required="true"/>
+                                    <!-- <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" value="{!v.closedFields.StageName}" required="true" value="{!v.lostStage}"/> -->
+                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" required="true" value="{!v.lostStage}"/>
+                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Lost_Reason__c" value="{!v.closedFields.Lost_Reason__c}" required="true"/>
+                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_competitor__c" value="{!v.closedFields.Which_competitor__c}" required="true"/>
+                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_features_were_missing__c" value="{!v.closedFields.Which_features_were_missing__c}" required="true"/>
                                 </lightning:recordEditForm>
                             </lightning:card>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'OppSummary'}">
                             <lightning:flow aura:id="closedOppSumFlowData" onstatuschange="{!c.handleStatusChange_OpportunityCloseSummary}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.innerPathValue == 'continueToSummary'}">
+                            <aura:if isTrue="{!v.showSpinner}">
+                                <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" class="slds-spinner_container"/>
+                            </aura:if>
+                            <lightning:card>
+                                <div style="text-align: center">
+                                    <ui:message title="You've finished the Closed Lost Process" severity="confirm" closable="true">
+                                        <br/>
+                                        If you want to fill the Opporutnity Summary<br/>
+                                        Click <b>Next Step</b> button<br/><br/>
+                                        If you want to SKIP the Opporutnity Summary<br/>
+                                        Click <b>Finish</b> button<br/>
+                                    </ui:message>
+                                </div>
+                                
+                            </lightning:card>
                         </aura:if>
                     </aura:if>
                     <aura:if isTrue="{!v.isClosedWon}">

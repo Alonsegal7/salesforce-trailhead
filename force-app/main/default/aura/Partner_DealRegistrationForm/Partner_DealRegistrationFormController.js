@@ -11,20 +11,47 @@
                 if (storeResponse != null){
 					storeResponse = JSON.parse(storeResponse);
 					console.log('### storeResponse_v1: ' + storeResponse);
-					console.log('### hasOwnProperty: ' + storeResponse.hasOwnProperty('partnerFieldSet'));
-					console.log('### partnerFieldSet: ' + storeResponse.partnerFieldSet.length);
-					if (storeResponse.hasOwnProperty('partnerFieldSet') && storeResponse.partnerFieldSet.length > 0) {
+					console.log('### hasOwnProperty: ' + storeResponse.hasOwnProperty('companyDetailsFieldSet'));
+					if (storeResponse.hasOwnProperty('companyDetailsFieldSet') && storeResponse.companyDetailsFieldSet.length > 0) {
 						var theLeadFields = new Array();
 						console.log('### theLeadFields_v1: ' + theLeadFields);
-						for (var i = 0; i < storeResponse.partnerFieldSet.length; i++){
+						for (var i = 0; i < storeResponse.companyDetailsFieldSet.length; i++){
 							var f = {};
-							f.name = storeResponse.partnerFieldSet[i].name;
-							f.req = storeResponse.partnerFieldSet[i].required;
+							f.name = storeResponse.companyDetailsFieldSet[i].name;
+							f.req = storeResponse.companyDetailsFieldSet[i].required;
 							theLeadFields.push(JSON.parse(JSON.stringify(f)));
 							console.log('### theLeadFields: ' + theLeadFields);
 						}
-						component.set('v.partnerFieldSetForm', theLeadFields);
-						console.log('### partnerFieldSetForm: ' + component.get('v.partnerFieldSetForm'));
+						component.set('v.companyDetailsFieldSet', theLeadFields);
+						console.log('### companyDetailsFieldSet: ' + component.get('v.companyDetailsFieldSet'));
+					}
+
+					if (storeResponse.hasOwnProperty('contactDetailsFieldSet') && storeResponse.contactDetailsFieldSet.length > 0) {
+						var theLeadFields = new Array();
+						console.log('### theLeadFields_v1: ' + theLeadFields);
+						for (var i = 0; i < storeResponse.contactDetailsFieldSet.length; i++){
+							var f = {};
+							f.name = storeResponse.contactDetailsFieldSet[i].name;
+							f.req = storeResponse.contactDetailsFieldSet[i].required;
+							theLeadFields.push(JSON.parse(JSON.stringify(f)));
+							console.log('### theLeadFields: ' + theLeadFields);
+						}
+						component.set('v.contactDetailsFieldSet', theLeadFields);
+						console.log('### contactDetailsFieldSet: ' + component.get('v.contactDetailsFieldSet'));
+					}
+					
+					if (storeResponse.hasOwnProperty('opportunityInformationFieldSet') && storeResponse.opportunityInformationFieldSet.length > 0) {
+						var theLeadFields = new Array();
+						console.log('### theLeadFields_v1: ' + theLeadFields);
+						for (var i = 0; i < storeResponse.opportunityInformationFieldSet.length; i++){
+							var f = {};
+							f.name = storeResponse.opportunityInformationFieldSet[i].name;
+							f.req = storeResponse.opportunityInformationFieldSet[i].required;
+							theLeadFields.push(JSON.parse(JSON.stringify(f)));
+							console.log('### theLeadFields: ' + theLeadFields);
+						}
+						component.set('v.opportunityInformationFieldSet', theLeadFields);
+						console.log('### opportunityInformationFieldSet: ' + component.get('v.opportunityInformationFieldSet'));
 					}
 				}
 				

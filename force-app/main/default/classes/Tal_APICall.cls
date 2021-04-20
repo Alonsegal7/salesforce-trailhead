@@ -3,17 +3,49 @@ public with sharing class Tal_APICall {
 	public static String getInitialParameters(){
 		String res = '';
 		Map <String, object> mso = new Map <String, object>();
-		mso.put('partnerFieldSet', getPartnerFieldSet());
+        mso.put('companyDetailsFieldSet', getCompanyDetailsFieldSetFieldSet());
+        mso.put('contactDetailsFieldSet', getContactDetailsFieldSetFieldSet());
+        mso.put('opportunityInformationFieldSet', getOpportunityInformationFieldSetFieldSet());
 		System.debug('### Tal:\n' + JSON.serializePretty(mso));
 		res = JSON.serialize(mso);
 		return res;
     }
 
-    public static List <Map<String, Object>> getPartnerFieldSet(){
+    public static List <Map<String, Object>> getCompanyDetailsFieldSetFieldSet(){
 		System.debug('### Tal Test');
 		List<String> ls = new List<String>();
 		List <Map<String, Object>> lmss = new List <Map<String, Object>>();
-		for(Schema.FieldSetMember f : SObjectType.Lead_Registration__c.FieldSets.Partner_DealRegistration_Form.getFields()) {
+		for(Schema.FieldSetMember f : SObjectType.Lead_Registration__c.FieldSets.CompanyDetails.getFields()) {
+			Map<String, Object> tmp = new Map<String, Object>();
+			tmp.put('name', f.getFieldPath());
+			tmp.put('required', (f.getDbRequired() || f.getRequired()));
+			lmss.add(tmp);
+			ls.add(f.getFieldPath());
+		}
+		System.debug('### Tal - New Fieldset mapping:\n' + JSON.serializePretty(lmss));
+		return lmss;
+    }
+
+    public static List <Map<String, Object>> getContactDetailsFieldSetFieldSet(){
+		System.debug('### Tal Test');
+		List<String> ls = new List<String>();
+		List <Map<String, Object>> lmss = new List <Map<String, Object>>();
+		for(Schema.FieldSetMember f : SObjectType.Lead_Registration__c.FieldSets.ContactDetails.getFields()) {
+			Map<String, Object> tmp = new Map<String, Object>();
+			tmp.put('name', f.getFieldPath());
+			tmp.put('required', (f.getDbRequired() || f.getRequired()));
+			lmss.add(tmp);
+			ls.add(f.getFieldPath());
+		}
+		System.debug('### Tal - New Fieldset mapping:\n' + JSON.serializePretty(lmss));
+		return lmss;
+    }
+
+    public static List <Map<String, Object>> getOpportunityInformationFieldSetFieldSet(){
+		System.debug('### Tal Test');
+		List<String> ls = new List<String>();
+		List <Map<String, Object>> lmss = new List <Map<String, Object>>();
+		for(Schema.FieldSetMember f : SObjectType.Lead_Registration__c.FieldSets.OpportunityInformation.getFields()) {
 			Map<String, Object> tmp = new Map<String, Object>();
 			tmp.put('name', f.getFieldPath());
 			tmp.put('required', (f.getDbRequired() || f.getRequired()));

@@ -60,6 +60,11 @@ public with sharing class LeadRegistration_Handler {
             acc.BillingCountry = lReg.Location__c;
             acc.Account_Territory__c = 'Local';
         }
+
+        else if(lReg.Regional_Company__c == null && lReg.Global_Company__c == null){
+            acc.BillingCountry = lReg.Location__c;
+            acc.Account_Territory__c = 'Local';
+        }
         newAcc.add(acc);
 
         return newAcc;
@@ -76,6 +81,9 @@ public with sharing class LeadRegistration_Handler {
         Boolean isApproved = false;
         Boolean updateAccount = false;
         Account relatedAcc = new Account();
+
+        Set<Id> oppConvert = new Set<Id>();
+        List<Opportunity> opplist = new List<Opportunity>();
 
         for(Lead_Registration__c lReg : newLeadRegs){
             if(lReg.Status__c == 'Approved'){
@@ -94,19 +102,12 @@ public with sharing class LeadRegistration_Handler {
                 for(Lead_Registration__c lReg : newLeadRegs){
                     if(lReg.Local_Company__c != null){
                         newAccount = updateRelatedCompany(relatedAcc, lReg);
-                        // relatedAcc.Lead_Registration__c = lReg.Id;
-                        // newAcc.add(relatedAcc);
                         leadRegAccount.put(newAccount[0], lReg);
                         updateAccount = true;
                     }
 
                     else{
                         newAccount = createRelatedCompany(lReg);
-                        // Account acc = new Account();
-                        // acc.Name = lReg.Company__c;
-                        // acc.Lead_Registration__c = lReg.Id;
-                        // acc.RecordTypeId = '0121t000000IQTiAAO';
-                        // newAccount.add(acc);
                         leadRegAccount.put(newAccount[0], lReg);
                         updateAccount = false;
                     }
@@ -123,11 +124,16 @@ public with sharing class LeadRegistration_Handler {
                 }
 
                 for(Lead_Registration__c lRegRec : newLeadRegs){
-
                     Lead l = new Lead();
-                    l.LastName = lRegRec.First_Name__c;
+                    l.LastName = lRegRec.Last_Name__c;
+                    l.FirstName = lRegRec.First_Name__c;
                     l.Lead_Registration__c = lRegRec.Id;
-                    l.Company = lRegRec.Company__c;
+                    if(lRegRec.Global_Company__c != null){
+                        l.Company = lRegRec.Global_Company__c;
+                    }
+                    else{
+                        l.Company = newAccount[0].Name;
+                    }
                     l.Company_Size__c = lRegRec.Company_Size__c;
                     l.Email = lRegRec.Registered_Email__c;
                     l.LeadSource = 'Deal Reg';
@@ -142,22 +148,47 @@ public with sharing class LeadRegistration_Handler {
                     insert newLead;
                     system.debug('### Inserted Lead Id = ' +newLead);
     
-                    /*List<Lead> leads = [SELECT Id FROM Lead WHERE Id IN: newLead];
+                    List<Lead> leads = [SELECT Id FROM Lead WHERE Id IN: newLead];
                     List<Database.LeadConvert> leadsToConvert = new List<Database.LeadConvert>();
                     LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
                     for(Lead l : leads){
                         Database.LeadConvert tempLC = new Database.LeadConvert();
                         tempLC.setLeadId(l.Id);
                         tempLC.setConvertedStatus(convertStatus.MasterLabel);
-                        tempLC.setOpportunityName('Test Opp');
+                        tempLC.setOpportunityName(newAccount[0].Name + ' - ' + newLeadRegs[0].Expected_Tier__c + ' - ' + newLeadRegs[0].Expected_Plan_Seats__c + ' - New Business');
                         leadsToConvert.add(tempLC);
+                        //Company Name + Expected Tier + Expected Seats - New Business
                     }
                     List<Database.LeadConvertResult> lc = Database.convertLead(leadsToConvert);
                     for(Database.LeadConvertResult lctemp : lc){
                         system.debug('### getAccountId: ' + lctemp.getAccountId());
                         system.debug('### getContactId' + lctemp.getContactId());
                         system.debug('### getContactId' + lctemp.getOpportunityId());
-                    }*/
+                        oppConvert.add(lctemp.getOpportunityId());
+                    }
+                }
+
+                if(!oppConvert.isEmpty() && oppConvert.size() > 0 && oppConvert != null){
+                    Opportunity oppNew = [SELECT Id, Name, Type, CloseDate, StageName, Company__c, RecordTypeId, Use_Cases_PL__c FROM Opportunity WHERE Id IN: oppConvert LIMIT 1];
+                    for(Lead_Registration__c lRegRec : newLeadRegs){
+                        oppNew.Type = 'New Business';
+                        oppNew.CloseDate = lRegRec.Expected_Closed_Date__c;
+                        oppNew.StageName = 'Qualified';
+                        oppNew.Company__c = newAccount[0].Id;
+                        oppNew.RecordTypeId = '0121t000000IQUbAAO';
+                        oppNew.Use_Cases_PL__c = lRegRec.Use_Cases__c;
+                        oppNew.DepartmentFunction__c = lRegRec.Department__c;
+                        oppNew.OwnerId = lRegRec.OwnerId;
+                        // oppNew.Lead_Registration__c = lRegRec.Id;
+                        system.debug('### oppNew');
+                        opplist.add(oppNew);
+                    }
+                    
+                    
+                }
+
+                if(!opplist.isEmpty() && opplist.size() > 0 && opplist != null){
+                    update opplist;
                 }
             }
         }
@@ -199,7 +230,7 @@ public with sharing class LeadRegistration_Handler {
                 Lead l = new Lead();
                 l.LastName = lRegRec.First_Name__c;
                 l.Lead_Registration__c = lRegRec.Id;
-                l.Company = lRegRec.Company__c;
+                l.Company = lRegRec.Global_Company__c; //put the global company
                 l.Company_Size__c = lRegRec.Company_Size__c;
                 l.Email = lRegRec.Registered_Email__c;
                 l.LeadSource = 'Deal Reg';
@@ -214,14 +245,14 @@ public with sharing class LeadRegistration_Handler {
                 insert newLead;
                 system.debug('### Inserted Lead Id = ' +newLead);
 
-                /*List<Lead> leads = [SELECT Id FROM Lead WHERE Id IN: newLead];
+                List<Lead> leads = [SELECT Id FROM Lead WHERE Id IN: newLead];
                 List<Database.LeadConvert> leadsToConvert = new List<Database.LeadConvert>();
                 LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
                 for(Lead l : leads){
                     Database.LeadConvert tempLC = new Database.LeadConvert();
                     tempLC.setLeadId(l.Id);
                     tempLC.setConvertedStatus(convertStatus.MasterLabel);
-                    tempLC.setOpportunityName('Test Opp');
+                    tempLC.setOpportunityName(newLeadRegs[0].Expected_Tier__c + ' - ' + newLeadRegs[0].Expected_Plan_Seats__c + ' - New Business');
                     leadsToConvert.add(tempLC);
                 }
                 List<Database.LeadConvertResult> lc = Database.convertLead(leadsToConvert);
@@ -229,7 +260,7 @@ public with sharing class LeadRegistration_Handler {
                     system.debug('### getAccountId: ' + lctemp.getAccountId());
                     system.debug('### getContactId' + lctemp.getContactId());
                     system.debug('### getContactId' + lctemp.getOpportunityId());
-                }*/
+                }
             }
         }
     }
@@ -372,7 +403,7 @@ public with sharing class LeadRegistration_Handler {
         if(companyWebsiteReg != null){
             Map<Id, Company_Domain__c> comDomainMap = new Map<Id, Company_Domain__c>([SELECT Id, Domain__c, Company__c FROM Company_Domain__c WHERE Domain__c IN: companyWebsiteReg.keySet()]);
             system.debug('### comDomainMap: ' + comDomainMap);
-            if(comDomainMap != null){
+            if(!comDomainMap.isEmpty()){
                 for(Company_Domain__c comDomainList : comDomainMap.values()){
                     companyDomain.add(comDomainMap.get(comDomainList.Id).Company__c);
                 }
@@ -403,7 +434,7 @@ public with sharing class LeadRegistration_Handler {
                                                     FROM Account 
                                                     WHERE ParentId IN: regionalCompanyAccounts AND RecordType.DeveloperName = 'Company' AND BillingCountry =: countryMappingDelReg[0]];
                     }
-
+                    system.debug('### localCompanyListRegional: ' + localCompanyListRegional);
                     if(localCompanyListRegional.isEmpty()){
                         localCompanyListGlobal = [SELECT Id, Name, OwnerId, Owner.name, Company__c, Owner.Function__c, BillingCountry, ParentId
                                                 FROM Account 
@@ -464,8 +495,9 @@ public with sharing class LeadRegistration_Handler {
                                     }
                                 // }
 
-                                if(realtedLocalCompany != null){
-                                    leadReg.Local_Company__c = realtedLocalCompany[0].Id;
+                                if(localCompanyListRegional != null){
+                                    system.debug('### localCompanyListRegionalv2: ' + localCompanyListRegional);
+                                    leadReg.Local_Company__c = localCompanyListRegional[0].Id;
                                 }
 
                                 if(realtedRegionalCompany != null){
@@ -492,8 +524,11 @@ public with sharing class LeadRegistration_Handler {
                                             leadReg.Related_Company__c = localAccount.Id;
                                             isPendingReview = true;
                                         }
-    
+                                        
                                         leadReg.Regional_Company__c = localAccount.ParentId;
+                                        leadReg.Local_Company__c = localAccount.Id;
+                                        leadReg.Global_Company__c = globalAccount[0].Id;
+                                        system.debug('### leadReg.Local_Company__c: ' + leadReg.Local_Company__c);
                                     }
                                 }
                             }
@@ -515,8 +550,9 @@ public with sharing class LeadRegistration_Handler {
                                             leadReg.Related_Company__c = localAccount.Id;
                                             isPendingReview = true;
                                         }
-    
+                                        leadReg.Local_Company__c = localAccount.Id;
                                         leadReg.Global_Company__c = localAccount.ParentId;
+                                        system.debug('### leadReg.Local_Company__c_v2: ' + leadReg.Local_Company__c);
                                     }
                                 }
                             }
@@ -539,6 +575,9 @@ public with sharing class LeadRegistration_Handler {
                                         leadReg.Related_Company__c = regionalAccount.Id;
                                         isPendingReview = true;
                                     }
+
+                                    leadReg.Regional_Company__c = regionalAccount.Id;
+                                    leadReg.Global_Company__c = regionalAccount.ParentId;
                                 }
                             }
                         }
@@ -560,6 +599,8 @@ public with sharing class LeadRegistration_Handler {
                                         leadReg.Related_Company__c = globalAcc.Id;
                                         isPendingReview = true;
                                     }
+
+                                    leadReg.Global_Company__c = globalAcc.Id;
                                 }
                             }
                         }
@@ -585,6 +626,12 @@ public with sharing class LeadRegistration_Handler {
                                     }
 
                                     leadReg.Regional_Company__c = localAccount.ParentId;
+                                    system.debug('### realtedLocalCompany: ' + realtedLocalCompany);
+                                    // if(realtedLocalCompany != null){
+                                        leadReg.Local_Company__c = localAccount.Id;
+                                        system.debug('### leadReg.Local_Company__c_v5: ' + leadReg.Local_Company__c);
+                                    // }
+                                        leadReg.Global_Company__c = globalAccount[0].Id;
                                 }
                             }
                         }
@@ -608,6 +655,8 @@ public with sharing class LeadRegistration_Handler {
                                     }
 
                                     leadReg.Global_Company__c = localAccount.ParentId;
+                                    leadReg.Local_Company__c = localAccount.Id;
+                                    system.debug('### leadReg.Local_Company__c_v4: ' + leadReg.Local_Company__c);
                                 }
                             }
                         }
@@ -629,8 +678,9 @@ public with sharing class LeadRegistration_Handler {
                                         leadReg.Related_Company__c = regionalAccount.Id;
                                         isPendingReview = true;
                                     }
-
+                                    leadReg.Regional_Company__c = regionalAccount.Id;
                                     leadReg.Global_Company__c = regionalAccount.ParentId;
+                                    
                                 }
                             }
                         }
@@ -652,6 +702,8 @@ public with sharing class LeadRegistration_Handler {
                                         leadReg.Related_Company__c = globalAcc.Id;
                                         isPendingReview = true;
                                     }
+
+                                    leadReg.Global_Company__c = globalAcc.Id;
                                 }
                             }
                         }
