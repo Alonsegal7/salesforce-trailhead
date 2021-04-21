@@ -1,9 +1,0 @@
-<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
-    <aura:attribute name="recordId" type="String" />    
-    <!--<div class="slds-button-group slds-align_absolute-center" role="group">
-        <button class="slds-button slds-button-neutral slds-align_absolute-left" onclick="{!c.navigateToValooto}">Create Quote (New)</button>
-        <button class="slds-button slds-button-neutral slds-align_absolute-right" onclick="{!c.navigateToValootoView}">View Quotes (New)</button>
-        
-    </div>-->
-    <c:contractValidationComponent recordId="{!v.recordId}"/>
-</aura:component>

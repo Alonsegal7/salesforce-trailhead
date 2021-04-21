@@ -1,8 +1,0 @@
-<design:component>
-	
-    <design:attribute name="numberOfMonths" label="Number of months" 
-                      description="Number of months back of story log" />
-    <design:attribute name="maxHeight" label="Max height"
-                      description="Max height of the component" />
-    
-</design:component>
