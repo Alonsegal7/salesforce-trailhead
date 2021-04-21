@@ -1,0 +1,29 @@
+<template>
+    <template if:true={hasProject}>
+        <lightning-card>
+            <div class="slds-text-link" style="font-weight:bold;padding:5px;margin-left: 1%;font-size: 1.3em;" >
+                <p style="display:inline-block" onclick={handleProjectClick}>{projectName}</p>
+                <lightning-button-icon class="iconLink" icon-name="utility:open" size="small" alternative-text="Open Project" title="Open Project" onclick={goToProject} value={projectId}></lightning-button-icon>
+            </div>
+            <lightning-progress-indicator current-step={currentStep} type="path" variant="base">
+                <template for:each={steps} for:item="step">
+                    <lightning-progress-step label={step.label} value={step.value} key={step.value} id={step.value} onclick={handleMSClick}></lightning-progress-step>
+                </template>
+            </lightning-progress-indicator><br/>
+            <template if:true={showProject}>
+                <lightning-record-form record-id={projectId} object-api-name="Project__c" columns="2" mode="view" layout-type="Compact">
+                </lightning-record-form>  
+            </template>
+            <template if:false={showProject}>
+                <lightning-record-form record-id={milestoneId} object-api-name="Milestone__c" columns="2" mode="view" layout-type="Compact">
+                </lightning-record-form>  
+            </template>
+        </lightning-card> 
+    </template>  
+    <template if:false={hasProject}>
+        <lightning-card title="Projects">
+            <lightning-button-icon class="iconLink" icon-name="action:new" size="small" alternative-text="New Project" title="New Project" onclick={cretaeProjectLink} value={projectId}></lightning-button-icon>
+            <p style="display:inline-block;margin-left: 10px;vertical-align: middle;cursor:pointer;" onclick={cretaeProjectLink}>Create New Project</p>
+        </lightning-card>
+    </template>
+</template>

@@ -1,0 +1,24 @@
+<template>
+    <div class="slds-col slds-size_3-of-3 slds-p-around_xxx-small lgc-bg">
+        <lightning-card >
+            <div class="slds-p-around_small lgc-bg">
+                <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar1">
+                    <strong>{title}</strong>
+                    <span aria-hidden="true">
+                    <span>{progress}% Complete</span>
+                    </span>
+                </div>
+                <div class="slds-progress-bar slds-progress-bar_circular" aria-valuemin="0" aria-valuemax="100" aria-valuenow={progress} role="progressbar" style="height: 14px;">
+                    <span class="slds-progress-bar__value" style={barStyle}>
+                      <span class="slds-assistive-text">Progress: {progress}%</span>
+                    </span>
+                </div>
+                <template if:true={showSubTitle}>
+                    <div class="slds-grid slds-grid_align-spread slds-p-top_x-small" id="subtitle">
+                        <span style="color:#6a6b6c">{subTitle}</span>
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+    </div>
+</template>
