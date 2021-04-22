@@ -51,3 +51,4 @@ globalValueSets/
 customMetadata/
 envs/
 salto.config/
+*.code-workspace
