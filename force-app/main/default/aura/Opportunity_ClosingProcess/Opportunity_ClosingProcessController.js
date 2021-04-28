@@ -33,6 +33,69 @@
 					if (storeResponse.hasOwnProperty('subscription')) {
                         component.set('v.hasWonSO_SubClaimCC', storeResponse.subscription);
                     }
+
+                    if (storeResponse.hasOwnProperty('internalOppLost_NotExpansion') && storeResponse.internalOppLost_NotExpansion.length > 0) {
+						var fieldsString = new Array();
+						console.log('### theLeadFields_v1: ' + fieldsString);
+						for (var i = 0; i < storeResponse.internalOppLost_NotExpansion.length; i++){
+							var f = {};
+                            f.name = storeResponse.internalOppLost_NotExpansion[i].name;
+                            console.log('@@@ Tal Test1: ' + f.name);
+							f.req = storeResponse.internalOppLost_NotExpansion[i].required;
+							fieldsString.push(JSON.parse(JSON.stringify(f)));
+							console.log('### fieldsString: ' + fieldsString);
+						}
+						component.set('v.internalOppLost_NotExpansion', fieldsString);
+						console.log('### internalOppLost_NotExpansion: ' + component.get('v.internalOppLost_NotExpansion'));
+                    }
+
+                    if (storeResponse.hasOwnProperty('internalOppLWon_Expansion') && storeResponse.internalOppLWon_Expansion.length > 0) {
+						var fieldsString = new Array();
+						console.log('### fieldsString_v1: ' + fieldsString);
+						for (var i = 0; i < storeResponse.internalOppLWon_Expansion.length; i++){
+							var f = {};
+                            f.name = storeResponse.internalOppLWon_Expansion[i].name;
+                            console.log('@@@ Tal Test2: ' + f.name);
+							f.req = storeResponse.internalOppLWon_Expansion[i].required;
+							fieldsString.push(JSON.parse(JSON.stringify(f)));
+							console.log('### fieldsString: ' + fieldsString);
+						}
+						component.set('v.internalOppLWon_Expansion', fieldsString);
+						console.log('### internalOppLWon_Expansion: ' + component.get('v.internalOppLWon_Expansion'));
+                    }
+
+                    if (storeResponse.hasOwnProperty('internalOppLWon_NotExpansion') && storeResponse.internalOppLWon_NotExpansion.length > 0) {
+						var fieldsString = new Array();
+						console.log('### fieldsString_v1: ' + fieldsString);
+						for (var i = 0; i < storeResponse.internalOppLWon_NotExpansion.length; i++){
+							var f = {};
+                            f.name = storeResponse.internalOppLWon_NotExpansion[i].name;
+                            console.log('@@@ Tal Test3: ' + f.name);
+							f.req = storeResponse.internalOppLWon_NotExpansion[i].required;
+							fieldsString.push(JSON.parse(JSON.stringify(f)));
+                            console.log('### fieldsString: ' + fieldsString);
+                            f.val = storeResponse.internalOppLWon_NotExpansion[i].name;
+                            console.log('### val: ' + f.val);
+						}
+						component.set('v.internalOppLWon_NotExpansion', fieldsString);
+                        console.log('### internalOppLWon_NotExpansion: ' + component.get('v.internalOppLWon_NotExpansion'));
+                    }
+
+                    if (storeResponse.hasOwnProperty('partnerOppLWonLost_Expansion') && storeResponse.partnerOppLWonLost_Expansion.length > 0) {
+						var fieldsString = new Array();
+						console.log('### fieldsString_v1: ' + fieldsString);
+						for (var i = 0; i < storeResponse.partnerOppLWonLost_Expansion.length; i++){
+							var f = {};
+                            f.name = storeResponse.partnerOppLWonLost_Expansion[i].name;
+                            console.log('@@@ Tal Test4: ' + f.name);
+							f.req = storeResponse.partnerOppLWonLost_Expansion[i].required;
+							fieldsString.push(JSON.parse(JSON.stringify(f)));
+							console.log('### fieldsString: ' + fieldsString);
+						}
+						component.set('v.partnerOppLWonLost_Expansion', fieldsString);
+						console.log('### partnerOppLWonLost_Expansion: ' + component.get('v.partnerOppLWonLost_Expansion'));
+                    }
+                    
                     console.log('### showWhatSigned: ' + component.get('v.showWhatSigned'));
                 }
                 
@@ -55,6 +118,27 @@
             }
         });
         $A.enqueueAction(action);
+    },
+
+    saveWonFieldSet : function(component, event, helper){
+        console.log('### in submit');
+		event.preventDefault();
+        var fields = event.getParam();
+		component.find('closedWonFields').submit(fields);
+    },
+
+    saveWonFieldSet : function(component, event, helper){
+        console.log('### in submit');
+		event.preventDefault();
+        var fields = event.getParam();
+		component.find('closedWonFields').submit(fields);
+    },
+
+    saveWonInfoFieldSet : function(component, event, helper){
+        console.log('### in submit');
+		event.preventDefault();
+        var fields = event.getParam();
+		component.find('closedWonInfoFields').submit(fields);
     },
 
     handleUploadFinished: function (component, event) {
@@ -81,37 +165,99 @@
     },
 
     saveManual : function(component, event, helper){
+        console.log('### saveManual: ');
+        // if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+        //     helper.saveManualFields(component, event, helper);
+        // }
         if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-            helper.saveManualFields(component, event, helper);
+            component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
+                console.log('### saveResult.state: ' + saveResult.state);
+                var errMsg = "";
+                if (saveResult.state == "SUCCESS" || saveResult.state == "DRAFT") {
+                    component.set('v.showSpinner', false);
+                }
+                
+                else if (saveResult.state === "INCOMPLETE") {
+                    console.log("User is offline, device doesn't support drafts.");
+                    component.set("v.recordSaveError", errMsg);
+                }
+    
+                else if(saveResult.state === "ERROR") {
+                    for (var i = 0; i < saveResult.error.length; i++) {
+                        errMsg += saveResult.error[i].message + "\n";
+                    }
+                    console.log('ERROR---'+errMsg)
+                    component.set("v.recordSaveError", errMsg);
+                }
+                
+                else {
+                    console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+                    component.set("v.recordSaveError", errMsg);
+                }
+                console.log('### recordSaveError: ' + component.get("v.recordSaveError"));
+            }));
         }
+        
+        // console.log('### saveManual_v1: ' + event.getParam('value'));
+        // event.preventDefault();
+        // var fields = event.getParam();
+        // component.find('closedFields').submit(fields);
     },
 
     setClaim : function(component, event, helper){
+        console.log('### setClaim' + event.getParam('value'));
         var claim = event.getParam('value');
-        console.log('### claim: ' + claim);
-        console.log('### forceData won: ' + component.get("v.closedFields.StageName"));
-        console.log('### forceData: ' + component.get("v.closedFields.What_Would_You_Like_To_Claim__c"));
-        console.log('### claim field: ' + component.get('v.oppData.What_Would_You_Like_To_Claim__c'));
-
-        if(claim == 'Sales Order ARR + CC Payments' || claim == 'Sales Order ARR'){
-            var innerValueVar = 'ManualSignature';
-            var innerValuePath = 'Manual Signature';
-            component.set('v.innerPathValue', innerValueVar);
-            if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                helper.saveManualFields(component, event, helper);
-                helper.setInnerPicklistPath(component, event, helper, innerValuePath);
+        event.preventDefault();
+        var fields = event.getParam();
+        // component.find('closedWonFields').submit(fields);
+        console.log('### what claim: ' + component.get('v.closedFields.What_Would_You_Like_To_Claim__c'));
+        component.set("v.closedFields.What_Would_You_Like_To_Claim__c", claim);
+        component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
+			console.log('### saveResult.state: ' + saveResult.state);
+			var errMsg = "";
+            if (saveResult.state == "SUCCESS" || saveResult.state == "DRAFT") {
+                component.set('v.showSpinner', false);
+                console.log('### succes what_v2: ' + component.get('v.closedFields.What_Would_You_Like_To_Claim__c'));
             }
-        }
+			
+			else if (saveResult.state === "INCOMPLETE") {
+				console.log("User is offline, device doesn't support drafts.");
+				component.set("v.recordSaveError", errMsg);
+			}
 
-        else if(claim == 'CC Payments'){
-            var innerValueVar = 'CCClaim';
-            var innerValuePath = 'CC Claim';
-            component.set('v.innerPathValue', innerValueVar);
-            if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                helper.saveManualFields(component, event, helper);
-                helper.setInnerPicklistPath(component, event, helper, innerValuePath);
-            }
-        }
+			else if(saveResult.state === "ERROR") {
+				for (var i = 0; i < saveResult.error.length; i++) {
+					errMsg += saveResult.error[i].message + "\n";
+				}
+				console.log('ERROR---'+errMsg)
+				component.set("v.recordSaveError", errMsg);
+			}
+			
+			else {
+				console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+				component.set("v.recordSaveError", errMsg);
+			}
+			console.log('### recordSaveError: ' + component.get("v.recordSaveError"));
+		}));
+        // if(claim == 'Sales Order ARR + CC Payments' || claim == 'Sales Order ARR'){
+        //     var innerValueVar = 'ManualSignature';
+        //     var innerValuePath = 'Manual Signature';
+        //     component.set('v.innerPathValue', innerValueVar);
+        //     if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+        //         helper.saveManualFields(component, event, helper);
+        //         helper.setInnerPicklistPath(component, event, helper, innerValuePath);
+        //     }
+        // }
+
+        // else if(claim == 'CC Payments'){
+        //     var innerValueVar = 'CCClaim';
+        //     var innerValuePath = 'CC Claim';
+        //     component.set('v.innerPathValue', innerValueVar);
+        //     if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+        //         helper.saveManualFields(component, event, helper);
+        //         helper.setInnerPicklistPath(component, event, helper, innerValuePath);
+        //     }
+        // }
     },
 
     handleStatusChange_OpportunityCloseSummary : function (component, event, helper) {
@@ -165,6 +311,8 @@
     closeModal : function(component, event, helper) {
         console.log('### v.innerPathValue: ' + component.get('v.innerPathValue'));
         component.set("v.isModalOpen", false);
+        var innerValue = 'Closed Modal';
+        helper.setInnerPicklistPath(component, event, helper, innerValue);
     },
 
     handleSelect : function (component, event, helper) {
@@ -254,10 +402,32 @@
                             component.set('v.showSpinner', false);
                             helper.updateProbability(component, event, helper);
                         }
-            
+
+                        else if (saveResult.state === "INCOMPLETE") {
+                            console.log("User is offline, device doesn't support drafts.");
+                            component.set("v.recordSaveError", errMsg);
+                        }
+
+                        else if(saveResult.state === "ERROR") {
+                            for (var i = 0; i < saveResult.error.length; i++) {
+                                errMsg += saveResult.error[i].message + "\n";
+                            }
+                            console.log('ERROR---'+errMsg)
+                            component.set("v.recordSaveError", errMsg);
+                        }
+                        
                         else {
-                            console.log('### not succes manual');
-                            console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
+                            console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+                            component.set("v.recordSaveError", errMsg);
+                        }
+
+                        if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+                            console.log('### in notice');
+                            component.find('notifLib').showNotice({
+                                "variant": "error",
+                                "header": "Problem saving record:",
+                                "message": errMsg,
+                            });
                         }
                     }));
                 }
@@ -302,6 +472,7 @@
 
         if(component.get('v.isClosedWon')){
             if(component.get('v.innerPathValue') == 'Claim'){
+                console.log('### in claim: ' + component.get('v.closedFields.What_Would_You_Like_To_Claim__c'));
                 if(component.get('v.closedFields.What_Would_You_Like_To_Claim__c') == 'CC Payments'){
                     component.set('v.innerPathValue', 'CCClaim');
 
@@ -319,28 +490,16 @@
             }
 
             else if(component.get('v.innerPathValue') == 'ManualSignature'){ // manualy signed
-                var showValidationError = false;
-                var fields = component.find("newOpportunityField");
-                var vaildationFailReason = 'Please fill in all the required fields: ';
-                var updateStageName = 'Please update the Stage to be: Closed Won';
+                console.log('### oppData.Manual_Signature_Reason__c: ' + component.get('v.oppData.Manual_Signature_Reason__c'));
+                console.log('### closedFields.Manual_Signature_Reason__c: ' + component.get('v.closedFields.Manual_Signature_Reason__c'));
+                console.log('### isPrioritySO: ' + component.get('v.isPrioritySO'));
                 
-                fields.forEach(function (field) {
-                    console.log('### in value');
-                    if($A.util.isEmpty(field.get("v.value"))){
-                        showValidationError = true;
-                        console.log('### in error: ' + showValidationError);
-                    }
-                });
-                
-                if (!showValidationError) { //if all the fields are populated
-                    console.log('### oppData.Manual_Signature_Reason__c: ' + component.get('v.oppData.Manual_Signature_Reason__c'));
-                    console.log('### closedFields.Manual_Signature_Reason__c: ' + component.get('v.closedFields.Manual_Signature_Reason__c'));
-                    console.log('### isPrioritySO: ' + component.get('v.isPrioritySO'));
-                    
-                    if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                        component.set('v.closedFields.Is_SO_Signed__c', true);
-                        helper.saveManualFields(component, event, helper);
-                    }
+                if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+                    component.set('v.closedFields.Is_SO_Signed__c', true);
+                    console.log('### Is_SO_Signed__c: ' + component.get('v.closedFields.Is_SO_Signed__c'));
+                    helper.saveManualFields(component, event, helper);
+                }
+                if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
                     if(component.get('v.isPrioritySO') == 'Priority SO' || component.get('v.closedFields.Manual_Signature_Reason__c') == 'Priority SO'){
                         console.log('### in BBPicker');
                         component.set('v.innerPathValue', 'BBPickers');
@@ -357,17 +516,6 @@
                         if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
                             helper.getCCClaim(component, event, helper);
                         }
-                    }
-                }
-                else { //if NOT all the fields are populated
-                    if(isClosedWon == true){
-                        console.log('## isClosedWon: ' + isClosedWon);
-                        component.find('oppMessage').setError(updateStageName);
-                    }
-
-                    if(showValidationError == true){
-                        vaildationFailReason += '* Date of Signature \n * Signer Name \n * Signer Title \n * Manual Signature Reason';
-                        component.find('oppMessage').setError(vaildationFailReason);
                     }
                 }
             }
@@ -396,14 +544,38 @@
                             component.set('v.showSpinner', true);
                             component.set('v.closedFields.StageName', 'Closed Won');
                             component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
+                                var errMsg = "";
                                 if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
                                     component.set('v.showSpinner', false);
+                                    component.set("v.recordSaveError", errMsg);
                                     helper.updateProbability(component, event, helper);
                                 }
-                    
+
+                                else if (saveResult.state === "INCOMPLETE") {
+                                    console.log("User is offline, device doesn't support drafts.");
+                                    component.set("v.recordSaveError", errMsg);
+                                }
+
+                                else if(saveResult.state === "ERROR") {
+                                    for (var i = 0; i < saveResult.error.length; i++) {
+                                        errMsg += saveResult.error[i].message + "\n";
+                                    }
+                                    console.log('ERROR---'+errMsg)
+                                    component.set("v.recordSaveError", errMsg);
+                                }
+
                                 else {
-                                    console.log('### not succes manual');
-                                    console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
+                                    console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+                                    component.set("v.recordSaveError", errMsg);
+                                }
+
+                                if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+                                    console.log('### in notice');
+                                    component.find('notifLib').showNotice({
+                                        "variant": "error",
+                                        "header": "Problem saving record:",
+                                        "message": errMsg,
+                                    });
                                 }
                             }));
                         }
@@ -526,22 +698,32 @@
                                     helper.setStageUpdateToast(component, event, helper);
                                 }
                             }
-        
+
+                            else if (saveResult.state === "INCOMPLETE") {
+                                console.log("User is offline, device doesn't support drafts.");
+                                component.set("v.recordSaveError", errMsg);
+                            }
+
+                            else if(saveResult.state === "ERROR") {
+                                for (var i = 0; i < saveResult.error.length; i++) {
+                                    errMsg += saveResult.error[i].message + "\n";
+                                }
+                                console.log('ERROR---'+errMsg)
+                                component.set("v.recordSaveError", errMsg);
+                            }
+                            
                             else {
-                                console.log('### FAILED' + saveResult.state);
-                                var errors = "";
-                                for (var i = 0; saveResult.error.length > i; i++){
-                                    errors = errors + saveResult.error[i].message;
-                                }            
-                                console.log('### errors: ' + errors);
-                                var resultsToast = $A.get("e.force:showToast");
-                                resultsToast.setParams({
-                                    "type":"error",
-                                    "title": "Error!",
-                                    "message": errors                        
+                                console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+                                component.set("v.recordSaveError", errMsg);
+                            }
+
+                            if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+                                console.log('### in notice');
+                                component.find('notifLib').showNotice({
+                                    "variant": "error",
+                                    "header": "Problem saving record:",
+                                    "message": errMsg,
                                 });
-                                resultsToast.fire();
-                                console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
                             }
                         }));
                     }

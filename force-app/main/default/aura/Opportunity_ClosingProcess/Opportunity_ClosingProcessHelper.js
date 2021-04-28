@@ -137,8 +137,10 @@
 
 	savefields : function(component, event, helper){
 		console.log('### save save:' + component.get('v.showSpinner'));
+		var errMsg = "";
 		component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
-            if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
+			console.log('### saveFields_v1: ' + saveResult.state);
+            if (saveResult.state == "SUCCESS" || saveResult.state == "DRAFT") {
 				component.set('v.showSpinner', false);
 				component.set('v.confetti', true);
 				component.set('v.isModalOpen', false);
@@ -150,31 +152,73 @@
 				});
             }
 
-            else {
-                console.log('### not succes manual');
-				console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
-				var errorMessage =  JSON.stringify(saveResult.error);
-				console.log('### showMessageeee: ' + errorMessage);
+            else if (saveResult.state == "INCOMPLETE") {
+				console.log("User is offline, device doesn't support drafts.");
+				component.set("v.recordSaveError", errMsg);
+			}
+
+			else if(saveResult.state == "ERROR") {
+				console.log('### in ERROR: ');
+				for (var i = 0; i < saveResult.error.length; i++) {
+					console.log('### in ERROR_v1: ');
+					errMsg += saveResult.error[i].message + "\n";
+					console.log('### in ERROR_v2: ' + errMsg);
+				}
+				console.log('ERROR---'+errMsg);
+				component.set('v.recordSaveError', errMsg);
+			}
+			
+			else {
+				console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+				component.set("v.recordSaveError", errMsg);
+			}
+
+			if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+				console.log('### in notice');
 				component.find('notifLib').showNotice({
 					"variant": "error",
 					"header": "Problem saving record:",
-					"message": errorMessage,
+					"message": errMsg,
 				});
-            }
+			}
 		}));
 	},
 
 	saveManualFields : function(component, event, helper){
-		console.log('### save save:' + component.get('v.showSpinner'));
+		console.log('### saveManualFields:' + component.get('v.closedFields.Is_SO_Signed__c'));
 		component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
-            if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
+			console.log('### saveResult.state: ' + saveResult.state);
+			var errMsg = "";
+            if (saveResult.state == "SUCCESS" || saveResult.state == "DRAFT") {
 				component.set('v.showSpinner', false);
             }
+			
+			else if (saveResult.state === "INCOMPLETE") {
+				console.log("User is offline, device doesn't support drafts.");
+				component.set("v.recordSaveError", errMsg);
+			}
 
-            else {
-                console.log('### not succes manual');
-				console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
-            }
+			else if(saveResult.state === "ERROR") {
+				for (var i = 0; i < saveResult.error.length; i++) {
+					errMsg += saveResult.error[i].message + "\n";
+				}
+				console.log('ERROR---'+errMsg)
+				component.set("v.recordSaveError", errMsg);
+			}
+			
+			else {
+				console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+				component.set("v.recordSaveError", errMsg);
+			}
+			console.log('### recordSaveError: ' + component.get('v.recordSaveError'));
+			if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+				console.log('### in notice');
+				component.find('notifLib').showNotice({
+					"variant": "error",
+					"header": "Problem saving record:",
+					"message": errMsg,
+				});
+			}
 		}));
 	},
 
@@ -235,6 +279,7 @@
 		var oppId = component.get('v.recordId');
 		console.log('### in probability');
 		if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+			console.log('### in prob');
 			var action = component.get("c.updateProbability");
 			action.setParams({ 
 				recordId : oppId,
@@ -244,8 +289,34 @@
 			action.setCallback(this, function(response) {
 				var state = response.getState();
 				console.log('### hello' + state);
-				if (state === "SUCCESS") {
+				if (state == "SUCCESS") {
 					console.log('### state_1111111: ' + response.getReturnValue());
+				}
+				else if (saveResult.state == "INCOMPLETE") {
+					console.log("User is offline, device doesn't support drafts.");
+					component.set("v.recordSaveError", errMsg);
+				}
+	
+				else if(saveResult.state == "ERROR") {
+					for (var i = 0; i < saveResult.error.length; i++) {
+						errMsg += saveResult.error[i].message + "\n";
+					}
+					console.log('ERROR---'+errMsg)
+					component.set("v.recordSaveError", errMsg);
+				}
+				
+				else {
+					console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+					component.set("v.recordSaveError", errMsg);
+				}
+				console.log('### recordSaveError: ' + component.get("v.recordSaveError"));
+				if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+					console.log('### in notice');
+					component.find('notifLib').showNotice({
+						"variant": "error",
+						"header": "Problem saving record:",
+						"message": errMsg,
+					});
 				}
 			});
 			$A.enqueueAction(action);
