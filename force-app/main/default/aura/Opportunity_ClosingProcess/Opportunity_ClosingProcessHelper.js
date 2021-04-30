@@ -154,7 +154,7 @@
 
             else if (saveResult.state == "INCOMPLETE") {
 				console.log("User is offline, device doesn't support drafts.");
-				component.set("v.recordSaveError", errMsg);
+				// component.set("v.recordSaveError", errMsg);
 			}
 
 			else if(saveResult.state == "ERROR") {
@@ -170,7 +170,7 @@
 			
 			else {
 				console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-				component.set("v.recordSaveError", errMsg);
+				// component.set("v.recordSaveError", errMsg);
 			}
 
 			if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
@@ -195,7 +195,7 @@
 			
 			else if (saveResult.state === "INCOMPLETE") {
 				console.log("User is offline, device doesn't support drafts.");
-				component.set("v.recordSaveError", errMsg);
+				// component.set("v.recordSaveError", errMsg);
 			}
 
 			else if(saveResult.state === "ERROR") {
@@ -208,7 +208,7 @@
 			
 			else {
 				console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-				component.set("v.recordSaveError", errMsg);
+				// component.set("v.recordSaveError", errMsg);
 			}
 			console.log('### recordSaveError: ' + component.get('v.recordSaveError'));
 			if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
@@ -220,6 +220,7 @@
 				});
 			}
 		}));
+		
 	},
 
 	setPreviousStep : function (component, event, helper){
@@ -289,12 +290,13 @@
 			action.setCallback(this, function(response) {
 				var state = response.getState();
 				console.log('### hello' + state);
+				var errMsg = "";
 				if (state == "SUCCESS") {
 					console.log('### state_1111111: ' + response.getReturnValue());
 				}
 				else if (saveResult.state == "INCOMPLETE") {
 					console.log("User is offline, device doesn't support drafts.");
-					component.set("v.recordSaveError", errMsg);
+					// component.set("v.recordSaveError", errMsg);
 				}
 	
 				else if(saveResult.state == "ERROR") {
@@ -307,7 +309,7 @@
 				
 				else {
 					console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-					component.set("v.recordSaveError", errMsg);
+					// component.set("v.recordSaveError", errMsg);
 				}
 				console.log('### recordSaveError: ' + component.get("v.recordSaveError"));
 				if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){

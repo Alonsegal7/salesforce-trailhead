@@ -127,13 +127,6 @@
 		component.find('closedWonFields').submit(fields);
     },
 
-    saveWonFieldSet : function(component, event, helper){
-        console.log('### in submit');
-		event.preventDefault();
-        var fields = event.getParam();
-		component.find('closedWonFields').submit(fields);
-    },
-
     saveWonInfoFieldSet : function(component, event, helper){
         console.log('### in submit');
 		event.preventDefault();
@@ -398,6 +391,7 @@
                 if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
                     component.set('v.closedFields.StageName', 'Closed Won');
                     component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
+                        var errMsg = "";
                         if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
                             component.set('v.showSpinner', false);
                             helper.updateProbability(component, event, helper);
@@ -405,7 +399,7 @@
 
                         else if (saveResult.state === "INCOMPLETE") {
                             console.log("User is offline, device doesn't support drafts.");
-                            component.set("v.recordSaveError", errMsg);
+                            // component.set("v.recordSaveError", errMsg);
                         }
 
                         else if(saveResult.state === "ERROR") {
@@ -418,7 +412,7 @@
                         
                         else {
                             console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-                            component.set("v.recordSaveError", errMsg);
+                            // component.set("v.recordSaveError", errMsg);
                         }
 
                         if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
@@ -499,7 +493,7 @@
                     console.log('### Is_SO_Signed__c: ' + component.get('v.closedFields.Is_SO_Signed__c'));
                     helper.saveManualFields(component, event, helper);
                 }
-                if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+                if(component.get('v.recordSaveError') == undefined || component.get('v.recordSaveError') == ""){
                     if(component.get('v.isPrioritySO') == 'Priority SO' || component.get('v.closedFields.Manual_Signature_Reason__c') == 'Priority SO'){
                         console.log('### in BBPicker');
                         component.set('v.innerPathValue', 'BBPickers');
@@ -553,7 +547,7 @@
 
                                 else if (saveResult.state === "INCOMPLETE") {
                                     console.log("User is offline, device doesn't support drafts.");
-                                    component.set("v.recordSaveError", errMsg);
+                                    // component.set("v.recordSaveError", errMsg);
                                 }
 
                                 else if(saveResult.state === "ERROR") {
@@ -566,7 +560,7 @@
 
                                 else {
                                     console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-                                    component.set("v.recordSaveError", errMsg);
+                                    // component.set("v.recordSaveError", errMsg);
                                 }
 
                                 if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
@@ -669,6 +663,7 @@
                         component.set('v.showSpinner', true);
                         component.set('v.closedFields.StageName', 'Closed Lost');
                         component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
+                            var errMsg = "";
                             if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
                                 if(component.get('v.oppData.Green_Bucket_ARR__c') >= 10000){
                                     component.set('v.showSpinner', false);
@@ -701,7 +696,7 @@
 
                             else if (saveResult.state === "INCOMPLETE") {
                                 console.log("User is offline, device doesn't support drafts.");
-                                component.set("v.recordSaveError", errMsg);
+                                // component.set("v.recordSaveError", errMsg);
                             }
 
                             else if(saveResult.state === "ERROR") {
@@ -714,7 +709,7 @@
                             
                             else {
                                 console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-                                component.set("v.recordSaveError", errMsg);
+                                // component.set("v.recordSaveError", errMsg);
                             }
 
                             if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
