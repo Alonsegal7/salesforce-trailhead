@@ -20,7 +20,7 @@
 
 	<aura:attribute name="errMsg" type="String" default="" />
 	<aura:attribute name="existingUserId" type="String" default=""/>
-	<aura:attribute name="newUserId" type="String" default=""/>
+	<aura:attribute name="newUser" type="Map" default="{}"/>
 	<aura:attribute name="managerId" type="String" default=""/>
 	<aura:attribute name="initialContact" type="Contact" default="{}"/>
 	<aura:attribute name="contactToUpdate" type="Map" default="{}"/>
@@ -77,7 +77,8 @@
 				<aura:if isTrue="{!and(v.screen2,v.errMsg=='')}">
 					<div class="slds-text-align_center">
 						<div class="slds-text-heading_small slds-text-color_success slds-p-bottom_medium">New community user was created successfully.</div>
-						<a href="{!'/one/one.app?#/sObject/'+ v.newUserId + '/view'}" target="_blank">Link to User</a>
+						<div class="slds-text-heading_small slds-p-bottom_medium">Username: {!v.newUser.Username}</div>
+						<a href="{!'/one/one.app?#/sObject/'+ v.newUser.Id + '/view'}" target="_blank">Link to User</a>
 					</div>
 				</aura:if>
 			</div>    

@@ -56,8 +56,8 @@
             var state = response.getState();
 			var errMsg = '';
             if(state == "SUCCESS"){
-                var newUserId = response.getReturnValue();
-				component.set("v.newUserId", newUserId);
+                var newUser = response.getReturnValue();
+				component.set("v.newUser", newUser);
 				component.set("v.screen1", false);
 				component.set("v.screen2", true);
             } else {

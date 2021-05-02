@@ -41,7 +41,7 @@ public class Ctrl_CreateCommunityUser  {
 	}
 
 	@AuraEnabled
-	public static Id createUser(Id contactId, Map<String,String> contactToUpdateMap, Id managerId){
+	public static User createUser(Id contactId, Map<String,String> contactToUpdateMap, Id managerId){
 		User newUserRec = new User();
 		Set<String> contactFieldSet = new Set<String>();
 		try {
@@ -61,14 +61,11 @@ public class Ctrl_CreateCommunityUser  {
 						newUserRec.put(cmt.User_Field_API_Name__c, cmt.User_Field_Default_Value__c);
 					}
 				} else if (cmt.Contact_Field_API_Name__c != null && cmt.Contact_Field_API_Name__c != ''){
-					//System.debug('## ksenia: '+cmt.Contact_Field_API_Name__c);
-					//System.debug('## ksenia: '+contactToUpdateMap.get(cmt.Contact_Field_API_Name__c));
 					if(contactToUpdateMap != null && contactToUpdateMap.containsKey(cmt.Contact_Field_API_Name__c)){
 						newUserRec.put(cmt.User_Field_API_Name__c, contactToUpdateMap.get(cmt.Contact_Field_API_Name__c));
 					} else {
 						newUserRec.put(cmt.User_Field_API_Name__c, contactRec.get(cmt.Contact_Field_API_Name__c));
 					}
-					//System.debug('## ksenia: '+newUserRec.get(cmt.User_Field_API_Name__c));
 				}
 			}
 			String partnerProfileName = [select Value__c from Environment_Variable__mdt where DeveloperName = 'Default_Partner_Profile' limit 1].Value__c;
@@ -93,13 +90,13 @@ public class Ctrl_CreateCommunityUser  {
 				}
 				System.enqueueJob(new updateContactQueueable(contactToUpdate)); // need to be async update due to user DML action
 			}
-			return newUserRec.Id;
+			return new User(Id = newUserRec.Id, Username = newUserRec.Username);
 		} catch (Exception e) {
 			if(e.getMessage().containsIgnoreCase('DUPLICATE_USERNAME')){
 				newUserRec.Username = newUserRec.Username + '.monday';
 				try {
 					Database.insert(newUserRec);
-					return newUserRec.Id;
+					return new User(Id = newUserRec.Id, Username = newUserRec.Username);
 				} catch (Exception secondEx) {
 					throw new AuraHandledException(secondEx.getMessage() + '\n' + secondEx.getStackTraceString());
 				}

@@ -33,11 +33,11 @@ private class Ctrl_CreateCommunityUser_TEST {
 		contactMap.put('Id', con.Id);
 		contactMap.put('Email', con.Email);
 		Test.startTest();
-		Id newUserId = Ctrl_CreateCommunityUser.createUser(con.Id, contactMap, UserInfo.getUserId());
+		User newUser = Ctrl_CreateCommunityUser.createUser(con.Id, contactMap, UserInfo.getUserId());
 		Ctrl_CreateCommunityUser.resWrapper res = Ctrl_CreateCommunityUser.getFieldsList(con.Id, con.Email);
 		Test.stopTest();
-		System.assertNotEquals(null, newUserId);
+		System.assertNotEquals(null, newUser.Id);
 		System.assertEquals(null, res.contactFieldNamesList);
-		System.assertEquals(newUserId, res.existingUserId);
+		System.assertEquals(newUser.Id, res.existingUserId);
 	}
 }
