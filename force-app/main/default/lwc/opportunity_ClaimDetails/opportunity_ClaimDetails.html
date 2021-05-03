@@ -1,0 +1,99 @@
+<template>
+    <div style="position:relative">
+        <template if:true={loading}><lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner></template>
+        <lightning-card>
+            <h3 slot="title">
+                <template if:true={isGbOpp}><img src={gbIcon}></template>
+                <template if:false={isGbOpp}><img src={obIcon}></template>
+                 ARR: <lightning-formatted-number value={gbARR} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+            </h3>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" padding="around-small">
+                        <lightning-tile>
+                            <dl class="slds-dl_horizontal">
+                                <template if:false={isGBAcc}>
+                                    <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                        <p class="slds-text-heading_x_small" title="Company">Claimed ARR on previous Orange Bucket Opportunities:</p>
+                                    </dt>
+                                    <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                        <p class="slds-truncate" title="Salesforce">
+                                            <lightning-formatted-number value={maClaimedARR} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                        </p>
+                                    </dd>
+                                </template>
+                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                    <p class="slds-text-heading_x_small" title="Email">Claimed ARR on this Opportunity:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                    <p class="slds-truncate" title="salesforce-ux@salesforce.com">
+                                        <lightning-formatted-number value={claimedARR} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                    </p>
+                                </dd>
+                            </dl>
+                        </lightning-tile><br/>
+                        <template if:false={isOppClosed}>
+                            <p class="slds-text-heading_small">
+                                <!--<lightning-icon icon-name="action:new_opportunity" alternative-text="note" title="note" size="xxx-small"></lightning-icon>-->
+                                Once you close the opportunity the ARR will be:        
+                                <lightning-formatted-number value={expectedArrOnWon} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                <!--<lightning-helptext content={helpText}></lightning-helptext>-->
+                            </p><br/>
+                        </template>
+                        <lightning-button variant="base" label="Claimed ARR Full Details:" onclick={handleDetailsClick} class="slds-m-left_xx-small" icon-name="utility:chevrondown"></lightning-button>
+                        <template if:true={showClaimDetails}>
+                            <dl class="slds-dl_horizontal">
+                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                    <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on Sales Order:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                    <p class="slds-truncate"><lightning-formatted-number value={soARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
+                                </dd>
+
+                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                    <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on CC:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                    <p class="slds-truncate"><lightning-formatted-number value={ccARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
+                                </dd>
+
+                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                    <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on Co Sell:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                    <p class="slds-truncate"><lightning-formatted-number value={coSellARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
+                                </dd>
+                            </dl>
+                        </template>
+                        <template if:true={showManagersSection}>
+                            <br/><lightning-button variant="base" label="Managers Section" onclick={handleOverrideClick} class="slds-m-left_xx-small" icon-name="utility:magicwand"></lightning-button>
+                        </template>
+                        <lightning-card if:true={showOverrideDetails}>
+                            <div class="slds-container_small">
+                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <header class="slds-modal__header">
+                                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Managers Section</h2>
+                                        </header>
+                                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                                        <lightning-record-form
+                                                                record-id={recordId}
+                                                                object-api-name="Opportunity"
+                                                                fields={overrideFields}
+                                                                mode="edit">
+                                                                <lightning-messages></lightning-messages>
+                                                        </lightning-record-form>
+                                        </div>
+                                        <footer class="slds-modal__footer">
+                                            <lightning-button variant="neutral" name="cancel" label="Cancel" title="Cancel" onclick={handleCancelClick} ></lightning-button>
+                                        </footer>
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop slds-backdrop_open"></div>
+                            </div>
+                        </lightning-card>
+
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-card>
+    </div>
+</template>
