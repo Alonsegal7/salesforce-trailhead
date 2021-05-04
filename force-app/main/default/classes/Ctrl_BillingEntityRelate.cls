@@ -11,32 +11,21 @@ public class Ctrl_BillingEntityRelate  {
 		mso.put('newFormFields', getNewFormFields());
 		mso.put('newFormShippingFields', getNewFormShippingFields());
 		mso.put('editFormFields', getEditFormFields());
-		mso.put('fieldValidations', getFieldValidations());
 		System.debug('iCloudius - Initial Parameters:\n' + JSON.serializePretty(mso));
 		res = JSON.serialize(mso);
 		return res;
 	}
 
-	public static Map <String, Object> getFieldValidations(){
-		Map <String, Object> mso = new Map <String, Object>();
-		List <BillingEntityFieldValidation__mdt> listRules = [SELECT DeveloperName, Error_Message__c, Field_API_Name__c, Id, Label, MasterLabel, Restriction_Type__c, Validation_Type__c 
-															  FROM BillingEntityFieldValidation__mdt ORDER BY Restriction_Type__c];
-		mso.put('list_rules', listRules);
-		
-		return mso;
-	}
-
 	public static Opportunity getOpportunity(Id oppId){
 		Opportunity o = null;
-		List<Opportunity> lo = [SELECT Id, Name, AccountId, Billing_Entity__c, Billing_Entity__r.Name, Account.Latest_Billing_Entity__c, Account.Latest_Billing_Entity__r.Name, 
-									   Account.Latest_Billing_Entity__r.VAT_Number__c 
+		List<Opportunity> lo = [SELECT Id, Name, AccountId, Billing_Entity__c, Billing_Entity__r.Name, Account.Latest_Billing_Entity__c, Account.Latest_Billing_Entity__r.Name, Account.Latest_Billing_Entity__r.VAT_Number__c
 								FROM Opportunity
 								WHERE Id =: oppId];
 
 		if (lo != null && !lo.isEmpty()){
 			o = lo[0];
 		}
-		System.debug('iCloudius - The Opp: ' + JSON.serializePretty(o));
+
 		return o;
 	}
 
@@ -190,124 +179,12 @@ public class Ctrl_BillingEntityRelate  {
 		}
 		return mss;
 	}
-
-	@AuraEnabled
-	public static String fieldValidations(Billing_Entity__c be){
-		System.debug('iCloudius - Billing entity for field validations: ' + JSON.serializePretty(be));
-		Map <String, Object> beMso = (Map <String, Object>)JSON.deserializeUntyped(JSON.serialize(be));
-		Map <String, Object> mso = new Map <String, Object>();
-		List <BillingEntityWrap> matchesFound = new List <BillingEntityWrap>();
-		Boolean prevent = false;
-		Boolean inform = false;
-		Set <Id> setId = new Set <Id>();
-		String baseQuery = 'SELECT Id, Name, CurrencyIsoCode, Billing_Address__c, Shipping_Address__c, Country__c, VAT_Number__c ';
-		String finalQuery = '';
-
-		List <BillingEntityFieldValidation__mdt> preventiveRules = new List <BillingEntityFieldValidation__mdt>();
-		List <BillingEntityFieldValidation__mdt> informativeRules = new List <BillingEntityFieldValidation__mdt>();
-		List <BillingEntityFieldValidation__mdt> listRules = [SELECT DeveloperName, Error_Message__c, Field_API_Name__c, Id, Label, MasterLabel, Restriction_Type__c, Validation_Type__c, 
-																	 (SELECT Id, DeveloperName, MasterLabel FROM Billing_Entity_Field_Validation_Suffixes__r) 
-															  FROM BillingEntityFieldValidation__mdt ORDER BY Restriction_Type__c];
-		if (listRules != null && !listRules.isEmpty()){
-			for (BillingEntityFieldValidation__mdt fv: listRules){
-				if (!baseQuery.containsIgnoreCase(', ' + fv.Field_API_Name__c)) baseQuery += ', ' + fv.Field_API_Name__c;
-				if (fv.Restriction_Type__c == 'Preventative') preventiveRules.add(fv);
-				if (fv.Restriction_Type__c == 'Informative') informativeRules.add(fv);
-			}
-		}
-
-		baseQuery += ' FROM Billing_Entity__c WHERE ';
-
-		List <Billing_Entity__c> BEsFound = null;
-		if (!preventiveRules.isEmpty()){
-			for (BillingEntityFieldValidation__mdt fv: preventiveRules){
-				if (fv.Validation_Type__c != null && fv.Field_API_Name__c != null && beMso.containsKey(fv.Field_API_Name__c) && beMso.get(fv.Field_API_Name__c) != null){
-					finalQuery = baseQuery + getWhereCluase(fv, be);
-					System.debug('iCloudius - Preventative validation query: ' + finalQuery);
-					BEsFound = Database.query(finalQuery);
-					if (BEsFound != null && !BEsFound.isEmpty()){
-						for (Billing_Entity__c ibe: BEsFound) {
-							Boolean isMatch = false;
-							if (fv.Validation_Type__c == 'Exact Match' && String.valueOf(ibe.get(fv.Field_API_Name__c)).equals(String.valueOf(be.get(fv.Field_API_Name__c))) && !setId.contains(ibe.Id)) { isMatch = true; }
-							if (fv.Validation_Type__c == 'Upper/Lower case' && String.valueOf(ibe.get(fv.Field_API_Name__c)).equalsIgnoreCase(String.valueOf(be.get(fv.Field_API_Name__c))) && !setId.contains(ibe.Id)) { isMatch = true; }
-							if ((fv.Validation_Type__c == 'Punctuations' || fv.Validation_Type__c == 'Email Domain' || fv.Validation_Type__c == 'Suffix') && !setId.contains(ibe.Id)) { isMatch = true; }
-							if (isMatch){
-								BillingEntityWrap bew = new BillingEntityWrap(ibe.Id, ibe.Name, '', ibe.CurrencyIsoCode, ibe.Billing_Address__c, ibe.Shipping_Address__c);
-								bew.country = ibe.Country__c;
-								bew.VATNumber = ibe.VAT_Number__c;
-								bew.errorMessage = fv.Error_Message__c;
-								matchesFound.add(bew);
-								prevent = true;
-								setId.add(ibe.Id);
-							}
-						}
-					}
-				}
-			}
-		}
-
-		if (!informativeRules.isEmpty()){
-			for (BillingEntityFieldValidation__mdt fv: informativeRules){
-				if (fv.Validation_Type__c != null && fv.Field_API_Name__c != null && beMso.containsKey(fv.Field_API_Name__c) && beMso.get(fv.Field_API_Name__c) != null){
-					finalQuery = baseQuery + getWhereCluase(fv, be);
-					System.debug('iCloudius - Informative validation query: ' + finalQuery);
-					BEsFound = Database.query(finalQuery);
-					if (BEsFound != null && !BEsFound.isEmpty()){
-						for (Billing_Entity__c ibe: BEsFound) {
-							Boolean isMatch = false;
-							if (fv.Validation_Type__c == 'Exact Match' && String.valueOf(ibe.get(fv.Field_API_Name__c)).equals(String.valueOf(be.get(fv.Field_API_Name__c))) && !setId.contains(ibe.Id)) { isMatch = true; }
-							if (fv.Validation_Type__c == 'Upper/Lower case' && String.valueOf(ibe.get(fv.Field_API_Name__c)).equalsIgnoreCase(String.valueOf(be.get(fv.Field_API_Name__c))) && !setId.contains(ibe.Id)) { isMatch = true; }
-							if ((fv.Validation_Type__c == 'Punctuations' || fv.Validation_Type__c == 'Email Domain' || fv.Validation_Type__c == 'Suffix') && !setId.contains(ibe.Id)) { isMatch = true; }
-							if (isMatch){
-								BillingEntityWrap bew = new BillingEntityWrap(ibe.Id, ibe.Name, '', ibe.CurrencyIsoCode, ibe.Billing_Address__c, ibe.Shipping_Address__c);
-								bew.country = ibe.Country__c;
-								bew.VATNumber = ibe.VAT_Number__c;
-								bew.errorMessage = fv.Error_Message__c;
-								matchesFound.add(bew);
-								inform = true;
-								setId.add(ibe.Id);
-							}
-						}
-					}
-				}
-			}
-		}
-
-		mso.put('matchesFound', matchesFound);
-		mso.put('prevent', prevent);
-		mso.put('inform', inform);
-
-		System.debug('iCloudius - Fields validation results: ' + JSON.serializePretty(mso));
-		return JSON.serialize(mso);
-	}
-
-	public static String getWhereCluase(BillingEntityFieldValidation__mdt fv, Billing_Entity__c be){
-		String res = '';
-		if (fv.Validation_Type__c == 'Exact Match' || fv.Validation_Type__c == 'Upper/Lower case') res = fv.Field_API_Name__c + ' = \'' + be.get(fv.Field_API_Name__c) + '\'';
-		if (fv.Validation_Type__c == 'Punctuations'){
-			String toMatch = (String)be.get(fv.Field_API_Name__c);
-			toMatch = toMatch.replaceAll('[(),;\\."\']', '');
-			res = fv.Field_API_Name__c + ' LIKE \'%' + toMatch + '%\'';
-		}
-		if (fv.Validation_Type__c == 'Email Domain'){
-			String toMatch = (String)be.get(fv.Field_API_Name__c);
-			if (toMatch.contains('@')) toMatch = toMatch.split('@')[1];
-			res = res = fv.Field_API_Name__c + ' LIKE \'%@' + toMatch + '\'';
-		}
-		if (fv.Validation_Type__c == 'Suffix'){
-			String toMatch = (String)be.get(fv.Field_API_Name__c);
-			for (ValidationSuffixes__mdt s: fv.Billing_Entity_Field_Validation_Suffixes__r) toMatch = toMatch.remove(s.MasterLabel);
-			res = res = fv.Field_API_Name__c + ' = \'' + toMatch + '\'';
-		}
-
-		return res;
-	}
 	
-	@AuraEnabled(cacheable=false)
+	@AuraEnabled
 	public static string testUniquness(String vatNumber, String cBillingCurrency, String cCountry, String cCity, String cName){
 		String res = '';
 		String key = BillingEntityHandler.UniquenessKey(vatNumber, cBillingCurrency, cCountry, cCity, cName);
-		System.debug('iCloudius - Key: ' + key);
+
 		List <Billing_Entity__c> lbe = [SELECT Id, Name FROM Billing_Entity__c WHERE Unique_Key__c =: key];
 
 		if (lbe != null && !lbe.isEmpty()){
@@ -320,42 +197,6 @@ public class Ctrl_BillingEntityRelate  {
 
 		System.debug('iCloudius - Uniquness test result: ' + res);
 		return res;
-	}
-
-	@AuraEnabled(cacheable=true)
-	public static string searchDB(String objectName, String searchText, Integer lim, String VATvalue, String VATno){
-
-		// searchText = '\'%' + String.escapeSingleQuotes(searchText.trim()) + '%\'';
-		system.debug('### in secarch:');
-		String query =  'SELECT ' + VATno;
-		system.debug('Tal - Searching_v2: ' + query);
-		query += ', Id FROM Billing_Entity__c WHERE Status__c = \'Active\' AND ' + VATno + ' = ' + VATvalue;
-		system.debug('Tal - Searching_v1: ' + query);
-
-		if (lim != null){
-			query += ' LIMIT ' + lim;
-			system.debug('Tal - Searching_v3: ' + query);
-		}
-
-		system.debug('Tal - Searching: ' + query);
-
-		List<sObject> sobjList = Database.query(query);
-		List<ResultWrapper> lstRet = new List<ResultWrapper>();
-
-		for(SObject s : sobjList){
-			ResultWrapper obj = new ResultWrapper();
-			obj.objName = objectName;
-			obj.text = String.valueOf(s.get(VATno));
-			lstRet.add(obj);
-		}
-
-		return JSON.serialize(lstRet);
-	}
-
-	public class ResultWrapper {
-		public String objName { get; set; }
-		public String text { get; set; }
-		public String val { get; set; }
 	}
 
 	@AuraEnabled
@@ -424,24 +265,10 @@ public class Ctrl_BillingEntityRelate  {
 				return shippingAddress == null ? '' : shippingAddress;
 			} set; 
 		}
-		public String VATNumber {
-			get {
-				return VATNumber == null ? '' : VATNumber;
-			} set; 
-		}
-		public String country {
-			get {
-				return country == null ? '' : country;
-			} set; 
-		}
 		public Boolean selected {
 			get {
 				return selected == null ? false : true;
 			} Set; }
-		public String errorMessage {
-			get {
-				return errorMessage == null ? '' : errorMessage;
-			} set; }
 
 		public BillingEntityWrap (){ }
 		

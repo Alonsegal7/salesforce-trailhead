@@ -12,7 +12,7 @@ public class Lookup_Ctrl  {
      * */
     @AuraEnabled(cacheable=true)
     public static String searchDB(String objectName, String fld_API_Text, String fld_API_Val, 
-                                  Integer lim, String fld_API_Search, String searchText, String query_literal, String field_API_text_to_add, String statusField ){
+                                  Integer lim, String fld_API_Search, String searchText, String query_literal, String field_API_text_to_add ){
         
         searchText = '\'%' + String.escapeSingleQuotes(searchText.trim()) + '%\'';
 
@@ -20,7 +20,6 @@ public class Lookup_Ctrl  {
 		if (String.isNotBlank(field_API_text_to_add)) query += ', ' + field_API_text_to_add;
         
         query += ' FROM ' + objectName + ' WHERE ';
-		if (String.isNotBlank(statusField) && !Test.isRunningTest()) query += statusField + ' != \'Inactive\' AND ';
 		
 		if(fld_API_Search.contains('_OR_')){
 			List<String> tempList = fld_API_Search.split('_OR_');
