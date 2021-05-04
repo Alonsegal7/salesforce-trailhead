@@ -22,6 +22,7 @@ private class Ctrl_BillingEntityRelate_TEST {
 		Company_Billing__c cb = TestObjectCreator.CreateCompanyBilling(aa, be);
 		insert cb;
 
+		Ctrl_BillingEntityRelate.fieldValidations(be);
 		Ctrl_BillingEntityRelate.getInitialParameters(o.Id);
 		Ctrl_BillingEntityRelate.testUniquness(be.VAT_Number__c, '', '', '', '');
 		Ctrl_BillingEntityRelate.doRelate(o.Id, be.Id);

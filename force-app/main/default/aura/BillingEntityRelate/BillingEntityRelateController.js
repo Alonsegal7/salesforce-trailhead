@@ -123,7 +123,41 @@
     closeDialog : function(){
     	$A.get("e.force:closeQuickAction").fire();
 	},
-
+	validationListItemClicked : function(cmp, evt, hlp){
+		var target = evt.getSource();
+		var BEId = target.get('v.label');
+		var BEName = target.get('v.text');
+		console.log('BEId: ' + BEId);
+		console.log('BEName: ' + BEName);
+		var selectedBE = {};
+		selectedBE.val = BEId;
+		selectedBE.text = BEName;
+		cmp.set('v.temp_selected_be', selectedBE);
+		cmp.set('v.enableSet', true);
+	},
+	setSelectedToMain : function(cmp, evt, hlp){
+		cmp.set('v.selected_be', cmp.get('v.temp_selected_be'));
+		cmp.set('v.enableSet', false);
+		cmp.set('v.temp_selected_be', null);
+		cmp.set('v.form_new', false);
+		cmp.set('v.showAltPopup', false);
+	},
+	closeAltPopup : function(cmp, evt, hlp){
+		cmp.set('v.temp_selected_be', null);
+		cmp.set('v.enableSet', false);
+		cmp.set('v.showAltPopup', false);
+	},
+	submitOriginal : function(cmp, evt, hlp){
+		var fields = cmp.get('v.formFieldsToSubmit');
+		var mainForm = cmp.find('mainBEForm');
+		console.log('Submitting');
+		try{
+			mainForm.submit(fields);
+			cmp.set('v.showAltPopup', false);
+		} catch (err){
+			console.log('Error submitting: ' + err);
+		}
+	},
 	//Start Tal	
 	handleToggleChanged : function (component, event, helper) {
 		var target = event.getSource();
