@@ -1,4 +1,4 @@
-import { LightningElement,track,wire,api } from 'lwc';
+import { LightningElement,wire,api } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getUserDetails from '@salesforce/apex/Opportunity_ClaimDetailsController.getUserDetails';
 import greenBucketIcon from '@salesforce/resourceUrl/greenBucket';
@@ -22,25 +22,25 @@ const fields = [claimedARR,addedARR,stage,closedOpp,maClaimedARR,ccARR,coSellARR
 
 export default class Opportunity_ClaimDetails extends LightningElement {
     @api recordId;
-    @track oppDetails;
-    @track claimedARR;
-    @track addedARR;
-    @track maClaimedARR;
-    @track ccARR;
-    @track coSellARR;
-    @track productsARR;
-    @track gbARR;
-    @track expectedArrOnWon;
-    @track helpText='';
-    @track gbIcon=greenBucketIcon;
-    @track obIcon=orangeBucketIcon;
-    @track isGBOpp;
-    @track soARR;
-    @track showClaimDetails=false;
-    @track showOverrideDetails=false;
-    @track isOppClosed;
-    @track isGBAcc;
-    @track loading=true;
+    oppDetails;
+    claimedARR;
+    addedARR;
+    maClaimedARR;
+    ccARR;
+    coSellARR;
+    productsARR;
+    gbARR;
+    expectedArrOnWon;
+    helpText='';
+    gbIcon=greenBucketIcon;
+    obIcon=orangeBucketIcon;
+    isGBOpp;
+    soARR;
+    showClaimDetails=false;
+    showOverrideDetails=false;
+    isOppClosed;
+    isGBAcc;
+    loading=true;
     userDetails;
     isManager;
     isAdmin;
@@ -59,6 +59,8 @@ export default class Opportunity_ClaimDetails extends LightningElement {
         this.gbARR=getFieldValue(this.oppDetails, gbARR);
         this.expectedArrOnWon=this.maClaimedARR+this.claimedARR;
         this.isGBOpp=getFieldValue(this.oppDetails, isGBOpp);
+        console.log('Raz Ben Ron this.isGBOpp: '+this.isGBOpp);
+        console.log('Raz Ben Ron this.gbIcon, this.obIcon: '+this.gbIcon+ ' '+this.obIcon);
         this.isGBAcc=getFieldValue(this.oppDetails, isGBAcc);
         this.soARR=this.productsARR-this.ccARR-this.coSellARR;
         this.isOppClosed=getFieldValue(this.oppDetails, closedOpp);
@@ -104,9 +106,9 @@ export default class Opportunity_ClaimDetails extends LightningElement {
     }
 
     get showManagersSection(){
-        if(this.isManager||this.isAdmin)
-            return true;
-        else
-            return false;
+        return (this.isManager||this.isAdmin)==true;
+    }
+    get GBOppVar(){
+        return this.isGBOpp==true;
     }
 }

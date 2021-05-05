@@ -3,8 +3,8 @@
         <template if:true={loading}><lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner></template>
         <lightning-card>
             <h3 slot="title">
-                <template if:true={isGbOpp}><img src={gbIcon}></template>
-                <template if:false={isGbOpp}><img src={obIcon}></template>
+                <template if:true={GBOppVar}><img src={gbIcon}></template>
+                <template if:false={GBOppVar}><img src={obIcon}></template>
                  ARR: <lightning-formatted-number value={gbARR} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
             </h3>
             <lightning-layout multiple-rows>
