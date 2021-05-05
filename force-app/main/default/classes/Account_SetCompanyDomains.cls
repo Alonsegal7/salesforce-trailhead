@@ -35,7 +35,7 @@ public without sharing class Account_SetCompanyDomains {
                 if(acc.Account_Domains__c != null){//handle domains list
                     cleanDomainsList = acc.Account_Domains__c.replace('[','').replace(']','').replace('"','').split(',');
                     for(String domain : cleanDomainsList){
-                        if(!existingDomains.containsKey(domain)){
+                        if(domain != '' && domain != null && !existingDomains.containsKey(domain)){
                             cdsToCreate.put(domain, new Company_Domain__c(Domain__c = domain, Company__c = acc.Id, Status__c = 'Active'));
                         }
                     }
