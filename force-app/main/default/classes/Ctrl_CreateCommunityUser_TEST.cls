@@ -28,12 +28,8 @@ private class Ctrl_CreateCommunityUser_TEST {
 
 	static testmethod void test2(){
 		Contact con = [select Id, Email from Contact limit 1];
-		con.Email = 'test2@testmonday.com';
-		Map<String,String> contactMap = new Map<String,String>();
-		contactMap.put('Id', con.Id);
-		contactMap.put('Email', con.Email);
 		Test.startTest();
-		User newUser = Ctrl_CreateCommunityUser.createUser(con.Id, contactMap, UserInfo.getUserId());
+		User newUser = Ctrl_CreateCommunityUser.createUser(con.Id, null, UserInfo.getUserId());
 		Ctrl_CreateCommunityUser.resWrapper res = Ctrl_CreateCommunityUser.getFieldsList(con.Id, con.Email);
 		Test.stopTest();
 		System.assertNotEquals(null, newUser.Id);

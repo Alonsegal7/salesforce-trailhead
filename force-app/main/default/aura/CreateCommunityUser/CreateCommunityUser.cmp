@@ -23,7 +23,7 @@
 	<aura:attribute name="newUser" type="Map" default="{}"/>
 	<aura:attribute name="managerId" type="String" default=""/>
 	<aura:attribute name="initialContact" type="Contact" default="{}"/>
-	<aura:attribute name="contactToUpdate" type="Map" default="{}"/>
+	<aura:attribute name="contactToUpdate" type="Contact" default="{}"/>
 	<aura:attribute name="contactFieldNamesList" type="String[]" default=""/>
 	<aura:attribute name="fieldsValidationError" type="String" default = ""/>
 	<aura:attribute name="screen1" type="boolean" default="false"/>

@@ -41,7 +41,7 @@ public class Ctrl_CreateCommunityUser  {
 	}
 
 	@AuraEnabled
-	public static User createUser(Id contactId, Map<String,String> contactToUpdateMap, Id managerId){
+	public static User createUser(Id contactId, Contact contactToUpdate, Id managerId){
 		User newUserRec = new User();
 		Set<String> contactFieldSet = new Set<String>();
 		try {
@@ -61,8 +61,8 @@ public class Ctrl_CreateCommunityUser  {
 						newUserRec.put(cmt.User_Field_API_Name__c, cmt.User_Field_Default_Value__c);
 					}
 				} else if (cmt.Contact_Field_API_Name__c != null && cmt.Contact_Field_API_Name__c != ''){
-					if(contactToUpdateMap != null && contactToUpdateMap.containsKey(cmt.Contact_Field_API_Name__c)){
-						newUserRec.put(cmt.User_Field_API_Name__c, contactToUpdateMap.get(cmt.Contact_Field_API_Name__c));
+					if(contactToUpdate != null && contactToUpdate.get(cmt.Contact_Field_API_Name__c) != null){
+						newUserRec.put(cmt.User_Field_API_Name__c, contactToUpdate.get(cmt.Contact_Field_API_Name__c));
 					} else {
 						newUserRec.put(cmt.User_Field_API_Name__c, contactRec.get(cmt.Contact_Field_API_Name__c));
 					}
@@ -83,13 +83,7 @@ public class Ctrl_CreateCommunityUser  {
 				newUserRec.UserRoleId = userRoleId;
 			}
 			Database.insert(newUserRec);
-			if(contactToUpdateMap != null) {
-				Contact contactToUpdate = new Contact();
-				for(String key : contactToUpdateMap.keySet()){
-					contactToUpdate.put(key, contactToUpdateMap.get(key));
-				}
-				System.enqueueJob(new updateContactQueueable(contactToUpdate)); // need to be async update due to user DML action
-			}
+			if(contactToUpdate != null) System.enqueueJob(new updateContactQueueable(contactToUpdate)); // need to be async update due to user DML action
 			return new User(Id = newUserRec.Id, Username = newUserRec.Username);
 		} catch (Exception e) {
 			if(e.getMessage().containsIgnoreCase('DUPLICATE_USERNAME')){
