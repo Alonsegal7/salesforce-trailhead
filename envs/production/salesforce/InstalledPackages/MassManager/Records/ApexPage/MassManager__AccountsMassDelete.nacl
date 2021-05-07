@@ -1,9 +1,0 @@
-salesforce.ApexPage MassManager__AccountsMassDelete {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 40
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Accounts Mass Delete"
-  fullName = "MassManager__AccountsMassDelete"
-  content = file("salesforce/InstalledPackages/MassManager/Records/ApexPage/MassManager__AccountsMassDelete.page")
-}

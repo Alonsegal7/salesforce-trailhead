@@ -1,7 +1,0 @@
-salesforce.ApexClass rh2__FormatPageMessage {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 42
-  status = "Active"
-  fullName = "rh2__FormatPageMessage"
-  content = "(hidden)"
-}

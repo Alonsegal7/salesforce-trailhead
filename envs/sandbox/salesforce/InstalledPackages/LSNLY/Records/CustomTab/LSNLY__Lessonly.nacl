@@ -1,6 +1,0 @@
-salesforce.CustomTab LSNLY__Lessonly {
-  fullName = "LSNLY__Lessonly"
-  label = "Lessonly"
-  motif = "Custom4: Hexagon"
-  page = "LSNLY__LessonlyCanvas"
-}

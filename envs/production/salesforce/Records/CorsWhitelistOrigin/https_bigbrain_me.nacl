@@ -1,4 +1,0 @@
-salesforce.CorsWhitelistOrigin https_bigbrain_me {
-  fullName = "https_bigbrain_me"
-  urlPattern = "https://*.bigbrain.me"
-}

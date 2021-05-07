@@ -1,6 +1,0 @@
-salesforce.SharingRules zisf__zicCleanJob__c {
-  fullName = "zisf__zicCleanJob__c"
-  _parent = [
-    salesforce.zisf__zicCleanJob__c,
-  ]
-}

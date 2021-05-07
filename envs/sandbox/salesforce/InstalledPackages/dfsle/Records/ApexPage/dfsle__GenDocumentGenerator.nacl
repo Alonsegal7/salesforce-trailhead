@@ -1,9 +1,0 @@
-salesforce.ApexPage dfsle__GenDocumentGenerator {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 49
-  availableInTouch = false
-  confirmationTokenRequired = true
-  label = "GenDocumentGenerator"
-  fullName = "dfsle__GenDocumentGenerator"
-  content = file("salesforce/InstalledPackages/dfsle/Records/ApexPage/dfsle__GenDocumentGenerator.page")
-}

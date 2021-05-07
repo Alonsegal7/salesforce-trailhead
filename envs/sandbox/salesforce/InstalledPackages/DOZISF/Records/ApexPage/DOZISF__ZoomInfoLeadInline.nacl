@@ -1,9 +1,0 @@
-salesforce.ApexPage DOZISF__ZoomInfoLeadInline {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "ZoomInfo Lead Inline"
-  fullName = "DOZISF__ZoomInfoLeadInline"
-  content = file("salesforce/InstalledPackages/DOZISF/Records/ApexPage/DOZISF__ZoomInfoLeadInline.page")
-}

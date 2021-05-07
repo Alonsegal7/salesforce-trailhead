@@ -1,9 +1,0 @@
-salesforce.ApexPage LH__LH_All_Realtime_Triggers {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "LH_All_Realtime_Triggers"
-  fullName = "LH__LH_All_Realtime_Triggers"
-  content = file("salesforce/InstalledPackages/LH/Records/ApexPage/LH__LH_All_Realtime_Triggers.page")
-}

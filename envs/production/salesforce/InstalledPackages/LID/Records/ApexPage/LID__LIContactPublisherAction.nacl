@@ -1,9 +1,0 @@
-salesforce.ApexPage LID__LIContactPublisherAction {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 29
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "LIContactPublisherAction"
-  fullName = "LID__LIContactPublisherAction"
-  content = file("salesforce/InstalledPackages/LID/Records/ApexPage/LID__LIContactPublisherAction.page")
-}

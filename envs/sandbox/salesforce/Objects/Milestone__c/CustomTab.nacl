@@ -1,8 +1,0 @@
-salesforce.CustomTab Milestone__c {
-  fullName = "Milestone__c"
-  customObject = true
-  motif = "Custom71: Headset"
-  _parent = [
-    salesforce.Milestone__c,
-  ]
-}

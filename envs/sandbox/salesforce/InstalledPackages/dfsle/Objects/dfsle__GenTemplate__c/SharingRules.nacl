@@ -1,6 +1,0 @@
-salesforce.SharingRules dfsle__GenTemplate__c {
-  fullName = "dfsle__GenTemplate__c"
-  _parent = [
-    salesforce.dfsle__GenTemplate__c,
-  ]
-}

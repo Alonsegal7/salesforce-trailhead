@@ -1,7 +1,0 @@
-salesforce.ApexClass HubSpot_Inc__HubSpotMessageLogger {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 22
-  status = "Active"
-  fullName = "HubSpot_Inc__HubSpotMessageLogger"
-  content = file("salesforce/InstalledPackages/HubSpot_Inc/Records/ApexClass/HubSpot_Inc__HubSpotMessageLogger.cls")
-}

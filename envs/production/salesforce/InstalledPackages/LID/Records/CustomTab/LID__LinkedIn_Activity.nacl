@@ -1,6 +1,0 @@
-salesforce.CustomTab LID__LinkedIn_Activity {
-  fullName = "LID__LinkedIn_Activity"
-  label = "LinkedIn Activity"
-  motif = "Custom20: Airplane"
-  page = "LID__LinkedInActivityPage"
-}

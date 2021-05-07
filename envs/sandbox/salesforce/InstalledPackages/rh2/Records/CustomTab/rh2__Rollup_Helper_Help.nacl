@@ -1,6 +1,0 @@
-salesforce.CustomTab rh2__Rollup_Helper_Help {
-  fullName = "rh2__Rollup_Helper_Help"
-  label = "Rollup Helper Help"
-  motif = "Custom33: Desk"
-  page = "rh2__PS_helpPage"
-}

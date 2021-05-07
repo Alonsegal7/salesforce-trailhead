@@ -1,7 +1,0 @@
-salesforce.ApexTrigger onContactUpdate {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  status = "Active"
-  fullName = "onContactUpdate"
-  content = file("salesforce/Records/ApexTrigger/onContactUpdate.trigger")
-}

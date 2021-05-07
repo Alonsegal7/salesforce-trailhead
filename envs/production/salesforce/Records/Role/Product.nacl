@@ -1,8 +1,0 @@
-salesforce.Role Product {
-  fullName = "Product"
-  caseAccessLevel = "Edit"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "Product"
-  opportunityAccessLevel = "Edit"
-}

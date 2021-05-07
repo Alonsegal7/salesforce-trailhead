@@ -1,3 +1,0 @@
-<apex:page standardController="Account" extensions="DOZISF.InlineIframController">
-    <c:InlineIframe route="inline/account?id={!Account.Id}" recordId="{!Account.Id}" pageType="Account"/>
-</apex:page>

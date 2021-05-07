@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting bigbrain {
-  fullName = "bigbrain"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://bigbrain.me"
-}

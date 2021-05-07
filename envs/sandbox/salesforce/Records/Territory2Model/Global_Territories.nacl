@@ -1,5 +1,0 @@
-salesforce.Territory2Model Global_Territories {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  name = "Global Territories"
-  fullName = "Global_Territories"
-}

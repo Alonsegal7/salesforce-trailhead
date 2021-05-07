@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting amiel_bigbrain_ngrok {
-  fullName = "amiel_bigbrain_ngrok"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://amiel-bb.ngrok.io"
-}

@@ -1,9 +1,0 @@
-salesforce.CustomTab aircall__Aircall_Admin {
-  fullName = "aircall__Aircall_Admin"
-  frameHeight = 666
-  hasSidebar = false
-  label = "Aircall Admin"
-  motif = "Custom5: Leaf"
-  url = "https://dashboard-v2.aircall.io/"
-  urlEncodingKey = "UTF-8"
-}

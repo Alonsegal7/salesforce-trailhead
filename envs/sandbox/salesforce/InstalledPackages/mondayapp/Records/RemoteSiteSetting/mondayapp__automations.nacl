@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting mondayapp__automations {
-  fullName = "mondayapp__automations"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://api-gw.monday.com"
-}

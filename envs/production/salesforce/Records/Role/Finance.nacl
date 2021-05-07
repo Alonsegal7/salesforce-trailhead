@@ -1,9 +1,0 @@
-salesforce.Role Finance {
-  fullName = "Finance"
-  caseAccessLevel = "Edit"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "Finance"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.Head_of_Sales
-}

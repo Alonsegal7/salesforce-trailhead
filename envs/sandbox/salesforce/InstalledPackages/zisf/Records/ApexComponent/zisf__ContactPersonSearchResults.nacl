@@ -1,7 +1,0 @@
-salesforce.ApexComponent zisf__ContactPersonSearchResults {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 38
-  label = "ContactPersonSearchResults"
-  fullName = "zisf__ContactPersonSearchResults"
-  content = "(hidden)"
-}

@@ -1,9 +1,0 @@
-salesforce.ProfileSessionSetting Partner_Community_Custom_profileSessionSetting1563866114028 {
-  fullName = "Partner_Community_Custom_profileSessionSetting1563866114028"
-  externalCommunityUserIdentityVerif = false
-  forceLogout = false
-  profile = "partner community custom"
-  sessionPersistence = false
-  sessionTimeout = 720
-  sessionTimeoutWarning = false
-}

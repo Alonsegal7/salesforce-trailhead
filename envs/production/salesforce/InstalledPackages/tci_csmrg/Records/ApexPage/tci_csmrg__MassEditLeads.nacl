@@ -1,9 +1,0 @@
-salesforce.ApexPage tci_csmrg__MassEditLeads {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 32
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "MassEditLeads"
-  fullName = "tci_csmrg__MassEditLeads"
-  content = file("salesforce/InstalledPackages/tci_csmrg/Records/ApexPage/tci_csmrg__MassEditLeads.page")
-}

@@ -1,7 +1,0 @@
-salesforce.ApexTrigger OnOpportunityLineItemUpdate {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  status = "Active"
-  fullName = "OnOpportunityLineItemUpdate"
-  content = file("salesforce/Records/ApexTrigger/OnOpportunityLineItemUpdate.trigger")
-}

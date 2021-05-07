@@ -1,7 +1,0 @@
-salesforce.RemoteSiteSetting HubSpot_Inc__internal_api {
-  fullName = "HubSpot_Inc__internal_api"
-  description = "Hubspot's API"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://internal.hubapi.com"
-}

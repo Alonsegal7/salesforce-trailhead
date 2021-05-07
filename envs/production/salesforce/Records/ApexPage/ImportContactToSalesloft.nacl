@@ -1,9 +1,0 @@
-salesforce.ApexPage ImportContactToSalesloft {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 42
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "ImportContactToSalesloft"
-  fullName = "ImportContactToSalesloft"
-  content = file("salesforce/Records/ApexPage/ImportContactToSalesloft.page")
-}

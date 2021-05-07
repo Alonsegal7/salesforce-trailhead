@@ -1,6 +1,0 @@
-salesforce.SharingRules DelegatedAccount {
-  fullName = "DelegatedAccount"
-  _parent = [
-    salesforce.DelegatedAccount,
-  ]
-}

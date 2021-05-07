@@ -1,4 +1,0 @@
-salesforce.SurveySettings {
-  fullName = "Survey"
-  enableSurvey = "false"
-}

@@ -1,8 +1,0 @@
-salesforce.CustomTab Sale_Snapshot__c {
-  fullName = "Sale_Snapshot__c"
-  customObject = true
-  motif = "Custom86: Red Cross"
-  _parent = [
-    salesforce.Sale_Snapshot__c,
-  ]
-}

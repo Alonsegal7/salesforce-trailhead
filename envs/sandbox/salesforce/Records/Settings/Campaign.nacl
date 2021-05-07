@@ -1,8 +1,0 @@
-salesforce.CampaignSettings {
-  fullName = "Campaign"
-  enableAutoCampInfluenceDisabled = false
-  enableCampaignHistoryTrackEnabled = false
-  enableCampaignInfluence2 = true
-  enableCampaignMemberTWCF = true
-  enableSuppressNoValueCI2 = false
-}

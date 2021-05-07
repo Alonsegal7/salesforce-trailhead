@@ -1,8 +1,0 @@
-salesforce.CustomTab Account_Snapshot__c {
-  fullName = "Account_Snapshot__c"
-  customObject = true
-  motif = "Custom70: Handsaw"
-  _parent = [
-    salesforce.Account_Snapshot__c,
-  ]
-}

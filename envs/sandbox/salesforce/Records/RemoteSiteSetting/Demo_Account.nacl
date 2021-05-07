@@ -1,7 +1,0 @@
-salesforce.RemoteSiteSetting Demo_Account {
-  fullName = "Demo_Account"
-  description = "DocuSign Account Service"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://account-d.docusign.com"
-}

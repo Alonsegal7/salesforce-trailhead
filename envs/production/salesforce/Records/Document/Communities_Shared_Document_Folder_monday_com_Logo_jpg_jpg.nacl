@@ -1,8 +1,0 @@
-salesforce.Document Communities_Shared_Document_Folder_monday_com_Logo_jpg_jpg {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  internalUseOnly = false
-  name = "monday.com Logo.jpg"
-  public = true
-  fullName = "Communities_Shared_Document_Folder/monday_com_Logo_jpg.jpg"
-  content = file("salesforce/Records/Document/Communities_Shared_Document_Folder/monday_com_Logo_jpg.jpg")
-}

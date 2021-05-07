@@ -1,8 +1,0 @@
-Opp Survey email has been sent.
-
-Details:
-Opp  name: {!Opportunity.Name}
-Owner Name: {!Opportunity.OwnerFullName}
-Partner Name: {!Opportunity.Owner_Company_Name__c}
-
-Link: {!Opportunity.Link}

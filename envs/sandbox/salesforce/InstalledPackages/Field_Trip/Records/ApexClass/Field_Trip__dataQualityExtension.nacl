@@ -1,7 +1,0 @@
-salesforce.ApexClass Field_Trip__dataQualityExtension {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  status = "Active"
-  fullName = "Field_Trip__dataQualityExtension"
-  content = file("salesforce/InstalledPackages/Field_Trip/Records/ApexClass/Field_Trip__dataQualityExtension.cls")
-}

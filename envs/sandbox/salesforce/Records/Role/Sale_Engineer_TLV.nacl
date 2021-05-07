@@ -1,9 +1,0 @@
-salesforce.Role Sale_Engineer_TLV {
-  fullName = "Sale_Engineer_TLV"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "Sale Engineer TLV"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.IL_VP_Sales
-}

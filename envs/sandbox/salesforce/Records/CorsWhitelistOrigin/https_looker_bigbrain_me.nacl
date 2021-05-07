@@ -1,4 +1,0 @@
-salesforce.CorsWhitelistOrigin https_looker_bigbrain_me {
-  fullName = "https_looker_bigbrain_me"
-  urlPattern = "https://looker.bigbrain.me"
-}

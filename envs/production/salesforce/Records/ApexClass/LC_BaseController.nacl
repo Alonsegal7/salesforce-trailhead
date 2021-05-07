@@ -1,7 +1,0 @@
-salesforce.ApexClass LC_BaseController {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  status = "Active"
-  fullName = "LC_BaseController"
-  content = file("salesforce/Records/ApexClass/LC_BaseController.cls")
-}

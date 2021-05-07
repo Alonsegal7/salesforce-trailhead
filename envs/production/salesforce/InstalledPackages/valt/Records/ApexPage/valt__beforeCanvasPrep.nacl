@@ -1,9 +1,0 @@
-salesforce.ApexPage valt__beforeCanvasPrep {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 41
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "beforeCanvasPrep"
-  fullName = "valt__beforeCanvasPrep"
-  content = file("salesforce/InstalledPackages/valt/Records/ApexPage/valt__beforeCanvasPrep.page")
-}

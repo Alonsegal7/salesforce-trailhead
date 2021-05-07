@@ -1,7 +1,0 @@
-salesforce.DocumentFolder LSNLY__Lessonly_Logs {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  accessType = "Public"
-  name = "Lessonly Logs"
-  publicFolderAccess = "ReadWrite"
-  fullName = "LSNLY__Lessonly_Logs"
-}

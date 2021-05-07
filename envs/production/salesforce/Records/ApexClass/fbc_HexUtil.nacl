@@ -1,7 +1,0 @@
-salesforce.ApexClass fbc_HexUtil {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 43
-  status = "Active"
-  fullName = "fbc_HexUtil"
-  content = file("salesforce/Records/ApexClass/fbc_HexUtil.cls")
-}

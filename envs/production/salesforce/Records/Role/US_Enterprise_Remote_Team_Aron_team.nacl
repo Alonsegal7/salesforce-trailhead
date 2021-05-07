@@ -1,9 +1,0 @@
-salesforce.Role US_Enterprise_Remote_Team_Aron_team {
-  fullName = "US_Enterprise_Remote_Team_Aron_team"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "US Enterprise Remote Team - Aron team"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.US_Enterprise_team_leader
-}

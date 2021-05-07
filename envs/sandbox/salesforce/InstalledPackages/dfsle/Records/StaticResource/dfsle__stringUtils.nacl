@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__stringUtils {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/javascript"
-  description = "stringUtils.js"
-  fullName = "dfsle__stringUtils"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__stringUtils.js")
-}

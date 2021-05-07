@@ -1,7 +1,0 @@
-salesforce.ApexClass yw__SyncTasksTrigger {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 27
-  status = "Active"
-  fullName = "yw__SyncTasksTrigger"
-  content = file("salesforce/InstalledPackages/yw/Records/ApexClass/yw__SyncTasksTrigger.cls")
-}

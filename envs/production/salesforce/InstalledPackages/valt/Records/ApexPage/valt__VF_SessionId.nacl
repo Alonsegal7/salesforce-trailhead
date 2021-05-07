@@ -1,9 +1,0 @@
-salesforce.ApexPage valt__VF_SessionId {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 41
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "VF_SessionId"
-  fullName = "valt__VF_SessionId"
-  content = file("salesforce/InstalledPackages/valt/Records/ApexPage/valt__VF_SessionId.page")
-}

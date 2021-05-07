@@ -1,6 +1,0 @@
-salesforce.CustomObjectTranslation dfsle__RecipientStatus__c_fr {
-  fullName = "dfsle__RecipientStatus__c-fr"
-  _parent = [
-    salesforce.dfsle__RecipientStatus__c,
-  ]
-}

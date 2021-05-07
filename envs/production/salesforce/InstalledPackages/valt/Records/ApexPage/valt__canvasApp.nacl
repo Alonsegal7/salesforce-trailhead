@@ -1,9 +1,0 @@
-salesforce.ApexPage valt__canvasApp {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 41
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "canvasApp"
-  fullName = "valt__canvasApp"
-  content = file("salesforce/InstalledPackages/valt/Records/ApexPage/valt__canvasApp.page")
-}

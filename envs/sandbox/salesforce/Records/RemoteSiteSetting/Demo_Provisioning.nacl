@@ -1,7 +1,0 @@
-salesforce.RemoteSiteSetting Demo_Provisioning {
-  fullName = "Demo_Provisioning"
-  description = "DocuSign Account Service"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://api-d.docusign.net"
-}

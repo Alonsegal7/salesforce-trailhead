@@ -1,8 +1,0 @@
-salesforce.CustomTab GB_Threshold__c {
-  fullName = "GB_Threshold__c"
-  customObject = true
-  motif = "Custom20: Airplane"
-  _parent = [
-    salesforce.GB_Threshold__c,
-  ]
-}

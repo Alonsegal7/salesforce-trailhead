@@ -1,7 +1,0 @@
-salesforce.ApexClass OpportunityHelperTest {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 46
-  status = "Active"
-  fullName = "OpportunityHelperTest"
-  content = file("salesforce/Records/ApexClass/OpportunityHelperTest.cls")
-}

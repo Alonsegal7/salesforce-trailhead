@@ -1,5 +1,0 @@
-salesforce.Group Sales_Managers {
-  fullName = "Sales_Managers"
-  doesIncludeBosses = true
-  name = "Sales Managers"
-}

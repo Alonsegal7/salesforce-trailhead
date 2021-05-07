@@ -1,6 +1,0 @@
-salesforce.SharingRules LH__Lookup_Helper_Filter__c {
-  fullName = "LH__Lookup_Helper_Filter__c"
-  _parent = [
-    salesforce.LH__Lookup_Helper_Filter__c,
-  ]
-}

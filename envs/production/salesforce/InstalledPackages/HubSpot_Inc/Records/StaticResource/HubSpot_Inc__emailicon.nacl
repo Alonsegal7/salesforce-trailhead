@@ -1,8 +1,0 @@
-salesforce.StaticResource HubSpot_Inc__emailicon {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "image/png"
-  description = "Icon used by HubSpot Intelligence Pages."
-  fullName = "HubSpot_Inc__emailicon"
-  content = file("salesforce/InstalledPackages/HubSpot_Inc/Records/StaticResource/HubSpot_Inc__emailicon.png")
-}

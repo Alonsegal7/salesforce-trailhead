@@ -1,6 +1,0 @@
-salesforce.CustomTab DOZISF__ZoomInfo {
-  fullName = "DOZISF__ZoomInfo"
-  label = "ZoomInfo"
-  motif = "Custom76: Keys"
-  page = "DOZISF__ZoomInfoMainFrame"
-}

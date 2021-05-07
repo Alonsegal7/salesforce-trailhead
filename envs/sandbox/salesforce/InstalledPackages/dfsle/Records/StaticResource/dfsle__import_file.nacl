@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__import_file {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/svg+xml"
-  description = "import_file"
-  fullName = "dfsle__import_file"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__import_file.svg")
-}

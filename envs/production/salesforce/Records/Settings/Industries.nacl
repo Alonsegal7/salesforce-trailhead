@@ -1,4 +1,0 @@
-salesforce.IndustriesSettings {
-  fullName = "Industries"
-  enableIndLoyaltyEnabled = "false"
-}

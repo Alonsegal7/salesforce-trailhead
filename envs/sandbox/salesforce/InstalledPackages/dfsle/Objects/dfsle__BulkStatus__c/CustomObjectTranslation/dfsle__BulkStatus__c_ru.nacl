@@ -1,6 +1,0 @@
-salesforce.CustomObjectTranslation dfsle__BulkStatus__c_ru {
-  fullName = "dfsle__BulkStatus__c-ru"
-  _parent = [
-    salesforce.dfsle__BulkStatus__c,
-  ]
-}

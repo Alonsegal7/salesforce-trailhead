@@ -1,8 +1,0 @@
-salesforce.ListView dfsle__Envelope__c_dfsle__All {
-  fullName = "dfsle__Envelope__c.dfsle__All"
-  filterScope = "Everything"
-  label = "All"
-  _parent = [
-    salesforce.dfsle__Envelope__c,
-  ]
-}

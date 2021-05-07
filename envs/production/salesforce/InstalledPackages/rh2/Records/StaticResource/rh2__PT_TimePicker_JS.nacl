@@ -1,7 +1,0 @@
-salesforce.StaticResource rh2__PT_TimePicker_JS {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/x-javascript"
-  fullName = "rh2__PT_TimePicker_JS"
-  content = file("salesforce/InstalledPackages/rh2/Records/StaticResource/rh2__PT_TimePicker_JS.resource")
-}

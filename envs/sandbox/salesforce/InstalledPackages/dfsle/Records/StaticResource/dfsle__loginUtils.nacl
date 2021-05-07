@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__loginUtils {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/javascript"
-  description = "loginUtils.js"
-  fullName = "dfsle__loginUtils"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__loginUtils.js")
-}

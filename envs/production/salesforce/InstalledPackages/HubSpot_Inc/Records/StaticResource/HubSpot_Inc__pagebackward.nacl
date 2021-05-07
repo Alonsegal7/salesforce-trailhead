@@ -1,8 +1,0 @@
-salesforce.StaticResource HubSpot_Inc__pagebackward {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "image/png"
-  description = "Icon used by HubSpot Tab."
-  fullName = "HubSpot_Inc__pagebackward"
-  content = file("salesforce/InstalledPackages/HubSpot_Inc/Records/StaticResource/HubSpot_Inc__pagebackward.png")
-}

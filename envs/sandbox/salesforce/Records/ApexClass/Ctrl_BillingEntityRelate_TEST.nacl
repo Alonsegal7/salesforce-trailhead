@@ -1,7 +1,0 @@
-salesforce.ApexClass Ctrl_BillingEntityRelate_TEST {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  status = "Active"
-  fullName = "Ctrl_BillingEntityRelate_TEST"
-  content = file("salesforce/Records/ApexClass/Ctrl_BillingEntityRelate_TEST.cls")
-}

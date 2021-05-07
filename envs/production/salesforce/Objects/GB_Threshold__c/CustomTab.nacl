@@ -1,8 +1,0 @@
-salesforce.CustomTab GB_Threshold__c {
-  fullName = "GB_Threshold__c"
-  customObject = true
-  motif = "Custom26: Flag"
-  _parent = [
-    salesforce.GB_Threshold__c,
-  ]
-}

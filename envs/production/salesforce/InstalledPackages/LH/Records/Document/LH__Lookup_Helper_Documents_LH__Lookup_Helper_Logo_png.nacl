@@ -1,8 +1,0 @@
-salesforce.Document LH__Lookup_Helper_Documents_LH__Lookup_Helper_Logo_png {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  internalUseOnly = false
-  name = "Lookup_Helper_Logo"
-  public = true
-  fullName = "LH__Lookup_Helper_Documents/LH__Lookup_Helper_Logo.png"
-  content = file("salesforce/InstalledPackages/LH/Records/Document/LH__Lookup_Helper_Documents/LH__Lookup_Helper_Logo.png")
-}

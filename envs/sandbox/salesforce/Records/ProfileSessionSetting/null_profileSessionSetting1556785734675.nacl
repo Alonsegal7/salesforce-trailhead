@@ -1,9 +1,0 @@
-salesforce.ProfileSessionSetting null_profileSessionSetting1556785734675 {
-  fullName = "null_profileSessionSetting1556785734675"
-  externalCommunityUserIdentityVerif = false
-  forceLogout = false
-  profile = "channel managers"
-  sessionPersistence = false
-  sessionTimeout = 0
-  sessionTimeoutWarning = false
-}

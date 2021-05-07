@@ -1,4 +1,0 @@
-salesforce.DevHubSettings {
-  fullName = "DevHub"
-  enableShapeExportPref = "false"
-}

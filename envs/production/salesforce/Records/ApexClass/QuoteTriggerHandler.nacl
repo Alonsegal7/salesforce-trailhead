@@ -1,7 +1,0 @@
-salesforce.ApexClass QuoteTriggerHandler {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 43
-  status = "Active"
-  fullName = "QuoteTriggerHandler"
-  content = file("salesforce/Records/ApexClass/QuoteTriggerHandler.cls")
-}

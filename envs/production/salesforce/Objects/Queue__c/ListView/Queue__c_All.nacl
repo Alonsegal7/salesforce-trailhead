@@ -1,8 +1,0 @@
-salesforce.ListView Queue__c_All {
-  fullName = "Queue__c.All"
-  filterScope = "Everything"
-  label = "All"
-  _parent = [
-    salesforce.Queue__c,
-  ]
-}

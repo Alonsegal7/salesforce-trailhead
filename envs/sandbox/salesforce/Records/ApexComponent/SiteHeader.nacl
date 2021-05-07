@@ -1,8 +1,0 @@
-salesforce.ApexComponent SiteHeader {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  description = "Default Lightning Platform site header component"
-  label = "SiteHeader"
-  fullName = "SiteHeader"
-  content = file("salesforce/Records/ApexComponent/SiteHeader.component")
-}

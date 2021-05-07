@@ -1,7 +1,0 @@
-salesforce.ApexClass CommunitiesSelfRegController {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  status = "Active"
-  fullName = "CommunitiesSelfRegController"
-  content = file("salesforce/Records/ApexClass/CommunitiesSelfRegController.cls")
-}

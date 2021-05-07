@@ -1,7 +1,0 @@
-salesforce.ApexClass fbc_ExpressionBuilderTest {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 46
-  status = "Active"
-  fullName = "fbc_ExpressionBuilderTest"
-  content = file("salesforce/Records/ApexClass/fbc_ExpressionBuilderTest.cls")
-}

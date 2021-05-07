@@ -1,6 +1,0 @@
-salesforce.CustomTab rh2__Rollup_Helper_Exceptions {
-  fullName = "rh2__Rollup_Helper_Exceptions"
-  label = "Rollup Helper Exceptions"
-  motif = "Custom33: Desk"
-  page = "rh2__PS_viewExceptions"
-}

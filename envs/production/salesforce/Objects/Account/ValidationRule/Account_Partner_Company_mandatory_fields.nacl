@@ -1,9 +1,0 @@
-salesforce.ValidationRule Account_Partner_Company_mandatory_fields {
-  fullName = "Account.Partner_Company_mandatory_fields"
-  active = false
-  errorConditionFormula = "RecordType.DeveloperName = \"Partner_Company\" && ISBLANK (BillingCountry)"
-  errorMessage = "You must fill the Partner Company Country field"
-  _parent = [
-    salesforce.Account,
-  ]
-}

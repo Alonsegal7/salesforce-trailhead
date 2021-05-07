@@ -1,7 +1,0 @@
-salesforce.StaticResource rh2__PT_Resources_v1 {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/octet-stream"
-  fullName = "rh2__PT_Resources_v1"
-  content = file("salesforce/InstalledPackages/rh2/Records/StaticResource/rh2__PT_Resources_v1.bin")
-}

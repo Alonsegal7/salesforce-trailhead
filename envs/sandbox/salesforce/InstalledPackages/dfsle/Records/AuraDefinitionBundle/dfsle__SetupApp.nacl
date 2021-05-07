@@ -1,8 +1,0 @@
-salesforce.AuraDefinitionBundle dfsle__SetupApp {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 49
-  description = "SetupApp"
-  fullName = "dfsle__SetupApp"
-  type = "Application"
-  markup = "(hidden)"
-}

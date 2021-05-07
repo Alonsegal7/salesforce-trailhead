@@ -1,8 +1,0 @@
-salesforce.CustomTab ExchangeRate__c {
-  fullName = "ExchangeRate__c"
-  customObject = true
-  motif = "Custom6: Triangle"
-  _parent = [
-    salesforce.ExchangeRate__c,
-  ]
-}

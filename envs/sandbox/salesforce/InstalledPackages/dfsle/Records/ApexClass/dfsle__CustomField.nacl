@@ -1,7 +1,0 @@
-salesforce.ApexClass dfsle__CustomField {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 49
-  status = "Active"
-  fullName = "dfsle__CustomField"
-  content = file("salesforce/InstalledPackages/dfsle/Records/ApexClass/dfsle__CustomField.cls")
-}

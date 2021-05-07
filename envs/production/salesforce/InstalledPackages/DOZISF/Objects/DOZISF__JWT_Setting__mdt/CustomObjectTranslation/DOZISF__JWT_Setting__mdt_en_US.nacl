@@ -1,6 +1,0 @@
-salesforce.CustomObjectTranslation DOZISF__JWT_Setting__mdt_en_US {
-  fullName = "DOZISF__JWT_Setting__mdt-en_US"
-  _parent = [
-    salesforce.DOZISF__JWT_Setting__mdt,
-  ]
-}

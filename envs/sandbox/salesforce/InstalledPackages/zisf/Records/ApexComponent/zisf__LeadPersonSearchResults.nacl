@@ -1,7 +1,0 @@
-salesforce.ApexComponent zisf__LeadPersonSearchResults {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 38
-  label = "LeadPersonSearchResults"
-  fullName = "zisf__LeadPersonSearchResults"
-  content = "(hidden)"
-}

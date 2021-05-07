@@ -1,7 +1,0 @@
-salesforce.ApexClass LightningSelfRegisterController {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  status = "Active"
-  fullName = "LightningSelfRegisterController"
-  content = file("salesforce/Records/ApexClass/LightningSelfRegisterController.cls")
-}

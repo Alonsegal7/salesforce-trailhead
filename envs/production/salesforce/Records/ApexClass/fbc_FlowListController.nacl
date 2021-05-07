@@ -1,7 +1,0 @@
-salesforce.ApexClass fbc_FlowListController {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 46
-  status = "Active"
-  fullName = "fbc_FlowListController"
-  content = file("salesforce/Records/ApexClass/fbc_FlowListController.cls")
-}

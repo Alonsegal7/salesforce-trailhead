@@ -1,8 +1,0 @@
-salesforce.Document valt__ConnectedApp_Resources_valt__SF_Valooto_logo_png_png {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  internalUseOnly = false
-  name = "SF-Valooto__logo.png"
-  public = true
-  fullName = "valt__ConnectedApp_Resources/valt__SF_Valooto_logo_png.png"
-  content = file("salesforce/InstalledPackages/valt/Records/Document/valt__ConnectedApp_Resources/valt__SF_Valooto_logo_png.png")
-}

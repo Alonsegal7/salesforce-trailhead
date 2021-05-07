@@ -1,7 +1,0 @@
-salesforce.StaticResource ARH__noimage {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/png"
-  fullName = "ARH__noimage"
-  content = file("salesforce/InstalledPackages/ARH/Records/StaticResource/ARH__noimage.png")
-}

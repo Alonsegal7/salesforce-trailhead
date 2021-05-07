@@ -1,6 +1,0 @@
-salesforce.SharingRules ExchangeRate__c {
-  fullName = "ExchangeRate__c"
-  _parent = [
-    salesforce.ExchangeRate__c,
-  ]
-}

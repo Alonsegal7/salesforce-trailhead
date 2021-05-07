@@ -1,5 +1,0 @@
-salesforce.Group Admins {
-  fullName = "Admins"
-  doesIncludeBosses = true
-  name = "Admins"
-}

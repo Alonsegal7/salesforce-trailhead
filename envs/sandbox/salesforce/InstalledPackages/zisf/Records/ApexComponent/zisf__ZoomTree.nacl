@@ -1,7 +1,0 @@
-salesforce.ApexComponent zisf__ZoomTree {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 26
-  label = "ZoomTree"
-  fullName = "zisf__ZoomTree"
-  content = "(hidden)"
-}

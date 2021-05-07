@@ -1,9 +1,0 @@
-salesforce.ApexPage LSNLY__AdminSettings {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 41
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "AdminSettings"
-  fullName = "LSNLY__AdminSettings"
-  content = file("salesforce/InstalledPackages/LSNLY/Records/ApexPage/LSNLY__AdminSettings.page")
-}

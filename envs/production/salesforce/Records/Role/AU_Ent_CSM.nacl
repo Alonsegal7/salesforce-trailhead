@@ -1,9 +1,0 @@
-salesforce.Role AU_Ent_CSM {
-  fullName = "AU_Ent_CSM"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "AU Ent CSM"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.IL_CS_Manager
-}

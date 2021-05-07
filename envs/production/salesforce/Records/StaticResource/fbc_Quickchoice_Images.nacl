@@ -1,8 +1,0 @@
-salesforce.StaticResource fbc_Quickchoice_Images {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/zip"
-  description = "Image files for the fbc_quickChoiceFSC LWC"
-  fullName = "fbc_Quickchoice_Images"
-  content = file("salesforce/Records/StaticResource/fbc_Quickchoice_Images.zip")
-}

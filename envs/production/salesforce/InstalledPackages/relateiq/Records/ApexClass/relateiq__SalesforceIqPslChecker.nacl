@@ -1,7 +1,0 @@
-salesforce.ApexClass relateiq__SalesforceIqPslChecker {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 39
-  status = "Active"
-  fullName = "relateiq__SalesforceIqPslChecker"
-  content = file("salesforce/InstalledPackages/relateiq/Records/ApexClass/relateiq__SalesforceIqPslChecker.cls")
-}

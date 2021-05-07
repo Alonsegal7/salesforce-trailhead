@@ -1,7 +1,0 @@
-salesforce.ApexClass LSNLY__MockHTTPResponseGenerator {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 38
-  status = "Active"
-  fullName = "LSNLY__MockHTTPResponseGenerator"
-  content = file("salesforce/InstalledPackages/LSNLY/Records/ApexClass/LSNLY__MockHTTPResponseGenerator.cls")
-}

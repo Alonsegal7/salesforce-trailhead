@@ -1,9 +1,0 @@
-salesforce.ApexPage Mass_Delete_Product2 {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 38
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "Mass_Delete_Product2"
-  fullName = "Mass_Delete_Product2"
-  content = file("salesforce/Records/ApexPage/Mass_Delete_Product2.page")
-}

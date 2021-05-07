@@ -1,6 +1,0 @@
-salesforce.SharingRules Target__c {
-  fullName = "Target__c"
-  _parent = [
-    salesforce.Target__c,
-  ]
-}

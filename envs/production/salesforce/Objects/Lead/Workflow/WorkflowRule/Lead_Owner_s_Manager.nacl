@@ -1,9 +1,0 @@
-salesforce.WorkflowRule Lead_Owner_s_Manager {
-  fullName = "Lead.Owner%27s Manager"
-  active = false
-  formula = "(ischanged( OwnerId ) || isnull( Owner_s_Manager__c ))&& not( OwnerId = '0051t000003PwDrAAK') && not( OwnerId = '0051t000003OiHnAAK')"
-  triggerType = "onAllChanges"
-  _parent = [
-    salesforce.Lead,
-  ]
-}

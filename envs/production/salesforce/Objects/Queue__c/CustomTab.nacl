@@ -1,8 +1,0 @@
-salesforce.CustomTab Queue__c {
-  fullName = "Queue__c"
-  customObject = true
-  motif = "Custom15: People"
-  _parent = [
-    salesforce.Queue__c,
-  ]
-}

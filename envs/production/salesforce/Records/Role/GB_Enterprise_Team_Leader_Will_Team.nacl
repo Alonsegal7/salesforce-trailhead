@@ -1,9 +1,0 @@
-salesforce.Role GB_Enterprise_Team_Leader_Will_Team {
-  fullName = "GB_Enterprise_Team_Leader_Will_Team"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "GB Enterprise Team Leader - Will Team"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.IL_VP_Sales
-}

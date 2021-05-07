@@ -1,9 +1,0 @@
-salesforce.ApexPage dfsle__CompleteOAuth {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 49
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "CompleteOAuth"
-  fullName = "dfsle__CompleteOAuth"
-  content = file("salesforce/InstalledPackages/dfsle/Records/ApexPage/dfsle__CompleteOAuth.page")
-}

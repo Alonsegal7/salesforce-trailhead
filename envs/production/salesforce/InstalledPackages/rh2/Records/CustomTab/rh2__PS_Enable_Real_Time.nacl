@@ -1,6 +1,0 @@
-salesforce.CustomTab rh2__PS_Enable_Real_Time {
-  fullName = "rh2__PS_Enable_Real_Time"
-  label = "Enable Real Time Rollups"
-  motif = "Custom64: Compass"
-  page = "rh2__PS_Select_Object"
-}

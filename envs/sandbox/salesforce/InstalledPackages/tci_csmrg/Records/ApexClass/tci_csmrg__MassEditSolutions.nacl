@@ -1,7 +1,0 @@
-salesforce.ApexClass tci_csmrg__MassEditSolutions {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 33
-  status = "Active"
-  fullName = "tci_csmrg__MassEditSolutions"
-  content = "(hidden)"
-}

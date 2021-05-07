@@ -1,8 +1,0 @@
-salesforce.ListView squivr__MilestoneTemplate__c_squivr__All {
-  fullName = "squivr__MilestoneTemplate__c.squivr__All"
-  filterScope = "Everything"
-  label = "All"
-  _parent = [
-    salesforce.squivr__MilestoneTemplate__c,
-  ]
-}

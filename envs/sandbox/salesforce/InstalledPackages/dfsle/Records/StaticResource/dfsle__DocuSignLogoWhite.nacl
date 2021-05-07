@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__DocuSignLogoWhite {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/png"
-  description = "DocuSignLogoWhite.png"
-  fullName = "dfsle__DocuSignLogoWhite"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__DocuSignLogoWhite.png")
-}

@@ -1,7 +1,0 @@
-salesforce.ApexComponent zisf__AccountCompanySearchPanel {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 38
-  label = "AccountCompanySearchPanel"
-  fullName = "zisf__AccountCompanySearchPanel"
-  content = "(hidden)"
-}

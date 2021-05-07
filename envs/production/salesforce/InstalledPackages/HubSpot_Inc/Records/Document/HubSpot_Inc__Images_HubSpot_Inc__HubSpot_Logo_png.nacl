@@ -1,8 +1,0 @@
-salesforce.Document HubSpot_Inc__Images_HubSpot_Inc__HubSpot_Logo_png {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  internalUseOnly = false
-  name = "HubSpot Logo"
-  public = true
-  fullName = "HubSpot_Inc__Images/HubSpot_Inc__HubSpot_Logo.png"
-  content = file("salesforce/InstalledPackages/HubSpot_Inc/Records/Document/HubSpot_Inc__Images/HubSpot_Inc__HubSpot_Logo.png")
-}

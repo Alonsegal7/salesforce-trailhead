@@ -1,8 +1,0 @@
-salesforce.ListView Round_Robin__c_All {
-  fullName = "Round_Robin__c.All"
-  filterScope = "Everything"
-  label = "All"
-  _parent = [
-    salesforce.Round_Robin__c,
-  ]
-}

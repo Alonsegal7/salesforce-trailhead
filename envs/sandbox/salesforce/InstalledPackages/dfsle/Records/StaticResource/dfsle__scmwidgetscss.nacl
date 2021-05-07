@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__scmwidgetscss {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "text/css"
-  description = "scm-widgets-css"
-  fullName = "dfsle__scmwidgetscss"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__scmwidgetscss.css")
-}

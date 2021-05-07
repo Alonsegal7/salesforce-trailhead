@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting DOZISF__Enrich {
-  fullName = "DOZISF__Enrich"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://enrich.zoominfo.com"
-}

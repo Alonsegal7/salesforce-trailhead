@@ -1,9 +1,0 @@
-salesforce.WorkflowRule Quote_Set_Quote_Owner {
-  fullName = "Quote.Set Quote Owner"
-  active = false
-  formula = "true"
-  triggerType = "onCreateOnly"
-  _parent = [
-    salesforce.Quote,
-  ]
-}

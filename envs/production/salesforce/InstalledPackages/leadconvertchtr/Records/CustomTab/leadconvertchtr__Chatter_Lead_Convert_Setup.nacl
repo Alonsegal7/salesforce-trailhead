@@ -1,6 +1,0 @@
-salesforce.CustomTab leadconvertchtr__Chatter_Lead_Convert_Setup {
-  fullName = "leadconvertchtr__Chatter_Lead_Convert_Setup"
-  label = "Lead Convert Chatter Setup"
-  motif = "Custom19: Wrench"
-  page = "leadconvertchtr__LeadConvertChatterSetupDetail"
-}

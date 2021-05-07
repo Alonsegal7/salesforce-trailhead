@@ -1,7 +1,0 @@
-salesforce.ApexClass rh2__PS_Rollup_Engine {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 42
-  status = "Active"
-  fullName = "rh2__PS_Rollup_Engine"
-  content = file("salesforce/InstalledPackages/rh2/Records/ApexClass/rh2__PS_Rollup_Engine.cls")
-}

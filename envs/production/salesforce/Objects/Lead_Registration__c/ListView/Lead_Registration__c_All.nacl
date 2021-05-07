@@ -1,8 +1,0 @@
-salesforce.ListView Lead_Registration__c_All {
-  fullName = "Lead_Registration__c.All"
-  filterScope = "Everything"
-  label = "All"
-  _parent = [
-    salesforce.Lead_Registration__c,
-  ]
-}

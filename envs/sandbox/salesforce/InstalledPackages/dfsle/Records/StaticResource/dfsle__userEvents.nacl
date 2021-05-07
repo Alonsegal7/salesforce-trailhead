@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__userEvents {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/javascript"
-  description = "userEvents.js"
-  fullName = "dfsle__userEvents"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__userEvents.js")
-}

@@ -1,8 +1,0 @@
-salesforce.Role Legal {
-  fullName = "Legal"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "Legal"
-  opportunityAccessLevel = "Edit"
-}

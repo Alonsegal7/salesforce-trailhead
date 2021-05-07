@@ -1,7 +1,0 @@
-salesforce.StaticResource dfsle__NegotiateHelpVideo {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/png"
-  fullName = "dfsle__NegotiateHelpVideo"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__NegotiateHelpVideo.png")
-}

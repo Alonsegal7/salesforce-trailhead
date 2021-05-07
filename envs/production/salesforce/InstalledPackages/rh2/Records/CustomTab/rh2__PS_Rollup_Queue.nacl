@@ -1,6 +1,0 @@
-salesforce.CustomTab rh2__PS_Rollup_Queue {
-  fullName = "rh2__PS_Rollup_Queue"
-  label = "Rollup Queue"
-  motif = "Custom33: Desk"
-  page = "rh2__PS_RollupQueue"
-}

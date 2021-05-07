@@ -1,6 +1,0 @@
-salesforce.SharingRules GB_Threshold__c {
-  fullName = "GB_Threshold__c"
-  _parent = [
-    salesforce.GB_Threshold__c,
-  ]
-}

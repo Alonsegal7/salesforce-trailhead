@@ -1,7 +1,0 @@
-salesforce.ApexComponent LH__LH_Nav_Bar {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  label = "LH_Nav_Bar"
-  fullName = "LH__LH_Nav_Bar"
-  content = "(hidden)"
-}

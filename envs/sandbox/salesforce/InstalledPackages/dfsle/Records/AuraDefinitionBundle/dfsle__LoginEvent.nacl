@@ -1,8 +1,0 @@
-salesforce.AuraDefinitionBundle dfsle__LoginEvent {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 49
-  description = "LoginEvent"
-  fullName = "dfsle__LoginEvent"
-  type = "Event"
-  markup = "(hidden)"
-}

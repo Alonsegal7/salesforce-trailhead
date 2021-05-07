@@ -1,6 +1,0 @@
-salesforce.SharingRules Subscription__c {
-  fullName = "Subscription__c"
-  _parent = [
-    salesforce.Subscription__c,
-  ]
-}

@@ -1,9 +1,0 @@
-salesforce.ApexPage Field_Trip__fieldTripStatus {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 32
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "fieldTripStatus"
-  fullName = "Field_Trip__fieldTripStatus"
-  content = file("salesforce/InstalledPackages/Field_Trip/Records/ApexPage/Field_Trip__fieldTripStatus.page")
-}

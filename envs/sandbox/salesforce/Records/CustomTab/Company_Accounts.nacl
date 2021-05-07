@@ -1,9 +1,0 @@
-salesforce.CustomTab Company_Accounts {
-  fullName = "Company_Accounts"
-  flexiPage = "Company_Accounts"
-  label = "Companies"
-  motif = "Custom36: Train"
-  _generated_dependencies = [
-    salesforce.LightningPage.instance.Company_Accounts,
-  ]
-}

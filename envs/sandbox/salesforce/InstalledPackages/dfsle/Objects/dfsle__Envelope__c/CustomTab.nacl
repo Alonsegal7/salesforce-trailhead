@@ -1,9 +1,0 @@
-salesforce.CustomTab dfsle__Envelope__c {
-  fullName = "dfsle__Envelope__c"
-  customObject = true
-  icon = salesforce.Document.instance.dfsle__DocuSign_dfsle__AppIcon_png
-  motif = "Custom23: Mail"
-  _parent = [
-    salesforce.dfsle__Envelope__c,
-  ]
-}

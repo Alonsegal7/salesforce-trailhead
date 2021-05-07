@@ -1,8 +1,0 @@
-salesforce.CustomTab Lead_Registration__c {
-  fullName = "Lead_Registration__c"
-  customObject = true
-  motif = "Custom37: Bridge"
-  _parent = [
-    salesforce.Lead_Registration__c,
-  ]
-}

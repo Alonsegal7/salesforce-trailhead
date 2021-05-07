@@ -1,7 +1,0 @@
-salesforce.StaticResource Confetti {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "text/javascript"
-  fullName = "Confetti"
-  content = file("salesforce/Records/StaticResource/Confetti.resource")
-}

@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__noData_Agreements {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/svg+xml"
-  description = "noData_Agreements.svg"
-  fullName = "dfsle__noData_Agreements"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__noData_Agreements.svg")
-}

@@ -1,9 +1,0 @@
-salesforce.ApexPage yw__Yesware {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 27
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "Yesware"
-  fullName = "yw__Yesware"
-  content = file("salesforce/InstalledPackages/yw/Records/ApexPage/yw__Yesware.page")
-}

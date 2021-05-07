@@ -1,7 +1,0 @@
-salesforce.ApexComponent LH__NFPDiscountForm {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  label = "NFPDiscountForm"
-  fullName = "LH__NFPDiscountForm"
-  content = "(hidden)"
-}

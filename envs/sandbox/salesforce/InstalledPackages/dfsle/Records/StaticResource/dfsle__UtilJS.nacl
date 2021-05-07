@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__UtilJS {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/javascript"
-  description = "UtilJS"
-  fullName = "dfsle__UtilJS"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__UtilJS.js")
-}

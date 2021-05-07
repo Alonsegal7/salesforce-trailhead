@@ -1,6 +1,0 @@
-salesforce.CustomObjectTranslation ARH__Configuration__c_en_US {
-  fullName = "ARH__Configuration__c-en_US"
-  _parent = [
-    salesforce.ARH__Configuration__c,
-  ]
-}

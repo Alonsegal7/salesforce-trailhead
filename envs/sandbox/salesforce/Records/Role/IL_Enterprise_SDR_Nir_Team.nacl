@@ -1,9 +1,0 @@
-salesforce.Role IL_Enterprise_SDR_Nir_Team {
-  fullName = "IL_Enterprise_SDR_Nir_Team"
-  caseAccessLevel = "Edit"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "IL Enterprise SDR - Alex Team"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.IL_SDR_Team_Leader
-}

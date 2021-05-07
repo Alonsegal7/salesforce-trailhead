@@ -1,7 +1,0 @@
-salesforce.StaticResource Silver {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/png"
-  fullName = "Silver"
-  content = file("salesforce/Records/StaticResource/Silver.png")
-}

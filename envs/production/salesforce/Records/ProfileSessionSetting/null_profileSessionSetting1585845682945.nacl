@@ -1,9 +1,0 @@
-salesforce.ProfileSessionSetting null_profileSessionSetting1585845682945 {
-  fullName = "null_profileSessionSetting1585845682945"
-  externalCommunityUserIdentityVerif = false
-  forceLogout = false
-  profile = "csm managers"
-  sessionPersistence = false
-  sessionTimeout = 0
-  sessionTimeoutWarning = false
-}

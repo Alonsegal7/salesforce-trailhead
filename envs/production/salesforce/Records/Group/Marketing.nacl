@@ -1,5 +1,0 @@
-salesforce.Group Marketing {
-  fullName = "Marketing"
-  doesIncludeBosses = true
-  name = "Marketing"
-}

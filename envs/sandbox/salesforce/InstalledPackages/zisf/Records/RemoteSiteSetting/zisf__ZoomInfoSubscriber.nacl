@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting zisf__ZoomInfoSubscriber {
-  fullName = "zisf__ZoomInfoSubscriber"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://subscriber.zoominfo.com"
-}

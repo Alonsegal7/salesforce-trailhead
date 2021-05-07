@@ -1,7 +1,0 @@
-salesforce.StaticResource LH__LHCategorySettingType {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/png"
-  fullName = "LH__LHCategorySettingType"
-  content = file("salesforce/InstalledPackages/LH/Records/StaticResource/LH__LHCategorySettingType.png")
-}

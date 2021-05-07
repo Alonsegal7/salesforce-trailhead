@@ -1,7 +1,0 @@
-salesforce.ApexTrigger OnMondayAccountUpdateTrigger {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  status = "Active"
-  fullName = "OnMondayAccountUpdateTrigger"
-  content = file("salesforce/Records/ApexTrigger/OnMondayAccountUpdateTrigger.trigger")
-}

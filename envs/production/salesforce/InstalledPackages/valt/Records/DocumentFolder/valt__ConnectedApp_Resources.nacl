@@ -1,7 +1,0 @@
-salesforce.DocumentFolder valt__ConnectedApp_Resources {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  accessType = "Hidden"
-  name = "ConnectedApp Resources"
-  publicFolderAccess = "ReadWrite"
-  fullName = "valt__ConnectedApp_Resources"
-}

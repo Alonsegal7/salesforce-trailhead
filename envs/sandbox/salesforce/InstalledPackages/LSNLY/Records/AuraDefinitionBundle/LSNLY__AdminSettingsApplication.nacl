@@ -1,8 +1,0 @@
-salesforce.AuraDefinitionBundle LSNLY__AdminSettingsApplication {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 41
-  description = "A Lightning Component Bundle"
-  fullName = "LSNLY__AdminSettingsApplication"
-  type = "Application"
-  markup = "(hidden)"
-}

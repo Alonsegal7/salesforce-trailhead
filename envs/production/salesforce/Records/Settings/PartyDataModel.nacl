@@ -1,5 +1,0 @@
-salesforce.PartyDataModelSettings {
-  fullName = "PartyDataModel"
-  enableAutoSelectIndividualOnMerge = false
-  enableConsentManagement = "true"
-}

@@ -1,7 +1,0 @@
-salesforce.ApexClass dfsle__AgreementStatus {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 49
-  status = "Active"
-  fullName = "dfsle__AgreementStatus"
-  content = "(hidden)"
-}

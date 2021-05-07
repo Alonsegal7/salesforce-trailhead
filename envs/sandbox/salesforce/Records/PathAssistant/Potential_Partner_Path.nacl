@@ -1,8 +1,0 @@
-salesforce.PathAssistant Potential_Partner_Path {
-  fullName = "Potential_Partner_Path"
-  active = false
-  entityName = "Lead"
-  fieldName = "Status"
-  masterLabel = "Potential Partner Path"
-  recordTypeName = "Potential_Partner"
-}

@@ -1,5 +1,0 @@
-salesforce.Group All_Internal_Users {
-  fullName = "All_Internal_Users"
-  doesIncludeBosses = true
-  name = "All Internal Users"
-}

@@ -1,6 +1,0 @@
-salesforce.SharingRules LH__Lookup_Helper_Record_Creation__c {
-  fullName = "LH__Lookup_Helper_Record_Creation__c"
-  _parent = [
-    salesforce.LH__Lookup_Helper_Record_Creation__c,
-  ]
-}

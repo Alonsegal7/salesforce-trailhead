@@ -1,9 +1,0 @@
-salesforce.ApexPage MassManager__OpportunitiesMassEdit {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 40
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Opportunities Mass Edit"
-  fullName = "MassManager__OpportunitiesMassEdit"
-  content = file("salesforce/InstalledPackages/MassManager/Records/ApexPage/MassManager__OpportunitiesMassEdit.page")
-}

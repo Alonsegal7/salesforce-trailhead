@@ -1,7 +1,0 @@
-salesforce.StaticResource dfsle__SetupImages {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/zip"
-  fullName = "dfsle__SetupImages"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__SetupImages.zip")
-}

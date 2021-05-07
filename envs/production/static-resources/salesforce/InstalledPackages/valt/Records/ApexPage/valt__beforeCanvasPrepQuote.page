@@ -1,3 +1,0 @@
-<apex:page standardController="Quote" extensions="valt.beforeCanvasPrep" sidebar="false" showHeader="false" action="{!init}" >
-	<apex:pageMessages />
-</apex:page>

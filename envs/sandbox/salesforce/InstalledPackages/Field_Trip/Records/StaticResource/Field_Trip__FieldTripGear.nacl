@@ -1,8 +1,0 @@
-salesforce.StaticResource Field_Trip__FieldTripGear {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/x-zip-compressed"
-  description = "Images used by the Field Trip application."
-  fullName = "Field_Trip__FieldTripGear"
-  content = file("salesforce/InstalledPackages/Field_Trip/Records/StaticResource/Field_Trip__FieldTripGear.resource")
-}

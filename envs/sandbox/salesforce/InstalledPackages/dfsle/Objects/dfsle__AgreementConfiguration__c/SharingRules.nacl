@@ -1,6 +1,0 @@
-salesforce.SharingRules dfsle__AgreementConfiguration__c {
-  fullName = "dfsle__AgreementConfiguration__c"
-  _parent = [
-    salesforce.dfsle__AgreementConfiguration__c,
-  ]
-}

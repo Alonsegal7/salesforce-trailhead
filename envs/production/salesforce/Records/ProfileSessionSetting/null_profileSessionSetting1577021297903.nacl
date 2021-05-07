@@ -1,9 +1,0 @@
-salesforce.ProfileSessionSetting null_profileSessionSetting1577021297903 {
-  fullName = "null_profileSessionSetting1577021297903"
-  externalCommunityUserIdentityVerif = false
-  forceLogout = false
-  profile = "marketing monday"
-  sessionPersistence = false
-  sessionTimeout = 0
-  sessionTimeoutWarning = false
-}

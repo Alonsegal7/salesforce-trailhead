@@ -1,8 +1,0 @@
-salesforce.CustomTab Billing_Entity__c {
-  fullName = "Billing_Entity__c"
-  customObject = true
-  motif = "Custom86: Red Cross"
-  _parent = [
-    salesforce.Billing_Entity__c,
-  ]
-}

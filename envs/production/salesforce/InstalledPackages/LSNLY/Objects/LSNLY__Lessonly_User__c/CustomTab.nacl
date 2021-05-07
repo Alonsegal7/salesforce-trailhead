@@ -1,8 +1,0 @@
-salesforce.CustomTab LSNLY__Lessonly_User__c {
-  fullName = "LSNLY__Lessonly_User__c"
-  customObject = true
-  motif = "Custom8: Diamond"
-  _parent = [
-    salesforce.LSNLY__Lessonly_User__c,
-  ]
-}

@@ -1,6 +1,0 @@
-salesforce.SharingRules LSNLY__Lessonly_Content__c {
-  fullName = "LSNLY__Lessonly_Content__c"
-  _parent = [
-    salesforce.LSNLY__Lessonly_Content__c,
-  ]
-}

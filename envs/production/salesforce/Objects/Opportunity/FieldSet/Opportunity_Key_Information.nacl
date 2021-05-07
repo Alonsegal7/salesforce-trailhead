@@ -1,8 +1,0 @@
-salesforce.FieldSet Opportunity_Key_Information {
-  fullName = "Opportunity.Key_Information"
-  description = "Opportunity Key Information"
-  label = "Key Information"
-  _parent = [
-    salesforce.Opportunity,
-  ]
-}

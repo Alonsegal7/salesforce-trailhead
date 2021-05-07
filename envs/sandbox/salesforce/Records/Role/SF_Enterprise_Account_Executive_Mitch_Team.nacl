@@ -1,9 +1,0 @@
-salesforce.Role SF_Enterprise_Account_Executive_Mitch_Team {
-  fullName = "SF_Enterprise_Account_Executive_Mitch_Team"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "SF Enterprise Account Executive - Mitch Team"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.SF_Team_Leader_Mitch_team
-}

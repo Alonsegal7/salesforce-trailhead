@@ -1,9 +1,0 @@
-salesforce.ApexPage valt__info {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 28
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "info"
-  fullName = "valt__info"
-  content = file("salesforce/InstalledPackages/valt/Records/ApexPage/valt__info.page")
-}

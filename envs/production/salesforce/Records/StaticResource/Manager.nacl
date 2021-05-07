@@ -1,7 +1,0 @@
-salesforce.StaticResource Manager {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/jpeg"
-  fullName = "Manager"
-  content = file("salesforce/Records/StaticResource/Manager.jpeg")
-}

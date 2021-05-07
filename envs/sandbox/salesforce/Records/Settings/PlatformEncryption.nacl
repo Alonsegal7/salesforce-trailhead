@@ -1,4 +1,0 @@
-salesforce.PlatformEncryptionSettings {
-  fullName = "PlatformEncryption"
-  enableEventBusEncryption = false
-}

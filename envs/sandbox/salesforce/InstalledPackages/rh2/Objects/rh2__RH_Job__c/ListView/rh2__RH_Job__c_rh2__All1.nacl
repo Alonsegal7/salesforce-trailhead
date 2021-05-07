@@ -1,8 +1,0 @@
-salesforce.ListView rh2__RH_Job__c_rh2__All1 {
-  fullName = "rh2__RH_Job__c.rh2__All1"
-  filterScope = "Everything"
-  label = "All"
-  _parent = [
-    salesforce.rh2__RH_Job__c,
-  ]
-}

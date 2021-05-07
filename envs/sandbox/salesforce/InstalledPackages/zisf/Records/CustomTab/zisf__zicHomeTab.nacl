@@ -1,6 +1,0 @@
-salesforce.CustomTab zisf__zicHomeTab {
-  fullName = "zisf__zicHomeTab"
-  label = "ZoomInfo Clean Home"
-  motif = "Custom20: Airplane"
-  page = "zisf__zicHomePage"
-}

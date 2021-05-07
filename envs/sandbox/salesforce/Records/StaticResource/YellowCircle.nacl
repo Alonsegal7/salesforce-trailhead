@@ -1,7 +1,0 @@
-salesforce.StaticResource YellowCircle {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/png"
-  fullName = "YellowCircle"
-  content = file("salesforce/Records/StaticResource/YellowCircle.png")
-}

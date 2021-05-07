@@ -1,8 +1,0 @@
-salesforce.StaticResource HubSpot_Inc__jqueryui {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "application/x-zip-compressed"
-  description = "jQuery UI scripts used by HubSpot Tab."
-  fullName = "HubSpot_Inc__jqueryui"
-  content = file("salesforce/InstalledPackages/HubSpot_Inc/Records/StaticResource/HubSpot_Inc__jqueryui.resource")
-}

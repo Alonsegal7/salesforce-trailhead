@@ -1,7 +1,0 @@
-salesforce.ApexTrigger onOMALinkUpdate {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  status = "Active"
-  fullName = "onOMALinkUpdate"
-  content = file("salesforce/Records/ApexTrigger/onOMALinkUpdate.trigger")
-}

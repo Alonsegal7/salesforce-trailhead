@@ -1,2 +1,0 @@
-<apex:page sidebar="false" showHeader="false" title="{!$Label.dfsle__docusign}">
-</apex:page>

@@ -1,6 +1,0 @@
-salesforce.SharingRules dfsle__EnvelopeConfiguration__c {
-  fullName = "dfsle__EnvelopeConfiguration__c"
-  _parent = [
-    salesforce.dfsle__EnvelopeConfiguration__c,
-  ]
-}

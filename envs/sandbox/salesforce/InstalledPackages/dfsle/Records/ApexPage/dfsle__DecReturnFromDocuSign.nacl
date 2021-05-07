@@ -1,9 +1,0 @@
-salesforce.ApexPage dfsle__DecReturnFromDocuSign {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 49
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "DecReturnFromDocuSign"
-  fullName = "dfsle__DecReturnFromDocuSign"
-  content = file("salesforce/InstalledPackages/dfsle/Records/ApexPage/dfsle__DecReturnFromDocuSign.page")
-}

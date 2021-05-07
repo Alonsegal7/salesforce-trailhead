@@ -1,9 +1,0 @@
-salesforce.ApexPage valt__setup {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 28
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "setup"
-  fullName = "valt__setup"
-  content = file("salesforce/InstalledPackages/valt/Records/ApexPage/valt__setup.page")
-}

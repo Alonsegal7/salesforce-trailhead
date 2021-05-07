@@ -1,8 +1,0 @@
-salesforce.CanvasMetadata LSNLY__Lessonly_oauth_c4s__Lessonly_oauth_c4sCanvas {
-  fullName = "LSNLY__Lessonly_oauth_c4s__Lessonly_oauth_c4sCanvas"
-  module = "Lessonly_oauth_c4s"
-  accessMethod = "Post"
-  canvasUrl = "https://auth.lessonly.com/canvas"
-  locationOptions = "VF"
-  samlInitiationMethod = "None"
-}

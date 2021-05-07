@@ -1,5 +1,0 @@
-salesforce.EACSettings {
-  fullName = "EAC"
-  enableInsightsInTimeline = true
-  enableInsightsInTimelineEacStd = false
-}

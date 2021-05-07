@@ -1,9 +1,0 @@
-salesforce.ApexPage leadconvertchtr__LeadConvertChatterSetupDetail {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 23
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "Lead Convert Chatter Setup Detail"
-  fullName = "leadconvertchtr__LeadConvertChatterSetupDetail"
-  content = file("salesforce/InstalledPackages/leadconvertchtr/Records/ApexPage/leadconvertchtr__LeadConvertChatterSetupDetail.page")
-}

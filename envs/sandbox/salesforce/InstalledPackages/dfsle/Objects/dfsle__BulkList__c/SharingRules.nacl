@@ -1,6 +1,0 @@
-salesforce.SharingRules dfsle__BulkList__c {
-  fullName = "dfsle__BulkList__c"
-  _parent = [
-    salesforce.dfsle__BulkList__c,
-  ]
-}

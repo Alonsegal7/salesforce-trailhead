@@ -1,7 +1,0 @@
-salesforce.StaticResource zisf__test_CompanySearchRequest {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "text/xml"
-  fullName = "zisf__test_CompanySearchRequest"
-  content = file("salesforce/InstalledPackages/zisf/Records/StaticResource/zisf__test_CompanySearchRequest.xml")
-}

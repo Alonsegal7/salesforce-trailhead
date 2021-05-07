@@ -1,4 +1,0 @@
-salesforce.ExperienceBundleSettings {
-  fullName = "ExperienceBundle"
-  enableExperienceBundleMetadata = false
-}

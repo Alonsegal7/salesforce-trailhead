@@ -1,9 +1,0 @@
-salesforce.ApexPage dfsle__TroubleShooting {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 49
-  availableInTouch = false
-  confirmationTokenRequired = true
-  label = "TroubleShooting"
-  fullName = "dfsle__TroubleShooting"
-  content = file("salesforce/InstalledPackages/dfsle/Records/ApexPage/dfsle__TroubleShooting.page")
-}

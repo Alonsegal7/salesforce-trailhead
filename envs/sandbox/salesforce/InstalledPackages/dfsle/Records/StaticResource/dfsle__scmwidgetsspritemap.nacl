@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__scmwidgetsspritemap {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/svg+xml"
-  description = "scm-widgets-sprite-map"
-  fullName = "dfsle__scmwidgetsspritemap"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__scmwidgetsspritemap.svg")
-}

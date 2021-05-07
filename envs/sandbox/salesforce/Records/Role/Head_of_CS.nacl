@@ -1,9 +1,0 @@
-salesforce.Role Head_of_CS {
-  fullName = "Head_of_CS"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "Head of CS"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.Head_of_Sales
-}

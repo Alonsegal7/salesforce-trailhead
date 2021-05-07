@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting LSNLY__LessonlyAPI {
-  fullName = "LSNLY__LessonlyAPI"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://api.lessonly.com"
-}

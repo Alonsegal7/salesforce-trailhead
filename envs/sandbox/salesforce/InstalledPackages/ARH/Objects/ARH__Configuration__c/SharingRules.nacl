@@ -1,6 +1,0 @@
-salesforce.SharingRules ARH__Configuration__c {
-  fullName = "ARH__Configuration__c"
-  _parent = [
-    salesforce.ARH__Configuration__c,
-  ]
-}

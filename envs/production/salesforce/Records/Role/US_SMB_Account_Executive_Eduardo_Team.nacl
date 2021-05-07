@@ -1,9 +1,0 @@
-salesforce.Role US_SMB_Account_Executive_Eduardo_Team {
-  fullName = "US_SMB_Account_Executive_Eduardo_Team"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "US SMB Account Executive - Eduardo Team"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.US_Mid_Market_team_leader_Eduardo_team
-}

@@ -1,8 +1,0 @@
-salesforce.CustomTab Department__c {
-  fullName = "Department__c"
-  customObject = true
-  motif = "Custom33: Desk"
-  _parent = [
-    salesforce.Department__c,
-  ]
-}

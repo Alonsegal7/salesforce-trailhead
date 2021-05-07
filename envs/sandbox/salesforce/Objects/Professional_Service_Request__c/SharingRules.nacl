@@ -1,6 +1,0 @@
-salesforce.SharingRules Professional_Service_Request__c {
-  fullName = "Professional_Service_Request__c"
-  _parent = [
-    salesforce.Professional_Service_Request__c,
-  ]
-}

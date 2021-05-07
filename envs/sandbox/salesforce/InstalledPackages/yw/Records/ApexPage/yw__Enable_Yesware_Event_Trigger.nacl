@@ -1,9 +1,0 @@
-salesforce.ApexPage yw__Enable_Yesware_Event_Trigger {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 27
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "Enable Yesware Triggers"
-  fullName = "yw__Enable_Yesware_Event_Trigger"
-  content = file("salesforce/InstalledPackages/yw/Records/ApexPage/yw__Enable_Yesware_Event_Trigger.page")
-}

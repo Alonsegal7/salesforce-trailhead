@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting Login_Salesforce {
-  fullName = "Login_Salesforce"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://login.salesforce.com"
-}

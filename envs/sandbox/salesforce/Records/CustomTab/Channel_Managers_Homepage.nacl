@@ -1,9 +1,0 @@
-salesforce.CustomTab Channel_Managers_Homepage {
-  fullName = "Channel_Managers_Homepage"
-  flexiPage = "Channel_Managers_Homepage"
-  label = "Channel Managers Homepage"
-  motif = "Custom7: Square"
-  _generated_dependencies = [
-    salesforce.LightningPage.instance.Channel_Managers_Homepage,
-  ]
-}

@@ -1,9 +1,0 @@
-salesforce.ApexPage Field_Trip__dataQualityScore {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "dataQualityScore"
-  fullName = "Field_Trip__dataQualityScore"
-  content = file("salesforce/InstalledPackages/Field_Trip/Records/ApexPage/Field_Trip__dataQualityScore.page")
-}

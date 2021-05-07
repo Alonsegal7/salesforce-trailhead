@@ -1,7 +1,0 @@
-salesforce.StaticResource squivr__ReactApp {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/x-zip-compressed"
-  fullName = "squivr__ReactApp"
-  content = file("salesforce/InstalledPackages/squivr/Records/StaticResource/squivr__ReactApp.resource")
-}

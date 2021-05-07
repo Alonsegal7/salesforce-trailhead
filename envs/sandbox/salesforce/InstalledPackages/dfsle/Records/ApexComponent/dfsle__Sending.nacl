@@ -1,7 +1,0 @@
-salesforce.ApexComponent dfsle__Sending {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  label = "Send with DocuSign"
-  fullName = "dfsle__Sending"
-  content = "(hidden)"
-}

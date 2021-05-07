@@ -1,6 +1,0 @@
-salesforce.CustomTab valt__Setup {
-  fullName = "valt__Setup"
-  label = "Setup"
-  motif = "Custom73: Highway Sign"
-  page = "valt__setup"
-}

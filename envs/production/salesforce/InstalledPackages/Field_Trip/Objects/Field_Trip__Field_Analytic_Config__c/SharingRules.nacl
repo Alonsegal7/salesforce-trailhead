@@ -1,6 +1,0 @@
-salesforce.SharingRules Field_Trip__Field_Analytic_Config__c {
-  fullName = "Field_Trip__Field_Analytic_Config__c"
-  _parent = [
-    salesforce.Field_Trip__Field_Analytic_Config__c,
-  ]
-}

@@ -1,9 +1,0 @@
-salesforce.Role IL_Mid_Market_Manager_Davidi_Team {
-  fullName = "IL_Mid_Market_Manager_Davidi_Team"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "IL Mid Market Manager - Davidi Team"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.IL_VP_Sales
-}

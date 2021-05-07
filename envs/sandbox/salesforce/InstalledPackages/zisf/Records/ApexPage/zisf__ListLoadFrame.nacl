@@ -1,9 +1,0 @@
-salesforce.ApexPage zisf__ListLoadFrame {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 26
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "ListLoadFrame"
-  fullName = "zisf__ListLoadFrame"
-  content = file("salesforce/InstalledPackages/zisf/Records/ApexPage/zisf__ListLoadFrame.page")
-}

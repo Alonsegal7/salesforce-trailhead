@@ -1,9 +1,0 @@
-<aura:component extensible="true" abstract="true" access="global" implements="force:hasRecordId"
-  controller="LC_BaseController">
-  <!-- attrs -->
-  <aura:attribute name="recordId" type="String" />
-  <aura:attribute name="isLoading" type="Boolean" default="false" />
-
-  {!v.body}
-
-</aura:component>

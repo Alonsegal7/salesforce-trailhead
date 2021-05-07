@@ -1,8 +1,0 @@
-salesforce.ApexComponent LH__LH_additionalInformation {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  description = "This is a generic template for Visualforce Component.  With this template, you may adjust the default elements and values and add new elements and values."
-  label = "LH_additionalInformation"
-  fullName = "LH__LH_additionalInformation"
-  content = "(hidden)"
-}

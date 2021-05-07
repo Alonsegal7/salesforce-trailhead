@@ -1,7 +1,0 @@
-salesforce.ApexClass Account_Snapshot {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 49
-  status = "Active"
-  fullName = "Account_Snapshot"
-  content = file("salesforce/Records/ApexClass/Account_Snapshot.cls")
-}

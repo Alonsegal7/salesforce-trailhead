@@ -1,7 +1,0 @@
-salesforce.ApexComponent zisf__TechAttributeCSS {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  label = "TechAttributeCSS"
-  fullName = "zisf__TechAttributeCSS"
-  content = "(hidden)"
-}

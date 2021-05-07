@@ -1,6 +1,0 @@
-salesforce.Territory2Type United_States {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  name = "United States"
-  priority = 4
-  fullName = "United_States"
-}

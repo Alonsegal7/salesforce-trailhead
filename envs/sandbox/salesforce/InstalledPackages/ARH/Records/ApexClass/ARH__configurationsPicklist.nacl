@@ -1,7 +1,0 @@
-salesforce.ApexClass ARH__configurationsPicklist {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  status = "Active"
-  fullName = "ARH__configurationsPicklist"
-  content = file("salesforce/InstalledPackages/ARH/Records/ApexClass/ARH__configurationsPicklist.cls")
-}

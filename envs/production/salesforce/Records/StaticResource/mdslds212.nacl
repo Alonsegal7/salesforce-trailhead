@@ -1,7 +1,0 @@
-salesforce.StaticResource mdslds212 {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "application/zip"
-  fullName = "mdslds212"
-  content = file("salesforce/Records/StaticResource/mdslds212.zip")
-}

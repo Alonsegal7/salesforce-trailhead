@@ -1,8 +1,0 @@
-salesforce.ListView StoryLogSnapshot__c_All {
-  fullName = "StoryLogSnapshot__c.All"
-  filterScope = "Everything"
-  label = "All"
-  _parent = [
-    salesforce.StoryLogSnapshot__c,
-  ]
-}

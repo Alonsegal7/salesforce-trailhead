@@ -1,6 +1,0 @@
-salesforce.CustomApplication standard__AllTabSet {
-  fullName = "standard__AllTabSet"
-  defaultLandingTab = "standard-home"
-  isNavAutoTempTabsDisabled = false
-  isNavPersonalizationDisabled = false
-}

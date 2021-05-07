@@ -1,7 +1,0 @@
-salesforce.StaticResource gmailicon {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "image/png"
-  fullName = "gmailicon"
-  content = file("salesforce/Records/StaticResource/gmailicon.png")
-}

@@ -1,9 +1,0 @@
-salesforce.Role Head_of_Sales {
-  fullName = "Head_of_Sales"
-  caseAccessLevel = "Edit"
-  contactAccessLevel = "Edit"
-  description = "Head of Sales"
-  mayForecastManagerShare = false
-  name = "Head of Sales"
-  opportunityAccessLevel = "Edit"
-}

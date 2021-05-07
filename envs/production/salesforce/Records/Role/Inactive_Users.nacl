@@ -1,8 +1,0 @@
-salesforce.Role Inactive_Users {
-  fullName = "Inactive_Users"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "Inactive Users"
-  opportunityAccessLevel = "Edit"
-}

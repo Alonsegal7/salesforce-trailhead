@@ -1,3 +1,0 @@
-<apex:page standardController="Lead" extensions="DOZISF.InlineIframController">
-    <c:InlineIframe route="inline/lead?id={!Lead.Id}" recordId="{!Lead.Id}" pageType="Lead"/>
-</apex:page>

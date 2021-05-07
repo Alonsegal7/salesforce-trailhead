@@ -1,8 +1,0 @@
-salesforce.CustomTab Partner_SO_Request__c {
-  fullName = "Partner_SO_Request__c"
-  customObject = true
-  motif = "Custom83: Pencil"
-  _parent = [
-    salesforce.Partner_SO_Request__c,
-  ]
-}

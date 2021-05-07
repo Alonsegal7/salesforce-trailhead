@@ -1,7 +1,0 @@
-salesforce.ApexClass IConductServiceTest {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  status = "Active"
-  fullName = "IConductServiceTest"
-  content = file("salesforce/Records/ApexClass/IConductServiceTest.cls")
-}

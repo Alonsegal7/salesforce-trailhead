@@ -1,7 +1,0 @@
-salesforce.DocumentFolder Communities_Shared_Document_Folder {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  accessType = "Public"
-  name = "Communities Shared Document Folder"
-  publicFolderAccess = "ReadWrite"
-  fullName = "Communities_Shared_Document_Folder"
-}

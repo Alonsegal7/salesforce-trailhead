@@ -1,7 +1,0 @@
-salesforce.ApexClass yw__SyncContactsTrigger {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 27
-  status = "Active"
-  fullName = "yw__SyncContactsTrigger"
-  content = file("salesforce/InstalledPackages/yw/Records/ApexClass/yw__SyncContactsTrigger.cls")
-}

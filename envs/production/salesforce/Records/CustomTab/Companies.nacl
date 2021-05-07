@@ -1,9 +1,0 @@
-salesforce.CustomTab Companies {
-  fullName = "Companies"
-  frameHeight = 600
-  hasSidebar = false
-  label = "Companies"
-  motif = "Custom74: Hot Air Balloon"
-  url = "https://monday.lightning.force.com/lightning/o/Account/list?filterName=00B1t000005s8KSEAY"
-  urlEncodingKey = "UTF-8"
-}

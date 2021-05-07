@@ -1,7 +1,0 @@
-salesforce.ApexClass MassManager__ActionHubExtension {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 40
-  status = "Active"
-  fullName = "MassManager__ActionHubExtension"
-  content = file("salesforce/InstalledPackages/MassManager/Records/ApexClass/MassManager__ActionHubExtension.cls")
-}

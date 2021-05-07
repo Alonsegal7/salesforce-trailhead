@@ -1,7 +1,0 @@
-salesforce.ApexClass CloneOpportunityController {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 42
-  status = "Active"
-  fullName = "CloneOpportunityController"
-  content = file("salesforce/Records/ApexClass/CloneOpportunityController.cls")
-}

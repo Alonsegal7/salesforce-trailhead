@@ -1,8 +1,0 @@
-salesforce.Document dfsle__DocuSign_dfsle__AppIcon_png {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  internalUseOnly = false
-  name = "AppIcon"
-  public = true
-  fullName = "dfsle__DocuSign/dfsle__AppIcon.png"
-  content = file("salesforce/InstalledPackages/dfsle/Records/Document/dfsle__DocuSign/dfsle__AppIcon.png")
-}

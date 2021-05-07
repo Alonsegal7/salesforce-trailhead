@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting eranb_localhost {
-  fullName = "eranb_localhost"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://moka.ngrok.io"
-}

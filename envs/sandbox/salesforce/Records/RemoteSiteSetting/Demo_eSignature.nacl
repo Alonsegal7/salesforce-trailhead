@@ -1,7 +1,0 @@
-salesforce.RemoteSiteSetting Demo_eSignature {
-  fullName = "Demo_eSignature"
-  description = "DocuSign ESignature Service"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://demo.docusign.net"
-}

@@ -1,6 +1,0 @@
-salesforce.RemoteSiteSetting zisf__zoomLoginByZiid {
-  fullName = "zisf__zoomLoginByZiid"
-  disableProtocolSecurity = false
-  isActive = true
-  url = "https://www.zoominfo.com"
-}

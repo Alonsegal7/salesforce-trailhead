@@ -1,8 +1,0 @@
-salesforce.ListView zisf__ZoomInfo__c_zisf__All {
-  fullName = "zisf__ZoomInfo__c.zisf__All"
-  filterScope = "Everything"
-  label = "All"
-  _parent = [
-    salesforce.zisf__ZoomInfo__c,
-  ]
-}

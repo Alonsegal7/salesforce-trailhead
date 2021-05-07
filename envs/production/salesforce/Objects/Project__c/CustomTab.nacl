@@ -1,8 +1,0 @@
-salesforce.CustomTab Project__c {
-  fullName = "Project__c"
-  customObject = true
-  motif = "Custom71: Headset"
-  _parent = [
-    salesforce.Project__c,
-  ]
-}

@@ -1,8 +1,0 @@
-salesforce.StaticResource valt__logob {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/png"
-  description = "New blue logo"
-  fullName = "valt__logob"
-  content = file("salesforce/InstalledPackages/valt/Records/StaticResource/valt__logob.png")
-}

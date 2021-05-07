@@ -1,9 +1,0 @@
-salesforce.ProfileSessionSetting Monday_Partners_Portal_Profile_profileSessionSetting1602752494859 {
-  fullName = "Monday_Partners_Portal_Profile_profileSessionSetting1602752494859"
-  externalCommunityUserIdentityVerif = false
-  forceLogout = false
-  profile = "monday partners portal profile"
-  sessionPersistence = false
-  sessionTimeout = 720
-  sessionTimeoutWarning = false
-}

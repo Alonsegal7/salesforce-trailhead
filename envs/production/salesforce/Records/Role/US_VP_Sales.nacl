@@ -1,9 +1,0 @@
-salesforce.Role US_VP_Sales {
-  fullName = "US_VP_Sales"
-  caseAccessLevel = "None"
-  contactAccessLevel = "Edit"
-  mayForecastManagerShare = false
-  name = "US VP Sales"
-  opportunityAccessLevel = "Edit"
-  parentRole = salesforce.Role.instance.Head_of_Sales
-}

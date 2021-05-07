@@ -1,8 +1,0 @@
-salesforce.Document rh2__Public_Images_rh2__Rollup_Helper_Logo_gif {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  internalUseOnly = false
-  name = "Rollup_Helper_Logo"
-  public = true
-  fullName = "rh2__Public_Images/rh2__Rollup_Helper_Logo.gif"
-  content = file("salesforce/InstalledPackages/rh2/Records/Document/rh2__Public_Images/rh2__Rollup_Helper_Logo.gif")
-}

@@ -1,4 +1,0 @@
-salesforce.IsvHammerSettings {
-  fullName = "IsvHammer"
-  enableIsvHammerSubIsOptedOut = "false"
-}

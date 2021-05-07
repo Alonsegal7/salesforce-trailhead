@@ -1,8 +1,0 @@
-salesforce.StaticResource zoom_key {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "text/plain"
-  description = "Key for Zoominfo integration generated from Zoominfo on 6/4/20"
-  fullName = "zoom_key"
-  content = file("salesforce/Records/StaticResource/zoom_key.txt")
-}

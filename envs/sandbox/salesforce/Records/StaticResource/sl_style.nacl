@@ -1,7 +1,0 @@
-salesforce.StaticResource sl_style {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Private"
-  contentType = "text/css"
-  fullName = "sl_style"
-  content = file("salesforce/Records/StaticResource/sl_style.css")
-}

@@ -1,5 +1,0 @@
-salesforce.Group All_Partners {
-  fullName = "All_Partners"
-  doesIncludeBosses = true
-  name = "All Partners"
-}

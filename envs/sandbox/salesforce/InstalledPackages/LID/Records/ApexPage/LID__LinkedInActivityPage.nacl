@@ -1,9 +1,0 @@
-salesforce.ApexPage LID__LinkedInActivityPage {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 25
-  availableInTouch = false
-  confirmationTokenRequired = false
-  label = "LinkedInActivityPage"
-  fullName = "LID__LinkedInActivityPage"
-  content = file("salesforce/InstalledPackages/LID/Records/ApexPage/LID__LinkedInActivityPage.page")
-}

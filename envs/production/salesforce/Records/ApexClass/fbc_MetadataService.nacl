@@ -1,7 +1,0 @@
-salesforce.ApexClass fbc_MetadataService {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 48
-  status = "Active"
-  fullName = "fbc_MetadataService"
-  content = file("salesforce/Records/ApexClass/fbc_MetadataService.cls")
-}

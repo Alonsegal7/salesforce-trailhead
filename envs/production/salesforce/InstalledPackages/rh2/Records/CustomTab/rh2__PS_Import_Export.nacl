@@ -1,6 +1,0 @@
-salesforce.CustomTab rh2__PS_Import_Export {
-  fullName = "rh2__PS_Import_Export"
-  label = "Export Rollups"
-  motif = "Custom33: Desk"
-  page = "rh2__PS_ImportData"
-}

@@ -1,9 +1,0 @@
-salesforce.ApexPage MassManager__MassEdit {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 39
-  availableInTouch = true
-  confirmationTokenRequired = false
-  label = "Mass Edit"
-  fullName = "MassManager__MassEdit"
-  content = file("salesforce/InstalledPackages/MassManager/Records/ApexPage/MassManager__MassEdit.page")
-}

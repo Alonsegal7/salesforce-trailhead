@@ -1,8 +1,0 @@
-salesforce.CustomTab Relationship__c {
-  fullName = "Relationship__c"
-  customObject = true
-  motif = "Custom1: Heart"
-  _parent = [
-    salesforce.Relationship__c,
-  ]
-}

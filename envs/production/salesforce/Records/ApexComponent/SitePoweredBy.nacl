@@ -1,8 +1,0 @@
-salesforce.ApexComponent SitePoweredBy {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 44
-  description = "Default Lightning Platform site powered by component"
-  label = "SitePoweredBy"
-  fullName = "SitePoweredBy"
-  content = file("salesforce/Records/ApexComponent/SitePoweredBy.component")
-}

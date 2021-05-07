@@ -1,7 +1,0 @@
-salesforce.StaticResource dfsle__LogicBlockComposer {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/svg+xml"
-  fullName = "dfsle__LogicBlockComposer"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__LogicBlockComposer.svg")
-}

@@ -1,8 +1,0 @@
-salesforce.StaticResource dfsle__dsdxicon {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  cacheControl = "Public"
-  contentType = "image/svg+xml"
-  description = "dsdxicon"
-  fullName = "dfsle__dsdxicon"
-  content = file("salesforce/InstalledPackages/dfsle/Records/StaticResource/dfsle__dsdxicon.svg")
-}

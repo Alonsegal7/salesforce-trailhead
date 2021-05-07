@@ -1,6 +1,0 @@
-<aura:documentation>
-	<aura:description>Documentation</aura:description>
-	<aura:example name="BigBrainPicker" ref="BigBrainPicker" label="Label">
-		Generic BigBrainPicker 
-	</aura:example>
-</aura:documentation>

@@ -1,7 +1,0 @@
-salesforce.DocumentFolder HubSpot_Inc__Images {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  accessType = "Hidden"
-  name = "Images"
-  publicFolderAccess = "ReadWrite"
-  fullName = "HubSpot_Inc__Images"
-}

@@ -1,9 +1,0 @@
-salesforce.ProfileSessionSetting null_profileSessionSetting1589186205084 {
-  fullName = "null_profileSessionSetting1589186205084"
-  externalCommunityUserIdentityVerif = false
-  forceLogout = false
-  profile = "onboarding team"
-  sessionPersistence = false
-  sessionTimeout = 0
-  sessionTimeoutWarning = false
-}

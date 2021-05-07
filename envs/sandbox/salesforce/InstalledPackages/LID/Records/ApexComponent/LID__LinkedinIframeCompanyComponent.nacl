@@ -1,8 +1,0 @@
-salesforce.ApexComponent LID__LinkedinIframeCompanyComponent {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 25
-  description = "This component provides the linkedin iframe for the company widget."
-  label = "LinkedinIframeCompanyComponent"
-  fullName = "LID__LinkedinIframeCompanyComponent"
-  content = "(hidden)"
-}

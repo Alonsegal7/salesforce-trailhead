@@ -1,7 +1,0 @@
-salesforce.ApexComponent DOZISF__InlineIframe {
-  attr_xmlns = "http://soap.sforce.com/2006/04/metadata"
-  apiVersion = 45
-  label = "Iframe"
-  fullName = "DOZISF__InlineIframe"
-  content = "(hidden)"
-}

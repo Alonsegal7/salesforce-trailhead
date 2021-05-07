@@ -1,9 +1,0 @@
-salesforce.CustomTab aircall__First_Steps {
-  fullName = "aircall__First_Steps"
-  frameHeight = 666
-  hasSidebar = false
-  label = "First Steps"
-  motif = "Custom44: Hammer"
-  url = "https://aircall.lpages.co/salesforce-managed-package-faq-how-to-configure-my-salesforce-integration/"
-  urlEncodingKey = "UTF-8"
-}

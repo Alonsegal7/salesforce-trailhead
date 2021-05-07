@@ -1,8 +1,0 @@
-salesforce.CustomTab Subscription__c {
-  fullName = "Subscription__c"
-  customObject = true
-  motif = "Custom27: Laptop"
-  _parent = [
-    salesforce.Subscription__c,
-  ]
-}
