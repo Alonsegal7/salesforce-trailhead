@@ -17,7 +17,8 @@ public with sharing class Slack_MessageService {
     
     @InvocableMethod(label='Send to Slack')
     public static void sendToSlack(List<slackRequest> requests) {
-        String webhookURL='https://hooks.slack.com/services/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'; 
+        Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='Slack'][0];
+        String webhookURL='https://hooks.slack.com/services/T024J3LAA/B01SU0QB06R/'+whMTD.Key__c; 
         for(slackRequest r:requests){
             requestDefaultValues(r);
             JSONGenerator gen = JSON.createGenerator(true);
