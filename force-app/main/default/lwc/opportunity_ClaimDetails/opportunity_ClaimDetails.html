@@ -34,7 +34,7 @@
                         <template if:false={isOppClosed}>
                             <p class="slds-text-heading_small">
                                 <!--<lightning-icon icon-name="action:new_opportunity" alternative-text="note" title="note" size="xxx-small"></lightning-icon>-->
-                                Once you close the opportunity the ARR will be:        
+                                Once you close the opportunity the ARR will be:          
                                 <lightning-formatted-number value={expectedArrOnWon} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
                                 <!--<lightning-helptext content={helpText}></lightning-helptext>-->
                             </p><br/>
@@ -62,6 +62,14 @@
                                 <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                     <p class="slds-truncate"><lightning-formatted-number value={coSellARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
                                 </dd>
+                                <template if:true={hasARROverride}>
+                                    <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                        <p class="slds-text-heading_x_small slds-text-color_weak">ARR Override:</p>
+                                    </dt>
+                                    <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                        <p class="slds-truncate"><lightning-formatted-number value={claimARROverride} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
+                                    </dd>
+                                </template>
                             </dl>
                         </template>
                         <template if:true={showManagersSection}>

@@ -17,8 +17,10 @@ import isGBAcc from '@salesforce/schema/Opportunity.Is_Account_Green_Bucket_New_
 import overrideIsGB from '@salesforce/schema/Opportunity.Potential_GB_Opp_Override__c';
 import overrideReason from '@salesforce/schema/Opportunity.Green_Bucket_Override_Reason__c';
 import triggerSlackCelebration from '@salesforce/schema/Opportunity.Trigger_Slack_Celebration__c';
+import isPrimarySOSigned from '@salesforce/schema/Opportunity.Is_Primary_SO_Signed__c';
+import claimARROverride from '@salesforce/schema/Opportunity.Claimed_ARR_Override__c';
 import userId from '@salesforce/user/Id';
-const fields = [claimedARR,addedARR,stage,closedOpp,maClaimedARR,ccARR,coSellARR,productsARR,gbARR,isGBOpp,isGBAcc];
+const fields = [claimedARR,addedARR,stage,closedOpp,maClaimedARR,ccARR,coSellARR,productsARR,gbARR,isGBOpp,isGBAcc,claimARROverride,isPrimarySOSigned];
 
 export default class Opportunity_ClaimDetails extends LightningElement {
     @api recordId;
@@ -44,6 +46,8 @@ export default class Opportunity_ClaimDetails extends LightningElement {
     userDetails;
     isManager;
     isAdmin;
+    isPrimarySOSigned;
+    claimARROverride;
     overrideFields=[overrideIsGB,overrideReason,triggerSlackCelebration];
     
 
@@ -59,11 +63,17 @@ export default class Opportunity_ClaimDetails extends LightningElement {
         this.gbARR=getFieldValue(this.oppDetails, gbARR);
         this.expectedArrOnWon=this.maClaimedARR+this.claimedARR;
         this.isGBOpp=getFieldValue(this.oppDetails, isGBOpp);
-        console.log('Raz Ben Ron this.isGBOpp: '+this.isGBOpp);
-        console.log('Raz Ben Ron this.gbIcon, this.obIcon: '+this.gbIcon+ ' '+this.obIcon);
         this.isGBAcc=getFieldValue(this.oppDetails, isGBAcc);
-        this.soARR=this.productsARR-this.ccARR-this.coSellARR;
+        this.isPrimarySOSigned=getFieldValue(this.oppDetails,isPrimarySOSigned);
+        this.claimARROverride=getFieldValue(this.oppDetails,claimARROverride);
+        console.log('Raz Ben Ron this.claimARROverride: '+this.claimARROverride);
         this.isOppClosed=getFieldValue(this.oppDetails, closedOpp);
+        if(this.isPrimarySOSigned==true){
+            this.soARR=this.productsARR-this.ccARR-this.coSellARR;
+        }else{
+            this.soARR=0;
+        }
+        //this.soARR=this.productsARR-this.ccARR-this.coSellARR;
         if(this.maClaimedARR&&this.maClaimedARR!=0)
             this.helpText=this.maClaimedARR.toString()+' (OB ARR)';
         if(this.claimedARR&&this.claimedARR!=0){
@@ -110,5 +120,12 @@ export default class Opportunity_ClaimDetails extends LightningElement {
     }
     get GBOppVar(){
         return this.isGBOpp==true;
+    }
+    get hasARROverride(){
+        if(this.claimARROverride){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
