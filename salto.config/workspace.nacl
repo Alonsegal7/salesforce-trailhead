@@ -1,5 +1,0 @@
-workspace {
-  uid = "fb3373cc-1b83-481f-97e6-3fa0e4374dd6"
-  name = "monday-salesforse"
-  staleStateThresholdMinutes = undefined
-}
