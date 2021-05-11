@@ -7,7 +7,7 @@ public class IConductServiceTest {
         Billing_Entity__c be = new Billing_Entity__c(Name = 'Test billing entity');
         insert be;
         
-        IConductService.handleBillingEntitySync(be.Id);
+        System.enqueueJob(new IConductService('BE',be.Id));
         Test.stopTest();
     }
     
@@ -18,7 +18,7 @@ public class IConductServiceTest {
         Billing_Entity__c be = new Billing_Entity__c(Name = 'Test billing entity');
         insert be;
         
-        IConductService.handleQuoteSync(be.Id);
+        System.enqueueJob(new IConductService('BE',be.Id));
         Test.stopTest();
     }
 }

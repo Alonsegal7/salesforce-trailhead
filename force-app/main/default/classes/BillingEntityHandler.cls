@@ -18,7 +18,7 @@ public class BillingEntityHandler
         for(Billing_Entity__c newBillingEntity : BEList)
         {
             boolean syncRequestChanged = SyncIConductREQ(newBillingEntity, oldMap.get(newBillingEntity.Id));
-            if (syncRequestChanged) { IConductService.handleBillingEntitySync(newBillingEntity.Id); }
+            if (syncRequestChanged) { System.enqueueJob(new IConductService('BE',newBillingEntity.Id));}
         }
     }
     
