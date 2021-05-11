@@ -11,11 +11,13 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, before update
             ContractService.ConditionOnContractCreation(oldQuote, newQuote);
         }
     }    
-    QuoteTriggerHandler handler = new QuoteTriggerHandler();    
     if (Trigger.isAfter && Trigger.isUpdate) {
         if(Quote_Utils.firstRunAfterUpdate){
             Quote_Utils.firstRunAfterUpdate=false;
             QuoteTriggerHandler.handleQuoteArchived(Trigger.new, Trigger.oldMap);
+        }
+        if (Quote_CallQuoteSync.firstRun) {
+            Quote_CallQuoteSync.Quote_CallQuoteSync(Trigger.new,Trigger.oldMap);
         }
     }   
 }
