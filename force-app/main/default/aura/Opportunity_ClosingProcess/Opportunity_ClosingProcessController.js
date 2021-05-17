@@ -11,6 +11,7 @@
                 var storeResponse = response.getReturnValue();
                 if (storeResponse != null){
                     storeResponse = JSON.parse(storeResponse);
+                    console.log('### storeResponse_v1: ' + storeResponse);
 					if (storeResponse.hasOwnProperty('opportunity')){
                         component.set("v.oppData", storeResponse.opportunity);
                         console.log('### oppData: ' + component.get("v.oppData"));
@@ -34,7 +35,7 @@
                         component.set('v.hasWonSO_SubClaimCC', storeResponse.subscription);
                     }
 
-                    if (storeResponse.hasOwnProperty('internalOppLost_NotExpansion') && storeResponse.internalOppLost_NotExpansion.length > 0) {
+                    /*if (storeResponse.hasOwnProperty('internalOppLost_NotExpansion') && storeResponse.internalOppLost_NotExpansion.length > 0) {
 						var fieldsString = new Array();
 						console.log('### theLeadFields_v1: ' + fieldsString);
 						for (var i = 0; i < storeResponse.internalOppLost_NotExpansion.length; i++){
@@ -74,8 +75,6 @@
 							f.req = storeResponse.internalOppLWon_NotExpansion[i].required;
 							fieldsString.push(JSON.parse(JSON.stringify(f)));
                             console.log('### fieldsString: ' + fieldsString);
-                            f.val = storeResponse.internalOppLWon_NotExpansion[i].name;
-                            console.log('### val: ' + f.val);
 						}
 						component.set('v.internalOppLWon_NotExpansion', fieldsString);
                         console.log('### internalOppLWon_NotExpansion: ' + component.get('v.internalOppLWon_NotExpansion'));
@@ -94,7 +93,7 @@
 						}
 						component.set('v.partnerOppLWonLost_Expansion', fieldsString);
 						console.log('### partnerOppLWonLost_Expansion: ' + component.get('v.partnerOppLWonLost_Expansion'));
-                    }
+                    }*/
                     
                     console.log('### showWhatSigned: ' + component.get('v.showWhatSigned'));
                 }
@@ -120,19 +119,34 @@
         $A.enqueueAction(action);
     },
 
-    saveWonFieldSet : function(component, event, helper){
-        console.log('### in submit');
-		event.preventDefault();
-        var fields = event.getParam();
-		component.find('closedWonFields').submit(fields);
+    handleSuccessFieldSets : function(component, event, helper){
+        console.log('### handleSuccessFieldSets: ');
+        component.set('v.showValidation', false);
     },
 
-    saveWonInfoFieldSet : function(component, event, helper){
-        console.log('### in submit');
-		event.preventDefault();
-        var fields = event.getParam();
-		component.find('closedWonInfoFields').submit(fields);
+    //Start - Save Field Sets to prevent validation
+    handleSubmitValidation_SOWon : function(component, event, helper){
+        console.log('### handleSubmitValidation_SOWon');
+        
+        event.preventDefault();
+        component.find("validationSOFields").submit();
     },
+
+    handleSubmitValidation_ClaimWon : function(component, event, helper){
+        console.log('### handleSubmitValidation_ClaimWon');
+        
+        event.preventDefault();
+        component.find("validationClaimFields").submit();
+    },
+
+    handleSubmitValidation_Lost : function(component, event, helper){
+        console.log('### handleSubmitValidation_Lost');
+        
+        event.preventDefault();
+        component.find("validationLostFields").submit();
+        
+    },
+    //End - Save Field Sets to prevent validation
 
     handleUploadFinished: function (component, event) {
         // Get the list of uploaded files
@@ -159,42 +173,9 @@
 
     saveManual : function(component, event, helper){
         console.log('### saveManual: ');
-        // if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-        //     helper.saveManualFields(component, event, helper);
-        // }
         if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-            component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
-                console.log('### saveResult.state: ' + saveResult.state);
-                var errMsg = "";
-                if (saveResult.state == "SUCCESS" || saveResult.state == "DRAFT") {
-                    component.set('v.showSpinner', false);
-                }
-                
-                else if (saveResult.state === "INCOMPLETE") {
-                    console.log("User is offline, device doesn't support drafts.");
-                    component.set("v.recordSaveError", errMsg);
-                }
-    
-                else if(saveResult.state === "ERROR") {
-                    for (var i = 0; i < saveResult.error.length; i++) {
-                        errMsg += saveResult.error[i].message + "\n";
-                    }
-                    console.log('ERROR---'+errMsg)
-                    component.set("v.recordSaveError", errMsg);
-                }
-                
-                else {
-                    console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-                    component.set("v.recordSaveError", errMsg);
-                }
-                console.log('### recordSaveError: ' + component.get("v.recordSaveError"));
-            }));
+            helper.saveManualFields(component, event, helper);
         }
-        
-        // console.log('### saveManual_v1: ' + event.getParam('value'));
-        // event.preventDefault();
-        // var fields = event.getParam();
-        // component.find('closedFields').submit(fields);
     },
 
     setClaim : function(component, event, helper){
@@ -205,61 +186,16 @@
         // component.find('closedWonFields').submit(fields);
         console.log('### what claim: ' + component.get('v.closedFields.What_Would_You_Like_To_Claim__c'));
         component.set("v.closedFields.What_Would_You_Like_To_Claim__c", claim);
-        component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
-			console.log('### saveResult.state: ' + saveResult.state);
-			var errMsg = "";
-            if (saveResult.state == "SUCCESS" || saveResult.state == "DRAFT") {
-                component.set('v.showSpinner', false);
-                console.log('### succes what_v2: ' + component.get('v.closedFields.What_Would_You_Like_To_Claim__c'));
-            }
-			
-			else if (saveResult.state === "INCOMPLETE") {
-				console.log("User is offline, device doesn't support drafts.");
-				component.set("v.recordSaveError", errMsg);
-			}
-
-			else if(saveResult.state === "ERROR") {
-				for (var i = 0; i < saveResult.error.length; i++) {
-					errMsg += saveResult.error[i].message + "\n";
-				}
-				console.log('ERROR---'+errMsg)
-				component.set("v.recordSaveError", errMsg);
-			}
-			
-			else {
-				console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-				component.set("v.recordSaveError", errMsg);
-			}
-			console.log('### recordSaveError: ' + component.get("v.recordSaveError"));
-		}));
-        // if(claim == 'Sales Order ARR + CC Payments' || claim == 'Sales Order ARR'){
-        //     var innerValueVar = 'ManualSignature';
-        //     var innerValuePath = 'Manual Signature';
-        //     component.set('v.innerPathValue', innerValueVar);
-        //     if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-        //         helper.saveManualFields(component, event, helper);
-        //         helper.setInnerPicklistPath(component, event, helper, innerValuePath);
-        //     }
-        // }
-
-        // else if(claim == 'CC Payments'){
-        //     var innerValueVar = 'CCClaim';
-        //     var innerValuePath = 'CC Claim';
-        //     component.set('v.innerPathValue', innerValueVar);
-        //     if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-        //         helper.saveManualFields(component, event, helper);
-        //         helper.setInnerPicklistPath(component, event, helper, innerValuePath);
-        //     }
-        // }
+        if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+            helper.saveManualFields(component, event, helper);
+        }
     },
 
     handleStatusChange_OpportunityCloseSummary : function (component, event, helper) {
         if(event.getParam("status") === "FINISHED_SCREEN" || event.getParam("status") === "FINISHED" ){
             if(component.get('v.closedFields.StageName') == 'Closed Won'){
                 console.log('### forceData won_v1: ' + component.get("v.closedFields.StageName"));
-                console.log('### forceData won_v2: ' + component.get("v.oppData.StageName"));
                 component.set('v.confetti', true);
-                console.log('### show toast');
                 component.find('notifLib').showToast({
                     "variant": "success",
                     "title": "Stage changed succesfully."                      
@@ -268,7 +204,6 @@
 
             else if(component.get('v.closedFields.StageName') == 'Closed Lost'){
                 console.log('### forceData lost_v1: ' + component.get("v.closedFields.StageName"));
-                console.log('### forceData lost_v2: ' + component.get("v.oppData.StageName"));
                 component.find('notifLib').showToast({
                     "variant": "success",
                     "title": "Stage changed succesfully."                      
@@ -304,8 +239,7 @@
     closeModal : function(component, event, helper) {
         console.log('### v.innerPathValue: ' + component.get('v.innerPathValue'));
         component.set("v.isModalOpen", false);
-        var innerValue = 'Closed Modal';
-        helper.setInnerPicklistPath(component, event, helper, innerValue);
+        // window.location.reload()
     },
 
     handleSelect : function (component, event, helper) {
@@ -322,9 +256,97 @@
             component.set('v.isClosedLost', true);
             component.set('v.innerPathValue', 'LostInfo');
             component.set('v.lostStage', 'Closed Lost');
+
+            var fieldSetReferance;
+            var isRetreiveFieldSet;
+            if(component.get('v.oppData.StageName') != 'Qualified'){
+                if(component.get('v.oppData.Type') != 'Expansion'){
+                    if(component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity' && component.get('v.oppData.Is_Potential_GB_Opportunity__c')){
+                        fieldSetReferance = "InternalOpportunity_Lost_NotExpansion";
+                        isRetreiveFieldSet = true;
+                        console.log('@@@ fieldSetReferance: ');
+                    }
+    
+                    else if(component.get('v.oppData.RecordType.DeveloperName') == 'Partner_Opportunity'){
+                        fieldSetReferance = "PartnerOpportunity_WonLost_NotExpansion";
+                        isRetreiveFieldSet = true;
+                        console.log('@@@ fieldSetReferance_v1: ');
+                    }
+                }
+
+                if(isRetreiveFieldSet == true){
+                    let action1 = component.get("c.getFieldsFromFieldSet");
+                    action1.setParams({
+                        objectName: "Opportunity",
+                        fieldSetName: fieldSetReferance
+                    });
+                    action1.setCallback(this, function(response){
+                        let state = response.getState();
+                        if(state==="SUCCESS"){
+                            let fieldsStr = response.getReturnValue();
+                            console.log("fields => ",fieldsStr);
+                            let fields = JSON.parse(fieldsStr);
+                            component.set("v.fields", fields);
+                        } else {
+                            alert("error");
+                        }
+                    });
+                    $A.enqueueAction(action1);
+                }
+            }
+
+            else{
+                component.set('v.showValidation', false);
+            }
         }
         
         else if(stepName === 'Closed Won'){
+            var fieldSetReferance;
+            var isRetreiveFieldSet;
+            if(component.get('v.oppData.Type') != 'Expansion'){
+                if(component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity' && component.get('v.oppData.Is_Potential_GB_Opportunity__c')){
+                    fieldSetReferance = "InternalOpportunity_Won_NotExpansion";
+                    isRetreiveFieldSet = true;
+                    console.log('### fieldSetReferance: ');
+                }
+
+                else if(component.get('v.oppData.RecordType.DeveloperName') == 'Partner_Opportunity'){
+                    fieldSetReferance = "PartnerOpportunity_WonLost_NotExpansion";
+                    isRetreiveFieldSet = true;
+                    console.log('### fieldSetReferance_v1: ');
+                }
+            }
+
+            else if(component.get('v.oppData.Type') == 'Expansion' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'){
+                fieldSetReferance = "InternalOpportunity_Won_Expansion";
+                isRetreiveFieldSet = true;
+                console.log('### fieldSetReferance_v2: ');
+            }
+
+            if(isRetreiveFieldSet == true){
+                let action1 = component.get("c.getFieldsFromFieldSet");
+                action1.setParams({
+                    objectName: "Opportunity",
+                    fieldSetName: fieldSetReferance
+                });
+                action1.setCallback(this, function(response){
+                    let state = response.getState();
+                    if(state==="SUCCESS"){
+                        let fieldsStr = response.getReturnValue();
+                        console.log("fields => ",fieldsStr);
+                        let fields = JSON.parse(fieldsStr);
+                        component.set("v.fields", fields);
+                    } else {
+                        alert("error");
+                    }
+                });
+                $A.enqueueAction(action1);
+            }
+
+            else{
+                component.set('v.showValidation', false);
+            }
+
             component.set('v.isModalOpen', true);
             component.set('v.isClosedWon', true);
             
@@ -399,7 +421,6 @@
 
                         else if (saveResult.state === "INCOMPLETE") {
                             console.log("User is offline, device doesn't support drafts.");
-                            // component.set("v.recordSaveError", errMsg);
                         }
 
                         else if(saveResult.state === "ERROR") {
@@ -407,26 +428,26 @@
                                 errMsg += saveResult.error[i].message + "\n";
                             }
                             console.log('ERROR---'+errMsg)
-                            component.set("v.recordSaveError", errMsg);
+                            component.set('v.recordSaveError', errMsg);
+                            if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+                                console.log('### in notice');
+                                component.find('notifLib').showNotice({
+                                    "variant": "error",
+                                    "header": "Problem saving record:",
+                                    "message": errMsg,
+                                });
+                            }
                         }
                         
                         else {
                             console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-                            // component.set("v.recordSaveError", errMsg);
-                        }
-
-                        if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
-                            console.log('### in notice');
-                            component.find('notifLib').showNotice({
-                                "variant": "error",
-                                "header": "Problem saving record:",
-                                "message": errMsg,
-                            });
                         }
                     }));
                 }
                 component.set('v.innerPathValue', 'continueToSummary');
                 console.log('### innerPathValue_v3:' + component.get('v.innerPathValue'));
+                var innerValue = "Done";
+                helper.setInnerPicklistPath(component, event, helper, innerValue);
             }
 
             else{
@@ -448,9 +469,12 @@
 
     finishModal : function (component, event, helper){
         console.log('### finishModal');
-        component.set('v.confetti', true);
+        if(component.get('v.closedFields.StageName') == 'Closed Won'){
+            component.set('v.confetti', true);
+        }
         component.set('v.isModalOpen', false);
         helper.setStageUpdateToast(component, event, helper);
+        // window.location.reload()
     },
 
     submitDetails : function(component, event, helper) {
@@ -466,65 +490,105 @@
 
         if(component.get('v.isClosedWon')){
             if(component.get('v.innerPathValue') == 'Claim'){
-                console.log('### in claim: ' + component.get('v.closedFields.What_Would_You_Like_To_Claim__c'));
-                if(component.get('v.closedFields.What_Would_You_Like_To_Claim__c') == 'CC Payments'){
-                    component.set('v.innerPathValue', 'CCClaim');
+                console.log('### tal: ' + component.get('v.innerPathValue'));
+                // var claim_ClosedWon = component.find("newOpportunityClaimField");
+                // var vaildation_ClosedWon = 'Please choose what would you like to claim.';
+                // var vaildationBoolean_ClosedWon = false;
 
-                    if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                        helper.getCCClaim(component, event, helper);
-                    }
-                }
+                // claim_ClosedWon.forEach(function (field) {
+                //     if($A.util.isEmpty(field.get("v.value"))){
+                //         vaildationBoolean_ClosedWon = true;
+                //     }
+                // });
+    
+                // if(vaildationBoolean_ClosedWon == true) { //if NOT all the fields are populated
+                //     console.log('### tal_v2: ' + vaildation_ClosedWon);
+                //     component.find('claimMessage').setError(vaildation_ClosedWon);
+                // }
 
-                else{
-                    component.set('v.innerPathValue', 'ManualSignature');
-                    if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                        helper.setInnerPicklistPath(component, event, helper, 'Manual Signature');
-                    }
-                }
-            }
+                // else{
+                    console.log('### tal_v3: ' + component.get('v.closedFields.What_Would_You_Like_To_Claim__c'));
+                    if(component.get('v.closedFields.What_Would_You_Like_To_Claim__c') == 'CC Payments'){
+                        console.log('### tal_v4: ' + component.get('v.closedFields.What_Would_You_Like_To_Claim__c'));
+                        component.set('v.innerPathValue', 'CCClaim');
+                        console.log('### tal_v5: ' + component.get('v.innerPathValue'));
 
-            else if(component.get('v.innerPathValue') == 'ManualSignature'){ // manualy signed
-                console.log('### oppData.Manual_Signature_Reason__c: ' + component.get('v.oppData.Manual_Signature_Reason__c'));
-                console.log('### closedFields.Manual_Signature_Reason__c: ' + component.get('v.closedFields.Manual_Signature_Reason__c'));
-                console.log('### isPrioritySO: ' + component.get('v.isPrioritySO'));
-                
-                if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                    component.set('v.closedFields.Is_SO_Signed__c', true);
-                    console.log('### Is_SO_Signed__c: ' + component.get('v.closedFields.Is_SO_Signed__c'));
-                    helper.saveManualFields(component, event, helper);
-                }
-                if(component.get('v.recordSaveError') == undefined || component.get('v.recordSaveError') == ""){
-                    if(component.get('v.isPrioritySO') == 'Priority SO' || component.get('v.closedFields.Manual_Signature_Reason__c') == 'Priority SO'){
-                        console.log('### in BBPicker');
-                        component.set('v.innerPathValue', 'BBPickers');
-                        
-                        var innerValue = "BigBrain Pickers";
                         if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+                            var innerValue = "CC Claim";
                             helper.setInnerPicklistPath(component, event, helper, innerValue);
                         }
                     }
-    
+
                     else{
-                        component.set('v.showCCClaim', true);
-                        component.set('v.innerPathValue', 'CCClaim');
+                        component.set('v.innerPathValue', 'ManualSignature');
                         if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                            helper.getCCClaim(component, event, helper);
+                            helper.setInnerPicklistPath(component, event, helper, 'Manual Signature');
+                        }
+                    }
+                // }
+            }
+
+            else if(component.get('v.innerPathValue') == 'ManualSignature'){ // manualy signed
+                var fields_ClosedWon = component.find("newOpportunityField");
+                var vaildation_ClosedWon = 'Please fill in all the required fields.';
+                var vaildationBoolean_ClosedWon = false;
+
+                fields_ClosedWon.forEach(function (field) {
+                    if($A.util.isEmpty(field.get("v.value"))){
+                        vaildationBoolean_ClosedWon = true;
+                    }
+                });
+    
+                if(vaildationBoolean_ClosedWon == true) { //if NOT all the fields are populated
+                    component.find('oppMessage').setError(vaildation_ClosedWon);
+                }
+
+                else{
+                    console.log('### closedFields.Manual_Signature_Reason__c: ' + component.get('v.closedFields.Manual_Signature_Reason__c'));
+                    console.log('### isPrioritySO: ' + component.get('v.isPrioritySO'));
+                    
+                    if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+                        component.set('v.closedFields.Is_SO_Signed__c', true);
+                        console.log('### Is_SO_Signed__c: ' + component.get('v.closedFields.Is_SO_Signed__c'));
+                        helper.saveManualFields(component, event, helper);
+                    }
+                    if(component.get('v.recordSaveError') == undefined || component.get('v.recordSaveError') == ""){
+                        if(component.get('v.isPrioritySO') == 'Priority SO' || component.get('v.closedFields.Manual_Signature_Reason__c') == 'Priority SO'){
+                            console.log('### in BBPicker');
+                            component.set('v.innerPathValue', 'BBPickers');
+                            
+                            var innerValue = "BigBrain Pickers";
+                            if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+                                helper.setInnerPicklistPath(component, event, helper, innerValue);
+                            }
+                        }
+        
+                        else{
+                            console.log('### else: ');
+                            component.set('v.innerPathValue', 'CCClaim');
+                            console.log('### else innerPathValue: ' + component.get('v.innerPathValue'));
+                            if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
+                                console.log('### else Close_Process_Sys_Admin__c: ' + component.get('v.oppData.Close_Process_Sys_Admin__c'));
+                                var innerValue = "CC Claim";
+                                helper.setInnerPicklistPath(component, event, helper, innerValue);
+                            }
                         }
                     }
                 }
             }
 
             else if(component.get('v.innerPathValue') == 'BBPickers'){ // manualy signed
-                component.set('v.showCCClaim', true);
                 component.set('v.innerPathValue', 'CCClaim');
                 if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                    helper.getCCClaim(component, event, helper);
+                    var innerValue = "CC Claim";
+                    helper.setInnerPicklistPath(component, event, helper, innerValue);
                 }
             }
 
             else if(component.get('v.innerPathValue') == 'CCClaim'){ // manualy signed
                 if(component.get('v.showHandover') == true){
                     component.set('v.innerPathValue', 'Handover');
+
                     helper.getHandover(component, event, helper);
                 }
 
@@ -541,13 +605,11 @@
                                 var errMsg = "";
                                 if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
                                     component.set('v.showSpinner', false);
-                                    component.set("v.recordSaveError", errMsg);
                                     helper.updateProbability(component, event, helper);
                                 }
 
                                 else if (saveResult.state === "INCOMPLETE") {
                                     console.log("User is offline, device doesn't support drafts.");
-                                    // component.set("v.recordSaveError", errMsg);
                                 }
 
                                 else if(saveResult.state === "ERROR") {
@@ -556,29 +618,33 @@
                                     }
                                     console.log('ERROR---'+errMsg)
                                     component.set("v.recordSaveError", errMsg);
+                                    
+                                    if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+                                        console.log('### in notice');
+                                        component.find('notifLib').showNotice({
+                                            "variant": "error",
+                                            "header": "Problem saving record:",
+                                            "message": errMsg,
+                                        });
+                                    }
                                 }
 
                                 else {
                                     console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-                                    // component.set("v.recordSaveError", errMsg);
-                                }
-
-                                if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
-                                    console.log('### in notice');
-                                    component.find('notifLib').showNotice({
-                                        "variant": "error",
-                                        "header": "Problem saving record:",
-                                        "message": errMsg,
-                                    });
                                 }
                             }));
                         }
                         component.set('v.innerPathValue', 'continueToSummary');
                         console.log('### innerPathValue_v3:' + component.get('v.innerPathValue'));
+                        var innerValue = "Done";
+                        helper.setInnerPicklistPath(component, event, helper, innerValue);
                     }
 
                     else{
                         console.log('### in else_v3:' + component.get('v.oppData.Green_Bucket_ARR__c'));
+                        component.set('v.showSpinner', true);
+                        console.log('### showSpinner:' + component.get('v.showSpinner'));
+                        console.log('### innerPathValue_v3:' + component.get('v.innerPathValue'));
                         if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
                             component.set('v.closedFields.Close_Process_Path__c', 'Done');
                             component.set('v.closedFields.StageName', 'Closed Won');
@@ -593,15 +659,17 @@
             else if(component.get('v.innerPathValue') == 'continueToSummary'){
                 component.set('v.innerPathValue', 'OppSummary');
                 console.log('### oppSummary_v3:' + component.get('v.innerPathValue'));
+                var innerValue = "Done";
+                helper.setInnerPicklistPath(component, event, helper, innerValue);
                 helper.getOpportunitySummary(component, event, helper);
             }
 
             else if(component.get('v.innerPathValue') == 'SOInfo'){ // manualy signed
                 component.set('v.closedFields.StageName', 'Closed Won');
-                component.set('v.showCCClaim', true);
                 component.set('v.innerPathValue', 'CCClaim');
                 if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                    helper.getCCClaim(component, event, helper);
+                    var innerValue = "CC Claim";
+                    helper.setInnerPicklistPath(component, event, helper, innerValue);
                 }
             }
         }
@@ -656,7 +724,6 @@
             }
 
             else{
-                // component.find("closedLostFields").submit();
                 console.log('### innerPathValue lost: ' + component.get('v.innerPathValue'));
                 if(component.get('v.innerPathValue') != 'continueToSummary'){
                     if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
@@ -668,11 +735,10 @@
                                 if(component.get('v.oppData.Green_Bucket_ARR__c') >= 10000){
                                     component.set('v.showSpinner', false);
                                     console.log('### 111111_v12');
-                                    // component.set("v.oppData.StageName", 'Closed Lost');
                                     helper.updateProbability(component, event, helper);
                                     component.set('v.innerPathValue', 'continueToSummary');
-                                    // component.set('v.innerPathValue', 'OppSummary');
-                                    // helper.getOpportunitySummary(component, event, helper);
+                                    var innerValue = "Done";
+                                    helper.setInnerPicklistPath(component, event, helper, innerValue);
                                 }
                                 
                                 else{

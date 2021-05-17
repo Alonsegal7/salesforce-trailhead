@@ -19,7 +19,7 @@
     <aura:attribute name="isModalOpen" type="Boolean" default="false"/>
     <aura:attribute name="confetti" type="Boolean" default="false"/>
     <aura:attribute name="closedFields" type="Object"/>
-    <aura:attribute name="showCCClaim" type="Boolean" default="false"/>
+    <!-- <aura:attribute name="showCCClaim" type="Boolean" default="false"/> -->
     <aura:attribute name="variant" type="String" default="non-linear"/>
     <aura:attribute name="hideUpdateButton" type="Boolean" default="false"/>
     <aura:attribute name="hideUpdateButton_ClosedProcess" type="Boolean" default="false"/>
@@ -29,12 +29,14 @@
     <aura:attribute name="record" type="Object"/>
     <aura:attribute name="lostStage" type="String"/>
     <aura:attribute name="recordSaveError" type="String"/>
+    <aura:attribute name="showValidation" type="Boolean" default="true"/>
 
     <!--Field Sets attributes-->
     <aura:attribute name="internalOppLost_NotExpansion" type="List"/>
     <aura:attribute name="internalOppLWon_Expansion" type="List"/>
     <aura:attribute name="internalOppLWon_NotExpansion" type="List"/>
     <aura:attribute name="partnerOppLWonLost_Expansion" type="List"/>
+    <aura:attribute name="fields" type="List" default="[]" />
     
     <lightning:quickActionAPI aura:id="quickActionAPI" />
     <lightning:notificationsLibrary aura:id="notifLib"/>
@@ -86,47 +88,44 @@
                         </lightning:progressIndicator>
                         <aura:if isTrue="{!v.innerPathValue == 'LostInfo'}">
                             <lightning:card>
-                                <lightning:recordEditForm 
+                                <aura:if isTrue="{!!v.showValidation}">
+                                    <lightning:recordEditForm 
                                         recordId="{!v.recordId}"
                                         objectApiName="Opportunity"
                                         aura:id="closedLostFields">
-                                    <lightning:messages aura:id="lostMessage"/>
-                    
-                                    <!-- <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" value="{!v.closedFields.StageName}" required="true" value="{!v.lostStage}"/> -->
-                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" required="true" value="{!v.lostStage}"/>
-                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Lost_Reason__c" value="{!v.closedFields.Lost_Reason__c}" required="true"/>
-                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_competitor__c" value="{!v.closedFields.Which_competitor__c}" required="true"/>
-                                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_features_were_missing__c" value="{!v.closedFields.Which_features_were_missing__c}" required="true"/>
-                                    
-                                    <aura:if isTrue="{!v.oppData.Type != 'Expansion'}">
-                                        <aura:if isTrue="{!v.oppData.RecordType.DeveloperName == 'Internal_Opportunity'}">
-                                            <aura:if isTrue="{!v.oppData.Is_Potential_GB_Opportunity__c}">
-                                                <ui:message title="Key Information:" severity="info">
-                                                    Please make sure you populate all the following fields before closing the Opp.<br/>
-                                                </ui:message>
-                                                <aura:iteration items="{!v.internalOppLost_NotExpansion}" var="field" indexVar="i">
-                                                    <div class="slds-grid slds-gutters">
-                                                        <div class="slds-col slds-size_1-of-1">
-                                                            <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" onchange="{!c.saveLostFieldSet}"/>
-                                                        </div>
-                                                    </div>
-                                                </aura:iteration>
-                                            </aura:if>
-                                        </aura:if>
-                                        <aura:if isTrue="{!v.oppData.RecordType.DeveloperName == 'Partner_Opportunity'}">
-                                            <ui:message title="Key Information:" severity="info">
-                                                Please make sure you populate all the following fields before closing the Opp.<br/>
-                                            </ui:message>
-                                            <aura:iteration items="{!v.partnerOppLWonLost_Expansion}" var="field" indexVar="i">
-                                                <div class="slds-grid slds-gutters">
-                                                    <div class="slds-col slds-size_1-of-1">
-                                                        <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" onchange="{!c.saveLostFieldSet}"/>
-                                                    </div>
+                                        <lightning:messages aura:id="lostMessage"/>
+                        
+                                        <!-- <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" value="{!v.closedFields.StageName}" required="true" value="{!v.lostStage}"/> -->
+                                        <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" required="true" value="{!v.lostStage}"/>
+                                        <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Lost_Reason__c" value="{!v.closedFields.Lost_Reason__c}" required="true"/>
+                                        <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_competitor__c" value="{!v.closedFields.Which_competitor__c}" required="true"/>
+                                        <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_features_were_missing__c" value="{!v.closedFields.Which_features_were_missing__c}" required="true"/>
+                                    </lightning:recordEditForm>
+                                </aura:if>
+                                <aura:if isTrue="{!v.showValidation}">
+                                    <lightning:recordEditForm
+                                        onsubmit="{!handleSubmitValidation_Lost}"
+                                        onsuccess="{!c.handleSuccessFieldSets}"
+                                        recordId="{!v.recordId}"
+                                        objectApiName="Opportunity"
+                                        aura:id="validationLostFields">
+                                        <lightning:messages/>
+
+                                        <ui:message title="Key Information:" severity="info">
+                                            Please make sure you populate all the following fields before closing the Opp.<br/>
+                                        </ui:message>
+                                        <aura:iteration items="{!v.fields}" var="field" indexVar="i">
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_1-of-1">
+                                                    <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}"/>
                                                 </div>
-                                            </aura:iteration> 
-                                        </aura:if>
-                                    </aura:if>
-                                </lightning:recordEditForm>
+                                            </div>
+                                        </aura:iteration>
+                                        <div class="slds-align_absolute-center">
+                                            <lightning:button variant="brand" label="Submit" type="submit"/>
+                                        </div>
+                                    </lightning:recordEditForm>
+                                </aura:if>
                             </lightning:card>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'OppSummary'}">
@@ -369,113 +368,83 @@
                         
                         <aura:if isTrue="{!and(v.oppData.Is_Primary_SO_Signed__c, v.innerPathValue == 'SOInfo')}">
                             <lightning:card>
-                                <lightning:recordEditForm 
+                                <aura:if isTrue="{!!v.showValidation}">
+                                    <lightning:recordEditForm 
                                         recordId="{!v.recordId}"
                                         objectApiName="Opportunity">
                                     <lightning:messages/>
                                     <lightning:outputField iconName="quotes" fieldName="SyncedQuoteId"/>
-                                </lightning:recordEditForm>
-                                
-                                <lightning:input label="DH Tier" value="{!v.oppData.SyncedQuote.DH_Tier__c}" disabled="true"/>
-                                <lightning:input label="Total Seats" value="{!v.oppData.SyncedQuote.Total_Seats__c}" disabled="true"/>
-                                <lightning:input label="DH Period" value="{!v.oppData.SyncedQuote.DH_Period__c}" disabled="true"/>
-                                <br/> 
-                                <lightning:recordEditForm
-                                        recordId="{!v.recordId}"
-                                        objectApiName="Opportunity"
-                                        aura:id="closedWonInfoFields">
-                                    <lightning:messages/>
+                                    </lightning:recordEditForm>
                                     
-                                    <aura:if isTrue="{!v.oppData.Type != 'Expansion'}">
-                                        <aura:if isTrue="{!v.oppData.RecordType.DeveloperName == 'Internal_Opportunity'}">
-                                            <aura:if isTrue="{!v.oppData.Is_Potential_GB_Opportunity__c}">
-                                                <ui:message title="Key Information:" severity="info">
-                                                    Please make sure you populate all the following fields before closing the Opp.<br/>
-                                                </ui:message>
-                                                <aura:iteration items="{!v.internalOppLWon_NotExpansion}" var="field" indexVar="i">
-                                                    <div class="slds-grid slds-gutters">
-                                                        <div class="slds-col slds-size_1-of-1">
-                                                            <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" onchange="{!c.saveWonInfoFieldSet}"/>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </aura:iteration>
-                                            </aura:if>
-                                        </aura:if>
-                                        <aura:if isTrue="{!v.oppData.RecordType.DeveloperName == 'Partner_Opportunity'}">
-                                            <ui:message title="Key Information:" severity="info">
-                                                Please make sure you populate all the following fields before closing the Opp.<br/>
-                                            </ui:message>
-                                            <aura:iteration items="{!v.partnerOppLWonLost_Expansion}" var="field" indexVar="i">
-                                                <div class="slds-grid slds-gutters">
-                                                    <div class="slds-col slds-size_1-of-1">
-                                                        <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" onchange="{!c.saveWonInfoFieldSet}" />
-                                                    </div>
-                                                </div>
-                                            </aura:iteration>
-                                        </aura:if>
-                                    </aura:if>
-                                    <aura:if isTrue="{!and(v.oppData.Type == 'Expansion', v.oppData.RecordType.DeveloperName == 'Internal_Opportunity')}">
-                                        <aura:iteration items="{!v.internalOppLWon_Expansion}" var="field" indexVar="i">
+                                    <lightning:input label="DH Tier" value="{!v.oppData.SyncedQuote.DH_Tier__c}" disabled="true"/>
+                                    <lightning:input label="Total Seats" value="{!v.oppData.SyncedQuote.Total_Seats__c}" disabled="true"/>
+                                    <lightning:input label="DH Period" value="{!v.oppData.SyncedQuote.DH_Period__c}" disabled="true"/>
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!v.showValidation}">
+                                    <lightning:recordEditForm
+                                        onsubmit="{!c.handleSubmitValidation_SOWon}"
+                                        onsuccess="{!c.handleSuccessFieldSets}"
+                                        recordId="{!v.recordId}"
+                                        aura:id="validationSOFields"
+                                        objectApiName="Opportunity">
+                                        <lightning:messages/>
+                                        <ui:message title="Key Information:" severity="info">
+                                            Please make sure you populate all the following fields before closing the Opp.<br/>
+                                        </ui:message>
+                                        <aura:iteration items="{!v.fields}" var="field" indexVar="i">
                                             <div class="slds-grid slds-gutters">
                                                 <div class="slds-col slds-size_1-of-1">
-                                                    <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" onchange="{!c.saveWonInfoFieldSet}"/>
+                                                    <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}"/>
+                                                    
                                                 </div>
                                             </div>
                                         </aura:iteration>
-                                    </aura:if>
-                                </lightning:recordEditForm>
+                                        <div class="slds-align_absolute-center">
+                                            <lightning:button variant="brand" label="Submit" type="submit"/>
+                                        </div>
+                                    </lightning:recordEditForm>
+                                </aura:if>
+                                
                             </lightning:card>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'Claim'}">
                             <lightning:card>
-                                <lightning:recordEditForm
+                                <aura:if isTrue="{!!v.showValidation}">
+                                    <lightning:recordEditForm
+                                    recordId="{!v.recordId}"
+                                    objectApiName="Opportunity"
+                                    aura:id="closedWonFields">
+                                    <lightning:messages aura:id="claimMessage"/>
+                    
+                                    <lightning:inputField aura:id="newOpportunityClaimField" fieldName="What_Would_You_Like_To_Claim__c" value="{!v.closedFields.What_Would_You_Like_To_Claim__c}" onchange="{!c.setClaim}" required="true"/>
+                                </lightning:recordEditForm>
+                                </aura:if>
+                                <aura:if isTrue="{!v.showValidation}">
+                                    <lightning:recordEditForm
+                                        onsubmit="{!c.handleSubmitValidation_ClaimWon}"
+                                        onsuccess="{!c.handleSuccessFieldSets}"
                                         recordId="{!v.recordId}"
                                         objectApiName="Opportunity"
-                                        aura:id="closedWonFields">
-                                    <lightning:messages/>
-                    
-                                    <lightning:inputField aura:id="newOpportunityField" fieldName="What_Would_You_Like_To_Claim__c" value="{!v.closedFields.What_Would_You_Like_To_Claim__c}" onchange="{!c.setClaim}" required="true"/>
-                                    
-                                    <aura:if isTrue="{!v.oppData.Type != 'Expansion'}">
-                                        <aura:if isTrue="{!v.oppData.RecordType.DeveloperName == 'Internal_Opportunity'}">
-                                            <aura:if isTrue="{!v.oppData.Is_Potential_GB_Opportunity__c}">
-                                                <ui:message title="Key Information:" severity="info">
-                                                    Please make sure you populate all the following fields before closing the Opp.<br/>
-                                                </ui:message>
-                                                <aura:iteration items="{!v.internalOppLWon_NotExpansion}" var="field" indexVar="i">
-                                                    <div class="slds-grid slds-gutters">
-                                                        <div class="slds-col slds-size_1-of-1">
-                                                            <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" onchange="{!c.saveWonFieldSet}"/>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </aura:iteration>
-                                            </aura:if>
-                                        </aura:if>
-                                        <aura:if isTrue="{!v.oppData.RecordType.DeveloperName == 'Partner_Opportunity'}">
-                                            <ui:message title="Key Information:" severity="info">
-                                                Please make sure you populate all the following fields before closing the Opp.<br/>
-                                            </ui:message>
-                                            <aura:iteration items="{!v.partnerOppLWonLost_Expansion}" var="field" indexVar="i">
-                                                <div class="slds-grid slds-gutters">
-                                                    <div class="slds-col slds-size_1-of-1">
-                                                        <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" onchange="{!c.saveWonFieldSet}" />
-                                                    </div>
-                                                </div>
-                                            </aura:iteration>
-                                        </aura:if>
-                                    </aura:if>
-                                    <aura:if isTrue="{!and(v.oppData.Type == 'Expansion', v.oppData.RecordType.DeveloperName == 'Internal_Opportunity')}">
-                                        <aura:iteration items="{!v.internalOppLWon_Expansion}" var="field" indexVar="i">
+                                        aura:id="validationClaimFields">
+                                        <lightning:messages/>
+                                        
+                                        <ui:message title="Key Information:" severity="info">
+                                            Please make sure you populate all the following fields before closing the Opp.<br/>
+                                        </ui:message>
+                                        <aura:iteration items="{!v.fields}" var="field" indexVar="i">
                                             <div class="slds-grid slds-gutters">
                                                 <div class="slds-col slds-size_1-of-1">
-                                                    <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" onchange="{!c.saveWonFieldSet}"/>
+                                                    <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}"/>
+                                                    
                                                 </div>
                                             </div>
                                         </aura:iteration>
-                                    </aura:if>
-                                </lightning:recordEditForm>
+                                        <div class="slds-align_absolute-center">
+                                            <lightning:button variant="brand" label="Submit" type="submit"/>
+                                        </div>
+                                    </lightning:recordEditForm>
+                                </aura:if>
                             </lightning:card>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'ManualSignature'}">
@@ -516,10 +485,15 @@
                                     sandbox="allow-same-origin allow-scripts allow-forms"/>
                             </lightning:card>
                         </aura:if>
-                        <aura:if isTrue="{!or(v.innerPathValue == 'CCClaim', v.closedFields.Close_Process_Path__c == 'CC Claim')}">
-                            <lightning:card>
-                                <c:subscriptionPickersComponent recordId="{!v.recordId}"/>
-                            </lightning:card>
+                        <aura:if isTrue="{!v.innerPathValue == 'CCClaim'}"><!--, v.closedFields.Close_Process_Path__c == 'CC Claim')-->
+                            <aura:if isTrue="{!v.showSpinner}">
+                                <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" class="slds-spinner_container"/>
+                            </aura:if>
+                            <aura:if isTrue="{!!v.showSpinner}">
+                                <lightning:card>
+                                    <c:subscriptionPickersComponent recordId="{!v.recordId}"/>
+                                </lightning:card>
+                            </aura:if>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'continueToSummary'}">
                             <aura:if isTrue="{!v.showSpinner}">
@@ -546,7 +520,7 @@
                         </aura:if>
                     </aura:if>
                 </div>
-                <aura:if isTrue="{!v.innerPathValue != 'continueToSummary'}">
+                <aura:if isTrue="{!and(v.innerPathValue != 'continueToSummary', !v.showValidation)}">
                     <aura:if isTrue="{!and(v.innerPathValue != 'OppSummary', v.innerPathValue != 'Handover')}">
                         <footer class="slds-modal__footer">
                             <lightning:button variant="brand"

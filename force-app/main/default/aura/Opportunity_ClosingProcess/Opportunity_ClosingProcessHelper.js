@@ -1,22 +1,22 @@
 ({
-	getCCClaim : function(component, event, helper){
-		var oppId = component.get('v.recordId');
-		component.set('v.showCCClaim', true);
-		component.set('v.innerPathValue', 'CCClaim');
-		var action = component.get("c.saveInnerPicklistPath");
-		action.setParams({ 
-			recordId : oppId,
-			innerPicklistPath : "CC Claim"
+	// getCCClaim : function(component, event, helper){
+	// 	var oppId = component.get('v.recordId');
+	// 	// component.set('v.showCCClaim', true);
+	// 	component.set('v.innerPathValue', 'CCClaim');
+	// 	var action = component.get("c.saveInnerPicklistPath");
+	// 	action.setParams({ 
+	// 		recordId : oppId,
+	// 		innerPicklistPath : "CC Claim"
 
-		});
-		action.setCallback(this, function(response) {
-			var state = response.getState();
-			if (state === "SUCCESS") {
-				console.log('### state');
-			}
-		});
-		$A.enqueueAction(action);
-	},
+	// 	});
+	// 	action.setCallback(this, function(response) {
+	// 		var state = response.getState();
+	// 		if (state === "SUCCESS") {
+	// 			console.log('### state');
+	// 		}
+	// 	});
+	// 	$A.enqueueAction(action);
+	// },
 
 	getHandover : function(component, event, helper){
 		console.log('### handover helper');
@@ -98,7 +98,7 @@
 	},
 
 	setInnerPicklistPath : function(component, event, helper, innerValue){
-		console.log('### in helper: ' + innerValue);
+		console.log('### tal_v6: ' + innerValue);
 		var oppId = component.get('v.recordId');
 		var action = component.get("c.saveInnerPicklistPath");
 		action.setParams({ 
@@ -109,7 +109,28 @@
 		action.setCallback(this, function(response) {
 			var state = response.getState();
 			if (state === "SUCCESS") {
-				console.log('### state');
+				console.log('### tal_v7');
+			}
+
+			else if (saveResult.state === "INCOMPLETE") {
+				console.log("### Incomplete");
+			}
+
+			else if(saveResult.state === "ERROR") {
+				for (var i = 0; i < saveResult.error.length; i++) {
+					errMsg += saveResult.error[i].message + "\n";
+				}
+				console.log('ERROR---'+errMsg)
+				component.set("v.recordSaveError", errMsg);
+				
+				if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+					console.log('### in notice');
+					component.find('notifLib').showNotice({
+						"variant": "error",
+						"header": "Problem saving record:",
+						"message": errMsg,
+					});
+				}
 			}
 		});
 		$A.enqueueAction(action);
@@ -144,17 +165,15 @@
 				component.set('v.showSpinner', false);
 				component.set('v.confetti', true);
 				component.set('v.isModalOpen', false);
-				console.log('### ok');
-				component.set('v.isModalOpen', false);
 				component.find('notifLib').showToast({
 					"variant": "success",
 					"title": "Stage changed succesfully."                      
 				});
+				// window.location.reload()
             }
 
             else if (saveResult.state == "INCOMPLETE") {
 				console.log("User is offline, device doesn't support drafts.");
-				// component.set("v.recordSaveError", errMsg);
 			}
 
 			else if(saveResult.state == "ERROR") {
@@ -166,20 +185,19 @@
 				}
 				console.log('ERROR---'+errMsg);
 				component.set('v.recordSaveError', errMsg);
+
+				if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
+					console.log('### in notice');
+					component.find('notifLib').showNotice({
+						"variant": "error",
+						"header": "Problem saving record:",
+						"message": errMsg,
+					});
+				}
 			}
 			
 			else {
 				console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-				// component.set("v.recordSaveError", errMsg);
-			}
-
-			if(component.get('v.recordSaveError') != "" && component.get('v.recordSaveError') != undefined){
-				console.log('### in notice');
-				component.find('notifLib').showNotice({
-					"variant": "error",
-					"header": "Problem saving record:",
-					"message": errMsg,
-				});
 			}
 		}));
 	},
@@ -224,6 +242,10 @@
 	},
 
 	setPreviousStep : function (component, event, helper){
+		if(component.get('v.innerPathValue') == 'SOInfo' || component.get('v.innerPathValue') == 'Claim'){
+            component.set('v.showValidation', true);
+		}
+		
 		if(component.get('v.innerPathValue') == 'ManualSignature'){
             component.set('v.innerPathValue', 'Claim');
         }

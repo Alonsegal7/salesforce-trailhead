@@ -111,6 +111,7 @@ public class OpportunityHelperTest {
 
         opp.OwnerId=user1.Id;
         opp.Potential_GB_Opp_Override__c='Yes';
+        opp.Green_Bucket_Override_Reason__c = 'Test Reason';
         update opp;
 
 		Test.stopTest();        

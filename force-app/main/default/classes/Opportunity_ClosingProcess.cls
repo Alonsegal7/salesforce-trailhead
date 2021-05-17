@@ -1,4 +1,4 @@
-public with sharing class Opportunity_ClosingProcess {
+public without sharing class Opportunity_ClosingProcess {
 
     @AuraEnabled
 	public static String getInitialParameters(Id oppId){
@@ -21,7 +21,7 @@ public with sharing class Opportunity_ClosingProcess {
 		List<String> ls = new List<String>();
 		List <Map<String, Object>> lmss = new List <Map<String, Object>>();
 		for(Schema.FieldSetMember f : SObjectType.Opportunity.FieldSets.InternalOpportunity_Lost_NotExpansion.getFields()) {
-			Map<String, Object> tmp = new Map<String, Object>();
+            Map<String, Object> tmp = new Map<String, Object>();
 			tmp.put('name', f.getFieldPath());
 			tmp.put('required', (f.getDbRequired() || f.getRequired()));
 			lmss.add(tmp);
@@ -66,6 +66,8 @@ public with sharing class Opportunity_ClosingProcess {
 		List<String> ls = new List<String>();
 		List <Map<String, Object>> lmss = new List <Map<String, Object>>();
 		for(Schema.FieldSetMember f : SObjectType.Opportunity.FieldSets.PartnerOpportunity_WonLost_NotExpansion.getFields()) {
+            system.debug('### f.getRequired(): ' + f.getRequired());
+            system.debug('### f.getFieldPath(): ' + f.getFieldPath());
 			Map<String, Object> tmp = new Map<String, Object>();
 			tmp.put('name', f.getFieldPath());
 			tmp.put('required', (f.getDbRequired() || f.getRequired()));
@@ -145,5 +147,17 @@ public with sharing class Opportunity_ClosingProcess {
         opp.Probability = stageMap.get(opp.StageName);
         update opp;
         return opp;
+    }
+
+    @AuraEnabled(Cacheable=true)
+    public static String getFieldsFromFieldSet(String objectName, String fieldSetName){
+        system.debug('### objectName: ' + objectName);
+        system.debug('### fieldSetName: ' + fieldSetName);
+        Schema.DescribeSObjectResult sObjectDescribe = Schema.getGlobalDescribe().get(ObjectName).getDescribe();
+
+        Schema.FieldSet fieldSet = sObjectDescribe.FieldSets.getMap().get(fieldSetName);
+
+        System.debug('fields => '+fieldSet.getFields());
+        return JSON.serialize(fieldSet.getFields()); 
     }
 }

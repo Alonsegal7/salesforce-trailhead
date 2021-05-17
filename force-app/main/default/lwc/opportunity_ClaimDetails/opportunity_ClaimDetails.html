@@ -33,9 +33,8 @@
                         </lightning-tile><br/>
                         <template if:false={isOppClosed}>
                             <p class="slds-text-heading_small">
-                                <!--<lightning-icon icon-name="action:new_opportunity" alternative-text="note" title="note" size="xxx-small"></lightning-icon>-->
                                 Once you close the opportunity the ARR will be:          
-                                <lightning-formatted-number value={expectedArrOnWon} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                <lightning-formatted-number style="margin-left: 5px;" value={expectedArrOnWon} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
                                 <!--<lightning-helptext content={helpText}></lightning-helptext>-->
                             </p><br/>
                         </template>

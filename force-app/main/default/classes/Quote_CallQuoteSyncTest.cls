@@ -1,4 +1,3 @@
-
 @isTest
 public class Quote_CallQuoteSyncTest {
     @TestSetup

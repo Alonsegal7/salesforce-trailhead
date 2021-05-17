@@ -61,13 +61,18 @@ export default class Opportunity_ClaimDetails extends LightningElement {
         this.coSellARR=getFieldValue(this.oppDetails, coSellARR);
         this.productsARR=getFieldValue(this.oppDetails, productsARR);
         this.gbARR=getFieldValue(this.oppDetails, gbARR);
-        this.expectedArrOnWon=this.maClaimedARR+this.claimedARR;
         this.isGBOpp=getFieldValue(this.oppDetails, isGBOpp);
         this.isGBAcc=getFieldValue(this.oppDetails, isGBAcc);
         this.isPrimarySOSigned=getFieldValue(this.oppDetails,isPrimarySOSigned);
         this.claimARROverride=getFieldValue(this.oppDetails,claimARROverride);
         console.log('Raz Ben Ron this.claimARROverride: '+this.claimARROverride);
         this.isOppClosed=getFieldValue(this.oppDetails, closedOpp);
+        //this.expectedArrOnWon=this.maClaimedARR+this.claimedARR;
+        if(this.isGBAcc==true){
+            this.expectedArrOnWon=this.claimedARR; 
+        }else{
+            this.expectedArrOnWon=this.maClaimedARR+this.claimedARR; 
+        }
         if(this.isPrimarySOSigned==true){
             this.soARR=this.productsARR-this.ccARR-this.coSellARR;
         }else{

@@ -4,8 +4,18 @@ public without sharing class Opportunity_GreenBucketLogic {
     public static Id currentRecordId=null;
     public static void Opportunity_GreenBucketLogic(List<Opportunity> newOpps, map<Id, Opportunity> oldOpps) {
         try{
+            List<Opportunity> relevantOpps= new list<Opportunity>();
+            for(Opportunity opp: newOpps){
+                if(opp.isClosed==false||
+                    inTimeFrame(opp.CloseDate)||
+                    (opp.Manual_Trigger__c!=oldOpps.get(opp.Id).Manual_Trigger__c&&opp.Manual_Trigger__c=='Recalculate GB')||
+                    opp.Potential_GB_Opp_Override__c!=oldOpps.get(opp.Id).Potential_GB_Opp_Override__c){
+                    relevantOpps.add(opp);
+                }
+            }
             map<Id,GB_Threshold__c> allTHs=Utilities.getAllTHs();//use static method to avoid soql limits
-            for(Opportunity opp: newOpps){ 
+            for(Opportunity opp: relevantOpps){ 
+                system.debug('OGBL Raz Ben Ron - opp in Gb logic: '+Opp.Name+' '+Opp.Id);
                 boolean isGB=false;
                 boolean isTransition=false;
                 GB_Threshold__c gbth=null;
@@ -38,6 +48,7 @@ public without sharing class Opportunity_GreenBucketLogic {
                 opp.Transition_to_GB__c=isTransition;
                 if(opp.Manual_Trigger__c!=null)
                     opp.Manual_Trigger__c='';
+                //opp.Green_Bucket_Override_Reason__c=string.valueof(datetime.now());
             }
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Opportunity_GreenBucketLogic ',e,e.getMessage());   
@@ -57,13 +68,14 @@ public without sharing class Opportunity_GreenBucketLogic {
                     gbPlan=(opp.Expected_Plan_Seats__c>=50||
                                 (newPVs&&opp.Expected_Plan_Tier__c.toLowercase()=='enterprise'&&opp.Expected_Plan_Seats__c>=20)||
                                 (!newPVs&&opp.Expected_Plan_Tier__c.toLowercase()=='enterprise'&&opp.Expected_Plan_Seats__c>=25));
-                }else if(opp.RecordTypeId==partnerRecordTypeId){
-                    gbPlan=opp.Expected_Plan_Seats__c>=50;
                 }
+                ///The condition was cancelled for Partners 09/05/21
+                /*else if(opp.RecordTypeId==partnerRecordTypeId){ 
+                    gbPlan=opp.Expected_Plan_Seats__c>=50;
+                }*/
             }
             system.debug('Raz Ben Ron OGBL gbPlan: '+gbPlan);
         }catch(Exception e){
-            //Utilities.sendSlackMessage(':fire: Error in GB Logic (is gb plan)!! :fire:','test-raz',':moneybag:',e,null,null,currentRecordId);  
             Utilities.sendDebugEmail('Error in Opportunity_GreenBucketLogic ',e,e.getMessage());   
 
         }
@@ -74,11 +86,6 @@ public without sharing class Opportunity_GreenBucketLogic {
     public static boolean isValidOpp(Opportunity opp,GB_Threshold__c gbth){
         string oppType=opp.Type==null?'':opp.Type;
         boolean isValid=(gbth!=null&&
-                        /*opp.Expected_Plan_Name__c!=null&&
-                        opp.Pricing_Version__c!=null&&
-                        opp.Expected_Plan_Seats__c!=null&&
-                        opp.Expected_Plan_Tier__c!=null&&
-                        opp.Expected_Plan_Period__c!=null&&*/
                         !oppType.contains('Downgrade')&&
                         !(opp.Expected_Plan_Period__c!=null&&
                             opp.RecordTypeId==internalRecordTypeId&&opp.Expected_Plan_Period__c.toLowercase()=='monthly'));
@@ -96,5 +103,21 @@ public without sharing class Opportunity_GreenBucketLogic {
             gbArr+=maClaimedARR;
         system.debug('Raz Ben Ron OGBL gbArr: '+gbArr);
         return gbArr;
+    }
+
+    public static boolean inTimeFrame(Date closeDate){
+        date today=date.today();
+        system.debug('Raz Ben Ron close date: '+closeDate.month()+' '+closeDate.year());
+        system.debug('Raz Ben Ron today: '+today.month()+' '+today.year()+' last month: '+today.addMonths(-1).month());
+        if((today.month()==closeDate.month()&&//close date on current month
+            today.year()==closeDate.year())||
+            (today.day()>=1&&today.day()<=10&&//last month is stil editable in first 10 days of the month
+            today.addMonths(-1).month()==closeDate.month())||
+            today<=closeDate){//close date in the future
+            return true;
+        }else{
+            return false;
+        }
+
     }
 }
