@@ -32,38 +32,49 @@
                             </dl>
                         </lightning-tile><br/>
                         <template if:false={isOppClosed}>
-                            <p class="slds-text-heading_small">
-                                Once you close the opportunity the ARR will be:          
+                            <p class="slds-text-heading_x_small">
+                                <lightning-icon icon-name="utility:info_alt" alternative-text="Info" size="x-small" style="padding-right: 5px;"></lightning-icon>
+                                If you close the opportunity now, the ARR will be:        
                                 <lightning-formatted-number style="margin-left: 5px;" value={expectedArrOnWon} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
-                                <!--<lightning-helptext content={helpText}></lightning-helptext>-->
+                                <!--<lightning-helptext content={helpText}></lightning-helptext>jhkjh-->
                             </p><br/>
                         </template>
-                        <lightning-button variant="base" label="Claimed ARR Full Details:" onclick={handleDetailsClick} class="slds-m-left_xx-small" icon-name="utility:chevrondown"></lightning-button>
+                        <template if:false={showClaimDetails}><lightning-button variant="base" label="Claimed ARR Breakdown:" onclick={handleDetailsClick} class="slds-m-left_xx-small" icon-name="utility:chevronright"></lightning-button></template>
+                        <template if:true={showClaimDetails}><lightning-button variant="base" label="Claimed ARR Breakdown:" onclick={handleDetailsClick} class="slds-m-left_xx-small" icon-name="utility:chevrondown"></lightning-button></template>
                         <template if:true={showClaimDetails}>
                             <dl class="slds-dl_horizontal">
-                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                    <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on Sales Order:</p>
-                                </dt>
-                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
-                                    <p class="slds-truncate"><lightning-formatted-number value={soARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
-                                </dd>
+                                <template if:false={hasARROverride}>
+                                    <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                        <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on Sales Order:</p>
+                                    </dt>
+                                    <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                        <p class="slds-truncate"><lightning-formatted-number value={soARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
+                                    </dd>
+                                    <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                        <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on CC:</p>
+                                    </dt>
+                                    <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                        <p class="slds-truncate"><lightning-formatted-number value={ccARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
+                                    </dd>
 
-                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                    <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on CC:</p>
-                                </dt>
-                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
-                                    <p class="slds-truncate"><lightning-formatted-number value={ccARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
-                                </dd>
-
-                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                    <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on Co Sell:</p>
-                                </dt>
-                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
-                                    <p class="slds-truncate"><lightning-formatted-number value={coSellARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
-                                </dd>
+                                    <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                        <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on Co Sell:</p>
+                                    </dt>
+                                    <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                        <p class="slds-truncate"><lightning-formatted-number value={coSellARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
+                                    </dd>
+                                    <template if:true={hasPickersARR}>
+                                        <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                            <p class="slds-text-heading_x_small slds-text-color_weak">ARR Claimed on BB Pickers:</p>
+                                        </dt>
+                                        <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                            <p class="slds-truncate"><lightning-formatted-number value={bbPickersARR} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
+                                        </dd>
+                                    </template>
+                                </template>
                                 <template if:true={hasARROverride}>
                                     <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                        <p class="slds-text-heading_x_small slds-text-color_weak">ARR Override:</p>
+                                        <p class="slds-text-heading_x_small slds-text-color_weak">Override ARR:</p>
                                     </dt>
                                     <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                         <p class="slds-truncate"><lightning-formatted-number value={claimARROverride} format-style="currency" currency-code="USD" currency-display-as="code" class="slds-text-color_weak"></lightning-formatted-number></p>
