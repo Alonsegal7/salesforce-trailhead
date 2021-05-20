@@ -24,11 +24,12 @@ public with sharing class SendContractToBB {
             String serializedObject=JSON.serialize(sub);
             Http http = new Http();
             HttpRequest request = new HttpRequest();
+            Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='Big_Brain'][0];
             String url = ConfigManager.BillingCycleEP(sub.Pulse_Account_Id__c);
             request.setEndpoint(url);
             request.setMethod(method);
             request.setHeader('Content-Type', 'application/json;charset=UTF-8');
-            request.setHeader('Authorization', 'aAhC65ebAhyL178e3IR9ZAtpqA0zS8lf');
+            request.setHeader('Authorization', whMTD.Key__c);
             request.setBody(serializedObject);
             HttpResponse response=null;
             if (!Test.isRunningTest()){

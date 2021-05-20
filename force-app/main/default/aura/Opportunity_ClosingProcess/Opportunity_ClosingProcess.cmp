@@ -315,7 +315,7 @@
                                     <aura:if isTrue="{!v.oppData.Is_Primary_SO_Signed__c}">
                                         <lightning:layout>
                                             <lightning:layoutItem title="" size="12">
-                                                You have Signed SO <br/>
+                                                <span><lightning:icon iconName="utility:check" variant="success" size="xx-small" /></span>You have Signed SO <br/>
                                                 You need to review/update the following:
                                             </lightning:layoutItem>
                                         </lightning:layout>
@@ -365,7 +365,6 @@
                                 </div>
                             </lightning:card>
                         </aura:if>
-                        
                         <aura:if isTrue="{!and(v.oppData.Is_Primary_SO_Signed__c, v.innerPathValue == 'SOInfo')}">
                             <lightning:card>
                                 <aura:if isTrue="{!!v.showValidation}">
@@ -512,7 +511,7 @@
                                 
                             </lightning:card>
                         </aura:if>
-                        <aura:if isTrue="{!or(v.innerPathValue == 'Handover', v.closedFields.Close_Process_Path__c == 'Handover')}">
+                        <aura:if isTrue="{!v.innerPathValue == 'Handover'}">
                             <lightning:flow aura:id="handoverFlowData" onstatuschange="{!c.handleStatusChange_Handover}"/>
                         </aura:if>
                         <aura:if isTrue="{!or(v.innerPathValue == 'OppSummary', v.closedFields.Close_Process_Path__c == 'Opportunity Summary')}">

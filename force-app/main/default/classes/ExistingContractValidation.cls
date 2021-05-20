@@ -1,4 +1,5 @@
 public with sharing class ExistingContractValidation {
+    public static boolean IsSandbox = [Select IsSandbox from Organization].IsSandbox;
     public ExistingContractValidation() {
     }
     @InvocableMethod
@@ -13,24 +14,27 @@ public with sharing class ExistingContractValidation {
             //String serializedObject=JSON.serialize(currentOpp);
             Http http = new Http();
             HttpRequest request = new HttpRequest();
-            
+            Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='Big_Brain'][0];
             String url = ConfigManager.BillingCycleEP(currentOpp.Account.primary_pulse_account_id__c);
             system.debug('Raz Ben Ron ECV api url: '+url);
             request.setEndpoint(url);
             request.setMethod(method);
             request.setHeader('Content-Type', 'application/json;charset=UTF-8');
-            request.setHeader('Authorization', 'aAhC65ebAhyL178e3IR9ZAtpqA0zS8lf');
+            request.setHeader('Authorization', whMTD.Key__c);
             //request.setBody(serializedObject);
             HttpResponse response=null;
             String resBody='';
             if (!Test.isRunningTest()){
                 //REAL CONNECTION
-                response = http.send(request); 
-                system.debug('Raz Ben Ron response: '+response); 
-                system.debug('Raz Ben Ron response: '+response.getBody()); 
-                resBody=response.getBody();
-                //SIMULATE FULL FESPONSE:
-                //resBody= '{"bb_contract_id":"131664","tier":"enterprise","seats":"50","list_price":"31.98","unit_price":"31.98","currency":"USD","discount":"0.0","paid_months":"12","free_months":"0","activation_date":"2020-05-22T00:00:00.000Z","deactivation_date":"2021-05-22T00:00:00.000+00:00","pricing_version":"8"}';   
+                //if(!IsSandbox){
+                    response = http.send(request); 
+                    system.debug('Raz Ben Ron response: '+response); 
+                    system.debug('Raz Ben Ron response: '+response.getBody()); 
+                    resBody=response.getBody();
+                //}else{
+                    //SIMULATE FULL FESPONSE:
+                    //resBody= '{"bb_contract_id":"131664","tier":"enterprise","seats":"50","list_price":"31.98","unit_price":"31.98","currency":"USD","discount":"0.0","paid_months":"12","free_months":"0","activation_date":"2020-05-22T00:00:00.000Z","deactivation_date":"2021-05-22T00:00:00.000+00:00","pricing_version":"8"}';   
+                //}
                 //SIMULATE NULL FESPONSE:
                 //resbody=null;
             }else{

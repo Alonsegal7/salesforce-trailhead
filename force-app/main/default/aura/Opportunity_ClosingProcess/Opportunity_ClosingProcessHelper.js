@@ -83,7 +83,8 @@
 		if(component.get('v.oppData.RecordType.Name') == 'Internal Opportunity'){
 			if(component.get('v.oppData.Should_be_handed_over_to_AM__c')
 			|| component.get('v.oppData.Total_PS_Hours__c') > 0 
-			|| component.get('v.oppData.Total_PS_Expended_Hours__c') > 0 ||
+			|| component.get('v.oppData.Total_PS_Expended_Hours__c') > 0
+			|| component.get('v.oppData.Total_Training_Hours__c') >= 3 ||
 			(
 			component.get('v.oppData.Expected_Plan_Seats__c') != undefined && component.get('v.oppData.Expected_Plan_Seats__c') >= 100
 			&&

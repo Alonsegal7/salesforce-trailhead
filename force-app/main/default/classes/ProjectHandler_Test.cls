@@ -36,7 +36,7 @@ public class ProjectHandler_Test {
             update projectRecord;
             
             Project__c proj2nd = [SELECT Id, Postponed_Age__c FROM Project__c WHERE Id =: projectRecord.Id];
-            system.assertEquals(proj2nd.Postponed_Age__c, null);
+            system.assertEquals(proj2nd.Postponed_Age__c, 0);
             
             projectRecord.Project_Status__c = 'Open';
             update projectRecord;

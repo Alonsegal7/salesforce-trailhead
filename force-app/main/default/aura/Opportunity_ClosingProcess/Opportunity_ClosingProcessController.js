@@ -34,66 +34,6 @@
 					if (storeResponse.hasOwnProperty('subscription')) {
                         component.set('v.hasWonSO_SubClaimCC', storeResponse.subscription);
                     }
-
-                    /*if (storeResponse.hasOwnProperty('internalOppLost_NotExpansion') && storeResponse.internalOppLost_NotExpansion.length > 0) {
-						var fieldsString = new Array();
-						console.log('### theLeadFields_v1: ' + fieldsString);
-						for (var i = 0; i < storeResponse.internalOppLost_NotExpansion.length; i++){
-							var f = {};
-                            f.name = storeResponse.internalOppLost_NotExpansion[i].name;
-                            console.log('@@@ Tal Test1: ' + f.name);
-							f.req = storeResponse.internalOppLost_NotExpansion[i].required;
-							fieldsString.push(JSON.parse(JSON.stringify(f)));
-							console.log('### fieldsString: ' + fieldsString);
-						}
-						component.set('v.internalOppLost_NotExpansion', fieldsString);
-						console.log('### internalOppLost_NotExpansion: ' + component.get('v.internalOppLost_NotExpansion'));
-                    }
-
-                    if (storeResponse.hasOwnProperty('internalOppLWon_Expansion') && storeResponse.internalOppLWon_Expansion.length > 0) {
-						var fieldsString = new Array();
-						console.log('### fieldsString_v1: ' + fieldsString);
-						for (var i = 0; i < storeResponse.internalOppLWon_Expansion.length; i++){
-							var f = {};
-                            f.name = storeResponse.internalOppLWon_Expansion[i].name;
-                            console.log('@@@ Tal Test2: ' + f.name);
-							f.req = storeResponse.internalOppLWon_Expansion[i].required;
-							fieldsString.push(JSON.parse(JSON.stringify(f)));
-							console.log('### fieldsString: ' + fieldsString);
-						}
-						component.set('v.internalOppLWon_Expansion', fieldsString);
-						console.log('### internalOppLWon_Expansion: ' + component.get('v.internalOppLWon_Expansion'));
-                    }
-
-                    if (storeResponse.hasOwnProperty('internalOppLWon_NotExpansion') && storeResponse.internalOppLWon_NotExpansion.length > 0) {
-						var fieldsString = new Array();
-						console.log('### fieldsString_v1: ' + fieldsString);
-						for (var i = 0; i < storeResponse.internalOppLWon_NotExpansion.length; i++){
-							var f = {};
-                            f.name = storeResponse.internalOppLWon_NotExpansion[i].name;
-                            console.log('@@@ Tal Test3: ' + f.name);
-							f.req = storeResponse.internalOppLWon_NotExpansion[i].required;
-							fieldsString.push(JSON.parse(JSON.stringify(f)));
-                            console.log('### fieldsString: ' + fieldsString);
-						}
-						component.set('v.internalOppLWon_NotExpansion', fieldsString);
-                        console.log('### internalOppLWon_NotExpansion: ' + component.get('v.internalOppLWon_NotExpansion'));
-                    }
-
-                    if (storeResponse.hasOwnProperty('partnerOppLWonLost_Expansion') && storeResponse.partnerOppLWonLost_Expansion.length > 0) {
-						var fieldsString = new Array();
-						console.log('### fieldsString_v1: ' + fieldsString);
-						for (var i = 0; i < storeResponse.partnerOppLWonLost_Expansion.length; i++){
-							var f = {};
-                            f.name = storeResponse.partnerOppLWonLost_Expansion[i].name;
-                            console.log('@@@ Tal Test4: ' + f.name);
-							f.req = storeResponse.partnerOppLWonLost_Expansion[i].required;
-							fieldsString.push(JSON.parse(JSON.stringify(f)));
-							console.log('### fieldsString: ' + fieldsString);
-						}
-						component.set('v.partnerOppLWonLost_Expansion', fieldsString);
-						console.log('### partnerOppLWonLost_Expansion: ' + component.get('v.partnerOppLWonLost_Expansion'));
-                    }*/
                     
                     console.log('### showWhatSigned: ' + component.get('v.showWhatSigned'));
                 }
@@ -322,7 +262,7 @@
                 isRetreiveFieldSet = true;
                 console.log('### fieldSetReferance_v2: ');
             }
-
+            console.log('### showValidation: ' + component.get('v.showValidation'));
             if(isRetreiveFieldSet == true){
                 let action1 = component.get("c.getFieldsFromFieldSet");
                 action1.setParams({
@@ -336,6 +276,7 @@
                         console.log("fields => ",fieldsStr);
                         let fields = JSON.parse(fieldsStr);
                         component.set("v.fields", fields);
+                        console.log('### showValidation_v1: ' + component.get('v.showValidation'));
                     } else {
                         alert("error");
                     }
