@@ -26,9 +26,7 @@ $RECYCLE.BIN/
 .forceignore
 .prettierignore
 .prettierrc
-package.json
 README.md
-sfdx-project.json
 # folders
 .vscode/
 config/
