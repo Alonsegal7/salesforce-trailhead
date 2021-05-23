@@ -22,11 +22,6 @@ Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
-.eslintignore
-.forceignore
-.prettierignore
-.prettierrc
-README.md
 # folders
 .vscode/
 config/
