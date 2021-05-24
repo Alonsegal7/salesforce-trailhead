@@ -7,4 +7,13 @@ public with sharing class BigBrainController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static string getAccountUsers(){
+        try {
+            return BigBrainAPI.getAccountUsers('841481');
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }
