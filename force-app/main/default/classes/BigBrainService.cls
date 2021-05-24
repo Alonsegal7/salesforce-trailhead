@@ -4,9 +4,27 @@ public with sharing class BigBrainService {
     }
     
     @AuraEnabled
-    public static string methodName(){
+    public static string getAccountProfile(){
         try {
-            
+            return '';
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static string getAccountUsers(){
+        try {
+            return '';
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static string getAccountBilling(){
+        try {
+            return '';
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
