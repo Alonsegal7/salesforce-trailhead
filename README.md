@@ -1,18 +1,16 @@
-# Salesforce DX Project: Next Steps
+# Environment setup
+Clone monday-salesforce repo
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+`npm install --global sfdx-cli`
 
-## How Do You Plan to Deploy Your Changes?
+`sfdx force:auth:web:login -r https://test.salesforce.com`
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+`sfdx plugins:install salesforcedx@pre-release`
 
-## Configure Your Salesforce DX Project
+`sfdx config:set defaultusername=eran.b@monday.com.partial`
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+Install 'Salesforce extension pack for vs code'
 
-## Read All About It
+![image](https://user-images.githubusercontent.com/36815567/119338737-0b44ab80-bc99-11eb-9cc8-add80a39a953.png)
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+Restart vscode
