@@ -22,9 +22,6 @@ public class ProjectHandler_Test {
     @isTest static void updateProjectFields(){
         setupTest();
 		System.runAs(userRecord){
-            Project__c proj = [SELECT Id, Postponed_Counter__c FROM Project__c WHERE Id =: projectRecord.Id];
-            system.assertEquals(proj.Postponed_Counter__c, 0);
-            
             projectRecordStatus.Postponed_Start_Date__c = System.now() - 2;
             update projectRecordStatus;
             

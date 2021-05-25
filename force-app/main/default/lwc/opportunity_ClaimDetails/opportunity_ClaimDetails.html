@@ -34,9 +34,9 @@
                         <template if:false={isOppClosed}>
                             <p class="slds-text-heading_x_small">
                                 <lightning-icon icon-name="utility:info_alt" alternative-text="Info" size="x-small" style="padding-right: 5px;"></lightning-icon>
-                                If you close the opportunity now, the ARR will be:        
+                                If you close the opportunity now, the ARR will be:       
                                 <lightning-formatted-number style="margin-left: 5px;" value={expectedArrOnWon} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
-                                <!--<lightning-helptext content={helpText}></lightning-helptext>jhkjh-->
+                                <!--<lightning-helptext content={helpText}></lightning-helptext>-->
                             </p><br/>
                         </template>
                         <template if:false={showClaimDetails}><lightning-button variant="base" label="Claimed ARR Breakdown:" onclick={handleDetailsClick} class="slds-m-left_xx-small" icon-name="utility:chevronright"></lightning-button></template>
