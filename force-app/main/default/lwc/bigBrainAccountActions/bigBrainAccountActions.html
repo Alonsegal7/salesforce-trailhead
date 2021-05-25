@@ -16,10 +16,13 @@
         ></lightning-input>
       </lightning-layout-item>
       <lightning-layout-item flexibility="auto" padding="around-small">
+        {datetimestring}
         <lightning-input
           type="date"
           name="input2"
           label="grant until"
+          min={todaysDate}
+          max={oneMonthFromNow}
           value={freeUsersUntil}
           onchange={handleFreeUsersUntilChange}
         ></lightning-input>
