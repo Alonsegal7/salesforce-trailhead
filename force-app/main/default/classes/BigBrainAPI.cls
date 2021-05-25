@@ -40,9 +40,8 @@ public with sharing class BigBrainAPI {
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
         request.setBody(params);
-        HttpResponse response = http.send(request); 
-
-
+        HttpResponse response = http.send(request);
+        
         if (response.getStatusCode() != 200) {
             throw new BigBrainException();
         }
@@ -54,8 +53,8 @@ public with sharing class BigBrainAPI {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
-        HttpResponse response = http.send(request); 
-
+        HttpResponse response = http.send(request);
+        
         if (response.getStatusCode() != 200) {
             throw new BigBrainException();
         }
