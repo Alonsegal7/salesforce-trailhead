@@ -1,4 +1,6 @@
 public with sharing class BigBrainAPI {
+    public class BigBrainException extends Exception {}
+
     public BigBrainAPI() {
 
     }
@@ -16,7 +18,10 @@ public with sharing class BigBrainAPI {
     }
 
     public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, string untilDate){
-        String params = 'due_date='+untilDate+'&free_users='+freeUsers;
+        String params = 'free_users=' + String.valueOf(freeUsers);
+        if (untilDate != null && untilDate != ''){
+            params += '&due_date='+untilDate;
+        }
         return put('/exposed_partners/set_free_users/' + pulseAccountId, params);
     }
 
@@ -25,7 +30,7 @@ public with sharing class BigBrainAPI {
         return response.getBody();
     }
 
-    private static string put(String url, String params) {
+    public static string put(String url, String params) {
         HttpResponse response = makeRequest('PUT', url);
         return response.getBody();
     }
@@ -36,6 +41,12 @@ public with sharing class BigBrainAPI {
         setRequestHeaders(request, method, url);
         request.setBody(params);
         HttpResponse response = http.send(request); 
+
+
+        if (response.getStatusCode() != 200) {
+            throw new BigBrainException();
+        }
+
         return response;
     }
 
@@ -44,15 +55,22 @@ public with sharing class BigBrainAPI {
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
         HttpResponse response = http.send(request); 
+
+        if (response.getStatusCode() != 200) {
+            throw new BigBrainException();
+        }
+
         return response;
     }
 
     private static void setRequestHeaders(HttpRequest request, String method, String url){
         Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='Big_Brain'][0];
         String baseUrl = ConfigManager.getBigBrainBaseUrl();
+
         request.setMethod(method);
         request.setEndpoint(baseUrl + url);
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setHeader('Authorization', whMTD.Key__c);
+        request.setHeader('From', UserInfo.getUserEmail());
     }
 }
