@@ -22,7 +22,7 @@ public with sharing class BigBrainController {
         try {
             return BigBrainAPI.setAccountFreeUsers(pulseAccountId, freeUsers, untilDate);
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
         }
     }
 }
