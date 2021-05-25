@@ -1,0 +1,25 @@
+<template>
+    <lightning-card>
+        <h3 slot="title">
+            <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+            Account
+        </h3>
+        <lightning-tabset>
+            <lightning-tab label="Profile">
+                <c-big-brain-account-profile pulse-account-id={pulseAccountId}></c-big-brain-account-profile>
+            </lightning-tab>
+            <lightning-tab label="Users" title="Users data">
+                <c-big-brain-account-users pulse-account-id={pulseAccountId}></c-big-brain-account-users>
+            </lightning-tab>
+            <lightning-tab label="Features">
+                
+            </lightning-tab>
+            <lightning-tab label="Billing">
+                <c-big-brain-account-billing pulse-account-id={pulseAccountId}></c-big-brain-account-billing>
+            </lightning-tab>
+            <lightning-tab label="Actions">
+                Three Content !
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+</template>
