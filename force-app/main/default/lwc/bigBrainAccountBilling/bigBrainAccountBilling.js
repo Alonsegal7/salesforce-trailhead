@@ -1,9 +1,6 @@
 import { LightningElement, wire, api } from 'lwc';
 import getAccountBilling from '@salesforce/apex/BigBrainController.getAccountBilling';
-import ACCOUNT_FIELD from '@salesforce/schema/Lead.primary_pulse_account_id__c';
-import { getFieldValue, getRecord } from 'lightning/uiRecordApi';
 
-const fields = [ACCOUNT_FIELD];
 const columns = [
     { label: 'Time', fieldName: 'time', type: 'date' },
     { label: 'Type', fieldName: 'type' },
@@ -19,22 +16,17 @@ const columns = [
 export default class BigBrainAccountBilling extends LightningElement {
     columns = columns;
     isLoading = true;
-    isLoading() { return this.isLoading }
 
-    @api recordId;
-    @wire(getRecord, { recordId: '$recordId', fields })
-    wiredRecord({ error, data }) {
-        if (data) {
-            const pulseAccountId = getFieldValue(data, ACCOUNT_FIELD)
-            this.diplayBillingData(pulseAccountId)
+    @api pulseAccountId;
+    @wire(getAccountBilling, { pulseAccountId: '$pulseAccountId' })
+    data({ error, data }) {
+        if(!data) return;
+        if(error) {
+            this.isLoading = false;
+            this.error = error;
+            return;
         }
-
-        if (error) { this.error = error }
-    }
-
-    async diplayBillingData(pulseAccountId) {
-        const response = await getAccountBilling({ pulseAccountId })
-        const results = JSON.parse(response);
+        const results = JSON.parse(data);
 
         this.data = results.map(b => ({
             time: b.event_happened_at,

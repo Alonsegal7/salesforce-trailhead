@@ -1,25 +1,18 @@
 <template>
-  <lightning-card>
-    <h3 slot="title">
-      <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
-      Account > Users
-    </h3>
+    <template if:true={isLoading}>
+      <div class="slds-is-relative">
+        <lightning-spinner alternative-text="Loading..." size="medium">
+        </lightning-spinner>
+      </div>
+    </template>
 
-    <div style="height: 300px;">
-      <template if:true={isLoading}>
-        <div class="slds-is-relative" style="min-height: 10vh;">
-          <lightning-spinner alternative-text="Loading..." size="medium">
-          </lightning-spinner>
-        </div>
-      </template>
-
-      <c-salesforce-codex-data-table
-        if:false={isLoading} 
-        key-field="id"
-        data={data}
-        columns={columns}
-        hide-checkbox-column>
+  <template if:false={isLoading}>
+    <c-salesforce-codex-data-table
+      if:false={isLoading} 
+      key-field="id"
+      data={usersData}
+      columns={columns}
+      hide-checkbox-column>
     </c-salesforce-codex-data-table>
-    </div>
-  </lightning-card>
+  </template>
 </template>
