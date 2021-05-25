@@ -1,8 +1,8 @@
 public with sharing class BigBrainController {
     @AuraEnabled(cacheable=true)
-    public static string getAccountProfile(){
+    public static string getAccountProfile(String pulseAccountId){
         try {
-            return BigBrainAPI.getAccountProfile('841481');
+            return BigBrainAPI.getAccountProfile(pulseAccountId);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

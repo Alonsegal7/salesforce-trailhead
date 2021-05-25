@@ -1,41 +1,49 @@
 <template>
   <lightning-card>
+    <template if:true={isLoading}>
+      <div class="slds-is-relative" style="min-height: 10vh;">
+        <lightning-spinner alternative-text="Loading..." size="medium">
+        </lightning-spinner>
+      </div>
+    </template>
     <h3 slot="title">
         <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
         Account > Actions ({accountId})
     </h3>
-    <lightning-layout vertical-align="end">
-      <lightning-layout-item flexibility="auto" padding="around-small">
-        <lightning-input
-          type="number"
-          name="freeUsersInput"
-          label="Free users"
-          value={freeUsersAmount}
-          onchange={handleFreeUsersAmountChange}
-          placeholder="0"
-        ></lightning-input>
-      </lightning-layout-item>
-      <lightning-layout-item flexibility="auto" padding="around-small">
-        {datetimestring}
-        <lightning-input
-          required
-          type="date"
-          name="input2"
-          label="grant until"
-          min={todaysDate}
-          max={oneMonthFromNow}
-          value={freeUsersUntil}
-          onchange={handleFreeUsersUntilChange}
-        ></lightning-input>
-      </lightning-layout-item>
-      <lightning-layout-item flexibility="auto" padding="around-small">
-        <lightning-button
-          label="Grant" 
-          variant="brand"
-          class="slds-button"
-          onclick={handleFreeUsersGrantClick}
-        ></lightning-button>
-      </lightning-layout-item>
-    </lightning-layout>
+    <template if:false={isLoading}>
+      <lightning-layout vertical-align="end">
+        <lightning-layout-item flexibility="auto" padding="around-small">
+          <lightning-input
+            type="number"
+            name="freeUsersInput"
+            label="Free users"
+            value={freeUsersAmount}
+            onchange={handleFreeUsersAmountChange}
+            placeholder="0"
+          ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item flexibility="auto" padding="around-small">
+          {datetimestring}
+          <lightning-input
+            required
+            type="date"
+            name="input2"
+            label="grant until"
+            min={todaysDate}
+            max={oneMonthFromNow}
+            value={freeUsersUntil}
+            onchange={handleFreeUsersUntilChange}
+          ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item flexibility="auto" padding="around-small">
+          <lightning-button
+            label="Grant" 
+            variant="brand"
+            class="slds-button"
+            onclick={handleFreeUsersGrantClick}
+          ></lightning-button>
+        </lightning-layout-item>
+      </lightning-layout>
+    </template>
   </lightning-card>
 </template>

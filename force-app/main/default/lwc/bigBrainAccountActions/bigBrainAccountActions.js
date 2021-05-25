@@ -16,6 +16,9 @@ const formatDate = (date) => {
 export default class BigBrainAccountActions extends LightningElement {
   @api recordId;
 
+  isLoading = true;
+  isLoading() { return this.isLoading }
+
   @wire(getRecord, { recordId: '$recordId', fields })
   lead;
 
