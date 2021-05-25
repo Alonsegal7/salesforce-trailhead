@@ -18,11 +18,11 @@ public with sharing class BigBrainAPI {
     }
 
     public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, string untilDate){
-        String params = 'free_users=' + String.valueOf(freeUsers);
-        if (untilDate != null && untilDate != ''){
-            params += '&due_date='+untilDate;
-        }
-        return put('/exposed_partners/set_free_users/' + pulseAccountId, params);
+        Map<String, String> mapName = new Map<String, String>();
+        mapName.put('free_users', String.valueOf(freeUsers));
+        mapName.put('due_date', untilDate);
+        
+        return put('/exposed_partners/set_free_users/' + pulseAccountId, mapName);
     }
 
     private static string get(String url) {
@@ -30,20 +30,20 @@ public with sharing class BigBrainAPI {
         return response.getBody();
     }
 
-    public static string put(String url, String params) {
-        HttpResponse response = makeRequest('PUT', url);
+    public static string put(String url, Map<String, String> params) {
+        HttpResponse response = makeRequest('PUT', url, params);
         return response.getBody();
     }
 
-    private static HttpResponse makeRequest(String method, String url, String params){
+    private static HttpResponse makeRequest(String method, String url, Map<String, String> params){
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
-        request.setBody(params);
+        request.setBody(JSON.serialize(params));
         HttpResponse response = http.send(request);
         
         if (response.getStatusCode() != 200) {
-            throw new BigBrainException();
+            throw new AuraHandledException(response.getBody());
         }
 
         return response;
@@ -56,7 +56,7 @@ public with sharing class BigBrainAPI {
         HttpResponse response = http.send(request);
         
         if (response.getStatusCode() != 200) {
-            throw new BigBrainException();
+            throw new AuraHandledException(response.getBody());
         }
 
         return response;

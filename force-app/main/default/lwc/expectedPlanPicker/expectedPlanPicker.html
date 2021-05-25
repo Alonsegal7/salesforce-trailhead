@@ -4,6 +4,40 @@
             <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
             Pickers > Expected Plan
         </h3>
-        <p class="slds-p-horizontal_small">Card Body (custom component)</p>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item padding="around-small" size="12">
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                        <lightning-combobox
+                            name="progress"
+                            label="Tier"
+                            value={tier}
+                            placeholder="Select tier"
+                            options={tierOptions}
+                            onchange={handleTierChange}
+                        ></lightning-combobox>
+                        <p>Selected value is: {tier}</p>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                        <lightning-combobox
+                            name="progress"
+                            label="Period"
+                            value={period}
+                            placeholder="Select period"
+                            options={periodOptions}
+                            onchange={handlePeriodChange}
+                        ></lightning-combobox>
+                        <p>Selected value is: {period}</p>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            
+            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">3</div>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">4</div>
+            </lightning-layout-item>
+        </lightning-layout>
     </lightning-card>
 </template>
