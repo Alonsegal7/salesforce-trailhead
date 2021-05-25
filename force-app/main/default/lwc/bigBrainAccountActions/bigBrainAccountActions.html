@@ -2,8 +2,36 @@
   <lightning-card>
     <h3 slot="title">
         <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
-        Account > Actions
+        Account > Actions ({accountId})
     </h3>
-    <p class="slds-p-horizontal_small">Card Body (custom component)</p>
-</lightning-card>
+    <lightning-layout vertical-align="end">
+      <lightning-layout-item flexibility="auto" padding="around-small">
+        <lightning-input
+          type="number"
+          name="freeUsersInput"
+          label="Free users"
+          value={freeUsersAmount}
+          onchange={handleFreeUsersAmountChange}
+          placeholder="0"
+        ></lightning-input>
+      </lightning-layout-item>
+      <lightning-layout-item flexibility="auto" padding="around-small">
+        <lightning-input
+          type="date"
+          name="input2"
+          label="grant until"
+          value={freeUsersUntil}
+          onchange={handleFreeUsersUntilChange}
+        ></lightning-input>
+      </lightning-layout-item>
+      <lightning-layout-item flexibility="auto" padding="around-small">
+        <lightning-button
+          label="Grant" 
+          variant="brand"
+          class="slds-button"
+          onclick={handleFreeUsersGrantClick}
+        ></lightning-button>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
 </template>
