@@ -1,9 +1,35 @@
 <template>
   <lightning-card>
     <h3 slot="title">
-        <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
-        Account > Users
+      <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+      Account > Users
     </h3>
-    <p class="slds-p-horizontal_small">Card Body (custom component)</p>
-</lightning-card>
+
+    <div style="height: 300px;">
+      <template if:true={isLoading}>
+        <div class="slds-is-relative" style="min-height: 10vh;">
+          <lightning-spinner alternative-text="Loading..." size="medium">
+          </lightning-spinner>
+        </div>
+      </template>
+
+      <c-salesforce-codex-data-table
+        if:false={isLoading} 
+        key-field="id"
+        data={data}
+        columns={columns}
+        hide-checkbox-column>
+    </c-salesforce-codex-data-table>
+
+      <!-- <lightning-datatable 
+        if:false={isLoading} 
+        key-field="id" 
+        data={data} 
+        columns={columns} 
+        hide-checkbox-column>
+      </lightning-datatable> -->
+    </div>
+       
+
+  </lightning-card>
 </template>
