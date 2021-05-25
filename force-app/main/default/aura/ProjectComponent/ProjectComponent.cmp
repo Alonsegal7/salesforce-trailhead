@@ -12,16 +12,16 @@
     <force:recordData recordId="{!v.recordId}"
           targetRecord ="{!v.record}"
           targetFields ="{!v.simpleRecord}"
-          fields="Id, Postponed_Age__c, Project_Status__c" />
+          fields="Id, Postponed_Age_v1__c, Project_Status__c" />
 
-    <aura:if isTrue="{!and(lessthan(v.simpleRecord.Postponed_Age__c,14), equals(v.simpleRecord.Project_Status__c,'Postponed'))}">
+    <aura:if isTrue="{!and(lessthan(v.simpleRecord.Postponed_Age_v1__c,14), equals(v.simpleRecord.Project_Status__c,'Postponed'))}">
         <div aura:id="container" align="center" style="font-size: 30px; background: white;">
-            <p>🔥 Project Postponed <span style="color: #ffcc00;"><b>{!v.simpleRecord.Postponed_Age__c}</b></span> days 🔥</p>
+            <p>🔥 Project Postponed <span style="color: #ffcc00;"><b>{!v.simpleRecord.Postponed_Age_v1__c}</b></span> days 🔥</p>
         </div>
     </aura:if>
-    <aura:if isTrue="{!and(greaterthanorequal(v.simpleRecord.Postponed_Age__c,14), equals(v.simpleRecord.Project_Status__c,'Postponed'))}">
+    <aura:if isTrue="{!and(greaterthanorequal(v.simpleRecord.Postponed_Age_v1__c,14), equals(v.simpleRecord.Project_Status__c,'Postponed'))}">
         <div aura:id="container" align="center" style="font-size: 30px; background: white;">
-            <p>🔥 Project Postponed <span style="color: #fb275d;"><b>{!v.simpleRecord.Postponed_Age__c}</b></span> days 🔥</p>
+            <p>🔥 Project Postponed <span style="color: #fb275d;"><b>{!v.simpleRecord.Postponed_Age_v1__c}</b></span> days 🔥</p>
         </div>
     </aura:if>
 </aura:component>
