@@ -31,21 +31,21 @@ export default class BigBrainAccountUsers extends LightningElement {
         if (error) { this.error = error }
     }
 
-    displayUsers(pulseAccountId) {
-        getAccountUsers({ pulseAccountId }).then(response => {
-            const results = JSON.parse(response);
-            this.data = results.map(u => ({
-                photo_url: u.photo_url || DEFAULT_PHOTO,
-                name: u.name,
-                email: u.email,
-                phone: u.phone,
-                engagments: u.engagments,
-                enabled: u.enabled === 1 ? true : false,
-                is_admin: u.is_admin === 1 ? true : false,
-                is_guest: u.user_kind === "guest" ? true : false
-            }));
+    async displayUsers(pulseAccountId) {
+        const response = await getAccountUsers({ pulseAccountId })
+        const results = JSON.parse(response);
+        this.data = results.map(u => ({
+            photo_url: u.photo_url || DEFAULT_PHOTO,
+            name: u.name,
+            email: u.email,
+            phone: u.phone,
+            engagments: u.engagments,
+            enabled: u.enabled === 1 ? true : false,
+            is_admin: u.is_admin === 1 ? true : false,
+            is_guest: u.user_kind === "guest" ? true : false
+        }));
 
-            this.isLoading = false
-        })
+        this.isLoading = false
+
     }
 }
