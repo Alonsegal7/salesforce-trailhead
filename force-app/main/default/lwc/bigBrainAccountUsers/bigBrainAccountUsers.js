@@ -1,4 +1,4 @@
-import { LightningElement, wire, track, api } from 'lwc';
+import { LightningElement, wire, api } from 'lwc';
 import getAccountUsers from '@salesforce/apex/BigBrainController.getAccountUsers';
 import ACCOUNT_FIELD from '@salesforce/schema/Lead.primary_pulse_account_id__c';
 import { getFieldValue, getRecord } from 'lightning/uiRecordApi';
@@ -46,6 +46,5 @@ export default class BigBrainAccountUsers extends LightningElement {
         }));
 
         this.isLoading = false
-
     }
 }
