@@ -4,6 +4,65 @@
             <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
             Account > Profile
         </h3>
-        <p class="slds-p-horizontal_small">Card Body (custom component)</p>
+         <div class="c-container">
+            <lightning-layout >
+                <lightning-layout-item padding="around-small">
+                    <div class="header-column">
+                        <p class="field-title" title="Sign up date">Sign up date</p>
+                        <p><lightning-formatted-date-time year="2-digit" month="short" day="2-digit" value={signupDate}></lightning-formatted-date-time></p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Trial length">Trial length</p>
+                        <p>{trialPeriod}</p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Company Size">Company size</p>
+                        <p>{companySize}</p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Team Size">Team size</p>
+                        <p>{teamSize}</p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Slug">Slug</p>
+                        <p><lightning-formatted-url value={slug} label={slug} target="_blank"></lightning-formatted-url></p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Website">Website</p>
+                        <p><lightning-formatted-url value={wesbite} label={wesbite} target="_blank"></lightning-formatted-url></p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <div class="header-column">
+                        <p class="field-title" title="Plan">Plan</p>
+                        <p>{plan}</p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Since">Since</p>
+                        <p><lightning-formatted-date-time year="2-digit" month="short" day="2-digit" value={planStartDate}></lightning-formatted-date-time></p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Until">Until</p>
+                        <p><lightning-formatted-date-time year="2-digit" month="short" day="2-digit" value={planUntilDate}></lightning-formatted-date-time></p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Collection">Collection (USD)</p>
+                        <p>{collection}</p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Currency">Currency</p>
+                        <p>{currency}</p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="ARR">ARR (USD)</p>
+                        <p>{arr}</p>
+                    </div>
+                    <div class="header-column">
+                        <p class="field-title" title="Pricing Version">Pricing Version</p>
+                        <p>{pricingVersion}</p>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout >
+        </div>
     </lightning-card>
 </template>
