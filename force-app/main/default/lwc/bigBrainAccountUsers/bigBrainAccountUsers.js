@@ -34,6 +34,7 @@ export default class BigBrainAccountUsers extends LightningElement {
     async displayUsers(pulseAccountId) {
         const response = await getAccountUsers({ pulseAccountId })
         const results = JSON.parse(response);
+
         this.data = results.map(u => ({
             photo_url: u.photo_url || DEFAULT_PHOTO,
             name: u.name,

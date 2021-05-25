@@ -17,6 +17,15 @@ public with sharing class BigBrainController {
         }
     }
 
+    @AuraEnabled(cacheable=true)
+    public static string getAccountBilling(String pulseAccountId){
+        try {
+            return BigBrainAPI.getAccountBilling(pulseAccountId);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
     @AuraEnabled(cacheable=false)
     public static string setAccountFreeUsers(String pulseAccountId, Integer freeUsers, String untilDate){
         try {
