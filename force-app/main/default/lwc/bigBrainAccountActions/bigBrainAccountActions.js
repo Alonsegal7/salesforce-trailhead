@@ -16,13 +16,10 @@ const formatDate = (date) => {
 } 
 
 export default class BigBrainAccountActions extends LightningElement {
+  @api pulseAccountId;
   @api recordId;
   @wire(getRecord, { recordId: '$recordId', fields })
   lead;
-
-  get accountId() {
-    return getFieldValue(this.lead.data, ACCOUNT_FIELD);
-  }
 
   get oneMonthFromNow(){
     const today = new Date();
@@ -82,7 +79,7 @@ export default class BigBrainAccountActions extends LightningElement {
   }
 
   handleResetTrialClick(e) {
-    resetAccountTrial({pulseAccountId: this.accountId})
+    resetAccountTrial({pulseAccountId: '$pulseAccountId'})
       .then(result => {
         const evt = new ShowToastEvent({
           title: "Reset account trial successfully!",
