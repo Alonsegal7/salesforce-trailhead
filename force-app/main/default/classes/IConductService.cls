@@ -14,7 +14,7 @@ public class IConductService implements Queueable, Database.AllowsCallouts{
     public void execute(QueueableContext qc){
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        string APIToken = 'E724AABD-89CB-48E6-996F-AEE061C76FF5';
+        string APIToken = [select id, Key__c from Webhook_Key__mdt where DeveloperName='iConduct' limit 1].Key__c;
         string APIBaseUrl = 'https://www11.iconductcloud.com/api/v11/api.svc/json/Execute/';
         string url = APIBaseUrl + processID;
         request.setEndpoint(url);
