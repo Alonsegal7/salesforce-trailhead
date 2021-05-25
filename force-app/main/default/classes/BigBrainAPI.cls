@@ -21,8 +21,13 @@ public with sharing class BigBrainAPI {
         Map<String, String> mapName = new Map<String, String>();
         mapName.put('free_users', String.valueOf(freeUsers));
         mapName.put('due_date', untilDate);
-        
+
         return put('/exposed_partners/set_free_users/' + pulseAccountId, mapName);
+    }
+
+    public static String resetAccountTrial(String pulseAccountId){
+        Map<String, String> mapName = new Map<String, String>();
+        return put('/exposed_partners/reset_trial/' + pulseAccountId);
     }
 
     private static string get(String url) {
@@ -32,6 +37,11 @@ public with sharing class BigBrainAPI {
 
     public static string put(String url, Map<String, String> params) {
         HttpResponse response = makeRequest('PUT', url, params);
+        return response.getBody();
+    }
+
+    public static string put(String url) {
+        HttpResponse response = makeRequest('PUT', url);
         return response.getBody();
     }
 

@@ -2,9 +2,11 @@ import { LightningElement, api, wire, track } from 'lwc';
 import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import setAccountFreeUsers from '@salesforce/apex/BigBrainController.setAccountFreeUsers';
+import resetAccountTrial from '@salesforce/apex/BigBrainController.resetAccountTrial';
 
 import ACCOUNT_FIELD from '@salesforce/schema/Lead.primary_pulse_account_id__c';
-const fields = [ACCOUNT_FIELD];
+import PRICING_VERSION_FIELD from '@salesforce/schema/Lead.Pricing_Version__c';
+const fields = [ACCOUNT_FIELD, PRICING_VERSION_FIELD];
 
 const formatDate = (date) => {
   var dd = String(date.getDate()).padStart(2, '0');
@@ -15,10 +17,6 @@ const formatDate = (date) => {
 
 export default class BigBrainAccountActions extends LightningElement {
   @api recordId;
-
-  isLoading = true;
-  isLoading() { return this.isLoading }
-
   @wire(getRecord, { recordId: '$recordId', fields })
   lead;
 
@@ -37,8 +35,22 @@ export default class BigBrainAccountActions extends LightningElement {
     return formatDate(today);
   }
 
+  get pricingVersionOptions() {
+    return [
+      { label: '6 - old infra / higher prices', value: 6 },
+      { label: '7 - new infra / lower prices', value: 7 },
+      { label: '8 - new infra / higher prices', value: 8 },
+      { label: '9 - new infra / updated higher prices (ENT 38$, BRL, MXN, INR)', value: 9 }
+    ];
+  }
+
   freeUsersAmount = 0;
   freeUsersUntil = "";
+  pricingVersion = null;
+
+  handlePricingVersionChange(event) {
+    this.pricingVersion = event.detail.value;
+  }
 
   handleFreeUsersAmountChange(e) {
     this.freeUsersAmount = e.detail.value;
@@ -62,6 +74,26 @@ export default class BigBrainAccountActions extends LightningElement {
       .catch(error => {
         const evt = new ShowToastEvent({
           title: "Error while setting free users",
+          variant: "error",
+        });
+
+        this.dispatchEvent(evt);
+      });
+  }
+
+  handleResetTrialClick(e) {
+    resetAccountTrial({pulseAccountId: this.accountId})
+      .then(result => {
+        const evt = new ShowToastEvent({
+          title: "Reset account trial successfully!",
+          variant: "success",
+        });
+
+        this.dispatchEvent(evt);
+      })
+      .catch(error => {
+        const evt = new ShowToastEvent({
+          title: "Error while resetting account trial",
           variant: "error",
         });
 

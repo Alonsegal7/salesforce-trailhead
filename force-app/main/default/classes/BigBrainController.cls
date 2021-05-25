@@ -34,4 +34,13 @@ public with sharing class BigBrainController {
             throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
         }
     }
+
+    @AuraEnabled(cacheable=false)
+    public static string resetAccountTrial(String pulseAccountId){
+        try {
+            return BigBrainAPI.resetAccountTrial(pulseAccountId);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
+        }
+    }
 }
