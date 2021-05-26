@@ -1,9 +1,14 @@
 <template>
-  <lightning-card>
-    <h3 slot="title">
-        <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
-        Account > Usage > Features
-    </h3>
-    <p class="slds-p-horizontal_small">Card Body (custom component)</p>
-</lightning-card>
+  <lightning-layout class="features-layout">
+      <lightning-layout-item padding="around-small" size="12">
+        <ul class="features-list">
+            <template for:each={featuresData} for:item="feature">
+                <li key={feature.name} class="feature-item">
+                    <div><lightning-formatted-url value={feature.doc_url} label={feature.name} tooltip={feature.description} target="_blank"></lightning-formatted-url></div>
+                    <div><span>{feature.data}</span><span class={feature.class}></span></div>
+                </li>
+            </template>
+        </ul>
+      </lightning-layout-item>
+  </lightning-layout>         
 </template>
