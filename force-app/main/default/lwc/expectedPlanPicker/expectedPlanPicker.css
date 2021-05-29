@@ -1,0 +1,14 @@
+.header-column {
+  padding: 4px 0px;
+}
+
+.field-title {
+  font-size: 12px;
+  line-height: 1.25;
+  color: #54698d;
+  margin-bottom: 2px;
+}
+
+.spinner-wrapper {
+  height: 400px;
+}

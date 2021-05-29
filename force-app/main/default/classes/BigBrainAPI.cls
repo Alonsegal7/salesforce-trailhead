@@ -21,6 +21,10 @@ public with sharing class BigBrainAPI {
         return get('/exposed_partners/features_use/' + pulseAccountId);
     }
 
+    public static String getPlans(String pricingVersion){
+        return get('/exposed_partners/plans/' + pricingVersion);
+    }
+
     public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, string untilDate){
         Map<String, String> mapName = new Map<String, String>();
         mapName.put('free_users', String.valueOf(freeUsers));

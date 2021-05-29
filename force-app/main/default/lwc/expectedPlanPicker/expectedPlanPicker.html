@@ -2,11 +2,47 @@
     <lightning-card>
         <h3 slot="title">
             <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
-            Pickers > Expected Plan
+            Forecast picker
+            <lightning-progress-indicator current-step="step2">
+                <lightning-progress-step label="Step One" value="step1">
+                </lightning-progress-step>
+                <lightning-progress-step label="Step Two" value="step2">
+                </lightning-progress-step>
+                <lightning-progress-step label="Step Three" value="step3">
+                </lightning-progress-step>
+            </lightning-progress-indicator>
         </h3>
         <lightning-layout multiple-rows="true">
-            <lightning-layout-item padding="around-small" size="12">
+            <lightning-layout-item size="12">
+                <lightning-progress-indicator current-step="step2">
+                    <lightning-progress-step label="Step One" value="step1">
+                    </lightning-progress-step>
+                    <lightning-progress-step label="Step Two" value="step2">
+                    </lightning-progress-step>
+                    <lightning-progress-step label="Step Three" value="step3">
+                    </lightning-progress-step>
+                </lightning-progress-indicator>
+            </lightning-layout-item>
+            
+
+            <lightning-layout-item size="12">
                 <lightning-layout>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small" size="2">
+                        <div class="header-column">
+                            <p class="field-title" title="Pricing version">Pricing version</p>
+                            <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                        <lightning-combobox
+                            name="progress"
+                            label="Seats"
+                            value={seats}
+                            placeholder="Select seats"
+                            options={seatsOptions}
+                            onchange={handleSeatsChange}
+                        ></lightning-combobox>
+                    </lightning-layout-item>
                     <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
                         <lightning-combobox
                             name="progress"
@@ -16,7 +52,6 @@
                             options={tierOptions}
                             onchange={handleTierChange}
                         ></lightning-combobox>
-                        <p>Selected value is: {tier}</p>
                     </lightning-layout-item>
                     <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
                         <lightning-combobox
@@ -27,17 +62,54 @@
                             options={periodOptions}
                             onchange={handlePeriodChange}
                         ></lightning-combobox>
-                        <p>Selected value is: {period}</p>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
             
-            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">3</div>
-            </lightning-layout-item>
-            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">4</div>
+            <lightning-layout-item flexibility="auto, no-grow" size="12">
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small" size="2">
+                        <div class="header-column">
+                            <p class="field-title" title="Currency">Currency</p>
+                            <p><lightning-formatted-text value={currency}></lightning-formatted-text></p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                        <lightning-input type="number" label="Total price" currency-code={currency} value={totalPrice} onchange={handleTotalPriceChange} step="0.01"></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                        <lightning-input type="number" label="Seat price" currency-code={currency} value={seatPrice} onchange={handleSeatPriceChange} step="0.01"></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                        <lightning-input type="number" label="Discount" formatter="percent" value={discount} onchange={handleDiscountChange} step="0.01"></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
             </lightning-layout-item>
         </lightning-layout>
+        <lightning-layout slot="footer">
+            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Pricing version">Expected ARR</p>
+                    <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Pricing version">Expected added ARR</p>
+                    <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                <div class="page-footer page-section">
+                    <lightning-button variant="brand" label="Reset" title="Reset" disabled={isDirty} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                <div class="page-footer page-section">
+                    <lightning-button variant="brand" label="Apply" title="Apply" disabled={isDirty} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout> 
+        
     </lightning-card>
 </template>
