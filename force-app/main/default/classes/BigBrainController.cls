@@ -43,6 +43,15 @@ public with sharing class BigBrainController {
             throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
         }
     }
+    
+    @AuraEnabled(cacheable=true)
+    public static string getForecastDetails(String pulseAccountId){
+        try {
+            return BigBrainAPI.getForecastDetails(pulseAccountId);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 
     @AuraEnabled(cacheable=false)
     public static string setAccountFreeUsers(String pulseAccountId, Integer freeUsers, String untilDate){

@@ -21,6 +21,10 @@ public with sharing class BigBrainAPI {
         return get('/exposed_partners/features_use/' + pulseAccountId);
     }
 
+    public static String getForecastDetails(String pulseAccountId){
+        return get('/exposed_partners/get_forecast_details/' + pulseAccountId);
+    }
+
     public static String getPlans(String pricingVersion){
         return get('/exposed_partners/plans/' + pricingVersion);
     }
