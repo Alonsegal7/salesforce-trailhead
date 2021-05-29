@@ -1,25 +1,22 @@
 <template>
     <lightning-card>
-        <h3 slot="title">
-            <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
-            Forecast picker
-            <lightning-progress-indicator current-step="step2">
-                <lightning-progress-step label="Step One" value="step1">
-                </lightning-progress-step>
-                <lightning-progress-step label="Step Two" value="step2">
-                </lightning-progress-step>
-                <lightning-progress-step label="Step Three" value="step3">
-                </lightning-progress-step>
-            </lightning-progress-indicator>
-        </h3>
+
         <lightning-layout multiple-rows="true">
-            <lightning-layout-item size="12">
+            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                <h2>
+                    <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+                    Forecast picker
+                </h2>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto, grow" padding="around-small">
                 <lightning-progress-indicator current-step="step2">
-                    <lightning-progress-step label="Step One" value="step1">
+                    <lightning-progress-step label="Plan" value="step1">
                     </lightning-progress-step>
-                    <lightning-progress-step label="Step Two" value="step2">
+                    <lightning-progress-step label="Price" value="step2">
                     </lightning-progress-step>
-                    <lightning-progress-step label="Step Three" value="step3">
+                    <lightning-progress-step label="Forecast" value="step3">
+                    </lightning-progress-step>
+                    <lightning-progress-step label="Save" value="step4">
                     </lightning-progress-step>
                 </lightning-progress-indicator>
             </lightning-layout-item>
@@ -81,7 +78,7 @@
                         <lightning-input type="number" label="Seat price" currency-code={currency} value={seatPrice} onchange={handleSeatPriceChange} step="0.01"></lightning-input>
                     </lightning-layout-item>
                     <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                        <lightning-input type="number" label="Discount" formatter="percent" value={discount} onchange={handleDiscountChange} step="0.01"></lightning-input>
+                        <lightning-input type="number" label="Discount" formatter="percent-fixed" value={discountInputValue} onchange={handleDiscountChange} step="0.01"></lightning-input>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>

@@ -12,8 +12,6 @@ import DISCOUNT_FIELD from '@salesforce/schema/Opportunity.Expected_Discount__c'
 const fields = [CURRENCY_FIELD, PRICING_VERSION_FIELD, TIER_FIELD, PERIOD_FIELD, SEATS_FIELD, DISCOUNT_FIELD];
 
 const getTotalPrice = (plan, currency) => {
-  console.log(plan);
-  console.log(currency);
   switch (currency) {
     case 'USD':
       return plan.priceUSD;
@@ -64,12 +62,20 @@ export default class ExpectedPlanPicker extends LightningElement {
   seats = null;
   seatsOptions = null;
 
+  @track totalPrice;
+  @track seatPrice;
+  @track discount;
+
   get currency() {
     return getFieldValue(this.record, CURRENCY_FIELD);
   }
 
   get isDirty() {
     return true;
+  }
+
+  get discountInputValue() {
+    return this.discount * 100;
   }
 
   @wire(getRecord, { recordId: '$recordId', fields })
@@ -97,7 +103,7 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   updateSeatsOptions() {
-    const allSeats = this.plans.map(p => p.users.toString);
+    const allSeats = this.plans.map(p => p.users.toString());
     const uniqueSeats = [...new Set(allSeats)];
     const options = uniqueSeats.map(s => ({ label: s, value: s }));
     this.seatsOptions = options;
@@ -133,7 +139,6 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   handleSeatsChange(event) {
     this.seats = event.detail.value;
-    console.log(typeof this.seats);
     this.updatePrices();
   }
 
@@ -143,15 +148,21 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   handleTotalPriceChange(e) {
+    console.log(e.detail.value);
     this.totalPrice = e.detail.value;
+    this.applyTotalPrice();
   }
 
   handleSeatPriceChange(e) {
+    console.log(e.detail.value);
     this.seatPrice = e.detail.value;
+    this.applySeatPrice();
   }
 
   handleDiscountChange(e) {
-    this.discount = e.detail.value;
+    console.log(e.detail.value);
+    this.discount = e.detail.value / 100;
+    this.applyDiscount();
   }
 
   updatePrices(){
@@ -161,9 +172,29 @@ export default class ExpectedPlanPicker extends LightningElement {
     const matchingPlans = this.plans.filter(p => p.users == seats && p.period == period && p.tier == tier);
     if (matchingPlans.length != 1) return;
 
-    const plan = matchingPlans[0];
-    this.totalPrice = getTotalPrice(plan, this.currency);
-    this.seatPrice = getSeatPrice(plan, this.currency, seats, period);
-    this.discount = getDiscount(plan, this.currency);
+    this.plan = matchingPlans[0];
+    this.totalPrice = getTotalPrice(this.plan, this.currency);
+    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period);
+    this.discount = getDiscount(this.plan, this.currency);
+  }
+
+  applyDiscount(){
+    const { seats, period, tier } = this;
+    this.totalPrice = getTotalPrice(this.plan, this.currency) * (1 - this.discount);
+    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period) * (1 - this.discount);
+  }
+
+  applyTotalPrice(){
+    const { seats, period, tier } = this;
+    this.discount = 1 - this.totalPrice / getTotalPrice(this.plan, this.currency);
+    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period) * (1 - this.discount);
+  }
+
+  applySeatPrice(){
+    const { seats, period, tier } = this;
+    console.log('3');
+
+    this.discount = 1 - this.seatPrice / getSeatPrice(this.plan, this.currency, seats, period);
+    this.totalPrice = getTotalPrice(this.plan, this.currency) * (1 - this.discount);
   }
 }
