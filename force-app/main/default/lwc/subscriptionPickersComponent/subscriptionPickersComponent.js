@@ -8,10 +8,11 @@ import unclaimSubs from '@salesforce/apex/SubscriptionPickerController.uncliamSu
 import getUserDetails from '@salesforce/apex/SubscriptionPickerController.getUserDetails';
 import updateMA from '@salesforce/apex/SubscriptionPickerController.updateMondayAccount';
 import isclosed from '@salesforce/schema/Opportunity.IsClosed';
+import closeDateThisMonth from '@salesforce/schema/Opportunity.Close_Date_This_Month__c';
 import accId from '@salesforce/schema/Opportunity.AccountId';
 import user_Id from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
-const fields = [isclosed,accId];
+const fields = [isclosed,accId,closeDateThisMonth];
 
 export default class subscriptionPickersComponent extends LightningElement {
     @api recordId;
@@ -39,6 +40,7 @@ export default class subscriptionPickersComponent extends LightningElement {
     isAdmin=false;
     isPartner=false;
     oppIsClosed=false;
+    closeDateThisMonth;
     maId;
 
     @wire(getRecord, { recordId: '$recordId', fields })
@@ -46,6 +48,7 @@ export default class subscriptionPickersComponent extends LightningElement {
         this.oppDetails=data;
         this.oppIsClosed=getFieldValue(this.oppDetails, isclosed);
         this.maId=getFieldValue(this.oppDetails, accId);
+        this.closeDateThisMonth=getFieldValue(this.oppDetails, closeDateThisMonth);
     }
 
 
@@ -125,8 +128,8 @@ export default class subscriptionPickersComponent extends LightningElement {
         return this.subsFinal.length==0&&this.subsToClaim.length==0;
     }
     get changesDisabled(){
-        console.log('Raz Ben Ron changes disabled?: '+this.oppIsClosed==true&&this.isAdmin==false);
-        return this.oppIsClosed==true&&this.isAdmin==false;
+        console.log('Raz Ben Ron changes disabled?: '+this.oppIsClosed==true&&this.isAdmin==false&&this.closeDateThisMonth==false);
+        return this.oppIsClosed==true&&this.isAdmin==false&&this.closeDateThisMonth==false;
     }
     handleChange(e) {
         this.selected = e.detail.value;
