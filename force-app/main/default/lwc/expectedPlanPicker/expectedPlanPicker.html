@@ -1,36 +1,18 @@
 <template>
     <lightning-card>
 
-        <lightning-layout multiple-rows="true">
-            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                <h2>
-                    <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
-                    Forecast picker
-                </h2>
-            </lightning-layout-item>
-            <lightning-layout-item flexibility="auto, grow" padding="around-small">
-                <lightning-progress-indicator current-step="step2">
-                    <lightning-progress-step label="Plan" value="step1">
-                    </lightning-progress-step>
-                    <lightning-progress-step label="Price" value="step2">
-                    </lightning-progress-step>
-                    <lightning-progress-step label="Forecast" value="step3">
-                    </lightning-progress-step>
-                    <lightning-progress-step label="Save" value="step4">
-                    </lightning-progress-step>
-                </lightning-progress-indicator>
-            </lightning-layout-item>
+        <lightning-layout multiple-rows="true" vertical-align="center">
             
 
             <lightning-layout-item size="12">
                 <lightning-layout>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small" size="2">
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium" size="2">
                         <div class="header-column">
                             <p class="field-title" title="Pricing version">Pricing version</p>
                             <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
                         </div>
                     </lightning-layout-item>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
                         <lightning-combobox
                             name="progress"
                             label="Seats"
@@ -40,7 +22,7 @@
                             onchange={handleSeatsChange}
                         ></lightning-combobox>
                     </lightning-layout-item>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
                         <lightning-combobox
                             name="progress"
                             label="Tier"
@@ -50,7 +32,7 @@
                             onchange={handleTierChange}
                         ></lightning-combobox>
                     </lightning-layout-item>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
                         <lightning-combobox
                             name="progress"
                             label="Period"
@@ -65,48 +47,48 @@
             
             <lightning-layout-item flexibility="auto, no-grow" size="12">
                 <lightning-layout>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small" size="2">
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium" size="2">
                         <div class="header-column">
                             <p class="field-title" title="Currency">Currency</p>
                             <p><lightning-formatted-text value={currency}></lightning-formatted-text></p>
                         </div>
                     </lightning-layout-item>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                        <lightning-input type="number" label="Total price" currency-code={currency} value={totalPrice} onchange={handleTotalPriceChange} step="0.01"></lightning-input>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                        <lightning-input type="number" label="Seat price" currency-code={currency} value={seatPrice} onchange={handleSeatPriceChange} step="0.01" maximum-fraction-digits="2"></lightning-input>
                     </lightning-layout-item>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                        <lightning-input type="number" label="Seat price" currency-code={currency} value={seatPrice} onchange={handleSeatPriceChange} step="0.01"></lightning-input>
-                    </lightning-layout-item>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                        <lightning-input type="number" label="Discount" formatter="percent-fixed" value={discountInputValue} onchange={handleDiscountChange} step="0.01"></lightning-input>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                        <lightning-input type="number" label="Discount" formatter="percent-fixed" value={discountInputValue} onchange={handleDiscountChange} step="0.01" maximum-fraction-digits="2"></lightning-input>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
         </lightning-layout>
-        <lightning-layout slot="footer">
-            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                <div class="header-column">
-                    <p class="field-title" title="Pricing version">Expected ARR</p>
-                    <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
-                </div>
-            </lightning-layout-item>
-            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                <div class="header-column">
-                    <p class="field-title" title="Pricing version">Expected added ARR</p>
-                    <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
-                </div>
-            </lightning-layout-item>
-            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                <div class="page-footer page-section">
-                    <lightning-button variant="brand" label="Reset" title="Reset" disabled={isDirty} class="slds-m-left_x-small"></lightning-button>
-                </div>
-            </lightning-layout-item>
-            <lightning-layout-item flexibility="auto, no-grow" padding="around-small">
-                <div class="page-footer page-section">
-                    <lightning-button variant="brand" label="Apply" title="Apply" disabled={isDirty} class="slds-m-left_x-small"></lightning-button>
-                </div>
-            </lightning-layout-item>
-        </lightning-layout> 
+        <footer slot="footer">
+                
+            <lightning-layout vertical-align="center">
+                <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                    <div class="header-column">
+                        <p class="field-title" title="Pricing version">Total price</p>
+                        <p><lightning-formatted-number value={totalPrice} maximum-fraction-digits="2"></lightning-formatted-number> {currency}</p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                    <div class="header-column">
+                        <p class="field-title" title="Pricing version">Expected ARR</p>
+                        <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="2"></lightning-formatted-number></p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto, no-grow" alignment-bump="left">
+                    <div class="page-footer page-section">
+                        <lightning-button variant="brand" label="Reset" title="Reset" disabled={isDirty} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto, no-grow">
+                    <div class="page-footer page-section">
+                        <lightning-button variant="brand" label="Apply" title="Apply" disabled={isDirty} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout> 
         
+        </footer>
     </lightning-card>
 </template>

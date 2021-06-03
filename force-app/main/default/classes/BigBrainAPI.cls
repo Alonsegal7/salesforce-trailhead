@@ -1,9 +1,7 @@
 public with sharing class BigBrainAPI {
     public class BigBrainException extends Exception {}
 
-    public BigBrainAPI() {
-
-    }
+    public BigBrainAPI() { }
 
     public static String getAccountProfile(String pulseAccountId){
         return get('/exposed_partners/profile/' + pulseAccountId);

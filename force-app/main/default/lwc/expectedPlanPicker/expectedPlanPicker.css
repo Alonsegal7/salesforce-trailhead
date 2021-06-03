@@ -1,5 +1,6 @@
 .header-column {
   padding: 4px 0px;
+  font-size: 14px;
 }
 
 .field-title {
@@ -11,4 +12,8 @@
 
 .spinner-wrapper {
   height: 400px;
+}
+
+.slds-card__footer {
+  margin-top: 12px;
 }

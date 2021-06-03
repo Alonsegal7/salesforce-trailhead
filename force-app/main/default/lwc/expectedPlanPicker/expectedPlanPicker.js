@@ -1,7 +1,9 @@
 import { LightningElement, track, wire,api } from 'lwc';
 import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
 import getPlans from '@salesforce/apex/BigBrainController.getPlans';
+import getForecastDetails from '@salesforce/apex/BigBrainController.getForecastDetails';
 
+import ACCOUNT_FIELD from "@salesforce/schema/Opportunity.Account.primary_pulse_account_id__c";
 import CURRENCY_FIELD from '@salesforce/schema/Opportunity.Currency__c';
 import PRICING_VERSION_FIELD from '@salesforce/schema/Opportunity.Pricing_Version__c';
 import TIER_FIELD from '@salesforce/schema/Opportunity.Expected_Plan_Tier__c';
@@ -9,7 +11,7 @@ import PERIOD_FIELD from '@salesforce/schema/Opportunity.Expected_Plan_Period__c
 import SEATS_FIELD from '@salesforce/schema/Opportunity.Expected_Plan_Seats__c';
 import DISCOUNT_FIELD from '@salesforce/schema/Opportunity.Expected_Discount__c';
 
-const fields = [CURRENCY_FIELD, PRICING_VERSION_FIELD, TIER_FIELD, PERIOD_FIELD, SEATS_FIELD, DISCOUNT_FIELD];
+const fields = [ACCOUNT_FIELD, CURRENCY_FIELD, PRICING_VERSION_FIELD, TIER_FIELD, PERIOD_FIELD, SEATS_FIELD, DISCOUNT_FIELD];
 
 const getTotalPrice = (plan, currency) => {
   switch (currency) {
@@ -51,8 +53,9 @@ export default class ExpectedPlanPicker extends LightningElement {
   @api recordId;
   @track record;
   @track error;
-  @track pricingVersion = null;
-  @track plans = null;
+  @track pricingVersion;
+  @track pulseAccountId;
+  @track plans;
   //  currency = null;
    tier = null;
    period = null;
@@ -62,12 +65,19 @@ export default class ExpectedPlanPicker extends LightningElement {
   seats = null;
   seatsOptions = null;
 
-  @track totalPrice;
+  @track exchangeRate;
+  @track currentArr;
+
+  @track totalPrice = 0;
   @track seatPrice;
   @track discount;
 
   get currency() {
     return getFieldValue(this.record, CURRENCY_FIELD);
+  }
+
+  get pulseAccountId() {
+    return getFieldValue(this.record, ACCOUNT_FIELD);
   }
 
   get isDirty() {
@@ -85,8 +95,10 @@ export default class ExpectedPlanPicker extends LightningElement {
     }
 
     if (data) {
+      // console.log(data);
       this.record = data;
       this.pricingVersion = getFieldValue(data, PRICING_VERSION_FIELD);
+      this.pulseAccountId = getFieldValue(data, ACCOUNT_FIELD);
     }
   }
 
@@ -99,6 +111,20 @@ export default class ExpectedPlanPicker extends LightningElement {
     if (data) {
       this.plans = JSON.parse(data);
       this.updateSeatsOptions();
+    }
+  }
+
+  @wire(getForecastDetails, { pulseAccountId: '$pulseAccountId' })
+  wiredForecast({ error, data }) {
+    if(error) {
+      console.log(error);
+    }
+
+    if (data) {
+      console.log(data);
+      const parsedData = JSON.parse(data);
+      this.exchangeRate = parsedData["exchange_rate"];
+      this.currentArr = parsedData["current_arr"];
     }
   }
 
