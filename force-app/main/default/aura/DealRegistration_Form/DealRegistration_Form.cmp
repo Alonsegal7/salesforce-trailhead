@@ -1,0 +1,172 @@
+<!--
+    Component Name:     DealRegistration_Form.cmp
+    Where Is It Used:   Partner Community
+    Purpose:            Form used for Partner to register a Lead with required details and submit to check
+    controller="AddProductController"
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" controller="DealRegistration_Controller">
+
+    <aura:attribute name="fields" type="List" default="[]"/>
+    <aura:attribute name="partnerFieldSetForm" type="List" description="Partner - New Deal Registration Form"/>
+    <aura:attribute name="companyDetailsFieldSet" type="List" description="Partner - New Deal Registration Form"/>
+    <aura:attribute name="contactDetailsFieldSet" type="List" description="Partner - New Deal Registration Form"/>
+    <aura:attribute name="opportunityInformationFieldSet" type="List" description="Partner - New Deal Registration Form"/>
+    <aura:attribute name="opportunityQualificationFieldSet" type="List" description="Partner - New Deal Registration Form"/>
+    <aura:attribute name="openModal" type="Boolean"/>
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="dealFields" type="Object"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="userProfile" type="String"/>
+    <aura:attribute name="isSandbox" type="Boolean"/>
+    <aura:attribute name="hasPermission" type="Boolean" default="false"/>
+    <aura:attribute name="showNotice" type="Boolean" default="false"/>
+    <aura:attribute name="opportunityId" type="Id"/>
+    <aura:attribute name="dealRegId" type="Id"/>
+    <aura:attribute name="relatedOppLink" type="String" default=""/>
+    <aura:attribute name="relatedDealRegLink" type="String" default=""/>
+    <aura:attribute name="dealRegStatus" type="String" default=""/>
+
+    <lightning:navigation aura:id="navService"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:if isTrue="{!and(!v.openModal, v.hasPermission == true)}">
+        <lightning:button class="slds-button_stretch" label="Register a Deal" variant="brand" onclick="{!c.openDealRegForm}" />
+    </aura:if>
+    
+    <aura:if isTrue="{!v.openModal}">
+        <aura:if isTrue="{!v.showNotice == false}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_xx_small slds-fade-in-open">
+                <div class="slds-modal__container" style="margin-inline: auto; padding: 35px; width: 80%; max-width: 70vh; background: #575c96;">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                            onclick="{! c.closeModal }"
+                                            alternativeText="close"
+                                            variant="bare-inverse"
+                                            class="slds-modal__close"/>
+                        <img src="{!$Resource.Monday_Logo}" class="mondayImage"/>
+                        <p class="slds-m-vertical_small formTitle">Deal Registration</p>
+                        <p class="headerText">{!$Label.c.DealRegistration_Header}</p>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"><!--modalWhite-->
+                        <lightning:card>
+                            <section><!--onerror="{!c.handleError}"-->
+                                <lightning:recordEditForm
+                                    onload="{!c.handleLoad}"
+                                    onsubmit="{!c.handleSubmit}"
+                                    objectApiName="Lead_Registration__c"
+                                    onsuccess="{!c.handleSuccess}"
+                                    aura:id="recordEditForm">
+                                    <lightning:messages aura:id="dealMessage"/>
+                                    <aura:if isTrue="{!v.showSpinner}">
+                                        <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" class="slds-spinner_container"/>
+                                        <!-- <p>It might take a minute, thanks for your patient :)</p> -->
+                                    </aura:if>
+                                    <!--Company Details - Get fields from CompanyDetails field set on Deal Registration object-->
+                                    <div class="slds-section">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <span class="slds-truncate slds-p-horizontal_small">Company Details:</span>
+                                        </h3>
+                                    </div>
+                                    
+                                    <aura:iteration items="{!v.companyDetailsFieldSet}" var="field" indexVar="i">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-1">
+                                                <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                            </div>
+                                        </div>
+                                    </aura:iteration>
+            
+                                    <!--Contact Details - Get fields from ContactDetails field set on Deal Registration object-->
+                                    <div class="slds-section">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <span class="slds-truncate slds-p-horizontal_small">Contact Details:</span>
+                                        </h3>
+                                    </div>
+                                    
+                                    <aura:iteration items="{!v.contactDetailsFieldSet}" var="field" indexVar="i">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-1">
+                                                <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                            </div>
+                                        </div>
+                                    </aura:iteration>
+            
+                                    <!--Opportunity Information - Get fields from OpportunityDetails field set on Deal Registration object-->
+                                    <div class="slds-section">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <span class="slds-truncate slds-p-horizontal_small">Opportunity Information:</span>
+                                        </h3>
+                                    </div>
+                                    
+                                    <aura:iteration items="{!v.opportunityInformationFieldSet}" var="field" indexVar="i">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-1">
+                                                <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                            </div>
+                                        </div>
+                                    </aura:iteration>
+        
+                                    <!--Opportunity Qualification - Get fields from OpportunityDetails field set on Deal Registration object-->
+                                    <div class="slds-section">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <span class="slds-truncate slds-p-horizontal_small">Opportunity Qualification:</span>
+                                        </h3>
+                                    </div>
+                                    
+                                    <aura:iteration items="{!v.opportunityQualificationFieldSet}" var="field" indexVar="i">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-1">
+                                                <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                            </div>
+                                        </div>
+                                    </aura:iteration>
+            
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <lightning:inputField fieldName="Comments__c" variant="label-stacked"/>
+                                        </div>
+                                    </div>
+            
+                                    <div class="slds-align_absolute-center">
+                                        <lightning:button variant="brand" label="Submit" type="submit"/>
+                                    </div>
+                                </lightning:recordEditForm>
+                            </section>
+                        </lightning:card>
+                    </div>
+                </div>
+            </section>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.showNotice == true}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_xx_small slds-fade-in-open">
+                <div class="slds-modal__container" style="margin-inline: auto; padding: 35px; width: 80%; max-width: 70vh; background: #575c96;">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                            onclick="{! c.closeModal }"
+                                            alternativeText="close"
+                                            variant="bare-inverse"
+                                            class="slds-modal__close"/>
+                        <img src="{!$Resource.Monday_Logo}" class="mondayImage"/>
+                        <p class="slds-m-vertical_small formTitle">Deal Registration</p>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"><!--modalWhite-->
+                        <aura:if isTrue="{!v.dealRegStatus == 'Approved'}">
+                            <ui:message title="We received your registration. You will get an email shortly with next steps." severity="confirm" closable="true">
+                                <!-- <a href="{!v.relatedOppLink + v.opportunityId}" target="_self">View Related Opportunity</a> -->
+                            </ui:message>
+                        </aura:if>
+                        <aura:if isTrue="{!v.dealRegStatus == 'Pending Review'}">
+                            <ui:message title="We received your registration. Your CPM will reach out to you with next steps." severity="confirm" closable="true">
+                                <!-- <a href="{!v.relatedDealRegLink + v.dealRegId}" target="_self">View Deal Registration</a> -->
+                            </ui:message>
+                        </aura:if>
+                    </div>
+                </div>
+            </section>
+            
+        </aura:if>
+        
+    </aura:if>
+</aura:component>
