@@ -27,7 +27,7 @@
 							lbe.text = storeResponse.opportunity.Billing_Entity__r.Name;
 							console.log('### storeResponse6: ' + lbe.text);
 							cmp.set('v.has_existing', true);
-							if(!this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__c)){
+							if(!this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__c) && !this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r)){
 								console.log('### storeResponse7: ' + (this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r.VAT_Number__c)));
 								cmp.set('v.showVATInEdtForm', (this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r.VAT_Number__c)));
 							}
@@ -137,6 +137,18 @@
 							cmp.set('v.hasPartnerSO', true);
 						}
 					}
+					console.log('B1: ' + storeResponse.hasOwnProperty('fieldValidations'));
+					if (storeResponse.hasOwnProperty('fieldValidations') && !this.isEmpty(storeResponse.fieldValidations.list_rules)){
+						cmp.set('v.fieldValidations', storeResponse.fieldValidations.list_rules);
+						console.log('Field validation rules found: ' + storeResponse.fieldValidations.list_rules.length);
+						if (storeResponse.fieldValidations.list_rules.length > 15 && storeResponse.fieldValidations.list_rules.length < 21){
+							cmp.set('v.validationRulesCloseToLimit', true);
+						}
+						if (storeResponse.fieldValidations.list_rules.length > 20){
+							cmp.set('v.tooManyValidationRules', true);
+						}
+					}
+					
 					/**/
                 }else{
                     
@@ -152,14 +164,15 @@
 	testUniqu : function(cmp, evt){
 		var fields = evt.getParam("fields");
 		console.log('fields: ' + JSON.stringify(fields));
+		var allowSubmit = cmp.get('v.allowSubmit');
 		if (!this.isEmpty(fields)){
 			var action = cmp.get("c.testUniquness");
 			action.setParams({
                 "vatNumber": fields.VAT_Number__c,
-                "cName": fields.Name,
-                "cCountry": fields.Country__c,
-                "cCity": fields.City__c,
-                "cBillingCurrency": fields.CurrencyIsoCode 
+				"cBillingCurrency": fields.CurrencyIsoCode,
+				"cCountry": fields.Country__c,
+				"cCity": fields.City__c,
+                "cName": fields.Name                
             });
             
 			action.setCallback(this, function(response) {
@@ -167,12 +180,20 @@
 				if (state === "SUCCESS") {
 					var storeResponse = response.getReturnValue();
 					console.log('Uniquness test: ' + storeResponse);
-					if (!this.isEmpty(storeResponse)){
+					if (!this.isEmpty(storeResponse) && false){ // Rule currently down
 						cmp.set('v.selected_be', JSON.parse(storeResponse));
 						cmp.set('v.form_new', false);
 					}else{
-						var mainForm = cmp.find('mainBEForm');
-						mainForm.submit(fields);
+						var fieldValidations = cmp.get('v.fieldValidations');
+						console.log('fieldValidations.length: ' + fieldValidations.length);
+						console.log('allowSubmit: ' + allowSubmit);
+						if (!this.isEmpty(fieldValidations) && fieldValidations.length > 0 && !allowSubmit){
+							this.fieldValidations(cmp, evt);
+						} else {
+							console.log('Submit');
+							var mainForm = cmp.find('mainBEForm');
+							mainForm.submit(fields);
+						}
 					}   
 				}
 				var spinner = cmp.find("cmspinnernew");
@@ -182,6 +203,56 @@
 			$A.util.removeClass(spinner, "slds-hide");
 			$A.enqueueAction(action);
 		}
+	},
+	fieldValidations : function(cmp, evt){
+		console.log('Initiating field validations');
+		var fields = evt.getParam("fields");
+		cmp.set('v.formFieldsToSubmit', fields);
+		
+		var action = cmp.get("c.fieldValidations");
+		action.setParams({ "be": fields });
+		action.setCallback(this, function(response) {
+			var state = response.getState();
+			if (state === "SUCCESS") {
+				var storeResponse = response.getReturnValue();
+				console.log('Field validations response: ' + storeResponse);
+				if (!this.isEmpty(storeResponse)){
+					storeResponse = JSON.parse(storeResponse);
+					console.log('Found existing records: ' + JSON.stringify(storeResponse.matchesFound));
+					if (this.isEmpty(storeResponse.prevent) || storeResponse.prevent == false){
+						cmp.set('v.allowSubmit', true);
+					}
+					if (this.isEmpty(storeResponse.matchesFound) || !Array.isArray(storeResponse.matchesFound) || storeResponse.matchesFound.length == 0){
+						console.log('Submitting...');
+						var mainForm = cmp.find('mainBEForm');
+						mainForm.submit(fields);
+					} else {
+						cmp.set('v.altList', storeResponse.matchesFound);
+						cmp.set('v.showAltPopup', true);
+					}
+				}
+				/*
+				if (!this.isEmpty(storeResponse)){
+					cmp.set('v.selected_be', JSON.parse(storeResponse));
+					cmp.set('v.form_new', false);
+				}else{
+					var fieldValidations = cmp.get('v.fieldValidations');
+					if (!this.isEmpty(fieldValidations) && fieldValidations.length > 0){
+						this.fieldValidations(cmp, evt);
+					} else {
+						var mainForm = cmp.find('mainBEForm');
+						mainForm.submit(fields);
+					}
+				} 
+				*/  
+			}
+			var spinner = cmp.find("cmspinnernew");
+			$A.util.addClass(spinner, "slds-hide");
+		});
+		var spinner = cmp.find("cmspinnernew");
+		$A.util.removeClass(spinner, "slds-hide");
+		$A.enqueueAction(action);
+
 	},
 	relate : function(cmp, evt){
 		var oppId = cmp.get('v.recordId');
