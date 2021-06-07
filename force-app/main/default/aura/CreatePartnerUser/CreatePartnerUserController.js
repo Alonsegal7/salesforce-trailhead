@@ -42,7 +42,7 @@
     updateContactRecord: function(component, event, helper) { 
         helper.updateAttribute(component, event, "v.contactToUpdate");
     },
-    
+
     updateManagerId: function(component, event, helper) { 
         helper.updateAttribute(component, event, "v.managerId");
     },
