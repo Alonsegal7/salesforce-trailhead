@@ -150,12 +150,24 @@ public class CreatePartnerUserCtrl {
 	}
 
 	public static void sendWelcomeEmail(List<User> usersList){
-		String welcomeEmailTempDeveloperName = [select Value__c from Environment_Variable__mdt where DeveloperName = 'Community_Users_Welcome_Email_Template' limit 1].Value__c;
-		Id welcomeEmailTempId = [select Id from EmailTemplate where DeveloperName =: welcomeEmailTempDeveloperName limit 1].Id;
+		List<String> EnvironmentVariableNamesList = new List<String>{'Community_Users_Welcome_Email_Template','Community_Users_Welcome_Email_Sender'};
+		List<Environment_Variable__mdt> EnvironmentVariableList = [select DeveloperName, Value__c from Environment_Variable__mdt where DeveloperName IN: EnvironmentVariableNamesList];
+		Map<String,Environment_Variable__mdt> EnvironmentVariableMap = new Map<String,Environment_Variable__mdt>();
+		for(Environment_Variable__mdt envVar: EnvironmentVariableList){
+			EnvironmentVariableMap.put(envVar.DeveloperName, envVar);
+		}
+		Id welcomeEmailTempId = [select Id from EmailTemplate where DeveloperName =: EnvironmentVariableMap.get('Community_Users_Welcome_Email_Template').Value__c limit 1].Id;
+        Id orgWideEmailAddressId = [select Id from orgWideEmailAddress where Address =: EnvironmentVariableMap.get('Community_Users_Welcome_Email_Sender').Value__c limit 1].Id;
 		List<Messaging.SingleEmailMessage> renderedEmailsList = new List<Messaging.SingleEmailMessage>();
 		for(User userRec: usersList){
-			Messaging.SingleEmailMessage renderedEmail = Messaging.renderStoredEmailTemplate(welcomeEmailTempId, userRec.Id, null);
+			Messaging.SingleEmailMessage renderedEmail = new Messaging.SingleEmailMessage();
+			renderedEmail.setTemplateId(welcomeEmailTempId);
+			renderedEmail.setTargetObjectId(userRec.Id);
+			renderedEmail.setOrgWideEmailAddressId(orgWideEmailAddressId);
 			renderedEmail.setToAddresses(new List<String>{userRec.Email});
+			renderedEmail.setBccAddresses(new List<String>{'kseniasm@monday.com','avivc@monday.com'});
+			renderedEmail.setReplyTo('noreply@monday.com'); 
+			renderedEmail.setSaveAsActivity(false);
 			renderedEmailsList.add(renderedEmail);
 		}
 		if(!test.isRunningTest() && !renderedEmailsList.isEmpty()) Messaging.sendEmail(renderedEmailsList);
