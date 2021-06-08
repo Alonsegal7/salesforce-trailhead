@@ -54,7 +54,7 @@
                                 <lightning:recordEditForm
                                     onload="{!c.handleLoad}"
                                     onsubmit="{!c.handleSubmit}"
-                                    objectApiName="Lead_Registration__c"
+                                    objectApiName="Deal_Registration__c"
                                     onsuccess="{!c.handleSuccess}"
                                     aura:id="recordEditForm">
                                     <lightning:messages aura:id="dealMessage"/>
