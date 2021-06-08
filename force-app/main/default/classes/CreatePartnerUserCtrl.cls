@@ -156,6 +156,7 @@ public class CreatePartnerUserCtrl {
 		for(User userRec: usersList){
 			Messaging.SingleEmailMessage renderedEmail = Messaging.renderStoredEmailTemplate(welcomeEmailTempId, userRec.Id, null);
 			renderedEmail.setToAddresses(new List<String>{userRec.Email});
+			renderedEmailsList.add(renderedEmail);
 		}
 		if(!test.isRunningTest() && !renderedEmailsList.isEmpty()) Messaging.sendEmail(renderedEmailsList);
 	}
