@@ -121,7 +121,16 @@ public class CreatePartnerUserCtrl {
 				if(contactRec.Send_Welcome_Email__c) contactsToSendWelcomeEmail.add(contactRec);
 			}
 			if(!newUsersList.isEmpty()) Database.insert(newUsersList);
-			if(!contactsToSendWelcomeEmail.isEmpty()) sendWelcomeEmail(contactsToSendWelcomeEmail);
+
+			Map<Id,Contact> contactRecMap = new Map<Id,Contact>(contactRecList);
+			List<User> usersToSendWelcomeEmail = new List<User>();
+			for(User userRec: newUsersList){
+				if(contactRecMap.containsKey(userRec.ContactId) && contactRecMap.get(userRec.ContactId).Send_Welcome_Email__c){
+					usersToSendWelcomeEmail.add(userRec);
+				}
+			}
+			if(!usersToSendWelcomeEmail.isEmpty()) sendWelcomeEmail(usersToSendWelcomeEmail);
+			
 			return newUsersList;
 		} catch (Exception e) {
 			if(e.getMessage().containsIgnoreCase('DUPLICATE_USERNAME')){
@@ -140,13 +149,13 @@ public class CreatePartnerUserCtrl {
 		}
 	}
 
-	private static void sendWelcomeEmail(List<Contact> contactsList){
+	public static void sendWelcomeEmail(List<User> usersList){
 		String welcomeEmailTempDeveloperName = [select Value__c from Environment_Variable__mdt where DeveloperName = 'Community_Users_Welcome_Email_Template' limit 1].Value__c;
 		Id welcomeEmailTempId = [select Id from EmailTemplate where DeveloperName =: welcomeEmailTempDeveloperName limit 1].Id;
 		List<Messaging.SingleEmailMessage> renderedEmailsList = new List<Messaging.SingleEmailMessage>();
-		for(Contact contactRec: contactsList){
-			Messaging.SingleEmailMessage renderedEmail = Messaging.renderStoredEmailTemplate(welcomeEmailTempId, contactRec.Id, null);
-			renderedEmail.setToAddresses(new List<String>{contactRec.Email});
+		for(User userRec: usersList){
+			Messaging.SingleEmailMessage renderedEmail = Messaging.renderStoredEmailTemplate(welcomeEmailTempId, userRec.Id, null);
+			renderedEmail.setToAddresses(new List<String>{userRec.Email});
 		}
 		if(!test.isRunningTest() && !renderedEmailsList.isEmpty()) Messaging.sendEmail(renderedEmailsList);
 	}
