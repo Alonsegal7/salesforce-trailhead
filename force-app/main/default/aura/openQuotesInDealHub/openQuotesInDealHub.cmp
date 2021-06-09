@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
+    <aura:handler event="aura:doneRendering" action="{!c.doneRendering}"/>
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false"/>    
+    <aura:attribute name="recordId" type="String" />  
+</aura:component>

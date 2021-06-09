@@ -1,0 +1,9 @@
+div:hover {
+    cursor:pointer;
+}
+.iconLink{
+    display:inline-block;
+    margin-bottom: 1%;
+    vertical-align: middle;
+    margin-left: 5px;
+}

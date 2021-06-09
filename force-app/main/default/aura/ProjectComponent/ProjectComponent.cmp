@@ -1,0 +1,27 @@
+<!--
+    Component Name:     PronectComponent
+    Object:             Project__c
+    Where Is It Used:   Project Lightning Record Page
+    Purpose:            Shows how many days the Project was/is in Postponed Status
+-->
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	<aura:attribute name="recordId" type="String" />
+    <aura:attribute name="record" type="Object" />
+    <aura:attribute name="simpleRecord" type="Object" />
+
+    <force:recordData recordId="{!v.recordId}"
+          targetRecord ="{!v.record}"
+          targetFields ="{!v.simpleRecord}"
+          fields="Id, Postponed_Age_v1__c, Project_Status__c" />
+
+    <aura:if isTrue="{!and(lessthan(v.simpleRecord.Postponed_Age_v1__c,14), equals(v.simpleRecord.Project_Status__c,'Postponed'))}">
+        <div aura:id="container" align="center" style="font-size: 30px; background: white;">
+            <p>🔥 Project Postponed <span style="color: #ffcc00;"><b>{!v.simpleRecord.Postponed_Age_v1__c}</b></span> days 🔥</p>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!and(greaterthanorequal(v.simpleRecord.Postponed_Age_v1__c,14), equals(v.simpleRecord.Project_Status__c,'Postponed'))}">
+        <div aura:id="container" align="center" style="font-size: 30px; background: white;">
+            <p>🔥 Project Postponed <span style="color: #fb275d;"><b>{!v.simpleRecord.Postponed_Age_v1__c}</b></span> days 🔥</p>
+        </div>
+    </aura:if>
+</aura:component>

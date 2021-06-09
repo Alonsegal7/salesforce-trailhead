@@ -1,0 +1,34 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="iframeUrl" type="String" />
+    <aura:attribute name="width" type="String" />
+    <aura:attribute name="height" type="String" />
+    <aura:attribute name="scrolling" type="String" />
+    <aura:attribute name="frameBorder" type="String" />
+    <aura:attribute name="style" type="String" />
+    <aura:attribute name="sandbox" type="String" />
+	
+    <aura:attribute name="record" type="Object" />
+	<force:recordData 
+          recordId="{!v.recordId}"
+          targetFields="{!v.record}"
+          fields="Id, primary_pulse_account_id__c " 
+          LayoutType="FULL"
+		  mode="VIEW"
+                      />
+    <aura:if isTrue="{!and(v.record.primary_pulse_account_id__c != null, v.record.primary_pulse_account_id__c != '') }">
+		<iframe src="{! v.iframeUrl + '/' + v.record.primary_pulse_account_id__c + '#full_screen'}" 
+            id="bb-embed"
+            width="{!v.width}"
+            height="{!v.height}"
+            style="{!v.style}"
+            frameBorder="{!v.frameBorder}"
+            sandbox="{!v.sandbox}"
+            scrolling="{!v.scrolling}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!or(v.record.primary_pulse_account_id__c == null, v.record.primary_pulse_account_id__c == '') }">
+        <h1>Loading Account...</h1>
+    </aura:if>
+   	
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+</aura:component>

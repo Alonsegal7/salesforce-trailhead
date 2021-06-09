@@ -1,0 +1,118 @@
+<aura:component controller="CreatePartnerUserCtrl" implements="force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+	<aura:html tag="style">
+        .cuf-content { 
+            padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+            padding: 0rem !important;
+        }
+        .slds-modal__content{
+            height:unset !important;
+            max-height:unset !important;
+        }
+        .slds-modal__close{
+            display:none;
+        }
+        .slds-modal__container{
+            transform:unset !important;
+        }	
+    </aura:html>
+
+	<aura:attribute name="errMsg" type="String" default="" />
+	<aura:attribute name="existingUserId" type="String" default=""/>
+	<aura:attribute name="newUser" type="Map" default="{}"/>
+	<aura:attribute name="managerId" type="String" default=""/>
+	<aura:attribute name="sendWelcomeEmail" type="boolean" default="false"/>
+	<aura:attribute name="initialContact" type="Contact" default="{}"/>
+	<aura:attribute name="contactToUpdate" type="Contact" default="{}"/>
+	<aura:attribute name="contactFieldNamesList" type="String[]" default=""/>
+	<aura:attribute name="fieldsValidationError" type="String" default = ""/>
+	<aura:attribute name="screen1" type="boolean" default="false"/>
+    <aura:attribute name="screen2" type="boolean" default="false"/>
+	<aura:attribute name="screen3" type="boolean" default="false"/>
+
+	<force:recordData aura:id="recordLoader"
+        recordId="{!v.recordId}"
+        fields="Email, AccountId, Account.IsPartner, Approval_Status_Partner_Users__c"
+        targetFields="{!v.initialContact}"
+        recordUpdated="{!c.doInit}" 
+    />
+
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+		<div class="slds-modal__container">
+			<header class="slds-modal__header">
+				<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Community User</h2>
+			</header>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+				<aura:if isTrue="{!not(v.errMsg=='')}">
+					<div class="slds-text-heading_small slds-text-align_center slds-text-color_error">{!v.errMsg}</div>
+				</aura:if>
+				<aura:if isTrue="{!and(not(v.existingUserId==''),v.errMsg=='')}">
+					<div class="slds-text-align_center">
+						<div class="slds-text-heading_small slds-text-color_error slds-p-bottom_medium">This contact already has a community user.</div>
+						<a href="{!'/one/one.app?#/sObject/'+ v.existingUserId + '/view'}" target="_blank">Link to User</a>
+					</div>
+				</aura:if>
+				<aura:if isTrue="{!and(v.screen1,v.errMsg=='')}">
+					<lightning:recordEditForm aura:id="editFormContact" recordId="{!v.recordId}" objectApiName="Contact" density="comfy">
+						<div class="slds-text-title slds-text-title_bold slds-text-align_left slds-m-bottom_xx-small">Please fill the following fields on the contact:</div>
+						<div class="slds-grid slds-gutters slds-wrap">
+							<aura:iteration items="{!v.contactFieldNamesList}" var="fieldAPIName">
+								<div class="slds-col slds-size_1-of-2">
+									<aura:if isTrue="{!fieldAPIName == 'AccountId'}">
+                                        <div class="slds-p-horizontal_xx-small slds-m-bottom_x-small">
+                                            <label class="slds-form-element__label" for="accountName"><abbr class="slds-required" title="required">*</abbr>Account Name</label>
+                                            <lightning:inputField aura:id="field" id="accountName" fieldName="{!fieldAPIName}" variant="label-hidden" onchange="{!c.updateContactRecord}" required="true"/>
+                                        </div>
+										<aura:set attribute="else">
+											<lightning:inputField aura:id="field" fieldName="{!fieldAPIName}" onchange="{!c.updateContactRecord}" required="true"/>
+										</aura:set>
+                                    </aura:if> 
+								</div>
+							</aura:iteration>
+						</div>
+					</lightning:recordEditForm>
+					<lightning:recordEditForm objectApiName="User" density="comfy">
+						<lightning:inputField aura:id="field" fieldName="ManagerId" value="{!v.managerId}" required="true" />
+					</lightning:recordEditForm>
+					<lightning:input type="checkbox" label="Send Welcome Email" name="welcomeEmailCheckbox" checked="{!v.sendWelcomeEmail}"/>
+				</aura:if>
+				<aura:if isTrue="{!and(v.screen2,v.errMsg=='')}">
+					<div class="slds-text-align_center">
+						<div class="slds-text-heading_small slds-text-color_success slds-p-bottom_medium">New community user was created successfully.</div>
+						<div class="slds-text-heading_small slds-p-bottom_medium">Username: {!v.newUser.Username}</div>
+						<a href="{!'/one/one.app?#/sObject/'+ v.newUser.Id + '/view'}" target="_blank">Link to User</a>
+					</div>
+				</aura:if>
+				<aura:if isTrue="{!and(v.screen3,v.errMsg=='')}">
+					<div class="slds-text-align_center">
+						<div class="slds-text-heading_small slds-text-color_success slds-p-bottom_medium">Contact was submitted for approval.</div>
+						<div class="slds-text-heading_small slds-p-bottom_medium">Once approved a user will be created automatically.</div>
+					</div>
+				</aura:if>
+			</div>    
+			<footer class="slds-modal__footer">
+				<aura:if isTrue="{!v.fieldsValidationError != ''}">
+					<div class="slds-text-align_center slds-m-bottom_small slds-text-color_error">{!v.fieldsValidationError}<br /></div> 
+				</aura:if>
+				<div class="slds-align_absolute-center">
+					<aura:if isTrue="{!and(v.errMsg=='',v.existingUserId=='')}">
+						<aura:if isTrue="{!v.screen1}">
+							<lightning:button label="Close" class="slds-button slds-button_neutral" onclick="{!c.closeModal}" />
+							<lightning:button label="Create" class="slds-button slds-button_brand" onclick="{!c.createNewUser}" />
+						</aura:if>
+						<aura:if isTrue="{!or(v.screen2,v.screen3)}">
+							<lightning:button label="OK" class="slds-button slds-button_neutral" onclick="{!c.closeModalRefreshView}" />
+						</aura:if>
+						<aura:set attribute="else">
+							<lightning:button label="Close" class="slds-button slds-button_neutral" onclick="{!c.closeModal}" />
+						</aura:set>
+					</aura:if>
+				</div>
+			</footer>
+		</div>
+	</section>
+	<div class="slds-is-relative">
+		<lightning:spinner alternativeText="Loading" size="medium" class="slds-hide" aura:id="cmspinner" />
+	</div>
+</aura:component>

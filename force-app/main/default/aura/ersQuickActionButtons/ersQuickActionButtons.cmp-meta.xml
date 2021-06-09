@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>43.0</apiVersion>
+    <description>Lightning Component designed to allow placement of a Quick Action as a Button on a Lightning Page</description>
+</AuraDefinitionBundle>

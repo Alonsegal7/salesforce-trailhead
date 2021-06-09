@@ -12,5 +12,4 @@
 **/aura/**/*.svg
 **/aura/**/*.tokens
 **/aura/**/*.xml
-**/aura/**/*.app
 .sfdx
