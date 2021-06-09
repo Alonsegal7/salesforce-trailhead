@@ -2,6 +2,7 @@ import { LightningElement, api, wire, track } from 'lwc';
 import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import setAccountFreeUsers from '@salesforce/apex/BigBrainController.setAccountFreeUsers';
+import getAccountGrantedFeatures from '@salesforce/apex/BigBrainController.getAccountGrantedFeatures';
 import resetAccountTrial from '@salesforce/apex/BigBrainController.resetAccountTrial';
 
 import ACCOUNT_FIELD from '@salesforce/schema/Lead.primary_pulse_account_id__c';
@@ -16,7 +17,6 @@ const formatDate = (date) => {
 } 
 
 export default class BigBrainAccountActions extends LightningElement {
-  @api pulseAccountId;
   @api recordId;
   @wire(getRecord, { recordId: '$recordId', fields })
   lead;
@@ -39,6 +39,18 @@ export default class BigBrainAccountActions extends LightningElement {
       { label: '8 - new infra / higher prices', value: 8 },
       { label: '9 - new infra / updated higher prices (ENT 38$, BRL, MXN, INR)', value: 9 }
     ];
+  }
+
+  @api pulseAccountId;
+  @wire(getAccountGrantedFeatures, { pulseAccountId: '$pulseAccountId' })
+  data({ error, data }) {
+    console.log("data", error)
+    if(!data) return;
+
+    const respJson = JSON.parse(data)
+    console.log("respJson", respJson)
+    this.options = []
+    this.value = ""
   }
 
   freeUsersAmount = 0;
