@@ -51,11 +51,17 @@ const getDiscount = (plan, currency) => {
 
 export default class ExpectedPlanPicker extends LightningElement {
   @api recordId;
+
   @track record;
-  @track error;
+  @track plans;
+
+  @track recordError;
+  @track plansError;
+  @track forecastDetailsError;
+
   @track pricingVersion;
   @track pulseAccountId;
-  @track plans;
+  
   //  currency = null;
    tier = null;
    period = null;
@@ -71,6 +77,14 @@ export default class ExpectedPlanPicker extends LightningElement {
   @track totalPrice = 0;
   @track seatPrice;
   @track discount;
+
+  get isLoading() {
+    return !this.isError && (!this.record || !this.plans || !this.forecastDetails);
+  }
+
+  get isError() {
+    return this.recordError || this.plansError || this.forecastDetailsError;
+  }
 
   get currency() {
     return getFieldValue(this.record, CURRENCY_FIELD);
@@ -90,12 +104,12 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getRecord, { recordId: '$recordId', fields })
   wiredRecord({ error, data }) {
-    if(error) {
+    if (error) {
       console.log(error);
+      this.recordError = error;
     }
 
     if (data) {
-      // console.log(data);
       this.record = data;
       this.pricingVersion = getFieldValue(data, PRICING_VERSION_FIELD);
       this.pulseAccountId = getFieldValue(data, ACCOUNT_FIELD);
@@ -104,8 +118,9 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getPlans, { pricingVersion: '$pricingVersion' })
   wiredPlans({ error, data }) {
-    if(error) {
+    if (error) {
       console.log(error);
+      this.plansError = error;
     }
 
     if (data) {
@@ -116,15 +131,15 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getForecastDetails, { pulseAccountId: '$pulseAccountId' })
   wiredForecast({ error, data }) {
-    if(error) {
+    if (error) {
       console.log(error);
+      this.forecastDetailsError = error;
     }
 
     if (data) {
-      console.log(data);
-      const parsedData = JSON.parse(data);
-      this.exchangeRate = parsedData["exchange_rate"];
-      this.currentArr = parsedData["current_arr"];
+      this.forecastDetails = JSON.parse(data);
+      this.exchangeRate = this.forecastDetails["exchange_rate"];
+      this.currentArr = this.forecastDetails["current_arr"];
     }
   }
 

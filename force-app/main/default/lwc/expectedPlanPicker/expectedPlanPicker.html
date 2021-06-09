@@ -1,9 +1,17 @@
 <template>
-    <lightning-card>
+    <template if:true={isLoading}>
+    <div class="slds-is-relative" style="min-height: 10vh;">
+        <lightning-spinner alternative-text="Loading..." size="medium">
+        </lightning-spinner>
+    </div>
+    </template>
 
+    <template if:true={isError}>
+        <lightning-icon icon-name="utility:error" alternative-text="Error" title="Error"></lightning-icon>
+    </template>
+  
+    <lightning-card if:false={isLoading}>
         <lightning-layout multiple-rows="true" vertical-align="center">
-            
-
             <lightning-layout-item size="12">
                 <lightning-layout>
                     <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium" size="2">

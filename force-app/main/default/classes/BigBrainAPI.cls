@@ -4,27 +4,27 @@ public with sharing class BigBrainAPI {
     public BigBrainAPI() { }
 
     public static String getAccountProfile(String pulseAccountId){
-        return get('/exposed_partners/profile/' + pulseAccountId);
+        return get('/salesforce_api/account/' + pulseAccountId);
     }
     
     public static String getAccountUsers(String pulseAccountId){
-        return get('/exposed_partners/users/' + pulseAccountId);
+        return get('/salesforce_api/account/' + pulseAccountId + '/users');
     }
 
     public static String getAccountBilling(String pulseAccountId){
-        return get('/exposed_partners/billing/' + pulseAccountId);
+        return get('/salesforce_api/account/' + pulseAccountId + '/billing');
     }
 
     public static String getAccountFeaturesUsage(String pulseAccountId){
-        return get('/exposed_partners/features_use/' + pulseAccountId);
+        return get('/salesforce_api/account/' + pulseAccountId + '/features_usage');
     }
 
     public static String getForecastDetails(String pulseAccountId){
-        return get('/exposed_partners/get_forecast_details/' + pulseAccountId);
+        return get('/salesforce_api/account/' + pulseAccountId + '/forecast_details');
     }
 
     public static String getPlans(String pricingVersion){
-        return get('/exposed_partners/plans/' + pricingVersion);
+        return get('/salesforce_api/plans/' + pricingVersion);
     }
 
     public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, string untilDate){
@@ -32,12 +32,12 @@ public with sharing class BigBrainAPI {
         mapName.put('free_users', String.valueOf(freeUsers));
         mapName.put('due_date', untilDate);
 
-        return put('/exposed_partners/set_free_users/' + pulseAccountId, mapName);
+        return put('/salesforce_api/account/' + pulseAccountId + '/free_users', mapName);
     }
 
     public static String resetAccountTrial(String pulseAccountId){
         Map<String, String> mapName = new Map<String, String>();
-        return put('/exposed_partners/reset_trial/' + pulseAccountId);
+        return put('/salesforce_api/account/' + pulseAccountId + '/reset_trial');
     }
 
     private static string get(String url) {
