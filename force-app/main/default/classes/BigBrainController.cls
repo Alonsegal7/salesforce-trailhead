@@ -53,6 +53,19 @@ public with sharing class BigBrainController {
         }
     }
 
+    @AuraEnabled(cacheable=true)
+    public static String getAccountGrantedFeatures(String pulseAccountId){
+        try {
+            string allFeatures = BigBrainAPI.getAllGrantedFeatures(pulseAccountId);
+            string usedFeatures = BigBrainAPI.getAccountUsedGrantedFeatures(pulseAccountId);
+            string resp = '{ allFeatures: ' + allFeatures;
+            resp += ', usedFeatures: ' + usedFeatures + ' }';            
+            return resp;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
     @AuraEnabled(cacheable=false)
     public static string setAccountFreeUsers(String pulseAccountId, Integer freeUsers, String untilDate){
         try {
