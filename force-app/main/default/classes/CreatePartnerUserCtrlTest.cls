@@ -52,6 +52,15 @@ public class CreatePartnerUserCtrlTest {
 		System.assertEquals(con.Email, newUser.Email);
 	}
 
+	static testmethod void test_ContactSendWelcomeEmail_TestTrigger(){
+		Contact con = [select Id from Contact limit 1];
+        con.Community_User__c = UserInfo.getUserId();
+        con.Send_Welcome_Email__c = true;
+		Test.startTest();
+        update con;
+        Test.stopTest();
+	}
+
     static testmethod void test_ContactGetsApproved_TestSubmitApproved(){
 		Contact con = [select Id, Email from Contact limit 1];
         con.Send_Welcome_Email__c = true;

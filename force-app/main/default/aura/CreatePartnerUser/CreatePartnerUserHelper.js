@@ -19,6 +19,10 @@
 						component.set("v.existingUserId", storeResponse.existingUserId);
 					} else {
 						component.set("v.contactFieldNamesList", storeResponse.contactFieldNamesList);
+						component.set("v.displayWelcomeEmailCheckbox", storeResponse.displayWelcomeEmailCheckbox);
+						if(storeResponse.displayWelcomeEmailCheckbox){
+							component.set("v.sendWelcomeEmail", false);
+						}
 						component.set("v.managerId", $A.get("$SObjectType.CurrentUser.Id"));
 						component.set("v.screen1", true);
 					}
@@ -35,11 +39,8 @@
 				}
 				component.set("v.errMsg", errMsg);
             }
-			var spinner = component.find("cmspinner");
-        	$A.util.addClass(spinner, "slds-hide");
+			component.set("v.spinner", false);
         });
-		var spinner = component.find("cmspinner");
-        $A.util.removeClass(spinner, "slds-hide");
         $A.enqueueAction(action);
     },
 
@@ -75,11 +76,8 @@
 				}
 				component.set("v.errMsg", errMsg);
             }
-			var spinner = component.find("cmspinner");
-        	$A.util.addClass(spinner, "slds-hide");
+			component.set("v.spinner", false);
         });
-		var spinner = component.find("cmspinner");
-        $A.util.removeClass(spinner, "slds-hide");
         $A.enqueueAction(action);
 	},
 

@@ -6,13 +6,16 @@ public class CreatePartnerUserCtrl {
         public Id existingUserId {get;set;}
         @AuraEnabled
 		public List<String> contactFieldNamesList {get;set;}
+		@AuraEnabled
+		public Boolean displayWelcomeEmailCheckbox {get;set;}
 
         public resWrapper(Id existingUserId){
 			this.existingUserId = existingUserId;
         }
 
-		public resWrapper(List<String> contactFieldNamesList){
+		public resWrapper(List<String> contactFieldNamesList, Boolean displayWelcomeEmailCheckbox){
 			this.contactFieldNamesList = contactFieldNamesList;
+			this.displayWelcomeEmailCheckbox = displayWelcomeEmailCheckbox;
         }
     }
 
@@ -35,7 +38,9 @@ public class CreatePartnerUserCtrl {
 			for(Schema.FieldSetMember f : SObjectType.Contact.FieldSets.Create_Community_User.getFields()) {
 				contactFieldNamesList.add(f.getFieldPath());
 			}
-			return new resWrapper(contactFieldNamesList);
+			User myUser = [select Team__c from User where Id =: UserInfo.getUserId()];
+			String teamName = [select Value__c from Environment_Variable__mdt where DeveloperName = 'Community_Users_Team_For_Welcome_Email' limit 1].Value__c;
+			return new resWrapper(contactFieldNamesList, myUser.Team__c == teamName);
 		} catch (Exception e) {
 			throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
 		}
@@ -142,6 +147,25 @@ public class CreatePartnerUserCtrl {
 			} else {
 				throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
 			}
+		}
+	}
+
+	public static void sendWelcomeEmails(List<Contact> newContactsList, Map<Id, Contact> oldContactsMap){
+		Set<Id> usersIds = new Set<Id>();
+		for(Contact con: newContactsList){
+			if(con.Send_Welcome_Email__c && !oldContactsMap.get(con.Id).Send_Welcome_Email__c && con.Community_User__c != null){
+				usersIds.add(con.Community_User__c);
+			}
+		}
+		if(!usersIds.isEmpty()) {
+			firstRun = false;
+			Map<String,Id> IdsForEmailsMap = getMetadataForEmails();
+			List<Messaging.SingleEmailMessage> allEmailsToSend = new List<Messaging.SingleEmailMessage>();
+			List<User> usersList = [select Id, ContactId, Email from User where Id IN: usersIds];
+			for(User userRec: usersList){
+				allEmailsToSend.add(generateEmail(new List<String>{userRec.Email}, userRec.Id, IdsForEmailsMap.get('welcomeEmailTempId'), IdsForEmailsMap.get('orgWideEmailAddressId')));
+			}
+			if(!Test.isRunningTest() && !allEmailsToSend.isEmpty()) Messaging.sendEmail(allEmailsToSend);
 		}
 	}
 
