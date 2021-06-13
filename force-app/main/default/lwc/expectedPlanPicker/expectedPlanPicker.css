@@ -17,3 +17,7 @@
 .slds-card__footer {
   margin-top: 12px;
 }
+
+.left-divider {
+  border-left: 5px solid red;
+}

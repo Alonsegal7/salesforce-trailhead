@@ -159,6 +159,13 @@ export default class ExpectedPlanPicker extends LightningElement {
     ];
   }
 
+  get options() {
+    return [
+        { label: 'New contract', value: 'option1' },
+        { label: 'Prorated', value: 'option2' },
+    ];
+}
+
   handleTierChange(event) {
     this.tier = event.detail.value;
     this.updatePrices();
