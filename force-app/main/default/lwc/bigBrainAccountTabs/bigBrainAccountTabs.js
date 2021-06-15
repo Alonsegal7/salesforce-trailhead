@@ -9,8 +9,8 @@ export default class BigBrainAccountTabs extends LightningElement {
     @track record; 
 
     get pulseAccountId() {
-        const leadPulseAccoiuntId = getFieldValue(data, LEAD_ACCOUNT_FIELD);
-        const opportunityPulse_account_id = getFieldValue(data, OPP_ACCOUNT_FIELD);
+        const leadPulseAccoiuntId = getFieldValue(this.record, LEAD_ACCOUNT_FIELD);
+        const opportunityPulse_account_id = getFieldValue(this.record, OPP_ACCOUNT_FIELD);
         return leadPulseAccoiuntId || opportunityPulse_account_id;
       }
 
@@ -18,7 +18,5 @@ export default class BigBrainAccountTabs extends LightningElement {
     @wire(getRecord, { recordId: '$recordId', fields })
     wiredRecord({ error, data }) {
         if (data) { this.record = data; }
-        }
     }
-
 }

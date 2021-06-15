@@ -1,4 +1,4 @@
-import { LightningElement, wire, api } from 'lwc';
+import { LightningElement, wire, api, track } from 'lwc';
 import getAccountUsers from '@salesforce/apex/BigBrainController.getAccountUsers';
 
 const DEFAULT_PHOTO = 'https://d1f5eoceewynq7.cloudfront.net/dapulse_default_photo.png';
@@ -16,8 +16,8 @@ export default class BigBrainAccountUsers extends LightningElement {
     @api pulseAccountId;
 
     columns = columns;
-    isLoading = true;
-    usersData = [];
+    @track isLoading = true;
+    @track usersData = [];
     error;
 
     @wire(getAccountUsers, { pulseAccountId: '$pulseAccountId' })
