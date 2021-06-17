@@ -14,8 +14,8 @@ private class Lookup_Ctrl_TEST {
         List<Contact> contacts = [Select Id, LastName, FirstName, Name From Contact];
         
         Test.startTest();
-        Lookup_Ctrl.searchDB('Contact', 'Name', 'Id', 3, 'Name', 'Name', null, 'LastName');
-		Lookup_Ctrl.searchDB('Contact', 'Name', 'Id', 3, 'Name_OR_Email', 'Name', null, 'LastName');
+        Lookup_Ctrl.searchDB('Contact', 'Name', 'Id', 3, 'Name', 'Name', null, 'LastName', 'Status__c');
+		Lookup_Ctrl.searchDB('Contact', 'Name', 'Id', 3, 'Name_OR_Email', 'Name', null, 'LastName', 'Status__c');
         Test.stopTest();
     }
 }

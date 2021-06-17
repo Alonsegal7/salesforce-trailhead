@@ -34,6 +34,6 @@ public with sharing class projectWidget {
     
     public static Project__c getProjectHelper(String accountId) {
         return [SELECT Id, Name FROM Project__c 
-                WHERE Monday_Account__c =: accountId AND (Project_Type__c = 'Onboarding' OR Project_Type__c = 'Expansion') ORDER BY createdDate asc][0];
+                WHERE Monday_Account__c =: accountId AND (Project_Type__c = 'Onboarding' OR Project_Type__c = 'Expansion') ORDER BY createdDate desc][0];
     }
 }

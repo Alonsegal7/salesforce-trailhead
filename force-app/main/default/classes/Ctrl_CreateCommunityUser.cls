@@ -16,17 +16,17 @@ public class Ctrl_CreateCommunityUser  {
     }
 
 	@AuraEnabled
-	public static resWrapper getFieldsList(Id contactId, String email){
+	public static resWrapper getFieldsList(Id contactId, String email, Id accountId, Boolean isPartner){
 		// permissions check
 		String profileName = [Select Id, Name from Profile where Id =: UserInfo.getProfileId()].Name;
 		if(!profileName.containsIgnoreCase('System Administrator')) throw new AuraHandledException('Oops! You are not allowed to run this action. Please contact Biz Ops.');
 
 		try {
+			// enable partner account
+			if(!isPartner) Database.update(new Account(Id = accountId, IsPartner = true));
 			// find exising users
 			String dynamicQuery = 'select Id from User where ContactId = \'' + contactId + '\'';
-			if(email != ''){
-				dynamicQuery += ' or Email = \'' + email + '\' limit 1';
-			}
+			if(email != '') dynamicQuery += ' or Email = \'' + email + '\' limit 1';
 			List<User> matchingUserList = Database.query(dynamicQuery);
 			if(matchingUserList != null && !matchingUserList.isEmpty()) return new resWrapper(matchingUserList.get(0).Id);
 			// get contact fieldset
@@ -77,11 +77,6 @@ public class Ctrl_CreateCommunityUser  {
 			newUserRec.CommunityNickname = newUserRec.Alias;
 			newUserRec.ManagerId = managerId;
 			newUserRec.ContactId = contactRec.Id;
-			if(!Test.isRunningTest()){
-				String userRoleName = contactRec.Account.Name + ' Partner User';
-				Id userRoleId = [select Id from UserRole where name =: userRoleName limit 1].Id;
-				newUserRec.UserRoleId = userRoleId;
-			}
 			Database.insert(newUserRec);
 			if(contactToUpdate != null) System.enqueueJob(new updateContactQueueable(contactToUpdate)); // need to be async update due to user DML action
 			return new User(Id = newUserRec.Id, Username = newUserRec.Username);
