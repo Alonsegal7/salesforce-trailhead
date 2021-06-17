@@ -14,12 +14,29 @@
         <lightning-layout multiple-rows="true" vertical-align="center">
             <lightning-layout-item size="12">
                 <lightning-layout>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium" size="2">
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                        <lightning-radio-group name="radioGroup"
+                          label="Upgrade type"
+                          options={options}
+                          value={value}
+                          type="button"></lightning-radio-group>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium">
                         <div class="header-column">
                             <p class="field-title" title="Pricing version">Pricing version</p>
                             <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
                         </div>
                     </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium">
+                        <div class="header-column">
+                            <p class="field-title" title="Currency">Currency</p>
+                            <p><lightning-formatted-text value={currency}></lightning-formatted-text></p>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="12">
+                <lightning-layout>
                     <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
                         <lightning-combobox
                             name="progress"
@@ -55,12 +72,7 @@
             
             <lightning-layout-item flexibility="auto, no-grow" size="12">
                 <lightning-layout>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium" size="2">
-                        <div class="header-column">
-                            <p class="field-title" title="Currency">Currency</p>
-                            <p><lightning-formatted-text value={currency}></lightning-formatted-text></p>
-                        </div>
-                    </lightning-layout-item>
+
                     <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
                         <lightning-input type="number" label="Seat price" currency-code={currency} value={seatPrice} onchange={handleSeatPriceChange} step="0.01" maximum-fraction-digits="2"></lightning-input>
                     </lightning-layout-item>
@@ -75,17 +87,29 @@
             <lightning-layout vertical-align="center">
                 <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
                     <div class="header-column">
-                        <p class="field-title" title="Pricing version">Total price</p>
+                        <p class="field-title" title="Pricing version">Plan price</p>
                         <p><lightning-formatted-number value={totalPrice} maximum-fraction-digits="2"></lightning-formatted-number> {currency}</p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small" class="left-divider">
+                    <div class="header-column">
+                        <p class="field-title" title="Pricing version">Current ARR</p>
+                        <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="2"></lightning-formatted-number></p>
                     </div>
                 </lightning-layout-item>
                 <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
                     <div class="header-column">
-                        <p class="field-title" title="Pricing version">Expected ARR</p>
+                        <p class="field-title" title="Pricing version">Added ARR</p>
                         <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="2"></lightning-formatted-number></p>
                     </div>
                 </lightning-layout-item>
-                <lightning-layout-item flexibility="auto, no-grow" alignment-bump="left">
+                <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                    <div class="header-column">
+                        <p class="field-title" title="Pricing version">Final ARR</p>
+                        <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="2"></lightning-formatted-number></p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto, no-grow" alignment-bump="left" class="left-divider">
                     <div class="page-footer page-section">
                         <lightning-button variant="brand" label="Reset" title="Reset" disabled={isDirty} class="slds-m-left_x-small"></lightning-button>
                     </div>
