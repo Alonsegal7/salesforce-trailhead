@@ -6,7 +6,7 @@ public class OpportunityLineItemHandler {
         Set<Id> oliIds = new Set<Id>();
         system.debug('Raz Ben Ron OLIH NewOlis.values(): '+NewOlis.values());
         for(OpportunityLineItem oli : NewOlis.values()){
-            if(!oli.CC_Claim_Product__c){
+            if(!oli.CC_Claim_Product__c && !oli.Co_Sell_Product__c){
                 oliIds.add(oli.Id);
             }
         }

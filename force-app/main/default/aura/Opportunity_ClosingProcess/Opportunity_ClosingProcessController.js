@@ -179,7 +179,7 @@
     closeModal : function(component, event, helper) {
         console.log('### v.innerPathValue: ' + component.get('v.innerPathValue'));
         component.set("v.isModalOpen", false);
-        // window.location.reload()
+        window.location.reload()
     },
 
     handleSelect : function (component, event, helper) {
@@ -198,7 +198,7 @@
             component.set('v.lostStage', 'Closed Lost');
 
             var fieldSetReferance;
-            var isRetreiveFieldSet;
+            var isRetreiveFieldSet = false;
             if(component.get('v.oppData.StageName') != 'Qualified'){
                 if(component.get('v.oppData.Type') != 'Expansion'){
                     if(component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity' && component.get('v.oppData.Is_Potential_GB_Opportunity__c')){
@@ -212,26 +212,34 @@
                         isRetreiveFieldSet = true;
                         console.log('@@@ fieldSetReferance_v1: ');
                     }
+
+                    if(isRetreiveFieldSet == true){
+                        let action1 = component.get("c.getFieldsFromFieldSet");
+                        action1.setParams({
+                            objectName: "Opportunity",
+                            fieldSetName: fieldSetReferance
+                        });
+                        action1.setCallback(this, function(response){
+                            let state = response.getState();
+                            if(state==="SUCCESS"){
+                                let fieldsStr = response.getReturnValue();
+                                console.log("fields => ",fieldsStr);
+                                let fields = JSON.parse(fieldsStr);
+                                component.set("v.fields", fields);
+                            } else {
+                                alert("error");
+                            }
+                        });
+                        $A.enqueueAction(action1);
+                    }
+
+                    else if(isRetreiveFieldSet == false){
+                        component.set('v.showValidation', false);
+                    }
                 }
 
-                if(isRetreiveFieldSet == true){
-                    let action1 = component.get("c.getFieldsFromFieldSet");
-                    action1.setParams({
-                        objectName: "Opportunity",
-                        fieldSetName: fieldSetReferance
-                    });
-                    action1.setCallback(this, function(response){
-                        let state = response.getState();
-                        if(state==="SUCCESS"){
-                            let fieldsStr = response.getReturnValue();
-                            console.log("fields => ",fieldsStr);
-                            let fields = JSON.parse(fieldsStr);
-                            component.set("v.fields", fields);
-                        } else {
-                            alert("error");
-                        }
-                    });
-                    $A.enqueueAction(action1);
+                else{
+                    component.set('v.showValidation', false);
                 }
             }
 
@@ -415,7 +423,7 @@
         }
         component.set('v.isModalOpen', false);
         helper.setStageUpdateToast(component, event, helper);
-        // window.location.reload()
+        window.location.reload()
     },
 
     submitDetails : function(component, event, helper) {

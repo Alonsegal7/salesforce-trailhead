@@ -19,18 +19,18 @@ private class Ctrl_CreateCommunityUser_TEST {
 	}
 
 	static testmethod void test1(){
-		Contact con = [select Id, Email from Contact limit 1];
+		Contact con = [select Id, AccountId, Account.IsPartner, Email from Contact limit 1];
 		Test.startTest();
-		Ctrl_CreateCommunityUser.resWrapper res = Ctrl_CreateCommunityUser.getFieldsList(con.Id, con.Email);
+		Ctrl_CreateCommunityUser.resWrapper res = Ctrl_CreateCommunityUser.getFieldsList(con.Id, con.Email, con.AccountId, con.Account.IsPartner);
 		Test.stopTest();
 		System.assertEquals(false, res.contactFieldNamesList.isEmpty());
 	}
 
 	static testmethod void test2(){
-		Contact con = [select Id, Email from Contact limit 1];
+		Contact con = [select Id, Email, AccountId, Account.IsPartner from Contact limit 1];
 		Test.startTest();
 		User newUser = Ctrl_CreateCommunityUser.createUser(con.Id, null, UserInfo.getUserId());
-		Ctrl_CreateCommunityUser.resWrapper res = Ctrl_CreateCommunityUser.getFieldsList(con.Id, con.Email);
+		Ctrl_CreateCommunityUser.resWrapper res = Ctrl_CreateCommunityUser.getFieldsList(con.Id, con.Email, con.AccountId, con.Account.IsPartner);
 		Test.stopTest();
 		System.assertNotEquals(null, newUser.Id);
 		System.assertEquals(null, res.contactFieldNamesList);
