@@ -19,5 +19,14 @@
 }
 
 .left-divider {
-  border-left: 5px solid red;
+  border-left: 1px solid grey;
+}
+
+.next-step-info {
+  padding: 8px;
+  color: grey;
+}
+
+.next-step-info-item {
+  margin-top: 12px;
 }
