@@ -76,7 +76,13 @@ const getDiscount = (plan, currency) => {
 const parseSeatsOptions = (plans, quoteType, currentSeats) => {
   const allSeats = plans.map(p => p.users.toString());
   const uniqueSeats = [...new Set(allSeats)];
-  const options = uniqueSeats.map(s => ({ label: (quoteType == QUOTE_TYPE_NEW_CONTARCT) ? s : `+${currentSeats - s}`, value: s }));
+  const options = uniqueSeats.map(s => {
+    const seatsDelta = s - currentSeats;
+    if (seatsDelta <= 0) { return null; }
+    const label = (quoteType == QUOTE_TYPE_NEW_CONTARCT) ? s : `+${seatsDelta}`;
+    return { label: label, value: s };
+  }).filter(v => v);
+
   return options;
 }
 
@@ -278,7 +284,7 @@ export default class ExpectedPlanPicker extends LightningElement {
       case QUOTE_TYPE_NEW_CONTARCT:
         return seats;
       case QUOTE_TYPE_PRORATED:
-        return currentSeats;
+        return seats - currentSeats;
       
       default:
         return null;
