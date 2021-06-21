@@ -1,0 +1,65 @@
+<template>
+  <lightning-accordion >
+    <lightning-accordion-section name="A" label="Free users">
+      <lightning-layout vertical-align="end">
+        <lightning-layout-item flexibility="auto" padding="around-small">
+          <lightning-input
+            type="number"
+            name="freeUsersInput"
+            label="Free users"
+            value={freeUsersAmount}
+            onchange={handleFreeUsersAmountChange}
+            placeholder="0"
+          ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item flexibility="auto" padding="around-small">
+          {datetimestring}
+          <lightning-input
+            required
+            type="date"
+            name="input2"
+            label="Grant Until"
+            min={todaysDate}
+            max={oneMonthFromNow}
+            value={freeUsersUntil}
+            onchange={handleFreeUsersUntilChange}
+          ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item flexibility="auto" padding="around-small">
+          <lightning-button
+            label="Grant" 
+            variant="brand"
+            class="slds-button"
+            onclick={handleFreeUsersGrantClick}
+          ></lightning-button>
+        </lightning-layout-item>
+      </lightning-layout>
+    </lightning-accordion-section>
+    <lightning-accordion-section name="B" label="Reset trial">
+      <lightning-button
+        label="Reset trial (7 days)" 
+        variant="brand"
+        class="slds-button"
+        onclick={handleResetTrialClick}
+      ></lightning-button>
+    </lightning-accordion-section>
+    <lightning-accordion-section name="C" label="Pricing version">
+      <lightning-combobox
+        name="progress"
+        value={pricingVersion}
+        placeholder="Select pricing version"
+        options={pricingVersionOptions}
+        onchange={handleTierChange}
+      ></lightning-combobox>
+    </lightning-accordion-section>
+    <lightning-accordion-section name="D" label="Granted Features">
+      <lightning-dual-listbox name="granted-features"
+          label="Select Features"
+          source-label="Available"
+          selected-label="Granted"
+          field-level-help=""
+          options={options}
+          value={value}></lightning-dual-listbox>
+    </lightning-accordion-section>
+  </lightning-accordion>
+</template>

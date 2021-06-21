@@ -1,0 +1,31 @@
+.features-list {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  max-height: 300px;
+  flex-wrap: wrap;
+}
+
+.feature-item {
+  display: flex;
+  line-height: 1.5;
+  padding: 0 8px;
+  justify-content: space-between;
+}
+
+.circle {
+  margin-left: 4px;
+  height: 8px;
+  width: 8px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.circle.green {
+  background-color: #00ca72;
+}
+
+.circle.red {
+  background-color: #e44258;
+}
