@@ -1,0 +1,30 @@
+<template>
+    <lightning-card>
+        <h3 slot="title">
+            <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+            Account
+        </h3>
+        <template if:true={pulseAccountId}>
+            <lightning-tabset>
+                <lightning-tab label="Profile">
+                    <c-big-brain-account-profile pulse-account-id={pulseAccountId}></c-big-brain-account-profile>
+                </lightning-tab>
+                <lightning-tab label="Users" class="account-tab">
+                    <c-big-brain-account-users pulse-account-id={pulseAccountId}></c-big-brain-account-users>
+                </lightning-tab>
+                <!--<lightning-tab label="Features" class="account-tab">
+                    <c-big-brain-account-usage-features pulse-account-id={pulseAccountId}></c-big-brain-account-usage-features>
+                </lightning-tab>-->
+                <lightning-tab label="Billing" class="account-tab">
+                    <c-big-brain-account-billing pulse-account-id={pulseAccountId}></c-big-brain-account-billing>
+                </lightning-tab>
+                <!--<lightning-tab label="Actions" class="account-tab">
+                    <c-big-brain-account-actions pulse-account-id={pulseAccountId}></c-big-brain-account-actions>
+                </lightning-tab>-->
+            </lightning-tabset>
+        </template>
+        <template if:false={pulseAccountId}>
+            <p class="no-account"><lightning-formatted-text value="No Bigbrain account is associated with this entity" ></lightning-formatted-text></p>
+        </template>
+    </lightning-card>
+</template>
