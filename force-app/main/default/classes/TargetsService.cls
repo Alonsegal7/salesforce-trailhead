@@ -142,7 +142,7 @@ public class TargetsService {
         try{
             String key = '';
             for(Opportunity opp : newOpps){
-                if(oldOpps == null || oldOpps.get(opp.Id).CloseDate != opp.CloseDate || oldOpps.get(opp.Id).OwnerId != opp.OwnerId || oldOpps.get(opp.Id).Owner_s_Manager__c != opp.Owner_s_Manager__c){
+                if(oldOpps == null || oldOpps.get(opp.Id).CloseDate != opp.CloseDate || oldOpps.get(opp.Id).OwnerId != opp.OwnerId || oldOpps.get(opp.Id).Owner_s_Manager__c != opp.Owner_s_Manager__c || (opp.Manual_Trigger__c == 'Link Target' && oldOpps.get(opp.Id).Manual_Trigger__c != opp.Manual_Trigger__c)){
                     if(opp.CloseDate == null || opp.OwnerId == null){
                         opp.Target__c = null;
                         opp.CP_Target__c = null;
@@ -160,6 +160,7 @@ public class TargetsService {
                     }
                     userIdDateTargetKeys.add(key);
                     oppsToUpdate.add(opp);
+                    if(opp.Manual_Trigger__c == 'Link Target') opp.Manual_Trigger__c = '';
                 }
             }
             if(oppsToUpdate.isEmpty()) return;
