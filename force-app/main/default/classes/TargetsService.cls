@@ -1,88 +1,52 @@
 public class TargetsService {
-    public void updateSalesOnTargetCreation(list<Target__c> targets){
+
+    public void updateOppsOnTargetCreation(list<Target__c> newTargets){
+        Id oppPartnerCompanyRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
+        Id internalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
+        set<Id> usersIds= new set<Id>();
+        set<Integer> monthsSet= new set<Integer>();
+        set<Integer> yearsSet= new set<Integer>();
+        set<Id> partnerCompanyIds= new set<Id>();
+        Map<String,Id> targetsMap = filterTargets(newTargets, usersIds, monthsSet, yearsSet, partnerCompanyIds);
+        if(targetsMap.isEmpty()) return;
+        list<Opportunity> allOpps=[select Id,OwnerId,RecordTypeId,Owner_s_Manager__c,CloseDate,Owner.Contact.AccountId
+                                    from Opportunity 
+                                    WHERE Target__c = null AND 
+                                    ((RecordTypeId =: internalOppRtId AND OwnerId in: usersIds ) or /*internal*/
+                                    (RecordTypeId =: oppPartnerCompanyRtId AND Owner.Contact.AccountId in: partnerCompanyIds) or /*partners */
+                                    (RecordTypeId =: oppPartnerCompanyRtId AND Owner_s_Manager__c in: usersIds)) /*cpms*/
+                                        AND CALENDAR_MONTH(CloseDate) in: monthsSet
+                                        AND CALENDAR_YEAR(CloseDate) in:yearsSet];
+
+        if(!allOpps.isEmpty() && Batch_UpdateOppsTargets.firstRun){
+            Map<Id,Opportunity> oppsMap = new Map<Id,Opportunity>(allOpps);
+            Batch_UpdateOppsTargets.firstRun = false;
+            Database.executeBatch(new Batch_UpdateOppsTargets(oppsMap.keySet(), targetsMap));
+        }
+    }
+    public void updateSalesOnTargetCreation(list<Target__c> newTargets){
         try{
+            Id partnerSaleRtId = Schema.SObjectType.Sale__c.getRecordTypeInfosByDeveloperName().get('Partner_Sale').getRecordTypeId();
+            Id internalSaleRtId = Schema.SObjectType.Sale__c.getRecordTypeInfosByDeveloperName().get('Internal_Sale').getRecordTypeId();
             set<Id> usersIds= new set<Id>();
             set<Integer> monthsSet= new set<Integer>();
             set<Integer> yearsSet= new set<Integer>();
             set<Id> partnerCompanyIds= new set<Id>();
-            for(Target__c target : targets){
-                usersIds.add(target.User__c);
-                monthsSet.add(target.Target_Date__c.month());
-                yearsSet.add(target.Target_Date__c.year());
-                if(target.Partner_Company__c!=null)
-                    partnerCompanyIds.add(target.Partner_Company__c);
-            }
-            system.debug('Raz Ben Ron usersIds: '+usersIds);
-            system.debug('Raz Ben Ron partnerCompanyIds: '+partnerCompanyIds);
-            system.debug('Raz Ben Ron monthsSet: '+monthsSet);
-            system.debug('Raz Ben Ron yearsSet: '+yearsSet);
+            Map<String,Id> targetsMap = filterTargets(newTargets, usersIds, monthsSet, yearsSet, partnerCompanyIds);
+            if(targetsMap.isEmpty()) return;
+
             list<Sale__c> allSales=[select Id,Owner__c,RecordTypeId,Owner_s_Manager__c,Close_Date__c
                                     from Sale__c 
                                     WHERE Target__c = null AND 
-                                    ((RecordTypeId='0121t000000IQYOAA4' AND Owner__c in: usersIds) or /*internal*/
-                                    (RecordTypeId='0121t000000IQYTAA4' AND Owner_s_Manager__c in: usersIds)) /*partners*/
+                                    ((RecordTypeId=:internalSaleRtId AND Owner__c in: usersIds) or /*internal*/
+                                    (RecordTypeId=:partnerSaleRtId AND Owner_s_Manager__c in: usersIds)) /*partners*/
                                         AND CALENDAR_MONTH(Close_Date__c) in: monthsSet
                                         AND CALENDAR_YEAR(Close_Date__c) in:yearsSet];
-            list<Opportunity> allOpps=[select Id,OwnerId,RecordTypeId,Owner_s_Manager__c,CloseDate,Owner.Contact.AccountId
-                                        from Opportunity 
-                                        WHERE Target__c = null AND 
-                                        ((RecordTypeId='0121t000000LucvAAC' AND OwnerId in: usersIds ) or /*internal*/
-                                        (RecordTypeId='0121t000000IQUbAAO' AND Owner.Contact.AccountId in: partnerCompanyIds) or /*partners */
-                                        (RecordTypeId='0121t000000IQUbAAO' AND Owner_s_Manager__c in: usersIds)) /*cpms*/
-                                            AND CALENDAR_MONTH(CloseDate) in: monthsSet
-                                            AND CALENDAR_YEAR(CloseDate) in:yearsSet];
-            system.debug('Raz Ben Ron allSales: '+allSales.size());
-            system.debug('Raz Ben Ron allOpps: '+allOpps.size());
-            list<Sale__c> salesToUpdate=new list<Sale__c>();
-            map<Id,Opportunity> oppsToUpdate=new map<Id,Opportunity>();
-            for(Target__c target : targets){
-                if(target.User__c != null && target.Target_Date__c != null){
-                    for(Sale__c sale: allSales){
-                        if(((sale.RecordTypeId=='0121t000000IQYOAA4' && sale.Owner__c==target.User__c ) || /*internal*/
-                        (sale.RecordTypeId=='0121t000000IQYTAA4' && sale.Owner_s_Manager__c==target.User__c)) /*partners*/
-                            && sale.Close_Date__c.month() == target.Target_Date__c.month()
-                            && sale.Close_Date__c.year() == target.Target_Date__c.year()){
-                            sale.Target__c=target.Id;
-                            salesToUpdate.add(sale);
-                        }
-                    }
-                }
-                for(Opportunity opp: allOpps){
-                    system.debug('Raz Ben Ron target.Target_Date__c.month(): '+target.Target_Date__c.month());
-                    system.debug('Raz Ben Ron target.Target_Date__c.year(): '+target.Target_Date__c.year());
-                    if(opp.CloseDate.month() == target.Target_Date__c.month()
-                    && opp.CloseDate.year() == target.Target_Date__c.year()){
-                        system.debug('Raz Ben Ron in dates condition');
-                        if((target.Partner_Company__c==null&&
-                        opp.RecordTypeId=='0121t000000LucvAAC' && opp.OwnerId==target.User__c ) || /*internal*/
-                            (opp.RecordTypeId=='0121t000000IQUbAAO' && opp.Owner_s_Manager__c==target.User__c)){
-                            if(oppsToUpdate.containskey(opp.Id)){
-                                oppsToUpdate.get(opp.Id).Target__c=target.Id;
-                            }else{
-                                oppsToUpdate.put(opp.Id,new Opportunity(id=opp.id,Target__c=target.Id));
-                            }
-                        }
-                        system.debug('Raz Ben Ron target.Partner_Company__c: '+target.Partner_Company__c);
-                        system.debug('Raz Ben Ron opp.Owner.Contact.AccountId: '+opp.Owner.Contact.AccountId);
-                        system.debug('Raz Ben Ron opp.RecordTypeId: '+opp.RecordTypeId);
-                        if(target.Partner_Company__c!=null&&
-                            opp.RecordTypeId=='0121t000000IQUbAAO' && opp.Owner.Contact.AccountId == target.Partner_Company__c){
-                            system.debug('Raz Ben Ron in partners condition');
-                            if(oppsToUpdate.containskey(opp.Id)){
-                                oppsToUpdate.get(opp.Id).CP_Target__c=target.Id;
-                            }else{
-                                oppsToUpdate.put(opp.Id,new Opportunity(id=opp.id,CP_Target__c=target.Id));
-                            }
-                        }
-                    }   
-                }
-            }
-            if(salesToUpdate.size() > 0){
-                update salesToUpdate;    
-            }
-            system.debug('Raz Ben Ron oppsToUpdate: '+oppsToUpdate.values());
-            if(oppsToUpdate.values().size() > 0){
-                update oppsToUpdate.values();    
+
+            if(!allSales.isEmpty() && Batch_UpdateSalesTargets.firstRun){
+                Map<Id,Sale__c> salesMap = new Map<Id,Sale__c>(allSales);
+                Batch_UpdateSalesTargets.firstRun = false;
+                Database.executeBatch(new Batch_UpdateSalesTargets(salesMap.keySet(), targetsMap));
             }
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in updateSalesOnTargetCreation ',e,e.getMessage());   
@@ -230,8 +194,29 @@ public class TargetsService {
         return targetsMap;
     }
 
-    private String getUniqueueKey(Id objectId, Date closeDate){
+    public String getUniqueueKey(Id objectId, Date closeDate){
         String res = objectId + String.valueOf(closeDate.year()) + String.valueOf(closeDate.month());
         return res;
+    }
+
+    private Map<String,Id> filterTargets(list<Target__c> newTargets, set<Id> usersIds, set<Integer> monthsSet, set<Integer> yearsSet, set<Id> partnerCompanyIds){
+        Map<String,Id> targetsMap = new Map<String,Id>();
+        String key = '';
+        for(Target__c targetRec : newTargets){
+            if((targetRec.User__c != null || targetRec.Partner_Company__c != null) && targetRec.Target_Date__c != null){
+                monthsSet.add(targetRec.Target_Date__c.month());
+                yearsSet.add(targetRec.Target_Date__c.year());
+                if(targetRec.User__c != null){
+                    usersIds.add(targetRec.User__c);
+                    key = getUniqueueKey(targetRec.User__c, targetRec.Target_Date__c);
+                }
+                if(targetRec.Partner_Company__c != null){
+                    partnerCompanyIds.add(targetRec.Partner_Company__c);
+                    key = getUniqueueKey(targetRec.Partner_Company__c, targetRec.Target_Date__c);
+                }
+                targetsMap.put(key, targetRec.Id);
+            }
+        }
+        return targetsMap;
     }
 }

@@ -4,6 +4,7 @@ trigger TargetTrigger on Target__c (before insert, after insert, before update) 
         targetServiceHelper.setTargetUniqueKeys(Trigger.new, Trigger.oldMap);
     }
     if(Trigger.isAfter && Trigger.isInsert){
+        targetServiceHelper.updateOppsOnTargetCreation(Trigger.new);
         targetServiceHelper.updateSalesOnTargetCreation(Trigger.new);
     }
 }
