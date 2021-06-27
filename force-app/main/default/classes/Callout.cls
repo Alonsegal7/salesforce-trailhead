@@ -1,7 +1,19 @@
 global class Callout {
     
     @Future(callout=true)
+    public static void postFuture(String serializedObject, String method) {
+        doCallout(serializedObject, method);
+    }
+
     public static void post(String serializedObject, String method) {
+        if(!System.isBatch()){
+            postFuture(serializedObject, method);
+        } else {
+            doCallout(serializedObject, method);
+        }
+    }
+
+    private static void doCallout(String serializedObject, String method){
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='Big_Brain'][0];
