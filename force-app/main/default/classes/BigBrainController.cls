@@ -58,9 +58,27 @@ public with sharing class BigBrainController {
         try {
             string allFeatures = BigBrainAPI.getAllGrantedFeatures(pulseAccountId);
             string usedFeatures = BigBrainAPI.getAccountUsedGrantedFeatures(pulseAccountId);
-            string resp = '{ allFeatures: ' + allFeatures;
-            resp += ', usedFeatures: ' + usedFeatures + ' }';            
+            string resp = '{ "allFeatures": ' + allFeatures;
+            resp += ', "selectedFeatures": ' + usedFeatures + ' }';            
             return resp;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static String grantAccountFeatures(String pulseAccountId, List<string> features, string due_date){
+        try {
+            return BigBrainAPI.grantAccountFeatures(pulseAccountId, features, due_date);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static String ungrantAccountFeatures(String pulseAccountId, List<string> features){
+        try {
+            return BigBrainAPI.ungrantAccountFeatures(pulseAccountId, features);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

@@ -58,8 +58,9 @@
           source-label="Available"
           selected-label="Granted"
           field-level-help=""
-          options={options}
-          value={value}></lightning-dual-listbox>
+          options={featuresList}
+          value={grantedFeaturesList}
+          onchange={handleFeaturesListChange}></lightning-dual-listbox>
     </lightning-accordion-section>
   </lightning-accordion>
 </template>

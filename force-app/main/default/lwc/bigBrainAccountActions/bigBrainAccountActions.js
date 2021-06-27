@@ -3,6 +3,8 @@ import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiReco
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import setAccountFreeUsers from '@salesforce/apex/BigBrainController.setAccountFreeUsers';
 import getAccountGrantedFeatures from '@salesforce/apex/BigBrainController.getAccountGrantedFeatures';
+import grantAccountFeatures from '@salesforce/apex/BigBrainController.grantAccountFeatures';
+import ungrantAccountFeatures from '@salesforce/apex/BigBrainController.ungrantAccountFeatures';
 import resetAccountTrial from '@salesforce/apex/BigBrainController.resetAccountTrial';
 
 import ACCOUNT_FIELD from '@salesforce/schema/Lead.primary_pulse_account_id__c';
@@ -20,6 +22,10 @@ export default class BigBrainAccountActions extends LightningElement {
   @api recordId;
   @wire(getRecord, { recordId: '$recordId', fields })
   lead;
+  
+  @track featuresList = [];
+  @track grantedFeaturesList = [];
+
 
   get oneMonthFromNow(){
     const today = new Date();
@@ -44,14 +50,71 @@ export default class BigBrainAccountActions extends LightningElement {
   @api pulseAccountId;
   @wire(getAccountGrantedFeatures, { pulseAccountId: '$pulseAccountId' })
   data({ error, data }) {
-    console.log("data", error)
-    if(!data) return;
+    console.log(data);
+    if(!data) {
+      console.error(error);
+      return;
+    }
 
-    const respJson = JSON.parse(data)
-    console.log("respJson", respJson)
-    this.options = []
-    this.value = ""
+    const respJson = JSON.parse(data);
+    const { allFeatures, selectedFeatures }  = this.prepareList(respJson);
+    this.grantedFeaturesList.push(...selectedFeatures);
+    this.featuresList.push(...allFeatures);
   }
+
+  handleFeaturesListChange(e) {
+    const updatedList = e.detail.value;
+    const addedFeatures = updatedList.filter(feature => !this.grantedFeaturesList.includes(feature));
+    if(addedFeatures) {
+      this.grantFeatures(addedFeatures)
+    } else {
+      const removedFeatures = this.grantedFeaturesList.filter(feature => !updatedList.includes(feature));
+      if(removedFeatures) this.ungrantFeatures();
+    }
+    this.grantedFeaturesList = updatedList;
+  }
+
+  prepareList(response) {
+    const { allFeatures, selectedFeatures } = response;
+    const tiers = Object.keys(allFeatures)
+    const processedFeatures = tiers.map(tier => {
+      return allFeatures[tier].map(feature => ({label: `${tier} - ${feature}`, value: feature}))
+    }).flat();
+
+    const featuresList = Object.keys(selectedFeatures.features)
+    const selectedFeaturesProcessed = featuresList.map(feature => {
+      const featureData = selectedFeatures.features[feature]
+      if(!featureData.has_feature) return null;
+
+      return feature;
+    });
+    const selectedFeaturesCurated = selectedFeaturesProcessed.filter(featureObj => !!featureObj);
+    return { allFeatures: processedFeatures, selectedFeatures: selectedFeaturesCurated}
+  }
+
+  grantFeatures(addedFeatures) {
+    const now = new Date();
+    const dueDate = new Date(now.setDate(now.getDate() + 30)).toString();
+    grantAccountFeatures({pulseAccountId: this.accountId, features: addedFeatures, due_date: dueDate})
+      .then(result => {
+        const evt = new ShowToastEvent({
+          title: "Granted features successfully!",
+          message: 'Free users was set to ' + addedFeatures,
+          variant: "success",
+        });
+
+        // this.dispatchEvent(evt);
+      })
+      .catch(error => {
+        const evt = new ShowToastEvent({
+          title: "Error while setting free users",
+          variant: "error",
+        });
+
+        // this.dispatchEvent(evt);
+      });
+  }
+
 
   freeUsersAmount = 0;
   freeUsersUntil = "";
