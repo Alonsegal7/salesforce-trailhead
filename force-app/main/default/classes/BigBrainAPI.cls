@@ -19,6 +19,10 @@ public with sharing class BigBrainAPI {
         return get('/salesforce_api/account/' + pulseAccountId + '/features_usage');
     }
 
+    public static String getAllOpportunityBillings(String opportunityId){
+        return get('/salesforce_api/opportunity/' + opportunityId + '/get_all_opportunity_billings');
+    }
+
     public static String getForecastDetails(String pulseAccountId){
         return get('/salesforce_api/account/' + pulseAccountId + '/forecast_details');
     }

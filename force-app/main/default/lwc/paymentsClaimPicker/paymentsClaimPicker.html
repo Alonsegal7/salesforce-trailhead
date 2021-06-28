@@ -1,9 +1,24 @@
 <template>
   <lightning-card>
     <h3 slot="title">
-        <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
-        Pickers > Payments Claim
+      <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+      Pickers > Payments Claim
     </h3>
-    <p class="slds-p-horizontal_small">Card Body (custom component)</p>
-</lightning-card>
+
+    <lightning-dual-listbox 
+    class="slds-dueling-picklist__column_responsive" 
+    name="languages" label="Select Languages" 
+    disable-reordering="true"
+    source-label="Available" selected-label="Claimed"
+    field-level-help="Claim subscriptions" 
+    options={availableSubscriptions} value={claimedSubscriptions}
+    onchange={handleChange} >
+    </lightning-dual-listbox>
+
+    <lightning-button variant="brand" label="Claim Billings" title="Primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+
+    <!-- <div class="slds-box">
+      <p>Selected values are: {selected}</p>
+    </div> -->
+  </lightning-card>
 </template>

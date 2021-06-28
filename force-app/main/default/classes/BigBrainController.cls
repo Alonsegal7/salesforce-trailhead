@@ -36,6 +36,15 @@ public with sharing class BigBrainController {
     }
 
     @AuraEnabled(cacheable=true)
+    public static string getAllOpportunityBillings(String opportunityId){
+        try {
+            return BigBrainAPI.getAllOpportunityBillings(opportunityId);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
     public static string getPlans(String pricingVersion){
         try {
             return BigBrainAPI.getPlans(pricingVersion);
