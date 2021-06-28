@@ -1,5 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import setAccountFreeUsers from '@salesforce/apex/BigBrainController.setAccountFreeUsers';
 import getAccountGrantedFeatures from '@salesforce/apex/BigBrainController.getAccountGrantedFeatures';
@@ -107,7 +107,7 @@ export default class BigBrainAccountActions extends LightningElement {
       })
       .catch(error => {
         const evt = new ShowToastEvent({
-          title: "Error while setting free users",
+          title: "Error while setting granted features",
           variant: "error",
         });
 
