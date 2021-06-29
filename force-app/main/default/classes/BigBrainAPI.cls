@@ -39,20 +39,20 @@ public with sharing class BigBrainAPI {
         return get('/salesforce_api/account/' + pulseAccountId + '/granted_features');
     }
 
-    public static String grantAccountFeatures(String pulseAccountId, List<string> features, string due_date){
-        Map<String, String> mapName = new Map<String, String>();
-        mapName.put('features', String.valueOf(features));
-        mapName.put('due_date', due_date);
-        mapName.put('reason', 'partner granted feature from salesforce plugin');
+    public static String grantAccountFeatures(String pulseAccountId, List<String> features, string due_date){
+        Map<String, String> requestParams = new Map<String, String>();
+        requestParams.put('features',  '[' + String.join(features, ',') + ']');
+        requestParams.put('due_date', due_date);
+        requestParams.put('reason', 'partner granted feature from salesforce plugin');
 
-        return put('/salesforce_api/account/' + pulseAccountId + '/grant_features', mapName);
+        return put('/salesforce_api/account/' + pulseAccountId + '/grant_feature', requestParams);
     }
 
     public static String ungrantAccountFeatures(String pulseAccountId, List<string> features){
-        Map<String, String> mapName = new Map<String, String>();
-        mapName.put('features', String.valueOf(features));
+        Map<String, String> requestParams = new Map<String, String>();
+        requestParams.put('features',  '[' + String.join(features, ',') + ']');
 
-        return put('/salesforce_api/account/' + pulseAccountId + '/ungrant_features', mapName);
+        return put('/salesforce_api/account/' + pulseAccountId + '/ungrant_feature', requestParams);
     }
 
     public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, string untilDate){
