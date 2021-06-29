@@ -39,17 +39,20 @@ public with sharing class BigBrainAPI {
         return get('/salesforce_api/account/' + pulseAccountId + '/granted_features');
     }
 
-    public static String grantAccountFeatures(String pulseAccountId, List<String> features, string due_date){
+    public static String grantAccountFeatures(String pulseAccountId, List<String> features){
         Map<String, String> requestParams = new Map<String, String>();
-        requestParams.put('features',  '[' + String.join(features, ',') + ']');
-        requestParams.put('due_date', due_date);
+        Date future_date = Date.today().addDays(30);
+
+        requestParams.put('features', String.join(features,','));
+        requestParams.put('due_date', future_date.format());
         requestParams.put('reason', 'partner granted feature from salesforce plugin');
+
         return put('/salesforce_api/account/' + pulseAccountId + '/grant_features', requestParams);
     }
 
     public static String ungrantAccountFeatures(String pulseAccountId, List<string> features){
         Map<String, String> requestParams = new Map<String, String>();
-        requestParams.put('features',  '[' + String.join(features, ',') + ']');
+        requestParams.put('features', String.join(features,','));
 
         return put('/salesforce_api/account/' + pulseAccountId + '/ungrant_features', requestParams);
     }
