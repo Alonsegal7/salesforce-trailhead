@@ -21,9 +21,6 @@ public class CreatePartnerUserCtrl {
 
 	@AuraEnabled
 	public static resWrapper getFieldsList(Id contactId, String email, Id accountId, Boolean isPartner, String approvalStatus){
-		// permissions check
-		String profileName = [Select Id, Name from Profile where Id =: UserInfo.getProfileId()].Name;
-		if(!profileName.containsIgnoreCase('System Administrator')) throw new AuraHandledException('Oops! You are not allowed to run this action. Please contact Biz Ops.');
 		if(approvalStatus == 'Pending') throw new AuraHandledException('Oops! This contact is pending approval to grant access to Salesforce and Big Brain. Please wait for the approval process to be completed.');
 		try {
 			// enable partner account
