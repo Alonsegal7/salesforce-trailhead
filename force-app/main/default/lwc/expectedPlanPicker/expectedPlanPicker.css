@@ -1,6 +1,7 @@
 .header-column {
   padding: 4px 0px;
   font-size: 14px;
+  text-transform: capitalize;
 }
 
 .field-title {
