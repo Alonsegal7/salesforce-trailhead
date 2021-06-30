@@ -46,8 +46,9 @@ public with sharing class BigBrainAPI {
         requestParams.put('features', String.join(features,','));
         requestParams.put('due_date', future_date.format());
         requestParams.put('reason', 'partner granted feature from salesforce plugin');
-        
-        return put('/salesforce_api/account/' + pulseAccountId + '/grant_features', requestParams);
+        return JSON.serialize(requestParams);
+
+        // return put('/salesforce_api/account/' + pulseAccountId + '/grant_features', requestParams);
     }
 
     public static String ungrantAccountFeatures(String pulseAccountId, List<string> features){

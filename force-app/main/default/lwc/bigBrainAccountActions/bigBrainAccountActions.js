@@ -64,8 +64,10 @@ export default class BigBrainAccountActions extends LightningElement {
   handleFeaturesListChange(e) {
     const updatedList = e.detail.value;
     const addedFeatures = updatedList.filter(feature => !this.grantedFeaturesList.includes(feature));
+    console.log(addedFeatures, updatedList);
     if(addedFeatures.length > 0) {
-      this.grantFeatures(addedFeatures)
+      this.grantFeatures(addedFeatures);
+
     } else {
       const removedFeatures = this.grantedFeaturesList.filter(feature => !updatedList.includes(feature));
       if(removedFeatures.length > 0) this.ungrantFeatures(removedFeatures);
