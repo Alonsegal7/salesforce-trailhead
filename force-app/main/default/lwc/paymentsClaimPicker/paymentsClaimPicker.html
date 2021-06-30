@@ -5,20 +5,19 @@
       Pickers > Payments Claim
     </h3>
 
-    <lightning-dual-listbox 
-    class="slds-dueling-picklist__column_responsive" 
-    name="languages" label="Select Languages" 
-    disable-reordering="true"
-    source-label="Available" selected-label="Claimed"
-    field-level-help="Claim subscriptions" 
-    options={availableSubscriptions} value={claimedSubscriptions}
-    onchange={handleChange} >
-    </lightning-dual-listbox>
+    <lightning-checkbox-group name="Checkbox Group" label="Subscriptions (checked items are already claimed)"
+      class="slds-m-around_medium" options={availableSubscriptions} value={claimedSubscriptions}
+      onchange={handleChange}>
+    </lightning-checkbox-group>
 
-    <lightning-button variant="brand" label="Claim Billings" title="Primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+    <div if:true={isLoading} class="slds-is-relative" style="min-height: 10vh;">
+      <lightning-spinner alternative-text="Loading..." size="medium">
+      </lightning-spinner>
+    </div>
 
-    <!-- <div class="slds-box">
-      <p>Selected values are: {selected}</p>
-    </div> -->
+    <lightning-button variant="brand" label="Update Billings Claims" title="Primary action"
+      onclick={updateBillingsClaims} class="slds-m-left_medium"></lightning-button>
+
+    <label class="slds-m-left_medium" if:true={showSuccess}>✓ Updated successfully</label>
   </lightning-card>
 </template>
