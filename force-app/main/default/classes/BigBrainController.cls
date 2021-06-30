@@ -76,9 +76,9 @@ public with sharing class BigBrainController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static String grantAccountFeatures(String pulseAccountId, List<string> features, string due_date){
+    public static String grantAccountFeatures(String pulseAccountId, List<String> features){
         try {
-            return BigBrainAPI.grantAccountFeatures(pulseAccountId, features, due_date);
+            return BigBrainAPI.grantAccountFeatures(pulseAccountId, features);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

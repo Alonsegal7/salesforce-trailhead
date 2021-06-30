@@ -1,145 +1,166 @@
 <template>
-    <template if:true={isLoading}>
-    <div class="slds-is-relative" style="min-height: 10vh;">
-        <lightning-spinner alternative-text="Loading..." size="medium">
-        </lightning-spinner>
-    </div>
-    </template>
-
-    <template if:true={isError}>
-        <lightning-icon icon-name="utility:error" alternative-text="Error" title="Error"></lightning-icon>
-    </template>
-  
-    <lightning-card if:false={isLoading}>
-        <h3 slot="title">
-            <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+    <lightning-card>
+        <h3 slot="title" class="slds-media">
+            <lightning-icon icon-name="standard:forecasts" size="small" class="slds-media__figure"></lightning-icon>
             Forecast picker
         </h3>
-        <lightning-layout multiple-rows="true" vertical-align="center">
-            <lightning-layout-item size="12">
-                <lightning-layout>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
-                        <lightning-radio-group name="radioGroup"
-                          options={quoteTypeOptions}
-                          value={quoteType}
-                          onchange={handleQuoteTypeChange}
-                          type="button"></lightning-radio-group>
-                    </lightning-layout-item>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium">
-                        <div class="header-column">
-                            <p class="field-title" title="Pricing version">Pricing version</p>
-                            <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium">
-                        <div class="header-column">
-                            <p class="field-title" title="Currency">Currency</p>
-                            <p><lightning-formatted-text value={currency}></lightning-formatted-text></p>
-                        </div>
-                    </lightning-layout-item>
-                </lightning-layout>
-            </lightning-layout-item>
-            <lightning-layout-item size="12">
-                <lightning-layout>
-                    <lightning-layout-item if:true={quoteTypeMessage} padding="horizontal-small" class="next-step-info-item">
-                        <lightning-icon icon-name="utility:info" size="small"></lightning-icon>
-                        <span class="next-step-info">{quoteTypeMessage}</span>
-                    </lightning-layout-item>
-                    <template if:false={quoteTypeMessage}>
-                        <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small" style="width: 150px;">
-                            <lightning-combobox
-                                name="progress"
-                                label="Seats"
-                                value={seats}
-                                placeholder="Select seats"
-                                options={seatsOptions}
-                                onchange={handleSeatsChange}
-                            ></lightning-combobox>
+
+        <template if:true={isLoading}>
+            <div class="slds-is-relative" style="min-height: 10vh;">
+                <lightning-spinner alternative-text="Loading..." size="medium">
+                </lightning-spinner> 
+            </div>
+        </template>
+
+        <template if:true={isError}>
+            <div class="slds-is-relative" style="min-height: 10vh;">
+                <lightning-icon icon-name="utility:error" alternative-text="Error" title="Error"></lightning-icon>
+            </div>
+        </template>
+  
+        <template if:false={isLoading}>
+            <lightning-layout multiple-rows="true" vertical-align="center">
+                <lightning-layout-item size="12">
+                    <lightning-layout>
+                        <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium">
+                            <div class="header-column">
+                                <p class="field-title" title="Pricing version">Pricing version</p>
+                                <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
+                            </div>
                         </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium">
+                            <div class="header-column">
+                                <p class="field-title" title="Currency">Currency</p>
+                                <p><lightning-formatted-text value={currency}></lightning-formatted-text></p>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium">
+                            <div class="header-column">
+                                <p class="field-title">Current seats</p>
+                                <p><lightning-formatted-number value={currentSeats} maximum-fraction-digits="0" format-style="decimal"></lightning-formatted-number></p>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium">
+                            <div class="header-column">
+                                <p class="field-title">Current tier</p>
+                                <p><lightning-formatted-text value={currentTier}></lightning-formatted-text></p>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-medium">
+                            <div class="header-column">
+                                <p class="field-title">Current ARR</p>
+                                <p><lightning-formatted-number value={currentArr} maximum-fraction-digits="2" format-style="decimal"></lightning-formatted-number></p>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-layout>
                         <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
-                            <lightning-combobox
-                                name="progress"
-                                label="Tier"
-                                value={tier}
-                                placeholder="Select tier"
-                                options={tierOptions}
-                                onchange={handleTierChange}
-                                disabled={isTierDisabled}
-                            ></lightning-combobox>
+                            <p class="field-title" title="Change type">Change type</p>
+                            <lightning-radio-group name="radioGroup"
+                            options={quoteTypeOptions}
+                            value={quoteType}
+                            onchange={handleQuoteTypeChange}
+                            type="button"></lightning-radio-group>
                         </lightning-layout-item>
-                        <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
-                            <lightning-combobox
-                                name="progress"
-                                label="Period"
-                                value={period}
-                                placeholder="Select period"
-                                options={periodOptions}
-                                onchange={handlePeriodChange}
-                            ></lightning-combobox>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-layout>
+                        <lightning-layout-item if:true={quoteTypeMessage} padding="horizontal-small" class="next-step-info-item">
+                            <lightning-icon icon-name="utility:info" size="small"></lightning-icon>
+                            <span class="next-step-info">{quoteTypeMessage}</span>
+
+                            {seats}
                         </lightning-layout-item>
-                    </template>
-                </lightning-layout>
-            </lightning-layout-item>
-            <lightning-layout-item flexibility="auto, no-grow" size="12" if:false={quoteTypeMessage}>
-                <lightning-layout>
-                    <lightning-layout-item if:true={planMessage} padding="horizontal-small" class="next-step-info-item">
-                        <lightning-icon icon-name="utility:info" size="small"></lightning-icon>
-                        <span class="next-step-info">{planMessage}</span>
-                    </lightning-layout-item>
-                    <template if:false={planMessage}>
-                        <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
-                            <lightning-input type="number" label="Seat price" currency-code={currency} value={seatPrice} onchange={handleSeatPriceChange} step="0.01" maximum-fraction-digits="2"></lightning-input>
+                        <template if:false={quoteTypeMessage}>
+                            <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small" style="width: 150px;">
+                                <lightning-combobox
+                                    name="seats"
+                                    label="Seats"
+                                    value={seats}
+                                    placeholder="Select seats"
+                                    options={seatsOptions}
+                                    onchange={handleSeatsChange}
+                                ></lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                                <lightning-combobox
+                                    name="tier"
+                                    label="Tier"
+                                    value={tier}
+                                    placeholder="Select tier"
+                                    options={tierOptions}
+                                    onchange={handleTierChange}
+                                    disabled={isTierDisabled}
+                                ></lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                                <lightning-combobox
+                                    name="period"
+                                    label="Period"
+                                    value={period}
+                                    placeholder="Select period"
+                                    options={periodOptions}
+                                    onchange={handlePeriodChange}
+                                ></lightning-combobox>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto, no-grow" size="12" if:false={quoteTypeMessage}>
+                    <lightning-layout>
+                        <lightning-layout-item if:true={planMessage} padding="horizontal-small" class="next-step-info-item">
+                            <lightning-icon icon-name="utility:info" size="small"></lightning-icon>
+                            <span class="next-step-info">{planMessage}</span>
                         </lightning-layout-item>
-                        <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
-                            <lightning-input type="number" label="Discount" formatter="percent-fixed" value={discountInputValue} onchange={handleDiscountChange} step="0.01" maximum-fraction-digits="2"></lightning-input>
-                        </lightning-layout-item>
-                    </template>
-                </lightning-layout>
-            </lightning-layout-item>
-        </lightning-layout>
+                        <template if:false={planMessage}>
+                            <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                                <lightning-input type="number" label="Seat price" currency-code={currency} value={seatPrice} onchange={handleSeatPriceChange} step="0.01" maximum-fraction-digits="2"></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                                <lightning-input type="number" label="Discount" formatter="percent-fixed" value={discountInputValue} onchange={handleDiscountChange} step="0.01" maximum-fraction-digits="2"></lightning-input>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+
         <footer slot="footer">
-            <lightning-layout vertical-align="center">
-                <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
-                    <div class="header-column">
-                        <p class="field-title" title="Pricing version">Plan change price</p>
-                        <p><lightning-formatted-number value={totalPrice} maximum-fraction-digits="2"></lightning-formatted-number> {currency}</p>
-                    </div>
-                </lightning-layout-item>
-                <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small" class="left-divider">
-                    <div class="header-column">
-                        <p class="field-title" title="Pricing version">Current ARR</p>
-                        <p><lightning-formatted-number value={currentArr} maximum-fraction-digits="2"></lightning-formatted-number></p>
-                    </div>
-                </lightning-layout-item>
-                <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
-                    <div class="header-column">
-                        <p class="field-title" title="Pricing version">Added ARR</p>
-                        <p><lightning-formatted-number value={addedArr} maximum-fraction-digits="2"></lightning-formatted-number></p>
-                    </div>
-                </lightning-layout-item>
-                <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
-                    <div class="header-column">
-                        <p class="field-title" title="Pricing version">Final ARR</p>
-                        <p><lightning-formatted-number value={finalArr} maximum-fraction-digits="2"></lightning-formatted-number></p>
-                    </div>
-                </lightning-layout-item>
-                <lightning-layout-item flexibility="auto, no-grow" alignment-bump="left">
-                    <div class="page-footer page-section">
-                        <lightning-button label="Revert" title="Revert" disabled={isRevertDisabled} class="slds-m-left_x-small" onclick={handleRevertClick}></lightning-button>
-                    </div>
-                </lightning-layout-item>
-                <lightning-layout-item flexibility="auto, no-grow">
-                    <div class="page-footer page-section">
-                        <lightning-button label="Clear" title="Clear" disabled={isClearDisabled} class="slds-m-left_x-small" onclick={handleClearClick}></lightning-button>
-                    </div>
-                </lightning-layout-item>
-                <lightning-layout-item flexibility="auto, no-grow">
-                    <div class="page-footer page-section">
-                        <lightning-button variant="brand" label="Apply" title="Apply" disabled={isApplyDisabled} class="slds-m-left_x-small" onclick={handleApplyClick}></lightning-button>
-                    </div>
-                </lightning-layout-item>
-            </lightning-layout> 
-        
+            <template if:false={isLoading} slot="footer">
+                <lightning-layout vertical-align="center">
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                        <div class="header-column">
+                            <p class="field-title" title="Pricing version">Plan change price</p>
+                            <p><lightning-formatted-number value={totalPrice} maximum-fraction-digits="2"></lightning-formatted-number> {currency}</p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                        <div class="header-column">
+                            <p class="field-title" title="Pricing version">Added ARR</p>
+                            <p><lightning-formatted-number value={addedArr} maximum-fraction-digits="2"></lightning-formatted-number></p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" padding="horizontal-small">
+                        <div class="header-column">
+                            <p class="field-title" title="Pricing version">Final ARR</p>
+                            <p><lightning-formatted-number value={finalArr} maximum-fraction-digits="2"></lightning-formatted-number></p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow" alignment-bump="left">
+                        <div class="page-footer page-section">
+                            <lightning-button label="Revert" title="Revert" disabled={isRevertDisabled} class="slds-m-left_x-small" onclick={handleRevertClick}></lightning-button>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto, no-grow">
+                        <div class="page-footer page-section">
+                            <lightning-button variant="brand" label="Apply" title="Apply" disabled={isApplyDisabled} class="slds-m-left_x-small" onclick={handleApplyClick}></lightning-button>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
         </footer>
     </lightning-card>
 </template>

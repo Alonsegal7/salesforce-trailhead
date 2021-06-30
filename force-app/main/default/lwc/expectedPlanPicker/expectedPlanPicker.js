@@ -69,17 +69,14 @@ const getSeatPrice = (plan, currency, seats, period) => {
   return totalPrice / seats / months;
 }
 
-const getDiscount = (plan, currency) => {
-  return 0;
-}
-
 const parseSeatsOptions = (plans, quoteType, currentSeats) => {
+  if (!plans || !quoteType || !currentSeats) { return null; } 
   const allSeats = plans.map(p => p.users.toString());
   const uniqueSeats = [...new Set(allSeats)];
   const options = uniqueSeats.map(s => {
     const seatsDelta = s - currentSeats;
     if (seatsDelta <= 0) { return null; }
-    const label = (quoteType == QUOTE_TYPE_NEW_CONTARCT) ? s : `+${seatsDelta}`;
+    const label = (quoteType == QUOTE_TYPE_NEW_CONTARCT) ? s : `${s} (+${seatsDelta})`;
     return { label: label, value: s };
   }).filter(v => v);
 
@@ -101,12 +98,11 @@ export default class ExpectedPlanPicker extends LightningElement {
   @track pulseAccountId;
   
   @track formFields = {};
-  @track seatsOptions = null;
 
   @wire(getRecord, { recordId: '$recordId', fields })
   wiredRecord({ error, data }) {
-    if (error) {this.recordError = error;}
-
+    console.log(error, data);
+    this.recordError = error;
     if (data) {
       this.record = data;
       this.pricingVersion = getFieldValue(data, PRICING_VERSION_FIELD);
@@ -116,18 +112,22 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getPlans, { pricingVersion: '$pricingVersion' })
   wiredPlans({ error, data }) {
-    if (error) {this.plansError = error;}
-
+    console.log(error, data);
+    this.plansError = error;
+ 
     if (data) {
       this.plans = JSON.parse(data);
-      this.seatsOptions = parseSeatsOptions(this.plans, this.quoteType, this.currentSeats);
     }
   }
 
   @wire(getForecastDetails, { pulseAccountId: '$pulseAccountId' })
   wiredForecast({ error, data }) {
-    if (error) {this.forecastDetailsError = error;}
-    if (data) {this.forecastDetails = JSON.parse(data);}
+    console.log(error, data);
+    this.forecastDetailsError = error;
+    
+    if (data) {
+      this.forecastDetails = JSON.parse(data);
+    }
   }
 
   get exchangeRate() {
@@ -147,6 +147,7 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get isLoading() {
+    console.log(this.isError ,this.record,this.plans, this.forecastDetails);
     return !this.isError && (!this.record || !this.plans || !this.forecastDetails);
   }
 
@@ -162,17 +163,16 @@ export default class ExpectedPlanPicker extends LightningElement {
     return getFieldValue(this.record, ACCOUNT_FIELD);
   }
 
-  get isApplyDisabled() {
-    if (!this.isDirty) { return true; }
+  get isDirty() {
+    return Object.values(this.formFields).some(v => v !== null);
+  }
 
+  get isApplyDisabled() {
+    return !this.isDirty;
   }
 
   get isRevertDisabled() {
-
-  }
-
-  get isClearDisabled() {
-
+    return !this.isDirty;
   }
 
   setFormField(fieldName, value){
@@ -205,11 +205,11 @@ export default class ExpectedPlanPicker extends LightningElement {
     this.setFormField(PERIOD_FIELD.fieldApiName, value);
   }
 
-  get seat() {
+  get seats() {
     return this.formFields[SEATS_FIELD.fieldApiName] || getFieldValue(this.record, SEATS_FIELD);
   }
 
-  set seat(value){
+  set seats(value){
     this.setFormField(SEATS_FIELD.fieldApiName, value);
   }
 
@@ -235,6 +235,14 @@ export default class ExpectedPlanPicker extends LightningElement {
     fields[ADDED_ARR_FIELD.fieldApiName] = this.addedArr;
     const recordInput = { fields };
     
+    new ShowToastEvent({
+      title: 'Updating',
+      message: 'This may take a few seconds...',
+      variant: 'info'
+    })
+
+    console.log(recordInput);
+
     updateRecord(recordInput)
       .then(() => {
           this.dispatchEvent(
@@ -256,21 +264,6 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   handleRevertClick() {
     this.formFields = {};
-  }
-
-  handleClearClick() {
-    this.tier = null;
-    this.quoteType = null;
-    this.seats = null;
-    this.seatPrice = null;
-    this.discount = null;
-    this.period = null;
-
-    this.handleApplyClick();
-  }
-
-  get isDirty() {
-    return Object.values(this.formFields).some(v => v !== null);
   }
 
   get discountInputValue() {
@@ -324,6 +317,11 @@ export default class ExpectedPlanPicker extends LightningElement {
     }
   }
 
+
+  get seatsOptions() {
+    return parseSeatsOptions(this.plans, this.quoteType, this.currentSeats);
+  }
+
   get tierOptions() {
     return [
         { label: 'Basic', value: 'basic' },
@@ -354,8 +352,7 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   handleQuoteTypeChange(event) {
     this.quoteType = event.detail.value;
-    if(this.quoteType == QUOTE_TYPE_PRORATED) { this.tier = this.currentTier; } 
-    this.seatsOptions = parseSeatsOptions(this.plans, this.quoteType, this.currentSeats);
+    if(this.quoteType == QUOTE_TYPE_PRORATED) { this.tier = this.currentTier; }
   }
 
   handleSeatsChange(event) {
@@ -388,7 +385,6 @@ export default class ExpectedPlanPicker extends LightningElement {
 
     this.plan = matchingPlans[0];
     this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period);
-    this.discount = getDiscount(this.plan, this.currency);
   }
 
   get isTierDisabled() {

@@ -39,20 +39,23 @@ public with sharing class BigBrainAPI {
         return get('/salesforce_api/account/' + pulseAccountId + '/granted_features');
     }
 
-    public static String grantAccountFeatures(String pulseAccountId, List<string> features, string due_date){
-        Map<String, String> mapName = new Map<String, String>();
-        mapName.put('features', String.valueOf(features));
-        mapName.put('due_date', due_date);
-        mapName.put('reason', 'partner granted feature from salesforce plugin');
+    public static String grantAccountFeatures(String pulseAccountId, List<String> features){
+        Map<String, String> requestParams = new Map<String, String>();
+        Date future_date = Date.today().addDays(30);
 
-        return put('/salesforce_api/account/' + pulseAccountId + '/grant_features', mapName);
+        requestParams.put('features', String.join(features,','));
+        requestParams.put('due_date', future_date.format());
+        requestParams.put('reason', 'partner granted feature from salesforce plugin');
+        return JSON.serialize(requestParams);
+
+        // return put('/salesforce_api/account/' + pulseAccountId + '/grant_features', requestParams);
     }
 
     public static String ungrantAccountFeatures(String pulseAccountId, List<string> features){
-        Map<String, String> mapName = new Map<String, String>();
-        mapName.put('features', String.valueOf(features));
+        Map<String, String> requestParams = new Map<String, String>();
+        requestParams.put('features', String.join(features,','));
 
-        return put('/salesforce_api/account/' + pulseAccountId + '/ungrant_features', mapName);
+        return put('/salesforce_api/account/' + pulseAccountId + '/ungrant_features', requestParams);
     }
 
     public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, string untilDate){
@@ -113,11 +116,13 @@ public with sharing class BigBrainAPI {
     private static void setRequestHeaders(HttpRequest request, String method, String url){
         Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='Big_Brain'][0];
         String baseUrl = ConfigManager.getBigBrainBaseUrl();
+        String userType = [select Function__c from User where Id =: UserInfo.getUserId()][0].Function__c;
 
         request.setMethod(method);
         request.setEndpoint(baseUrl + url);
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setHeader('Authorization', whMTD.Key__c);
         request.setHeader('From', UserInfo.getUserEmail());
+        request.setHeader('User-Type', userType);
     }
 }

@@ -50,7 +50,6 @@ export default class BigBrainAccountActions extends LightningElement {
   @api pulseAccountId;
   @wire(getAccountGrantedFeatures, { pulseAccountId: '$pulseAccountId' })
   data({ error, data }) {
-    console.log(data);
     if(!data) {
       console.error(error);
       return;
@@ -65,11 +64,13 @@ export default class BigBrainAccountActions extends LightningElement {
   handleFeaturesListChange(e) {
     const updatedList = e.detail.value;
     const addedFeatures = updatedList.filter(feature => !this.grantedFeaturesList.includes(feature));
-    if(addedFeatures) {
-      this.grantFeatures(addedFeatures)
+    console.log(addedFeatures, updatedList);
+    if(addedFeatures.length > 0) {
+      this.grantFeatures(addedFeatures);
+
     } else {
       const removedFeatures = this.grantedFeaturesList.filter(feature => !updatedList.includes(feature));
-      if(removedFeatures) this.ungrantFeatures();
+      if(removedFeatures.length > 0) this.ungrantFeatures(removedFeatures);
     }
     this.grantedFeaturesList = updatedList;
   }
@@ -93,25 +94,46 @@ export default class BigBrainAccountActions extends LightningElement {
   }
 
   grantFeatures(addedFeatures) {
-    const now = new Date();
-    const dueDate = new Date(now.setDate(now.getDate() + 30)).toString();
-    grantAccountFeatures({pulseAccountId: this.accountId, features: addedFeatures, due_date: dueDate})
+    grantAccountFeatures({pulseAccountId: this.accountId, features: addedFeatures})
       .then(result => {
         const evt = new ShowToastEvent({
           title: "Granted features successfully!",
-          message: 'Free users was set to ' + addedFeatures,
+          message: 'Features granted: ' + addedFeatures,
           variant: "success",
         });
 
-        // this.dispatchEvent(evt);
+        this.dispatchEvent(evt);
       })
       .catch(error => {
+        console.error(error);
         const evt = new ShowToastEvent({
           title: "Error while setting granted features",
           variant: "error",
         });
 
-        // this.dispatchEvent(evt);
+        this.dispatchEvent(evt);
+      });
+  }
+
+  ungrantFeatures(removedFeatures) {
+    ungrantAccountFeatures({pulseAccountId: this.accountId, features: removedFeatures })
+      .then(result => {
+        const evt = new ShowToastEvent({
+          title: "Ungranted features successfully!",
+          message: 'Featured removed: ' + addedFeatures,
+          variant: "success",
+        });
+
+        this.dispatchEvent(evt);
+      })
+      .catch(error => {
+        console.error(error);
+        const evt = new ShowToastEvent({
+          title: "Error while setting ungranting features",
+          variant: "error",
+        });
+
+        this.dispatchEvent(evt);
       });
   }
 
