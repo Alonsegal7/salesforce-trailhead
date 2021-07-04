@@ -111,7 +111,7 @@ public class PartnerCommissionService {
                 for(Partner_Commission__c existingPc: pcMap.get(key)){
                     if((newPc.Start_Date__c >= existingPc.Start_Date__c && (existingPc.End_Date__c == null || newPc.Start_Date__c <= existingPc.End_Date__c)) 
                     || (existingPc.Start_Date__c >= newPc.Start_Date__c && (newPc.End_Date__c == null || existingPc.Start_Date__c <= newPc.End_Date__c))){
-                        throw new partnerCommissionException('Partner Commission dates overlap detected. Partner Commission Id: '+newPc.Id);
+                        throw new partnerCommissionException('Partner Commission dates overlap detected. Partner Commission Id: '+newPc.Id+';partnerId: '+newPc.Partner_Company__c+'; mondayAccountId: '+newPc.Monday_Account__c);
                     }
                 }
             }
@@ -124,6 +124,7 @@ public class PartnerCommissionService {
 
     public Partner_Commission__c createPartnerCommissionRecord(Account mondayAccount, Account partnerAccount, Opportunity opp){
         Partner_Commission__c tempPartnerCommission = new Partner_Commission__c();
+        tempPartnerCommission.Name = mondayAccount.primary_pulse_account_id__c + ' - ' + partnerAccount.Name + ' - ' + partnerAccount.Partner_Tier__c;
         tempPartnerCommission.Partner_Commission_Model__c = partnerAccount.Partner_Commission_Model__c;
         tempPartnerCommission.Partner_Company__c = partnerAccount.Id;
         tempPartnerCommission.Partner_ID__c = partnerAccount.Id;
@@ -152,7 +153,7 @@ public class PartnerCommissionService {
     }
 
     public Map<Id,Account> getChannelPartnersMap(Set<Id> channelPartnersIds){
-        Map<Id,Account> channelPartnersMap = new Map<Id,Account>([select Id, Partner_Type__c, Partner_Commission_Model__c, Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c, Partner_Commission_Model__r.Commission_Model__r.Period__c, Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c, Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c from Account where Id IN: channelPartnersIds]);
+        Map<Id,Account> channelPartnersMap = new Map<Id,Account>([select Id, Name, Partner_Tier__c, Partner_Type__c, Partner_Commission_Model__c, Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c, Partner_Commission_Model__r.Commission_Model__r.Period__c, Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c, Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c from Account where Id IN: channelPartnersIds]);
         return channelPartnersMap;
     }
 }
