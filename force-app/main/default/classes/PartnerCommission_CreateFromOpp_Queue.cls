@@ -14,7 +14,21 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
             Partner_Commission__c newPartnerCommission = pcService.createPartnerCommissionRecord(accountsMap.get(opp.AccountId), accountsMap.get(opp.Channel_Partner__c), opp);
             newPartnerCommissionList.add(newPartnerCommission);
         }
-        if(!newPartnerCommissionList.isEmpty()) Database.insert(newPartnerCommissionList);
+        if(!newPartnerCommissionList.isEmpty()) {
+            Database.SaveResult[] lsr = Database.insert(newPartnerCommissionList, false);
+            for (Database.SaveResult sr : lsr) {
+                if (sr.isSuccess()) {
+                    System.debug('Successfully inserted Partner_Commission__c. Partner_Commission__c ID: ' + sr.getId());
+                }
+                else {
+                    for(Database.Error err : sr.getErrors()) {
+                        System.debug('The following error has occurred.');                    
+                        System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                        System.debug('Partner_Commission__c fields that affected this error: ' + err.getFields());
+                    }
+                }
+            }
+        }
     }
 
     private Map<Id, Account> getAccountsMap(List<Opportunity> oppsList){

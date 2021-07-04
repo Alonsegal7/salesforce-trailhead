@@ -81,22 +81,45 @@ public class PartnerCommissionService {
 
     public void checkIfExistingPcDatesOverlap(List<Partner_Commission__c> newPcList, Map<Id,Partner_Commission__c> oldPcMap){
         Set<Id> partnerCompanyIds = new Set<Id>();
+        Set<Id> mondayAccountIds = new Set<Id>();
         for(Partner_Commission__c pc : newPcList){
             if(oldPcMap == null || pc.Start_Date__c != oldPcMap.get(pc.Id).Start_Date__c || pc.End_Date__c != oldPcMap.get(pc.Id).End_Date__c){
                 partnerCompanyIds.add(pc.Partner_Company__c);
+                mondayAccountIds.add(pc.Monday_Account__c);
             }
         }
         if(partnerCompanyIds.isEmpty()) return;
-        Map<Id,Account> partnerCompaniesMap = new Map<Id,Account>([select Id, (select Id, Start_Date__c, End_Date__c from Partners_Commission__r) from Account where Id IN: partnerCompanyIds]);
+        String dynamicQuery = 'select Start_Date__c, End_Date__c, Partner_Company__c, Monday_Account__c from Partner_Commission__c where Partner_Company__c IN: partnerCompanyIds and Monday_Account__c IN: mondayAccountIds';
+        if(oldPcMap != null) {
+            Set<Id> existingPcIds = oldPcMap.keySet();
+            dynamicQuery += ' and Id NOT IN: existingPcIds';
+        }
+        List<Partner_Commission__c> existingPcList = Database.query(dynamicQuery);
+        String key = '';
+        Map<String,List<Partner_Commission__c>> pcMap = new Map<String,List<Partner_Commission__c>>();
+        for(Partner_Commission__c pc: existingPcList){
+            key = getOverlapKey(pc);
+            if(pcMap.containsKey(key)){
+                pcMap.get(key).add(pc);
+            } else {
+                pcMap.put(key, new list<Partner_Commission__c>{pc});
+            }
+        }
         for(Partner_Commission__c newPc : newPcList){
-            for(Partner_Commission__c existingPc: partnerCompaniesMap.get(newPc.Partner_Company__c).Partners_Commission__r){
-                if(oldPcMap != null && oldPcMap.containsKey(existingPc.Id)) continue;
-                if((newPc.Start_Date__c >= existingPc.Start_Date__c && (existingPc.End_Date__c == null || newPc.Start_Date__c <= existingPc.End_Date__c)) 
-                || (existingPc.Start_Date__c >= newPc.Start_Date__c && (newPc.End_Date__c == null || existingPc.Start_Date__c <= newPc.End_Date__c))){
-                    throw new partnerCommissionException('Partner Commission dates overlap detected. Partner Commission Id: '+newPc.Id);
+            key = getOverlapKey(newPc);
+            if(pcMap.containsKey(key)){
+                for(Partner_Commission__c existingPc: pcMap.get(key)){
+                    if((newPc.Start_Date__c >= existingPc.Start_Date__c && (existingPc.End_Date__c == null || newPc.Start_Date__c <= existingPc.End_Date__c)) 
+                    || (existingPc.Start_Date__c >= newPc.Start_Date__c && (newPc.End_Date__c == null || existingPc.Start_Date__c <= newPc.End_Date__c))){
+                        throw new partnerCommissionException('Partner Commission dates overlap detected. Partner Commission Id: '+newPc.Id);
+                    }
                 }
             }
         }
+    }
+
+    private String getOverlapKey(Partner_Commission__c pc){
+        return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Monday_Account__c);
     }
 
     public Partner_Commission__c createPartnerCommissionRecord(Account mondayAccount, Account partnerAccount, Opportunity opp){
