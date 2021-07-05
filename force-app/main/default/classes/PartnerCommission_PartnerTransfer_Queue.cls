@@ -25,16 +25,23 @@ public class PartnerCommission_PartnerTransfer_Queue implements System.Queueable
         }
         
         if(!partnersToCreatePC.isEmpty()) {// create PCs for all new partners
-            //TBD - query active pcs to prevent overlap error
-            Map<Id,Account> channelPartnersMap = pcService.getChannelPartnersMap(new Set<Id>(partnersToCreatePC.values()));
-            for(Id mondayAccId: partnersToCreatePC.keySet()){
-                if(mondayAccountsMap.containsKey(mondayAccId) && channelPartnersMap.containsKey(partnersToCreatePC.get(mondayAccId))){
-                    Partner_Commission__c newPartnerCommission = pcService.createPartnerCommissionRecord(mondayAccountsMap.get(mondayAccId), channelPartnersMap.get(partnersToCreatePC.get(mondayAccId)), null);
-                    newPartnerCommissionList.add(newPartnerCommission);
+            Set<Id> partnerToCreateIds = new Set<Id>(partnersToCreatePC.values());
+            List<Partner_Commission__c> existingPcsList = [select Id, Monday_Account__c, Partner_Company__c from Partner_Commission__c where Monday_Account__c IN: partnersToCreatePC.keySet() and Partner_Company__c IN: partnerToCreateIds and is_Last__c = true and Renewable__c = true and (End_Date__c = null or End_Date__c >: Datetime.now())];
+            for(Partner_Commission__c pc: existingPcsList){
+                if(partnersToCreatePC.containsKey(pc.Monday_Account__c) && partnersToCreatePC.get(pc.Monday_Account__c) == pc.Partner_Company__c){
+                    partnersToCreatePC.remove(pc.Monday_Account__c);
+                }
+            }
+            if(!partnersToCreatePC.isEmpty()){
+                Map<Id,Account> channelPartnersMap = pcService.getChannelPartnersMap(new Set<Id>(partnersToCreatePC.values()));
+                for(Id mondayAccId: partnersToCreatePC.keySet()){
+                    if(mondayAccountsMap.containsKey(mondayAccId) && channelPartnersMap.containsKey(partnersToCreatePC.get(mondayAccId))){
+                        Partner_Commission__c newPartnerCommission = pcService.createPartnerCommissionRecord(mondayAccountsMap.get(mondayAccId), channelPartnersMap.get(partnersToCreatePC.get(mondayAccId)), null);
+                        newPartnerCommissionList.add(newPartnerCommission);
+                    }
                 }
             }
         }
-
         if(!newPartnerCommissionList.isEmpty()) Database.upsert(newPartnerCommissionList);
     }
 }
