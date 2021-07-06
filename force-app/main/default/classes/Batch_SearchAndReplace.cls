@@ -1,13 +1,13 @@
 public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Database.AllowsCallouts{
 
-    public final String query;
-    public final String field;
-    public final String value;
+    private String query;
+    private String field;
+    private String value;
   
     public Batch_SearchAndReplace(String q, String f, String v){
-       query = q;
-       field = f;
-       value = v;
+       this.query = q;
+       this.field = f;
+       this.value = v;
     }
   
     public Database.QueryLocator start(Database.BatchableContext BC){

@@ -26,83 +26,45 @@ public class Partner_TransferRecords {
 
     @AuraEnabled
     public static String runCpmTransfer(Id partnerAccountId, Id oldCpmId, Id newCpmId, Date startingFrom){
-        /*try {
-            String body = '';
-            List<User> userList = [select Id, Name from User where managerId =: oldCpmId and Contact.AccountId =: partnerAccountId];
-            for(User userRec : userList){
-                userRec.ManagerId = newCpmId;
-            }
-            if(!userList.isEmpty()) {
-                body += 'Users: \n';
-                for(User userRec : userList){
-                    body += userRec.Name + ' - ' + userRec.Id + '\n';
-                }
-                System.enqueueJob(new updateRecords(userList));
-            }
+        try {
+            Datetime dt = (Datetime) startingFrom;
+            String formattedDate = dt.format('yyyy-MM-dd');
+            system.debug('$$$ Ksenia formattedDate='+formattedDate);
+            String query = 'select Id, Name from User where managerId = \''+oldCpmId+'\' and Contact.AccountId = \''+partnerAccountId+'\'';
+            system.debug('$$$ Ksenia='+query);
+            Batch_SearchAndReplace usersBatch = new Batch_SearchAndReplace(query,'ManagerId',String.valueOf(newCpmId));
+            Database.executeBatch(usersBatch,20);
 
             Account partnerAccount = [select Name from Account where Id =: partnerAccountId];
             String partnerNameForCompare = '%'+partnerAccount.Name+'%';
-            List<Account> accountlist = [select Id, Name from Account where (Partner_s_Role_Formula__c like: partnerNameForCompare or Channel_Partner__c =: partnerAccountId) and Owner_s_Manager__c =: oldCpmId];
-            for(Account accountRec : accountlist){
-                accountRec.Owner_s_Manager__c = newCpmId;
-            }
-            if(!accountlist.isEmpty()) {
-                body += 'Accounts: \n';
-                for(Account acc: accountlist){
-                    body += acc.Name + ' - ' + acc.Id + '\n';
-                }
-                System.enqueueJob(new updateRecords(accountlist));
-            }
+            query = 'select Id, Name from Account where (Partner_s_Role_Formula__c like \'' + partnerNameForCompare + '\' or Channel_Partner__c = \''+partnerAccountId+'\') and Owner_s_Manager__c = \''+oldCpmId+'\'';
+            system.debug('$$$ Ksenia='+query);
+            Batch_SearchAndReplace accountsBatch = new Batch_SearchAndReplace(query,'Owner_s_Manager__c',String.valueOf(newCpmId));
+            Database.executeBatch(accountsBatch,20);
 
-            List<Lead> leadsList = [select Id, Name from Lead where (Owner.UserRole.Name like: partnerNameForCompare or Partner_Company__c =: partnerAccountId) and Owner_s_Manager__c =: oldCpmId and Status != 'Nurturing' and Status != 'Qualified' and Status != 'Converted'];
-            for(Lead leadRec : leadsList){
-                leadRec.Owner_s_Manager__c = newCpmId;
-            }
-            if(!leadsList.isEmpty()) {
-                body += 'Leads: \n';
-                for(Lead leadRec: leadsList){
-                    body += leadRec.Name + ' - ' + leadRec.Id + '\n';
-                }
-                System.enqueueJob(new updateRecords(leadsList));
-            }
+            query = 'select Id from Account where Id = \'' +partnerAccountId+ '\'';
+            system.debug('$$$ Ksenia='+query);
+            Batch_SearchAndReplace accountsBatch2 = new Batch_SearchAndReplace(query,'OwnerId',String.valueOf(newCpmId));
+            Database.executeBatch(accountsBatch2,20);
 
-            List<Opportunity> oppList = [select Id, Name from Opportunity where (Owner.UserRole.Name like: partnerNameForCompare or Channel_Partner__c =: partnerAccountId) and Owner_s_Manager__c =: oldCpmId and ((StageName != 'Closed Won' and StageName != 'Closed Lost') or CloseDate >: startingFrom)];
-            for(Opportunity oppRec : oppList){
-                oppRec.Owner_s_Manager__c = newCpmId;
-            }
-            if(!oppList.isEmpty()) {
-                body += 'Opportunities: \n';
-                for(Opportunity opp: oppList){
-                    body += opp.Name + ' - ' + opp.Id + '\n';
-                }
-                System.enqueueJob(new updateRecords(oppList));
-            }
+            query = 'select Id, Name from Lead where (Owner.UserRole.Name like \'' + partnerNameForCompare + '\' or Partner_Company__c = \''+partnerAccountId+'\') and Owner_s_Manager__c = \''+oldCpmId+'\' and Status != \'Nurturing\' and Status != \'Qualified\' and Status != \'Converted\'';
+            system.debug('$$$ Ksenia='+query);
+            Batch_SearchAndReplace leadsBatch = new Batch_SearchAndReplace(query,'Owner_s_Manager__c',String.valueOf(newCpmId));
+            Database.executeBatch(leadsBatch,20);
 
-            List<Sale__c> saleList = [select Id, Name from Sale__c where Owner__r.UserRole.Name like: partnerNameForCompare and Owner_s_Manager__c =: oldCpmId and (Sale_Status__c != 'Complete' or Close_Date__c >: startingFrom)];
-            for(Sale__c saleRec : saleList){
-                saleRec.Owner_s_Manager__c = newCpmId;
-            }
-            if(!saleList.isEmpty()) {
-                body += 'Sales: \n';
-                for(Sale__c sale: saleList){
-                    body += sale.Name + ' - ' + sale.Id + '\n';
-                }
-                System.enqueueJob(new updateRecords(saleList));
-            }
+            query = 'select Id, Name from Opportunity where (Owner.UserRole.Name like \'' + partnerNameForCompare + '\' or Channel_Partner__c = \''+partnerAccountId+'\') and Owner_s_Manager__c = \''+oldCpmId+'\' and ((StageName != \'Closed Won\' and StageName != \'Closed Lost\') or CloseDate >= '+formattedDate+')';
+            system.debug('$$$ Ksenia='+query);
+            Batch_SearchAndReplace oppsBatch = new Batch_SearchAndReplace(query,'Owner_s_Manager__c',String.valueOf(newCpmId));
+            Database.executeBatch(oppsBatch,20);
 
-            if(!(userList.isEmpty() && accountList.isEmpty() && oppList.isEmpty() && saleList.isEmpty() && leadsList.isEmpty())){
-                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                mail.setToAddresses(new List<String>{UserInfo.getUserEmail()});
-                mail.setSubject('Partner CPM Records Transfer Summary');
-                mail.setHtmlBody(body);
-                Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{mail});
-                return 'running';
-            } else {
-                return 'empty';
-            }
+            query = 'select Id, Name from Sale__c where Owner__r.UserRole.Name like \'' + partnerNameForCompare + '\' and Owner_s_Manager__c = \''+oldCpmId+'\' and (Sale_Status__c != \'Complete\' or Close_Date__c >= '+formattedDate+')';
+            system.debug('$$$ Ksenia='+query);
+            Batch_SearchAndReplace salesBatch = new Batch_SearchAndReplace(query,'Owner_s_Manager__c',String.valueOf(newCpmId));
+            Database.executeBatch(salesBatch,20);
+
+            return 'running';
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
-        }*/
-        return 'running';
+        }
     }
 }
