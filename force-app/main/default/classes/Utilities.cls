@@ -108,4 +108,17 @@ public without sharing class Utilities {
         request.e=e;
         Slack_MessageService.sendToSlack(new list<Slack_MessageService.slackRequest>{request});
     }
+
+    public static void cleanFlexQueue(){
+        List<AsyncApexJob> jobsList = [select Id, ApexClass.Name from AsyncApexJob where Status = 'Holding'];
+        if(jobsList.size() > 90){
+            Integer iterations = 20;
+            for(AsyncApexJob job: jobsList){
+                if(job.ApexClass.Name == 'TriggerProducerBatchWorker' && iterations > 0){
+                    System.abortJob(job.Id);
+                    iterations--;
+                }
+            }
+        }
+    }
 }
