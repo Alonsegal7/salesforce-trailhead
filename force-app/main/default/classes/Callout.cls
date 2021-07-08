@@ -14,7 +14,7 @@ global class Callout {
             firstRunBatch = false;
             System.enqueueJob(new sendCalloutQueueable(serializedObject, method));
         }
-    } 
+    }
 
     private class sendCalloutQueueable implements System.Queueable, Database.AllowsCallouts {
         private String serializedObject; 

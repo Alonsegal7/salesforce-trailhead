@@ -74,4 +74,3 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
         return mondayAccIdPartnerCommisionMap;
     }
 }
-

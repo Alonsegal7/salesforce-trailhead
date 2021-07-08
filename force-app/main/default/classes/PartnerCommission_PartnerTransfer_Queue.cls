@@ -45,5 +45,3 @@ public class PartnerCommission_PartnerTransfer_Queue implements System.Queueable
         if(!newPartnerCommissionList.isEmpty()) Database.upsert(newPartnerCommissionList);
     }
 }
-
-
