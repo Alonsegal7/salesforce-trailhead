@@ -1,12 +1,13 @@
 import { LightningElement, wire, api } from 'lwc';
 import getAccountProfile from '@salesforce/apex/BigBrainController.getAccountProfile';
 
-
 const SLUG_SUFFIX = ".monday.com"
 export default class BigBrainAccountProfile extends LightningElement {
   @api pulseAccountId;
 
-  loaded = false;
+  data = null;
+  error = null;
+  loading = true;
 
   //General
   name;
@@ -35,12 +36,25 @@ export default class BigBrainAccountProfile extends LightningElement {
   guests;
   seatsLeft;
 
+  get isError() {
+    return !!this.error || (!this.isLoading && !this.name);
+  }
+
+  get isLoading() {
+    return this.loading;
+  }
+
+  get isReady() {
+    return !this.isError && !this.isLoading;
+  }
   
   @wire(getAccountProfile, { pulseAccountId: '$pulseAccountId' })
   data ({ error, data }) {
+    this.error = error;
+    this.data = data;
     if (!data) return;
-    
-    this.accountData = JSON.parse(data);
+
+    const parsedData = JSON.parse(data);
 
     const { 
       domain, 
@@ -60,11 +74,11 @@ export default class BigBrainAccountProfile extends LightningElement {
       xi_city,
       xi_region,
       xi_time_diff
-   } = this.accountData;
+   } = parsedData;
 
     const { max_user, tier, period, started_at, ended_at } = plan;
     const { total_seats, members, viewers, guests, free_users, seats_left } = users_breakdown;
-    const timeDiffText = xi_time_diff ? '' : `(${xi_time_diff})`
+    const timeDiffText = xi_time_diff ? '' : `(${xi_time_diff})`;
 
     this.name = account_name;
     this.wesbite = `https://${domain}`;
@@ -90,6 +104,6 @@ export default class BigBrainAccountProfile extends LightningElement {
     this.guests = guests || 0;
     this.seatsLeft = seats_left || 0;
 
-    this.loaded = true;
+    this.loading = false;
   };
 }

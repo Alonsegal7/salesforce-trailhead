@@ -63,6 +63,15 @@ public with sharing class BigBrainController {
     }
 
     @AuraEnabled(cacheable=true)
+    public static string getActionsDetails(String pulseAccountId){
+        try {
+            return BigBrainAPI.getActionsDetails(pulseAccountId);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
     public static String getAccountGrantedFeatures(String pulseAccountId){
         try {
             string allFeatures = BigBrainAPI.getAllGrantedFeatures(pulseAccountId);

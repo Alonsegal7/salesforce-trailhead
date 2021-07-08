@@ -1,15 +1,12 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getActionsDetails from '@salesforce/apex/BigBrainController.getActionsDetails';
 import setAccountFreeUsers from '@salesforce/apex/BigBrainController.setAccountFreeUsers';
 import getAccountGrantedFeatures from '@salesforce/apex/BigBrainController.getAccountGrantedFeatures';
 import grantAccountFeatures from '@salesforce/apex/BigBrainController.grantAccountFeatures';
 import ungrantAccountFeatures from '@salesforce/apex/BigBrainController.ungrantAccountFeatures';
 import resetAccountTrial from '@salesforce/apex/BigBrainController.resetAccountTrial';
-
-import ACCOUNT_FIELD from '@salesforce/schema/Lead.primary_pulse_account_id__c';
-import PRICING_VERSION_FIELD from '@salesforce/schema/Lead.Pricing_Version__c';
-const fields = [ACCOUNT_FIELD, PRICING_VERSION_FIELD];
 
 const formatDate = (date) => {
   var dd = String(date.getDate()).padStart(2, '0');
@@ -20,12 +17,24 @@ const formatDate = (date) => {
 
 export default class BigBrainAccountActions extends LightningElement {
   @api recordId;
-  @wire(getRecord, { recordId: '$recordId', fields })
-  lead;
+  @api pulseAccountId;
+  @api pricingVersion;
   
+  @wire(getPlans, { pricingVersion: '$pricingVersion' })
+  wiredPlans({ error, data }) {
+    this.plansError = error;
+ 
+    if (data) {
+      this.plans = JSON.parse(data);
+    }
+  }
+
   @track featuresList = [];
   @track grantedFeaturesList = [];
 
+  freeUsersAmount = 0;
+  freeUsersUntil = "";
+  pricingVersion = null;
 
   get oneMonthFromNow(){
     const today = new Date();
@@ -47,27 +56,24 @@ export default class BigBrainAccountActions extends LightningElement {
     ];
   }
 
-  @api pulseAccountId;
   @wire(getAccountGrantedFeatures, { pulseAccountId: '$pulseAccountId' })
   data({ error, data }) {
-    if(!data) {
-      console.error(error);
-      return;
-    }
+    if (error) { console.error(error); }
 
-    const respJson = JSON.parse(data);
-    const { allFeatures, selectedFeatures }  = this.prepareList(respJson);
-    this.grantedFeaturesList.push(...selectedFeatures);
-    this.featuresList.push(...allFeatures);
+    if(data) {
+      const respJson = JSON.parse(data);
+      const { allFeatures, selectedFeatures }  = this.prepareList(respJson);
+      this.grantedFeaturesList.push(...selectedFeatures);
+      this.featuresList.push(...allFeatures);
+    }
   }
 
   handleFeaturesListChange(e) {
     const updatedList = e.detail.value;
     const addedFeatures = updatedList.filter(feature => !this.grantedFeaturesList.includes(feature));
-    console.log(addedFeatures, updatedList);
+    
     if(addedFeatures.length > 0) {
       this.grantFeatures(addedFeatures);
-
     } else {
       const removedFeatures = this.grantedFeaturesList.filter(feature => !updatedList.includes(feature));
       if(removedFeatures.length > 0) this.ungrantFeatures(removedFeatures);
@@ -94,7 +100,7 @@ export default class BigBrainAccountActions extends LightningElement {
   }
 
   grantFeatures(addedFeatures) {
-    grantAccountFeatures({pulseAccountId: this.accountId, features: addedFeatures})
+    grantAccountFeatures({pulseAccountId: this.pulseAccountId, features: addedFeatures})
       .then(result => {
         const evt = new ShowToastEvent({
           title: "Granted features successfully!",
@@ -116,7 +122,7 @@ export default class BigBrainAccountActions extends LightningElement {
   }
 
   ungrantFeatures(removedFeatures) {
-    ungrantAccountFeatures({pulseAccountId: this.accountId, features: removedFeatures })
+    ungrantAccountFeatures({pulseAccountId: this.pulseAccountId, features: removedFeatures })
       .then(result => {
         const evt = new ShowToastEvent({
           title: "Ungranted features successfully!",
@@ -127,7 +133,6 @@ export default class BigBrainAccountActions extends LightningElement {
         this.dispatchEvent(evt);
       })
       .catch(error => {
-        console.error(error);
         const evt = new ShowToastEvent({
           title: "Error while setting ungranting features",
           variant: "error",
@@ -136,11 +141,6 @@ export default class BigBrainAccountActions extends LightningElement {
         this.dispatchEvent(evt);
       });
   }
-
-
-  freeUsersAmount = 0;
-  freeUsersUntil = "";
-  pricingVersion = null;
 
   handlePricingVersionChange(event) {
     this.pricingVersion = event.detail.value;
@@ -155,7 +155,7 @@ export default class BigBrainAccountActions extends LightningElement {
 }
 
   handleFreeUsersGrantClick(e) {
-    setAccountFreeUsers({pulseAccountId: this.accountId, freeUsers: this.freeUsersAmount, untilDate: this.freeUsersUntil})
+    setAccountFreeUsers({pulseAccountId: this.pulseAccountId, freeUsers: this.freeUsersAmount, untilDate: this.freeUsersUntil})
       .then(result => {
         const evt = new ShowToastEvent({
           title: "Set free users successfully!",
@@ -176,7 +176,7 @@ export default class BigBrainAccountActions extends LightningElement {
   }
 
   handleResetTrialClick(e) {
-    resetAccountTrial({pulseAccountId: '$pulseAccountId'})
+    resetAccountTrial({pulseAccountId: this.pulseAccountId})
       .then(result => {
         const evt = new ShowToastEvent({
           title: "Reset account trial successfully!",

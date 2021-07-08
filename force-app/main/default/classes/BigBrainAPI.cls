@@ -24,7 +24,11 @@ public with sharing class BigBrainAPI {
     }
 
     public static String getForecastDetails(String pulseAccountId){
-        return get('/salesforce_api/account/' + pulseAccountId + '/forecast_details');
+        return get('/salesforce_api/account/' + pulseAccountId + '/forecast_current_state');
+    }
+
+    public static String getActionsDetails(String pulseAccountId){
+        return get('/salesforce_api/account/' + pulseAccountId + '/actions_current_state');
     }
 
     public static String getPlans(String pricingVersion){
@@ -41,14 +45,13 @@ public with sharing class BigBrainAPI {
 
     public static String grantAccountFeatures(String pulseAccountId, List<String> features){
         Map<String, String> requestParams = new Map<String, String>();
-        Date future_date = Date.today().addDays(30);
+        Date dueDate = Date.today().addDays(30);
 
-        requestParams.put('features', String.join(features,','));
-        requestParams.put('due_date', future_date.format());
+        requestParams.put('features', JSON.serialize(features));
+        requestParams.put('due_date', dueDate.format());
         requestParams.put('reason', 'partner granted feature from salesforce plugin');
-        return JSON.serialize(requestParams);
 
-        // return put('/salesforce_api/account/' + pulseAccountId + '/grant_features', requestParams);
+        return put('/salesforce_api/account/' + pulseAccountId + '/grant_features', requestParams);
     }
 
     public static String ungrantAccountFeatures(String pulseAccountId, List<string> features){
@@ -92,11 +95,6 @@ public with sharing class BigBrainAPI {
         setRequestHeaders(request, method, url);
         request.setBody(JSON.serialize(params));
         HttpResponse response = http.send(request);
-        
-        if (response.getStatusCode() != 200) {
-            throw new AuraHandledException(response.getBody());
-        }
-
         return response;
     }
 
@@ -105,11 +103,6 @@ public with sharing class BigBrainAPI {
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
         HttpResponse response = http.send(request);
-        
-        if (response.getStatusCode() != 200) {
-            throw new AuraHandledException(response.getBody());
-        }
-
         return response;
     }
 
