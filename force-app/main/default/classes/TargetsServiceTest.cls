@@ -118,6 +118,47 @@ public class TargetsServiceTest {
         System.assertEquals(target.Id, opp.Target__c);
     }
 
+    static testMethod void oppCloseWonUpdateTarget() {      
+        Account company = TestObjectCreator.CreateCompany();
+        insert company;
+
+        Account mondayAcc = TestObjectCreator.CreateMondayAccount(company);
+        insert mondayAcc;
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+        Profile admin = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User manager = new User(Alias = 'manager',Country='United Kingdom',Email='manager@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = admin.Id,TimeZoneSidKey='America/Los_Angeles', UserName='manager@monday.com');
+		insert manager;
+        
+		User user = new User(Alias = 'standt1',Country='United Kingdom', ManagerId=manager.Id, Email='demo1@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing123@monday.com');
+		insert user;
+        
+        Target__c target = new Target__c(User__c=user.Id, Target_Date__c=Date.newInstance(2019, 12, 1));
+        insert target;
+
+        Opportunity opp = new Opportunity(Target__c = target.Id, StageName = 'Qualification', OwnerId = user.Id, CloseDate = Date.newInstance(2019, 12, 17), Name = 'test', AccountId = mondayAcc.Id);
+        opp.OwnerId = user.Id;
+        opp.Potential_GB_Opp_Override__c = 'Yes';
+        insert opp;
+        opp.StageName = 'Closed Won';
+        opp.Transition_to_GB__c = true;
+        opp.Claimed_ARR__c = 10000;
+        opp.Expected_ARR__c = 10000;
+        opp.Is_Account_Green_Bucket_New__c = true;
+        Test.startTest();
+        update opp;
+        Test.stopTest();
+        opp = [select StageName, Transition_to_GB__c, Claimed_ARR__c, Expected_ARR__c, Is_Account_Green_Bucket_New__c, Green_Bucket_ARR_V2__c from Opportunity limit 1];
+        system.debug('$$Ksenia: StageName = '+ opp.StageName);
+        system.debug('$$Ksenia: Transition_to_GB__c = '+ opp.Transition_to_GB__c);
+        system.debug('$$Ksenia: Claimed_ARR__c = '+ opp.Claimed_ARR__c);
+        system.debug('$$Ksenia: Expected_ARR__c = '+ opp.Expected_ARR__c);
+        system.debug('$$Ksenia: Is_Account_Green_Bucket_New__c = '+ opp.Is_Account_Green_Bucket_New__c);
+        system.debug('$$Ksenia: Green_Bucket_ARR_V2__c = '+ opp.Green_Bucket_ARR_V2__c);
+        target = [select Closed_Won_Arr__c from Target__c where Id =: target.Id];
+        //System.assertEquals(10000, target.Closed_Won_Arr__c);
+    }
+
     static testMethod void shouldLinkOpportunityOnCreateTarget() {        
         Account company = new Account(Name='test company');
         insert company;

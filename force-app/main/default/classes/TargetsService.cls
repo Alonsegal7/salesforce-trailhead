@@ -1,15 +1,67 @@
 public class TargetsService {
 
-    public void updateOppsOnTargetCreation(list<Target__c> newTargets){
+    public static Boolean firstRunUpdateTargetsArrSum = true;
+
+    public void updateTargetOnClosedWonOppChange(List<Opportunity> newOpps, Map<Id, Opportunity> oldOpps){
+        Set<Id> targetIds = new Set<Id>();
+        Decimal arrToAdd = 0;
+        for(Opportunity opp: newOpps){
+            if((((opp.StageName == 'Closed Won' || oldOpps.get(opp.Id).StageName == 'Closed Won') && opp.StageName != oldOpps.get(opp.Id).StageName) 
+                    || (opp.StageName == 'Closed Won' && (opp.Expected_ARR__c != oldOpps.get(opp.Id).Expected_ARR__c || opp.Claimed_ARR__c != oldOpps.get(opp.Id).Claimed_ARR__c || opp.Target__c != oldOpps.get(opp.Id).Target__c || opp.CP_Target__c != oldOpps.get(opp.Id).CP_Target__c)))
+                && (opp.Transition_to_GB__c || opp.Is_Account_Green_Bucket_New__c)){
+                    //update targets
+                    if(opp.Target__c != null) targetIds.add(oldOpps.get(opp.Id).Target__c);
+                    if(opp.CP_Target__c != null) targetIds.add(oldOpps.get(opp.Id).CP_Target__c);
+                    //if target changed not from null - update old targets too
+                    if(opp.Target__c != oldOpps.get(opp.Id).Target__c && oldOpps.get(opp.Id).Target__c != null){
+                        targetIds.add(oldOpps.get(opp.Id).Target__c);
+                    }
+                    if(opp.CP_Target__c != oldOpps.get(opp.Id).CP_Target__c && oldOpps.get(opp.Id).CP_Target__c != null){
+                        targetIds.add(oldOpps.get(opp.Id).CP_Target__c);
+                    }
+            }
+        }
+        if(targetIds.isEmpty()) return;
+        firstRunUpdateTargetsArrSum = false;
+        System.enqueueJob(new updateTargetsArrSum(targetIds));
+    }
+
+    private class updateTargetsArrSum implements Queueable{
+        private Set<Id> targetIds;
+    
+        public updateTargetsArrSum(Set<Id> targetIds){
+            this.targetIds = targetIds;
+        }
+        public void execute(System.QueueableContext ctx) {
+            Map<Id,Target__c> targetIdToAddedArrMap = new Map<Id,Target__c>();
+            for(Id targetId: targetIds){
+                targetIdToAddedArrMap.put(targetId, new Target__c(Id = targetId,Closed_Won_Arr__c = 0));
+            }
+            List<Opportunity> oppsList = [select Target__c, CP_Target__c, Green_Bucket_ARR_V2__c from Opportunity where (Target__c IN: targetIds or CP_Target__c IN: targetIds) and StageName = 'Closed Won' and Green_Bucket_ARR_V2__c != null];
+            if(!oppsList.isEmpty()) {
+                for(Opportunity opp: oppsList){
+                    if(opp.Target__c != null && targetIdToAddedArrMap.containsKey(opp.Target__c)){
+                        targetIdToAddedArrMap.get(opp.Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
+                    }
+                    if(opp.CP_Target__c != null && targetIdToAddedArrMap.containsKey(opp.CP_Target__c)){
+                        targetIdToAddedArrMap.get(opp.CP_Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
+                    }
+                }
+            }
+            Database.update(targetIdToAddedArrMap.values());
+        }
+    }
+
+    public void updateOppsOnTargetCreation(List<Target__c> newTargets){
         Id oppPartnerCompanyRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
         Id internalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
-        set<Id> usersIds= new set<Id>();
-        set<Integer> monthsSet= new set<Integer>();
-        set<Integer> yearsSet= new set<Integer>();
-        set<Id> partnerCompanyIds= new set<Id>();
+        Set<Id> usersIds= new Set<Id>();
+        Set<Integer> monthsSet= new Set<Integer>();
+        Set<Integer> yearsSet= new Set<Integer>();
+        Set<Id> partnerCompanyIds= new Set<Id>();
         Map<String,Id> targetsMap = filterTargets(newTargets, usersIds, monthsSet, yearsSet, partnerCompanyIds);
         if(targetsMap.isEmpty()) return;
-        list<Opportunity> allOpps=[select Id,OwnerId,RecordTypeId,Owner_s_Manager__c,CloseDate,Owner.Contact.AccountId
+        List<Opportunity> allOpps=[select Id,OwnerId,RecordTypeId,Owner_s_Manager__c,CloseDate,Owner.Contact.AccountId
                                     from Opportunity 
                                     WHERE Target__c = null AND 
                                     ((RecordTypeId =: internalOppRtId AND OwnerId in: usersIds ) or /*internal*/
@@ -21,21 +73,22 @@ public class TargetsService {
         if(!allOpps.isEmpty() && Batch_UpdateOppsTargets.firstRun){
             Map<Id,Opportunity> oppsMap = new Map<Id,Opportunity>(allOpps);
             Batch_UpdateOppsTargets.firstRun = false;
-            Database.executeBatch(new Batch_UpdateOppsTargets(oppsMap.keySet(), targetsMap));
+            Utilities.cleanFlexQueue();
+            Database.executeBatch(new Batch_UpdateOppsTargets(oppsMap.keySet(), targetsMap), 20);
         }
     }
-    public void updateSalesOnTargetCreation(list<Target__c> newTargets){
+    public void updateSalesOnTargetCreation(List<Target__c> newTargets){
         try{
             Id partnerSaleRtId = Schema.SObjectType.Sale__c.getRecordTypeInfosByDeveloperName().get('Partner_Sale').getRecordTypeId();
             Id internalSaleRtId = Schema.SObjectType.Sale__c.getRecordTypeInfosByDeveloperName().get('Internal_Sale').getRecordTypeId();
-            set<Id> usersIds= new set<Id>();
-            set<Integer> monthsSet= new set<Integer>();
-            set<Integer> yearsSet= new set<Integer>();
-            set<Id> partnerCompanyIds= new set<Id>();
+            Set<Id> usersIds= new Set<Id>();
+            Set<Integer> monthsSet= new Set<Integer>();
+            Set<Integer> yearsSet= new Set<Integer>();
+            Set<Id> partnerCompanyIds= new Set<Id>();
             Map<String,Id> targetsMap = filterTargets(newTargets, usersIds, monthsSet, yearsSet, partnerCompanyIds);
             if(targetsMap.isEmpty()) return;
 
-            list<Sale__c> allSales=[select Id,Owner__c,RecordTypeId,Owner_s_Manager__c,Close_Date__c
+            List<Sale__c> allSales=[select Id,Owner__c,RecordTypeId,Owner_s_Manager__c,Close_Date__c
                                     from Sale__c 
                                     WHERE Target__c = null AND 
                                     ((RecordTypeId=:internalSaleRtId AND Owner__c in: usersIds) or /*internal*/
@@ -46,14 +99,15 @@ public class TargetsService {
             if(!allSales.isEmpty() && Batch_UpdateSalesTargets.firstRun){
                 Map<Id,Sale__c> salesMap = new Map<Id,Sale__c>(allSales);
                 Batch_UpdateSalesTargets.firstRun = false;
-                Database.executeBatch(new Batch_UpdateSalesTargets(salesMap.keySet(), targetsMap));
+                Utilities.cleanFlexQueue();
+                Database.executeBatch(new Batch_UpdateSalesTargets(salesMap.keySet(), targetsMap), 20);
             }
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in updateSalesOnTargetCreation ',e,e.getMessage());   
         }
     }
 
-    public void TargetsServiceOnSales(List<Sale__c> newSales, map <Id, Sale__c> oldSales){
+    public void TargetsServiceOnSales(List<Sale__c> newSales, Map<Id, Sale__c> oldSales){
         List<Sale__c> salesToUpdate = new List<Sale__c>();
         Set<String> userIdDateTargetKeys = new Set<String>();
         Id salePartnerRecordId = Schema.SObjectType.Sale__c.getRecordTypeInfosByDeveloperName().get('Partner_Sale').getRecordTypeId();
@@ -92,13 +146,10 @@ public class TargetsService {
         }
     }
 
-    public void TargetsServiceOnOpps(List<Opportunity> newOpps, map <Id, Opportunity> oldOpps){
+    public void TargetsServiceOnOpps(List<Opportunity> newOpps, Map<Id, Opportunity> oldOpps){
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
-        Set<Id> userIds = new Set<Id>();
         Map<Id,Date> userIdsForPartnerCompanyQuery = new Map<Id,Date>();
         Map<Id,Id> userIdToPartnerCompanyMap = new Map<Id,Id>();
-        Set<Integer> yearsSet = new Set<Integer>();
-        Set<Integer> monthsSet = new Set<Integer>();
         Set<String> userIdDateTargetKeys = new Set<String>();
         Set<String> partnerCompanyDateTargetKeys = new Set<String>();
         Id oppPartnerCompanyRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
@@ -167,7 +218,7 @@ public class TargetsService {
         }
     }
 
-    public void setTargetUniqueKeys(List<Target__c> newTargets, map <Id, Target__c> oldTargetsMap){
+    public void setTargetUniqueKeys(List<Target__c> newTargets, Map<Id, Target__c> oldTargetsMap){
         for(Target__c targetRec: newTargets){
             if(targetRec.Target_Date__c != null && (targetRec.User__c != null || targetRec.Partner_Company__c != null) && (oldTargetsMap == null || targetRec.Target_Date__c != oldTargetsMap.get(targetRec.Id).Target_Date__c || targetRec.User__c != oldTargetsMap.get(targetRec.Id).User__c || targetRec.Partner_Company__c != oldTargetsMap.get(targetRec.Id).Partner_Company__c)){
                 if(targetRec.User__c != null){
@@ -199,7 +250,7 @@ public class TargetsService {
         return res;
     }
 
-    private Map<String,Id> filterTargets(list<Target__c> newTargets, set<Id> usersIds, set<Integer> monthsSet, set<Integer> yearsSet, set<Id> partnerCompanyIds){
+    private Map<String,Id> filterTargets(List<Target__c> newTargets, Set<Id> usersIds, Set<Integer> monthsSet, Set<Integer> yearsSet, Set<Id> partnerCompanyIds){
         Map<String,Id> targetsMap = new Map<String,Id>();
         String key = '';
         for(Target__c targetRec : newTargets){

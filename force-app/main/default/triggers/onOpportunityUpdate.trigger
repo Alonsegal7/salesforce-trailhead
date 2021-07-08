@@ -17,6 +17,10 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     
     if(Trigger.isAfter && Trigger.isUpdate){
         OpportunityHelper.afterUpdate(Trigger.new,Trigger.oldmap);
+        if(TargetsService.firstRunUpdateTargetsArrSum){
+            TargetsService targetServiceHelper = new TargetsService();
+            targetServiceHelper.updateTargetOnClosedWonOppChange(Trigger.new, Trigger.oldMap);
+        }
         if(PartnerCommissionService.firstRunOpp){
             PartnerCommissionService partnerCommission = new PartnerCommissionService();
             partnerCommission.partnerCommissionFromGbOpp(Trigger.new, Trigger.oldMap);
