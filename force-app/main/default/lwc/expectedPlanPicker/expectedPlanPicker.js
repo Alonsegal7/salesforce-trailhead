@@ -101,7 +101,6 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getRecord, { recordId: '$recordId', fields })
   wiredRecord({ error, data }) {
-    console.log(error, data);
     this.recordError = error;
     if (data) {
       this.record = data;
@@ -112,7 +111,6 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getPlans, { pricingVersion: '$pricingVersion' })
   wiredPlans({ error, data }) {
-    console.log(error, data);
     this.plansError = error;
  
     if (data) {
@@ -122,7 +120,6 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getForecastDetails, { pulseAccountId: '$pulseAccountId' })
   wiredForecast({ error, data }) {
-    console.log(error, data);
     this.forecastDetailsError = error;
     
     if (data) {
@@ -147,7 +144,7 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get isLoading() {
-    console.log(this.isError ,this.record,this.plans, this.forecastDetails);
+    // console.log(this.isError ,this.record,this.plans, this.forecastDetails);
     return !this.isError && (!this.record || !this.plans || !this.forecastDetails);
   }
 
