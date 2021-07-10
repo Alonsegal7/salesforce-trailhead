@@ -72,19 +72,6 @@ public with sharing class BigBrainController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static String getAccountGrantedFeatures(String pulseAccountId){
-        try {
-            string allFeatures = BigBrainAPI.getAllGrantedFeatures(pulseAccountId);
-            string usedFeatures = BigBrainAPI.getAccountUsedGrantedFeatures(pulseAccountId);
-            string resp = '{ "allFeatures": ' + allFeatures;
-            resp += ', "selectedFeatures": ' + usedFeatures + ' }';            
-            return resp;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-
-    @AuraEnabled(cacheable=true)
     public static String grantAccountFeatures(String pulseAccountId, List<String> features){
         try {
             return BigBrainAPI.grantAccountFeatures(pulseAccountId, features);
@@ -115,6 +102,15 @@ public with sharing class BigBrainController {
     public static string resetAccountTrial(String pulseAccountId){
         try {
             return BigBrainAPI.resetAccountTrial(pulseAccountId);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
+        }
+    }
+
+    @AuraEnabled(cacheable=false)
+    public static string setPricingVersion(String pulseAccountId, String version){
+        try {
+            return BigBrainAPI.setPricingVersion(pulseAccountId, version);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
         }

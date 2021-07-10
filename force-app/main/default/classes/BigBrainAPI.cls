@@ -61,17 +61,21 @@ public with sharing class BigBrainAPI {
         return put('/salesforce_api/account/' + pulseAccountId + '/ungrant_features', requestParams);
     }
 
-    public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, string untilDate){
+    public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, String untilDate){
         Map<String, String> mapName = new Map<String, String>();
         mapName.put('free_users', String.valueOf(freeUsers));
         mapName.put('due_date', untilDate);
-
         return put('/salesforce_api/account/' + pulseAccountId + '/free_users', mapName);
     }
 
     public static String resetAccountTrial(String pulseAccountId){
-        Map<String, String> mapName = new Map<String, String>();
         return put('/salesforce_api/account/' + pulseAccountId + '/reset_trial');
+    }
+
+    public static String setPricingVersion(String pulseAccountId, String version) {
+        Map<String, String> mapName = new Map<String, String>();
+        mapName.put('version', version);
+        return put('/salesforce_api/account/' + pulseAccountId + '/pricing_version', mapName);
     }
 
     private static string get(String url) {
@@ -79,12 +83,12 @@ public with sharing class BigBrainAPI {
         return response.getBody();
     }
 
-    public static string put(String url, Map<String, String> params) {
+    private static string put(String url, Map<String, String> params) {
         HttpResponse response = makeRequest('PUT', url, params);
         return response.getBody();
     }
 
-    public static string put(String url) {
+    private static string put(String url) {
         HttpResponse response = makeRequest('PUT', url);
         return response.getBody();
     }
