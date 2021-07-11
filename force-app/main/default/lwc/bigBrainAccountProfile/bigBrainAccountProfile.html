@@ -20,7 +20,13 @@
             </lightning-layout>
         </template>
         <template if:true={isReady}>
-            <lightning-layout>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item padding="horizontal-small" size="12" if:true={hasStatuses}>
+                    <div class="header-column">
+                        <p class="field-title" title="Statuses">Statuses</p>
+                        <p><lightning-pill-container items={statuses} ></lightning-pill-container></p>
+                    </div>
+                </lightning-layout-item>
                 <lightning-layout-item padding="around-small">
                     <div class="header-column">
                         <p class="field-title" title="Account Name">Name</p>

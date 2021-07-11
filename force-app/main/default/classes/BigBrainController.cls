@@ -71,7 +71,7 @@ public with sharing class BigBrainController {
         }
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=false)
     public static String grantAccountFeatures(String pulseAccountId, List<String> features){
         try {
             return BigBrainAPI.grantAccountFeatures(pulseAccountId, features);
@@ -80,7 +80,7 @@ public with sharing class BigBrainController {
         }
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=false)
     public static String ungrantAccountFeatures(String pulseAccountId, List<string> features){
         try {
             return BigBrainAPI.ungrantAccountFeatures(pulseAccountId, features);

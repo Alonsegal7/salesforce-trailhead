@@ -8,10 +8,10 @@ import resetAccountTrial from '@salesforce/apex/BigBrainController.resetAccountT
 import setPricingVersion from '@salesforce/apex/BigBrainController.setPricingVersion';
 
 const PRICING_VERSION_OPTIONS = [
-  { label: '6 - old infra / higher prices', value: 6 },
-  { label: '7 - new infra / lower prices', value: 7 },
-  { label: '8 - new infra / higher prices', value: 8 },
-  { label: '9 - new infra / updated higher prices (ENT 38$, BRL, MXN, INR)', value: 9 }
+  { label: '6 - old infra / higher prices', value: "6" },
+  { label: '7 - new infra / lower prices', value: "7" },
+  { label: '8 - new infra / higher prices', value: "8" },
+  { label: '9 - new infra / updated higher prices (ENT 38$, BRL, MXN, INR)', value: "9" }
 ];
 
 const formatDate = (date) => {
@@ -89,7 +89,7 @@ export default class BigBrainAccountActions extends LightningElement {
   }
 
   get isFreeUsersGrantDisabled() {
-    return !this.selectedFreeUsersAmount || !this.isFreeUsersGrantUntilValid;
+    return !this.selectedFreeUsersAmount || !this.isFreeUsersGrantUntilValid || this.isTrial;
   }
 
   get isFreeUsersGrantUntilValid() {
@@ -117,6 +117,10 @@ export default class BigBrainAccountActions extends LightningElement {
     return this.data.is_paying;
   }
 
+  get isTrial() { 
+    return !this.isPaying;
+  }
+
   get isSubmitting() {
     return this.submitting;
   }
@@ -126,11 +130,11 @@ export default class BigBrainAccountActions extends LightningElement {
   }
 
   get currentPricingVersion() { 
-    return this.data.pricing_version; 
+    return this.data.pricing_version || '';
   }
 
   get pricingVersion() { 
-    return this.selectedPricingVersion || this.currentPricingVersion;
+    return (this.selectedPricingVersion || this.currentPricingVersion).toString();
   }
 
   get isSetPricingVersionDisabled() {

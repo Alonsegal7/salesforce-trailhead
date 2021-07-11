@@ -18,6 +18,7 @@ export default class BigBrainAccountProfile extends LightningElement {
   companySize;
   slug;
   website;
+  statuses;
 
   //Plan related data
   plan;
@@ -47,6 +48,10 @@ export default class BigBrainAccountProfile extends LightningElement {
   get isReady() {
     return !this.isError && !this.isLoading;
   }
+
+  get hasStatuses() {
+    return this.statuses && this.statuses.length > 0;
+  }
   
   @wire(getAccountProfile, { pulseAccountId: '$pulseAccountId' })
   data ({ error, data }) {
@@ -73,9 +78,10 @@ export default class BigBrainAccountProfile extends LightningElement {
       xi_country,
       xi_city,
       xi_region,
-      xi_time_diff
+      xi_time_diff,
+      statuses
    } = parsedData;
-
+console.log(statuses)
     const { max_user, tier, period, started_at, ended_at } = plan;
     const { total_seats, members, viewers, guests, free_users, seats_left } = users_breakdown;
     const timeDiffText = xi_time_diff ? '' : `(${xi_time_diff})`;
@@ -87,9 +93,10 @@ export default class BigBrainAccountProfile extends LightningElement {
     this.companySize = company_size || "Unknown";
     this.teamSize = max_team_size || "Unknown";
     this.slug = `https://${slug}${SLUG_SUFFIX}`;
-    this.address = `${xi_city}, ${xi_region}, ${xi_country} ${timeDiffText}`
+    this.address = `${xi_city}, ${xi_region}, ${xi_country} ${timeDiffText}`;
+    this.statuses = statuses.map(s => ({label: s}));
 
-    this.plan = `${max_user} ${tier} ${period}`;
+    this.plan = tier ? `${max_user} ${tier} ${period}` : 'Trial';
     this.currency = payment_currency;
     this.pricingVersion = pricing_version;
     this.planStartDate = started_at;

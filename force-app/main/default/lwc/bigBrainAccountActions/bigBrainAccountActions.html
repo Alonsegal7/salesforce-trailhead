@@ -10,7 +10,7 @@
       <lightning-accordion >
         <lightning-accordion-section name="A" label="Free users">
           <lightning-layout vertical-align="end">
-            <lightning-layout-item flexibility="auto" padding="around-small">
+            <lightning-layout-item padding="horizontal-small" style="width: 150px;">
               <lightning-input
                 type="number"
                 name="freeUsersInput"
@@ -18,26 +18,36 @@
                 value={freeUsersAmount}
                 onchange={handleFreeUsersAmountChange}
                 placeholder="0"
+                disabled={isTrial}
               ></lightning-input>
             </lightning-layout-item>
-            <lightning-layout-item flexibility="auto" padding="around-small">
+            <lightning-layout-item padding="horizontal-small" style="width: 200px;">
               <lightning-input
                 required
                 type="date"
                 label="Grant Until"
                 value={freeUsersUntil}
                 onchange={handleFreeUsersUntilChange}
+                disabled={isTrial}
               ></lightning-input>
-              <span class="error">{freeUsersGrantUntilValidationMessage}</span>
             </lightning-layout-item>
-            <lightning-layout-item flexibility="auto" padding="around-small">
+            <lightning-layout-item padding="horizontal-small">
               <lightning-button
-                label="Grant" 
+                label="Apply" 
                 variant="brand"
                 class="slds-button"
                 onclick={handleFreeUsersGrantClick}
                 disabled={isFreeUsersGrantDisabled}
               ></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item if:true={isTrial}>
+              <div class="info">
+                <lightning-icon class="info-icon" icon-name="utility:info" size="small"></lightning-icon>
+                <span class="info-label">Account is in trial</span>
+              </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+              <span class="error">{freeUsersGrantUntilValidationMessage}</span>
             </lightning-layout-item>
           </lightning-layout>
         </lightning-accordion-section>
