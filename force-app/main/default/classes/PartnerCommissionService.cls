@@ -89,7 +89,7 @@ public class PartnerCommissionService {
             }
         }
         if(partnerCompanyIds.isEmpty()) return;
-        String dynamicQuery = 'select Start_Date__c, End_Date__c, Partner_Company__c, Monday_Account__c from Partner_Commission__c where Partner_Company__c IN: partnerCompanyIds and Monday_Account__c IN: mondayAccountIds';
+        String dynamicQuery = 'select Pulse_Account_ID__c, Start_Date__c, End_Date__c, Partner_Company__c, Monday_Account__c from Partner_Commission__c where Partner_Company__c IN: partnerCompanyIds and Monday_Account__c IN: mondayAccountIds';
         if(oldPcMap != null) {
             Set<Id> existingPcIds = oldPcMap.keySet();
             dynamicQuery += ' and Id NOT IN: existingPcIds';
@@ -119,7 +119,7 @@ public class PartnerCommissionService {
     }
 
     private String getOverlapKey(Partner_Commission__c pc){
-        return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Monday_Account__c);
+        return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Pulse_Account_ID__c);
     }
 
     public Partner_Commission__c createPartnerCommissionRecord(Account mondayAccount, Account partnerAccount, Opportunity opp){
