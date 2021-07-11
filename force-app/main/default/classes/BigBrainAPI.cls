@@ -19,8 +19,16 @@ public with sharing class BigBrainAPI {
         return get('/salesforce_api/account/' + pulseAccountId + '/features_usage');
     }
 
+    public static String getAllOpportunityBillings(String pulseAccountId, String opportunityId){
+        return get('/salesforce_api/account/' + pulseAccountId + '/get_all_opportunity_billings/?opportunity_id=' + opportunityId);
+    }
+
     public static String getForecastDetails(String pulseAccountId){
-        return get('/salesforce_api/account/' + pulseAccountId + '/forecast_details');
+        return get('/salesforce_api/account/' + pulseAccountId + '/forecast_current_state');
+    }
+
+    public static String getActionsDetails(String pulseAccountId){
+        return get('/salesforce_api/account/' + pulseAccountId + '/actions_current_state');
     }
 
     public static String getPlans(String pricingVersion){
@@ -35,17 +43,39 @@ public with sharing class BigBrainAPI {
         return get('/salesforce_api/account/' + pulseAccountId + '/granted_features');
     }
 
-    public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, string untilDate){
+    public static String grantAccountFeatures(String pulseAccountId, List<String> features){
+        Map<String, String> requestParams = new Map<String, String>();
+        Date dueDate = Date.today().addDays(30);
+
+        requestParams.put('features', JSON.serialize(features));
+        requestParams.put('due_date', dueDate.format());
+        requestParams.put('reason', 'partner granted feature from salesforce plugin');
+
+        return put('/salesforce_api/account/' + pulseAccountId + '/grant_features', requestParams);
+    }
+
+    public static String ungrantAccountFeatures(String pulseAccountId, List<string> features){
+        Map<String, String> requestParams = new Map<String, String>();
+        requestParams.put('features', String.join(features,','));
+
+        return put('/salesforce_api/account/' + pulseAccountId + '/ungrant_features', requestParams);
+    }
+
+    public static String setAccountFreeUsers(String pulseAccountId, Integer freeUsers, String untilDate){
         Map<String, String> mapName = new Map<String, String>();
         mapName.put('free_users', String.valueOf(freeUsers));
         mapName.put('due_date', untilDate);
-
         return put('/salesforce_api/account/' + pulseAccountId + '/free_users', mapName);
     }
 
     public static String resetAccountTrial(String pulseAccountId){
-        Map<String, String> mapName = new Map<String, String>();
         return put('/salesforce_api/account/' + pulseAccountId + '/reset_trial');
+    }
+
+    public static String setPricingVersion(String pulseAccountId, String version) {
+        Map<String, String> mapName = new Map<String, String>();
+        mapName.put('version', version);
+        return put('/salesforce_api/account/' + pulseAccountId + '/pricing_version', mapName);
     }
 
     private static string get(String url) {
@@ -53,12 +83,12 @@ public with sharing class BigBrainAPI {
         return response.getBody();
     }
 
-    public static string put(String url, Map<String, String> params) {
+    private static string put(String url, Map<String, String> params) {
         HttpResponse response = makeRequest('PUT', url, params);
         return response.getBody();
     }
 
-    public static string put(String url) {
+    private static string put(String url) {
         HttpResponse response = makeRequest('PUT', url);
         return response.getBody();
     }
@@ -68,12 +98,9 @@ public with sharing class BigBrainAPI {
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
         request.setBody(JSON.serialize(params));
-        HttpResponse response = http.send(request);
-        
-        if (response.getStatusCode() != 200) {
-            throw new AuraHandledException(response.getBody());
-        }
 
+        if(Test.isRunningTest()){ return new HttpResponse(); }
+        HttpResponse response = http.send(request);
         return response;
     }
 
@@ -81,23 +108,22 @@ public with sharing class BigBrainAPI {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
-        HttpResponse response = http.send(request);
-        
-        if (response.getStatusCode() != 200) {
-            throw new AuraHandledException(response.getBody());
-        }
 
+        if(Test.isRunningTest()){ return new HttpResponse(); }
+        HttpResponse response = http.send(request);
         return response;
     }
 
     private static void setRequestHeaders(HttpRequest request, String method, String url){
         Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='Big_Brain'][0];
         String baseUrl = ConfigManager.getBigBrainBaseUrl();
+        String userType = [select Function__c from User where Id =: UserInfo.getUserId()][0].Function__c;
 
         request.setMethod(method);
         request.setEndpoint(baseUrl + url);
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setHeader('Authorization', whMTD.Key__c);
         request.setHeader('From', UserInfo.getUserEmail());
+        request.setHeader('User-Type', userType);
     }
 }

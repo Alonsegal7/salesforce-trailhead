@@ -13,19 +13,22 @@ const columns = [
     { label: 'Coupon', fieldName: 'coupon', }
 ];
 
+const formatPrice = price => 
+    Math.abs(price) > 999 ?
+        Math.sign(price) * ((Math.abs(price) / 1000).toFixed(1)) + 'k' :
+        Math.sign(price) * Math.abs(price);
+
 export default class BigBrainAccountBilling extends LightningElement {
+    @api pulseAccountId;
+
     columns = columns;
     isLoading = true;
 
-    @api pulseAccountId;
     @wire(getAccountBilling, { pulseAccountId: '$pulseAccountId' })
     data({ error, data }) {
+        this.error = error;
         if(!data) return;
-        if(error) {
-            this.isLoading = false;
-            this.error = error;
-            return;
-        }
+        
         const results = JSON.parse(data);
 
         this.data = results.map(b => ({
@@ -33,19 +36,13 @@ export default class BigBrainAccountBilling extends LightningElement {
             type: b.event_type,
             status: b.status,
             plan: b.plan ? b.plan.name : "",
-            price: this.formatPrice(b.invoice_charge_amount),
-            mrr_gain: this.formatPrice(b.mrr_gain),
+            price: formatPrice(b.invoice_charge_amount),
+            mrr_gain: formatPrice(b.mrr_gain),
             currency: b.currency,
-            price_usd: this.formatPrice(b.invoice_charge_amount_usd),
+            price_usd: formatPrice(b.invoice_charge_amount_usd),
             coupon: b.coupon_code
         }));
 
         this.isLoading = false
-    }
-
-    formatPrice(price) {
-        return Math.abs(price) > 999 ?
-            Math.sign(price) * ((Math.abs(price) / 1000).toFixed(1)) + 'k' :
-            Math.sign(price) * Math.abs(price)
     }
 }

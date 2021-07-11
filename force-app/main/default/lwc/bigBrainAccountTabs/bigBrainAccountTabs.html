@@ -12,15 +12,15 @@
                 <lightning-tab label="Users" class="account-tab">
                     <c-big-brain-account-users pulse-account-id={pulseAccountId}></c-big-brain-account-users>
                 </lightning-tab>
-                <!--<lightning-tab label="Features" class="account-tab">
+                <lightning-tab label="Features" class="account-tab">
                     <c-big-brain-account-usage-features pulse-account-id={pulseAccountId}></c-big-brain-account-usage-features>
-                </lightning-tab>-->
+                </lightning-tab>
                 <lightning-tab label="Billing" class="account-tab">
                     <c-big-brain-account-billing pulse-account-id={pulseAccountId}></c-big-brain-account-billing>
                 </lightning-tab>
-                <!--<lightning-tab label="Actions" class="account-tab">
+                <lightning-tab label="Actions" class="account-tab">
                     <c-big-brain-account-actions pulse-account-id={pulseAccountId}></c-big-brain-account-actions>
-                </lightning-tab>-->
+                </lightning-tab>
             </lightning-tabset>
         </template>
         <template if:false={pulseAccountId}>

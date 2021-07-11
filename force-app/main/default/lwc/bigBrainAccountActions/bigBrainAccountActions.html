@@ -1,65 +1,116 @@
 <template>
-  <lightning-accordion >
-    <lightning-accordion-section name="A" label="Free users">
-      <lightning-layout vertical-align="end">
-        <lightning-layout-item flexibility="auto" padding="around-small">
-          <lightning-input
-            type="number"
-            name="freeUsersInput"
-            label="Free users"
-            value={freeUsersAmount}
-            onchange={handleFreeUsersAmountChange}
-            placeholder="0"
-          ></lightning-input>
-        </lightning-layout-item>
-        <lightning-layout-item flexibility="auto" padding="around-small">
-          {datetimestring}
-          <lightning-input
-            required
-            type="date"
-            name="input2"
-            label="Grant Until"
-            min={todaysDate}
-            max={oneMonthFromNow}
-            value={freeUsersUntil}
-            onchange={handleFreeUsersUntilChange}
-          ></lightning-input>
-        </lightning-layout-item>
-        <lightning-layout-item flexibility="auto" padding="around-small">
-          <lightning-button
-            label="Grant" 
-            variant="brand"
-            class="slds-button"
-            onclick={handleFreeUsersGrantClick}
-          ></lightning-button>
-        </lightning-layout-item>
-      </lightning-layout>
-    </lightning-accordion-section>
-    <lightning-accordion-section name="B" label="Reset trial">
-      <lightning-button
-        label="Reset trial (7 days)" 
-        variant="brand"
-        class="slds-button"
-        onclick={handleResetTrialClick}
-      ></lightning-button>
-    </lightning-accordion-section>
-    <lightning-accordion-section name="C" label="Pricing version">
-      <lightning-combobox
-        name="progress"
-        value={pricingVersion}
-        placeholder="Select pricing version"
-        options={pricingVersionOptions}
-        onchange={handleTierChange}
-      ></lightning-combobox>
-    </lightning-accordion-section>
-    <lightning-accordion-section name="D" label="Granted Features">
-      <lightning-dual-listbox name="granted-features"
-          label="Select Features"
-          source-label="Available"
-          selected-label="Granted"
-          field-level-help=""
-          options={options}
-          value={value}></lightning-dual-listbox>
-    </lightning-accordion-section>
-  </lightning-accordion>
+  <div class="c-container">
+    <template if:true={isLoading}>
+      <div class="slds-is-relative" style="min-height: 10vh;">
+          <lightning-spinner alternative-text="Loading..." size="medium">
+          </lightning-spinner> 
+      </div>
+    </template>
+    <template if:true={isReady}>
+      <lightning-accordion >
+        <lightning-accordion-section name="A" label="Free users">
+          <lightning-layout vertical-align="end">
+            <lightning-layout-item padding="horizontal-small" style="width: 150px;">
+              <lightning-input
+                type="number"
+                name="freeUsersInput"
+                label="Free users"
+                value={freeUsersAmount}
+                onchange={handleFreeUsersAmountChange}
+                placeholder="0"
+                disabled={isTrial}
+              ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small" style="width: 200px;">
+              <lightning-input
+                required
+                type="date"
+                label="Grant Until"
+                value={freeUsersUntil}
+                onchange={handleFreeUsersUntilChange}
+                disabled={isTrial}
+              ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-button
+                label="Apply" 
+                variant="brand"
+                class="slds-button"
+                onclick={handleFreeUsersGrantClick}
+                disabled={isFreeUsersGrantDisabled}
+              ></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item if:true={isTrial}>
+              <div class="info">
+                <lightning-icon class="info-icon" icon-name="utility:info" size="small"></lightning-icon>
+                <span class="info-label">Account is in trial</span>
+              </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+              <span class="error">{freeUsersGrantUntilValidationMessage}</span>
+            </lightning-layout-item>
+          </lightning-layout>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="B" label="Reset trial">
+          <lightning-layout vertical-align="end">
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-button
+                label="Reset trial (7 days)" 
+                variant="brand"
+                class="slds-button"
+                onclick={handleResetTrialClick}
+                disabled={isPaying}
+              ></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item if:true={isPaying}>
+              <div class="info">
+                <lightning-icon class="info-icon" icon-name="utility:info" size="small"></lightning-icon>
+                <span class="info-label">Account is paying</span>
+              </div>
+            </lightning-layout-item>
+          </lightning-layout>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="C" label="Pricing version">
+          <lightning-layout vertical-align="end">
+            <lightning-layout-item padding="horizontal-small" style="width: 300px;">
+              <lightning-combobox
+                name="progress"
+                value={pricingVersion}
+                label="Version"
+                placeholder="Select pricing version"
+                options={pricingVersionOptions}
+                onchange={handlePricingVersionChange}
+                disabled={isPaying}
+              ></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-button
+                label="Apply" 
+                variant="brand"
+                class="slds-button"
+                onclick={handleSetPricingVersionClick}
+                disabled={isSetPricingVersionDisabled}
+              ></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item if:true={isPaying}>
+              <div class="info">
+                <lightning-icon class="info-icon" icon-name="utility:info" size="small"></lightning-icon>
+                <span class="info-label">Account is paying</span>
+              </div>
+            </lightning-layout-item>
+          </lightning-layout>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="D" label="Granted Features">
+          <lightning-dual-listbox name="granted-features"
+              label="Select Features"
+              source-label="Available"
+              selected-label="Granted"
+              disabled={isSubmitting}
+              options={allFeatures}
+              value={grantedFeatures}
+              onchange={handleFeaturesChange}></lightning-dual-listbox>
+        </lightning-accordion-section>
+      </lightning-accordion>
+    </template>
+  </div>
 </template>

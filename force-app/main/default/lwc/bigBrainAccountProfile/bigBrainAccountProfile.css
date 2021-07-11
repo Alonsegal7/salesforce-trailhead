@@ -11,3 +11,7 @@
 .spinner-wrapper {
   height: 400px;
 }
+
+.slds-pill__remove {
+  display: none !important;
+}

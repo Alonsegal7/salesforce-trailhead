@@ -1,0 +1,23 @@
+<template>
+  <lightning-card>
+    <h3 slot="title">
+      <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+      Pickers > Payments Claim
+    </h3>
+
+    <lightning-checkbox-group name="Checkbox Group" label="Subscriptions (checked items are already claimed)"
+      class="slds-m-around_medium" options={availableSubscriptions} value={claimedSubscriptions}
+      onchange={handleChange}>
+    </lightning-checkbox-group>
+
+    <div if:true={isLoading} class="slds-is-relative" style="min-height: 10vh;">
+      <lightning-spinner alternative-text="Loading..." size="medium">
+      </lightning-spinner>
+    </div>
+
+    <lightning-button variant="brand" label="Update Billings Claims" title="Primary action"
+      onclick={updateBillingsClaims} class="slds-m-left_medium"></lightning-button>
+
+    <label class="slds-m-left_medium" if:true={showSuccess}>✓ Updated successfully</label>
+  </lightning-card>
+</template>

@@ -1,12 +1,13 @@
 import { LightningElement, wire, api } from 'lwc';
 import getAccountProfile from '@salesforce/apex/BigBrainController.getAccountProfile';
 
-
 const SLUG_SUFFIX = ".monday.com"
 export default class BigBrainAccountProfile extends LightningElement {
   @api pulseAccountId;
 
-  loaded = false;
+  data = null;
+  error = null;
+  loading = true;
 
   //General
   name;
@@ -17,6 +18,7 @@ export default class BigBrainAccountProfile extends LightningElement {
   companySize;
   slug;
   website;
+  statuses;
 
   //Plan related data
   plan;
@@ -35,12 +37,29 @@ export default class BigBrainAccountProfile extends LightningElement {
   guests;
   seatsLeft;
 
+  get isError() {
+    return !!this.error || (!this.isLoading && !this.name);
+  }
+
+  get isLoading() {
+    return this.loading;
+  }
+
+  get isReady() {
+    return !this.isError && !this.isLoading;
+  }
+
+  get hasStatuses() {
+    return this.statuses && this.statuses.length > 0;
+  }
   
   @wire(getAccountProfile, { pulseAccountId: '$pulseAccountId' })
   data ({ error, data }) {
+    this.error = error;
+    this.data = data;
     if (!data) return;
-    
-    this.accountData = JSON.parse(data);
+
+    const parsedData = JSON.parse(data);
 
     const { 
       domain, 
@@ -49,22 +68,23 @@ export default class BigBrainAccountProfile extends LightningElement {
       company_size, 
       max_team_size, 
       slug, 
-      plan, 
+      plan = {}, 
       pricing_version, 
       payment_currency, 
       collection_usd, 
       arr,
-      users_breakdown,
+      users_breakdown = {},
       account_name,
       xi_country,
       xi_city,
       xi_region,
-      xi_time_diff
-   } = this.accountData;
-
+      xi_time_diff,
+      statuses
+   } = parsedData;
+console.log(statuses)
     const { max_user, tier, period, started_at, ended_at } = plan;
     const { total_seats, members, viewers, guests, free_users, seats_left } = users_breakdown;
-    const timeDiffText = xi_time_diff ? '' : `(${xi_time_diff})`
+    const timeDiffText = xi_time_diff ? '' : `(${xi_time_diff})`;
 
     this.name = account_name;
     this.wesbite = `https://${domain}`;
@@ -73,9 +93,10 @@ export default class BigBrainAccountProfile extends LightningElement {
     this.companySize = company_size || "Unknown";
     this.teamSize = max_team_size || "Unknown";
     this.slug = `https://${slug}${SLUG_SUFFIX}`;
-    this.address = `${xi_city}, ${xi_region}, ${xi_country} ${timeDiffText}`
+    this.address = `${xi_city}, ${xi_region}, ${xi_country} ${timeDiffText}`;
+    this.statuses = statuses.map(s => ({label: s}));
 
-    this.plan = `${max_user} ${tier} ${period}`;
+    this.plan = tier ? `${max_user} ${tier} ${period}` : 'Trial';
     this.currency = payment_currency;
     this.pricingVersion = pricing_version;
     this.planStartDate = started_at;
@@ -90,6 +111,6 @@ export default class BigBrainAccountProfile extends LightningElement {
     this.guests = guests || 0;
     this.seatsLeft = seats_left || 0;
 
-    this.loaded = true;
+    this.loading = false;
   };
 }

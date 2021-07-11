@@ -6,17 +6,20 @@ import OPP_ACCOUNT_FIELD from "@salesforce/schema/Opportunity.primary_pulse_acco
 const fields = [LEAD_ACCOUNT_FIELD, OPP_ACCOUNT_FIELD];
 
 export default class BigBrainAccountTabs extends LightningElement {
-    @track record; 
-
-    get pulseAccountId() {
-        const leadPulseAccoiuntId = getFieldValue(this.record, LEAD_ACCOUNT_FIELD);
-        const opportunityPulse_account_id = getFieldValue(this.record, OPP_ACCOUNT_FIELD);
-        return leadPulseAccoiuntId || opportunityPulse_account_id;
-      }
-
     @api recordId;
-    @wire(getRecord, { recordId: '$recordId', fields })
+    @track pulseAccountId;
+
+    // Getting by lead
+    @wire(getRecord, { recordId: '$recordId', fields: [LEAD_ACCOUNT_FIELD] })
     wiredRecord({ error, data }) {
-        if (data) { this.record = data; }
+        const pulseAccountId = getFieldValue(data, LEAD_ACCOUNT_FIELD);
+        if (pulseAccountId) { this.pulseAccountId = pulseAccountId; }
+    }
+
+    // Getting by opportunity
+    @wire(getRecord, { recordId: '$recordId', fields: [OPP_ACCOUNT_FIELD] })
+    wiredRecord({ error, data }) {
+        const pulseAccountId = getFieldValue(data, OPP_ACCOUNT_FIELD);
+        if (pulseAccountId) { this.pulseAccountId = pulseAccountId; }
     }
 }

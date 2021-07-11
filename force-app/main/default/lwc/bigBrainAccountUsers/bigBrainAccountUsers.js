@@ -6,6 +6,7 @@ const columns = [
     { label: '', fieldName: 'photo_url', type: 'image' },
     { label: 'Name', fieldName: 'name' },
     { label: 'Email', fieldName: 'email' },
+    { label: 'Last seen', fieldName: 'last_seen' },
     { label: 'Phone', fieldName: 'phone' },
     { label: 'Engagements', fieldName: 'engagments', type: 'number' },
     { label: 'Enabled', fieldName: 'enabled', type: 'boolean' },

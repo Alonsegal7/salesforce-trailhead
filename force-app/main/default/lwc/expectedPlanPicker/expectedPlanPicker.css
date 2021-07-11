@@ -1,0 +1,33 @@
+.header-column {
+  padding: 4px 0px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.field-title {
+  font-size: 12px;
+  line-height: 1.25;
+  color: #54698d;
+  margin-bottom: 2px;
+}
+
+.spinner-wrapper {
+  height: 400px;
+}
+
+.slds-card__footer {
+  margin-top: 12px;
+}
+
+.left-divider {
+  border-left: 1px solid grey;
+}
+
+.next-step-info {
+  padding: 8px;
+  color: grey;
+}
+
+.next-step-info-item {
+  margin-top: 12px;
+}
