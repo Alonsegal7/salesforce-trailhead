@@ -98,6 +98,8 @@ public with sharing class BigBrainAPI {
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
         request.setBody(JSON.serialize(params));
+
+        if(Test.isRunningTest()){ return new HttpResponse(); }
         HttpResponse response = http.send(request);
         return response;
     }
@@ -106,6 +108,8 @@ public with sharing class BigBrainAPI {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
+
+        if(Test.isRunningTest()){ return new HttpResponse(); }
         HttpResponse response = http.send(request);
         return response;
     }
