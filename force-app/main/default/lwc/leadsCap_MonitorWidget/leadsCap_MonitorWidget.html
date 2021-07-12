@@ -1,35 +1,35 @@
 <template>
   <lightning-card>
-    <div class="slds-p-around_xxx-small lgc-bg" style="margin-left:95%">
+    <template if:true={noLeadsAlert}>
+      <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+          <span class="slds-assistive-text">warning</span>
+          <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
+          <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+          </svg>
+          </span>
+          <h2><b>Attention!</b> No  You reached your cap! Please review and update your open leads to ensure you can get more leads</h2>
+      </div>
+  </template>
+  <!--<div class="slds-text-link" style="font-weight:bold;padding:5px;margin-left: 1%;font-size: 1.3em;" >
+      <p style="display:inline-block">Leads Distribution Status</p>
+      <lightning-button-icon class="iconLink" icon-name="utility:open" size="small" alternative-text="Open Project" title="Open Project"></lightning-button-icon>
+  </div>-->
+    <!--<div class="slds-p-around_xxx-small lgc-bg" style="margin-left:95%">
           <lightning-button-menu alternative-text="Menu" onselect={handleManuselect} menu-alignment="right">
               <lightning-menu-item value="dashboard1" label="Leads Management Dashboard" prefix-icon-name="standard:lead_list"></lightning-menu-item>
           </lightning-button-menu>
-    </div>
-   <!--<div class="slds-card__body slds-card__body_inner">
-      <article class="slds-tile slds-tile_board">
-        <h3 class="slds-tile__title slds-truncate" title="Remaining Leads to Hold">
-          <p>Remaining Leads to Hold:</p>
-        </h3>
-       <div class="slds-tile__detail">
-          <p class="slds-text-heading_medium">
-              <lightning-formatted-number style={numStyle} value={remainingLeads} maximum-fraction-digits="0"></lightning-formatted-number>
-          </p>
-          <p class="slds-truncate" title="Company One">
-              Holding <lightning-formatted-number value={actualOpenLeads} maximum-fraction-digits="0"></lightning-formatted-number> out of 
-              <lightning-formatted-number value={leadCapLimit} maximum-fraction-digits="0"></lightning-formatted-number>
-          </p>
-        </div>
-      </article>
     </div>-->
       <c-dynamic-progress-bar record-id={leadCapId} 
                             object-api-name="Leads_Cap__c"
-                            title="Remaning Leads for Distribution" 
+                            title="Available Leads Status" 
                             field-a-p-i-name="Remaining_Percentage__c"
                             first-threshold="10"
                             second-threshold="30"
                             sub-title={subTitle}
-                            complete-label="Remaining"
-                            conditinal-formatting></c-dynamic-progress-bar>
+                            complete-label="Full"
+                            conditinal-formatting-reverse
+                            show-title></c-dynamic-progress-bar>
 
     </lightning-card>
 </template>

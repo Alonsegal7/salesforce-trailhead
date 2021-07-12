@@ -55,4 +55,9 @@ export default class leadsCap_MonitorWidget extends NavigationMixin(LightningEle
         }
     }
 
+    get noLeadsAlert(){
+        return this.remainingLeads==0;
+
+    }
+
 }

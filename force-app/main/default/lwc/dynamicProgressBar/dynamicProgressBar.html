@@ -2,8 +2,9 @@
     <div class="slds-col slds-size_3-of-3 slds-p-around_xxx-small lgc-bg">
         <lightning-card >
             <div class="slds-p-around_x-small lgc-bg">
-                <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar1">
-                    <strong>{title}</strong>
+                <div class="slds-grid slds-grid_align-spread slds-p-bottom_xxx-small" id="progress-bar1">
+                    <template if:true={showTitle}><strong>{title}</strong></template>
+                    <template if:false={showTitle}><strong></strong></template>
                     <span aria-hidden="true">
                     <span>{progress}% {completeLabel}</span>
                     </span>

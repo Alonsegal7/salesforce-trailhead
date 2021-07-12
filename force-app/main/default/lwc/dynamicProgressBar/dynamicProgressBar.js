@@ -11,7 +11,9 @@ export default class DynamicProgressBar extends LightningElement {
     @api firstThreshold;
     @api secondThreshold;
     @api conditinalFormatting;
+    @api conditinalFormattingReverse;
     @api completeLabel;
+    @api showTitle;
     @track currentField;
 
     connectedCallback() {
@@ -36,6 +38,15 @@ export default class DynamicProgressBar extends LightningElement {
                 return `width:${this.progress}%;background:#ffcc00;height: 14px;`;//yellow
             }else{
                 return `width:${this.progress}%;background:#00ca72;height: 14px;`;//green
+            }
+
+        }else if(this.conditinalFormattingReverse==true){
+            if (this.progress<this.firstThreshold){
+                return `width:${this.progress}%;background:#00ca72;height: 14px;`;//green
+            }else if(this.progress>=this.firstThreshold&&this.progress<this.secondThreshold){
+                return `width:${this.progress}%;background:#ffcc00;height: 14px;`;//yellow
+            }else{
+                return `width:${this.progress}%;background:#fb275d;height: 14px;`;//red
             }
         }else if(this.progress=='100'){
             return `width:${this.progress}%;background:#00ca72;height: 14px;`;//green
