@@ -11,15 +11,21 @@ export default class DynamicProgressBar extends LightningElement {
     @api firstThreshold;
     @api secondThreshold;
     @api conditinalFormatting;
+    @api completeLabel;
     @track currentField;
 
     connectedCallback() {
         this.currentField = this.objectApiName+'.'+this.fieldAPIName;
+        console.log('PB Raz Ben Ron this.currentField: '+this.currentField);
+        console.log('PB Raz Ben Ron this.completeLabel: '+this.completeLabel);
     }
     @wire(getRecord, { recordId: '$recordId', fields: '$currentField'})
     fullRecord;
 
     get progress() {
+        console.log('PB Raz Ben Ron this.fullRecord.data: '+this.fullRecord.data);
+        console.log('PB Raz Ben Ron this.objectApiName: '+this.objectApiName);
+        console.log('PB Raz Ben Ron this.fieldAPIName: '+this.fieldAPIName);
         return getFieldValue(this.fullRecord.data, this.objectApiName+'.'+this.fieldAPIName);
     }
     get barStyle() {

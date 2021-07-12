@@ -39,6 +39,7 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
         }
         if(trigger.isInsert||trigger.IsUpdate){
             Account_SetCompanyDomains.Account_SetCompanyDomains(trigger.new,trigger.oldmap);
+            Account_LeadsCapForPartnerCompany.Account_LeadsCapForPartnerCompany(trigger.new,trigger.oldmap);
         }
 
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);

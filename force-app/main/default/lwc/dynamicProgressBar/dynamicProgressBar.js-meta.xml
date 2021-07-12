@@ -16,6 +16,7 @@
             <property label="Conditional Formatting" name="conditinalFormatting" type="boolean"/>
             <property label="First Threshold (Red)" name="firstThreshold" default="33" type="Integer" description="Values from 0 to 100, can't be higher than second threshold"/>
             <property label="Second Threshold (Yellow)" name="secondThreshold" default="67" type="Integer" description="Values from 0 to 100, can't be lower than first threshold"/>
+            <property label="Complete Label" name="completeLabel" type="String" default="Complete"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
