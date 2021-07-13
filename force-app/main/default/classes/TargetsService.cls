@@ -56,7 +56,8 @@ public class TargetsService {
             for(Id targetId: targetIds){
                 targetIdToAddedArrMap.put(targetId, new Target__c(Id = targetId,Closed_Won_Arr__c = 0, Actual_ARR_Inbound_LIVE__c = 0, Actual_ARR_Outbound_LIVE__c = 0));
             }
-            List<Opportunity> oppsList = [select Target__c, CP_Target__c, CP_Target__r.Partner_Company__c, Channel_Partner__c, Green_Bucket_ARR_V2__c, Account.Account_Source_Type__c from Opportunity where (Target__c IN: targetIds or CP_Target__c IN: targetIds) and StageName = 'Closed Won' and Green_Bucket_ARR_V2__c != null];
+            // query all GB closed won opps
+            List<Opportunity> oppsList = [select Target__c, CP_Target__c, CP_Target__r.Partner_Company__c, Channel_Partner__c, Green_Bucket_ARR_V2__c, Account.Account_Source_Type__c from Opportunity where (Target__c IN: targetIds or CP_Target__c IN: targetIds) and StageName = 'Closed Won' and Green_Bucket_ARR_V2__c != null and (Transition_to_GB__c = true or Is_Potential_GB_Opportunity__c=true)];
             if(!oppsList.isEmpty()) {
                 for(Opportunity opp: oppsList){
                     if(opp.Target__c != null && targetIdToAddedArrMap.containsKey(opp.Target__c)){
