@@ -1,6 +1,25 @@
 public class TargetsService {
 
     public static Boolean firstRunUpdateTargetsArrSum = true;
+    public static Boolean firstRunUpdateTargetsFromAcc = true;
+
+    public void updateTargetOnAccSourceTypeChange(List<Account> newAccounts, Map<Id, Account> oldAccountsMap){
+        Set<Id> accountIds = new Set<Id>();
+        for(Account acc: newAccounts){
+            if(acc.Account_Source_Type__c != oldAccountsMap.get(acc.Id).Account_Source_Type__c){
+                accountIds.add(acc.Id);
+            }
+        }
+        if(accountIds.isEmpty()) return;
+        List<Opportunity> oppsList = [select CP_Target__c from Opportunity where AccountId IN: accountIds and CP_Target__c != null and StageName = 'Closed Won' and (Transition_to_GB__c=true or Is_Potential_GB_Opportunity__c=true)];
+        Set<Id> cpTargetsIds = new Set<Id>();
+        for (Opportunity opp: oppsList){
+            cpTargetsIds.add(opp.CP_Target__c);
+        }
+        if(cpTargetsIds.isEmpty()) return;
+        firstRunUpdateTargetsFromAcc = false;
+        System.enqueueJob(new updateTargetsArrSum(cpTargetsIds));
+    }
 
     public void updateTargetOnClosedWonOppChange(List<Opportunity> newOpps, Map<Id, Opportunity> oldOpps){
         Set<Id> targetIds = new Set<Id>();
@@ -8,7 +27,7 @@ public class TargetsService {
         for(Opportunity opp: newOpps){
             if((((opp.StageName == 'Closed Won' || oldOpps.get(opp.Id).StageName == 'Closed Won') && opp.StageName != oldOpps.get(opp.Id).StageName) 
                     || (opp.StageName == 'Closed Won' && (opp.Expected_ARR__c != oldOpps.get(opp.Id).Expected_ARR__c || opp.Claimed_ARR__c != oldOpps.get(opp.Id).Claimed_ARR__c || opp.Target__c != oldOpps.get(opp.Id).Target__c || opp.CP_Target__c != oldOpps.get(opp.Id).CP_Target__c)))
-                && (opp.Transition_to_GB__c || opp.Is_Potential_GB_Opportunity__c)){
+                && (opp.Transition_to_GB__c || opp.Is_Potential_GB_Opportunity__c || oldOpps.get(opp.Id).Transition_to_GB__c || oldOpps.get(opp.Id).Is_Potential_GB_Opportunity__c)){
                     //update targets
                     if(opp.Target__c != null) targetIds.add(opp.Target__c);
                     if(opp.CP_Target__c != null) targetIds.add(opp.CP_Target__c);
@@ -35,16 +54,20 @@ public class TargetsService {
         public void execute(System.QueueableContext ctx) {
             Map<Id,Target__c> targetIdToAddedArrMap = new Map<Id,Target__c>();
             for(Id targetId: targetIds){
-                targetIdToAddedArrMap.put(targetId, new Target__c(Id = targetId,Closed_Won_Arr__c = 0));
+                targetIdToAddedArrMap.put(targetId, new Target__c(Id = targetId,Closed_Won_Arr__c = 0, Actual_ARR_Inbound_LIVE__c = 0, Actual_ARR_Outbound_LIVE__c = 0));
             }
-            List<Opportunity> oppsList = [select Target__c, CP_Target__c, Green_Bucket_ARR_V2__c from Opportunity where (Target__c IN: targetIds or CP_Target__c IN: targetIds) and StageName = 'Closed Won' and Green_Bucket_ARR_V2__c != null];
+            List<Opportunity> oppsList = [select Target__c, CP_Target__c, CP_Target__r.Partner_Company__c, Channel_Partner__c, Green_Bucket_ARR_V2__c, Account.Account_Source_Type__c from Opportunity where (Target__c IN: targetIds or CP_Target__c IN: targetIds) and StageName = 'Closed Won' and Green_Bucket_ARR_V2__c != null];
             if(!oppsList.isEmpty()) {
                 for(Opportunity opp: oppsList){
                     if(opp.Target__c != null && targetIdToAddedArrMap.containsKey(opp.Target__c)){
                         targetIdToAddedArrMap.get(opp.Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
                     }
-                    if(opp.CP_Target__c != null && targetIdToAddedArrMap.containsKey(opp.CP_Target__c)){
-                        targetIdToAddedArrMap.get(opp.CP_Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
+                    if(opp.CP_Target__c != null && targetIdToAddedArrMap.containsKey(opp.CP_Target__c) && opp.CP_Target__r.Partner_Company__c == opp.Channel_Partner__c){
+                        if(opp.Account.Account_Source_Type__c == 'Inbound'){
+                            targetIdToAddedArrMap.get(opp.CP_Target__c).Actual_ARR_Inbound_LIVE__c += opp.Green_Bucket_ARR_V2__c;
+                        } else if (opp.Account.Account_Source_Type__c == 'Outbound'){
+                            targetIdToAddedArrMap.get(opp.CP_Target__c).Actual_ARR_Outbound_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
+                        }
                     }
                 }
             }

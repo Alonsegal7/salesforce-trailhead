@@ -35,7 +35,11 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
                 PartnerCommissionService partnerCommission = new PartnerCommissionService();
                 if(PartnerCommissionService.firstRunAccARR) partnerCommission.partnerCommissionFromARR(Trigger.new, Trigger.oldMap);
                 if(PartnerCommissionService.firstRunAccTrans) partnerCommission.partnerCommissionFromPartnerTransfer(Trigger.new, Trigger.oldMap);
-            }   
+            }  
+            if(TargetsService.firstRunUpdateTargetsFromAcc){
+                TargetsService targetsServ = new TargetsService();
+                targetsServ.updateTargetOnAccSourceTypeChange(Trigger.new, Trigger.oldMap);
+            } 
         }
         if(trigger.isInsert||trigger.IsUpdate){
             Account_SetCompanyDomains.Account_SetCompanyDomains(trigger.new,trigger.oldmap);
