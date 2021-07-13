@@ -171,10 +171,13 @@ public class OpportunityHelper {
 
     public static void MarkQuotesSigned(Set<Id> quoteIds){
         if(quoteIds.size() > 0){
-            List<Quote> quotesList = [SELECT Id, Is_Manually_Signed__c,Document_Type__c,Opportunity.Manual_Signature_Reason__c FROM Quote WHERE Id = :quoteIds AND Is_Manually_Signed__c = false AND Document_Type__c='Sales Order' for update];
+            List<Quote> quotesList = [SELECT Id,Opportunity.DH_Signer_Title__c,Opportunity.DH_Signer_Name_c__c,Opportunity.DH_Date_of_Signature__c,DH_Date_of_Signature__c,DH_Signer_Name__c,DH_Signer_Title__c, Is_Manually_Signed__c,Document_Type__c,Opportunity.Manual_Signature_Reason__c FROM Quote WHERE Id = :quoteIds AND Is_Manually_Signed__c = false AND Document_Type__c='Sales Order' AND DH_Quote_Status__c='Approved' for update];
             for(Quote q :quotesList) { 
                 q.Is_Manually_Signed__c = true;
                 q.Manual_Signature_Reason__c=q.Opportunity.Manual_Signature_Reason__c;
+                q.DH_Date_of_Signature__c=q.Opportunity.DH_Date_of_Signature__c;
+                q.DH_Signer_Name__c=q.Opportunity.DH_Signer_Name_c__c;
+                q.DH_Signer_Title__c=q.Opportunity.DH_Signer_Title__c;
             }
             if ( !quotesList.isEmpty() ) { update quotesList; }
         }
