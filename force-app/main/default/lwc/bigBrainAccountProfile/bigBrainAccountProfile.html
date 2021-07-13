@@ -77,7 +77,7 @@
                     </div>
                     <div class="header-column">
                         <p class="field-title" title="Collection">Collection (USD)</p>
-                        <p>{collection}</p>
+                        <p><lightning-formatted-number value={collection} maximum-fraction-digits="2"></lightning-formatted-number></p>
                     </div>
                     <div class="header-column">
                         <p class="field-title" title="Currency">Currency</p>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="header-column">
                         <p class="field-title" title="ARR">ARR (USD)</p>
-                        <p>{arr}</p>
+                        <p><lightning-formatted-number value={arr} maximum-fraction-digits="2"></lightning-formatted-number></p>
                     </div>
                     <div class="header-column">
                         <p class="field-title" title="Pricing Version">Pricing Version</p>

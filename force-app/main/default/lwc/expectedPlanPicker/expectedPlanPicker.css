@@ -29,5 +29,16 @@
 }
 
 .next-step-info-item {
-  margin-top: 12px;
+  margin: 5px 0 5px 0px;
+}
+
+.message-icon {
+  padding: 5px;
+  padding-left: 12px;
+}
+
+.account-info {
+  border-bottom: 1px rgb(221, 219, 218) solid;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
 }

@@ -32,6 +32,13 @@ const fields = [
   DISCOUNT_FIELD
 ];
 
+const TIER_OPTIONS = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Standard', value: 'standard' },
+  { label: 'Pro', value: 'pro' },
+  { label: 'Enterprise', value: 'enterprise' },
+];
+
 const PERIOD_YEARLY = 'yearly';
 const PERIOD_MONTHLY = 'monthly'
 const QUOTE_TYPE_NEW_CONTARCT = 'New Contract';
@@ -70,17 +77,15 @@ const getSeatPrice = (plan, currency, seats, period) => {
 }
 
 const parseSeatsOptions = (plans, quoteType, currentSeats) => {
-  if (!plans || !quoteType || !currentSeats) { return null; } 
+  if (!plans || !quoteType || (!currentSeats && currentSeats != 0)) { return []; } 
   const allSeats = plans.map(p => p.users.toString());
   const uniqueSeats = [...new Set(allSeats)];
-  const options = uniqueSeats.map(s => {
-    const seatsDelta = s - currentSeats;
-    if (seatsDelta <= 0) { return null; }
-    const label = (quoteType == QUOTE_TYPE_NEW_CONTARCT) ? s : `${s} (+${seatsDelta})`;
-    return { label: label, value: s };
-  }).filter(v => v);
 
-  return options;
+  return uniqueSeats.map(s => {
+    const seatsDelta = s - currentSeats;
+    const label = (quoteType == QUOTE_TYPE_NEW_CONTARCT) ? s : `${s} (+${seatsDelta})`;
+    return { label: label, value: s.toString() };
+  }).filter(v => v);
 }
 
 export default class ExpectedPlanPicker extends LightningElement {
@@ -88,6 +93,7 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @track record;
   @track plans;
+  @track planOptions;
   @track forecastDetails;
 
   @track recordError;
@@ -97,15 +103,23 @@ export default class ExpectedPlanPicker extends LightningElement {
   @track pricingVersion;
   @track pulseAccountId;
   
+  @track isSubmitting = false;
   @track formFields = {};
 
   @wire(getRecord, { recordId: '$recordId', fields })
   wiredRecord({ error, data }) {
     this.recordError = error;
+
     if (data) {
       this.record = data;
+      this.updateMatchingPlan();
       this.pricingVersion = getFieldValue(data, PRICING_VERSION_FIELD);
-      this.pulseAccountId = getFieldValue(data, ACCOUNT_FIELD);
+
+      if (getFieldValue(data, ACCOUNT_FIELD)) {
+        this.pulseAccountId = getFieldValue(data, ACCOUNT_FIELD);
+      } else {
+        this.initMissingAccountDetails();
+      }
     }
   }
 
@@ -115,6 +129,8 @@ export default class ExpectedPlanPicker extends LightningElement {
  
     if (data) {
       this.plans = JSON.parse(data);
+      this.updateMatchingPlan();
+      this.setPlanOptions();
     }
   }
 
@@ -124,32 +140,49 @@ export default class ExpectedPlanPicker extends LightningElement {
     
     if (data) {
       this.forecastDetails = JSON.parse(data);
+      this.forecastDetailsError = this.forecastDetails.message;
+      this.setPlanOptions();
     }
   }
 
   get exchangeRate() {
-    return this.forecastDetails["exchange_rate"];
+    return this.forecastDetails && this.forecastDetails["exchange_rate"];
   }
 
   get currentArr() {
-    return this.forecastDetails["current_arr"];
+    return this.forecastDetails && this.forecastDetails["current_arr"];
   }
 
   get currentSeats() {
-    return this.forecastDetails["current_seats"];
+    return this.forecastDetails && this.forecastDetails["current_seats"];
   }
 
   get currentTier() {
-    return this.forecastDetails["current_tier"];
+    return (this.forecastDetails && this.forecastDetails["current_tier"]) || '-';
+  }
+
+  get currentPlan() {
+    return this.currentTier ? `${this.currentTier} ${this.currentSeats}` : 'Trial';
   }
 
   get isLoading() {
-    // console.log(this.isError ,this.record,this.plans, this.forecastDetails);
     return !this.isError && (!this.record || !this.plans || !this.forecastDetails);
   }
 
   get isError() {
     return this.recordError || this.plansError || this.forecastDetailsError;
+  }
+
+  get isMissing() {
+    return this.record && !this.pulseAccountId;
+  }
+
+  get isReady(){
+    return !this.isLoading && !this.isError;
+  }
+
+  get isPaying() {
+    return this.forecastDetails["current_tier"];
   }
 
   get currency() {
@@ -164,12 +197,20 @@ export default class ExpectedPlanPicker extends LightningElement {
     return Object.values(this.formFields).some(v => v !== null);
   }
 
+  get isSubmitting() {
+    return this.isSubmitting;
+  }
+
+  get isQuoteTypeDisabled() {
+    return !this.isPaying;
+  }
+
   get isApplyDisabled() {
-    return !this.isDirty;
+    return !this.isDirty || this.isSubmitting;
   }
 
   get isRevertDisabled() {
-    return !this.isDirty;
+    return !this.isDirty || this.isSubmitting;
   }
 
   setFormField(fieldName, value){
@@ -182,20 +223,25 @@ export default class ExpectedPlanPicker extends LightningElement {
     return this.formFields[TIER_FIELD.fieldApiName] || getFieldValue(this.record, TIER_FIELD);
   }
 
-  set tier(value){
+  set tier(value) {
     this.setFormField(TIER_FIELD.fieldApiName, value);
   }
 
-  get quoteType() {
-    return this.formFields[QUOTE_TYPE_FIELD.fieldApiName] || getFieldValue(this.record, QUOTE_TYPE_FIELD);
+  get defaultQuoteType() {
+    return this.isQuoteTypeDisabled ? QUOTE_TYPE_NEW_CONTARCT : null;
   }
 
-  set quoteType(value){
+  get quoteType() {
+    return this.formFields[QUOTE_TYPE_FIELD.fieldApiName] || getFieldValue(this.record, QUOTE_TYPE_FIELD) || this.defaultQuoteType;
+  }
+
+  set quoteType(value) {
     this.setFormField(QUOTE_TYPE_FIELD.fieldApiName, value);
+    this.setPlanOptions();
   }
 
   get period() {
-    return this.formFields[PERIOD_FIELD.fieldApiName] || getFieldValue(this.record, PERIOD_FIELD);
+    return this.formFields[PERIOD_FIELD.fieldApiName] || getFieldValue(this.record, PERIOD_FIELD) ;
   }
 
   set period(value){
@@ -203,7 +249,7 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get seats() {
-    return this.formFields[SEATS_FIELD.fieldApiName] || getFieldValue(this.record, SEATS_FIELD);
+    return (this.formFields[SEATS_FIELD.fieldApiName] || getFieldValue(this.record, SEATS_FIELD) || '').toString();
   }
 
   set seats(value){
@@ -226,19 +272,23 @@ export default class ExpectedPlanPicker extends LightningElement {
     this.setFormField(DISCOUNT_FIELD.fieldApiName, value);
   }
 
+  initMissingAccountDetails() {
+    this.forecastDetails = {
+      exchange_rate: 1,
+      current_arr: 0,
+      current_seats: 0,
+      current_tier: null
+    }
+
+    this.set
+  }
+
   handleApplyClick() {
+    this.isSubmitting = true;
     const fields = {...this.formFields};
     fields[ID_FIELD.fieldApiName] = this.recordId;
     fields[ADDED_ARR_FIELD.fieldApiName] = this.addedArr;
     const recordInput = { fields };
-    
-    new ShowToastEvent({
-      title: 'Updating',
-      message: 'This may take a few seconds...',
-      variant: 'info'
-    })
-
-    console.log(recordInput);
 
     updateRecord(recordInput)
       .then(() => {
@@ -249,13 +299,15 @@ export default class ExpectedPlanPicker extends LightningElement {
                   variant: 'success'
               })
           );
+          this.isSubmitting = false;
       })
       .catch(error => {
         new ShowToastEvent({
           title: 'Error',
           message: 'Error updating forecast',
           variant: 'error'
-        })
+        });
+        this.isSubmitting = false;
       });
   }
 
@@ -296,11 +348,11 @@ export default class ExpectedPlanPicker extends LightningElement {
     }
   }
 
-  get finalArr(){
+  get finalArr() {
     return this.addedArr + this.currentArr;
   }
 
-  get totalPrice(){
+  get totalPrice() {
     const {addedSeats, seatPrice, period} = this;
     const monthlyPrice = addedSeats * seatPrice;
 
@@ -314,18 +366,12 @@ export default class ExpectedPlanPicker extends LightningElement {
     }
   }
 
-
-  get seatsOptions() {
-    return parseSeatsOptions(this.plans, this.quoteType, this.currentSeats);
+  setPlanOptions() {
+    this.planOptions = parseSeatsOptions(this.plans, this.quoteType, this.currentSeats);
   }
 
   get tierOptions() {
-    return [
-        { label: 'Basic', value: 'basic' },
-        { label: 'Standard', value: 'standard' },
-        { label: 'Pro', value: 'pro' },
-        { label: 'Enterprise', value: 'enterprise' },
-    ];
+    return TIER_OPTIONS;
   }
 
   get quoteTypeOptions() {
@@ -363,7 +409,6 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   handleSeatPriceChange(e) {
-    console.log(e.detail.value);
     this.seatPrice = e.detail.value;
     this.applySeatPrice();
   }
@@ -373,15 +418,22 @@ export default class ExpectedPlanPicker extends LightningElement {
     this.applyDiscount();
   }
 
-  updatePrices(){
-    const { seats, period, tier } = this;
-    if (!seats || !period || !tier) return;
+  updatePrices() {
+    const { seats, period } = this;
+    if (!seats || !period) return;
     
-    const matchingPlans = this.plans.filter(p => p.users == seats && p.period == period && p.tier == tier);
+    this.updateMatchingPlan();
+    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period);
+  }
+
+  updateMatchingPlan() {
+    const { seats, period, tier, plans } = this;
+    if (!seats || !period || !tier || !plans) return;
+    
+    const matchingPlans = plans.filter(p => p.users == seats && p.period == period && p.tier == tier);
     if (matchingPlans.length != 1) return;
 
     this.plan = matchingPlans[0];
-    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period);
   }
 
   get isTierDisabled() {

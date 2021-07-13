@@ -31,8 +31,11 @@ export default class PaymentsClaimPicker extends LightningElement {
         this.isLoading = false;
         const results = JSON.parse(data);
 
-        this.claimedSubscriptions = this.toDisplayFormat(results.claimed).map(s => String(s.value))
-        this.availableSubscriptions = this.toDisplayFormat([...results.unclaimed, ...results.claimed])
+        this.claimed = results.claimed || [];
+        this.unclaimed = results.unclaimed || [];
+
+        this.claimedSubscriptions = this.toDisplayFormat(this.claimed).map(s => String(s.value))
+        this.availableSubscriptions = this.toDisplayFormat([...this.unclaimed, ...this.claimed])
     }
 
     handleChange(e) {
@@ -54,7 +57,7 @@ export default class PaymentsClaimPicker extends LightningElement {
     }
 
     toDisplayFormat(subscriptions) {
-        return subscriptions.map(s => ({
+        return (subscriptions || []).map(s => ({
             label: `$${s.invoice_charge_amount_usd} | ${this.formatDate(new Date(s.event_happened_at))} | ${s.event_type} | ${s.plan.name} | ${s.account.slug}`,
             value: String(s.bluesnap_log_entry_id)
         }))

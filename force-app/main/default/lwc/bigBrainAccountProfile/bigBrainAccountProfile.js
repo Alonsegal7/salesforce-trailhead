@@ -38,11 +38,11 @@ export default class BigBrainAccountProfile extends LightningElement {
   seatsLeft;
 
   get isError() {
-    return !!this.error || (!this.isLoading && !this.name);
+    return !!this.error;
   }
 
   get isLoading() {
-    return this.loading;
+    return this.loading && !this.error;
   }
 
   get isReady() {
@@ -79,13 +79,15 @@ export default class BigBrainAccountProfile extends LightningElement {
       xi_city,
       xi_region,
       xi_time_diff,
-      statuses
+      statuses,
+      message
    } = parsedData;
-console.log(statuses)
+   
     const { max_user, tier, period, started_at, ended_at } = plan;
     const { total_seats, members, viewers, guests, free_users, seats_left } = users_breakdown;
     const timeDiffText = xi_time_diff ? '' : `(${xi_time_diff})`;
 
+    this.error = message;
     this.name = account_name;
     this.wesbite = `https://${domain}`;
     this.signupDate = created_at;
@@ -94,7 +96,7 @@ console.log(statuses)
     this.teamSize = max_team_size || "Unknown";
     this.slug = `https://${slug}${SLUG_SUFFIX}`;
     this.address = `${xi_city}, ${xi_region}, ${xi_country} ${timeDiffText}`;
-    this.statuses = statuses.map(s => ({label: s}));
+    this.statuses = (statuses || []).map(s => ({label: s}));
 
     this.plan = tier ? `${max_user} ${tier} ${period}` : 'Trial';
     this.currency = payment_currency;
