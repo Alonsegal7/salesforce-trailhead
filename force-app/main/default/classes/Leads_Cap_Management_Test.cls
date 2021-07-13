@@ -39,7 +39,8 @@ public class Leads_Cap_Management_Test {
         intLead.OwnerId=user.Id;
         update intLead;
 
-        Database.executeBatch(new Lead_Cap_CalcOpenLeads());
+        //Database.executeBatch(new Lead_Cap_CalcOpenLeads());
+        Leads_Cap_CallBatch lccb= new Leads_Cap_CallBatch();
 
 	}
 
@@ -66,7 +67,8 @@ public class Leads_Cap_Management_Test {
         parLead.OwnerId=parUser.Id;
         update parLead;
 
-        Database.executeBatch(new Lead_Cap_CalcOpenLeads());
+        //Database.executeBatch(new Lead_Cap_CalcOpenLeads());
+        Leads_Cap_CallBatch lccb= new Leads_Cap_CallBatch();
 
 
 	}
