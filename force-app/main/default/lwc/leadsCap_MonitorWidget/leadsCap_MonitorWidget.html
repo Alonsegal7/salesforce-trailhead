@@ -1,35 +1,48 @@
 <template>
   <lightning-card>
-    <template if:true={noLeadsAlert}>
-      <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
-          <span class="slds-assistive-text">warning</span>
-          <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
-          <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
-              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
-          </svg>
-          </span>
-          <h2><b>Attention!</b> No  You reached your cap! Please review and update your open leads to ensure you can get more leads</h2>
-      </div>
-  </template>
-  <!--<div class="slds-text-link" style="font-weight:bold;padding:5px;margin-left: 1%;font-size: 1.3em;" >
-      <p style="display:inline-block">Leads Distribution Status</p>
-      <lightning-button-icon class="iconLink" icon-name="utility:open" size="small" alternative-text="Open Project" title="Open Project"></lightning-button-icon>
-  </div>-->
-    <!--<div class="slds-p-around_xxx-small lgc-bg" style="margin-left:95%">
-          <lightning-button-menu alternative-text="Menu" onselect={handleManuselect} menu-alignment="right">
-              <lightning-menu-item value="dashboard1" label="Leads Management Dashboard" prefix-icon-name="standard:lead_list"></lightning-menu-item>
-          </lightning-button-menu>
-    </div>-->
-      <c-dynamic-progress-bar record-id={leadCapId} 
-                            object-api-name="Leads_Cap__c"
-                            title="Available Leads Status" 
-                            field-a-p-i-name="Remaining_Percentage__c"
-                            first-threshold="10"
-                            second-threshold="30"
-                            sub-title={subTitle}
-                            complete-label="Full"
-                            conditinal-formatting-reverse
-                            show-title></c-dynamic-progress-bar>
+    <template if:false={noLeadCapFound}>
+      <template if:true={noLeadsAlert}>
+          <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+              <span class="slds-assistive-text">warning</span>
+              <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
+              <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+              </svg>
+              </span>
+              <h2><b>Attention!</b> You reached your cap! 🤯 Please review and update your open leads to ensure you can get more leads</h2>
+          </div>
+      </template>
+      <!--<div class="slds-text-link" style="font-weight:bold;padding:5px;margin-left: 1%;font-size: 1.3em;" >
+          <p style="display:inline-block">Leads Distribution Status</p>
+          <lightning-button-icon class="iconLink" icon-name="utility:open" size="small" alternative-text="Open Project" title="Open Project"></lightning-button-icon>
+      </div>-->
+        <!--<div class="slds-p-around_xxx-small lgc-bg" style="margin-left:95%">
+              <lightning-button-menu alternative-text="Menu" onselect={handleManuselect} menu-alignment="right">
+                  <lightning-menu-item value="dashboard1" label="Leads Management Dashboard" prefix-icon-name="standard:lead_list"></lightning-menu-item>
+              </lightning-button-menu>
+        </div>-->
+        <c-dynamic-progress-bar record-id={leadCapId} 
+                              object-api-name="Leads_Cap__c"
+                              title="Available Leads Status" 
+                              field-a-p-i-name="Remaining_Percentage__c"
+                              first-threshold="10"
+                              second-threshold="30"
+                              sub-title={subTitle}
+                              complete-label="Full"
+                              conditinal-formatting-reverse
+                              show-title></c-dynamic-progress-bar>
 
-    </lightning-card>
+      </template>
+      <template if:true={noLeadCapFound}>
+          <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+              <span class="slds-assistive-text">warning</span>
+              <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
+              <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+              </svg>
+              </span>
+              <h2><b>Attention!</b> Leads Cap is missing! 😱 Please reach out to the <a href="https://monday.monday.com/boards/198601936" target="_blank">Biz Ops Team</a></h2>
+          </div>
+      </template>
+  </lightning-card>
 </template>

@@ -7,14 +7,15 @@ public without sharing class Lead_Cap_CalcOpenLeads implements Database.Batchabl
     public Lead_Cap_CalcOpenLeads() {}
     
     public void execute(SchedulableContext sc) {
+        Utilities.cleanFlexQueue();
         Database.executeBatch(this,20);
     }
 
     public Iterable<Id> start(Database.BatchableContext bc){
         for(Leads_Cap__c lc: [select id,User__c,Channel_Partner__c,Open_Leads_Actual__c,Open_Leads_Limit__c,Available_for_Distribution__c
                                 from Leads_Cap__c 
-                                where (User__c != null and User__r.IsActive=true) or 
-                                    (Channel_Partner__c != null and Channel_Partner__r.Partner_Company_Status__c='Signed')]){
+                                where (User__c != null and User__r.IsActive=true and User__r.should_get_leads_from_BigBrain__c=true) or 
+                                    (Channel_Partner__c != null and (Channel_Partner__r.Partner_Company_Status__c='Signed' or Channel_Partner__r.Partner_Signed_Timestamp__c!=null ))]){
             if(lc.User__c!=null){
                 lcByOwner.put(lc.User__c,lc);
             }else if(lc.Channel_Partner__c!=null){
