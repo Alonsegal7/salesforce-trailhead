@@ -80,7 +80,8 @@ public without sharing class ContractService {
             Seats__c =quote.Total_Seats__c,
             Renewal_Unit_Price__c=quoteLicenseLine.Renewal_Unit_Price__c,
             Deal_Structure__c=quote.Deal_Structure__c,
-            Rollout_Plan__c=quote.Rollout_Plan__c
+            Rollout_Plan__c=quote.Rollout_Plan__c,
+            Auto_Renewal__c=quote.Auto_Renewal__c
         );
         system.debug('Raz Ben Ron contract: '+contract);
         insert contract;
