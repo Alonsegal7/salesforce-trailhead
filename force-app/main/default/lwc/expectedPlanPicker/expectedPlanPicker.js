@@ -7,7 +7,6 @@ import getForecastDetails from '@salesforce/apex/BigBrainController.getForecastD
 
 import ID_FIELD from "@salesforce/schema/Opportunity.Id";
 import ACCOUNT_FIELD from "@salesforce/schema/Opportunity.Account.primary_pulse_account_id__c";
-import CURRENCY_FIELD from '@salesforce/schema/Opportunity.Currency__c';
 import ISO_CURRENCY_FIELD from '@salesforce/schema/Opportunity.CurrencyIsoCode';
 import PRICING_VERSION_FIELD from '@salesforce/schema/Opportunity.Pricing_Version__c';
 import QUOTE_TYPE_FIELD from '@salesforce/schema/Opportunity.Expected_Quote_Type__c';
@@ -20,7 +19,6 @@ import DISCOUNT_FIELD from '@salesforce/schema/Opportunity.Expected_Discount__c'
 
 const fields = [
   ACCOUNT_FIELD,
-  CURRENCY_FIELD,
   ISO_CURRENCY_FIELD,
   PRICING_VERSION_FIELD,
   QUOTE_TYPE_FIELD,
@@ -32,17 +30,27 @@ const fields = [
   DISCOUNT_FIELD
 ];
 
+const PERIOD_YEARLY = 'yearly';
+const PERIOD_MONTHLY = 'monthly'
+const QUOTE_TYPE_NEW_CONTARCT = 'New Contract';
+const QUOTE_TYPE_PRORATED = 'Pro-rated';
+
+const QUOTE_TYPE_OPTIONS = [
+  { label: 'New contract', value: QUOTE_TYPE_NEW_CONTARCT },
+  { label: 'Prorated', value: QUOTE_TYPE_PRORATED },
+];
+
+const PERIOD_OPTIONS = [
+  { label: 'Monthly', value: 'monthly' },
+  { label: 'Yearly', value: 'yearly' },
+];
+
 const TIER_OPTIONS = [
   { label: 'Basic', value: 'basic' },
   { label: 'Standard', value: 'standard' },
   { label: 'Pro', value: 'pro' },
   { label: 'Enterprise', value: 'enterprise' },
 ];
-
-const PERIOD_YEARLY = 'yearly';
-const PERIOD_MONTHLY = 'monthly'
-const QUOTE_TYPE_NEW_CONTARCT = 'New Contract';
-const QUOTE_TYPE_PRORATED = 'Pro-rated';
 
 const getTotalPrice = (plan, currency) => {
   switch (currency) {
@@ -94,7 +102,13 @@ export default class ExpectedPlanPicker extends LightningElement {
   @track record;
   @track plans;
   @track planOptions;
-  @track forecastDetails;
+  @track forecastDetails = {
+    exchange_rate: 1,
+    current_arr: 0,
+    arr: 0,
+    seats: 0,
+    tier: null
+  };
 
   @track recordError;
   @track plansError;
@@ -114,6 +128,8 @@ export default class ExpectedPlanPicker extends LightningElement {
       this.record = data;
       this.updateMatchingPlan();
       this.pricingVersion = getFieldValue(data, PRICING_VERSION_FIELD);
+      this.isSubmitting = false;
+      this.resetFormFields();
 
       if (getFieldValue(data, ACCOUNT_FIELD)) {
         this.pulseAccountId = getFieldValue(data, ACCOUNT_FIELD);
@@ -150,15 +166,15 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get currentArr() {
-    return this.forecastDetails && this.forecastDetails["current_arr"];
+    return this.forecastDetails && (this.forecastDetails["arr"] || this.forecastDetails["current_arr"]);
   }
 
   get currentSeats() {
-    return this.forecastDetails && this.forecastDetails["current_seats"];
+    return this.forecastDetails && this.forecastDetails["seats"] || 0;
   }
 
   get currentTier() {
-    return (this.forecastDetails && this.forecastDetails["current_tier"]) || '-';
+    return (this.forecastDetails && this.forecastDetails["tier"]) || '-';
   }
 
   get currentPlan() {
@@ -182,7 +198,7 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get isPaying() {
-    return this.forecastDetails["current_tier"];
+    return this.forecastDetails && this.forecastDetails["tier"];
   }
 
   get currency() {
@@ -213,18 +229,30 @@ export default class ExpectedPlanPicker extends LightningElement {
     return !this.isDirty || this.isSubmitting;
   }
 
-  setFormField(fieldName, value){
+  getFormField(field){
+    return this.formFields[field.fieldApiName];
+  }
+
+  setFormField(field, value){
     const newFields = { ...this.formFields };
-    newFields[fieldName] = value;
+    newFields[field.fieldApiName] = value;
     this.formFields = newFields;
   }
 
+  resetFormFields() {
+    this.formFields = {};
+  }
+
+  hasFormField(field) {
+    return this.formFields.hasOwnProperty(field.fieldApiName);
+  }
+
   get tier() {
-    return this.formFields[TIER_FIELD.fieldApiName] || getFieldValue(this.record, TIER_FIELD);
+    return this.getFormField(TIER_FIELD) || getFieldValue(this.record, TIER_FIELD);
   }
 
   set tier(value) {
-    this.setFormField(TIER_FIELD.fieldApiName, value);
+    this.setFormField(TIER_FIELD, value);
   }
 
   get defaultQuoteType() {
@@ -232,55 +260,48 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get quoteType() {
-    return this.formFields[QUOTE_TYPE_FIELD.fieldApiName] || getFieldValue(this.record, QUOTE_TYPE_FIELD) || this.defaultQuoteType;
+    return this.getFormField(QUOTE_TYPE_FIELD) || getFieldValue(this.record, QUOTE_TYPE_FIELD) || this.defaultQuoteType;
   }
 
   set quoteType(value) {
-    this.setFormField(QUOTE_TYPE_FIELD.fieldApiName, value);
+    const resetDiscount = this.tier != this.currentTier;
+    if(value === QUOTE_TYPE_PRORATED) { this.tier = this.currentTier; }
+
+    this.setFormField(QUOTE_TYPE_FIELD, value);
     this.setPlanOptions();
+    this.updatePrices(resetDiscount);
   }
 
   get period() {
-    return this.formFields[PERIOD_FIELD.fieldApiName] || getFieldValue(this.record, PERIOD_FIELD) ;
+    return this.getFormField(PERIOD_FIELD) || getFieldValue(this.record, PERIOD_FIELD) ;
   }
 
   set period(value){
-    this.setFormField(PERIOD_FIELD.fieldApiName, value);
+    this.setFormField(PERIOD_FIELD, value);
   }
 
   get seats() {
-    return (this.formFields[SEATS_FIELD.fieldApiName] || getFieldValue(this.record, SEATS_FIELD) || '').toString();
+    return (this.getFormField(SEATS_FIELD) || getFieldValue(this.record, SEATS_FIELD) || '').toString();
   }
 
   set seats(value){
-    this.setFormField(SEATS_FIELD.fieldApiName, value);
+    this.setFormField(SEATS_FIELD, value);
   }
 
   get seatPrice() {
-    return this.formFields[SEAT_PRICE_FIELD.fieldApiName] || getFieldValue(this.record, SEAT_PRICE_FIELD);
+    return this.hasFormField(SEAT_PRICE_FIELD) ? this.getFormField(SEAT_PRICE_FIELD) : getFieldValue(this.record, SEAT_PRICE_FIELD);
   }
 
   set seatPrice(value){
-    this.setFormField(SEAT_PRICE_FIELD.fieldApiName, value);
+    this.setFormField(SEAT_PRICE_FIELD, value);
   }
 
   get discount() {
-    return this.formFields[DISCOUNT_FIELD.fieldApiName] || getFieldValue(this.record, DISCOUNT_FIELD);
+    return this.hasFormField(DISCOUNT_FIELD) ? this.getFormField(DISCOUNT_FIELD) : getFieldValue(this.record, DISCOUNT_FIELD);
   }
 
   set discount(value){
-    this.setFormField(DISCOUNT_FIELD.fieldApiName, value);
-  }
-
-  initMissingAccountDetails() {
-    this.forecastDetails = {
-      exchange_rate: 1,
-      current_arr: 0,
-      current_seats: 0,
-      current_tier: null
-    }
-
-    this.set
+    this.setFormField(DISCOUNT_FIELD, value);
   }
 
   handleApplyClick() {
@@ -299,7 +320,6 @@ export default class ExpectedPlanPicker extends LightningElement {
                   variant: 'success'
               })
           );
-          this.isSubmitting = false;
       })
       .catch(error => {
         new ShowToastEvent({
@@ -312,11 +332,11 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   handleRevertClick() {
-    this.formFields = {};
+    this.resetFormFields();
   }
 
   get discountInputValue() {
-    return this.discount * 100;
+    return Math.round(this.discount * 10000) / 100;
   }
 
   get addedSeats() {
@@ -344,7 +364,7 @@ export default class ExpectedPlanPicker extends LightningElement {
         return newArr;
       
       default:
-        return null;
+        return 0;
     }
   }
 
@@ -375,55 +395,50 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get quoteTypeOptions() {
-    return [
-        { label: 'New contract', value: QUOTE_TYPE_NEW_CONTARCT },
-        { label: 'Prorated', value: QUOTE_TYPE_PRORATED },
-    ];
+    return QUOTE_TYPE_OPTIONS;
   }
 
   get periodOptions() {
-    return [
-        { label: 'Monthly', value: 'monthly' },
-        { label: 'Yearly', value: 'yearly' },
-    ];
-  }
-
-  handleTierChange(event) {
-    this.tier = event.detail.value;
-    this.updatePrices();
+    return PERIOD_OPTIONS;
   }
 
   handleQuoteTypeChange(event) {
     this.quoteType = event.detail.value;
-    if(this.quoteType == QUOTE_TYPE_PRORATED) { this.tier = this.currentTier; }
+  }
+
+  handleTierChange(event) {
+    this.tier = event.detail.value;
+    this.updatePrices(true);
   }
 
   handleSeatsChange(event) {
     this.seats = event.detail.value;
-    this.updatePrices();
+    this.updatePrices(false);
   }
 
   handlePeriodChange(event) {
     this.period = event.detail.value;
-    this.updatePrices();
+    this.updatePrices(true);
   }
 
   handleSeatPriceChange(e) {
+    const { seats, period, currency, plan } = this;
     this.seatPrice = e.detail.value;
-    this.applySeatPrice();
+    this.discount = 1 - this.seatPrice / getSeatPrice(plan, currency, seats, period);
   }
 
   handleDiscountChange(e) {
     this.discount = e.detail.value / 100;
-    this.applyDiscount();
+    this.seatPrice = getSeatPrice(this.plan, this.currency, this.seats, this.period) * (1 - this.discount);
   }
 
-  updatePrices() {
+  updatePrices(resetDiscount) {
     const { seats, period } = this;
     if (!seats || !period) return;
     
     this.updateMatchingPlan();
-    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period);
+    if (resetDiscount) { this.discount = 0; }
+    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period) * (1 - this.discount);
   }
 
   updateMatchingPlan() {
@@ -451,21 +466,5 @@ export default class ExpectedPlanPicker extends LightningElement {
     if (!seats || !period || !tier) { return 'Missing required fields for plan'; }
     if (!plan) { return "Plan doesn't exist"; }
     return null;
-  }
-
-  applyDiscount(){
-    const { seats, period } = this;
-    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period) * (1 - this.discount);
-  }
-
-  applyTotalPrice(){
-    const { seats, period } = this;
-    this.discount = 1 - this.totalPrice / getTotalPrice(this.plan, this.currency);
-    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period) * (1 - this.discount);
-  }
-
-  applySeatPrice(){
-    const { seats, period } = this;
-    this.discount = 1 - this.seatPrice / getSeatPrice(this.plan, this.currency, seats, period);
   }
 }
