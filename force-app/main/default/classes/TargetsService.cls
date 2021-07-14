@@ -26,7 +26,7 @@ public class TargetsService {
         Decimal arrToAdd = 0;
         for(Opportunity opp: newOpps){
             if((((opp.StageName == 'Closed Won' || oldOpps.get(opp.Id).StageName == 'Closed Won') && opp.StageName != oldOpps.get(opp.Id).StageName) 
-                    || (opp.StageName == 'Closed Won' && (opp.Expected_ARR__c != oldOpps.get(opp.Id).Expected_ARR__c || opp.Claimed_ARR__c != oldOpps.get(opp.Id).Claimed_ARR__c || opp.Target__c != oldOpps.get(opp.Id).Target__c || opp.CP_Target__c != oldOpps.get(opp.Id).CP_Target__c)))
+                    || (opp.StageName == 'Closed Won' && (opp.Expected_ARR__c != oldOpps.get(opp.Id).Expected_ARR__c || opp.Claimed_ARR__c != oldOpps.get(opp.Id).Claimed_ARR__c || opp.Target__c != oldOpps.get(opp.Id).Target__c || opp.CP_Target__c != oldOpps.get(opp.Id).CP_Target__c || opp.Is_Potential_GB_Opportunity__c != oldOpps.get(opp.Id).Is_Potential_GB_Opportunity__c || opp.Transition_to_GB__c != oldOpps.get(opp.Id).Transition_to_GB__c)))
                 && (opp.Transition_to_GB__c || opp.Is_Potential_GB_Opportunity__c || oldOpps.get(opp.Id).Transition_to_GB__c || oldOpps.get(opp.Id).Is_Potential_GB_Opportunity__c)){
                     //update targets
                     if(opp.Target__c != null) targetIds.add(opp.Target__c);
