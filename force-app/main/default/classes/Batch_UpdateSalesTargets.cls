@@ -38,4 +38,3 @@ public class Batch_UpdateSalesTargets implements Database.Batchable<sObject> {
     public void finish(Database.BatchableContext BC){
     }
 }
-

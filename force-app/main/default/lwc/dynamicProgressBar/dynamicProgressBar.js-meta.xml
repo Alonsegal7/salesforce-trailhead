@@ -14,8 +14,11 @@
             <property label="Field API Name" name="fieldAPIName" type="String" description="Values from 0 to 100"/>
             <property label="Single Bar Color (No Conditional Formatting)" name="barColor" type="String" default="#ffcc00" datasource="#ffcc00,#00ca72,#a358d0,#fb275d,#00cff0,#595ad4"/>
             <property label="Conditional Formatting" name="conditinalFormatting" type="boolean"/>
+            <property label="Conditional Formatting - Reverse" name="conditinalFormattingReverse" type="boolean"/>
             <property label="First Threshold (Red)" name="firstThreshold" default="33" type="Integer" description="Values from 0 to 100, can't be higher than second threshold"/>
             <property label="Second Threshold (Yellow)" name="secondThreshold" default="67" type="Integer" description="Values from 0 to 100, can't be lower than first threshold"/>
+            <property label="Complete Label" name="completeLabel" type="String" default="Complete"/>
+            <property label="Show Title" name="showTitle" type="boolean" default="true"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

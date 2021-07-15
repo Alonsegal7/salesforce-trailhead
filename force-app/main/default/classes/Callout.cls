@@ -1,5 +1,7 @@
 global class Callout {
-    
+
+    public static Boolean firstRunBatch = true;
+
     @Future(callout=true)
     public static void postFuture(String serializedObject, String method) {
         doCallout(serializedObject, method);
@@ -8,10 +10,23 @@ global class Callout {
     public static void post(String serializedObject, String method) {
         if(!System.isBatch()){
             postFuture(serializedObject, method);
-        } else {
-            doCallout(serializedObject, method);
+        } else if(firstRunBatch){
+            firstRunBatch = false;
+            System.enqueueJob(new sendCalloutQueueable(serializedObject, method));
         }
     }
+
+    private class sendCalloutQueueable implements System.Queueable, Database.AllowsCallouts {
+        private String serializedObject; 
+        private String method;
+        public sendCalloutQueueable(String serializedObject, String method) {
+            this.serializedObject = serializedObject;
+            this.method = method;
+        }
+        public void execute(System.QueueableContext ctx) {
+            doCallout(serializedObject, method);
+        }
+    } 
 
     private static void doCallout(String serializedObject, String method){
         Http http = new Http();

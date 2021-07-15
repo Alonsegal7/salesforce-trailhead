@@ -86,8 +86,10 @@ public with sharing class Slack_MessageService {
             req.setEndpoint(url);
             req.setMethod(method);
             req.setBody(body);
-            HttpResponse res = http.send(req);
-            System.debug('Raz Ben Ron SMS queueable res.getbody():'+res.getbody());
+            if (!Test.isRunningTest()){
+                HttpResponse res = http.send(req);
+                System.debug('Raz Ben Ron SMS queueable res.getbody():'+res.getbody());
+            }
         }
     }
 }

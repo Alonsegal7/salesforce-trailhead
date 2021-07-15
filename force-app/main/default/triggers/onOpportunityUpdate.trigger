@@ -17,6 +17,14 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     
     if(Trigger.isAfter && Trigger.isUpdate){
         OpportunityHelper.afterUpdate(Trigger.new,Trigger.oldmap);
+        if(TargetsService.firstRunUpdateTargetsArrSum){
+            TargetsService targetServiceHelper = new TargetsService();
+            targetServiceHelper.updateTargetOnClosedWonOppChange(Trigger.new, Trigger.oldMap);
+        }
+        if(PartnerCommissionService.firstRunOpp){
+            PartnerCommissionService partnerCommission = new PartnerCommissionService();
+            partnerCommission.partnerCommissionFromGbOpp(Trigger.new, Trigger.oldMap);
+        }
     }
     
     if(Trigger.isAfter){
@@ -24,6 +32,4 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);
         if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
     }
-    
-    //StoryLogSnapshotCreator.run(Opportunity.getSObjectType());
 }

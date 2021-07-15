@@ -250,7 +250,7 @@ public class Ctrl_BillingEntityRelate  {
 			for (BillingEntityFieldValidation__mdt fv: informativeRules){
 				if (fv.Validation_Type__c != null && fv.Field_API_Name__c != null && beMso.containsKey(fv.Field_API_Name__c) && beMso.get(fv.Field_API_Name__c) != null){
 					finalQuery = baseQuery + getWhereCluase(fv, be);
-					System.debug('iCloudius - Informative validation query: ' + finalQuery);
+					System.debug('iCloudius - Informative validation query: ' + finalQuery);				
 					BEsFound = Database.query(finalQuery);
 					if (BEsFound != null && !BEsFound.isEmpty()){
 						for (Billing_Entity__c ibe: BEsFound) {
@@ -283,21 +283,24 @@ public class Ctrl_BillingEntityRelate  {
 
 	public static String getWhereCluase(BillingEntityFieldValidation__mdt fv, Billing_Entity__c be){
 		String res = '';
-		if (fv.Validation_Type__c == 'Exact Match' || fv.Validation_Type__c == 'Upper/Lower case') res = fv.Field_API_Name__c + ' = \'' + be.get(fv.Field_API_Name__c) + '\'';
+		String toMatch = (String)be.get(fv.Field_API_Name__c);
+		toMatch = toMatch.replaceAll('[(),;\\."\']', '');
+
+		if (fv.Validation_Type__c == 'Exact Match' || fv.Validation_Type__c == 'Upper/Lower case') {
+			res = fv.Field_API_Name__c + ' = \'' + toMatch + '\'';
+		}
 		if (fv.Validation_Type__c == 'Punctuations'){
-			String toMatch = (String)be.get(fv.Field_API_Name__c);
-			toMatch = toMatch.replaceAll('[(),;\\."\']', '');
 			res = fv.Field_API_Name__c + ' LIKE \'%' + toMatch + '%\'';
 		}
 		if (fv.Validation_Type__c == 'Email Domain'){
-			String toMatch = (String)be.get(fv.Field_API_Name__c);
 			if (toMatch.contains('@')) toMatch = toMatch.split('@')[1];
-			res = res = fv.Field_API_Name__c + ' LIKE \'%@' + toMatch + '\'';
+			res = res + fv.Field_API_Name__c + ' LIKE \'%@' + toMatch + '\'';
 		}
 		if (fv.Validation_Type__c == 'Suffix'){
-			String toMatch = (String)be.get(fv.Field_API_Name__c);
-			for (ValidationSuffixes__mdt s: fv.Billing_Entity_Field_Validation_Suffixes__r) toMatch = toMatch.remove(s.MasterLabel);
-			res = res = fv.Field_API_Name__c + ' = \'' + toMatch + '\'';
+			for (ValidationSuffixes__mdt s: fv.Billing_Entity_Field_Validation_Suffixes__r) {
+				toMatch = toMatch.remove(s.MasterLabel);
+			}
+			res = res + fv.Field_API_Name__c + ' = \'' + toMatch + '\'';
 		}
 
 		return res;
