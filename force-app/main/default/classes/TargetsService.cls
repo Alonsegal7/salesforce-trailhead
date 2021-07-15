@@ -1,6 +1,5 @@
 public class TargetsService {
 
-    public static Boolean firstRunUpdateTargetsArrSum = true;
     public static Boolean firstRunUpdateTargetsFromAcc = true;
 
     public void updateTargetOnAccSourceTypeChange(List<Account> newAccounts, Map<Id, Account> oldAccountsMap){
@@ -41,7 +40,6 @@ public class TargetsService {
             }
         }
         if(targetIds.isEmpty()) return;
-        firstRunUpdateTargetsArrSum = false;
         System.enqueueJob(new updateTargetsArrSum(targetIds));
     }
 
