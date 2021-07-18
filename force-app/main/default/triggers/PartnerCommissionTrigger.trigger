@@ -1,8 +1,14 @@
-trigger PartnerCommissionTrigger on Partner_Commission__c (before insert, before update) {
-    if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)){
+trigger PartnerCommissionTrigger on Partner_Commission__c (before insert, before update, after insert) {
+    if(Trigger.isInsert || Trigger.isUpdate){
         PartnerCommissionService partnerCommissionHelper = new PartnerCommissionService();
-        partnerCommissionHelper.checkIfExistingPcDatesOverlap(Trigger.new, Trigger.oldMap);
-        PartnerCommissionHelper.updateEndDateOnRenewableFalse(Trigger.new, Trigger.oldMap);
-        partnerCommissionHelper.updatePartnerCommissionVersion(Trigger.new, Trigger.oldMap); //has to be last
+        if(Trigger.isBefore){
+            partnerCommissionHelper.checkIfExistingPcDatesOverlap(Trigger.new, Trigger.oldMap);
+            partnerCommissionHelper.updateEndDateOnRenewableFalse(Trigger.new, Trigger.oldMap);
+            if(Trigger.isInsert) { partnerCommissionHelper.updatePartnerCommissionTriggerValidFrom(Trigger.new); }
+            partnerCommissionHelper.updatePartnerCommissionVersion(Trigger.new, Trigger.oldMap); //has to be last
+        }
+        if(Trigger.isAfter && Trigger.isInsert){
+            partnerCommissionHelper.setIsLastFalseForManual(Trigger.new);
+        }
     }
 }
