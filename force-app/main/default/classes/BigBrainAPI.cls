@@ -34,14 +34,6 @@ public with sharing class BigBrainAPI {
     public static String getPlans(String pricingVersion){
         return get('/salesforce_api/plans/' + pricingVersion);
     }
-    
-    public static String getAllGrantedFeatures(String pulseAccountId){
-        return get('/salesforce_api/account/' + pulseAccountId + '/available_features');
-    }
-
-    public static String getAccountUsedGrantedFeatures(String pulseAccountId){
-        return get('/salesforce_api/account/' + pulseAccountId + '/granted_features');
-    }
 
     public static String grantAccountFeatures(String pulseAccountId, List<String> features){
         Map<String, String> requestParams = new Map<String, String>();
