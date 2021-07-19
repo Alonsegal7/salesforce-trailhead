@@ -2,6 +2,8 @@ import { LightningElement, wire, api } from 'lwc';
 import getAccountProfile from '@salesforce/apex/BigBrainController.getAccountProfile';
 
 const SLUG_SUFFIX = ".monday.com"
+const UNKNOWN = '-';
+
 export default class BigBrainAccountProfile extends LightningElement {
   @api pulseAccountId;
 
@@ -17,6 +19,7 @@ export default class BigBrainAccountProfile extends LightningElement {
   teamSize;
   companySize;
   slug;
+  industry;
   website;
   statuses;
 
@@ -62,8 +65,10 @@ export default class BigBrainAccountProfile extends LightningElement {
     const parsedData = JSON.parse(data);
 
     const { 
-      domain, 
-      created_at, 
+      domain,
+      industry,
+      created_at,
+      last_seen,
       trial_period, 
       company_size, 
       max_team_size, 
@@ -90,10 +95,11 @@ export default class BigBrainAccountProfile extends LightningElement {
     this.error = message;
     this.name = account_name;
     this.wesbite = `https://${domain}`;
+    this.industry = industry || UNKNOWN;
     this.signupDate = created_at;
     this.trialPeriod = trial_period;
-    this.companySize = company_size || "Unknown";
-    this.teamSize = max_team_size || "Unknown";
+    this.companySize = company_size || UNKNOWN;
+    this.teamSize = max_team_size || UNKNOWN;
     this.slug = `https://${slug}${SLUG_SUFFIX}`;
     this.address = `${xi_city}, ${xi_region}, ${xi_country} ${timeDiffText}`;
     this.statuses = (statuses || []).map(s => ({label: s}));
@@ -103,6 +109,7 @@ export default class BigBrainAccountProfile extends LightningElement {
     this.pricingVersion = pricing_version;
     this.planStartDate = started_at;
     this.planUntilDate = ended_at;
+    this.lastSeen = last_seen;
     this.collection = collection_usd;
     this.arr = arr;
 

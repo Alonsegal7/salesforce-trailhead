@@ -18,6 +18,10 @@
                 <lightning-layout-item size="12">
                     <lightning-layout multiple-rows class="account-info">
                         <lightning-layout-item padding="horizontal-small">
+                            <div class="account-header">Current plan
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="horizontal-small">
                             <div class="header-column">
                                 <p class="field-title" title="Pricing version">Pricing v</p>
                                 <p><lightning-formatted-number value={pricingVersion} maximum-fraction-digits="0"></lightning-formatted-number></p>
@@ -99,6 +103,7 @@
                                     placeholder="Select period"
                                     options={periodOptions}
                                     onchange={handlePeriodChange}
+                                    disabled={isPeriodDisabled}
                                 ></lightning-combobox>
                             </lightning-layout-item>
                         </template>

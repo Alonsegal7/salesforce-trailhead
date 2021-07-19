@@ -1,6 +1,6 @@
 .header-column {
   padding: 4px 0px;
-  font-size: 14px;
+  font-size: 13px;
   text-transform: capitalize;
 }
 
@@ -9,6 +9,13 @@
   line-height: 1.25;
   color: #54698d;
   margin-bottom: 2px;
+}
+
+.account-header {
+  padding: 4px 0px;
+  word-break: keep-all;
+  text-transform: capitalize;
+  width: 60px;
 }
 
 .spinner-wrapper {
@@ -32,6 +39,10 @@
   margin: 5px 0 5px 0px;
 }
 
+.slds-icon_container {
+  padding: 4px;
+}
+
 .message-icon {
   padding: 5px;
   padding-left: 12px;
@@ -41,4 +52,5 @@
   border-bottom: 1px rgb(221, 219, 218) solid;
   margin-bottom: 8px;
   padding-bottom: 8px;
+  background: linear-gradient(0deg, rgb(240, 240, 240) 0%, rgba(255,255,255,0) 100%);
 }

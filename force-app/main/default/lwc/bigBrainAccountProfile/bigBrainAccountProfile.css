@@ -1,5 +1,6 @@
 .header-column {
-  padding: 4px 24px;
+  padding: 4px 0px;
+  min-width: 200px;
 }
 .field-title {
   font-size: 12px;

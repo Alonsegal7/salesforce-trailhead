@@ -49,6 +49,10 @@
                         <p>{teamSize}</p>
                     </div>
                     <div class="header-column">
+                        <p class="field-title" title="Industry">Industry</p>
+                        <p>{industry}</p>
+                    </div>
+                    <div class="header-column">
                         <p class="field-title" title="Slug">Slug</p>
                         <p><lightning-formatted-url value={slug} label={slug} target="_blank"></lightning-formatted-url></p>
                     </div>
@@ -93,6 +97,10 @@
                     </div>
                 </lightning-layout-item>
                 <lightning-layout-item padding="around-small">
+                    <div class="header-column">
+                        <p class="field-title" title="Last seen">Last seen</p>
+                        <p><lightning-formatted-date-time year="2-digit" month="short" day="2-digit" value={lastSeen}></lightning-formatted-date-time></p>
+                    </div>
                     <div class="header-column">
                         <p class="field-title" title="Pricing Version">Total Seats</p>
                         <p>{totalSeats}</p>

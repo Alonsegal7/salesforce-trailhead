@@ -25,7 +25,7 @@ public class ConfigManager {
     }
     
     public static String getBigBrainBaseUrl(){
-        return IsSandbox ? 'https://bigbrainstaging.me' : 'https://data.bigbrain.me';
+        return IsSandbox ? 'https://data.bigbrainstaging.me' : 'https://data.bigbrain.me';
     }
 
     private static BigBrain_Setting__mdt getConfig(){
