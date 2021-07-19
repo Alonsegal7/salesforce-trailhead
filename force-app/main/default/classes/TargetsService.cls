@@ -70,6 +70,18 @@ public class TargetsService {
                     }
                 }
             }
+            //get targtes to ignore for locked arr sum
+            Datetime nowTime = Datetime.now();
+            Datetime startOfMonth10UTC = Date.today().toStartOfMonth();
+            startOfMonth10UTC = startOfMonth10UTC.addHours(10);
+            Date startOfMonth = Date.today().toStartOfMonth();
+            if(nowTime < startOfMonth10UTC) startOfMonth = startOfMonth.addMonths(-1);
+            Map<Id,Target__c> targetsValidForLockedArrSum = new Map<Id,Target__c>([select Id from Target__c where Id IN: targetIds and Target_Date__c >=: startOfMonth]);
+            for(Id targetId: targetIds){
+                if(targetsValidForLockedArrSum.containsKey(targetId)){
+                    targetIdToAddedArrMap.get(targetId).Actual_ARR_Locked__c = targetIdToAddedArrMap.get(targetId).Closed_Won_Arr__c;
+                }
+            }
             Database.update(targetIdToAddedArrMap.values());
         }
     }
