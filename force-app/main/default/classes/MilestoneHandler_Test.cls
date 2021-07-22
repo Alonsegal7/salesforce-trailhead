@@ -27,7 +27,10 @@ public class MilestoneHandler_Test {
         mileRecord.Project__c = projectRecord.Id;
         mileRecord.Milestone_type__c = 'Advanced Training';
         mileRecord.Session_Due_Date__c = System.today();
-        // mileRecord.Status__c = 'Open';
+        mileRecord.Status__c = 'Open';
         insert mileRecord;
+        
+        Project__c proj = [SELECT Id, Project_Status__c FROM Project__c WHERE Id =: projectRecord.Id LIMIT 1];
+        System.assertEquals(proj.Project_Status__c, 'Open');
     }
 }

@@ -26,4 +26,3 @@ public with sharing class Quote_CreateQuoteHistory {
         }
     }
 }
-
