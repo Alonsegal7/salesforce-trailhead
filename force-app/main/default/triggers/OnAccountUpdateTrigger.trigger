@@ -31,10 +31,17 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
                 PartnerCommission_PartnerTermination partnerTermination = new PartnerCommission_PartnerTermination();
                 partnerTermination.updatePcAfterPartnerTermination(Trigger.new, Trigger.oldMap);
             }
-            if(PartnerCommissionService.firstRunAccARR || PartnerCommissionService.firstRunAccTrans){
-                PartnerCommissionService partnerCommission = new PartnerCommissionService();
-                if(PartnerCommissionService.firstRunAccARR) partnerCommission.partnerCommissionFromARR(Trigger.new, Trigger.oldMap);
-                if(PartnerCommissionService.firstRunAccTrans) partnerCommission.partnerCommissionFromPartnerTransfer(Trigger.new, Trigger.oldMap);
+            if(PartnerCommissionService.firstRunAccARR){
+                PartnerCommissionService partnerCommissionARR = new PartnerCommissionService();
+                partnerCommissionARR.partnerCommissionFromARR(Trigger.new, Trigger.oldMap);
+            }  
+            if(PartnerCommissionService.firstRunAccTrans){
+                PartnerCommissionService partnerCommissionAccTrans = new PartnerCommissionService();
+                partnerCommissionAccTrans.partnerCommissionFromPartnerTransfer(Trigger.new, Trigger.oldMap);
+            }  
+            if(PartnerCommissionService.firstRunAccSource){
+                PartnerCommissionService partnerCommissionAccSource = new PartnerCommissionService();
+                partnerCommissionAccSource.updatePcOnAccountSourceChange(Trigger.new, Trigger.oldMap);
             }  
             if(TargetsService.firstRunUpdateTargetsFromAcc){
                 TargetsService targetsServ = new TargetsService();

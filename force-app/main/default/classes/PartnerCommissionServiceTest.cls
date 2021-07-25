@@ -5,9 +5,14 @@ public class PartnerCommissionServiceTest {
         Map<String, Schema.RecordTypeInfo> accountRecordTypesMap = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName();
 
         //create THs
+        List<GB_Threshold__c> ths = new List<GB_Threshold__c>();
         GB_Threshold__c th = TestObjectCreator.CreateGBThreshold('Partner_Opportunity');
         th.Source_Type__c = 'Inbound';
-        insert th;
+        ths.add(th);
+        GB_Threshold__c th2 = TestObjectCreator.CreateGBThreshold('Partner_Opportunity');
+        th2.Source_Type__c = 'Outbound';
+        ths.add(th2);
+        insert ths;
 
         //create commission model
         Commission_Model__c commissionModel = new Commission_Model__c(Partner_Tier__c = 'Platinum', Name = 'test', Outbound_Percent__c = 30, Inbound_Percent__c	= 20, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today());
@@ -65,12 +70,14 @@ public class PartnerCommissionServiceTest {
         Account mondayAcc = [select Id from Account where RecordTypeId =: mondayAccRtId limit 1];
         mondayAcc.ARR__c = 4000;
         mondayAcc.Last_ARR_Update_Timestamp__c = Datetime.now();
+        mondayAcc.Account_Source_Type__c = 'Outbound';
         Test.startTest();
         update mondayAcc;
         Test.stopTest();
-        pcList = [select Id, End_Date__c from Partner_Commission__c];
+        pcList = [select Id, End_Date__c, Account_Source__c from Partner_Commission__c];
         System.assertEquals(1, pcList.size());
         System.assertNotEquals(null, pcList.get(0).End_Date__c);
+        System.assertEquals('Outbound', pcList.get(0).Account_Source__c);
     }
 
     static testmethod void testPartnerCommissionCreationFromARR(){
@@ -134,5 +141,16 @@ public class PartnerCommissionServiceTest {
         } catch (Exception e){
             
         }
+    }
+
+    static testmethod void testReports(){
+        Partner_Commission_Report__c test = new Partner_Commission_Report__c();
+        test.name = 'test';
+        test.Big_Brain_Id__c = '12';
+        test.Date__c = Date.today();
+        insert test;
+        test.Big_Brain_Id__c = '13';
+        update test;
+        delete test;
     }
 }

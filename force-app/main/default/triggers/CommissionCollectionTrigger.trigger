@@ -3,6 +3,7 @@ trigger CommissionCollectionTrigger on Commission_Collection__c (before insert, 
         CommissionCommitmentCollectionService helper = new CommissionCommitmentCollectionService();
         helper.setMondayAcc(Trigger.new, Trigger.oldMap);
         helper.setOpportunity(Trigger.new, Trigger.oldMap);
+        helper.setPartnerCommissionReport(Trigger.new, Trigger.oldMap);
     }
 
     if(Trigger.isAfter){

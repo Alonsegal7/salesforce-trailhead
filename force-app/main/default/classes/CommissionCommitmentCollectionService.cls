@@ -1,5 +1,27 @@
 public without sharing class CommissionCommitmentCollectionService {
 
+    public void setPartnerCommissionReport(List<sObject> sobjectList, Map<Id,sObject> oldSobjectMap){
+        List<sObject> relevantObjs = new List<sObject>();
+        Set<String> reportIds = new Set<String>();
+        for(sObject obj: sobjectList){
+            if(oldSobjectMap == null || obj.get('Report_Id__c') != oldSobjectMap.get(String.valueOf(obj.get('Id'))).get('Report_Id__c')){
+                if(obj.get('Report_Id__c') == null){
+                    obj.put('Partner_Commission_Report__c',null);
+                    continue;
+                }
+                relevantObjs.add(obj);
+                reportIds.add(String.valueOf(obj.get('Report_Id__c'))); 
+            }
+        }
+        if(relevantObjs.isEmpty()) return;
+        Map<String,Id> reportsMap = getReports(reportIds);
+        for(sObject obj: relevantObjs){
+            if(reportsMap.containsKey(String.valueOf(obj.get('Report_Id__c')))){
+                obj.put('Partner_Commission_Report__c',reportsMap.get(String.valueOf(obj.get('Report_Id__c'))));
+            }
+        }
+    }
+
     public void setMondayAcc(List<sObject> sobjectList, Map<Id,sObject> oldSobjectMap){
         List<sObject> relevantObjs = new List<sObject>();
         Set<String> bigBrainIds = new Set<String>();
@@ -60,6 +82,16 @@ public without sharing class CommissionCommitmentCollectionService {
         List<Partner_Commission__c> pcList = [select Id, Opportunity__c from Partner_Commission__c where Id IN: pcIds];
         for(Partner_Commission__c pc: pcList){
             res.put(pc.Id, pc.Opportunity__c);
+        }
+        return res;
+    }
+
+    private Map<String,Id> getReports(Set<String> reportIds){
+        Map<String,Id> res = new Map<String,Id>();
+        if(reportIds.isEmpty()) return res;
+        List<Partner_Commission_Report__c> reportList = [select Id, Big_Brain_Id__c from Partner_Commission_Report__c where Big_Brain_Id__c IN: reportIds];
+        for(Partner_Commission_Report__c report: reportList){
+            res.put(report.Big_Brain_Id__c, report.Id);
         }
         return res;
     }

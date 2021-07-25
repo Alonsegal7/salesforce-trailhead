@@ -3,6 +3,7 @@ public class PartnerCommissionService {
     public static Boolean firstRunOpp = true;
     public static Boolean firstRunAccARR = true;
     public static Boolean firstRunAccTrans = true;
+    public static Boolean firstRunAccSource = true;
 
     public class partnerCommissionException extends Exception {}
 
@@ -52,6 +53,21 @@ public class PartnerCommissionService {
         if(relevantMondayAccounts.isEmpty()) return;   
         firstRunAccTrans = false;       
         System.enqueueJob(new PartnerCommission_PartnerTransfer_Queue(relevantMondayAccounts, partnersToClosePC, partnersToCreatePc));
+    }
+
+    public void updatePcOnAccountSourceChange(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
+        Map<Id,String> mondayAccSourceTypeMap = new Map<Id,String>();
+        Id mondayRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+        for(Account acc: newAccounts){
+            if(acc.RecordTypeId == mondayRecordTypeId 
+                && acc.Is_GB_Account_Partners__c 
+                && acc.Account_Source_Type__c != oldAccountsMap.get(acc.Id).Account_Source_Type__c){
+                    mondayAccSourceTypeMap.put(acc.Id, acc.Account_Source_Type__c);
+            }
+        }
+        if(mondayAccSourceTypeMap.isEmpty()) return;   
+        firstRunAccSource = false;       
+        System.enqueueJob(new PartnerCommission_AccountSource_Queue(mondayAccSourceTypeMap));
     }
 
     public void updatePartnerCommissionVersion(List<Partner_Commission__c> partnerCommissionList, Map<Id, Partner_Commission__c> oldPartnerCommissionMap){
@@ -150,10 +166,6 @@ public class PartnerCommissionService {
         }
     }
 
-    private String getOverlapKey(Partner_Commission__c pc){
-        return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Pulse_Account_ID__c) + String.valueOf(pc.Monday_Account__c);
-    }
-
     public Partner_Commission__c createPartnerCommissionRecord(Account mondayAccount, Account partnerAccount, Opportunity opp){
         Partner_Commission__c tempPartnerCommission = new Partner_Commission__c();
         tempPartnerCommission.Name = mondayAccount.primary_pulse_account_id__c + ' - ' + partnerAccount.Name + ' - ' + partnerAccount.Partner_Tier__c;
@@ -219,5 +231,9 @@ public class PartnerCommissionService {
             gbThresholdsMap.put(gbt.Source_Type__c, gbt);
         }
         return gbThresholdsMap;
+    }
+
+    private String getOverlapKey(Partner_Commission__c pc){
+        return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Pulse_Account_ID__c) + String.valueOf(pc.Monday_Account__c);
     }
 }
