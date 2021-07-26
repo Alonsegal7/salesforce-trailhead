@@ -1,9 +1,5 @@
 <template>
-    <lightning-card>
-        <h3 slot="title">
-            <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
-            Account
-        </h3>
+    <lightning-card variant="Narrow" title="Account" icon-name="utility:connected_apps">
         <template if:true={pulseAccountId}>
             <lightning-tabset>
                 <lightning-tab label="Profile" class="account-tab">
