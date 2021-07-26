@@ -15,5 +15,6 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, before update
         if (Quote_CallQuoteSync.firstRun) {
             Quote_CallQuoteSync.Quote_CallQuoteSync(Trigger.new,Trigger.oldMap);
         }
+        Quote_CreateQuoteHistory.CreateQuoteHistory(Trigger.new,Trigger.oldMap);
     }   
 }

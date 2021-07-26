@@ -11,7 +11,7 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
         Map<Id,Account> mondayAccountsMap = new Map<Id,Account>(mondayAccountsList);
         Map<Id,List<Partner_Commission__c>> mondayAccIdPartnerCommisionMap = getLastPcsMap(mondayAccountsMap.keySet());
         if(mondayAccIdPartnerCommisionMap.isEmpty()) return;
-        Map<String, GB_Threshold__c> gbThresholdsMap = getThsMap();
+        Map<String, GB_Threshold__c> gbThresholdsMap = pcService.getThsMap();
         Set<Id> channelPartnersIds = new Set<Id>();
         Map<Id,Set<Id>> mondayAccountPartnerIdToCreatePC = new Map<Id,Set<Id>>();
         for(Account mondayAccount: mondayAccountsList){
@@ -31,7 +31,7 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
             } else { //set end datetime to now on pc for accounts that got under TH and have active pc
                 for(Partner_Commission__c partnerCom: mondayAccIdPartnerCommisionMap.get(mondayAccount.Id)) {
                     if(partnerCom.End_Date__c == null || partnerCom.End_Date__c > mondayAccount.Last_ARR_Update_Timestamp__c){ 
-                        newPartnerCommissionList.add(new Partner_Commission__c(Id = partnerCom.Id, End_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c));
+                        newPartnerCommissionList.add(new Partner_Commission__c(Id = partnerCom.Id, End_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c, ARR_Upon_Close__c = mondayAccount.ARR__c));
                     }
                 }
             }
@@ -48,15 +48,6 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
         }
 
         if(!newPartnerCommissionList.isEmpty()) Database.upsert(newPartnerCommissionList);
-    }
-
-    private Map<String, GB_Threshold__c> getThsMap(){
-        List<GB_Threshold__c> gbThresholds = [select Id, Source_Type__c, Min_ARR__c from GB_Threshold__c where Is_Active__c = true and Opportunity_Record_Type__c = 'Partner_Opportunity' and (Source_Type__c = 'Outbound' or Source_Type__c = 'Inbound')];
-        Map<String, GB_Threshold__c> gbThresholdsMap = new Map<String, GB_Threshold__c>();
-        for(GB_Threshold__c gbt: gbThresholds){
-            gbThresholdsMap.put(gbt.Source_Type__c, gbt);
-        }
-        return gbThresholdsMap;
     }
 
     private Map<Id,List<Partner_Commission__c>> getLastPcsMap(Set<Id> mondayAccountsIds){

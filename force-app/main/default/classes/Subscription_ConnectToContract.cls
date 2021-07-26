@@ -1,15 +1,16 @@
 public without sharing class Subscription_ConnectToContract {
     public static void Subscription_ConnectToContract(List<Subscription__c> newSubs, map<Id, Subscription__c> oldMap) {
         map<string,Contract> contractsToCreate= new map<string,Contract>();
+        map<Id,Account> accsToUpdate= new map<Id,Account>();
         try{
             set<string> subsPulseIds= new set<string>();
             if(oldMap==null)//insert
                 for(Subscription__c sub: newSubs){
-                    subsPulseIds.add(sub.Pulse_Account_Id__c);
+                    if(sub.Pulse_Account_Id__c != null) subsPulseIds.add(sub.Pulse_Account_Id__c);
                 }
             else{//update
                 for(Subscription__c sub: newSubs){
-                    if(sub.Manual_Trigger__c!=oldMap.get(sub.id).Manual_Trigger__c&&sub.Manual_Trigger__c=='Create Active Contract')
+                    if(sub.Manual_Trigger__c!=oldMap.get(sub.id).Manual_Trigger__c&&sub.Manual_Trigger__c=='Create Active Contract' && sub.Pulse_Account_Id__c != null)
                         subsPulseIds.add(sub.Pulse_Account_Id__c);
                 }
             }
@@ -17,12 +18,10 @@ public without sharing class Subscription_ConnectToContract {
                 return;
 
             map<string,Account> accountsByPulseId= new map<string,Account>(); 
-            for(Account acc: [select id,primary_pulse_account_id__c,Active_Contract__c,Company__c,Active_Contract__r.EndDate
-                                from Account where primary_pulse_account_id__c in: subsPulseIds FOR UPDATE]){
+            for(Account acc: [select id,primary_pulse_account_id__c,Active_Contract__c,Company__c,Active_Contract__r.EndDate from Account where primary_pulse_account_id__c in: subsPulseIds]){
                 if(!accountsByPulseId.containsKey(acc.primary_pulse_account_id__c))
                     accountsByPulseId.put(acc.primary_pulse_account_id__c,acc);
             }
-            //map<string,Contract> contractsToCreate= new map<string,Contract>();
             set<String> pulseIdsWithNewContracts= new Set<String>();
             List<Contract> contractsToUpdate= new List<Contract>();
             for(Subscription__c sub: newSubs){
@@ -38,8 +37,7 @@ public without sharing class Subscription_ConnectToContract {
                         if(acc.Active_Contract__c!=null&&sub.Deactivation_Date__c<=acc.Active_Contract__r.EndDate){//connect to existing active contract
                             sub.Contract__c=acc.Active_Contract__c;
                             if(sub.SO_Import_Type__c=='Pro-rated'){//for pro rated deal imported in BB, do not update prices as they are not aligned in BB
-                                contractsToUpdate.add(new contract(id=sub.Contract__c,
-                                                                    Seats__c=integer.valueof(sub.Seats__c)));
+                                contractsToUpdate.add(new contract(id=sub.Contract__c, Seats__c=integer.valueof(sub.Seats__c)));
                             }else{
                                 contractsToUpdate.add(new contract(id=sub.Contract__c,
                                                                     Seats__c=integer.valueof(sub.Seats__c),
@@ -56,6 +54,7 @@ public without sharing class Subscription_ConnectToContract {
                     }
                 }
             }
+            if(!contractsToUpdate.isempty()) Database.update(contractsToUpdate);
             system.debug('Raz Ben Ron SCON contractsToCreate: '+contractsToCreate);
             if(!contractsToCreate.isEmpty()){
                 Database.SaveResult[] srList = Database.insert(contractsToCreate.values());
@@ -69,26 +68,23 @@ public without sharing class Subscription_ConnectToContract {
                     i++;
                 }
                 system.debug('Raz Ben Ron pulseIdsWithNewContracts: '+pulseIdsWithNewContracts);
-                map<Id,Account> accsToUpdate= new map<Id,Account>();
                 for(Subscription__c sub: newSubs){
                     if(pulseIdsWithNewContracts.contains(sub.Pulse_Account_Id__c)){
                         sub.Contract__c=conByPulseId.get(sub.Pulse_Account_Id__c).Id;//connect subscription to new contract
-                        Account currentAcc=accountsByPulseId.get(sub.Pulse_Account_Id__c);
-                        if(!accsToUpdate.containsKey(currentAcc.id)){//connect account to new contract
-                            currentAcc.Active_Contract__c=conByPulseId.get(sub.Pulse_Account_Id__c).Id;
-                            accsToUpdate.put(currentAcc.id,currentAcc);
+                        Id currentAccId = accountsByPulseId.get(sub.Pulse_Account_Id__c).Id;
+                        if(!accsToUpdate.containsKey(currentAccId)){//connect account to new contract
+                            accsToUpdate.put(currentAccId,new Account(Id = currentAccId, Active_Contract__c = conByPulseId.get(sub.Pulse_Account_Id__c).Id));
                         }
                     }
                 }
-                if(!accsToUpdate.isEmpty())
-                    update accsToUpdate.values();
+                if(!accsToUpdate.isEmpty()) Database.update(accsToUpdate.values());
             }
-            if(!contractsToUpdate.isempty())
-                update contractsToUpdate;
         }catch(Exception e){
-            Utilities.sendDebugEmail('Error in Subscription_ConnectToContract ',e,e.getMessage()+'Cons To Create'+contractsToCreate);   
+            Utilities.sendDebugEmail('Error in Subscription_ConnectToContract real time',e,e.getMessage()+'Cons To Create'+contractsToCreate);   
+            if(e.getMessage().containsIgnoreCase('Record Currently Unavailable')){
+                System.enqueueJob(new updateAccounts(accsToUpdate.values()));
+            }
         }
-
     }
 
     public static Contract contractDetails(Subscription__c sub, Account acc, String source){
@@ -112,5 +108,26 @@ public without sharing class Subscription_ConnectToContract {
                                     Status__c='Active'
                                     );
         return Con;
+    }
+
+    public class updateAccounts implements System.Queueable{
+        private List<Account> accsToUpdate;
+        public updateAccounts(List<Account> accsToUpdate) {
+            this.accsToUpdate = accsToUpdate;
+        }
+        public void execute(System.QueueableContext ctx) {
+            try{
+                Database.update(accsToUpdate);
+            } catch (Exception e){
+                Utilities.sendDebugEmail('Error in Subscription_ConnectToContract updateAccounts queueable first attempt',e,e.getMessage());
+                if(e.getMessage().containsIgnoreCase('Record Currently Unavailable')){
+                    try{
+                        Database.update(accsToUpdate);
+                    } catch (Exception e2){
+                        Utilities.sendDebugEmail('Error in Subscription_ConnectToContract updateAccounts queueable second attempt',e2,e2.getMessage());
+                    }
+                }
+            }
+        }
     }
 }

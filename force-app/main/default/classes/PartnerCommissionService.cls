@@ -3,6 +3,7 @@ public class PartnerCommissionService {
     public static Boolean firstRunOpp = true;
     public static Boolean firstRunAccARR = true;
     public static Boolean firstRunAccTrans = true;
+    public static Boolean firstRunAccSource = true;
 
     public class partnerCommissionException extends Exception {}
 
@@ -54,6 +55,21 @@ public class PartnerCommissionService {
         System.enqueueJob(new PartnerCommission_PartnerTransfer_Queue(relevantMondayAccounts, partnersToClosePC, partnersToCreatePc));
     }
 
+    public void updatePcOnAccountSourceChange(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
+        Map<Id,String> mondayAccSourceTypeMap = new Map<Id,String>();
+        Id mondayRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+        for(Account acc: newAccounts){
+            if(acc.RecordTypeId == mondayRecordTypeId 
+                && acc.Is_GB_Account_Partners__c 
+                && acc.Account_Source_Type__c != oldAccountsMap.get(acc.Id).Account_Source_Type__c){
+                    mondayAccSourceTypeMap.put(acc.Id, acc.Account_Source_Type__c);
+            }
+        }
+        if(mondayAccSourceTypeMap.isEmpty()) return;   
+        firstRunAccSource = false;       
+        System.enqueueJob(new PartnerCommission_AccountSource_Queue(mondayAccSourceTypeMap));
+    }
+
     public void updatePartnerCommissionVersion(List<Partner_Commission__c> partnerCommissionList, Map<Id, Partner_Commission__c> oldPartnerCommissionMap){
         //running in before trigger!!!
         if(oldPartnerCommissionMap == null){
@@ -69,6 +85,38 @@ public class PartnerCommissionService {
                 }
             }
         }
+    }
+
+    public void updatePartnerCommissionTriggerValidFrom(List<Partner_Commission__c> partnerCommissionList){
+        for(Partner_Commission__c pc: partnerCommissionList){
+            pc.Trigger_Valid_From__c = Date.today().toStartOfMonth();
+        }
+    }
+
+    public void setIsLastFalseForManual(List<Partner_Commission__c> partnerCommissionList){
+        Set<Id> partnerIds = new Set<Id>();
+        Set<Id> mondayAccIds = new Set<Id>();
+        Set<String> relevantMondayAccPartnerPairs = new Set<String>();
+        String key = '';
+        for(Partner_Commission__c pc: partnerCommissionList){
+            if(pc.Created_From__c == 'Manual') {
+                partnerIds.add(pc.Partner_Company__c);
+                mondayAccIds.add(pc.Monday_Account__c);
+                key = getOverlapKey(pc);
+                relevantMondayAccPartnerPairs.add(key);
+            }
+        }
+        if(relevantMondayAccPartnerPairs.isEmpty()) return;
+        Map<Id,Partner_Commission__c> partnerCommissionMap = new Map<Id,Partner_Commission__c>(partnerCommissionList);
+        List<Partner_Commission__c> oldPcList = [select Id, Partner_Company__c, Monday_Account__c, Pulse_Account_ID__c from Partner_Commission__c where Is_Last__c = true and Monday_Account__c IN: mondayAccIds and Partner_Company__c IN: partnerIds and Id NOT IN: partnerCommissionMap.keySet()];
+        List<Partner_Commission__c> oldPcsToUpdate = new List<Partner_Commission__c>();
+        for(Partner_Commission__c pc: oldPcList){
+            key = getOverlapKey(pc);
+            if(relevantMondayAccPartnerPairs.contains(key)){
+                oldPcsToUpdate.add(new Partner_Commission__c(Id = pc.Id, Is_Last__c = false));
+            }
+        }
+        if(!oldPcsToUpdate.isEmpty()) Database.update(oldPcsToUpdate);
     }
 
     public void updateEndDateOnRenewableFalse(List<Partner_Commission__c> partnerCommissionList, Map<Id, Partner_Commission__c> oldPartnerCommissionMap){
@@ -118,10 +166,6 @@ public class PartnerCommissionService {
         }
     }
 
-    private String getOverlapKey(Partner_Commission__c pc){
-        return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Pulse_Account_ID__c);
-    }
-
     public Partner_Commission__c createPartnerCommissionRecord(Account mondayAccount, Account partnerAccount, Opportunity opp){
         Partner_Commission__c tempPartnerCommission = new Partner_Commission__c();
         tempPartnerCommission.Name = mondayAccount.primary_pulse_account_id__c + ' - ' + partnerAccount.Name + ' - ' + partnerAccount.Partner_Tier__c;
@@ -134,6 +178,7 @@ public class PartnerCommissionService {
         tempPartnerCommission.Pulse_Account_ID__c = mondayAccount.primary_pulse_account_id__c;
         tempPartnerCommission.Account_Source__c = mondayAccount.Account_Source_Type__c;
         tempPartnerCommission.Created_From__c = 'Code';
+        tempPartnerCommission.ARR_Upon_Create__c = mondayAccount.ARR__c;
         if(opp != null) {
             tempPartnerCommission.Opportunity__c = opp.Id;
             if(opp.Is_Migrated_Commission__c) tempPartnerCommission.Start_Date__c = Datetime.now().addDays(-5);
@@ -155,5 +200,40 @@ public class PartnerCommissionService {
     public Map<Id,Account> getChannelPartnersMap(Set<Id> channelPartnersIds){
         Map<Id,Account> channelPartnersMap = new Map<Id,Account>([select Id, Name, Partner_Tier__c, Partner_Type__c, Partner_Commission_Model__c, Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c, Partner_Commission_Model__r.Commission_Model__r.Period__c, Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c, Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c from Account where Id IN: channelPartnersIds]);
         return channelPartnersMap;
+    }
+
+    public void upsertPartnerCommissionInQueue(List<Partner_Commission__c> newPartnerCommissionList, String queueName){
+        if(!newPartnerCommissionList.isEmpty()) {
+            Database.SaveResult[] lsr = Database.insert(newPartnerCommissionList, false);
+            for (Database.SaveResult sr : lsr) {
+                if (sr.isSuccess()) {
+                    System.debug('Successfully upserted Partner_Commission__c. Partner_Commission__c ID: ' + sr.getId());
+                }
+                else {
+                    for(Database.Error err : sr.getErrors()) {
+                        System.debug('The following error has occurred.');                    
+                        System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                        System.debug('Partner_Commission__c fields that affected this error: ' + err.getFields());
+                        String body = '';
+                        if(sr.getId() != null) body = 'Partner_Commission__c ID: ' + sr.getId() + ' ';
+                        body = body + err.getStatusCode() + ': ' + err.getMessage();
+                        Utilities.sendEmail('Error in '+queueName, body, new list<String>{label.SystemNotificationsDL});
+                    }
+                }
+            }
+        }
+    }
+
+    public Map<String, GB_Threshold__c> getThsMap(){
+        List<GB_Threshold__c> gbThresholds = [select Id, Source_Type__c, Min_ARR__c from GB_Threshold__c where Is_Active__c = true and Opportunity_Record_Type__c = 'Partner_Opportunity' and (Source_Type__c = 'Outbound' or Source_Type__c = 'Inbound')];
+        Map<String, GB_Threshold__c> gbThresholdsMap = new Map<String, GB_Threshold__c>();
+        for(GB_Threshold__c gbt: gbThresholds){
+            gbThresholdsMap.put(gbt.Source_Type__c, gbt);
+        }
+        return gbThresholdsMap;
+    }
+
+    private String getOverlapKey(Partner_Commission__c pc){
+        return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Pulse_Account_ID__c) + String.valueOf(pc.Monday_Account__c);
     }
 }
