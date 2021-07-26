@@ -3,6 +3,7 @@ trigger CommissionCommitmentTrigger on Commission_Commitment__c (before insert, 
         CommissionCommitmentCollectionService helper = new CommissionCommitmentCollectionService();
         helper.setMondayAcc(Trigger.new, Trigger.oldMap);
         helper.setOpportunity(Trigger.new, Trigger.oldMap);
+        helper.setPartnerCommissionReport(Trigger.new, Trigger.oldMap);
     }
     if(Trigger.isAfter){
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
