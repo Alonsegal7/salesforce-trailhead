@@ -233,6 +233,23 @@ public class PartnerCommissionService {
         return gbThresholdsMap;
     }
 
+    public void connectNewReportsToCollectionsCommitments(List<Commission_Report__c> newReports){
+        Map<String,Id> reportNumberToReportIdMap = new Map<String,Id>();
+        for(Commission_Report__c report: newReports){
+            reportNumberToReportIdMap.put(report.Big_Brain_Id__c, report.Id);
+        }
+        String query;
+        for(String reportNum: reportNumberToReportIdMap.keySet()){
+            query = 'select Id from Commission_Commitment__c where report_id__c = \''+reportNum+'\'';
+            Batch_SearchAndReplace commitments = new Batch_SearchAndReplace(query, 'Commission_Report__c', reportNumberToReportIdMap.get(reportNum));
+            query = 'select Id from Commission_Collection__c where report_id__c = \''+reportNum+'\'';
+            Batch_SearchAndReplace collections = new Batch_SearchAndReplace(query, 'Commission_Report__c', reportNumberToReportIdMap.get(reportNum));
+            Utilities.cleanFlexQueue();
+            Database.executeBatch(commitments,100);
+            Database.executeBatch(collections,100);
+        }
+    }
+
     private String getOverlapKey(Partner_Commission__c pc){
         return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Pulse_Account_ID__c) + String.valueOf(pc.Monday_Account__c);
     }

@@ -6,7 +6,7 @@ public without sharing class CommissionCommitmentCollectionService {
         for(sObject obj: sobjectList){
             if(oldSobjectMap == null || obj.get('Report_Id__c') != oldSobjectMap.get(String.valueOf(obj.get('Id'))).get('Report_Id__c')){
                 if(obj.get('Report_Id__c') == null){
-                    obj.put('Partner_Commission_Report__c',null);
+                    obj.put('Commission_Report__c',null);
                     continue;
                 }
                 relevantObjs.add(obj);
@@ -17,7 +17,7 @@ public without sharing class CommissionCommitmentCollectionService {
         Map<String,Id> reportsMap = getReports(reportIds);
         for(sObject obj: relevantObjs){
             if(reportsMap.containsKey(String.valueOf(obj.get('Report_Id__c')))){
-                obj.put('Partner_Commission_Report__c',reportsMap.get(String.valueOf(obj.get('Report_Id__c'))));
+                obj.put('Commission_Report__c',reportsMap.get(String.valueOf(obj.get('Report_Id__c'))));
             }
         }
     }
