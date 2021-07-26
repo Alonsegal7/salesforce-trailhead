@@ -8,6 +8,7 @@ import getForecastDetails from '@salesforce/apex/BigBrainController.getForecastD
 import ID_FIELD from "@salesforce/schema/Opportunity.Id";
 import ACCOUNT_FIELD from "@salesforce/schema/Opportunity.Account.primary_pulse_account_id__c";
 import ISO_CURRENCY_FIELD from '@salesforce/schema/Opportunity.CurrencyIsoCode';
+import EXCHANGE_RATE_FIELD from '@salesforce/schema/Opportunity.USD_exchange_rate__c';
 import PRICING_VERSION_FIELD from '@salesforce/schema/Opportunity.Pricing_Version__c';
 import QUOTE_TYPE_FIELD from '@salesforce/schema/Opportunity.Expected_Quote_Type__c';
 import ADDED_ARR_FIELD from '@salesforce/schema/Opportunity.Expected_ARR__c';
@@ -21,6 +22,7 @@ import PLAN_NAME_FIELD from '@salesforce/schema/Opportunity.Expected_Plan_Name__
 const fields = [
   ACCOUNT_FIELD,
   ISO_CURRENCY_FIELD,
+  EXCHANGE_RATE_FIELD,
   PRICING_VERSION_FIELD,
   QUOTE_TYPE_FIELD,
   ADDED_ARR_FIELD,
@@ -116,7 +118,6 @@ export default class ExpectedPlanPicker extends LightningElement {
   @track plans;
   @track planOptions;
   @track forecastDetails = {
-    exchange_rate: 1,
     current_arr: 0,
     arr: 0,
     seats: 0,
@@ -135,6 +136,7 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getRecord, { recordId: '$recordId', fields })
   wiredRecord({ error, data }) {
+    if (error) console.log(error);
     this.recordError = error;
 
     if (data) {
@@ -154,6 +156,7 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getPlans, { pricingVersion: '$pricingVersion' })
   wiredPlans({ error, data }) {
+    if (error) console.log(error);
     this.plansError = error;
  
     if (data) {
@@ -165,6 +168,7 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @wire(getForecastDetails, { pulseAccountId: '$pulseAccountId' })
   wiredForecast({ error, data }) {
+    if (error) console.log(error);
     this.forecastDetailsError = error;
     
     if (data) {
@@ -175,7 +179,7 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get exchangeRate() {
-    return this.forecastDetails && this.forecastDetails["exchange_rate"];
+    return getFieldValue(this.record, EXCHANGE_RATE_FIELD) || 0;
   }
 
   get currentArr() {
