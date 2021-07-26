@@ -6,7 +6,7 @@ const columns = [
     { label: '', fieldName: 'photo_url', type: 'image' },
     { label: 'Name', fieldName: 'name' },
     { label: 'Email', fieldName: 'email' },
-    { label: 'Last seen', fieldName: 'last_seen' },
+    { label: 'Last seen', fieldName: 'last_seen', type: 'date' },
     { label: 'Phone', fieldName: 'phone' },
     { label: 'Engagements', fieldName: 'engagments', type: 'number' },
     { label: 'Enabled', fieldName: 'enabled', type: 'boolean' },
@@ -38,6 +38,7 @@ export default class BigBrainAccountUsers extends LightningElement {
             email: u.email,
             phone: u.phone,
             engagments: u.engagments,
+            last_seen: u.last_seen,
             enabled: u.enabled === 1 ? true : false,
             is_admin: u.is_admin === 1 ? true : false,
             is_guest: u.user_kind === "guest" ? true : false

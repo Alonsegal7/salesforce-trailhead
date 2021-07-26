@@ -1,3 +1,9 @@
 .no-account {
     padding-left: 24px;
 }
+
+.account-tab {
+    min-height: 400px;
+    max-height: 450px;
+    overflow: auto;
+}

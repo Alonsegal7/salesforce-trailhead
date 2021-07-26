@@ -37,9 +37,7 @@ const parseGrantedFeatures = temp => {
 }
 
 export default class BigBrainAccountActions extends LightningElement {
-  @api recordId;
   @api pulseAccountId;
-  @api pricingVersion;
 
   error;
   loading = true;
@@ -143,8 +141,6 @@ export default class BigBrainAccountActions extends LightningElement {
 
   // Handle field changes --------------------------------------------------------------------------------------
   handleFeaturesChange(e) {
-    console.log(e.detail.value);
-
     const updatedList = e.detail.value;
     const addedFeatures = updatedList.filter(feature => !this.grantedFeaturesList.includes(feature));
     

@@ -1,14 +1,18 @@
 import { LightningElement, api, wire } from 'lwc';
 import getAccountFeaturesUsage from '@salesforce/apex/BigBrainController.getAccountFeaturesUsage';
 
-const postProcessData = featuresData => 
-  JSON.parse(featuresData).map(feature => (
+const featuresSort = (a, b) => a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
+
+const postProcessData = featuresData => {
+  const parsedData = JSON.parse(featuresData);
+  return parsedData.map(feature => (
     {
       ...feature, 
       name: feature.name.replaceAll("_", " "),
       class: feature.data > 0 ? 'circle green' : 'circle red'
     }
-    )).sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1);
+    )).sort(featuresSort);
+}
 
 export default class BigBrainAccountUsageFeatures extends LightningElement {
   @api pulseAccountId;
