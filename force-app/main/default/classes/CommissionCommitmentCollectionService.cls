@@ -89,8 +89,8 @@ public without sharing class CommissionCommitmentCollectionService {
     private Map<String,Id> getReports(Set<String> reportIds){
         Map<String,Id> res = new Map<String,Id>();
         if(reportIds.isEmpty()) return res;
-        List<Partner_Commission_Report__c> reportList = [select Id, Big_Brain_Id__c from Partner_Commission_Report__c where Big_Brain_Id__c IN: reportIds];
-        for(Partner_Commission_Report__c report: reportList){
+        List<Commission_Report__c> reportList = [select Id, Big_Brain_Id__c from Commission_Report__c where Big_Brain_Id__c IN: reportIds];
+        for(Commission_Report__c report: reportList){
             res.put(report.Big_Brain_Id__c, report.Id);
         }
         return res;

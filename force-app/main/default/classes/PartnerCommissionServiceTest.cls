@@ -144,7 +144,7 @@ public class PartnerCommissionServiceTest {
     }
 
     static testmethod void testReports(){
-        Partner_Commission_Report__c test = new Partner_Commission_Report__c();
+        Commission_Report__c test = new Commission_Report__c();
         test.name = 'test';
         test.Big_Brain_Id__c = '12';
         test.Date__c = Date.today();
