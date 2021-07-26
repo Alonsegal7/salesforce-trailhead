@@ -250,6 +250,12 @@ public class PartnerCommissionService {
         }
     }
 
+    public void setReportName(List<Commission_Report__c> newReports){
+        for(Commission_Report__c report: newReports){
+            report.name = 'report-'+report.Big_Brain_Id__c;
+        }
+    }
+
     private String getOverlapKey(Partner_Commission__c pc){
         return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Pulse_Account_ID__c) + String.valueOf(pc.Monday_Account__c);
     }
