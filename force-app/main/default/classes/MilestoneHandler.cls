@@ -7,6 +7,14 @@ public with sharing class MilestoneHandler {
     public static void afterInsert(Map<Id, Milestone__c> milestoneMap, Map<Id, Milestone__c> oldMilestoneMap){
         //updateProjectStartDate(milestoneMap, oldMilestoneMap);
         updateProjectFields(milestoneMap, oldMilestoneMap);
+        popualteProjectStartDate(milestoneMap, oldMilestoneMap);
+    }
+
+    public static void afterUpdate(Map<Id, Milestone__c> milestoneMap, Map<Id, Milestone__c> oldMilestoneMap){
+        system.debug('### un afterUpdate');
+        //updateProjectStartDate(milestoneMap, oldMilestoneMap);
+        updateProjectFields(milestoneMap, oldMilestoneMap);
+        popualteProjectStartDate(milestoneMap, oldMilestoneMap);
     }
 
     /*public static void updateMilestoneName(List<Milestone__c> milestoneList, Map<Id, Milestone__c> oldMilestoneMap){
@@ -84,46 +92,44 @@ public with sharing class MilestoneHandler {
                 }
             }
         }
-        system.debug('### projToUpdate: ' + projToUpdate);
+        
         if(!projToUpdate.isEmpty()){
             Database.update(projToUpdate);
         }
     }
 
-    /*public static void updateProjectStartDate(Map<Id, Milestone__c> milestoneMap, Map<Id, Milestone__c> oldMilestoneMap){
-        Set<Id> projId = new Set<Id>();
-        Set<Id> kickoffId = new Set<Id>();
-        List<Project__c> projToUpdate = new List<Project__c>();
-        List<Kickoff__c> kickoffList = new List<Kickoff__c>();
-        List<Project__c> projectList = new List<Project__c>();
-
-        for(Milestone__c mile : milestoneMap.values()){
-            projId.add(mile.Project__c);
+    public static void popualteProjectStartDate(Map<Id, Milestone__c> milestonesMap, Map<Id, Milestone__c> oldMap){
+        List<Project__c> projectsToUpdate = new List<Project__c>();
+        Set<Id> projIds = new Set<Id>();
+        
+        for(Milestone__c mile : milestonesMap.values()){
+            projIds.add(mile.Project__c);
         }
 
-        if(!projId.isEmpty()){
-            for(Project__c relatedProject : [SELECT Id, Kickoff_Date__c, of_Milestones__c, Project_Status__c FROM Project__c WHERE Id IN: projId]){
-                projectList.add(relatedProject);
-            }
-        }
+        for(Project__c proj : [SELECT Id, Kickoff_Date__c FROM Project__c WHERE Id IN: projIds]){
+            for(Milestone__c mile : milestonesMap.values()){
+                if(mile.Project__c == proj.Id){
+                    if(mile.Session_Due_Date__c != null){
+                        if(proj.Kickoff_Date__c != null && mile.Session_Due_Date__c < proj.Kickoff_Date__c
+                            && (oldMap == null || (oldMap != null && oldMap.get(mile.Id).Session_Due_Date__c != mile.Session_Due_Date__c))){
+                            proj.Kickoff_Date__c = mile.Session_Due_Date__c;
+                            projectsToUpdate.add(proj);
+                        }
+                    }
 
-        if(!projectList.isEmpty()){
-            for(Milestone__c mile : milestoneMap.values()){
-                if(milestoneMap.get(mile.Id).RecordType.DeveloperName == 'Session'){
-                    for(Project__c proj : projectList){
-                        if(milestoneMap.get(mile.Id).Project__c == proj.Id){
-                            if(milestoneMap.get(mile.Id).Session_Due_Date__c < proj.Kickoff_Date__c){
-                                proj.Kickoff_Date__c = milestoneMap.get(mile.Id).Session_Due_Date__c;
-                                projToUpdate.add(proj);
-                            }
+                    else if(mile.Kickoff_meeting_date__c != null){
+                        if(proj.Kickoff_Date__c != null && mile.Kickoff_meeting_date__c < proj.Kickoff_Date__c
+                            && (oldMap == null || (oldMap != null && oldMap.get(mile.Id).Kickoff_meeting_date__c != mile.Kickoff_meeting_date__c))){
+                            proj.Kickoff_Date__c = mile.Kickoff_meeting_date__c;
+                            projectsToUpdate.add(proj);
                         }
                     }
                 }
             }
         }
         
-        if(!projToUpdate.isEmpty()){
-            Database.update(projToUpdate);
+        if(!projectsToUpdate.isEmpty()){
+            Database.update(projectsToUpdate);
         }
-    }*/
+    }
 }
