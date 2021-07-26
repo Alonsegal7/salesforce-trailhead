@@ -13,5 +13,9 @@ trigger MilestoneTrigger on Milestone__c (before insert, before update, after in
         if(Trigger.isInsert){
             MilestoneHandler.afterInsert(Trigger.newMap, Trigger.oldMap);
         }
+
+        if(Trigger.isUpdate){
+            MilestoneHandler.afterUpdate(Trigger.newMap, Trigger.oldMap);
+        }
     }
 }
