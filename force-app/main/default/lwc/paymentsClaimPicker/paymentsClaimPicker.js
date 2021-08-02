@@ -3,20 +3,25 @@ import { getRecord, getFieldValue, updateRecord } from 'lightning/uiRecordApi';
 import getAllOpportunityBillings from '@salesforce/apex/BigBrainController.getAllOpportunityBillings';
 import ACCOUNT_FIELD from "@salesforce/schema/Opportunity.Account.primary_pulse_account_id__c";
 import BILLING_IDS_FIELD from "@salesforce/schema/Opportunity.Billing_Ids__c";
+import IS_CLAIMED_FIELD from "@salesforce/schema/Opportunity.Is_Claim_Available__c"
 import ID_FIELD from "@salesforce/schema/Opportunity.Id";
 
 export default class PaymentsClaimPicker extends LightningElement {
     claimedSubscriptions = [];
     availableSubscriptions = [];
     isLoading = true;
+    disable = true;
 
     @api recordId;
     @track pulseAccountId;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_FIELD, BILLING_IDS_FIELD] })
+    @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_FIELD, BILLING_IDS_FIELD, IS_CLAIMED_FIELD] })
     wiredRecord({ error, data }) {
         if (error) { this.recordError = error; }
-        if (data) { this.pulseAccountId = getFieldValue(data, ACCOUNT_FIELD); }
+        if (data) {
+            this.pulseAccountId = getFieldValue(data, ACCOUNT_FIELD);
+            this.isClaimAvailable = getFieldValue(data, IS_CLAIMED_FIELD);
+        }
     }
 
     @wire(getAllOpportunityBillings, { pulseAccountId: '$pulseAccountId', opportunityId: '$recordId' })
@@ -36,6 +41,10 @@ export default class PaymentsClaimPicker extends LightningElement {
 
         this.claimedSubscriptions = this.toDisplayFormat(this.claimed).map(s => String(s.value))
         this.availableSubscriptions = this.toDisplayFormat([...this.unclaimed, ...this.claimed])
+
+        this.disable = !this.isClaimAvailable
+        if ((this.claimed.length + this.unclaimed.length) === 0) { this.disable = true }
+
     }
 
     handleChange(e) {
