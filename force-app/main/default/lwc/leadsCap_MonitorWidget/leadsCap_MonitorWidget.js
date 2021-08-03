@@ -49,16 +49,16 @@ export default class leadsCap_MonitorWidget extends NavigationMixin(LightningEle
 
     }
 
-    get numStyle(){
+    /*get numStyle(){
         this.ratio=this.remainingLeads/this.leadCapLimit;
-        if (this.ratio>=0.5){
+        if (this.ratio<=0.85){
             return `font-size:5em;color:#00ca72;`;//green
-        }else if(this.ratio<0.5&&this.ratio>=0.1){
+        }else if(this.ratio>0.85&&this.ratio<=0.95){
             return `font-size:5em;color:#ffcc00;`;//yellow
         }else{
             return `font-size:5em;color:#fb275d;`;//red
         }
-    }
+    }*/
 
     get noLeadsAlert(){
         return this.remainingLeads==0;
