@@ -13,6 +13,7 @@ export default class leadsCap_MonitorWidget extends NavigationMixin(LightningEle
     ratio;
     subTitle;
     noLeadCapFound=false;
+    loading=true;
 
     @wire(getRelatedLeadsCap, { userId: userId }) 
         leadCapData({data, error}){
@@ -26,6 +27,7 @@ export default class leadsCap_MonitorWidget extends NavigationMixin(LightningEle
                 this.avilableForDistribution=this.leadCapDetails.Available_for_Distribution__c;
                 this.subTitle='Remaining Leads: '+this.remainingLeads+' (Holding '+this.actualOpenLeads+' leads, out of '+this.leadCapLimit+' available leads)';
                 console.log('Raz Ben Ron lead cap data: '+ JSON.stringify(data));
+                this.loading=false;
             }else{
                 this.noLeadCapFound=true;
                 console.log('Raz Ben Ron lead cap this.noLeadCapFound: '+ this.noLeadCapFound);
