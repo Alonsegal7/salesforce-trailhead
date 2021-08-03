@@ -1,6 +1,6 @@
 <template>
   <lightning-card variant="Narrow" title="Payments claim" icon-name="standard:partner_fund_request">
-    <lightning-checkbox-group name="Checkbox Group" label="Subscriptions (checked items are already claimed)"
+    <lightning-checkbox-group disabled={disable} name="Checkbox Group" label="Subscriptions (checked items are already claimed)"
       class="slds-m-around_medium" options={availableSubscriptions} value={claimedSubscriptions}
       onchange={handleChange}>
     </lightning-checkbox-group>
@@ -10,7 +10,7 @@
       </lightning-spinner>
     </div>
 
-    <lightning-button variant="brand" label="Update Billings Claims" title="Primary action"
+    <lightning-button variant="brand" if:false={isLoading} disabled={disable} label="Update Billings Claims" title="Primary action"
       onclick={updateBillingsClaims} class="slds-m-left_medium"></lightning-button>
 
     <label class="slds-m-left_medium" if:true={showSuccess}>✓ Updated successfully</label>
