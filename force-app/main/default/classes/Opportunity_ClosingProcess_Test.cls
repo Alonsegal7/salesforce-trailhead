@@ -20,6 +20,7 @@ public class Opportunity_ClosingProcess_Test {
 		Opportunity_ClosingProcess.getInitialParameters(o.Id);
 		Opportunity_ClosingProcess.saveInnerPicklistPath(o.Id, 'CC Claim');
 		Opportunity_ClosingProcess.updateProbability(o.Id, 'Closed Won');
-        Opportunity_ClosingProcess.getFieldsFromFieldSet('Opportunity', 'InternalOpportunity_Won_Expansion');
+		Opportunity_ClosingProcess.getFieldsFromFieldSet('Opportunity', 'InternalOpportunity_Won_Expansion');
+		Opportunity_ClosingProcess.getARRSum(o.Id);
     }  
 }

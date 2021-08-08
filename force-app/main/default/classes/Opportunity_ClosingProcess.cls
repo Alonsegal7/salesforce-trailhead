@@ -14,7 +14,28 @@ public without sharing class Opportunity_ClosingProcess {
 		System.debug('iCloudius - Initial Parameters:\n' + JSON.serializePretty(mso));
 		res = JSON.serialize(mso);
 		return res;
-	}
+    }
+    
+    @AuraEnabled
+	public static String getARRSum(Id oppId){
+		String res = '';
+		Map <String, object> mso = new Map <String, object>();
+		mso.put('opportunityARR', getOpportunityARR(oppId));
+        // mso.put('quote', getQuote(oppId));
+		System.debug('iCloudius - Initial Parameters:\n' + JSON.serializePretty(mso));
+		res = JSON.serialize(mso);
+		return res;
+    }
+    
+    @AuraEnabled
+    public static Opportunity getOpportunityARR(Id recordId){
+        system.debug('@@@ recordId_v3: ' + recordId);
+
+        List<Opportunity> opp = [SELECT Id, Green_Bucket_ARR_V2__c FROM Opportunity WHERE Id =: recordId LIMIT 1];
+        system.debug('@@@ opp:_v2 ' + opp);
+        
+        return opp[0];
+    }
 
     public static List <Map<String, Object>> InternalOpportunity_Lost_NotExpansion(){
 		System.debug('### Tal Test');
@@ -82,9 +103,9 @@ public without sharing class Opportunity_ClosingProcess {
     public static Opportunity getOpportunityData(Id recordId){
         system.debug('### recordId_v3: ' + recordId);
 
-        List<Opportunity> opp = [SELECT Id, Manual_Signature_Reason__c, Should_be_handed_over_to_AM__c, Green_Bucket_ARR__c, RecordType.Name, Is_Primary_SO_Signed__c, AccountId, StageName,
+        List<Opportunity> opp = [SELECT Id, Manual_Signature_Reason__c, Should_be_handed_over_to_AM__c, Green_Bucket_ARR_V2__c, RecordType.Name, Is_Primary_SO_Signed__c, AccountId, StageName,
                                         Total_PS_Hours__c, Total_PS_Expended_Hours__c , Expected_Plan_Seats__c, Expected_Plan_Tier__c, Account.CSM_Function__c, Close_Process_Path__c, Total_Training_Hours__c,
-                                        SyncedQuoteId, SyncedQuote.DH_Tier__c, SyncedQuote.Total_Seats__c, SyncedQuote.DH_Period__c, Account.Name, SyncedQuote.OwnerId, SyncedQuote.Name,
+                                        SyncedQuoteId, SyncedQuote.DH_Tier__c, SyncedQuote.Total_Seats__c, SyncedQuote.DH_Period__c, Account.Name, SyncedQuote.OwnerId, SyncedQuote.Name, Handed_Over__c,
                                         SyncedQuote.Owner.Name, What_Would_You_Like_To_Claim__c, Is_SO_Signed__c, Close_Process_Sys_Admin__c, RecordType.DeveloperName, Type, Is_Potential_GB_Opportunity__c
                                 FROM Opportunity WHERE Id =: recordId LIMIT 1];
         system.debug('### opp:_v2 ' + opp);
