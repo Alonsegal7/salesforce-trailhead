@@ -44,6 +44,7 @@
 			type : "String",
 			value : component.get("v.recordId")}
 		];
+		console.log('### testyyyyy');
 		flow.startFlow("Handover", inputVariables);
 	},
 
@@ -61,12 +62,12 @@
 				var state = response.getState();
 				console.log('### hello' + state);
 				if (state === "SUCCESS") {
-					console.log('### state_1111111: ' + response.getReturnValue());
+					console.log('### state_22222: ' + response.getReturnValue());
 				}
 			});
 			$A.enqueueAction(action);
 		}
-
+		console.log('### Close_Process_Path__c: ' + component.get('v.closedFields.Close_Process_Path__c'));
 		var flow = component.find("closedOppSumFlowData");
 		console.log('$$$ 111111_v12');
 		console.log('### oppSummaryPath_v3:' + component.get('v.closedFields.Close_Process_Path__c'));
@@ -80,7 +81,16 @@
 	},
 
 	checkHandover_InternalOpp : function (component, event, helper){
+		console.log('### 1: ' + component.get('v.oppData.RecordType.Name'));
+		console.log('### 2: ' + component.get('v.oppData.Should_be_handed_over_to_AM__c'));
+		console.log('### 3: ' + component.get('v.oppData.Total_PS_Hours__c'));
+		console.log('### 4: ' + component.get('v.oppData.Total_PS_Expended_Hours__c'));
+		console.log('### 5: ' + component.get('v.oppData.Total_Training_Hours__c'));
+		console.log('### 6: ' + component.get('v.oppData.Expected_Plan_Seats__c'));
+		console.log('### 7: ' + component.get('v.oppData.Expected_Plan_Tier__c'));
+		console.log('### 8: ' + component.get('v.oppData.Account.CSM_Function__c'));
 		if(component.get('v.oppData.RecordType.Name') == 'Internal Opportunity'){
+			console.log('@@@ 1');
 			if(component.get('v.oppData.Should_be_handed_over_to_AM__c')
 			|| component.get('v.oppData.Total_PS_Hours__c') > 0 
 			|| component.get('v.oppData.Total_PS_Expended_Hours__c') > 0
@@ -91,7 +101,8 @@
 			(component.get('v.oppData.Expected_Plan_Tier__c') != undefined && (component.get('v.oppData.Expected_Plan_Tier__c') == 'enterprise' || component.get('v.oppData.Expected_Plan_Tier__c') == 'Enterprise'))
 			&&
 			component.get('v.oppData.Account.CSM_Function__c') != undefined && component.get('v.oppData.Account.CSM_Function__c') != 'Enterprise CSM' && component.get('v.oppData.Account.CSM_Function__c') != 'Mid-Market CSM')){
-				// component.set('v.innerPathValue', 'Handover');
+				
+				console.log('@@@ 2');
 				component.set('v.showHandover', true);
 				console.log('showHandover_v1: ' + component.get('v.showHandover'));
 			}
@@ -111,6 +122,10 @@
 			var state = response.getState();
 			if (state === "SUCCESS") {
 				console.log('### tal_v7');
+				// if(innerValue == 'Opportunity Summary'){
+				// 	console.log('### tal_v77');
+				// 	helper.getOpportunitySummary(component, event, helper);
+				// }
 			}
 
 			else if (saveResult.state === "INCOMPLETE") {
@@ -135,6 +150,8 @@
 			}
 		});
 		$A.enqueueAction(action);
+
+		
 	},
 
 	setStageUpdateToast : function (component, event, helper){
@@ -165,12 +182,60 @@
             if (saveResult.state == "SUCCESS" || saveResult.state == "DRAFT") {
 				component.set('v.showSpinner', false);
 				component.set('v.confetti', true);
-				component.set('v.isModalOpen', false);
+				// component.set('v.isModalOpen', false);
 				component.find('notifLib').showToast({
 					"variant": "success",
 					"title": "Stage changed succesfully."                      
 				});
+				component.set('v.wonCompletedSuccess', true);
+				console.log('### wonCompletedSuccess' + component.get('v.wonCompletedSuccess'));
+				component.set('v.recordSaveError', '');
+				console.log('### recordSaveError' + component.get('v.recordSaveError'));
 				// window.location.reload()
+				var oppId = component.get('v.recordId');
+				var action = component.get("c.getARRSum");
+				action.setParams({ "oppId" : oppId });
+				action.setCallback(this, function(response) {
+					console.log('### callback');
+					var state = response.getState();
+					console.log('### state' + state);
+					if (state === "SUCCESS") {
+						var storeResponse = response.getReturnValue();
+						if (storeResponse != null){
+							storeResponse = JSON.parse(storeResponse);
+							console.log('### storeResponse_v1: ' + storeResponse);
+							console.log('@@@ storeResponse_v2: ' + storeResponse.hasOwnProperty('opportunityARR'));
+							if (storeResponse.hasOwnProperty('opportunityARR')){
+								component.set('v.greenBucketData', storeResponse.opportunityARR);
+								console.log('### Green_Bucket_ARR_V2__c: ' + storeResponse.opportunityARR.Green_Bucket_ARR_V2__c);
+								if(storeResponse.opportunityARR.Green_Bucket_ARR_V2__c >= 10000){
+									console.log('### in first: ' + storeResponse.opportunityARR.Green_Bucket_ARR_V2__c);
+									component.set('v.innerPathValue', 'continueToSummary');
+									// helper.getOpportunitySummary(component, event, helper);
+								}
+		
+								else{
+									console.log('### in 2nd: ' + storeResponse.opportunityARR.Green_Bucket_ARR_V2__c);
+									component.set('v.isModalOpen', false);
+								}
+							}
+						}
+					}
+		
+					else if (state === "ERROR") {
+						var errors = response.getError();
+						if (errors) {
+							if (errors[0] && errors[0].message) {
+								console.log("Error message: " + errors[0].message);
+							}
+						}
+						
+						else {
+							console.log("Unknown error");
+						}
+					}
+				});
+				$A.enqueueAction(action)
             }
 
             else if (saveResult.state == "INCOMPLETE") {
@@ -193,6 +258,13 @@
 						"variant": "error",
 						"header": "Problem saving record:",
 						"message": errMsg,
+						closeCallback: function() {
+							component.set('v.innerPathValue', 'CCClaim');
+							component.set('v.showSpinner', false);
+							component.set("v.recordSaveError", '');
+							var innerValue = "Claim";
+							helper.setInnerPicklistPath(component, event, helper, innerValue);
+						}
 					});
 				}
 			}
@@ -236,6 +308,13 @@
 					"variant": "error",
 					"header": "Problem saving record:",
 					"message": errMsg,
+					closeCallback: function() {
+						component.set('v.innerPathValue', 'ManualSignature');
+						component.set('v.showSpinner', false);
+						component.set("v.recordSaveError", '');
+						var innerValue = "Manual Signature";
+						helper.setInnerPicklistPath(component, event, helper, innerValue);
+					}
 				});
 			}
 		}));
@@ -243,8 +322,53 @@
 	},
 
 	setPreviousStep : function (component, event, helper){
+		console.log('### in previous' + component.get('v.innerPathValue'));
 		if(component.get('v.innerPathValue') == 'SOInfo' || component.get('v.innerPathValue') == 'Claim'){
-            component.set('v.showValidation', true);
+			console.log('### in previous claim');
+			console.log('### v.oppData.Type' + component.get('v.oppData.Type'));
+			component.set('v.showValidation', true);
+			console.log('### record type' + component.get('v.oppData.RecordType.DeveloperName'));
+			if(component.get('v.oppData.Type') != 'Expansion'){
+				if(component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity' && component.get('v.oppData.Is_Potential_GB_Opportunity__c')){
+					fieldSetReferance = "InternalOpportunity_Won_NotExpansion";
+					isRetreiveFieldSet = true;
+					console.log('### fieldSetReferance: ');
+				}
+
+				else if(component.get('v.oppData.RecordType.DeveloperName') == 'Partner_Opportunity'){
+					fieldSetReferance = "PartnerOpportunity_WonLost_NotExpansion";
+					isRetreiveFieldSet = true;
+					console.log('### fieldSetReferance_v1: ');
+				}
+			}
+			
+			else if(component.get('v.oppData.Type') == 'Expansion' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'){
+				console.log('### v.oppData.Type1' + component.get('v.oppData.Type'));
+				fieldSetReferance = "InternalOpportunity_Won_Expansion";
+				isRetreiveFieldSet = true;
+				console.log('### fieldSetReferance_v2: ');
+			}
+			console.log('### showValidation: ' + component.get('v.showValidation'));
+			if(isRetreiveFieldSet == true){
+				let action1 = component.get("c.getFieldsFromFieldSet");
+				action1.setParams({
+					objectName: "Opportunity",
+					fieldSetName: fieldSetReferance
+				});
+				action1.setCallback(this, function(response){
+					let state = response.getState();
+					if(state==="SUCCESS"){
+						let fieldsStr = response.getReturnValue();
+						console.log("fields => ",fieldsStr);
+						let fields = JSON.parse(fieldsStr);
+						component.set("v.fields", fields);
+						console.log('### showValidation_v1: ' + component.get('v.showValidation'));
+					} else {
+						alert("error");
+					}
+				});
+				$A.enqueueAction(action1);
+			}
 		}
 		
 		if(component.get('v.innerPathValue') == 'ManualSignature'){
@@ -313,8 +437,10 @@
 			action.setCallback(this, function(response) {
 				var state = response.getState();
 				console.log('### hello' + state);
+				console.log('### hello2' + response.getParam());
 				var errMsg = "";
 				if (state == "SUCCESS") {
+					component.set('v.checkARR', true);
 					console.log('### state_1111111: ' + response.getReturnValue());
 				}
 				else if (saveResult.state == "INCOMPLETE") {
