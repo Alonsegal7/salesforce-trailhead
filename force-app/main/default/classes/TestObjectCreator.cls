@@ -111,7 +111,7 @@ public class TestObjectCreator
 	}
     
     public static Product2 CreateProduct(){
-		Product2 p = new Product2(Name = 'Test product', IsActive = true);
+		Product2 p = new Product2(Name = 'Test product', IsActive = true, IsRecurring__c=true,Contract_Event_Product__c=true,Quantity_Unit_Of_Measure__c='Seats');
         
         if (persistImmediate) insert p;
 		return p;
@@ -146,7 +146,8 @@ public class TestObjectCreator
         	QuoteId = quote.Id,
             Quantity = quantity,
             UnitPrice = unitPrice,
-            Product_Type__c = productType
+            Product_Type__c = productType,
+            Is_Primary__c=true
         );
         
         if (persistImmediate) insert i;
@@ -156,6 +157,7 @@ public class TestObjectCreator
     public static Contract CreateContract(Account account){
         Contract c = new Contract(
             Name = 'Test contract',
+            Seats__c = 5,
         	AccountId = account.Id
         );
         
@@ -173,8 +175,9 @@ public class TestObjectCreator
             Seats__c='50',
             Paid_Months__c=12,
             Free_Months__c=1,
-            ARR_Gain__c=1000,
-            Billing_Ids__c='123456'
+            ARR_Gain__c=1020,
+            Billing_Ids__c='123456',
+            ARR__c=1020
         );
         
         if (persistImmediate) insert s;

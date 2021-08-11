@@ -44,4 +44,7 @@ global class Response {
     }
 
 
+
+	public static void getBody(){
+	} 
 }

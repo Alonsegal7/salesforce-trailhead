@@ -28,6 +28,10 @@ public class ConfigManager {
         return IsSandbox ? 'https://data.bigbrainstaging.me' : 'https://data.bigbrain.me';
     }
 
+    public static String getBillingVatServiceUrl(){
+        return IsSandbox ? 'https://webhooks.mondaystaging.com' : 'https://webhooks.monday.com';
+    }
+
     private static BigBrain_Setting__mdt getConfig(){
         BigBrain_Setting__mdt[] settings = [select id, Root_URL__c from BigBrain_Setting__mdt LIMIT 1];
         return settings[0];

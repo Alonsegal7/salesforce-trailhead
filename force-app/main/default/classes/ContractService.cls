@@ -11,17 +11,18 @@ public without sharing class ContractService {
                 
                 Opportunity opportunity = [SELECT Id, AccountId FROM Opportunity WHERE Id = :quote.OpportunityId];
                 Account mondayAccount = [SELECT Id, Name, Active_Contract__c, Company__c FROM Account WHERE Id = :opportunity.AccountId];
-                QuoteLineItem quoteLicenseLine = [SELECT Id, Tier__c, ListPrice, UnitPrice, Discount, ServiceDate,Quantity,End_Date__c,List_Price__c,Net_Per_Unit__c,Renewal_Unit_Price__c FROM QuoteLineItem WHERE QuoteId = :quote.Id AND Product_Type__c = 'License' limit 1];
+                QuoteLineItem quoteLicenseLine = [SELECT Id,added_seats__c, Tier__c, ListPrice, UnitPrice, Discount, ServiceDate,Quantity,End_Date__c,List_Price__c,Net_Per_Unit__c,Renewal_Unit_Price__c FROM QuoteLineItem WHERE QuoteId = :quote.Id AND Product_Type__c = 'License' limit 1];
                 List<OpportunityLineItem> opportunityLines = [SELECT Id, Contract__c FROM OpportunityLineItem WHERE OpportunityId = :opportunity.Id for update];
-                
                 //Contract creation and replacment will be only for new contracts deals
                 if(quote.Manual_Trigger__c == 'Create Active Contract' && quote.ContractId != null && quote.Quote_Type__c == 'New Contract') {
                     deactivateContract(quote.ContractId); 
                 }
 
                 if(quote.Quote_Type__c =='Pro-rated- Additional Seats' && quote.Get_Contract_Id__c != null){
+                    Contract proRatedCon = [select Id, Seats__c from Contract where Id=:quote.Get_Contract_Id__c];
                     quote.ContractId=quote.Get_Contract_Id__c;
-                    update new contract(id=quote.ContractId,Seats__c=quote.Total_Seats__c);
+                    Decimal totalSeats = proRatedCon.Seats__c + quoteLicenseLine.added_seats__c;
+                    update new contract(id=quote.ContractId,Seats__c=totalSeats);
                     
                 } else if(quote.Quote_Type__c == 'New Contract' || quote.Quote_Type__c == 'Change Tier in the same term' || quote.Manual_Trigger__c == 'Create Active Contract'){
                     Id contractId = createContract(mondayAccount, quote, quoteLicenseLine,quote.Manual_Trigger__c =='Create Active Contract'?'Manual Creation':'Dealhub');
