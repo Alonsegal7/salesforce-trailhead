@@ -95,12 +95,12 @@ checkIfLegalDocExist(){
 }
 //Each clm doc url will have a different url and therefore a different buttons
     InitSaasAgreement(event){
-        var thisUrl ="https://uatna11.springcm.com/atlas/doclauncher/eos/Monday SaaS Agreement?aid=25283&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
+        var thisUrl ="https://na11.springcm.com/atlas/doclauncher/eos/Monday SaaS Agreement?aid=22364&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
         window.open(thisUrl,'_blank');
     }
 
     InitDPA(event){
-        var thisUrl ="https://uatna11.springcm.com/atlas/doclauncher/eos/Exhibit Form?aid=25283&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
+        var thisUrl ="https://na11.springcm.com/atlas/doclauncher/eos/DPA?aid=22364&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
         window.open(thisUrl,'_blank');
     }        
     closeAction(){
