@@ -6,12 +6,13 @@ public without sharing class Subscription_ConnectToContractEvent {
                 for(Subscription__c sub: newSubs){
                     subsPulseIds.add(sub.Pulse_Account_Id__c);
                 }
-            else{//update only for Manual Trigger
+            else{//update (will be only for manual trigger)
                 for(Subscription__c sub: newSubs){
                     if(sub.Manual_Trigger__c!=oldMap.get(sub.id).Manual_Trigger__c&&sub.Manual_Trigger__c=='Create Active Contract')
-                        subsPulseIds.add(sub.Pulse_Account_Id__c);
+                        subsPulseIds.add(sub.Pulse_Account_Id__c);   
                 }
             }
+
             if(subsPulseIds.isEmpty())
                 return;
 
@@ -166,5 +167,3 @@ public without sharing class Subscription_ConnectToContractEvent {
         }
     }
 }
-
-

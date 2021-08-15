@@ -111,7 +111,7 @@ public class TestObjectCreator
 	}
     
     public static Product2 CreateProduct(){
-		Product2 p = new Product2(Name = 'Test product', IsActive = true, IsRecurring__c=true,Contract_Event_Product__c=true,Quantity_Unit_Of_Measure__c='Seats');
+		Product2 p = new Product2(Name = 'Test product', IsActive = true, IsRecurring__c=true,Contract_Creation_Product__c=true,Contract_Event_Product__c=true,Quantity_Unit_Of_Measure__c='Seats');
         
         if (persistImmediate) insert p;
 		return p;
@@ -169,7 +169,7 @@ public class TestObjectCreator
         Subscription__c s = new Subscription__c(
             Name = 'Test Sub',
             Status__c='ACTIVE',
-            Pulse_Account_Id__c='12345',
+            Pulse_Account_Id__c='12211',
             Pricing_Version__c=8,
             Tier__c='pro',
             Seats__c='50',

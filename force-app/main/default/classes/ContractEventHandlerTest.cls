@@ -24,6 +24,7 @@ public with sharing class ContractEventHandlerTest {
         quoteLicenseLine.Duration__c=12;
         quoteLicenseLine.ServiceDate=startDate;
         quoteLicenseLine.End_Date__c=endDate;
+        quoteLicenseLine.Duration__c=12;
         quoteLicenseLine.Tier__c='Enterprise';
         quoteLicenseLine.List_Price__c=38;
         quoteLicenseLine.Net_Per_Unit__c=263;
@@ -62,13 +63,26 @@ public with sharing class ContractEventHandlerTest {
 
         Account company = TestObjectCreator.CreateCompany();
         Account ma = TestObjectCreator.CreateMondayAccount(company);
+        TestObjectCreator.persistImmediate = false;
+
         Contract con = TestObjectCreator.CreateContract(company);
-        Contract_Event__c conEvent = new Contract_Event__c(Contract__c=con.Id, IsRecurring__c=true,  ARR__c=123, Quantity__c=20,Quantity_Unit_Of_Measure__c='Seats');
+        con.StartDate=startDate;
+        con.EndDate=endDate;
+        insert con;
+        Contract_Event__c conEvent = new Contract_Event__c(
+            Contract__c=con.Id, Calculate_Arr__c=true, 
+            IsRecurring__c=true,  
+            ARR__c=123, 
+            Quantity__c=20,
+            Quantity_Unit_Of_Measure__c='Seats',
+            Start_Date__c=startDate,
+            End_Date__c=endDate);
         ma.Active_Contract__c=con.Id;
         ma.primary_pulse_account_id__c='12211';
         insert conEvent;
         update ma;
-        
+        TestObjectCreator.persistImmediate = true;
+
         Opportunity proRatedOpportunity = TestObjectCreator.CreateOpp(ma);
         Quote quoteProRataCont = TestObjectCreator.CreateNonContractQuote(proRatedOpportunity, 'Pro-rated- Additional Seats');
         QuoteLineItem proRataQuoteLicenseLine = TestObjectCreator.CreateQuoteLineItem(quoteProRataCont, 'License', 1, 1.0);
@@ -83,6 +97,7 @@ public with sharing class ContractEventHandlerTest {
         proRataQuoteLicenseLine.ARR__c=5353;
         update proRataQuoteLicenseLine;
         List<OpportunityLineItem> proRataOpportunityLines = new List<OpportunityLineItem>{ TestObjectCreator.CreateOpportunityProduct(proRatedOpportunity, proRataQuoteLicenseLine) };
+        TestObjectCreator.persistImmediate = false;
 
         Subscription__c sub = TestObjectCreator.CreateSubscription();
         sub.Pulse_Account_Id__c='12211';
@@ -90,7 +105,7 @@ public with sharing class ContractEventHandlerTest {
         sub.Activation_Date__c=startDate;
         sub.arr__c=123;
         sub.seats__c='20';
-        update sub;
+        insert sub;
 
         quoteProRataCont.DH_Quote_Status__c='Won';
         quoteProRataCont.Document_Type__c='Sales Order';

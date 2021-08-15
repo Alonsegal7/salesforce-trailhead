@@ -221,8 +221,18 @@ public with sharing class ContractEventHandler {
             this.quoteToUpdateList = quoteToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            Database.update(quoteToUpdateList);
+            try{
+                Database.update(quoteToUpdateList);
+            } catch (Exception e){
+                Utilities.sendDebugEmail('Error in SalesOrderContractEvent quoteToUpdateList queueable first attempt',e,e.getMessage());
+                if(e.getMessage().containsIgnoreCase('Record Currently Unavailable')){
+                    try{
+                        Database.update(quoteToUpdateList);
+                    } catch (Exception e2){
+                        Utilities.sendDebugEmail('Error in quoteToUpdateList updateAccounts queueable second attempt',e2,e2.getMessage());
+                    }
+                }
+            }
         }
     }
-    
 }
