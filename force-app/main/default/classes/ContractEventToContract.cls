@@ -14,7 +14,7 @@ public with sharing class ContractEventToContract {
         //Get the recurring event to create contract
         for (Id key : conEvents.keyset()) {
             for (Contract_Event__c conEvnt : conEvents.get(key)) {
-                //The list will have only one contract creation events
+                //The list will have only one recurring events
                 if (conEvnt.Contract_Creation_Product__c) {
                     Contract newCon = createContract(conEvnt);
                     createdContsMap.put(key, newCon);

@@ -3,8 +3,10 @@ public class LeadTriggerHandlerWithoutSharingTest {
     
     @testSetup
     static void setup() {
+        Account company = TestObjectCreator.CreateCompany();
+        insert company;
         Id partnerLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Partner_Lead').getRecordTypeId();
-        Lead newLead = new Lead(LastName='LeadForTest', Status='Received', LeadSource='g2crowd', Company='LeadForTest', Email='lead@test.for', recordTypeId=partnerLeadRecordTypeId);
+        Lead newLead = new Lead(LastName='LeadForTest', Status='Received', LeadSource='g2crowd', Company='LeadForTest', Email='lead@test.for', Related_Company__c = company.Id, recordTypeId=partnerLeadRecordTypeId);
         insert newLead;
         
         FeedItem item = new FeedItem();
