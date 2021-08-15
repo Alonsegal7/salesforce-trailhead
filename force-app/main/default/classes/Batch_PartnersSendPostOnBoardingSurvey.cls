@@ -1,5 +1,7 @@
 public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchable<sObject>,Schedulable{
 
+    public Date threeMonthsAgo = Date.today().addDays(-90);
+
     public void execute(SchedulableContext sc) {
         try{
             Database.executeBatch(this, 30);
@@ -9,7 +11,6 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
     }
 
     public Database.QueryLocator start(Database.BatchableContext BC){
-        Date threeMonthsAgo = Date.today().addDays(-90);
         String query = 'select Id, AccountId, Expected_Plan_Period__c, Expected_Plan_Tier__c, Expected_Plan_Seats__c from Opportunity where Expected_Plan_Period__c != \'Monthly\' and Expected_Plan_Tier__c = \'Enterprise\' and Account.Low_Touch_CS__c = null and StageName = \'Closed Won\' and Expected_Plan_Seats__c >= 20 and Account.CSM__c = null and RecordType.DeveloperName = \'Partner_Opportunity\' and CloseDate =: threeMonthsAgo';
         return Database.getQueryLocator(query);
      }
@@ -24,7 +25,7 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
         }
 
         //query all prev opps per account and save to map A of accountid to opp list
-        for(Account acc: [select Id, (select Id, Expected_Plan_Tier__c, Expected_Plan_Seats__c from Opportunities where Id not in: oppsIds and StageName = 'Closed Won' order by CloseDate DESC limit 1) from Account where Id IN: accountIdToOppMap.keySet()]){
+        for(Account acc: [select Id, (select Id, Expected_Plan_Tier__c, Expected_Plan_Seats__c, RecordType.DeveloperName from Opportunities where Id not in: oppsIds and StageName = 'Closed Won' and Expected_Plan_Tier__c = 'Enterprise' and CloseDate <=: threeMonthsAgo order by CloseDate DESC limit 2) from Account where Id IN: accountIdToOppMap.keySet()]){
             if(acc.Opportunities.isEmpty()) continue;
             accountIdToOppMap.get(acc.Id).add(acc.Opportunities.get(0));
         }
@@ -35,8 +36,18 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
             Opportunity currentOpp = accountIdToOppMap.get(accountId).get(0);
             Opportunity prevOpp =  accountIdToOppMap.get(accountId).get(1);
             Decimal deltaSeats = currentOpp.Expected_Plan_Seats__c - prevOpp.Expected_Plan_Seats__c;
-            if(prevOpp.Expected_Plan_Tier__c == 'Enterprise' && deltaSeats < 100){ //remove this account from survey
-                accountIdToOppMap.remove(accountId);
+            if(deltaSeats < 100){ //check if need to remove this account from survey
+                if(prevOpp.RecordType.DeveloperName == 'Internal_Opportunity' && deltaSeats == 0){ // potentially co-sell, need to check prev prev opp (if exists)
+                    if(accountIdToOppMap.get(accountId).size() == 3){ //check if there is another opp before the co-sell opp
+                        prevOpp = accountIdToOppMap.get(accountId).get(2);
+                        deltaSeats = currentOpp.Expected_Plan_Seats__c - prevOpp.Expected_Plan_Seats__c;
+                        if(deltaSeats < 100){
+                            accountIdToOppMap.remove(accountId);
+                        }
+                    }
+                } else {
+                    accountIdToOppMap.remove(accountId);
+                }
             }
         }
 
