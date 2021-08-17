@@ -25,7 +25,7 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
         }
 
         //query all prev opps per account and save to map A of accountid to opp list
-        for(Account acc: [select Id, (select Id, Expected_Plan_Tier__c, Expected_Plan_Seats__c, RecordType.DeveloperName from Opportunities where Id not in: oppsIds and StageName = 'Closed Won' and Expected_Plan_Tier__c = 'Enterprise' and CloseDate <=: threeMonthsAgo order by CloseDate DESC limit 2) from Account where Id IN: accountIdToOppMap.keySet()]){
+        for(Account acc: [select Id, (select Id, Expected_Plan_Tier__c, Expected_Plan_Seats__c, RecordType.DeveloperName from Opportunities where Id not in: oppsIds and Co_Sell_Opportunity__c not in: oppsIds and StageName = 'Closed Won' and Expected_Plan_Tier__c = 'Enterprise' and CloseDate <=: threeMonthsAgo order by CloseDate DESC limit 2) from Account where Id IN: accountIdToOppMap.keySet()]){
             if(acc.Opportunities.isEmpty()) continue;
             accountIdToOppMap.get(acc.Id).add(acc.Opportunities.get(0));
         }
