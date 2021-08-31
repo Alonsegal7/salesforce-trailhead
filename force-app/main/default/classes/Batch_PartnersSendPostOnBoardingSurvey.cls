@@ -2,8 +2,16 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
 
     public Date threeMonthsAgo = Date.today().addDays(-90);
 
+    public Batch_PartnersSendPostOnBoardingSurvey(){
+    }
+
+    public Batch_PartnersSendPostOnBoardingSurvey(Date selectedDate){
+        this.threeMonthsAgo = selectedDate;
+    }
+
     public void execute(SchedulableContext sc) {
         try{
+            Utilities.cleanFlexQueue();
             Database.executeBatch(this, 30);
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Batch_PartnersSendPostOnBoardingSurvey ', e, e.getMessage());   
