@@ -24,11 +24,13 @@ public without sharing class Opportunity_Snapshot implements Database.Batchable<
     }
     @InvocableMethod
     public static void OppSnapManualRun(list<id> testOppId){
+        Utilities.cleanFlexQueue();
         Database.executeBatch(new Opportunity_Snapshot(testOppId[0]));
     }
 
     public void execute(SchedulableContext sc) {
         try{
+            Utilities.cleanFlexQueue();
             Database.executeBatch(this,50);
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Opportunity_Snapshot ',e,e.getMessage());   
@@ -107,28 +109,7 @@ public without sharing class Opportunity_Snapshot implements Database.Batchable<
                     if(oppFieldType=='DATETIME'&&snapFieldType=='DATE')
                         value=date.valueof(value);
                     os.put(snapFieldName,value);
-                                }
-                /*Opportunity_Snapshot__c osOld= new Opportunity_Snapshot__c(name=string.valueof(datetime.now().format('dd/MM/YYYY HH:mm')),
-                                                        Opportunity__c=opp.id,
-                                                        Commit__c=opp.Forecasted__c?1:0,
-                                                        Close_Date__c=opp.CloseDate,
-                                                        Commit_ARR__c=opp.Forecasted_ARR__c,
-                                                        Forecast_ARR__c=opp.Forecast_ARR__c,
-                                                        GB_Opp__c=opp.GB_opp__c,
-                                                        Green_bucket_ARR__c=opp.Green_Bucket_ARR__c,
-                                                        Record_Type_Number__c=opp.Record_Type__c,
-                                                        Probability__c=opp.Probability,
-                                                        Owner__c=opp.Owner.FirstName+' '+opp.Owner.LastName,
-                                                        Owner_Team__c=opp.Owner.Team__c,
-                                                        Owner_Office__c=opp.Owner.Office__c,
-                                                        Owner_Manager__c=opp.Owner.Manager.FirstName+' '+opp.Owner.Manager.LastName,
-                                                        Opportunity_Record_Type__c=opp.RecordType.Name,
-                                                        Stage__c=opp.StageName,
-                                                        Opportunity_Created_Date__c=date.valueof(opp.Createddate),
-                                                        Bi_Weekly_Snapshot__c=isOngoing,
-                                                        End_of_Month__c=isLast,
-                                                        Start_of_Month__c=isFirst,
-                                                        Snapshot_Date__c=date.today());*/
+                }
                 if(opp.Opportunity_Snapshots__r.size()>0)
                     os.Previous_Snapshot__c=opp.Opportunity_Snapshots__r[0].id;
                 snapsToCreate.add(os);

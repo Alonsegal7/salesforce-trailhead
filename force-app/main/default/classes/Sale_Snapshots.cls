@@ -5,6 +5,7 @@ public without sharing class Sale_Snapshots implements Database.Batchable<sObjec
     }
     public void execute(SchedulableContext sc) {
         try{
+            Utilities.cleanFlexQueue();
             Database.executeBatch(this,50);
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Sale_Snapshots ',e,e.getMessage());   

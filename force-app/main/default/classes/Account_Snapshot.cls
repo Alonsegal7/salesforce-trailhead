@@ -18,10 +18,12 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
     }
     @InvocableMethod
     public static void ManualRun(list<id> testAccId){
+        Utilities.cleanFlexQueue();
         Database.executeBatch(new Account_Snapshot(testAccId[0]));
     }
     public void execute(SchedulableContext sc) {
         try{
+            Utilities.cleanFlexQueue();
             Database.executeBatch(this,30);
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage());   
