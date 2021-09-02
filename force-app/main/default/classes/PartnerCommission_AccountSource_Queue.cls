@@ -8,7 +8,7 @@ public without sharing class PartnerCommission_AccountSource_Queue implements Sy
     public void execute(System.QueueableContext ctx) {
         List<Partner_Commission__c> pcList = [select Id, Monday_Account__c, Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c, Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c from Partner_Commission__c where Monday_Account__c IN: mondayAccSourceTypeMap.keySet()];
         if(pcList.isEmpty()) return;
-
+        PartnerCommissionService pcService = new PartnerCommissionService();
         for(Partner_Commission__c pc: pcList){
             if(mondayAccSourceTypeMap.containsKey(pc.Monday_Account__c)){
                 if(mondayAccSourceTypeMap.get(pc.Monday_Account__c) == 'Inbound'){
@@ -20,7 +20,6 @@ public without sharing class PartnerCommission_AccountSource_Queue implements Sy
                 }
             }
         }
-
-        Database.update(pcList);
+        pcService.upsertPartnerCommissionInQueue(pcList, 'PartnerCommission_AccountSource_Queue');
     }
 }

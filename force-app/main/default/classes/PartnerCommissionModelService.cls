@@ -23,7 +23,7 @@ public class PartnerCommissionModelService {
                 if(oldPcmMap != null && oldPcmMap.containsKey(existingPcm.Id)) continue;
                 if((newPcm.Start_Date__c >= existingPcm.Start_Date__c && (existingPcm.End_Date__c == null || newPcm.Start_Date__c <= existingPcm.End_Date__c)) 
                 || (existingPcm.Start_Date__c >= newPcm.Start_Date__c && (newPcm.End_Date__c == null || existingPcm.Start_Date__c <= newPcm.End_Date__c))){
-                    throw new partnerCommissionException('PCM dates overlap detected. PCM Id: '+newPcm.Id);
+                    throw new partnerCommissionException('PCM dates overlap detected. New PCM Id: '+newPcm.Id+ ' ; Existing PCM Id: '+existingPcm.Id);
                 }
             }
         }

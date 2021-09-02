@@ -1,5 +1,9 @@
 @isTest
 public class PartnerCommissionServiceTest {
+    private static final Id OPP_PARTNER_RT_CONST = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
+    private static final Id ACC_MA_RT_CONST = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+    private static final Id ACC_PARTNER_COMP_RT_CONST = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();
+
     @TestSetup
     static void makeData(){
         Map<String, Schema.RecordTypeInfo> accountRecordTypesMap = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName();
@@ -20,8 +24,8 @@ public class PartnerCommissionServiceTest {
 
         //create partner company
         List<Account> partnersList = new List<Account>();
-        partnersList.add(new Account(Name = 'testPartner', RecordTypeId = accountRecordTypesMap.get('Partner_Company').getRecordTypeId()));
-        partnersList.add(new Account(Name = 'testPartner2', RecordTypeId = accountRecordTypesMap.get('Partner_Company').getRecordTypeId()));
+        partnersList.add(new Account(Name = 'testPartner', RecordTypeId = ACC_PARTNER_COMP_RT_CONST));
+        partnersList.add(new Account(Name = 'testPartner2', RecordTypeId = ACC_PARTNER_COMP_RT_CONST));
         insert partnersList;
     
         //create partner commission model
@@ -39,60 +43,68 @@ public class PartnerCommissionServiceTest {
 		insert user;
 
         //create monday account
-        Account mondayAcc = new Account(OwnerId = user.Id, Name = 'testMOnday', RecordTypeId = accountRecordTypesMap.get('Monday_Account').getRecordTypeId(), primary_pulse_account_id__c = '12345', Account_Source_Type__c = 'Inbound', Sign_Up_Date__c = Date.today());
+        Account mondayAcc = new Account(OwnerId = user.Id, Name = 'testMOnday', RecordTypeId = ACC_MA_RT_CONST, primary_pulse_account_id__c = '12345', Account_Source_Type__c = 'Inbound', Sign_Up_Date__c = Date.today());
         insert mondayAcc;
 
         //create opportunity with opp.Potential_GB_Opp_Override__c=='Yes'
-        Id partnerRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
         Opportunity opp = TestObjectCreator.CreateOpp(mondayAcc);
-        opp.RecordTypeId = partnerRecordTypeId;
-        opp.OwnerId = user.Id;
+        opp.RecordTypeId = OPP_PARTNER_RT_CONST;
         opp.Potential_GB_Opp_Override__c = 'Yes';
+        opp.OwnerId = user.Id;
         insert opp;
 
+        opp.Channel_Partner__c = partnersList.get(0).Id;
         opp.StageName = 'Closed Won';
         opp.Transition_to_GB__c = true;
+        opp.Is_Potential_GB_Opportunity__c = true;
         opp.Claimed_ARR__c = 10000;
         update opp;
     }
 
     static testmethod void testFirstPartnerCommissionCreation(){
-        Opportunity opp = [select Id, Channel_Partner__c, Transition_to_GB__c, StageName, RecordTypeId from Opportunity limit 1];
+        Opportunity opp = [select Id, Channel_Partner__c, Transition_to_GB__c, StageName, RecordTypeId from Opportunity where RecordTypeId=:OPP_PARTNER_RT_CONST limit 1];
         System.assertNotEquals(null, opp.Channel_Partner__c);
         System.assertEquals(true, opp.Transition_to_GB__c);
         System.assertEquals('Closed Won', opp.StageName);
-        System.assertEquals(Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId(), opp.RecordTypeId);
         List<Partner_Commission__c> pcList = [select Id from Partner_Commission__c];
         System.assertEquals(1, pcList.size());
 
         //update MA ARR below TH
-        Id mondayAccRtId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
-        Account mondayAcc = [select Id from Account where RecordTypeId =: mondayAccRtId limit 1];
+        Account mondayAcc = [select Id, Is_GB_Account_Partners__c from Account where RecordTypeId =: ACC_MA_RT_CONST limit 1];
+        System.assertEquals(true, mondayAcc.Is_GB_Account_Partners__c);
         mondayAcc.ARR__c = 4000;
         mondayAcc.Last_ARR_Update_Timestamp__c = Datetime.now();
-        mondayAcc.Account_Source_Type__c = 'Outbound';
         Test.startTest();
         update mondayAcc;
         Test.stopTest();
         pcList = [select Id, End_Date__c, Account_Source__c from Partner_Commission__c];
         System.assertEquals(1, pcList.size());
         System.assertNotEquals(null, pcList.get(0).End_Date__c);
+    }
+
+    static testmethod void testAccSourceTypeChange(){
+        //update MA Source Type to Outbound
+        Account mondayAcc = [select Id from Account where RecordTypeId =: ACC_MA_RT_CONST limit 1];
+        mondayAcc.Account_Source_Type__c = 'Outbound';
+        Test.startTest();
+        update mondayAcc;
+        Test.stopTest();
+        List<Partner_Commission__c> pcList = [select Id, Account_Source__c from Partner_Commission__c];
+        System.assertEquals(1, pcList.size());
         System.assertEquals('Outbound', pcList.get(0).Account_Source__c);
     }
 
     static testmethod void testPartnerCommissionCreationFromARR(){
-        Opportunity opp = [select Id, Channel_Partner__c, Transition_to_GB__c, StageName, RecordTypeId from Opportunity limit 1];
+        Opportunity opp = [select Id, Channel_Partner__c, Transition_to_GB__c, StageName, RecordTypeId from Opportunity where RecordTypeId=:OPP_PARTNER_RT_CONST limit 1];
         System.assertNotEquals(null, opp.Channel_Partner__c);
         System.assertEquals(true, opp.Transition_to_GB__c);
         System.assertEquals('Closed Won', opp.StageName);
-        System.assertEquals(Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId(), opp.RecordTypeId);
         List<Partner_Commission__c> pcList = [select Id from Partner_Commission__c];
         System.assertEquals(1, pcList.size());
         pcList.get(0).End_Date__c = Datetime.now().addMinutes(-1);
         update pcList;
         //update MA ARR above TH
-        Id mondayAccRtId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
-        Account mondayAcc = [select Id from Account where RecordTypeId =: mondayAccRtId limit 1];
+        Account mondayAcc = [select Id from Account where RecordTypeId =: ACC_MA_RT_CONST limit 1];
         mondayAcc.ARR__c = 9000;
         mondayAcc.Last_ARR_Update_Timestamp__c = Datetime.now();
         Test.startTest();

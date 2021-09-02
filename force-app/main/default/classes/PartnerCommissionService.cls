@@ -4,14 +4,18 @@ public class PartnerCommissionService {
     public static Boolean firstRunAccARR = true;
     public static Boolean firstRunAccTrans = true;
     public static Boolean firstRunAccSource = true;
+    public static Boolean firstRunAccMerge = true;
+    private static final String CMT_ERROR_EMAIL_CONST = 'Partner_Commission_Error_Email_Recipient';
 
+    public Id mondayRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
     public class partnerCommissionException extends Exception {}
 
+    // create first PC from transition to GB Opps
     public void partnerCommissionFromGbOpp(List<Opportunity> newOpps, Map<Id, Opportunity> oldOppsMap){
         List<Opportunity> relevantOppsList = new List<Opportunity>();
         Id partnerRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
         for(Opportunity opp: newOpps){
-            if(opp.RecordTypeId == partnerRecordTypeId && opp.Channel_Partner__c != null && opp.AccountId != null && opp.Transition_to_GB__c && opp.StageName == 'Closed Won' && oldOppsMap.get(opp.Id).StageName != opp.StageName){
+            if(opp.RecordTypeId == partnerRecordTypeId && opp.Channel_Partner__c != null && opp.AccountId != null && opp.Transition_to_GB__c && opp.StageName == 'Closed Won' && (oldOppsMap.get(opp.Id).StageName != opp.StageName || !oldOppsMap.get(opp.Id).Transition_to_GB__c)){
                 relevantOppsList.add(opp);
             }
         }   
@@ -20,9 +24,9 @@ public class PartnerCommissionService {
         System.enqueueJob(new PartnerCommission_CreateFromOpp_Queue(relevantOppsList));
     }
 
+    // create or end PC due to ARR change
     public void partnerCommissionFromARR(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
         List<Account> relevantMondayAccounts = new List<Account>();
-        Id mondayRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
         for(Account acc: newAccounts){
             if(acc.RecordTypeId == mondayRecordTypeId 
                 && acc.Is_GB_Account_Partners__c 
@@ -35,12 +39,12 @@ public class PartnerCommissionService {
         System.enqueueJob(new PartnerCommission_CreateFromARR_Queue(relevantMondayAccounts));
     }
 
+    //partner transfer
     public void partnerCommissionFromPartnerTransfer(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
         List<Account> relevantMondayAccounts = new List<Account>();
         Map<Id,Id> partnersToClosePC = new Map<Id,Id>();
         Map<Id,Id> partnersToCreatePc = new Map<Id,Id>();
         
-        Id mondayRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
         for(Account acc: newAccounts){
             if(acc.RecordTypeId == mondayRecordTypeId 
                 && acc.Is_GB_Account_Partners__c 
@@ -55,9 +59,9 @@ public class PartnerCommissionService {
         System.enqueueJob(new PartnerCommission_PartnerTransfer_Queue(relevantMondayAccounts, partnersToClosePC, partnersToCreatePc));
     }
 
+    // account source type changed - need to update the percent opn the PC
     public void updatePcOnAccountSourceChange(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
         Map<Id,String> mondayAccSourceTypeMap = new Map<Id,String>();
-        Id mondayRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
         for(Account acc: newAccounts){
             if(acc.RecordTypeId == mondayRecordTypeId 
                 && acc.Is_GB_Account_Partners__c 
@@ -68,6 +72,23 @@ public class PartnerCommissionService {
         if(mondayAccSourceTypeMap.isEmpty()) return;   
         firstRunAccSource = false;       
         System.enqueueJob(new PartnerCommission_AccountSource_Queue(mondayAccSourceTypeMap));
+    }
+
+    //account merge - close PC of old account and create PC for new account
+    public void updatePcOnAccountMerge(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
+        List<Account> accountsToUpdatePcs = new List<Account>();
+        Map<Id,String> accountsOldBigBrainId = new Map<Id,String>();
+        for(Account acc: newAccounts){
+            if(acc.RecordTypeId == mondayRecordTypeId 
+                && acc.Is_GB_Account_Partners__c 
+                && acc.primary_pulse_account_id__c != oldAccountsMap.get(acc.Id).primary_pulse_account_id__c){
+                    accountsToUpdatePcs.add(acc);
+                    accountsOldBigBrainId.put(acc.Id, oldAccountsMap.get(acc.Id).primary_pulse_account_id__c);
+            }
+        }
+        if(accountsToUpdatePcs.isEmpty()) return;   
+        firstRunAccMerge = false;       
+        System.enqueueJob(new PartnerCommission_MergeAccounts_Queue(accountsToUpdatePcs, accountsOldBigBrainId));
     }
 
     public void updatePartnerCommissionVersion(List<Partner_Commission__c> partnerCommissionList, Map<Id, Partner_Commission__c> oldPartnerCommissionMap){
@@ -87,12 +108,17 @@ public class PartnerCommissionService {
         }
     }
 
+    // Trigger_Valid_From__c if used for BigBrain to know if they should include a PC in their run or not
+    // f.e if we run a report for July and we run it in the begining of Aug, let's say Aug 3rd, and on 1st/2nd of Aug some PCs were created we don't want the report to include them
+    // so this will be achieved by setting a Trigger_Valid_From__c value for every PC
+    // logic is - 1st of month of the creation time, unless we run a script to fix missing triggers with opps and then we put the 1st of month of the opp close date
     public void updatePartnerCommissionTriggerValidFrom(List<Partner_Commission__c> partnerCommissionList){
         for(Partner_Commission__c pc: partnerCommissionList){
-            pc.Trigger_Valid_From__c = Date.today().toStartOfMonth();
+            if(pc.Trigger_Valid_From__c == null) pc.Trigger_Valid_From__c = Date.today().toStartOfMonth();
         }
     }
 
+    // set is Last to true when PC created manually
     public void setIsLastFalseForManual(List<Partner_Commission__c> partnerCommissionList){
         Set<Id> partnerIds = new Set<Id>();
         Set<Id> mondayAccIds = new Set<Id>();
@@ -131,43 +157,27 @@ public class PartnerCommissionService {
         Set<Id> partnerCompanyIds = new Set<Id>();
         Set<Id> mondayAccountIds = new Set<Id>();
         for(Partner_Commission__c pc : newPcList){
+            //entry criteria
             if(oldPcMap == null || pc.Start_Date__c != oldPcMap.get(pc.Id).Start_Date__c || pc.End_Date__c != oldPcMap.get(pc.Id).End_Date__c){
                 partnerCompanyIds.add(pc.Partner_Company__c);
                 mondayAccountIds.add(pc.Monday_Account__c);
             }
         }
-        if(partnerCompanyIds.isEmpty()) return;
+        if(partnerCompanyIds.isEmpty()) return; //no pcs found in entry criteria
+        //checkDups(newPcList, newPcList); //check dups within the new pcs list
         String dynamicQuery = 'select Pulse_Account_ID__c, Start_Date__c, End_Date__c, Partner_Company__c, Monday_Account__c from Partner_Commission__c where Partner_Company__c IN: partnerCompanyIds and Monday_Account__c IN: mondayAccountIds';
         if(oldPcMap != null) {
             Set<Id> existingPcIds = oldPcMap.keySet();
             dynamicQuery += ' and Id NOT IN: existingPcIds';
         }
         List<Partner_Commission__c> existingPcList = Database.query(dynamicQuery);
-        String key = '';
-        Map<String,List<Partner_Commission__c>> pcMap = new Map<String,List<Partner_Commission__c>>();
-        for(Partner_Commission__c pc: existingPcList){
-            key = getOverlapKey(pc);
-            if(pcMap.containsKey(key)){
-                pcMap.get(key).add(pc);
-            } else {
-                pcMap.put(key, new list<Partner_Commission__c>{pc});
-            }
-        }
-        for(Partner_Commission__c newPc : newPcList){
-            key = getOverlapKey(newPc);
-            if(pcMap.containsKey(key)){
-                for(Partner_Commission__c existingPc: pcMap.get(key)){
-                    if((newPc.Start_Date__c >= existingPc.Start_Date__c && (existingPc.End_Date__c == null || newPc.Start_Date__c <= existingPc.End_Date__c)) 
-                    || (existingPc.Start_Date__c >= newPc.Start_Date__c && (newPc.End_Date__c == null || existingPc.Start_Date__c <= newPc.End_Date__c))){
-                        throw new partnerCommissionException('Partner Commission dates overlap detected. Partner Commission Id: '+newPc.Id+';partnerId: '+newPc.Partner_Company__c+'; mondayAccountId: '+newPc.Monday_Account__c);
-                    }
-                }
-            }
-        }
+        checkDups(newPcList, existingPcList);
     }
 
-    public Partner_Commission__c createPartnerCommissionRecord(Account mondayAccount, Account partnerAccount, Opportunity opp){
+    // this method is the core for PC creation, all partner commission logic creates PCs by this method
+    public Partner_Commission__c createPartnerCommissionRecord(Account mondayAccount, Account partnerAccount, Opportunity opp, String creationReson){
         Partner_Commission__c tempPartnerCommission = new Partner_Commission__c();
+        tempPartnerCommission.Creation_Reason__c = creationReson;
         tempPartnerCommission.Name = mondayAccount.primary_pulse_account_id__c + ' - ' + partnerAccount.Name + ' - ' + partnerAccount.Partner_Tier__c;
         tempPartnerCommission.Partner_Commission_Model__c = partnerAccount.Partner_Commission_Model__c;
         tempPartnerCommission.Partner_Company__c = partnerAccount.Id;
@@ -203,25 +213,35 @@ public class PartnerCommissionService {
     }
 
     public void upsertPartnerCommissionInQueue(List<Partner_Commission__c> newPartnerCommissionList, String queueName){
-        if(!newPartnerCommissionList.isEmpty()) {
-            Database.SaveResult[] lsr = Database.insert(newPartnerCommissionList, false);
-            for (Database.SaveResult sr : lsr) {
-                if (sr.isSuccess()) {
-                    System.debug('Successfully upserted Partner_Commission__c. Partner_Commission__c ID: ' + sr.getId());
+        if(newPartnerCommissionList.isEmpty()) return;
+        Boolean errorOccured = false;
+        List<String> recipientsList;
+        
+        Database.UpsertResult[] lsr = Database.upsert(newPartnerCommissionList, false); // specify false for second parameter (allOrNone) so that if a record fails, the remainder of the DML operation can still succeed 
+        for (Database.UpsertResult sr : lsr) {
+            if (sr.isSuccess()) {
+                System.debug('Successfully upserted Partner_Commission__c. Partner_Commission__c ID: ' + sr.getId());
+            } else {
+                if(!errorOccured){
+                    errorOccured = true;
+                    recipientsList = [select Value__c from Environment_Variable__mdt where DeveloperName =:CMT_ERROR_EMAIL_CONST limit 1].Value__c.split(';');
                 }
-                else {
-                    for(Database.Error err : sr.getErrors()) {
-                        System.debug('The following error has occurred.');                    
-                        System.debug(err.getStatusCode() + ': ' + err.getMessage());
-                        System.debug('Partner_Commission__c fields that affected this error: ' + err.getFields());
-                        String body = '';
-                        if(sr.getId() != null) body = 'Partner_Commission__c ID: ' + sr.getId() + ' ';
-                        body = body + err.getStatusCode() + ': ' + err.getMessage();
-                        Utilities.sendEmail('Error in '+queueName, body, new list<String>{label.SystemNotificationsDL});
-                    }
+                for(Database.Error err : sr.getErrors()) {
+                    System.debug('The following error has occurred.');                    
+                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                    System.debug('Partner_Commission__c fields that affected this error: ' + err.getFields());
+                    String body = '';
+                    if(sr.getId() != null) body = 'Partner_Commission__c ID: ' + sr.getId() + ' ';
+                    body = body + err.getStatusCode() + ': ' + err.getMessage();
+                    Utilities.sendEmail('Error in ' + queueName, body, recipientsList);
                 }
             }
         }
+    }
+
+    public void sendErrorEmail(String className, String body){
+        List<String> recipientsList = [select Value__c from Environment_Variable__mdt where DeveloperName =:CMT_ERROR_EMAIL_CONST limit 1].Value__c.split(';');
+        Utilities.sendEmail('Error in '+ className +': ', body, recipientsList);
     }
 
     public Map<String, GB_Threshold__c> getThsMap(){
@@ -256,7 +276,73 @@ public class PartnerCommissionService {
         }
     }
 
+    public Map<Id,List<Partner_Commission__c>> getLastPcsMap(Set<Id> mondayAccountsIds){
+        Map<Id,List<Partner_Commission__c>> mondayAccIdPartnerCommisionMap = new Map<Id,List<Partner_Commission__c>>();
+        List<Partner_Commission__c> lastPartnerCommissionList = [select Id, Monday_Account__c, Partner_Company__c, End_Date__c, Counter__c, Previous_Partner_Commission__c, Pulse_Account_Id__c from Partner_Commission__c where Monday_Account__c IN: mondayAccountsIds and is_Last__c = true and Renewable__c = true];
+        if(lastPartnerCommissionList.isEmpty()) return mondayAccIdPartnerCommisionMap;
+        //build map of MA and it's last PCs list
+        for(Partner_Commission__c partnerCom: lastPartnerCommissionList){
+            if(mondayAccIdPartnerCommisionMap.containsKey(partnerCom.Monday_Account__c)){
+                mondayAccIdPartnerCommisionMap.get(partnerCom.Monday_Account__c).add(partnerCom);
+            } else {
+                mondayAccIdPartnerCommisionMap.put(partnerCom.Monday_Account__c, new List<Partner_Commission__c>{partnerCom});
+            }
+        }
+        return mondayAccIdPartnerCommisionMap;
+    }
+
+    //runs in before insert!
+    public void setPcCounterAndPreviousPc(List<Partner_Commission__c> newPcList){
+        Set<Id> mondayAccountIds = new Set<Id>();
+        for(Partner_Commission__c pc: newPcList){
+            mondayAccountIds.add(pc.Monday_Account__c);
+            pc.Counter__c = 1;
+        }
+        Map<Id,List<Partner_Commission__c>> mondayAccIdPartnerCommisionMap = getLastPcsMap(mondayAccountIds);
+        if(mondayAccIdPartnerCommisionMap.isEmpty()) return;
+
+        for(Partner_Commission__c newPc: newPcList){
+            if(!mondayAccIdPartnerCommisionMap.containsKey(newPc.Monday_Account__c)) continue;
+            for(Partner_Commission__c existingPc: mondayAccIdPartnerCommisionMap.get(newPc.Monday_Account__c)){
+                if(newPc.Partner_Company__c == existingPc.Partner_Company__c){
+                    if(existingPc.Counter__c != null) newPc.Counter__c += existingPc.Counter__c;
+                    else newPc.Counter__c = 2;
+                    newPc.Previous_Partner_Commission__c = existingPc.Id;
+                }
+            }
+        }
+    }
+
     private String getOverlapKey(Partner_Commission__c pc){
         return String.valueOf(pc.Partner_Company__c) + String.valueOf(pc.Pulse_Account_ID__c) + String.valueOf(pc.Monday_Account__c);
+    }
+
+    private void checkDups(List<Partner_Commission__c> newPcsList, List<Partner_Commission__c> existingPcList){
+        String key = '';
+        String errorMsg = '';
+        Map<String,List<Partner_Commission__c>> pcMap = new Map<String,List<Partner_Commission__c>>();
+        for(Partner_Commission__c pc: existingPcList){
+            key = getOverlapKey(pc);
+            if(pcMap.containsKey(key)){
+                pcMap.get(key).add(pc);
+            } else {
+                pcMap.put(key, new list<Partner_Commission__c>{pc});
+            }
+        }
+        //check comparing to existing pcs
+        for(Partner_Commission__c newPc : newPcsList){
+            key = getOverlapKey(newPc);
+            if(pcMap.containsKey(key)){
+                for(Partner_Commission__c existingPc: pcMap.get(key)){
+                    if((newPc.Start_Date__c >= existingPc.Start_Date__c && (existingPc.End_Date__c == null || newPc.Start_Date__c <= existingPc.End_Date__c)) 
+                    || (existingPc.Start_Date__c >= newPc.Start_Date__c && (newPc.End_Date__c == null || existingPc.Start_Date__c <= newPc.End_Date__c))){
+                        errorMsg = 'Partner Commission dates overlap detected.';
+                        if(newPc.Id != null) errorMsg +=  'Partner Commission Id: '+newPc.Id+';';
+                        errorMsg += 'partnerId: '+newPc.Partner_Company__c+'; mondayAccountId: '+newPc.Monday_Account__c;
+                        throw new partnerCommissionException(errorMsg);
+                    }
+                }
+            }
+        } 
     }
 }

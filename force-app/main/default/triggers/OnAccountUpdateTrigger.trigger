@@ -27,22 +27,23 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
     }
     if (Trigger.isAfter) {
         if(Trigger.isUpdate){
-            if(PartnerCommission_PartnerTermination.firstRun){
+            // Partner Commission - start 
+            if(PartnerCommissionService.firstRunAccARR || PartnerCommissionService.firstRunAccTrans || PartnerCommissionService.firstRunAccSource || PartnerCommissionService.firstRunAccMerge) {
+                PartnerCommissionService commissionHelper = new PartnerCommissionService();
+                if(PartnerCommissionService.firstRunAccARR) commissionHelper.partnerCommissionFromARR(Trigger.new, Trigger.oldMap);
+                if(PartnerCommissionService.firstRunAccTrans) commissionHelper.partnerCommissionFromPartnerTransfer(Trigger.new, Trigger.oldMap);
+                if(PartnerCommissionService.firstRunAccSource) commissionHelper.updatePcOnAccountSourceChange(Trigger.new, Trigger.oldMap);
+                if(PartnerCommissionService.firstRunAccMerge) commissionHelper.updatePcOnAccountMerge(Trigger.new, Trigger.oldMap);
+            }
+            if(PartnerCommission_PartnerTermination.firstRun){ // Partner Termination - Set End Date to Active PCs
                 PartnerCommission_PartnerTermination partnerTermination = new PartnerCommission_PartnerTermination();
                 partnerTermination.updatePcAfterPartnerTermination(Trigger.new, Trigger.oldMap);
             }
-            if(PartnerCommissionService.firstRunAccARR){
-                PartnerCommissionService partnerCommissionARR = new PartnerCommissionService();
-                partnerCommissionARR.partnerCommissionFromARR(Trigger.new, Trigger.oldMap);
-            }  
-            if(PartnerCommissionService.firstRunAccTrans){
-                PartnerCommissionService partnerCommissionAccTrans = new PartnerCommissionService();
-                partnerCommissionAccTrans.partnerCommissionFromPartnerTransfer(Trigger.new, Trigger.oldMap);
-            }  
-            if(PartnerCommissionService.firstRunAccSource){
-                PartnerCommissionService partnerCommissionAccSource = new PartnerCommissionService();
-                partnerCommissionAccSource.updatePcOnAccountSourceChange(Trigger.new, Trigger.oldMap);
-            }  
+            if(PartnerCommissionModel_PartnerSigned.firstRun){ // Partner Signed - Create Gold First Year PCM
+                PartnerCommissionModel_PartnerSigned pcmSignedAccount = new PartnerCommissionModel_PartnerSigned();
+                pcmSignedAccount.updatePcmForSignedPartners(Trigger.new, Trigger.oldMap);
+            }
+            // Partner Commission - end
             if(TargetsService.firstRunUpdateTargetsFromAcc){
                 TargetsService targetsServ = new TargetsService();
                 targetsServ.updateTargetOnAccSourceTypeChange(Trigger.new, Trigger.oldMap);
