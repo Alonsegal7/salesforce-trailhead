@@ -15,6 +15,8 @@ import gbARR from '@salesforce/schema/Opportunity.Green_Bucket_ARR_V2__c';
 import isGBOpp from '@salesforce/schema/Opportunity.Is_Potential_GB_Opportunity__c';
 import isGBAcc from '@salesforce/schema/Opportunity.Is_Account_Green_Bucket_New__c';
 import overrideIsGB from '@salesforce/schema/Opportunity.Potential_GB_Opp_Override__c';
+import overrideCLMProcess from '@salesforce/schema/Opportunity.Override_Legal_Document_Validation__c';
+import overrideCLMProcessReason from '@salesforce/schema/Opportunity.Legal_Document_Override_Reason__c';
 import overrideReason from '@salesforce/schema/Opportunity.Green_Bucket_Override_Reason__c';
 import triggerSlackCelebration from '@salesforce/schema/Opportunity.Trigger_Slack_Celebration__c';
 import isPrimarySOSigned from '@salesforce/schema/Opportunity.Is_Primary_SO_Signed__c';
@@ -51,7 +53,7 @@ export default class Opportunity_ClaimDetails extends LightningElement {
     claimARROverride;
     bbPickersARR;
     billingIds;
-    overrideFields=[overrideIsGB,overrideReason,triggerSlackCelebration];
+    overrideFields=[overrideIsGB,overrideReason,triggerSlackCelebration,overrideCLMProcess,overrideCLMProcessReason];
     
 
     @wire(getRecord, { recordId: '$recordId', fields })
