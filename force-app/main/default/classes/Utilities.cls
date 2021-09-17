@@ -121,4 +121,12 @@ public without sharing class Utilities {
             }
         }
     }
+    public static String setFirstLetterUpper(String str){
+        return str.substring(0,1).toUpperCase() + str.substring(1,str.length());
+    }
+    public static String setPlanName(String tier, String seats, String period){
+        return  setFirstLetterUpper(tier)+' -- Up to '+seats+' users ('+setFirstLetterUpper(period)+')';
+
+    }
 }
+    

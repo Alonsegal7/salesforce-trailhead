@@ -19,6 +19,9 @@
                                 <!--<p><lightning-formatted-text style="display:inline-block" value="Click Save to complete the claim" ></lightning-formatted-text></p>-->
                             </lightning-layout-item>
                         </template>
+                        <template if:true={noSubsAfterSync}>
+                            <p class="slds-text-body_regular slds-text-heading_small" title="noSubsLeft">Looks like there are no payments left to claim on the account 🤷‍♂️</p><br/><br/>
+                        </template>
                         <template if:true={hasNoSubs}>
                             <template if:false={refreshAfterAccUpdate}>
                                 <lightning-tile type="media">
@@ -82,5 +85,39 @@
                 <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
         </lightning-card>
+
+        <!---->
+        <lightning-card if:true={suggestPlanModal}>
+            <div class="slds-container_small">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Opportunity Plan Reccomandation</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                            <p class="slds-text-body_regular slds-text-heading_small">We noticed there is a mismatch between the expected plan on the opportunity and the plans you are claiming.</p><br/>
+                            <p class="slds-text-body_regular slds-text-heading_small">Expected Plan on this Opportunity:</p><br/>
+                            <lightning-pill label={oppExpectedPlan}>
+                                <lightning-icon icon-name="standard:document" alternative-text="adjval" ></lightning-icon>
+                            </lightning-pill>
+                            <br/><br/>
+                            <p class="slds-text-body_regular slds-text-heading_small">Suggested Plan:</p><br/>
+                            <lightning-pill label={latestPlan}>
+                                <lightning-icon icon-name="standard:solution" alternative-text="adjval" ></lightning-icon>
+                            </lightning-pill>
+                            <br/>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button variant="neutral" name="cancel" label="Back" title="Back" onclick={handleCancelPlanSuggestion} ></lightning-button>
+                            <lightning-button variant="brand-outline" name="ignore" label="Ignore and Continue" title="Ignore" onclick={handleIgnorePlanSuggestion} ></lightning-button>
+                            <lightning-button variant="brand" name="update" label="Update Plan" title="Update Plan" onclick={handleUpdatePlan} ></lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </lightning-card>
+        <!---->
+
     </div>
 </template>

@@ -7,12 +7,16 @@ import claimSubs from '@salesforce/apex/SubscriptionPickerController.claimSubs';
 import unclaimSubs from '@salesforce/apex/SubscriptionPickerController.uncliamSubscriptions';
 import getUserDetails from '@salesforce/apex/SubscriptionPickerController.getUserDetails';
 import updateMA from '@salesforce/apex/SubscriptionPickerController.updateMondayAccount';
+import getMASubs from '@salesforce/apex/SubscriptionPickerController.getMASubs';
+import getLatestPlan from '@salesforce/apex/SubscriptionPickerController.getLatestPlan';
+import updateOppPlan from '@salesforce/apex/SubscriptionPickerController.updateOppPlan';
 import isclosed from '@salesforce/schema/Opportunity.IsClosed';
 import closeDateThisMonth from '@salesforce/schema/Opportunity.Close_Date_This_Month__c';
 import accId from '@salesforce/schema/Opportunity.AccountId';
+import expectedPlan from '@salesforce/schema/Opportunity.Expected_Plan_Name__c';
 import user_Id from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
-const fields = [isclosed,accId,closeDateThisMonth];
+const fields = [isclosed,accId,closeDateThisMonth,expectedPlan];
 
 export default class subscriptionPickersComponent extends LightningElement {
     @api recordId;
@@ -42,6 +46,12 @@ export default class subscriptionPickersComponent extends LightningElement {
     oppIsClosed=false;
     closeDateThisMonth;
     maId;
+    maSubs=[];
+    suggestPlanModal=false;
+    latestPlan;
+    latestSub;
+    planChecked=false;
+    oppExpectedPlan;
 
     @wire(getRecord, { recordId: '$recordId', fields })
     opp({data, error}){
@@ -49,6 +59,7 @@ export default class subscriptionPickersComponent extends LightningElement {
         this.oppIsClosed=getFieldValue(this.oppDetails, isclosed);
         this.maId=getFieldValue(this.oppDetails, accId);
         this.closeDateThisMonth=getFieldValue(this.oppDetails, closeDateThisMonth);
+        this.oppExpectedPlan=getFieldValue(this.oppDetails, expectedPlan);
     }
 
 
@@ -114,6 +125,13 @@ export default class subscriptionPickersComponent extends LightningElement {
             }
         }
 
+    @wire(getMASubs, { oppId: '$recordId'})
+    maSubsData({data, error}){
+        if(data){
+            console.log('Raz Ben Ron ma subs: '+ JSON.stringify(data));
+            this.maSubs=data;
+        }
+    }
     get selectedValues() {
         return this.selected.join(',');
     }
@@ -125,7 +143,10 @@ export default class subscriptionPickersComponent extends LightningElement {
         return this.subsFinal.length!=0;
     }
     get hasNoSubs() {                       
-        return this.subsFinal.length==0&&this.subsToClaim.length==0;
+        return this.subsFinal.length==0&&this.subsToClaim.length==0&&this.maSubs.length==0;
+    }
+    get noSubsAfterSync() {              
+        return this.subsFinal.length==0&&this.subsToClaim.length==0&&this.maSubs.length!=0;
     }
     get changesDisabled(){
         console.log('Raz Ben Ron changes disabled?: '+this.oppIsClosed==true&&this.isAdmin==false&&this.closeDateThisMonth==false);
@@ -168,30 +189,88 @@ export default class subscriptionPickersComponent extends LightningElement {
 
     handleSave(e){
         this.loadingSave=true;
-        console.log('this.selected: '+JSON.stringify(this.selected));
-        claimSubs( {oppId: this.recordId, subsIdsToClaim: this.selected, productCodes: this.newSubsCodes}).then((resultSubs)=>{
-            console.log('resultSubs: '+resultSubs);
-            this.saveDisabled=true;
-            this.savedSuccess=true;
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Plans Claimed Successfully!',
-                    variant: 'success',
-                }),
-            );
-            this.loadingSave=false;
-        refreshApex(this.recordId);
+        if(this.planChecked==true){
+            console.log('this.selected: '+JSON.stringify(this.selected));
+            claimSubs( {oppId: this.recordId, subsIdsToClaim: this.selected, productCodes: this.newSubsCodes}).then((resultSubs)=>{
+                console.log('resultSubs: '+resultSubs);
+                this.saveDisabled=true;
+                this.savedSuccess=true;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Payments Claimed Successfully!',
+                        variant: 'success',
+                    }),
+                );
+                this.loadingSave=false;
+            refreshApex(this.recordId);
+            }).catch(error => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error Claiming Payments',
+                        message: error.body.message,
+                        variant: 'error',
+                    }),
+                );
+                this.loadingSave=false;
+            });
+        }else{
+            this.handleGetPlanSuggestion(e);
+        }
+    }
+    handleGetPlanSuggestion(e){
+        getLatestPlan( {subsIdsToClaim: this.selected, oppId: this.recordId}).then((resultSub)=>{
+            this.planChecked=true;
+            if(resultSub){
+                console.log('resultSub.Plan_Name__c: '+resultSub.Plan_Name__c);
+                this.latestSub=resultSub;
+                this.latestPlan=resultSub.Plan_Name__c;
+                this.suggestPlanModal=true;
+            }else{
+                this.handleSave(e);
+            }
+            
         }).catch(error => {
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'Error Claiming Payments',
+                    title: 'Error Getting Plan',
                     message: error.body.message,
                     variant: 'error',
                 }),
             );
-            this.loadingSave=false;
         });
     }
+
+    handleUpdatePlan(e){
+        this.suggestPlanModal=false;
+        updateOppPlan( {sub: this.latestSub, oppId: this.recordId}).then(()=>{
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Opportunity Plan Updated Successfully!',
+                    variant: 'success',
+                }),
+            );
+            this.handleSave(e);
+        }).catch(error => {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error Updating Plan',
+                    message: error.body.message,
+                    variant: 'error',
+                }),
+            );
+        });
+    }
+
+    handleIgnorePlanSuggestion(e){
+        this.suggestPlanModal=false;
+        this.handleSave(e);
+    }
+    handleCancelPlanSuggestion(e){
+        this.suggestPlanModal=false;
+        this.planChecked=false;
+        this.loadingSave=false;
+    }
+
     handleItemRemove (event) {
         if(this.changesDisabled==false){
             this.dialogVisible=true;
