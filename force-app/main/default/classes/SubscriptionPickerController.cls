@@ -55,7 +55,7 @@ public without sharing class SubscriptionPickerController {
         try{
             system.debug('Raz Ben Ron oppId from Controller, '+oppId);
             Opportunity opp=[select id,Pricebook2Id,Billing_Ids__c,CurrencyIsoCode,Expected_Plan_Tier__c,Expected_Plan_Period__c,Expected_Plan_Seats__c,
-                                Is_Primary_SO_Signed__c
+                                Is_Primary_SO_Signed__c,Last_Claimed_Subscription__c
                                 from Opportunity where id=:oppId][0];
             List<Opportunitylineitem> olisToInsert= new List<Opportunitylineitem>();
             List<Subscription__c> subsToClaim = [select id,name,Seats__c,Unit_Price__c,Product_Code__c,ARR_Gain__c,Tier__c,Period__c,
@@ -96,6 +96,12 @@ public without sharing class SubscriptionPickerController {
                 opp.Pricebook2Id=priceBook;
             system.debug('Raz Ben Ron productByCode:'+ productByCode);
             system.debug('Raz Ben Ron claimedSubsFromOlis:'+ claimedSubsFromOlis);
+            
+            //connect to lates claimed subscription
+            Subscription__c latestSub=getLatestClaimedSub(oppId,subsIdsToClaim,null);
+            if(opp.Last_Claimed_Subscription__c!=latestSub.Id)
+                opp.Last_Claimed_Subscription__c=latestSub.Id;
+
             for(Subscription__c sub: subsToClaim){
                 system.debug('Raz Ben Ron sub id:'+ sub.Id);
                 if(!claimedSubsFromOlis.contains(sub.Id)){//prevent duplications subscription claiming, allow to create each sub only once
@@ -156,7 +162,7 @@ public without sharing class SubscriptionPickerController {
     public static map<Id,Subscription__c> uncliamSubscriptions(list<String> subsToUnclaim,String oppId){
         try{
             system.debug('Raz Ben Ron subsToUnclaim from Controller, '+subsToUnclaim);
-            Opportunity opp=[select id,Billing_Ids__c from Opportunity where id=:oppId][0];
+            Opportunity opp=[select id,Billing_Ids__c,Last_Claimed_Subscription__c from Opportunity where id=:oppId][0];
             list<Subscription__c> subs=[select id,Billing_Ids__c,Claimed_On_Opportunity__c,Claimed_On_Opportunity_Co_Sell__c,ARR_Gain__c,Name_for_CC_Claim__c from Subscription__c where Id in: subsToUnclaim];
             system.debug('Raz Ben Ron subs from Controller, '+subs);
             ///handle delete OLIs
@@ -195,6 +201,14 @@ public without sharing class SubscriptionPickerController {
             }
             system.debug('Raz Ben Ron olis: '+olis);
             opp.Billing_Ids__c=billingIdsTemp;
+
+            //connect to lates claimed subscription
+            Subscription__c latestSub=getLatestClaimedSub(oppId,null,subsToUnclaim);
+            if(latestSub==null)//if all subscriptions are unclaimed
+                opp.Last_Claimed_Subscription__c=null;
+            else if(opp.Last_Claimed_Subscription__c!=latestSub.Id)
+                opp.Last_Claimed_Subscription__c=latestSub.Id;
+
             if(!olis.isEmpty()){
                 update olis;
                 delete olis;
@@ -245,16 +259,18 @@ public without sharing class SubscriptionPickerController {
             Opportunity opp=[select id,Expected_Plan_Tier__c,Expected_Plan_Period__c,Expected_Plan_Seats__c,Is_Primary_SO_Signed__c
                                 from Opportunity where id=:oppId][0];
             List<Opportunitylineitem> olisToInsert= new List<Opportunitylineitem>();
-            List<Subscription__c> subsToClaim = [select id,Plan_Name__c,Seats__c,Tier__c,Period__c,Activation_Date__c
+            /*List<Subscription__c> subsToClaim = [select id,Plan_Name__c,Seats__c,Tier__c,Period__c,Activation_Date__c
                                                     from Subscription__c 
                                                     where id in: subsIdsToClaim or Claimed_On_Opportunity__c=:opp.Id or Claimed_On_Opportunity_Co_Sell__c=:opp.id
                                                     order by Activation_Date__c desc];
-            Subscription__c latestSub=subsToClaim[0];//subs sorted by activation date
-            system.debug('Raz Ben Ron subsToClaim: '+subsToClaim);
+
+            Subscription__c latestSub=subsToClaim[0];//subs sorted by activation date*/
+            Subscription__c latestSub=getLatestClaimedSub(oppId,subsIdsToClaim,null);
             system.debug('Raz Ben Ron latest sub Plan: '+latestSub.Tier__c+' '+latestSub.Seats__c+' '+latestSub.Period__c);
             system.debug('Raz Ben Ron opp Plan: '+opp.Expected_Plan_Tier__c+' '+opp.Expected_Plan_Seats__c+' '+opp.Expected_Plan_Period__c);
             if(!opp.Is_Primary_SO_Signed__c&&
-                (latestSub.Tier__c.toLowercase()!=opp.Expected_Plan_Tier__c.toLowercase()||
+                (opp.Expected_Plan_Tier__c==null||opp.Expected_Plan_Seats__c==null||opp.Expected_Plan_Period__c==null||
+                latestSub.Tier__c.toLowercase()!=opp.Expected_Plan_Tier__c.toLowercase()||
                 integer.valueof(latestSub.Seats__c)!=opp.Expected_Plan_Seats__c||
                 latestSub.Period__c.toLowercase()!=opp.Expected_Plan_Period__c.toLowercase())){
                 return latestSub;
@@ -277,6 +293,23 @@ public without sharing class SubscriptionPickerController {
         }catch(Exception e){
             throw new AuraHandledException(e.getMessage());
         }
+    }
+
+    public static Subscription__c getLatestClaimedSub(String oppId, list<String> subsIdsToClaim, list<String> subsToUnclaim){
+        string query='select id,Plan_Name__c,Seats__c,Tier__c,Period__c,Activation_Date__c from Subscription__c ';
+        query+=' where (Claimed_On_Opportunity__c=:oppId or Claimed_On_Opportunity_Co_Sell__c=:oppid) ';
+        if(subsIdsToClaim!=null)
+            query+=' or id in: subsIdsToClaim ';
+        if(subsToUnclaim!=null)
+            query+=' and id not in: subsToUnclaim ';
+        query+=' order by Activation_Date__c desc limit 1';
+
+        List<Subscription__c> claimedSubs=Database.query(query);
+        if(claimedSubs.size()>0)
+            return claimedSubs[0];
+        else
+            return null;
+
     }
     
 }
