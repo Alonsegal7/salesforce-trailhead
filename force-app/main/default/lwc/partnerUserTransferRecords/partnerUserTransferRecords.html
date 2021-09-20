@@ -1,15 +1,22 @@
 <template>
     <lightning-card title="Transfer Records Between Users">
         <lightning-button label="Run Transfer" onclick={handleRunTransfer} slot="actions"></lightning-button>
-        <div class="slds-m-around_medium">
-            <lightning-record-edit-form object-api-name="User">
-                <div class="slds-m-bottom_small">
-                    <label for="olduserfield">From User</label>
-                    <lightning-input-field id="olduserfield" field-name="ManagerId" value={fromUserId} variant="label-hidden" onchange={handleFromUserChange} ></lightning-input-field>    
-                </div>
-                <label for="newuserid">To User</label>
-                <lightning-input-field id="newuserid" field-name="ManagerId" value={toUserId} variant="label-hidden" onchange={handleToUserChange}></lightning-input-field>            
-            </lightning-record-edit-form>
+        <div class="c-container slds-m-around_medium">
+            <lightning-layout pull-to-boundary="medium">
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <lightning-record-edit-form object-api-name="User">
+                        <label for="olduserfield">From User</label>
+                        <lightning-input-field id="olduserfield" field-name="ManagerId" value={fromUserId} variant="label-hidden" onchange={handleFromUserChange} ></lightning-input-field>    
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <lightning-record-edit-form object-api-name="User">
+                        <label for="newuserid">To User</label>
+                        <lightning-input-field id="newuserid" field-name="ManagerId" value={toUserId} variant="label-hidden" onchange={handleToUserChange}></lightning-input-field>            
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-helptext content="Please note, when clicking Run Transfer we are going to update the following: Open Leads - Leads with status Recived, Attempting and Contacted; Accounts - By Owner/Partner; Open Opps - Opps with stage Qualified, Evaluation, Validation and Buying Process"></lightning-helptext>
             <template if:true={badInput}>
                 <div class="slds-var-m-vertical_small">
                     <span class="slds-text-color_destructive">{customError}</span>

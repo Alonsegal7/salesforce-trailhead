@@ -2,6 +2,7 @@ public class Batch_PartnerUserTransfer_Accounts implements Database.Batchable<sO
 
     private Id oldOwnerId;
     private Id newOwnerId;
+    private List<String> idsList = new List<String>();
 
     public Batch_PartnerUserTransfer_Accounts(Id oldOwnerId, Id newOwnerId) {
         this.oldOwnerId = oldOwnerId;
@@ -13,7 +14,7 @@ public class Batch_PartnerUserTransfer_Accounts implements Database.Batchable<sO
             String query = 'select Id, Name, OwnerId, Partner__c from Account where OwnerId = \'' + oldOwnerId + '\' or Partner__c = \'' + oldOwnerId + '\'';
             return Database.getQueryLocator(query);
         }catch(Exception e){
-            Utilities.sendDebugEmail('Error in Batch_PartnerUserTransfer_Accounts: ',e,e.getMessage());   
+            Utilities.sendEmail('Error in Apex Job Batch_PartnerUserTransfer_Accounts: ', e.getMessage() + '\n' + e.getStackTraceString(), new List<String>{UserInfo.getUserEmail(),'biztech@monday.com'}); 
             return null;
         }
     }
@@ -22,6 +23,7 @@ public class Batch_PartnerUserTransfer_Accounts implements Database.Batchable<sO
         try{
             List<Account> accToUpdateList = new List<Account>();
             for(Account accountRec : scope){
+                idsList.add(accountRec.Id);
                 accountRec.Partner__c = newOwnerId;
                 if(accountRec.OwnerId == oldOwnerId) {
                     accountRec.OwnerId = newOwnerId;
@@ -30,11 +32,11 @@ public class Batch_PartnerUserTransfer_Accounts implements Database.Batchable<sO
             }
             Database.update(accToUpdateList);
         }catch(Exception e){
-            Utilities.sendDebugEmail('Error in Batch_PartnerUserTransfer_Accounts: ',e,e.getMessage());   
+            Utilities.sendEmail('Error in Apex Job Batch_PartnerUserTransfer_Accounts: ', e.getMessage() + '\n' + e.getStackTraceString(), new List<String>{UserInfo.getUserEmail(),'biztech@monday.com'}); 
         }
     }
 
     public void finish(Database.BatchableContext BC){
-        //send email?
+        Utilities.sendEmail('Transfer Accounts from '+oldOwnerId+' to '+newOwnerId+' is finished!', 'List of Ids updated: ' + idsList.toString(), new List<String>{UserInfo.getUserEmail(),'biztech@monday.com'}); 
     }
 }

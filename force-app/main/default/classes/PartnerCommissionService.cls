@@ -261,9 +261,9 @@ public class PartnerCommissionService {
         String query;
         for(String reportNum: reportNumberToReportIdMap.keySet()){
             query = 'select Id from Commission_Commitment__c where report_id__c = \''+reportNum+'\'';
-            Batch_SearchAndReplace commitments = new Batch_SearchAndReplace(query, 'Commission_Report__c', reportNumberToReportIdMap.get(reportNum));
+            Batch_SearchAndReplace commitments = new Batch_SearchAndReplace(query, 'Commission_Report__c', reportNumberToReportIdMap.get(reportNum), 'connectNewReportsToCollectionsCommitments');
             query = 'select Id from Commission_Collection__c where report_id__c = \''+reportNum+'\'';
-            Batch_SearchAndReplace collections = new Batch_SearchAndReplace(query, 'Commission_Report__c', reportNumberToReportIdMap.get(reportNum));
+            Batch_SearchAndReplace collections = new Batch_SearchAndReplace(query, 'Commission_Report__c', reportNumberToReportIdMap.get(reportNum), 'connectNewReportsToCollectionsCommitments');
             Utilities.cleanFlexQueue();
             Database.executeBatch(commitments,100);
             Database.executeBatch(collections,100);

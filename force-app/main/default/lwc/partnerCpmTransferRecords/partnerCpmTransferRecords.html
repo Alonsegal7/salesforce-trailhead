@@ -1,22 +1,36 @@
 <template>
     <lightning-card title="Transfer Records Between CPMs">
         <lightning-button label="Run Transfer" onclick={handleRunTransfer} slot="actions"></lightning-button>
-        <div class="slds-m-around_medium">
-            <lightning-record-edit-form object-api-name="Account">
-                <div class="slds-m-bottom_small">
-                    <label for="partner">Partner</label>
-                    <lightning-input-field id="partner" field-name="Channel_Partner__c" value={partnerAccountId} variant="label-hidden" onchange={handlePartnerChange} ></lightning-input-field>    
-                </div>
-            </lightning-record-edit-form>
-            <lightning-record-edit-form object-api-name="User">
-                <div class="slds-m-bottom_small">
-                    <label for="olduserfield">From CPM</label>
-                    <lightning-input-field id="olduserfield" field-name="ManagerId" value={fromCpmId} variant="label-hidden" onchange={handleFromCpmChange} ></lightning-input-field>    
-                </div>
-                <label for="newuserid">To CPM</label>
-                <lightning-input-field id="newuserid" field-name="ManagerId" value={toCpmId} variant="label-hidden" onchange={handleToCpmChange} ></lightning-input-field>            
-            </lightning-record-edit-form>
-            <lightning-input type="date" name="startingFrom" label="Starting From" value={startingFrom} onchange={handleStartingFromChange} ></lightning-input>
+        <div class="c-container slds-m-around_medium">
+            <lightning-layout pull-to-boundary="medium">
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <lightning-record-edit-form object-api-name="Account">
+                        <div class="slds-m-bottom_small">
+                            <label for="partner">Partner</label>
+                            <lightning-input-field id="partner" field-name="Channel_Partner__c" value={partnerAccountId} variant="label-hidden" onchange={handlePartnerChange} ></lightning-input-field>    
+                        </div>
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <label for="startingFrom">Starting From</label>
+                    <lightning-input id="startingFrom" type="date" variant="label-hidden" name="startingFrom" value={startingFrom} onchange={handleStartingFromChange} ></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout pull-to-boundary="medium">
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <lightning-record-edit-form object-api-name="User">
+                        <label for="olduserfield">From CPM</label>
+                        <lightning-input-field id="olduserfield" field-name="ManagerId" value={fromCpmId} variant="label-hidden" onchange={handleFromCpmChange} ></lightning-input-field>    
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <lightning-record-edit-form object-api-name="User">
+                        <label for="newuserid">To CPM</label>
+                        <lightning-input-field id="newuserid" field-name="ManagerId" value={toCpmId} variant="label-hidden" onchange={handleToCpmChange} ></lightning-input-field>                
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-helptext content="Please note, when clicking Run Transfer we are going to update the following: Open Leads - Leads with status Recived, Attempting and Contacted; Accounts - All Accounts in the portfolio; Open Opps - Opps with stage Qualified, Evaluation, Validation and Buying Process; Closed Opps - Closed Won opps since the 'Starting From' date"></lightning-helptext>
             <template if:true={badInput}>
                 <div class="slds-var-m-vertical_small">
                     <span class="slds-text-color_destructive">{customError}</span>
