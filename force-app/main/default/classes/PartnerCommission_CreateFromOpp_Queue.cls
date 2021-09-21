@@ -71,7 +71,7 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
         }
         Map<Id, Quote> oppIdToQuoteMap = new Map<Id, Quote>();
         for(Quote quote: [select Id, OpportunityId, Contract.StartDate from Quote where (OpportunityId IN: partnerCoSellOppsMap.keySet() or OpportunityId IN: internalCoSellOpps) and IsSyncing = true and DH_Quote_Status__c = 'Won']){
-            if(oppIdToQuoteMap.containsKey(quote.OpportunityId)) oppIdToQuoteMap.put(quote.OpportunityId, quote);
+            oppIdToQuoteMap.put(quote.OpportunityId, quote);
         }
         Date startDateForCoSell;
         for(Opportunity opp: partnerCoSellOppsMap.values()){

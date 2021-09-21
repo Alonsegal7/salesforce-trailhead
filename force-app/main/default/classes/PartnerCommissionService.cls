@@ -232,7 +232,7 @@ public class PartnerCommissionService {
                     System.debug('Partner_Commission__c fields that affected this error: ' + err.getFields());
                     String body = '';
                     if(sr.getId() != null) body = 'Partner_Commission__c ID: ' + sr.getId() + ' ';
-                    body = body + err.getStatusCode() + ': ' + err.getMessage();
+                    body = body + err.getStatusCode() + ': ' + err.getMessage() + ' ; New PCs list json: '+ JSON.serialize(newPartnerCommissionList);
                     Utilities.sendEmail('Error in ' + queueName, body, recipientsList);
                 }
             }
