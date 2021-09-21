@@ -216,26 +216,28 @@ public class PartnerCommissionService {
         if(newPartnerCommissionList.isEmpty()) return;
         Boolean errorOccured = false;
         List<String> recipientsList;
-        
+        String errorsFound = '';
+        String currErr = '';
+
         Database.UpsertResult[] lsr = Database.upsert(newPartnerCommissionList, false); // specify false for second parameter (allOrNone) so that if a record fails, the remainder of the DML operation can still succeed 
         for (Database.UpsertResult sr : lsr) {
             if (sr.isSuccess()) {
                 System.debug('Successfully upserted Partner_Commission__c. Partner_Commission__c ID: ' + sr.getId());
             } else {
-                if(!errorOccured){
-                    errorOccured = true;
-                    recipientsList = [select Value__c from Environment_Variable__mdt where DeveloperName =:CMT_ERROR_EMAIL_CONST limit 1].Value__c.split(';');
-                }
                 for(Database.Error err : sr.getErrors()) {
                     System.debug('The following error has occurred.');                    
                     System.debug(err.getStatusCode() + ': ' + err.getMessage());
                     System.debug('Partner_Commission__c fields that affected this error: ' + err.getFields());
-                    String body = '';
-                    if(sr.getId() != null) body = 'Partner_Commission__c ID: ' + sr.getId() + ' ';
-                    body = body + err.getStatusCode() + ': ' + err.getMessage() + ' ; New PCs list json: '+ JSON.serialize(newPartnerCommissionList);
-                    Utilities.sendEmail('Error in ' + queueName, body, recipientsList);
+                    currErr = '';
+                    if(sr.getId() != null) currErr = 'Partner_Commission__c ID: ' + sr.getId() + ' ';
+                    currErr = currErr + err.getStatusCode() + ': ' + err.getMessage();
+                    errorsFound += currErr + ', ';
                 }
             }
+        }
+        if(errorsFound != ''){
+            recipientsList = [select Value__c from Environment_Variable__mdt where DeveloperName =: CMT_ERROR_EMAIL_CONST limit 1].Value__c.split(';');
+            Utilities.sendEmail('Error in upsert PCs from ' + queueName, 'Errors found: ' + errorsFound + ' <br/>PCs List attempted to upsert: ' + JSON.serialize(newPartnerCommissionList) + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), recipientsList);
         }
     }
 
