@@ -150,7 +150,13 @@ public class MondayAccountHelper {
         Globals.CodeOff = true;
         
         system.debug('TESTING sobject4Update is '+sobject4Update.size());
-        if (sobject4Update.size()>0) {update sobject4Update.values(); sobject4Update.clear();}
+        if (sobject4Update.size()>0) {
+            List<SObject>sortedSobjectsToUpdate = sobject4Update.values();
+            system.debug('List before: '+sortedSobjectsToUpdate);
+            sortedSobjectsToUpdate.sort();
+            update sortedSobjectsToUpdate; 
+            sobject4Update.clear();
+            }
         
         system.debug('TESTING CB4Insert is '+CB4Insert.size());
         if (CB4Insert.size()>0 && CB4Insert[0].id==null){ insert CB4Insert; CB4Insert.clear();}
