@@ -14,6 +14,5 @@ public class BigBrainControllerTest {
         BigBrainController.setAccountFreeUsers('test', 1, 'test');
         BigBrainController.resetAccountTrial('test');
         BigBrainController.setPricingVersion('test', 'test');
-        BigBrainController.getAddedArr('test', 1, 1, 1, 1, 1);
     }
 }

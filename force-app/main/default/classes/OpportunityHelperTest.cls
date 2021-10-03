@@ -6,6 +6,7 @@ public class OpportunityHelperTest {
         // Arrange
         Id companyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
         Id mondayAccountRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+
         
         Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
 		Profile admin = [SELECT Id FROM Profile WHERE Name='System Administrator'];

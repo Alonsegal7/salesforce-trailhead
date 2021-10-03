@@ -1,7 +1,7 @@
 public class OpportunityHelper {
     public static Id internalRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
     public static Id partnerRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
-    public static void beforeUpdate(List<Opportunity> opportunities, map <Id, Opportunity> oldMap){
+  public static void beforeUpdate(List<Opportunity> opportunities, map <Id, Opportunity> oldMap){
         try{
             list<Opportunity> oppsWithMAChange= new list<Opportunity>();
             list<Opportunity> oppsWithOwnerChange= new list<Opportunity>();
@@ -65,6 +65,7 @@ public class OpportunityHelper {
         if(!oppsWithOwnerChange.isEmpty()){
             setPartnerCompany(oppsWithOwnerChange,userIds);
         }
+
     }
 
     public static void updateOppType(List<Opportunity> opportunities, Map<Id,Opportunity> oldOpps){
@@ -92,23 +93,8 @@ public class OpportunityHelper {
                 opp.Opportunity_Type__c  = 'New Business';
             }
         }
-    }
+    } 
 
-    public static void CalculateArr(List<Opportunity> opps, Map<Id, Opportunity> oldOpps){
-        for (Opportunity opp : opps) {
-            Decimal addedArr = ArrCalculator.AddedArr(
-                opp.Expected_Quote_Type__c,
-                opp.Prior_ARR__c,
-                opp.Prior_Seats__c,
-                opp.Expected_Plan_Seats__c,
-                opp.Expected_Seat_Price__c,
-                opp.USD_exchange_rate__c
-            );
-            
-            if (addedArr == null || addedArr == opp.Expected_ARR__c) { continue; }
-            opp.Expected_ARR__c = addedArr;
-        }
-    }
     
     public static void afterUpdate(List<Opportunity> opps,map <Id, Opportunity> oldMap){
         Set<Id> SignedQuotes = new Set<Id>();

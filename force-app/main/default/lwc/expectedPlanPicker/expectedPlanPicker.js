@@ -4,7 +4,6 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import getPlans from '@salesforce/apex/BigBrainController.getPlans';
 import getForecastDetails from '@salesforce/apex/BigBrainController.getForecastDetails';
-import getAddedArr from '@salesforce/apex/BigBrainController.getAddedArr';
 
 import ID_FIELD from "@salesforce/schema/Opportunity.Id";
 import ACCOUNT_FIELD from "@salesforce/schema/Opportunity.Account.primary_pulse_account_id__c";
@@ -19,9 +18,6 @@ import SEATS_FIELD from '@salesforce/schema/Opportunity.Expected_Plan_Seats__c';
 import SEAT_PRICE_FIELD from '@salesforce/schema/Opportunity.Expected_Seat_Price__c';
 import DISCOUNT_FIELD from '@salesforce/schema/Opportunity.Expected_Discount__c';
 import PLAN_NAME_FIELD from '@salesforce/schema/Opportunity.Expected_Plan_Name__c';
-import PRIOR_ARR_FIELD from '@salesforce/schema/Opportunity.Prior_ARR__c';
-import PRIOR_SEATS_FIELD from '@salesforce/schema/Opportunity.Prior_Seats__c';
-import PRIOR_TIER_FIELD from '@salesforce/schema/Opportunity.Prior_Tier__c';
 
 const fields = [
   ACCOUNT_FIELD,
@@ -35,13 +31,10 @@ const fields = [
   SEATS_FIELD,
   SEAT_PRICE_FIELD,
   DISCOUNT_FIELD,
-  PLAN_NAME_FIELD,
-  PRIOR_SEATS_FIELD,
-  PRIOR_ARR_FIELD,
-  PRIOR_TIER_FIELD
+  PLAN_NAME_FIELD
 ];
 
-const PERIOD_YEARLY = 'Yearly'; 
+const PERIOD_YEARLY = 'Yearly';
 const PERIOD_MONTHLY = 'Monthly'
 const QUOTE_TYPE_NEW_CONTARCT = 'New Contract';
 const QUOTE_TYPE_PRORATED = 'Pro-rated';
@@ -99,20 +92,20 @@ const titlize = str => {
 
 const lower = str => (str || '').toLowerCase();
 
-const calcSeatPrice = (plan, currency, seats, period) => {
+const getSeatPrice = (plan, currency, seats, period) => {
   if (!seats || !period) return null;
   const months = period == PERIOD_YEARLY ? 12 : 1;
   const totalPrice = getTotalPrice(plan, currency);
   return totalPrice / seats / months;
 }
 
-const parseSeatsOptions = (plans, quoteType, priorSeats) => {
-  if (!plans || !quoteType || (!priorSeats && priorSeats != 0)) { return []; } 
+const parseSeatsOptions = (plans, quoteType, currentSeats) => {
+  if (!plans || !quoteType || (!currentSeats && currentSeats != 0)) { return []; } 
   const allSeats = plans.map(p => p.users.toString());
   const uniqueSeats = [...new Set(allSeats)];
 
   return uniqueSeats.map(s => {
-    const seatsDelta = s - priorSeats;
+    const seatsDelta = s - currentSeats;
     const label = (quoteType == QUOTE_TYPE_NEW_CONTARCT) ? s : `${s} (+${seatsDelta})`;
     return { label: label, value: s.toString() };
   }).filter(v => v);
@@ -121,10 +114,15 @@ const parseSeatsOptions = (plans, quoteType, priorSeats) => {
 export default class ExpectedPlanPicker extends LightningElement {
   @api recordId;
 
-  @track recordData;
+  @track record;
   @track plans;
-  @track forecastDetails;
   @track planOptions;
+  @track forecastDetails = {
+    current_arr: 0,
+    arr: 0,
+    seats: 0,
+    tier: null
+  };
 
   @track recordError;
   @track plansError;
@@ -132,7 +130,6 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   @track pricingVersion;
   @track pulseAccountId;
-  @track addedArr;
   
   @track isSubmitting = false;
   @track formFields = {};
@@ -144,9 +141,16 @@ export default class ExpectedPlanPicker extends LightningElement {
 
     if (data) {
       this.record = data;
+      this.updateMatchingPlan();
+      this.pricingVersion = getFieldValue(data, PRICING_VERSION_FIELD);
       this.isSubmitting = false;
       this.resetFormFields();
-      this.setFormField(QUOTE_TYPE_FIELD, this.defaultQuoteType);
+
+      if (getFieldValue(data, ACCOUNT_FIELD)) {
+        this.pulseAccountId = getFieldValue(data, ACCOUNT_FIELD);
+      } else {
+        this.initMissingAccountDetails();
+      }
     }
   }
 
@@ -170,41 +174,7 @@ export default class ExpectedPlanPicker extends LightningElement {
     if (data) {
       this.forecastDetails = JSON.parse(data);
       this.forecastDetailsError = this.forecastDetails.message;
-
-      this.setFormField(PRIOR_ARR_FIELD, getFieldValue(this.record, PRIOR_ARR_FIELD) || this.forecastDetails["arr"] || 0);
-      this.setFormField(PRIOR_SEATS_FIELD, getFieldValue(this.record, PRIOR_SEATS_FIELD) || this.forecastDetails["seats"] || 0);
-      this.setFormField(PRIOR_TIER_FIELD, getFieldValue(this.record, PRIOR_TIER_FIELD) || this.forecastDetails["tier"]);
-
       this.setPlanOptions();
-      this.updateAddedArr();
-    }
-  }
-
-  updateAddedArr() {
-    const {quoteType, exchangeRate, priorSeats, seats, seatPrice, priorArr} = this;
-    if (!quoteType || !exchangeRate || !priorSeats || !seats || seatPrice == null || priorArr == null) {
-      this.addedArr = null;
-    }
-
-    getAddedArr({quoteType, exchangeRate, priorSeats, seats, seatPrice, priorArr})
-      .then(result => { this.addedArr = result; })
-      .catch(error => { console.log('Error calculating added ARR', error); });
-  }
-
-  get record() {
-    return this.recordData;
-  }
-
-  set record(value) {
-    this.recordData = value;
-    this.updateMatchingPlan();
-    this.updateAddedArr();
-    this.pricingVersion = getFieldValue(value, PRICING_VERSION_FIELD);
-
-    if (getFieldValue(value, ACCOUNT_FIELD)) {
-      this.pulseAccountId = getFieldValue(value, ACCOUNT_FIELD);
-    } else {
-      this.initMissingAccountDetails();
     }
   }
 
@@ -212,22 +182,20 @@ export default class ExpectedPlanPicker extends LightningElement {
     return getFieldValue(this.record, EXCHANGE_RATE_FIELD) || 0;
   }
 
-  get priorArr() {
-    const recordValue = getFieldValue(this.record, PRIOR_ARR_FIELD);
-    if (recordValue && recordValue !== 0) { return recordValue; }
-
-    return this.forecastDetails && this.forecastDetails["arr"] || 0;
+  get currentArr() {
+    return this.forecastDetails && (this.forecastDetails["arr"] || this.forecastDetails["current_arr"]) || 0;
   }
 
-  get priorSeats() {
-    const recordValue = getFieldValue(this.record, PRIOR_SEATS_FIELD);
-    if (recordValue && recordValue !== 0) { return recordValue; }
-
+  get currentSeats() {
     return this.forecastDetails && this.forecastDetails["seats"] || 0;
   }
 
-  get priorTier() {
+  get currentTier() {
     return (this.forecastDetails && this.forecastDetails["tier"]) || '-';
+  }
+
+  get currentPlan() {
+    return this.currentTier ? `${this.currentTier} ${this.currentSeats}` : 'Trial';
   }
 
   get isLoading() {
@@ -247,15 +215,11 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get isPaying() {
-    return this.priorTier;
+    return this.forecastDetails && this.forecastDetails["tier"];
   }
 
   get currency() {
     return getFieldValue(this.record, ISO_CURRENCY_FIELD);
-  }
-
-  get currencyTooltip() {
-    return `ARR is calculated using an exchange rate of 1 ${this.currency} to ${this.exchangeRate} USD`;
   }
 
   get pulseAccountId() {
@@ -288,14 +252,7 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   setFormField(field, value){
     const newFields = { ...this.formFields };
-    const currentValue = getFieldValue(this.record, field);
-
-    if (currentValue != value) {
-      newFields[field.fieldApiName] = value;
-    } else { 
-      delete newFields[field.fieldApiName];
-    }
-
+    newFields[field.fieldApiName] = value;
     this.formFields = newFields;
   }
 
@@ -316,25 +273,24 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get defaultQuoteType() {
-    return getFieldValue(this.record, QUOTE_TYPE_FIELD) || QUOTE_TYPE_NEW_CONTARCT;
+    return this.isQuoteTypeDisabled ? QUOTE_TYPE_NEW_CONTARCT : null;
   }
 
   get quoteType() {
-    return this.getFormField(QUOTE_TYPE_FIELD) || getFieldValue(this.record, QUOTE_TYPE_FIELD);
+    return this.getFormField(QUOTE_TYPE_FIELD) || getFieldValue(this.record, QUOTE_TYPE_FIELD) || this.defaultQuoteType;
   }
 
   set quoteType(value) {
-    const resetDiscount = this.tier != this.priorTier;
+    const resetDiscount = this.tier != this.currentTier;
 
     if(value === QUOTE_TYPE_PRORATED) {
-      this.tier = this.priorTier;
+      this.tier = this.currentTier;
       this.period = PERIOD_YEARLY;
     }
     
     this.setFormField(QUOTE_TYPE_FIELD, value);
     this.setPlanOptions();
     this.updatePrices(resetDiscount);
-    this.updateAddedArr();
   }
 
   get period() {
@@ -351,7 +307,6 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   set seats(value){
     this.setFormField(SEATS_FIELD, value);
-    this.updateAddedArr();
   }
 
   get seatPrice() {
@@ -360,7 +315,6 @@ export default class ExpectedPlanPicker extends LightningElement {
 
   set seatPrice(value){
     this.setFormField(SEAT_PRICE_FIELD, value);
-    this.updateAddedArr();
   }
 
   get discount() {
@@ -379,29 +333,27 @@ export default class ExpectedPlanPicker extends LightningElement {
     this.isSubmitting = true;
     const fields = {...this.formFields};
     fields[ID_FIELD.fieldApiName] = this.recordId;
+    fields[ADDED_ARR_FIELD.fieldApiName] = this.addedArr;
     fields[PLAN_NAME_FIELD.fieldApiName] = this.planName;
+
     const recordInput = { fields };
-    console.log(recordInput);
 
     updateRecord(recordInput)
       .then(() => {
-        this.dispatchEvent(
-          new ShowToastEvent({
-            title: 'Success',
-            message: 'Forecast updated',
-            variant: 'success'
-          })
-        );
+          this.dispatchEvent(
+              new ShowToastEvent({
+                  title: 'Success',
+                  message: 'Forecast updated',
+                  variant: 'success'
+              })
+          );
       })
       .catch(error => {
-        console.log(error);
-        this.dispatchEvent(
-          new ShowToastEvent({
-            title: 'Error',
-            message: 'Error updating forecast',
-            variant: 'error'
-          })
-        );
+        new ShowToastEvent({
+          title: 'Error',
+          message: 'Error updating forecast',
+          variant: 'error'
+        });
         this.isSubmitting = false;
       });
   }
@@ -415,20 +367,34 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   get addedSeats() {
-    const {quoteType, seats, priorSeats} = this;
+    const {quoteType, seats, currentSeats} = this;
 
     switch (quoteType) {
       case QUOTE_TYPE_NEW_CONTARCT:
         return seats;
       case QUOTE_TYPE_PRORATED:
-        return seats - priorSeats;
+        return seats - currentSeats;
       default:
         return null;
     }
   }
 
+  get addedArr() {
+    const {quoteType, exchangeRate, addedSeats, seatPrice, currentArr} = this;
+    const newArr = 12 * exchangeRate * addedSeats * seatPrice;
+
+    switch (quoteType) {
+      case QUOTE_TYPE_NEW_CONTARCT:
+        return newArr - currentArr;
+      case QUOTE_TYPE_PRORATED:
+        return newArr;
+      default:
+        return 0;
+    }
+  }
+
   get finalArr() {
-    return this.addedArr + this.priorArr;
+    return this.addedArr + this.currentArr;
   }
 
   get totalPrice() {
@@ -446,7 +412,7 @@ export default class ExpectedPlanPicker extends LightningElement {
   }
 
   setPlanOptions() {
-    this.planOptions = parseSeatsOptions(this.plans, this.quoteType, this.priorSeats);
+    this.planOptions = parseSeatsOptions(this.plans, this.quoteType, this.currentSeats);
   }
 
   get tierOptions() {
@@ -483,12 +449,12 @@ export default class ExpectedPlanPicker extends LightningElement {
   handleSeatPriceChange(e) {
     const { seats, period, currency, plan } = this;
     this.seatPrice = e.detail.value;
-    this.discount = 1 - this.seatPrice / calcSeatPrice(plan, currency, seats, period);
+    this.discount = 1 - this.seatPrice / getSeatPrice(plan, currency, seats, period);
   }
 
   handleDiscountChange(e) {
     this.discount = e.detail.value / 100;
-    this.seatPrice = calcSeatPrice(this.plan, this.currency, this.seats, this.period) * (1 - this.discount);
+    this.seatPrice = getSeatPrice(this.plan, this.currency, this.seats, this.period) * (1 - this.discount);
   }
 
   updatePrices(resetDiscount) {
@@ -497,7 +463,7 @@ export default class ExpectedPlanPicker extends LightningElement {
     
     this.updateMatchingPlan();
     if (resetDiscount) { this.discount = 0; }
-    this.seatPrice = calcSeatPrice(this.plan, this.currency, seats, period) * (1 - this.discount);
+    this.seatPrice = getSeatPrice(this.plan, this.currency, seats, period) * (1 - this.discount);
   }
 
   updateMatchingPlan() {

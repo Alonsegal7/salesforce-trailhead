@@ -30,19 +30,19 @@
                         <lightning-layout-item padding="horizontal-small">
                             <div class="header-column">
                                 <p class="field-title">Seats</p>
-                                <p><lightning-formatted-number value={priorSeats} maximum-fraction-digits="0" format-style="decimal"></lightning-formatted-number></p>
+                                <p><lightning-formatted-number value={currentSeats} maximum-fraction-digits="0" format-style="decimal"></lightning-formatted-number></p>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item padding="horizontal-small">
                             <div class="header-column">
                                 <p class="field-title">Tier</p>
-                                <p><lightning-formatted-text value={priorTier}></lightning-formatted-text></p>
+                                <p><lightning-formatted-text value={currentTier}></lightning-formatted-text></p>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item padding="horizontal-small">
                             <div class="header-column">
                                 <p class="field-title">ARR</p>
-                                <p><lightning-formatted-number value={priorArr} maximum-fraction-digits="2" format-style="decimal"></lightning-formatted-number></p>
+                                <p><lightning-formatted-number value={currentArr} maximum-fraction-digits="2" format-style="decimal"></lightning-formatted-number></p>
                             </div>
                         </lightning-layout-item>
                     </lightning-layout>
@@ -60,12 +60,8 @@
                         </lightning-layout-item>
                         <lightning-layout-item>
                             <div class="header-column">
-                                <p class="field-title" title="Currency">
-                                    Currency 
-                                </p>
-                                <p><lightning-formatted-text value={currency}></lightning-formatted-text>
-                                    <span class="currency-tooltip"><lightning-helptext content={currencyTooltip}></lightning-helptext></span>
-                                </p>
+                                <p class="field-title" title="Currency">Currency</p>
+                                <p><lightning-formatted-text value={currency}></lightning-formatted-text></p>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item if:true={quoteTypeMessage} class="next-step-info-item" padding="vertical-small">
