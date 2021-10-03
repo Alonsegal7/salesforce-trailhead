@@ -1,15 +1,24 @@
 public without sharing class Subscription_ConnectToContractEvent {
+    public static map<string,id> subOrderNumbers = new map<string,id>();
+    public static boolean multipleSubsUpdated=false;
     public static void Subscription_ConnectToContract(List<Subscription__c> newSubs, map<Id, Subscription__c> oldMap) {
         try{
             set<string> subsPulseIds= new set<string>();
+            Set<string> subsProductSKUs = new Set<string>();
+
             if(oldMap==null)//insert
                 for(Subscription__c sub: newSubs){
-                    subsPulseIds.add(sub.Pulse_Account_Id__c);
+                    //There could be multiple active subs for accuont (solutions)
+                    if (!subsPulseIds.contains(sub.Pulse_Account_Id__c)) {
+                        subsPulseIds.add(sub.Pulse_Account_Id__c); 
+                    }
+                    subsProductSKUs.add(sub.SKU__c);
                 }
             else{//update (will be only for manual trigger)
                 for(Subscription__c sub: newSubs){
                     if(sub.Manual_Trigger__c!=oldMap.get(sub.id).Manual_Trigger__c&&sub.Manual_Trigger__c=='Create Active Contract')
-                        subsPulseIds.add(sub.Pulse_Account_Id__c);   
+                    subsPulseIds.add(sub.Pulse_Account_Id__c);   
+                    subsProductSKUs.add(sub.SKU__c);   
                 }
             }
 
@@ -22,15 +31,26 @@ public without sharing class Subscription_ConnectToContractEvent {
                 if(!accountsByPulseId.containsKey(acc.primary_pulse_account_id__c))
                     accountsByPulseId.put(acc.primary_pulse_account_id__c,acc);
             }
+
+            map<string,Product2> prodBySKUs= new map<string,Product2>(); 
+            for(Product2 prod: [select id,Product_Identifier__c
+                                from Product2 where IsActive=true AND Product_Identifier__c in: subsProductSKUs]){
+                if(!prodBySKUs.containsKey(prod.Product_Identifier__c))
+                    prodBySKUs.put(prod.Product_Identifier__c,prod);
+            }
+
             List<Contract> contractsToUpdate= new List<Contract>();
             List<Contract> contractsToDeactivate= new List<Contract>();
 
             for(Subscription__c sub: newSubs){
                 if(accountsByPulseId.containsKey(sub.Pulse_Account_Id__c)){
                     Account acc=accountsByPulseId.get(sub.Pulse_Account_Id__c);
+                    Product2 prod = prodBySKUs.get(sub.SKU__c);
                     sub.Monday_Account__c=acc.Id;
+                    sub.Product__c=prod.Id;
+
                      if(sub.Status__c=='ACTIVE'&&sub.Contract__c==null){//if contract is selected in BB, do not create/connect to another contract
-                        if(acc.Active_Contract__c!=null&&sub.Deactivation_Date__c<=acc.Active_Contract__r.EndDate){//connect to existing active contract
+                        if(acc.Active_Contract__c!=null&&sub.Deactivation_Date__c==acc.Active_Contract__r.EndDate){//connect to existing active contract
                             sub.Contract__c=acc.Active_Contract__c;
                             if(sub.SO_Import_Type__c=='Pro-rated'){//for pro rated deal imported in BB, do not update prices as they are not aligned in BB
                                 contractsToUpdate.add(new contract(id=sub.Contract__c,
@@ -68,10 +88,12 @@ public without sharing class Subscription_ConnectToContractEvent {
         Map<Id, Subscription__c> subsMapToGetARR = new Map<Id, Subscription__c>();
         List <Subscription__c> subsConEventToCreate = new List <Subscription__c>();
         List <Subscription__c> subsConEventToUpdate = new List <Subscription__c>();
+        List <Subscription__c> subsToUpdateContract = new List <Subscription__c>();
+        List <Subscription__c> multiContractSubsToEvents = new List <Subscription__c>();
         Map<Id, List<Contract_Event__c>> existingContractAndconEventMap = new Map<Id, List<Contract_Event__c>>();
-        List <Contract_Event__c> proRatedConEventToCreate = new List<Contract_Event__c>();
+        List <Contract_Event__c> conEventForExisContract = new List<Contract_Event__c>();
         Set<Id> contractIds = new Set<Id>();
-        
+
         //First, Create a set of contract id's from subs to define a map of contract events related to the set(Used later in SameTermEventExist function)
         for (Subscription__c sub : newSubs) {
             if (sub.Contract__c!=null) {
@@ -80,7 +102,7 @@ public without sharing class Subscription_ConnectToContractEvent {
         }
         if (!contractIds.isEmpty()) {
              //Prepere a map to check if there is a contract event with the same term for this subscription  (Used later in SameTermEventExist function)
-            for (Contract_Event__c existingConEvnt : [select Id,Contract__c, Start_Date__c, End_Date__c, ARR__c, IsRecurring__c from Contract_Event__c where IsRecurring__c=true and Contract__c in:contractIds ])
+            for (Contract_Event__c existingConEvnt : [select Id,sku__c,Product__c,Contract__c, Start_Date__c, End_Date__c, ARR__c, IsRecurring__c from Contract_Event__c where IsRecurring__c=true and Contract__c in:contractIds ])
             {
                 if (existingContractAndconEventMap.containsKey(existingConEvnt.Contract__c)) {
                     existingContractAndconEventMap.get(existingConEvnt.Contract__c).add(existingConEvnt);
@@ -91,22 +113,27 @@ public without sharing class Subscription_ConnectToContractEvent {
             }      
         }
 
+        //Now, handle contract creations/event update
             if (oldMap==null) {//insert 
                 for (Subscription__c sub : newSubs) {
                     //Contract was added on the 'before' trigger
                     //Contract event fields is mapped on the ContractEventMapping__mdt (Including the contract created on the before)
                     if(sub.Status__c=='ACTIVE'&&sub.Contract__c!= null&&sub.Activated_via_Import_SO__c==false && !SameTermEventExist(existingContractAndconEventMap,sub)){
                         subsConEventToUpdate.add(sub);
-                        proRatedConEventToCreate.addall(ContractEventHandler.DefineContractEvent(subsConEventToUpdate));
+                        conEventForExisContract.addall(ContractEventHandler.DefineContractEvent(subsConEventToUpdate));
                     }
-                    //Contract wasn't found on before trigger and didn't imported by so- create contract and event
-                    if (sub.Status__c=='ACTIVE'&&sub.Contract__c==null&&sub.Activated_via_Import_SO__c==false) {
+                    //Contract wasn't found on before trigger and didn't imported by so- create contract and event 
+                    if (sub.Status__c=='ACTIVE'&&sub.Contract__c==null&&sub.Activated_via_Import_SO__c==false && !subOrderNumbers.containskey(sub.order_number__c)) {
                         subsConEventToCreate.add(sub); 
+                        //In case of multi-product subscriptions, Only one contract will be created for the subscrition (random chose)
+                        if (sub.order_number__c!=null) {
+                            subOrderNumbers.put(sub.order_number__c,sub.id); 
+                        }
                     }
                 }
             }
              
-            else {
+            else {//update
                 for (Subscription__c sub : newSubs) {
                     if(sub.Manual_Trigger__c!=oldMap.get(sub.id).Manual_Trigger__c&&sub.Manual_Trigger__c=='Create Active Contract'){
                         subsConEventToCreate.add(sub);
@@ -116,10 +143,6 @@ public without sharing class Subscription_ConnectToContractEvent {
                     } 
                 }
             }
-                    //Contract event for existing contract
-                    if (!proRatedConEventToCreate.isempty()) {
-                        System.enqueueJob(new createContractEventsQueueable(proRatedConEventToCreate));
-                    }
                     //New contract and contract event
                     if (!subsConEventToCreate.isempty()) {
                         ContractEventHandler.ActivationsContractEventNewContracts(subsConEventToCreate);
@@ -127,7 +150,34 @@ public without sharing class Subscription_ConnectToContractEvent {
                     //update arr to con event is added after insert (and it was null)
                     if (!subsMapToGetARR.isEmpty()) {
                         updateArrToEvent(subsMapToGetARR);
-                    }   
+                    } 
+                    
+                    //For multiple subs under the same contract, find the created contract and call the conEventForExisContract function to set a cont product and con events
+                    if (multipleSubsUpdated==false) {
+                        for (Subscription__c sub : newSubs) {
+                            if (sub.order_number__c !=null && ContractEventToContract.createdContForSubOrder.containsKey(sub.Order_Number__c) && sub.Id != subOrderNumbers.get(sub.order_number__c)) {
+                                multiContractSubsToEvents.add(sub);
+                                subsToUpdateContract.add(new Subscription__c(Id=sub.Id,Contract__c=ContractEventToContract.createdContForSubOrder.get(sub.order_number__c)) );
+                            }
+                        }
+                    }
+
+
+                    if (!subsToUpdateContract.isempty()) {
+                        multipleSubsUpdated=true;
+                        update subsToUpdateContract;
+                        //System.enqueueJob(new createContractToSubscriptionsQueueable(subsToUpdateContract));
+                    }
+                    //Contract event for existing contract
+                    if (!multiContractSubsToEvents.isempty()) {
+                        conEventForExisContract.addall(ContractEventHandler.DefineContractEvent(multiContractSubsToEvents));
+                    }
+                    
+                    if (!conEventForExisContract.isempty()) {
+                        System.enqueueJob(new createContractEventsQueueable(conEventForExisContract));
+                    }
+
+                    
 
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in SubscriptionToContractEvent ',e,e.getMessage());   
@@ -139,7 +189,7 @@ public without sharing class Subscription_ConnectToContractEvent {
         for (Id conKey : conEvnts.keyset()) {
             for (Contract_Event__c singleEvent : conEvnts.get(conKey)) {
                  if (singleEvent.Contract__c==sub.Contract__c&&singleEvent.Start_Date__c==sub.Activation_Date__c && 
-                     singleEvent.End_Date__c==sub.Deactivation_Date__c && 
+                     singleEvent.End_Date__c==sub.Deactivation_Date__c && singleEvent.SKU__c==sub.SKU__c && 
                      singleEvent.ARR__c==sub.ARR__c) {
                      evntExist=true;  
                 }
@@ -163,7 +213,18 @@ public without sharing class Subscription_ConnectToContractEvent {
             this.contractEventToCreateList = contractEventToCreateList;
         }
         public void execute(System.QueueableContext ctx) {
-            Database.insert(contractEventToCreateList);
+            ContractEventHandler.CreateContractEventForExistingContract(contractEventToCreateList);
+            //Database.insert(contractEventToCreateList);
         }
     }
+
+    // private class createContractToSubscriptionsQueueable implements System.Queueable {
+    //     private List<Subscription__c> SubsToUpdateContId; 
+    //     public createContractToSubscriptionsQueueable(List<Subscription__c> SubsToUpdateContId) {
+    //         this.SubsToUpdateContId = SubsToUpdateContId;
+    //     }
+    //     public void execute(System.QueueableContext ctx) {
+    //         Database.update(SubsToUpdateContId);
+    //     }
+    // }
 }

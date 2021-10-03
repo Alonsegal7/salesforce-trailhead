@@ -1,8 +1,9 @@
 public with sharing class ContractEventToContract {
-
+    public static Map<string, id> createdContForSubOrder = new Map<string, id>();
     public static void ContractEventCreateNewContract(Map<Id, List<Contract_Event__c>> conEvents, List<SObject> objects, string objType) {
-        try{
+       try{
         List<Contract_Event__c> conEventToInsert = new List<Contract_Event__c>();
+        Map<string, Contract_Product__c> conProdMap = new Map<string, Contract_Product__c>();
         Map<Id,Contract> createdContsMap = new Map<Id, Contract>();
         List<Quote> quoteToUpdate = new List<Quote>();
         List<Account> masterMondayAccountToUpdate = new List<Account>();
@@ -11,13 +12,14 @@ public with sharing class ContractEventToContract {
         List<Contract> contractToDeactivate = new List<Contract>();
         List<Contract> priorContractsToUpdate = new List<Contract>();
 
-        //Get the recurring event to create contract
+        //Find the Contract_Creation_Product__c event to create contract (There could be many - for now, take the frist added)
         for (Id key : conEvents.keyset()) {
+            Boolean contracCreated=false;
             for (Contract_Event__c conEvnt : conEvents.get(key)) {
-                //The list will have only one recurring events
-                if (conEvnt.Contract_Creation_Product__c) {
+                if (conEvnt.Contract_Creation_Product__c && contracCreated==false) {
                     Contract newCon = createContract(conEvnt);
                     createdContsMap.put(key, newCon);
+                    contracCreated=true;
                 }
             }
         }
@@ -26,11 +28,21 @@ public with sharing class ContractEventToContract {
             insert createdContsMap.values();
             for (Id key : conEvents.keyset()) {
                 for (Contract_Event__c conEvnt : conEvents.get(key)) {
+                    conProdMap.put(string.valueof(createdContsMap.get(key).Id) + string.valueof(conEvnt.Product__c),createContractProduct(conEvnt,createdContsMap.get(key)));
                     conEvnt.contract__c=createdContsMap.get(key).Id;
                     conEventToInsert.add(conEvnt);
                 }
             }
         }
+        //Set a contract product for each contract event
+        if (!conProdMap.isEmpty()) {
+            insert conProdMap.values();
+        }
+        //Update the inserted contract products to the contract events
+        for (Contract_Event__c conEvnt : conEventToInsert) {
+            conEvnt.Contract_Product__c=conProdMap.get(string.valueof(conEvnt.Contract__c)+string.valueof(conEvnt.Product__c)).Id;
+        }
+        //Insert contract events
         if (!conEventToInsert.isEmpty()) {
             insert conEventToInsert;
         }
@@ -78,23 +90,27 @@ public with sharing class ContractEventToContract {
                 }
                 else {
                     subsToUpdate.add(new Subscription__c(Id=obj.id,Contract__c=createdContsMap.get(obj.Id).Id));
+                    createdContForSubOrder.put((string)obj.get('Order_Number__c'),createdContsMap.get(obj.Id).Id);
                 }
                 masterMondayAccountToUpdate.add(new Account(Id=(Id)obj.get('Monday_Account__c'),Active_Contract__c = createdContsMap.get(obj.Id).Id));
             }
-            if (!masterMondayAccountToUpdate.isEmpty()) {
-                System.enqueueJob(new updateAccountQueueable(masterMondayAccountToUpdate));
-            }
+            // if (!masterMondayAccountToUpdate.isEmpty()) {
+            //     System.enqueueJob(new updateAccountQueueable(masterMondayAccountToUpdate));
+            // }
             if (!subsToUpdate.isEmpty()) {
                 update subsToUpdate;
+            }
+            if (!masterMondayAccountToUpdate.isEmpty()) {
+                update masterMondayAccountToUpdate;
             }
             if (!contractToDeactivate.isEmpty()) {
                 System.enqueueJob(new updateContractToInactiveQueueable(contractToDeactivate));
             }
 
         }
-    }catch(Exception e){
+     }catch(Exception e){
         Utilities.sendDebugEmail('Error in ContractEventCreateNewContract ',e,e.getMessage());  
-    }
+     }
 }
     public static Contract createContract(Contract_Event__c conEvent){
         //Contract define fields are added on ConEventMetadata
@@ -147,6 +163,14 @@ public with sharing class ContractEventToContract {
         Utilities.sendDebugEmail('Error in ContractEventCreateNewContract.updateContractArrChangeToOpenOps ',e,e.getMessage());  
     }
 }
+
+    public static Contract_Product__c createContractProduct(Contract_Event__c conEvent, Contract Con){
+        Contract_Product__c conProd = new Contract_Product__c(
+            Product__c=conEvent.Product__c, 
+            Contract__c=con.Id);
+        return conProd;
+    }
+
     private class updateOppQueueable implements System.Queueable {
         private List<Opportunity> oppToUpdateList; 
         public updateOppQueueable(List<Opportunity> oppToUpdateList) {

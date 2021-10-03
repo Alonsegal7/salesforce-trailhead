@@ -111,7 +111,7 @@ public class TestObjectCreator
 	}
     
     public static Product2 CreateProduct(){
-		Product2 p = new Product2(Name = 'Test product', IsActive = true, IsRecurring__c=true,Contract_Creation_Product__c=true,Contract_Event_Product__c=true,Quantity_Unit_Of_Measure__c='Seats');
+		Product2 p = new Product2(Name = 'Pro Plan', IsActive = true, IsRecurring__c=true,Contract_Creation_Product__c=true,Contract_Event_Product__c=true,Quantity_Unit_Of_Measure__c='Seats');
         
         if (persistImmediate) insert p;
 		return p;

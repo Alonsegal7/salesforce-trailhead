@@ -6,7 +6,7 @@ public with sharing class ContractEventHandler {
     public static void SalesOrderContractEvent(List<Quote> quotes, Map<Id,Quote> oldQuotes){
         try{
             List<Quote> quotesToHandle = new List<Quote>();
-            List <Contract_Event__c> proRatedConEventToCreate = new List<Contract_Event__c>();
+            List <Contract_Event__c> conEventForExisContract = new List<Contract_Event__c>();
             Map<Id, List<Contract_Event__c>> newContractEvents = new Map<Id, List<Contract_Event__c>>();
             List<Opportunity> oppsToUpdate = new List<Opportunity>();
             List<Quote> proRatedQuotesToUpdate = new List<Quote>();
@@ -99,7 +99,7 @@ public with sharing class ContractEventHandler {
                             }
                             
                             //is pro-rated  (Contract from opp is maaped from metadata)
-                            proRatedConEventToCreate.addall(DefineContractEvent(qlisMap.get(quote.id)));
+                            conEventForExisContract.addall(DefineContractEvent(qlisMap.get(quote.id)));
                             proRataedContsToUpdate.add(new Contract(Id=quote.Selected_Company_Contract__c,
                             
                             //Seats__c referenced in dh so we still updating this field - untill fully go live
@@ -124,8 +124,8 @@ public with sharing class ContractEventHandler {
                     if (!proRatedQuotesToUpdate.isempty()) {
                         System.enqueueJob(new updateQuoteQueueable(proRatedQuotesToUpdate));
                     }
-                    if (!proRatedConEventToCreate.isempty()) {
-                        insert proRatedConEventToCreate;
+                    if (!conEventForExisContract.isempty()) {
+                        CreateContractEventForExistingContract(conEventForExisContract);
                     }
                     if (!proRataedContsToUpdate.isempty()) {
                         update proRataedContsToUpdate;
@@ -156,6 +156,9 @@ public with sharing class ContractEventHandler {
             for (Subscription__c sub : subs) {
                 conEventsToCreate.add(sub); 
                 newContractEvents.put(sub.Id,DefineContractEvent(conEventsToCreate));
+                //The subscription in the loop is the contract creaotr + the first event. therefore, it must be send as a list of subs
+                //Since solution can send many subs on single transaction, we need to clear the list after the event conversion on the DefineContractEvent function using clear()
+                conEventsToCreate.clear();
             }
             if (!newContractEvents.isempty()) {
                 ContractEventToContract.ContractEventCreateNewContract(newContractEvents,subs,'Subscription');
@@ -168,15 +171,25 @@ public with sharing class ContractEventHandler {
 
     //This functions was created to get any object that defined ContractEventMapping__mdt within metadata 
     public static List<Contract_Event__c> DefineContractEvent(List<SObject> events) {
+        Id contractId;
         List<Contract_Event__c> contEvents = new List<Contract_Event__c>();
         Map<String, Object> contEventsfieldValueMap = new Map<String, Object>();
         List<ContractEventMapping__mdt> eventMapMtd = [SELECT ObjectAPI__c,ObjectFieldAPI__c,ContractEventFieldAPI__c,Constant_Value_Mapping__c,Constant_Value__c 
         FROM ContractEventMapping__mdt WHERE ObjectAPI__c =:String.valueOf(events[0].getSObjectType())];
         try{
         for (SObject obj : events) {
+            if (String.valueOf(obj.getSObjectType())=='Subscription__c') {
+                //check if it is subscription and part of solution
+                if (ContractEventToContract.createdContForSubOrder.containskey((string)obj.get('Order_Number__c'))) {
+                    contractId=ContractEventToContract.createdContForSubOrder.get((string)obj.get('Order_Number__c'));
+                }
+            }
             Contract_Event__c conEven = new Contract_Event__c();
             for (ContractEventMapping__mdt contEvenMapData : eventMapMtd) {
-                if (contEvenMapData.Constant_Value_Mapping__c=='Yes') {
+                if (contEvenMapData.ContractEventFieldAPI__c=='Contract__c' && contractId!=null ) {
+                    conEven.put(contEvenMapData.ContractEventFieldAPI__c,contractId);
+                }
+                else if (contEvenMapData.Constant_Value_Mapping__c=='Yes') {
                     conEven.put(contEvenMapData.ContractEventFieldAPI__c,contEvenMapData.Constant_Value__c);
                 }
                 else {
@@ -206,6 +219,54 @@ public with sharing class ContractEventHandler {
         }
         return returnedConEvnts;
     }
+
+    //This function is gettin con events from existing contract and update/create them to contract product
+    public static void CreateContractEventForExistingContract(List<Contract_Event__c> conEventForExisContract){
+        Set<String> contractProdIdentifiers = new Set<String>();
+        Map<string, Contract_Product__c> existingConProdMap = new Map<string, Contract_Product__c>();
+        Map<string, Contract_Product__c> newConProdMap = new Map<string, Contract_Product__c>();
+        List<Contract_Event__c> conEventsToInsert = new List<Contract_Event__c>();
+
+        //Prepere a set of Contract_Product_Identifier__c
+        for (Contract_Event__c conEvent : conEventForExisContract) {
+            contractProdIdentifiers.add(conEvent.Contract__c+conEvent.SKU__c);
+        }
+        //Find Contract_Product_Identifier__c on current DB (existing)
+        for (Contract_Product__c conProd : [select Id,Contract_Product_Identifier__c from Contract_Product__c where Contract_Product_Identifier__c in:contractProdIdentifiers]) {
+            existingConProdMap.put(conProd.Contract_Product_Identifier__c,conProd);
+        }
+        //Update contract product to pro-rated event. if not found it means contract product needs to be created
+        for (Contract_Event__c conEvent : conEventForExisContract) {
+            if (existingConProdMap.get(conEvent.Contract__c+conEvent.SKU__c)!=null) {
+                conEvent.Contract_Product__c=existingConProdMap.get(conEvent.Contract__c+conEvent.SKU__c).Id;
+                conEventsToInsert.add(conEvent);
+            }
+            //Didn't found - create contract product and assign event
+            else {
+                Contract_Product__c conProd = new Contract_Product__c(
+                    Product__c=conEvent.Product__c, 
+                    Contract__c=conEvent.Contract__c);
+                    newConProdMap.put(conEvent.Contract__c+conEvent.SKU__c,conProd);
+                    conEventsToInsert.add(conEvent);
+            }
+        }
+        //First, insert the new contract products
+        if (!newConProdMap.isempty()) {
+            insert newConProdMap.values();
+        }
+        //Now, run on all the events w/o contract products and assign the created contract product
+        for (Contract_Event__c conEvent : conEventsToInsert) {
+            if (conEvent.Contract_Product__c==null) {
+                conEvent.Contract_Product__c=newConProdMap.get(conEvent.Contract__c+conEvent.SKU__c).Id;
+            }
+        }
+        //When all con events are with contrat product (new or existing) - insert the prorated con events
+        if (!conEventsToInsert.isempty()) {
+            insert conEventsToInsert;
+        }
+    }
+
+
 	private class updateOppQueueable implements System.Queueable {
         private List<Opportunity> oppToUpdateList; 
         public updateOppQueueable(List<Opportunity> oppToUpdateList) {
