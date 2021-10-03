@@ -115,4 +115,13 @@ public with sharing class BigBrainController {
             throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
         }
     }
+
+    @AuraEnabled(cacheable=false)
+    public static Decimal getAddedArr(String quoteType, Decimal priorArr, Decimal priorSeats, Decimal seats, Decimal seatPrice, Decimal exchangeRate){
+        try {
+            return ArrCalculator.AddedArr(quoteType, priorArr, priorSeats, seats, seatPrice, exchangeRate);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
+        }
+    }
 }

@@ -1,18 +1,22 @@
 <template>
-    <template if:true={isLoading}>
-      <div class="slds-is-relative" style="min-height: 10vh;">
-        <lightning-spinner alternative-text="Loading..." size="medium">
-        </lightning-spinner>
-      </div>
-    </template>
+  <template if:true={isLoading}>
+    <div class="slds-is-relative" style="min-height: 10vh;">
+      <lightning-spinner alternative-text="Loading..." size="medium">
+      </lightning-spinner>
+    </div>
+  </template>
 
   <template if:false={isLoading}>
     <c-salesforce-codex-data-table
       if:false={isLoading} 
       key-field="id"
-      data={usersData}
+      data={data}
       columns={columns}
-      hide-checkbox-column>
-    </c-salesforce-codex-data-table>
+      hide-checkbox-column
+      default-sort-direction={defaultSortDirection}
+      sorted-direction={sortDirection}
+      sorted-by={sortedBy}
+      onsort={onHandleSort}
+    ></c-salesforce-codex-data-table>
   </template>
 </template>

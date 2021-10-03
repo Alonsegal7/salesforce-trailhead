@@ -22,6 +22,10 @@
   height: 400px;
 }
 
+.currency-tooltip {
+  padding: 4px;
+}
+
 .slds-card__footer {
   margin-top: 12px;
 }

@@ -141,17 +141,17 @@ export default class BigBrainAccountActions extends LightningElement {
 
   // Handle field changes --------------------------------------------------------------------------------------
   handleFeaturesChange(e) {
-    const updatedList = e.detail.value;
-    const addedFeatures = updatedList.filter(feature => !this.grantedFeaturesList.includes(feature));
-    
+    const updatedList = Object.values(e.detail.value);
+    const addedFeatures = updatedList.filter(feature => !this.grantedFeatures.includes(feature));
+
     if(addedFeatures.length > 0) {
       this.grantFeatures(addedFeatures);
     } else {
-      const removedFeatures = this.grantedFeaturesList.filter(feature => !updatedList.includes(feature));
+      const removedFeatures = this.grantedFeatures.filter(feature => !updatedList.includes(feature));
       if(removedFeatures.length > 0) this.ungrantFeatures(removedFeatures);
     }
 
-    this.grantedFeaturesList = updatedList;
+    this.grantedFeatures = updatedList;
   }
 
   handlePricingVersionChange(e) {

@@ -104,11 +104,20 @@ export default class BigBrainAccountProfile extends LightningElement {
     this.address = `${xi_city}, ${xi_region}, ${xi_country} ${timeDiffText}`;
     this.statuses = (statuses || []).map(s => ({label: s}));
 
-    this.plan = tier ? `${max_user} ${tier} ${period}` : 'Trial';
+    if (tier) {
+      this.plan = `${max_user} ${tier} ${period}`;
+      this.planStartDate = started_at;
+      this.planUntilDate = ended_at;
+    } else {
+      this.plan = 'Trial';
+      this.planStartDate = created_at;
+      var trialUntil = new Date(created_at);
+      trialUntil.setDate(trialUntil.getDate() + trial_period);
+      this.planUntilDate = trialUntil;
+    }
+
     this.currency = payment_currency;
     this.pricingVersion = pricing_version;
-    this.planStartDate = started_at;
-    this.planUntilDate = ended_at;
     this.lastSeen = last_seen;
     this.collection = collection_usd;
     this.arr = arr;

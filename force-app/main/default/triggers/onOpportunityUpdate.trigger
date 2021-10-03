@@ -5,6 +5,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         TargetsService targetServiceHelper = new TargetsService();
         targetServiceHelper.TargetsServiceOnOpps(trigger.new,trigger.oldmap);
         Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(trigger.new,trigger.oldmap);
+        OpportunityHelper.CalculateArr(Trigger.new, Trigger.oldMap);
     }
     
     if(Trigger.isBefore && Trigger.isUpdate){
@@ -13,10 +14,11 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         targetServiceHelper.TargetsServiceOnOpps(trigger.new,trigger.oldmap);
         OpportunityHelper.updateOppType(trigger.new,trigger.oldmap);
         Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(trigger.new,trigger.oldmap);
+        OpportunityHelper.CalculateArr(Trigger.new, Trigger.oldMap);
     }
     
     if(Trigger.isAfter && Trigger.isUpdate){
-        OpportunityHelper.afterUpdate(Trigger.new,Trigger.oldmap);
+        OpportunityHelper.afterUpdate(Trigger.new, Trigger.oldmap);
         TargetsService targetServiceHelper = new TargetsService();
         targetServiceHelper.updateTargetOnClosedWonOppChange(Trigger.new, Trigger.oldMap);
         if(PartnerCommissionService.firstRunOpp){

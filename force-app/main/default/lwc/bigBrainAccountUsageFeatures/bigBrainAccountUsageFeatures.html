@@ -1,14 +1,37 @@
 <template>
-  <lightning-layout class="features-layout">
-      <lightning-layout-item padding="around-small" size="12">
-        <ul class="features-list">
+  <div class="c-container">
+    <template if:true={isLoading}>
+        <div class="spinner-wrapper">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div> 
+    </template>
+    <template if:true={isError}>
+        <lightning-layout>
+            <lightning-layout-item padding="around-small">
+                Error loading features
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+    <template if:false={hasData}>
+      <lightning-layout>
+          <lightning-layout-item padding="around-small">
+              Features data is unavailable at the moment
+          </lightning-layout-item>
+      </lightning-layout>
+    </template>
+    <template if:true={isReady}>
+      <lightning-layout class="features-layout">
+        <lightning-layout-item padding="around-small" size="12">
+          <ul class="features-list">
             <template for:each={featuresData} for:item="feature">
-                <li key={feature.name} class="feature-item">
-                    <div><lightning-formatted-url value={feature.doc_url} label={feature.name} tooltip={feature.description} target="_blank"></lightning-formatted-url></div>
-                    <div><span>{feature.data}</span><span class={feature.class}></span></div>
-                </li>
+              <li key={feature.name} class="feature-item">
+                <div><lightning-formatted-url value={feature.doc_url} label={feature.name} tooltip={feature.description} target="_blank"></lightning-formatted-url></div>
+                <div><span>{feature.data}</span><span class={feature.class}></span></div>
+              </li>
             </template>
-        </ul>
-      </lightning-layout-item>
-  </lightning-layout>         
+          </ul>
+        </lightning-layout-item>
+      </lightning-layout>
+    </template>
+  </div>
 </template>
