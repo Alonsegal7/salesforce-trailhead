@@ -16,11 +16,13 @@ public with sharing class Quote_CreateQuoteHistory {
                             New_Value__c=String.valueOf(quote.get(fldSetMmber.getFieldPath()))
                         );
                     historyMap.put(fldSetMmber.getFieldPath(),quote.get(fldSetMmber.getFieldPath()));
-                    quoteHistoryToCreate.add(quteHis);
+                    if (quote.id !=null) {//avoid insert for deleted quotes
+                        quoteHistoryToCreate.add(quteHis);
                     }
                 }
             }
         }
+    }
         if (!quoteHistoryToCreate.isempty()) {
             insert quoteHistoryToCreate;
         }
