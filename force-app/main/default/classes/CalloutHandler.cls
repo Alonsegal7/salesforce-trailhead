@@ -82,6 +82,8 @@ public class CalloutHandler
         if (fsname!=null && sotype.equalsignorecase('QuoteLineItem')) fs = Schema.SObjectType.QuoteLineItem.fieldSets.getMap().get(fsname);
         if (fsname!=null && sotype.equalsignorecase('OpportunityLineItem')) fs = Schema.SObjectType.OpportunityLineItem.fieldSets.getMap().get(fsname);
         if (fsname!=null && sotype.equalsignorecase('Subscription__c')) fs = Schema.SObjectType.OpportunityLineItem.fieldSets.getMap().get(fsname);
+        if (fsname!=null && sotype.equalsignorecase('Contract')) fs = Schema.SObjectType.Contract.fieldSets.getMap().get(fsname);
+        if (fsname!=null && sotype.equalsignorecase('Contract_Event__c')) fs = Schema.SObjectType.Contract_Event__c.fieldSets.getMap().get(fsname);
 
         system.debug('TESTING fs is '+fs);
         if (fs != null){
