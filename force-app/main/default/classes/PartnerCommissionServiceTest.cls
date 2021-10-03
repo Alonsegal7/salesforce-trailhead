@@ -19,7 +19,7 @@ public class PartnerCommissionServiceTest {
         insert ths;
 
         //create commission model
-        Commission_Model__c commissionModel = new Commission_Model__c(Partner_Tier__c = 'Platinum', Name = 'test', Outbound_Percent__c = 30, Inbound_Percent__c	= 20, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today());
+        Commission_Model__c commissionModel = new Commission_Model__c(Partner_Tier__c = 'Gold First Year', Name = 'test', Outbound_Percent__c = 30, Inbound_Percent__c	= 20, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today());
         insert commissionModel;
 
         //create partner company
@@ -28,11 +28,11 @@ public class PartnerCommissionServiceTest {
         partnersList.add(new Account(Name = 'testPartner2', RecordTypeId = ACC_PARTNER_COMP_RT_CONST));
         insert partnersList;
     
-        //create partner commission model
-        List<Partner_Commission_Model__c> pcmList = new List<Partner_Commission_Model__c>();
-        pcmList.add(new Partner_Commission_Model__c(Commission_Model__c = commissionModel.Id, Partner_Company__c = partnersList.get(0).Id, Start_Date__c = Datetime.now()));
-        pcmList.add(new Partner_Commission_Model__c(Commission_Model__c = commissionModel.Id, Partner_Company__c = partnersList.get(1).Id, Start_Date__c = Datetime.now()));
-        insert pcmList;
+        for(Account partner: partnersList){
+            partner.Partner_Company_Status__c = 'Signed';
+            partner.Signature_Approval_Status__c = 'Approved';
+        }
+        update partnersList;
 
         Contact con = new Contact(Email='demo1@randomdemodomain.com', FirstName = 'test', LastName = 'bla', AccountId = partnersList.get(0).Id);
         insert con;

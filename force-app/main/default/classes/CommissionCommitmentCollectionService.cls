@@ -22,6 +22,28 @@ public without sharing class CommissionCommitmentCollectionService {
         }
     }
 
+    public void setPartnerCommissionCommitment(List<Commission_Collection__c> collectionList, Map<Id,Commission_Collection__c> oldCollectionMap){
+        List<Commission_Collection__c> relevantCollections = new List<Commission_Collection__c>();
+        Set<String> commitmentsIds = new Set<String>();
+        for(Commission_Collection__c collection: collectionList){
+            if(oldCollectionMap == null || collection.get('Commitment_Big_Brain_Id__c') != oldCollectionMap.get(String.valueOf(collection.get('Id'))).get('Commitment_Big_Brain_Id__c')){
+                if(collection.get('Commitment_Big_Brain_Id__c') == null){
+                    collection.put('Commission_Commitment__c',null);
+                    continue;
+                }
+                relevantCollections.add(collection);
+                commitmentsIds.add(String.valueOf(collection.get('Commitment_Big_Brain_Id__c'))); 
+            }
+        }
+        if(relevantCollections.isEmpty()) return;
+        Map<String,Id> commitmentsMap = getCommitments(commitmentsIds);
+        for(Commission_Collection__c collection: relevantCollections){
+            if(commitmentsMap.containsKey(String.valueOf(collection.get('Commitment_Big_Brain_Id__c')))){
+                collection.put('Commission_Commitment__c',commitmentsMap.get(String.valueOf(collection.get('Commitment_Big_Brain_Id__c'))));
+            }
+        }
+    }
+
     public void setMondayAcc(List<sObject> sobjectList, Map<Id,sObject> oldSobjectMap){
         List<sObject> relevantObjs = new List<sObject>();
         Set<String> bigBrainIds = new Set<String>();
@@ -37,9 +59,22 @@ public without sharing class CommissionCommitmentCollectionService {
         }
         if(relevantObjs.isEmpty()) return;
         Map<String,Id> accountsMap = getAccounts(bigBrainIds);
+        List<sObject> sobjPulseIdNotMatchAM = new List<sObject>();
+        Set<String> pcsIds = new Set<String>();
         for(sObject obj: relevantObjs){
             if(accountsMap.containsKey(String.valueOf(obj.get('Pulse_Account_Id__c')))){
                 obj.put('Monday_Account__c',accountsMap.get(String.valueOf(obj.get('Pulse_Account_Id__c'))));
+            } else {
+                sobjPulseIdNotMatchAM.add(obj);
+                pcsIds.add(String.valueOf(obj.get('Partner_Commission__c')));
+            }
+        }
+        if(!sobjPulseIdNotMatchAM.isEmpty()){
+            Map<Id,Partner_Commission__c> pcsMap = new Map<Id,Partner_Commission__c>([select Id, Monday_Account__c from Partner_Commission__c where Id in: pcsIds]);
+            for(sObject obj: sobjPulseIdNotMatchAM){
+                if(pcsMap.containsKey(String.valueOf(obj.get('Partner_Commission__c')))){
+                    obj.put('Monday_Account__c',pcsMap.get(String.valueOf(obj.get('Partner_Commission__c'))).Monday_Account__c);
+                }
             }
         }
     }
@@ -92,6 +127,16 @@ public without sharing class CommissionCommitmentCollectionService {
         List<Commission_Report__c> reportList = [select Id, Big_Brain_Id__c from Commission_Report__c where Big_Brain_Id__c IN: reportIds];
         for(Commission_Report__c report: reportList){
             res.put(report.Big_Brain_Id__c, report.Id);
+        }
+        return res;
+    }
+
+    private Map<String,Id> getCommitments(Set<String> commitmentsIds){
+        Map<String,Id> res = new Map<String,Id>();
+        if(commitmentsIds.isEmpty()) return res;
+        List<Commission_Commitment__c> commitmentList = [select Id, Big_Brain_Id__c from Commission_Commitment__c where Big_Brain_Id__c IN: commitmentsIds];
+        for(Commission_Commitment__c commitment: commitmentList){
+            res.put(commitment.Big_Brain_Id__c, commitment.Id);
         }
         return res;
     }
