@@ -28,7 +28,8 @@ public class QuoteLineItemHandler {
                     oli.Plan_Period__c = qli.Plan_Period__c;
                     oli.Seats__c = qli.Seats__c;
                     oli.Training_Hours__c = qli.Training_Hours__c;
-                    oli.Is_Primary__c = qli.Is_Primary__c;
+                    oli.Sales_Order_Primary_Line__c=qli.Sales_Order_Primary_Line__c;
+                    oli.Is_Primary__c=qli.Is_Primary__c;
                     oli.Added_Seats__c = qli.Added_Seats__c;
                     oli.PS_Hours__c = qli.Hours__c;
                     oli.Expiration_Date__c = qli.Expiration_Date__c;
