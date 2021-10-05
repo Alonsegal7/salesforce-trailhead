@@ -206,6 +206,7 @@ public with sharing class DealRegistration_Handler {
         private Account newAccount;
          
         public convertRelatedLead(Lead newLead, Deal_Registration__c dealRegRecord, Account newAccount) {
+            Account_Rollup.collisionState = true;
             this.newLead = newLead;
             this.dealRegRecord = dealRegRecord;
             this.newAccount = newAccount;
@@ -242,6 +243,7 @@ public with sharing class DealRegistration_Handler {
         private Account newAccount;
          
         public updateOpportunityMappingConvert(Lead newLead, Deal_Registration__c dealRegRecord, Id opportunityIdFromConvert, Id maAccountIdFromConvert, Account newAccount) {
+            Account_Rollup.collisionState = true;
             this.newLead = newLead;
             this.dealRegRecord = dealRegRecord;
             this.opportunityIdFromConvert = opportunityIdFromConvert;
@@ -295,6 +297,7 @@ public with sharing class DealRegistration_Handler {
         private Account newAccount;
          
         public updateAccountMappingConvert(Lead newLead, Deal_Registration__c dealRegRecord, Id maAccountIdFromConvert, Account newAccount) {
+            Account_Rollup.collisionState = true;
             this.newLead = newLead;
             this.dealRegRecord = dealRegRecord;
             this.maAccountIdFromConvert = maAccountIdFromConvert;
@@ -320,8 +323,9 @@ public with sharing class DealRegistration_Handler {
         private Account convertedAcc;
         private List<Account> newGlobalCompany = new List<Account>();
         private List<Account> newRegionalCompany = new List<Account>();
-         
+        
         public createCompanyHierarchy(Deal_Registration__c dealRegRecord, Account localCompanyRecord, Lead newLead, Account convertedAcc) {
+            Account_Rollup.collisionState = true;
             this.dealRegRecord = dealRegRecord;
             this.localCompanyRecord = localCompanyRecord;
             this.newLead = newLead;
@@ -329,6 +333,7 @@ public with sharing class DealRegistration_Handler {
         }
 
         public void execute(QueueableContext ctx) {
+            Account_Rollup.collisionState = true;
             if(dealRegRecord.Global_Company__c != null && dealRegRecord.Regional_Company__c != null){
                 system.debug('### 1');
                 localCompanyRecord.ParentId = dealRegRecord.Regional_Company__c;
@@ -336,7 +341,6 @@ public with sharing class DealRegistration_Handler {
             }
 
             else if(dealRegRecord.Global_Company__c != null && dealRegRecord.Regional_Company__c == null){
-                system.debug('### 2');
                 newRegionalCompany = createRegionalCompany(dealRegRecord, dealRegRecord.Global_Company__c);
                 if(newRegionalCompany != null && newRegionalCompany.size() > 0 && !newRegionalCompany.isEmpty()){
                     Database.insert(newRegionalCompany);
@@ -347,7 +351,6 @@ public with sharing class DealRegistration_Handler {
             }
 
             else if(dealRegRecord.Global_Company__c == null && dealRegRecord.Regional_Company__c == null){
-                system.debug('### 3');
                 newGlobalCompany = createGlobalCompany(dealRegRecord);
                 if(newGlobalCompany != null && newGlobalCompany.size() > 0 && !newGlobalCompany.isEmpty()){
                     Database.insert(newGlobalCompany);
@@ -361,7 +364,6 @@ public with sharing class DealRegistration_Handler {
                     localCompanyRecord.Company__c = newGlobalCompany[0].Id;
                 }
             }
-            system.debug('### 4');
             Database.update(localCompanyRecord);
             system.debug('### localCompanyRecord: ' + localCompanyRecord);
             newLead.Related_Company__c = localCompanyRecord.Company__c; //get the global company
@@ -369,7 +371,10 @@ public with sharing class DealRegistration_Handler {
             system.debug('### newLead: ' + newLead);
             convertedAcc.Company__c = localCompanyRecord.Company__c; //get the global company
             convertedAcc.Prioritized_Account__c = true;
+            convertedAcc.Manual_Trigger__c = 'Rollup Company';
+            Account_Rollup.collisionState = false;
             Database.update(convertedAcc);
+            //Account_Rollup.MA(convertedAcc);
             system.debug('### convertedAcc: ' + convertedAcc);
             List<Account> acc = [SELECT Id, Company__c, Prioritized_Account__c FROM Account WHERE Id =: convertedAcc.Id];
             system.debug('### acc: ' + acc);

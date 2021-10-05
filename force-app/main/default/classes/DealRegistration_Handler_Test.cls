@@ -291,7 +291,6 @@ public class DealRegistration_Handler_Test {
         Test.startTest();
         Deal_Registration__c dealRegRecord = createDealRegistration(existingDomain, approvedCompanySize, companyLocation);
         insert dealRegRecord;
-        
         Deal_Registration__c reg = [SELECT Id, Expected_Tier__c, Expected_Plan_Seats__c, Expected_Closed_Date__c, Use_Cases__c,
                                     Department__c, OwnerId, Competition_They_re_Evaluating__c, Tools_in_their_Ecosystem__c,
                                     Current_Tool__c, Timeline_Why__c, Pains__c, Champion_Title__c, Source__c, Regional_Company__c, Global_Company__c,
@@ -313,7 +312,7 @@ public class DealRegistration_Handler_Test {
         newLead.Use_Cases__c = dealRegRecord.Use_Cases__c;
         newLead.Status = 'Received';
         insert newLead;
-        
+
         Lead thisLead = [SELECT Id FROM Lead WHERE Id =: newLead.Id LIMIT 1];
         
         Database.LeadConvert lc = new database.LeadConvert();
@@ -328,10 +327,8 @@ public class DealRegistration_Handler_Test {
                             FROM Lead WHERE Deal_Registration__c =: dealRegRecord.Id LIMIT 1];
 
         Account mondayAcc = [SELECT Id, Name FROM Account WHERE Id =: maAccountIdFromConvert LIMIT 1];
-        
         DealRegistration_Handler.createCompanyHierarchy companiesHier = new DealRegistration_Handler.createCompanyHierarchy(reg, localAcc, createdLead, mondayAcc);
-        
-          System.enqueueJob(companiesHier);
+        System.enqueueJob(companiesHier);
         Test.stopTest();
     }
     
