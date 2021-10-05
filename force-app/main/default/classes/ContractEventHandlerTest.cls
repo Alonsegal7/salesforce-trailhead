@@ -73,9 +73,12 @@ public with sharing class ContractEventHandlerTest {
         con.StartDate=startDate;
         con.EndDate=endDate;
         insert con;
+        Contract_Product__c conProd = new Contract_Product__c(Contract__c=con.Id,Product__c=prodForExisitngEvent.Id);
+        insert conProd;
         //Existing contract exist
         Contract_Event__c conEvent = new Contract_Event__c(
             Contract__c=con.Id, Calculate_Arr__c=true, 
+            Contract_Product__c=conProd.Id,
             Product__c= prodForExisitngEvent.Id,
             SKU__c='CORE-PRO',
             IsRecurring__c=true,  
@@ -130,8 +133,8 @@ public with sharing class ContractEventHandlerTest {
         Contract proRatedCon = [select Id,Contract_Arr__c,Contract_Seats__c from contract where id =: con.Id limit 1];
         List<Contract_Event__c> conEvntList = [select id from contract_event__c];
         List<Contract> conLit =[select id from contract];
-        List<Contract_Product__c> conProd = [select id from Contract_Product__c ];
-        System.assertEquals(1, conProd.size());
+        List<Contract_Product__c> conProdc = [select id from Contract_Product__c ];
+        System.assertEquals(1, conProdc.size());
         System.assertEquals(proRatedCon.Id ,quote.ContractId);
         System.assertEquals(73 ,proRatedCon.Contract_Seats__c);
         System.assertEquals(5476 ,proRatedCon.Contract_arr__c);

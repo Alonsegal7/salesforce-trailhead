@@ -9,8 +9,10 @@ public with sharing class Contract_Event_Daily_Update_Test {
         TestObjectCreator.persistImmediate=true;
         Account comp = TestObjectCreator.CreateAccount();
         Contract con = TestObjectCreator.CreateContract(comp);
-        Contract_Event__c todayCon = new Contract_Event__c(isrecurring__c=true,Contract__c=con.Id,Start_Date__c=today);
-        Contract_Event__c futureCon = new Contract_Event__c(isrecurring__c=true,Contract__c=con.Id,Start_Date__c=tommorow);
+        Contract_Product__c conProd = new Contract_Product__C (Contract__c=con.Id);
+        insert conProd;
+        Contract_Event__c todayCon = new Contract_Event__c(Contract_Product__c=conProd.Id,isrecurring__c=true,Contract__c=con.Id,Start_Date__c=today);
+        Contract_Event__c futureCon = new Contract_Event__c(Contract_Product__c=conProd.Id,isrecurring__c=true,Contract__c=con.Id,Start_Date__c=tommorow);
         insert todayCon;
         insert futureCon;
          
