@@ -94,14 +94,12 @@ public with sharing class ContractEventToContract {
                 }
                 masterMondayAccountToUpdate.add(new Account(Id=(Id)obj.get('Monday_Account__c'),Active_Contract__c = createdContsMap.get(obj.Id).Id));
             }
-            // if (!masterMondayAccountToUpdate.isEmpty()) {
-            //     System.enqueueJob(new updateAccountQueueable(masterMondayAccountToUpdate));
-            // }
+
             if (!subsToUpdate.isEmpty()) {
                 update subsToUpdate;
             }
             if (!masterMondayAccountToUpdate.isEmpty()) {
-                update masterMondayAccountToUpdate;
+                System.enqueueJob(new updateAccountQueueable(masterMondayAccountToUpdate));
             }
             if (!contractToDeactivate.isEmpty()) {
                 System.enqueueJob(new updateContractToInactiveQueueable(contractToDeactivate));
