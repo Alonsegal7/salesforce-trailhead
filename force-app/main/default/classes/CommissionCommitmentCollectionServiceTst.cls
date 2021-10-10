@@ -52,21 +52,31 @@ public without sharing class CommissionCommitmentCollectionServiceTst {
     }
 
     static testmethod void testInsert(){
+        Commission_Report__c test = new Commission_Report__c();
+        test.name = 'test';
+        test.Big_Brain_Id__c = '12';
+        test.Date__c = Date.today();
+        insert test;
         List<Partner_Commission__c> pcList = [select Id from Partner_Commission__c];
         System.assertEquals(1, pcList.size());
-        Commission_Collection__c collection = new Commission_Collection__c(Name = 'test');
-        collection.Partner_Commission__c = pcList.get(0).Id;
-        collection.Pulse_Account_Id__c = '12345';
         Commission_Commitment__c commitment = new Commission_Commitment__c(Name = 'test');
         commitment.Partner_Commission__c = pcList.get(0).Id;
         commitment.Pulse_Account_Id__c = '12345';
-
-        insert collection;
+        commitment.External_Source_ID__c = '879';
+        commitment.Report_Id__c = '12';
+        Commission_Collection__c collection = new Commission_Collection__c(Name = 'test');
+        collection.Partner_Commission__c = pcList.get(0).Id;
+        collection.Pulse_Account_Id__c = '12345';
+        collection.Commitment_Big_Brain_Id__c = '879';
+        collection.Report_Id__c = '12';
+        
         insert commitment;
+        insert collection; 
 
-        collection = [select Monday_Account__c, Opportunity__c from Commission_Collection__c limit 1];
+        collection = [select Monday_Account__c, Opportunity__c, Commission_Commitment__c from Commission_Collection__c limit 1];
         System.assertNotEquals(null, collection.Monday_Account__c);
         System.assertNotEquals(null, collection.Opportunity__c);
+        System.assertNotEquals(null, collection.Commission_Commitment__c);
         commitment = [select Monday_Account__c, Opportunity__c from Commission_Commitment__c limit 1];
         System.assertNotEquals(null, commitment.Monday_Account__c);
         System.assertNotEquals(null, commitment.Opportunity__c);

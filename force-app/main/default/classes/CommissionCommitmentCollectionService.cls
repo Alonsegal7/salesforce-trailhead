@@ -26,13 +26,14 @@ public without sharing class CommissionCommitmentCollectionService {
         List<Commission_Collection__c> relevantCollections = new List<Commission_Collection__c>();
         Set<String> commitmentsIds = new Set<String>();
         for(Commission_Collection__c collection: collectionList){
-            if(oldCollectionMap == null || collection.get('Commitment_Big_Brain_Id__c') != oldCollectionMap.get(String.valueOf(collection.get('Id'))).get('Commitment_Big_Brain_Id__c')){
+            if(oldCollectionMap == null || collection.get('Commitment_Big_Brain_Id__c') != oldCollectionMap.get(String.valueOf(collection.get('Id'))).get('Commitment_Big_Brain_Id__c') || collection.get('Manual_Trigger__c') == 'Link Commitment'){
                 if(collection.get('Commitment_Big_Brain_Id__c') == null){
                     collection.put('Commission_Commitment__c',null);
                     continue;
                 }
                 relevantCollections.add(collection);
                 commitmentsIds.add(String.valueOf(collection.get('Commitment_Big_Brain_Id__c'))); 
+                collection.put('Manual_Trigger__c', null);
             }
         }
         if(relevantCollections.isEmpty()) return;
@@ -134,9 +135,9 @@ public without sharing class CommissionCommitmentCollectionService {
     private Map<String,Id> getCommitments(Set<String> commitmentsIds){
         Map<String,Id> res = new Map<String,Id>();
         if(commitmentsIds.isEmpty()) return res;
-        List<Commission_Commitment__c> commitmentList = [select Id, Big_Brain_Id__c from Commission_Commitment__c where Big_Brain_Id__c IN: commitmentsIds];
+        List<Commission_Commitment__c> commitmentList = [select Id, External_Source_ID__c from Commission_Commitment__c where External_Source_ID__c IN: commitmentsIds];
         for(Commission_Commitment__c commitment: commitmentList){
-            res.put(commitment.Big_Brain_Id__c, commitment.Id);
+            res.put(commitment.External_Source_ID__c, commitment.Id);
         }
         return res;
     }
