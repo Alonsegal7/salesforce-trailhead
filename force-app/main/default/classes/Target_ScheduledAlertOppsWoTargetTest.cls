@@ -24,9 +24,11 @@ public with sharing class Target_ScheduledAlertOppsWoTargetTest {
     }
 
     static testmethod void testOppsWoTarget(){
-        Opportunity opp = [select Id from Opportunity limit 1];
-        opp.Target__c = null;
-        update opp;
+        Opportunity opp = [select Id, Target__c from Opportunity limit 1];
+        Target__c target = new Target__c(
+            Id = opp.Target__c
+        );
+        delete target;
         Test.setMock(HttpCalloutMock.class, new Slack_MessageServiceTest.mockCallout());
         Test.startTest();
         Target_ScheduledAlertOppsWoTarget myClass = new Target_ScheduledAlertOppsWoTarget();   
