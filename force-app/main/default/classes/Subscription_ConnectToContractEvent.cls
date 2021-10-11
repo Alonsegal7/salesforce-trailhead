@@ -168,7 +168,7 @@ public without sharing class Subscription_ConnectToContractEvent {
                     if(sub.Manual_Trigger__c!=oldMap.get(sub.id).Manual_Trigger__c&&sub.Manual_Trigger__c=='Create Active Contract'){
                         subsConEventToCreate.add(sub);
                     }
-                    if (sub.Status__c=='ACTIVE' && sub.arr__c !=null && oldMap.get(sub.id).arr__c==null && sub.contract__c!=null ) {
+                    if (sub.Status__c=='ACTIVE' && sub.contract__c!=null && ((sub.arr__c !=null && oldMap.get(sub.id).arr__c==null) || (sub.ARR_Gain__c !=null && oldMap.get(sub.id).ARR_Gain__c==null))) {
                         subsMapToGetARR.put(sub.id,sub);
                     } 
                 }
@@ -228,7 +228,7 @@ public without sharing class Subscription_ConnectToContractEvent {
     public static void updateArrToEvent(Map<Id,Subscription__c> subs){
         List<contract_event__c> conEvntsToUpdate = new List<contract_event__c>();
         for (contract_event__c conEvn:[select id, ARR__c,subscription__c from contract_event__c where subscription__c in:subs.keyset() ]){
-            conEvn.arr__c = subs.get(conEvn.subscription__c).arr__c;
+            conEvn.arr__c = subs.get(conEvn.subscription__c).Contract_Event_ARR__c;
             conEvntsToUpdate.add(conEvn);
         }
         update conEvntsToUpdate;
