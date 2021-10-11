@@ -18,8 +18,8 @@ trigger Subscription_Trigger on Subscription__c (after delete, after insert, aft
                 Subscription_ConnectToContractEvent.SubscriptionToContractEvent(trigger.new,null);
         }
         if (trigger.IsUpdate) {
-            CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
                 Subscription_ConnectToContractEvent.SubscriptionToContractEvent(trigger.new,trigger.oldMap);
+            CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
         }
     }
 }

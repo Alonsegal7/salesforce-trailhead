@@ -87,10 +87,14 @@ public with sharing class ContractEventToContract {
                 if (obj.get('Manual_Trigger__c')=='Create Active Contract') {
                     subsToUpdate.add(new Subscription__c(Id=obj.id,Contract__c=createdContsMap.get(obj.Id).Id,Manual_Trigger__c=''));
                     contractToDeactivate.add(new Contract(Id=(Id)obj.get('Contract__c'),Status__c='Deactivated'));
+                    priorContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=Subscription_ConnectToContractEvent.priorContsMap.get((string)obj.get('BigBrain_Id__c'))));
+
                 }
+                
                 else {
                     subsToUpdate.add(new Subscription__c(Id=obj.id,Contract__c=createdContsMap.get(obj.Id).Id));
                     createdContForSubOrder.put((string)obj.get('Order_Number__c'),createdContsMap.get(obj.Id).Id);
+                    priorContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=Subscription_ConnectToContractEvent.priorContsMap.get((string)obj.get('BigBrain_Id__c'))));
                 }
                 masterMondayAccountToUpdate.add(new Account(Id=(Id)obj.get('Monday_Account__c'),Active_Contract__c = createdContsMap.get(obj.Id).Id));
             }
@@ -104,7 +108,9 @@ public with sharing class ContractEventToContract {
             if (!contractToDeactivate.isEmpty()) {
                 System.enqueueJob(new updateContractToInactiveQueueable(contractToDeactivate));
             }
-
+            if (!priorContractsToUpdate.isEmpty()) {
+                System.enqueueJob(new updatePriorContract(priorContractsToUpdate));
+            }
         }
      }catch(Exception e){
         Utilities.sendDebugEmail('Error in ContractEventCreateNewContract ',e,e.getMessage());  
@@ -135,7 +141,8 @@ public with sharing class ContractEventToContract {
             Auto_Renewal__c=conEvent.Auto_Renewal__c
         );
         return contract;
-        }
+    }
+       
     
     //When a new contract event is arrived and arr is changed - find all related open opps to update new ARR
     public static void updateContractArrChangeToOpenOps(List<Contract> contracts, Map<Id,Contract> oldConts){
