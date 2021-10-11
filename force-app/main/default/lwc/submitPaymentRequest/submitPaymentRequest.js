@@ -85,9 +85,7 @@ export default class SubmitPaymentRequest extends LightningElement {
     }
 
     loadDataScreen() {
-        //test
         this.error = '';
-        //test1
         this.customError = '';
         this.showSpinner = true;
         getData({month: this.monthValue})
