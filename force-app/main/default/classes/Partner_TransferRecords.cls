@@ -4,7 +4,7 @@ public class Partner_TransferRecords {
     public static String runUserTransfer(Id oldOwnerId, Id newOwnerId){
         try {
             String helpText = ' from '+ oldOwnerId + ' to ' + newOwnerId;
-            //accounts test
+            //accounts
             Batch_PartnerUserTransfer_Accounts accountsBatch = new Batch_PartnerUserTransfer_Accounts(oldOwnerId, newOwnerId);
             //leads
             String query = 'select Id, Name from Lead where OwnerId = \''+oldOwnerId+'\' and Status != \'Nurturing\' and Status != \'Qualified\' and Status != \'Converted\'';
