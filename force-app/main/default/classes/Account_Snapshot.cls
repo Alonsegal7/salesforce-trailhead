@@ -9,12 +9,16 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
     public list<String> accountHeaderFields;
     public list<String> snapshotHeaderFields;
     public id accountId;
+    public boolean forceCreate=false;
     
     public Account_Snapshot() {
     }
     
     public Account_Snapshot(id testAccId) {
         accountId=testAccId;
+    }
+    public Account_Snapshot(boolean forceCreateVar) {
+        forceCreate=forceCreateVar;
     }
     @InvocableMethod
     public static void ManualRun(list<id> testAccId){
@@ -24,7 +28,7 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
     public void execute(SchedulableContext sc) {
         try{
             Utilities.cleanFlexQueue();
-            Database.executeBatch(this,30);
+            Database.executeBatch(this,10);
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage());   
         }
@@ -58,8 +62,9 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             query+=' and Id NOT IN (SELECT Account__c FROM Account_Snapshot__c where Date__c=today) ';
             if(accountId!=null)
                 query+=' and id=\''+accountId+'\' '; 
-            if(!(today.format('E')=='Sun'||today.day()==1||today.day()>tomorrow.day()||accountId!=null)&&!test.isRunningTest())
+            if(!(today.format('E')=='Sun'||today.day()==1||today.day()>tomorrow.day()||accountId!=null||forceCreate)&&!test.isRunningTest())
                 query+=' limit 0 ';
+            system.debug('Raz Ben Ron accSnap forceCreate: '+forceCreate); 
             system.debug('Raz Ben Ron accSnap query: '+query); 
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage());   
@@ -72,7 +77,7 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             list<Account_Snapshot__c> snapsToCreate= new list<Account_Snapshot__c>();
             dateTime today=dateTime.now();
             dateTime tomorrow=today+1;
-            boolean isOngoing=today.format('E')=='Sun'?true:false;
+            boolean isOngoing=today.format('E')=='Sun'||forceCreate?true:false;
             boolean isFirst=today.day()==1?true:false;
             boolean isLast=today.day()>tomorrow.day()?true:false;
             for(Account acc: scope){
