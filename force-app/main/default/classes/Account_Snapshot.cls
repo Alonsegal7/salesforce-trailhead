@@ -4,10 +4,11 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
     public Integer totalSnapsCreated=0;
     public Integer totalSnapsErrors=0;
     public String errorsFound='';
-    public map<String,Schema.FieldSetMember> accountFieldByName;
-    public map<String,Schema.FieldSetMember> snapshotFieldByName;
-    public list<String> accountHeaderFields;
-    public list<String> snapshotHeaderFields;
+    //public map<String,Schema.FieldSetMember> accountFieldByName;
+    //public map<String,Schema.FieldSetMember> snapshotFieldByName;
+    //public list<String> accountHeaderFields;
+    //public list<String> snapshotHeaderFields;
+    public map<String,String> snapshotFieldByAccField;
     public id accountId;
     public boolean forceCreate=false;
     
@@ -38,7 +39,8 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
         try{
             string fieldsToQuery='';
             totalAccountsFromQuery=0;
-            accountHeaderFields=new list<String>();
+            snapshotFieldByAccField=new map<String,String>();
+            /*accountHeaderFields=new list<String>();
             accountFieldByName=new map<String,Schema.FieldSetMember>();
             for (Schema.FieldSetMember fsm :SObjectType.Account.FieldSets.Account_Snapshot_Fields.getFields()){
                 accountHeaderFields.add(fsm.getFieldPath());
@@ -50,8 +52,15 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             for (Schema.FieldSetMember fsm :SObjectType.Account_Snapshot__c.FieldSets.Snapshot_Creation_Fields.getFields()){
                 snapshotHeaderFields.add(fsm.getFieldPath());
                 snapshotFieldByName.put(fsm.getFieldPath(),fsm);
+            }*/
+            //
+            for(Account_Snapshot_Mapping__mdt asm :[select id,Account_Field_API__c,Snapshot_Field_API__c 
+                                                    from Account_Snapshot_Mapping__mdt]){
+                snapshotFieldByAccField.put(asm.Account_Field_API__c,asm.Snapshot_Field_API__c);
+                fieldsToQuery+=','+asm.Account_Field_API__c;
             }
-            
+            //
+
             dateTime today=dateTime.now();
             dateTime tomorrow=today+1;
             query='select Id,Name ';
@@ -90,11 +99,17 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
                 os.Start_of_Month__c=isFirst;
                 if(accountId!=null)
                     os.Test_Snapshot__c=true;
-                for (Integer i=0;i<accountHeaderFields.size();i++){
+                /*for (Integer i=0;i<accountHeaderFields.size();i++){
                     String accFieldName=accountHeaderFields[i];
                     String snapFieldName=snapshotHeaderFields[i];
                     os.put(snapFieldName,acc.get(accFieldName));
-                }
+                }*/
+                //
+                for (String accField: snapshotFieldByAccField.keySet()){
+                    String accFieldName=accField;
+                    String snapFieldName=snapshotFieldByAccField.get(accField);
+                    os.put(snapFieldName,acc.get(accFieldName));
+                }//
                 if(acc.Account_Snapshots__r.size()>0)
                     os.Previous_Snapshot__c=acc.Account_Snapshots__r[0].Id;
                 snapsToCreate.add(os);
