@@ -30,7 +30,7 @@ public class MondayAccountHelper {
                SObject4Update.put(sale.id, sale);
            }
             
-           for(Opportunity o : aData.Opportunities_of_Monday_Account__r) {
+           for(Opportunity o : aData.Opportunities) {
                o.Company__c = accountCompanyId;
                o.primary_pulse_account_id__c = a.primary_pulse_account_id__c;
                SObject4Update.put(o.id, o);
@@ -54,7 +54,7 @@ public class MondayAccountHelper {
         
         list <Account> AData = [
             select id,name,parentid,
-            (select id,stagename,monday_account__c from Opportunities_of_Monday_Account__r),
+            (select id,stagename,AccountId from Opportunities),
             (select id,monday_Account__c from Sale1__r),
             (select id,monday_Account__c from Contacts1__r),
             (select id,company__c,Billing_Entity__c from Company_Billings__r)
@@ -163,43 +163,4 @@ public class MondayAccountHelper {
         
         Globals.CodeOff = false;
     }
-    
-    /*
-    public static void handleChange(Account mondayAccount){
-        List<SObject> recordsToUpdate = new List<SObject>();
-        
-        recordsToUpdate.addAll(updateSales(mondayAccount));
-        recordsToUpdate.addAll(updateOpportunities(mondayAccount));
-        recordsToUpdate.addAll(updateContacts(mondayAccount));
-
-        if(recordsToUpdate.size() > 0){
-            update recordsToUpdate;
-        }
-    }
-    
-    public static List<Sale__c> updateSales(Account mondayAccount){
-        Sale__c[] sales = [SELECT Id FROM Sale__c WHERE Monday_Account__c=:mondayAccount.Id];
-        for(Sale__c sale : sales){
-            sale.Company__c = mondayAccount.ParentId;
-            sale.Primary_Pulse_Account_Id__c = mondayAccount.primary_pulse_account_id__c;
-        }
-        return sales;
-    }
-    
-    public static List<Opportunity> updateOpportunities(Account mondayAccount){
-        Opportunity[] opps = [SELECT Id FROM Opportunity WHERE Monday_Account__c=:mondayAccount.Id];
-        for(Opportunity opp : opps){
-            opp.Company__c = mondayAccount.ParentId;
-            opp.primary_pulse_account_id__c = mondayAccount.primary_pulse_account_id__c;
-        }
-        return opps;
-    }
-    
-    public static List<Contact> updateContacts(Account mondayAccount){
-        Contact[] contacts = [SELECT Id FROM Contact WHERE Monday_Account__c=:mondayAccount.Id];
-        for(Contact contact : contacts){
-            contact.Company__c = mondayAccount.ParentId;
-        }
-        return contacts;
-    }*/
 }
