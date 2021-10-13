@@ -8,6 +8,7 @@ public with sharing class DealRegistration_Controller {
         mso.put('contactDetailsFieldSet', getContactDetailsFieldSetFieldSet());
         mso.put('opportunityInformationFieldSet', getOpportunityInformationFieldSetFieldSet());
         mso.put('opportunityQualificationFieldSet', getOpportunityQualificationFieldSetFieldSet());
+        mso.put('eventDetailsFieldSet', getEventDetailsFieldSetFieldSetFieldSet());
         System.debug('### Tal:\n' + JSON.serializePretty(mso));
         res = JSON.serialize(mso);
         return res;
@@ -122,5 +123,20 @@ public with sharing class DealRegistration_Controller {
             system.debug('### in catch: ');
             throw new AuraHandledException(e.getMessage()); 
         }
+    }
+
+    public static List <Map<String, Object>> getEventDetailsFieldSetFieldSetFieldSet(){
+        System.debug('### in getEventDetailsFieldSetFieldSetFieldSet');
+        List<String> ls = new List<String>();
+        List <Map<String, Object>> lmss = new List <Map<String, Object>>();
+        for(Schema.FieldSetMember f : SObjectType.Deal_Registration__c.FieldSets.EventDetails.getFields()) {
+            Map<String, Object> tmp = new Map<String, Object>();
+            tmp.put('name', f.getFieldPath());
+            tmp.put('required', (f.getDbRequired() || f.getRequired()));
+            lmss.add(tmp);
+            ls.add(f.getFieldPath());
+        }
+        System.debug('### Tal - New Fieldset mapping:\n' + JSON.serializePretty(lmss));
+        return lmss;
     }
 }

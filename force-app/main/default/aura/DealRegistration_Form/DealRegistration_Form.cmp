@@ -12,6 +12,7 @@
     <aura:attribute name="contactDetailsFieldSet" type="List" description="Partner - New Deal Registration Form"/>
     <aura:attribute name="opportunityInformationFieldSet" type="List" description="Partner - New Deal Registration Form"/>
     <aura:attribute name="opportunityQualificationFieldSet" type="List" description="Partner - New Deal Registration Form"/>
+    <aura:attribute name="eventDetailsFieldSet" type="List" description="Partner - New Deal Registration Form"/>
     <aura:attribute name="openModal" type="Boolean"/>
     <aura:attribute name="recordId" type="Id"/>
     <aura:attribute name="dealFields" type="Object"/>
@@ -26,6 +27,7 @@
     <aura:attribute name="relatedOppLink" type="String" default=""/>
     <aura:attribute name="relatedDealRegLink" type="String" default=""/>
     <aura:attribute name="dealRegStatus" type="String" default=""/>
+    <aura:attribute name="eventOrWebinarSelected" type="Boolean" default="false"/>
 
     <lightning:navigation aura:id="navService"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
@@ -103,10 +105,20 @@
                                     <aura:iteration items="{!v.opportunityInformationFieldSet}" var="field" indexVar="i">
                                         <div class="slds-grid slds-gutters">
                                             <div class="slds-col slds-size_1-of-1">
-                                                <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                                <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" onchange="{!c.handleContactDetailsFieldChange}" />
                                             </div>
                                         </div>
                                     </aura:iteration>
+
+                                    <aura:if isTrue="{!v.eventOrWebinarSelected}">
+                                        <aura:iteration items="{!v.eventDetailsFieldSet}" var="field" indexVar="i">
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_1-of-1">
+                                                    <lightning:inputField rendered="" variant="label-stacked" required="{!field.req}" fieldName="{!field.name}" value="{!field.val}" />
+                                                </div>
+                                            </div>
+                                        </aura:iteration>
+                                    </aura:if>
         
                                     <!--Opportunity Qualification - Get fields from OpportunityDetails field set on Deal Registration object-->
                                     <div class="slds-section">

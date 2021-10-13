@@ -74,6 +74,19 @@
 						console.log('### hasPermissionToForm:' + storeResponse.hasPermissionToForm);
 						component.set('v.hasPermission', storeResponse.hasPermissionToForm);
 					}
+
+					if (storeResponse.hasOwnProperty('eventDetailsFieldSet') && storeResponse.eventDetailsFieldSet.length > 0) {
+						var fieldSetFields = new Array();
+						for (var i = 0; i < storeResponse.eventDetailsFieldSet.length; i++){
+							var f = {};
+							f.name = storeResponse.eventDetailsFieldSet[i].name;
+							f.req = storeResponse.eventDetailsFieldSet[i].required;
+							fieldSetFields.push(JSON.parse(JSON.stringify(f)));
+							console.log('### fieldSetFields: ' + fieldSetFields);
+						}
+						component.set('v.eventDetailsFieldSet', fieldSetFields);
+						console.log('### eventDetailsFieldSet: ' + component.get('v.eventDetailsFieldSet'));
+					}
 				}
 			} else {
 				console.log('### response.getError(): ' + response.getError());
@@ -196,4 +209,16 @@
 		});
 		$A.enqueueAction(action1);
 	},
+
+	handleContactDetailsFieldChange : function(component, event){
+		var fieldName = event.getSource().get("v.fieldName");
+        var fieldValue = event.getSource().get("v.value");
+		if(fieldName == 'Source__c'){
+			if(fieldValue == 'Event' || fieldValue == 'Webinar'){
+				component.set("v.eventOrWebinarSelected", true);  
+			} else {
+				component.set("v.eventOrWebinarSelected", false);  
+			}
+		}
+	}
 })
