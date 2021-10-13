@@ -75,24 +75,13 @@
 						component.set('v.hasPermission', storeResponse.hasPermissionToForm);
 					}
 				}
-				
-				else{
-                }   
-			}
-			
-			else{
+			} else {
 				console.log('### response.getError(): ' + response.getError());
 				var errors = response.getError();
 				console.log('### error messsge: ' + errors[0].message);
 			}
-            var spinner = component.find("cmspinner");
-        	$A.util.addClass(spinner, "slds-hide");
         });
-        var spinner = component.find("cmspinner");
-        $A.util.removeClass(spinner, "slds-hide");
 		$A.enqueueAction(action);
-
-		
 	},
 
 	closeModal : function(component, event, helper) {
@@ -102,14 +91,15 @@
     },
 	
 	handleLoad : function(component, event, helper) {
-		component.set("v.showSpinner", false);   
+		var spinner = component.find("cmspinner");
+        $A.util.addClass(spinner, "slds-hide");
 	},
 
 	handleSubmit : function(component, event, helper) {
-		component.set('v.showSpinner', true);
+		var spinner = component.find("cmspinner");
+        $A.util.removeClass(spinner, "slds-hide");
 		console.log('### in submit: ');
 		console.log('### openModal: ' + component.get("v.openModal"));
-		// component.set("v.openModal",false);
 		event.preventDefault();
 		var fields = event.getParam();
 		console.log('### fields: ');
@@ -117,9 +107,16 @@
 		console.log('### fields_v2: ');
 	},
 
+	handleError: function(component, event) {
+		console.log('### in error submit: ');
+        var errors = event.getParams();
+        console.log("submit form response error: ", JSON.stringify(errors));
+		var spinner = component.find("cmspinner");
+        $A.util.addClass(spinner, "slds-hide");
+    },
+
 	handleSuccess : function(component, event, helper) {
 		console.log('### in success: ');
-		component.set('v.showSpinner', false);
 		var dealRegId = event.getParams().response;
 		console.log('### dealRegId: ' + dealRegId.id);
 		component.set('v.dealRegRecordId', dealRegId);
@@ -141,53 +138,24 @@
 				console.log('### dealRegStatus: ' + component.get('v.dealRegStatus'));
 				component.set('v.dealRegId', response.getReturnValue().Id);
 				console.log('### dealRegId: ' + component.get('v.dealRegId'));
-				
-				//if Partner Profile and Deal Reg = approved and in Sandbox --> Link to Sandbox Community
-				if(component.get('v.dealRegStatus') == 'Approved'){
-					component.set('v.showNotice', true);
-					console.log('### showNotice: ' + component.get('v.showNotice'));
-				}
-
-				/*//if Partner Profile and Deal Reg = approved and in Production --> Link to Production Community
-				else if(component.get('v.dealRegStatus') == 'Approved' && component.get('v.userProfile') == 'Partner Community Custom' && component.get('v.isSandbox') == false){
-					component.set('v.showNotice', true);
-					console.log('### showNotice: ' + component.get('v.showNotice'));
-					component.set('v.relatedOppLink', 'https://monday--partial.lightning.force.com/lightning/r/Opportunity/');
-				}*/
-
-				//if Partner Profile and Deal Reg = Pending Review and in Production --> Link to Sandbox Community
-				else if(component.get('v.dealRegStatus') == 'Pending Review'){
-					component.set('v.showNotice', true);
-					console.log('### showNotice: ' + component.get('v.showNotice'));
-				}
-
-				/*if Partner Profile and Deal Reg = Pending Review and in Production --> Link to Production Community
-				else if(component.get('v.dealRegStatus') == 'Pending Review' && component.get('v.userProfile') == 'Partner Community Custom' && component.get('v.isSandbox') == false){
-					component.set('v.showNotice', true);
-					console.log('### showNotice: ' + component.get('v.showNotice'));
-					component.set('v.relatedDealRegLink', 'partial-monday.cs173.force.com/partners/s/detail/');
-				}*/
-				// if(component.get('v.userProfile') == 'Partner Community Custom' && component.get('v.isSandbox') == true){
-					// component.set('v.showNotice', true);
-					// console.log('### showNotice: ' + component.get('v.showNotice'));
-					// component.set('v.relatedDealRegLink', 'detail/');
-					// console.log('### relatedDealRegLink: ' + component.get('v.relatedDealRegLink'));
-				// }
-			}
-			
-			else {
+				component.set('v.formScreen', false);
+				component.set('v.showNotice', true);
+			}else {
 				console.log('### event_v1: ' + console.log(event));
 				var errors = response.getError();
 				console.log('### error messsge_v1: ' + errors[0].message);
 			}
+			var spinner = component.find("cmspinner");
+        	$A.util.addClass(spinner, "slds-hide");
 		});
 		$A.enqueueAction(action);
 	},
 
 	openDealRegForm : function(component, event, helper){
-		console.log('### openModal: ' + component.get('v.openModal'));
 		component.set('v.openModal', true);
-		console.log('### openModal: ' + component.get('v.openModal'));
+		var spinner = component.find("cmspinner");
+        $A.util.removeClass(spinner, "slds-hide");
+
 		var action = component.get("c.getProfileInfo");
 		action.setCallback(this, function(response) {
 			console.log('### in action: ');
@@ -198,13 +166,17 @@
 				var result = response.getReturnValue().Name;
 				component.set('v.userProfile', result);
 		
-			}
-			
-			else{
+			}else{
 				console.error("fail:" + response.getError()[0].message); 
 			}
+			var spinner = component.find("cmspinner");
+        	$A.util.addClass(spinner, "slds-hide");
 		});
 		$A.enqueueAction(action);
+
+		//TBD - consolidate these two actions to one
+		var spinner = component.find("cmspinner");
+        $A.util.removeClass(spinner, "slds-hide");
 
 		var action1 = component.get("c.runningInASandbox");
 		action1.setCallback(this, function(response) {
@@ -216,11 +188,11 @@
 				var result = response.getReturnValue();
 				component.set('v.isSandbox', result);
 		
-			}
-			
-			else{
+			}else{
 				console.error("fail:" + response.getError()[0].message); 
 			}
+			var spinner = component.find("cmspinner");
+        	$A.util.addClass(spinner, "slds-hide");
 		});
 		$A.enqueueAction(action1);
 	},
