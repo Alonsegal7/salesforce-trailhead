@@ -158,6 +158,7 @@ public with sharing class DealRegistration_SearchLogic {
 
                         //Looking for related Leads
                         for(Deal_Registration__c leadReg : companyWebsiteReg.values()){
+                            leadReg.Status__c = 'Pending Review'; //Ksenia - attemp to solve empty status scenarios
                             //finding and conecting duplicate contact
                             if(!emailToConMap.isEmpty() && emailToConMap.containsKey(leadReg.Registered_Email__c)){
                                 leadReg.Related_Contact__c = emailToConMap.get(leadReg.Registered_Email__c).Id;
@@ -193,6 +194,7 @@ public with sharing class DealRegistration_SearchLogic {
                 //if no Domain exists --> no Account exists --> no need to search
                 else{
                     for(Deal_Registration__c lReg : companyWebsiteReg.values()){
+                        lReg.Status__c = 'Pending Review'; //Ksenia - attemp to solve empty status scenarios
                         if((!emailToConMap.isEmpty() && emailToConMap.containsKey(lReg.Registered_Email__c)) || lReg.Company_Size__c == '1500+'){
                             lReg.Related_Contact__c = emailToConMap.get(lReg.Registered_Email__c).Id;
                             lReg.Status__c = 'Pending Review';
