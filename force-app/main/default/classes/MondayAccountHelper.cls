@@ -30,7 +30,7 @@ public class MondayAccountHelper {
                SObject4Update.put(sale.id, sale);
            }
             
-           for(Opportunity o : aData.Opportunities_of_Monday_Account__r) {
+           for(Opportunity o : aData.Opportunities) {
                o.Company__c = accountCompanyId;
                o.primary_pulse_account_id__c = a.primary_pulse_account_id__c;
                SObject4Update.put(o.id, o);
@@ -54,7 +54,7 @@ public class MondayAccountHelper {
         
         list <Account> AData = [
             select id,name,parentid,
-            (select id,stagename,monday_account__c from Opportunities_of_Monday_Account__r),
+            (select id,stagename,AccountId from Opportunities),
             (select id,monday_Account__c from Sale1__r),
             (select id,monday_Account__c from Contacts1__r),
             (select id,company__c,Billing_Entity__c from Company_Billings__r)
