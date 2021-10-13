@@ -163,43 +163,4 @@ public class MondayAccountHelper {
         
         Globals.CodeOff = false;
     }
-    
-    /*
-    public static void handleChange(Account mondayAccount){
-        List<SObject> recordsToUpdate = new List<SObject>();
-        
-        recordsToUpdate.addAll(updateSales(mondayAccount));
-        recordsToUpdate.addAll(updateOpportunities(mondayAccount));
-        recordsToUpdate.addAll(updateContacts(mondayAccount));
-
-        if(recordsToUpdate.size() > 0){
-            update recordsToUpdate;
-        }
-    }
-    
-    public static List<Sale__c> updateSales(Account mondayAccount){
-        Sale__c[] sales = [SELECT Id FROM Sale__c WHERE Monday_Account__c=:mondayAccount.Id];
-        for(Sale__c sale : sales){
-            sale.Company__c = mondayAccount.ParentId;
-            sale.Primary_Pulse_Account_Id__c = mondayAccount.primary_pulse_account_id__c;
-        }
-        return sales;
-    }
-    
-    public static List<Opportunity> updateOpportunities(Account mondayAccount){
-        Opportunity[] opps = [SELECT Id FROM Opportunity WHERE Monday_Account__c=:mondayAccount.Id];
-        for(Opportunity opp : opps){
-            opp.Company__c = mondayAccount.ParentId;
-            opp.primary_pulse_account_id__c = mondayAccount.primary_pulse_account_id__c;
-        }
-        return opps;
-    }
-    
-    public static List<Contact> updateContacts(Account mondayAccount){
-        Contact[] contacts = [SELECT Id FROM Contact WHERE Monday_Account__c=:mondayAccount.Id];
-        for(Contact contact : contacts){
-            contact.Company__c = mondayAccount.ParentId;
-        }
-        return contacts;
-    }*/
 }
