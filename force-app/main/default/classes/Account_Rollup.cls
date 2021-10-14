@@ -32,9 +32,10 @@ public without sharing class Account_Rollup {
             }
         }
         if(relevantCompanies.isempty()){return;}
-        ID jobID = System.enqueueJob(new updateAccountsRollup(relevantCompanies));
-        System.debug('JobIDNo: '+jobID);
+        //ID jobID = System.enqueueJob(new updateAccountsRollup(relevantCompanies));
+        //System.debug('JobIDNo: '+jobID);
     }
+    /*
     private class updateAccountsRollup implements Queueable{
         private Set<Id> relevantCompanies;
 
@@ -95,4 +96,5 @@ public without sharing class Account_Rollup {
             }
         }
     }
+    */
 }

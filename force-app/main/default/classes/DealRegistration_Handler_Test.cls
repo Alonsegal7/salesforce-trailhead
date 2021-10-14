@@ -203,10 +203,10 @@ public class DealRegistration_Handler_Test {
         newLead.Status = 'Received';
         insert newLead;
         
-        Lead thisLead = [SELECT Id FROM Lead WHERE Id =: newLead.Id LIMIT 1];
+        //Lead thisLead = [SELECT Id FROM Lead WHERE Id =: newLead.Id LIMIT 1];
         
         Database.LeadConvert lc = new database.LeadConvert();
-        lc.setLeadId(thisLead.Id);
+        lc.setLeadId(newLead.Id);
         LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted=true LIMIT 1];
         lc.setConvertedStatus(convertStatus.MasterLabel);
         Database.LeadConvertResult lcr = Database.convertLead(lc);
@@ -258,10 +258,10 @@ public class DealRegistration_Handler_Test {
         newLead.Status = 'Received';
         insert newLead;
         
-        Lead thisLead = [SELECT Id FROM Lead WHERE Id =: newLead.Id LIMIT 1];
+        //Lead thisLead = [SELECT Id FROM Lead WHERE Id =: newLead.Id LIMIT 1];
         
         Database.LeadConvert lc = new database.LeadConvert();
-        lc.setLeadId(thisLead.Id);
+        lc.setLeadId(newLead.Id);
         LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted=true LIMIT 1];
         lc.setConvertedStatus(convertStatus.MasterLabel);
         Database.LeadConvertResult lcr = Database.convertLead(lc);
@@ -313,10 +313,10 @@ public class DealRegistration_Handler_Test {
         newLead.Status = 'Received';
         insert newLead;
 
-        Lead thisLead = [SELECT Id FROM Lead WHERE Id =: newLead.Id LIMIT 1];
+        //Lead thisLead = [SELECT Id FROM Lead WHERE Id =: newLead.Id LIMIT 1];
         
         Database.LeadConvert lc = new database.LeadConvert();
-        lc.setLeadId(thisLead.Id);
+        lc.setLeadId(newLead.Id);
         LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted=true LIMIT 1];
         lc.setConvertedStatus(convertStatus.MasterLabel);
         Database.LeadConvertResult lcr = Database.convertLead(lc);
@@ -326,7 +326,7 @@ public class DealRegistration_Handler_Test {
         Lead createdLead = [SELECT Id, Deal_Registration__c, Company, Related_Company__c, ConvertedAccountId, primary_pulse_account_id__c
                             FROM Lead WHERE Deal_Registration__c =: dealRegRecord.Id LIMIT 1];
 
-        Account mondayAcc = [SELECT Id, Name FROM Account WHERE Id =: maAccountIdFromConvert LIMIT 1];
+        Account mondayAcc = new Account(Id = maAccountIdFromConvert);
         DealRegistration_Handler.createCompanyHierarchy companiesHier = new DealRegistration_Handler.createCompanyHierarchy(reg, localAcc, createdLead, mondayAcc);
         System.enqueueJob(companiesHier);
         Test.stopTest();

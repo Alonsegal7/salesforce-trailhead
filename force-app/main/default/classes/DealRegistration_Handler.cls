@@ -214,6 +214,7 @@ public with sharing class DealRegistration_Handler {
 
         public void execute(QueueableContext ctx) {
             try{
+                Account_Rollup.collisionState = true;
                 List<Lead> leads = [SELECT Id FROM Lead WHERE Id =: newLead.Id];
                 LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
                 Database.LeadConvert tempLC = new Database.LeadConvert();
@@ -252,6 +253,7 @@ public with sharing class DealRegistration_Handler {
         }
 
         public void execute(QueueableContext ctx) {
+            Account_Rollup.collisionState = true;
             List<Opportunity> opportunityToUpdate = new List<Opportunity>();
             Opportunity convertedOpp = [SELECT Id, Name, CloseDate, Type, StageName, RecordTypeId, Use_Cases_PL__c, DepartmentFunction__c, OwnerId, Deal_Registration__c, Competition_They_re_Evaluating__c, Current_Tool__c, Timeline__c, Pains_PL__c, Main_Point_of_Contacts__c, Company__c, Monday_Account__c, LeadSource, pulse_account_ids__c
                                         FROM Opportunity WHERE Id =: OpportunityIdFromConvert][0];
@@ -305,6 +307,7 @@ public with sharing class DealRegistration_Handler {
         }
 
         public void execute(QueueableContext ctx) {
+            Account_Rollup.collisionState = true;
             Account convertedAcc = [SELECT Id, Name, OwnerId, ParentId, Deal_Registration__c FROM Account WHERE Id =: maAccountIdFromConvert][0];
             convertedAcc.ParentId = newLead.Related_Company__c;
             convertedAcc.OwnerId = dealRegRecord.OwnerId;
