@@ -350,6 +350,10 @@ public class DealRegistration_Handler_Test {
         lReg.Expected_Plan_Seats__c = 50;
         lReg.Source__c = 'Webinar ';
         lReg.Comments__c = 'Test Comments';
+        lReg.Competition_They_re_Evaluating__c = 'Salesforce';
+        lReg.Current_Tool__c = 'Asana';
+        lReg.Pains__c = 'Ease of use;Unhappy with current tool';
+        lReg.Tools_in_their_Ecosystem__c = 'Salesforce;Asana';
         return lReg;
     }
 }
