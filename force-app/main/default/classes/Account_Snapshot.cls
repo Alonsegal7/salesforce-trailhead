@@ -10,7 +10,7 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
     //public list<String> snapshotHeaderFields;
     public map<String,String> snapshotFieldByAccField;
     public id accountId;
-    public boolean forceCreate=false;
+    //public boolean forceCreate=false;
     
     public Account_Snapshot() {
     }
@@ -18,9 +18,9 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
     public Account_Snapshot(id testAccId) {
         accountId=testAccId;
     }
-    public Account_Snapshot(boolean forceCreateVar) {
+    /*public Account_Snapshot(boolean forceCreateVar) {
         forceCreate=forceCreateVar;
-    }
+    }*/
     @InvocableMethod
     public static void ManualRun(list<id> testAccId){
         Utilities.cleanFlexQueue();
@@ -64,16 +64,16 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             dateTime today=dateTime.now();
             dateTime tomorrow=today+1;
             query='select Id,Name ';
-            query+=',(SELECT Id FROM Account_Snapshots__r ORDER BY Date__c DESC LIMIT 1) ';
+            //query+=',(SELECT Id FROM Account_Snapshots__r ORDER BY Date__c DESC LIMIT 1) ';
             query+=fieldsToQuery;
             //get all paying customers (MAs), excluding accounts that already have a snapshot for today (to aviod dups)
             query+=' from Account where recordtype.developername=\'Monday_Account\' and ARR__c>0 '; 
-            query+=' and Id NOT IN (SELECT Account__c FROM Account_Snapshot__c where Date__c=today) ';
+            //query+=' and Id NOT IN (SELECT Account__c FROM Account_Snapshot__c where Date__c=today) ';
             if(accountId!=null)
                 query+=' and id=\''+accountId+'\' '; 
-            if(!(today.format('E')=='Sun'||today.day()==1||today.day()>tomorrow.day()||accountId!=null||forceCreate)&&!test.isRunningTest())
+            if(!(today.format('E')=='Sun'||today.format('E')=='Mon'||today.day()==1||today.day()>tomorrow.day()||accountId!=null)&&!test.isRunningTest())
                 query+=' limit 0 ';
-            system.debug('Raz Ben Ron accSnap forceCreate: '+forceCreate); 
+            //system.debug('Raz Ben Ron accSnap forceCreate: '+forceCreate); 
             system.debug('Raz Ben Ron accSnap query: '+query); 
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage());   
@@ -86,10 +86,15 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             list<Account_Snapshot__c> snapsToCreate= new list<Account_Snapshot__c>();
             dateTime today=dateTime.now();
             dateTime tomorrow=today+1;
-            boolean isOngoing=today.format('E')=='Sun'||forceCreate?true:false;
+            boolean isOngoing=today.format('E')=='Sun'||today.format('E')=='Mon'?true:false;
             boolean isFirst=today.day()==1?true:false;
             boolean isLast=today.day()>tomorrow.day()?true:false;
+
+            //querying in execute to avoid CPU limit in start
+            map<Id,Account> accountWithLatestSnapshot= new map<Id,Account>([select id,(SELECT Id,Date__c FROM Account_Snapshots__r ORDER BY Date__c DESC LIMIT 1)
+                                                                            from Account where id in:scope]);
             for(Account acc: scope){
+                system.debug('Raz Ben Ron Acc Name '+acc.Name); 
                 Account_Snapshot__c os= new Account_Snapshot__c();
                 os.Account__c=acc.Id;
                 os.Name=acc.Name.left(61)+' - '+string.valueof(datetime.now().format('dd/MM/YYYY HH:mm'));
@@ -110,9 +115,12 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
                     String snapFieldName=snapshotFieldByAccField.get(accField);
                     os.put(snapFieldName,acc.get(accFieldName));
                 }//
-                if(acc.Account_Snapshots__r.size()>0)
-                    os.Previous_Snapshot__c=acc.Account_Snapshots__r[0].Id;
-                snapsToCreate.add(os);
+                if(accountWithLatestSnapshot.get(acc.Id).Account_Snapshots__r.size()>0){
+                    os.Previous_Snapshot__c=accountWithLatestSnapshot.get(acc.Id).Account_Snapshots__r[0].Id;
+                    //os.Previous_Snapshot__c=acc.Account_Snapshots__r[0].Id;
+                }
+                if(accountWithLatestSnapshot.get(acc.Id).Account_Snapshots__r[0].Date__c!=os.Date__c)//to avoid duplications
+                    snapsToCreate.add(os);
             }
             num+=1;
             system.debug('Raz Ben Ron accSnap snapsToCreate: '+snapsToCreate); 
