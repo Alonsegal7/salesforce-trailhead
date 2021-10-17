@@ -2,7 +2,7 @@
 	 onRender : function(component, event, helper){
         var frame = document.getElementById("bb-embed");
         if(frame){
-        	console.log("BigBrainEmbed - onRender", frame.src);     
+        	console.log("BigBrainEmbed - onRender", frame.src);  
         }
         setTimeout(function(){
             var frame = document.getElementById("bb-embed");
