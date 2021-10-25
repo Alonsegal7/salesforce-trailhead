@@ -1,13 +1,24 @@
 public with sharing class Opportunity_RenewalCreation {
     //Check if there is already a CS Opportunity related to Contract - if so, the component will not show the ability to create a new Opp
     @AuraEnabled(cacheable=true)
-    public static List<Opportunity> checkRelatedOpps(Id recordId){
-        List<Opportunity> relatedOpp = [
+    public static List<Opportunity> checkOpenRenewalOpps(Id recordId){
+        List<Opportunity> renewalOpps = [
             SELECT Id, Name, StageName, Selected_Company_Contract__c 
             FROM Opportunity 
-            WHERE StageName != 'Closed Won' AND StageName != 'Closed Lost' AND RecordType.DeveloperName = 'CS_Opportunity' AND Selected_Company_Contract__c =: recordId];
-        
-        return relatedOpp;
+            WHERE StageName != 'Closed Won' AND StageName != 'Closed Lost' AND Selected_Company_Contract__c =: recordId AND (RecordType.DeveloperName = 'CS_Opportunity' OR Type LIKE '%Renewal%')];
+        system.debug('### renewalOpps: ' + renewalOpps);
+        return renewalOpps;
+    }
+
+    //Check if there is already an open Expansion Opportunity related to Contract - if so, the component will display a warning message
+    @AuraEnabled(cacheable=true)
+    public static List<Opportunity> checkOpenExpansionOpps(Id recordId){
+        List<Opportunity> expansionOpps = [
+            SELECT Id, Name, StageName, Selected_Company_Contract__c 
+            FROM Opportunity 
+            WHERE StageName != 'Closed Won' AND StageName != 'Closed Lost' AND Type = 'Expansion' AND Selected_Company_Contract__c =: recordId];
+        system.debug('### expansionOpps: ' + expansionOpps);
+        return expansionOpps;
     }
 
     @AuraEnabled(cacheable=true)
@@ -73,8 +84,12 @@ public with sharing class Opportunity_RenewalCreation {
             }
         }
 
-        List<Account> mondayAcc  = [SELECT Id, Name, Active_Contract__c, Company__c, Company__r.Name FROM Account WHERE Active_Contract__c =: recordId AND ARR__c != null ORDER BY ARR__c DESC LIMIT 1];
+        List<Account> mondayAcc  = [SELECT Id, Name, Active_Contract__c, Company__c, Company__r.Name, Pricing_Version__c, Latest_Billing_Entity__c FROM Account WHERE Active_Contract__c =: recordId AND ARR__c != null ORDER BY ARR__c DESC LIMIT 1];
         System.debug('### mondayAcc: ' + mondayAcc);
+
+        if((billingEntity == '' || billingEntity == null) && qli == null && subs == null && !mondayAcc.isEmpty()){
+            billingEntity = mondayAcc[0].Latest_Billing_Entity__c;
+        }
 
         if(userProfile.Name == 'Renewals'){
             getRelevantRT = csOpportunityRT;
@@ -85,7 +100,6 @@ public with sharing class Opportunity_RenewalCreation {
         }
 
         system.debug('### pricingVersion: ' + pricingVersion);
-        system.debug('### mondayAcc[0]: ' + mondayAcc[0]);
         system.debug('### cont_v1: ' + cont);
         try{
             Opportunity newOpp = new Opportunity(
@@ -103,12 +117,13 @@ public with sharing class Opportunity_RenewalCreation {
                 Probability = 20,
                 Expected_Seat_Price__c = cont.Weighted_Average_Net_Per_Unit__c,
                 Expected_Plan_Seats__c = cont.Contract_Seats__c,
-                Expected_Plan_Period__c = cont.Tier__c,
-                Expected_Plan_Tier__c = cont.Period__c,
+                Expected_Plan_Period__c = cont.Period__c,
+                Expected_Plan_Tier__c = cont.Tier__c,
                 Pricing_Version__c = pricingVersion,
                 Payment_Method__c = paymentMethod,
                 Payment_Terms__c = paymentTerms,
-                Billing_Entity__c = billingEntity
+                Billing_Entity__c = billingEntity,
+                Manual_Renewal_Creation__c = true
             );
             system.debug('### newOpp: ' + newOpp);
             insert newOpp;

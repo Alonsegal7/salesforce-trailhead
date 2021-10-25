@@ -10,8 +10,8 @@
                 </div>
               </template>
         </div>
-        <template if:true={oppEsixt}>
-            <template iterator:it={oppty}>
+        <template if:true={renewalOppEsixt}>
+            <template iterator:it={renewalOppty}>
                 <li class="slds-m-around_small" style="list-style-type:none" key={it.value.Id}>
                     <div style="font-size: 18px; color: cadetblue">
                         <p>There is already an open Renewal Opportunity in progress 🤓</p>
@@ -38,16 +38,46 @@
                 </li>
             </template>
         </template>
-        <template if:false={oppEsixt}>
+        <template if:false={renewalOppEsixt}>
+            <template if:true={expansionOppEsixt}>
+                <template iterator:it={expansionOppty}>
+                    <li class="slds-m-around_small" style="list-style-type:none" key={it.value.Id}>
+                        <div style="font-size: 18px; color: black">
+                            <p>🚫 There is already an open Expansion Opportunity in progress 🚫</p>
+                        </div>
+                        <div style="font-size: 16px; color: chocolate">
+                            <p>Please review the existing Opportunity before creating a Renewal 🔎</p>
+                        </div>
+                        <div class="slds-box slds-theme_shade">
+                            <article>
+                                <slot>
+                                    <p style="font-size: 16px; color:black; font-weight: bold;">Short Overview
+                                        <lightning-icon icon-name="utility:search" alternative-text="Search" title="Search" size="small" style="padding-left: 10px;"></lightning-icon>
+                                    </p>
+                                </slot>
+                                <div>
+                                    <lightning-record-edit-form
+                                        object-api-name="Opportunity"
+                                        record-id={it.value.Id}>
+                                    <div style="font-size: 12px; color: #3E3E3C; margin-left: 2px; margin-top: 10px; margin-bottom: -5px;">Name</div>
+                                    <lightning-button variant="Base" label={it.value.Name} onclick={viewRecord} value={it.value.Id}></lightning-button>
+                                    <lightning-output-field field-name="OwnerId"> </lightning-output-field>
+                                </lightning-record-edit-form>
+                                </div>
+                            </article>
+                        </div>
+                    </li>
+                </template>
+            </template>
             <div class="slds-p-around_x-small">
                 <div if:true={primaryRenewalExist}>
                     ❌ {label.renewal_primaryRenewalLabel}
+                    <br></br>
                 </div>
-                <br></br>
                 <div if:true={mondayAccExist}>
                     ❌ {label.renewal_relatedMondayAccountLabel}
+                    <br></br>
                 </div>
-                <br></br>
                 <div>
                     <lightning-button class="slds-align_absolute-center" label="Create Renewal Opp" onclick={handleClick} disabled={buttonDisplayed} icon-name="utility:record_create"></lightning-button>
                 </div>
@@ -78,6 +108,13 @@
                                 record-id={opportunityId}>
                                 <lightning-output-field field-name="Name"></lightning-output-field>
                                 <lightning-output-field field-name="OwnerId"></lightning-output-field>
+                                <lightning-output-field field-name="AccountId"></lightning-output-field>
+                                <lightning-output-field field-name="Billing_Entity__c"></lightning-output-field>
+                                <lightning-output-field field-name="CloseDate"></lightning-output-field>
+                                <lightning-output-field field-name="StageName"></lightning-output-field>
+                                <lightning-output-field field-name="Expected_Plan_Seats__c"></lightning-output-field>
+                                <lightning-output-field field-name="Expected_Plan_Tier__c"></lightning-output-field>
+                                <lightning-output-field field-name="Expected_Plan_Period__c"></lightning-output-field>
                             </lightning-record-edit-form>
                         </div>
                         <!-- Modal/Popup Box LWC footer starts here -->

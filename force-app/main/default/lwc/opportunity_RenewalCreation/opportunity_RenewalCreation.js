@@ -3,7 +3,8 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import insertOpportunity from '@salesforce/apex/Opportunity_RenewalCreation.insertOpportunity';
-import checkRelatedOpps from '@salesforce/apex/Opportunity_RenewalCreation.checkRelatedOpps';
+import checkOpenRenewalOpps from '@salesforce/apex/Opportunity_RenewalCreation.checkOpenRenewalOpps';
+import checkOpenExpansionOpps from '@salesforce/apex/Opportunity_RenewalCreation.checkOpenExpansionOpps';
 import checkRelatedMAs from '@salesforce/apex/Opportunity_RenewalCreation.checkRelatedMAs';
 import primaryRenewalOwner from "@salesforce/schema/Contract.Primary_Renewal_Owner__c";
 import renewal_primaryRenewalLabel from '@salesforce/label/c.renewal_primaryRenewalLabel';
@@ -17,11 +18,13 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
 
     @api recordId;
     @track opportunityId;
-    @track oppty;
+    @track renewalOppty;
+    @track expansionOppty;
     @track mondayAcc;
     @track showSpinner = false;
     @track contractDetails;
-    oppEsixt = false;
+    renewalOppEsixt = false;
+    expansionOppEsixt = false;
     mondayAccExist = false;
     buttonDisplayed = false;
     primaryRenewalExist = false;
@@ -79,29 +82,52 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
         }
     }
 
-    @wire(checkRelatedOpps, { recordId: '$recordId' })
-    opportunityList({ error, data }) {
-        
+    @wire(checkOpenRenewalOpps, { recordId: '$recordId' })
+    renewalOppList({ error, data }) {
         console.log('### data: ' + data);
         if (data) {
-			// find how many items are in caselist for each loop
 			console.log(' No of opps --> ' + data.length);
-            this.oppty = data;
+            this.renewalOppty = data;
             this.error = undefined;
             if(data.length > 0){
                 console.log('### in if: ' + data.length);
-                this.oppEsixt = true;
+                this.renewalOppEsixt = true;
             }
 
             else {
                 console.log('### in else: ' + data.length);
-                this.oppEsixt = false;
+                this.renewalOppEsixt = false;
             }
-            console.log('### oppEsixt: ' + this.oppEsixt);
+            console.log('### renewalOppEsixt: ' + this.renewalOppEsixt);
         }
         
         else if (error) {
             console.log('### error: ' + error.body.message);
+            this.error = error;
+        }
+    }
+
+    @wire(checkOpenExpansionOpps, { recordId: '$recordId' })
+    expansionList({ error, data }) {
+        console.log('### data_v1: ' + data);
+        if (data) {
+			console.log(' No of opps_v1 --> ' + data.length);
+            this.expansionOppty = data;
+            this.error = undefined;
+            if(data.length > 0){
+                console.log('### in if_v1: ' + data.length);
+                this.expansionOppEsixt = true;
+            }
+
+            else {
+                console.log('### in else_v1: ' + data.length);
+                this.expansionOppEsixt = false;
+            }
+            console.log('### expansionOppEsixt_v1: ' + this.expansionOppEsixt);
+        }
+        
+        else if (error) {
+            console.log('### error_v1: ' + error.body.message);
             this.error = error;
         }
     }
@@ -121,6 +147,7 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
 
     handleClick() {
         console.log('!!!');
+        this.showSpinner = true;
         insertOpportunity( {recordId: this.recordId}).then((response)=>{
             this.showSpinner = false;
             this.opportunityId = response.Id;
