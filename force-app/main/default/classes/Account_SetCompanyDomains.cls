@@ -9,7 +9,7 @@ public without sharing class Account_SetCompanyDomains {
 
             
             for(Account acc : newAccounts){
-                if(acc.RecordTypeId == '0121t000000IQTiAAO' && acc.ParentId == null){ //Company RT and Global Company
+                if(acc.RecordTypeId == '0121t000000IQTiAAO' && acc.ParentId == null && (acc.Account_Domains__c != null || acc.website != null)){ //Company RT and Global Company and Domain or Website
                     if(oldAccounts == null && (acc.Account_Domains__c != null || acc.website != null)){//insert
                         relevantAccs.add(acc);
                     }
