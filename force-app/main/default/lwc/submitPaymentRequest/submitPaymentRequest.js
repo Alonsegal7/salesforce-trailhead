@@ -4,8 +4,12 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getMonthsPicklist from '@salesforce/apex/Partner_PaymentRequestService.getMonthsPicklist';
 import getData from '@salesforce/apex/Partner_PaymentRequestService.getData';
 import submitForApproval from '@salesforce/apex/Partner_PaymentRequestService.submitForApproval';
+import updateMdfAndSpiff from '@salesforce/apex/Partner_PaymentRequestService.updateMdfAndSpiff';
 import PAYMENT_REQ_STATUS_FIELD from '@salesforce/schema/Payment_Request__c.Status__c';
 import PAYMENT_REQ_MONTH_FIELD from '@salesforce/schema/Payment_Request__c.Month__c';
+import PAYMENT_REQ_MDF_FIELD from '@salesforce/schema/Payment_Request__c.MDF_Amount__c';
+import PAYMENT_REQ_SPIFF_FIELD from '@salesforce/schema/Payment_Request__c.Spiff_Amount__c';
+
 
 const columns = [
     { label: 'Partner Company', fieldName: 'PartnerCompanyURL', type: 'url', typeAttributes: { label: { fieldName: 'PartnerCompanyName' }, target: '_blank' }, sortable: true, wrapText: true , hideDefaultActions: true, hideDefaultActions: true},
@@ -83,15 +87,23 @@ export default class SubmitPaymentRequest extends LightningElement {
     totalPage = 0;
     //filterableFields = ['Pulse_Account_Id__c','MondayAccountName','PartnerCompanyName']; //use in case you want to filter only on specific fields in the datatable
 
-    @wire(getRecord, { recordId: '$recordId', fields: [PAYMENT_REQ_STATUS_FIELD, PAYMENT_REQ_MONTH_FIELD] })
+    @wire(getRecord, { recordId: '$recordId', fields: [PAYMENT_REQ_STATUS_FIELD, PAYMENT_REQ_MONTH_FIELD, PAYMENT_REQ_MDF_FIELD, PAYMENT_REQ_SPIFF_FIELD] })
     wiredPaymentReq(result) {
         this.wiredPaymentReqResult = result;
         if (result.data) {
             this.showViewBreakdownBtn = true;
             var statusValue = getFieldValue(result.data, PAYMENT_REQ_STATUS_FIELD);
             this.selectedMonth = getFieldValue(result.data, PAYMENT_REQ_MONTH_FIELD);
-            console.log('allowSubmit: '+this.allowSubmit);
-            console.log('statusValue: '+statusValue);
+            this.mdfAmount = getFieldValue(result.data, PAYMENT_REQ_MDF_FIELD);
+            if(this.mdfAmount != null && this.mdfAmount != '' && this.mdfAmount > 0) {
+                this.showUploadMdfFiles = true;
+                this.fileKeyMdf = this.newPaymentRequestId + '1';
+            }
+            this.spiffAmount = getFieldValue(result.data, PAYMENT_REQ_SPIFF_FIELD);
+            if(this.spiffAmount != null && this.spiffAmount != '' && this.spiffAmount > 0) {
+                this.showUploadSpiffFiles = true;
+                this.fileKeySpiff = this.newPaymentRequestId + '2';
+            }
             if(statusValue != 'Draft' && statusValue != 'Pending Partner') {
                 this.cardTitle = 'Payment Request Status - ' + statusValue;
                 this.allowSubmit = false;
@@ -100,31 +112,25 @@ export default class SubmitPaymentRequest extends LightningElement {
                 this.submitButtonLabel = 'Submit';
                 this.allowSubmit = true;
             }
-            console.log('cardTitle: '+this.cardTitle);
-            console.log('allowSubmit: '+this.allowSubmit);
         } 
     }
 
     handleSpiffAmountChange(event) {
         this.spiffAmount = event.detail.value;
-        console.log('spiffAmount: '+this.spiffAmount);
         if(this.spiffAmount != null && this.spiffAmount != '' && this.spiffAmount > 0) {
             this.showUploadSpiffFiles = true;
             this.fileKeySpiff = this.newPaymentRequestId + '2';
         }
         else this.showUploadSpiffFiles = false;
-        console.log('showUploadSpiffFiles: '+this.showUploadSpiffFiles);
     }
 
     handleMdfAmountChange(event) {
         this.mdfAmount = event.detail.value;
-        console.log('mdfAmount: '+this.mdfAmount);
         if(this.mdfAmount != null && this.mdfAmount != '' && this.mdfAmount > 0) {
             this.showUploadMdfFiles = true;
             this.fileKeyMdf = this.newPaymentRequestId + '1';
         }
         else this.showUploadMdfFiles = false;
-        console.log('showUploadMdfFiles: '+this.showUploadMdfFiles);
     }
 
     onViewBreakdownClick(){
@@ -226,10 +232,15 @@ export default class SubmitPaymentRequest extends LightningElement {
     submitPaymentRequestForApproval(event){
         this.error = '';
         this.customError = '';
-        var validateFileUpload = this.template.querySelector('c-file-upload-improved').validate();
-        if(!validateFileUpload.isValid){
-            this.customError = validateFileUpload.errorMessage;
-        } else {
+        var fileUploadIsValid = true;
+        this.template.querySelectorAll('c-file-upload-improved').forEach(element => { // validate files upload
+            var validateFileUpload = element.validate();
+            if(!validateFileUpload.isValid){
+                fileUploadIsValid = false;
+                this.customError = validateFileUpload.errorMessage;
+            }
+        });
+        if(fileUploadIsValid){
             this.isLoading = true;
             submitForApproval({
                 paymentRequestId: this.newPaymentRequestId,
@@ -331,8 +342,9 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.filesScreen = false;
         this.monthScreen = false;
         this.submittedScreen = false;
+        this.viewBreakdownMode = false;
         localStorage.clear();
-        return refreshApex(this.wiredPaymentReqResult);
+        window.location.reload();
     }
 
     loadFilesScreen(){
@@ -352,10 +364,31 @@ export default class SubmitPaymentRequest extends LightningElement {
     saveAsDraft(){
         this.error = '';
         this.customError = '';
-        this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
-        this.showCancelButton = true;
-        this.filesScreen = false;
-        this.submittedScreen = true;
+        if((this.mdfAmount != null && this.mdfAmount > 0) || (this.spiffAmount != null && this.spiffAmount)){
+            this.isLoading = true;
+            updateMdfAndSpiff({
+                paymentRequestId: this.newPaymentRequestId,
+                mdfAmount: this.mdfAmount,
+                spiffAmount: this.spiffAmount
+            })
+            .then(result => {
+                this.isLoading = false;
+                this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
+                this.showCancelButton = true;
+                this.filesScreen = false;
+                this.submittedScreen = true;
+                return refreshApex(this.wiredPaymentReqResult);
+            })
+            .catch(error => {
+                this.error = error;
+                this.isLoading = false;
+            });
+        } else {
+            this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
+            this.showCancelButton = true;
+            this.filesScreen = false;
+            this.submittedScreen = true;
+        }
     }
 
     downloadCSVFile() {   
