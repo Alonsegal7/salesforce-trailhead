@@ -83,8 +83,7 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
         });
 
         this.communicateEvent(this.docIds,this.versIds,this.fileNames,this.objFiles);
-
-        if(this.community === true && this.value.data){
+        if(this.community === true && this.value.data != ''){
             createContentDocLink({versIds: this.versIds, encodedKey: this.key.data});
         }
         

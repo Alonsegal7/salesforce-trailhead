@@ -1,0 +1,87 @@
+<template>
+    <c-submit-payment-request running-from-homepage card-title="New Payment Request" submit-button-label="Submit" allow-submit></c-submit-payment-request>
+    <!-- DRAFT -->
+    <lightning-card title="Draft Payment Requests" icon-name="standard:drafts" if:true={draftPaymentReqs}>
+        <div class="slds-m-around_medium">
+            <ul class="slds-has-dividers_bottom-space">
+                <template for:each={draftPaymentReqs} for:item="paymentRequest">
+                    <li key={paymentRequest.Id} class="slds-item">
+                        <lightning-tile>
+                            <a href={paymentRequest.PaymentRequestLink} target="_blank">{paymentRequest.Name}</a>
+                            <dl class="slds-dl_horizontal">
+                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                    <p>Created Date:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                    <p class="slds-truncate">{paymentRequest.CreatedDateFormatted}</p>
+                                </dd>
+                            </dl>
+                        </lightning-tile>
+                    </li>
+                </template>
+            </ul>
+            <!-- TBD - change it to other error variable (separate modal errors and general errors)-->
+        </div>
+    </lightning-card>
+    <!-- RECENT -->
+    <lightning-card title="Recently Submitted Payment Requests" icon-name="standard:recent" if:true={submittedPaymentReqs}>
+        <div class="slds-m-around_medium">
+            <ul class="slds-has-dividers_bottom-space">
+                <template for:each={submittedPaymentReqs} for:item="paymentRequest">
+                    <li key={paymentRequest.Id} class="slds-item">
+                        <lightning-tile>
+                            <a href={paymentRequest.PaymentRequestLink} target="_blank">{paymentRequest.Name}</a>
+                            <dl class="slds-dl_horizontal">
+                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                    <p>Submitted Date:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                    <p class="slds-truncate">{paymentRequest.SubmittedDateFormatted}</p>
+                                </dd>
+                            </dl>
+                        </lightning-tile>
+                    </li>
+                </template>
+            </ul>
+            <!-- TBD - change it to other error variable (separate modal errors and general errors)-->
+        </div>
+    </lightning-card>
+    <!-- REJECTED -->
+    <lightning-card title="Rejected Payment Requests" icon-name="standard:first_non_empty" if:true={rejectedPaymentReqs}>
+        <div class="slds-m-around_medium">
+            <ul class="slds-has-dividers_bottom-space">
+                <template for:each={rejectedPaymentReqs} for:item="paymentRequest">
+                    <li key={paymentRequest.Id} class="slds-item">
+                        <lightning-tile>
+                            <a href={paymentRequest.PaymentRequestLink} target="_blank">{paymentRequest.Name}</a>
+                        </lightning-tile>
+                    </li>
+                </template>
+            </ul>
+            <!-- TBD - change it to other error variable (separate modal errors and general errors)-->
+        </div>
+    </lightning-card>
+    <!-- PAID -->
+    <lightning-card title="Paid Payment Requests" icon-name="standard:task2" if:true={paidPaymentReqs}>
+        <div class="slds-m-around_medium">
+            <ul class="slds-has-dividers_bottom-space">
+                <template for:each={paidPaymentReqs} for:item="paymentRequest">
+                    <li key={paymentRequest.Id} class="slds-item">
+                        <lightning-tile>
+                            <a href={paymentRequest.PaymentRequestLink} target="_blank">{paymentRequest.Name}</a>
+                            <dl class="slds-dl_horizontal">
+                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                    <p>Total Amount:</p>
+                                </dt>
+                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                    <p class="slds-truncate">{paymentRequest.Total_Commission_Amount__c}</p>
+                                </dd>
+                            </dl>
+                        </lightning-tile>
+                    </li>
+                </template>
+            </ul>
+            <!-- TBD - change it to other error variable (separate modal errors and general errors)-->
+        </div>
+    </lightning-card>
+</template>

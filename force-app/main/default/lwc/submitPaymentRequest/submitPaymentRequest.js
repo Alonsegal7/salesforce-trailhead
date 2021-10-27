@@ -1,35 +1,44 @@
-import { LightningElement } from 'lwc';
-import getData from '@salesforce/apex/Partner_PaymentRequestService.getData';
+import { LightningElement, api, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getMonthsPicklist from '@salesforce/apex/Partner_PaymentRequestService.getMonthsPicklist';
-import saveNewPaymentRequest from '@salesforce/apex/Partner_PaymentRequestService.saveNewPaymentRequest';
+import getData from '@salesforce/apex/Partner_PaymentRequestService.getData';
+import submitForApproval from '@salesforce/apex/Partner_PaymentRequestService.submitForApproval';
+import PAYMENT_REQ_STATUS_FIELD from '@salesforce/schema/Payment_Request__c.Status__c';
+import PAYMENT_REQ_MONTH_FIELD from '@salesforce/schema/Payment_Request__c.Month__c';
 
 const columns = [
-    { label: 'Pulse Account ID', fieldName: 'Pulse_Account_Id__c' },
-    { label: 'Monday Account', fieldName: 'Monday_Account__c' },
-    { label: 'Account Source Type', fieldName: 'Account_Source_Type__c' },
-    { label: 'Partner Company', fieldName: 'Partner_Company__c' },
-    { label: 'Partner Tier', fieldName: 'Partner_Tier__c' },
-    { label: 'Plan Name', fieldName: 'Plan_Name__c' },
-    { label: 'Plan Period', fieldName: 'Plan_Period__c' },
-    { label: 'Plan Tier', fieldName: 'Plan_Tier__c' },
-    { label: 'Account Slug', fieldName: 'Account_Slug__c' },
-    { label: 'Collection Amount USD', fieldName: 'Collection_Amount_USD__c' },
-    { label: 'Commission Amount USD', fieldName: 'Commission_Amount_USD__c' },
-    { label: 'Collection Happened At', fieldName: 'Collection_Happened_At__c' },
-    { label: 'Event Type', fieldName: 'Event_Type__c' },
-    { label: 'Payment Type', fieldName: 'Payment_Type__c' }
+    { label: 'Partner Company', fieldName: 'PartnerCompanyURL', type: 'url', typeAttributes: { label: { fieldName: 'PartnerCompanyName' }, target: '_blank' }, sortable: true, wrapText: true , hideDefaultActions: true, hideDefaultActions: true},
+    { label: 'Monday Account', fieldName: 'MondayAccountURL', type: 'url', typeAttributes: { label: { fieldName: 'MondayAccountName' }, target: '_blank' }, sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Pulse Account ID', fieldName: 'Pulse_Account_Id__c', sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Account Source Type', fieldName: 'Account_Source_Type__c' , sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Partner Tier', fieldName: 'Partner_Tier__c' , sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Plan Name', fieldName: 'Plan_Name__c' , sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Plan Period', fieldName: 'Plan_Period__c' , sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Plan Tier', fieldName: 'Plan_Tier__c' , sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Account Slug', fieldName: 'Account_Slug__c' , sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Collection Amount USD', fieldName: 'Collection_Amount_USD__c', type: 'number', sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Commission Amount USD', fieldName: 'Commission_Amount_USD__c', type: 'number', sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Collection Happened At', fieldName: 'Collection_Happened_At__c', type: 'date', sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Event Type', fieldName: 'Event_Type__c' , sortable: true, wrapText: true , hideDefaultActions: true},
+    { label: 'Payment Type', fieldName: 'Payment_Type__c' , sortable: true, wrapText: true , hideDefaultActions: true}
 ];
 
 export default class SubmitPaymentRequest extends LightningElement {
+    @api runningFromHomepage;
+    @api recordId;
+    @api cardTitle;
+    @api submitButtonLabel;
+    @api allowSubmit;
+
     error;
-    showSpinner = false;
-    isCustomError = false;
+    customError;
+    isLoading = false;
     showModal = false;
     dataScreen = false;
     filesScreen = false;
     monthScreen = false;
     submittedScreen = false;
-    customError = '';
     columns = columns;
     data;
     monthlyAmount;
@@ -44,26 +53,103 @@ export default class SubmitPaymentRequest extends LightningElement {
     monthValue; // format of '2021-10-04'
     monthsMap = {};
     paymentRequestLink;
+    newPaymentRequestId;
     submittedScreenText;
-    isSaveAsDraftChosen = false;
-    fileId;
+    submittedScreenTitle = 'Payment Request Created Successfully!';
+    urlPrefix = '/lightning/r/';
+    urlSuffix = '/view';
+    showCancelButton = true;
+    wiredPaymentReqResult;
+    showViewBreakdownBtn = false;
+    viewBreakdownMode = false;
+    mdfAmount;
+    showUploadMdfFiles = false;
+    spiffAmount;
+    showUploadSpiffFiles = false;
+    fileKeyMdf;
+    fileKeySpiff;
 
+    //sort & filter variables
+    defaultSortDirection = 'asc';
+    sortDirection = 'asc';
+    sortedBy;
+    page = 1; 
+    _allData = []; 
+    filteredData;
+    startingRecord = 1;
+    endingRecord = 0; 
+    pageSize = 10; 
+    totalRecountCount = 0;
+    totalPage = 0;
+    //filterableFields = ['Pulse_Account_Id__c','MondayAccountName','PartnerCompanyName']; //use in case you want to filter only on specific fields in the datatable
 
-    handleMonthChange(event) {
-        this.monthValue = event.detail.value;
-        this.selectedMonth = this.monthsMap[event.detail.value];
+    @wire(getRecord, { recordId: '$recordId', fields: [PAYMENT_REQ_STATUS_FIELD, PAYMENT_REQ_MONTH_FIELD] })
+    wiredPaymentReq(result) {
+        this.wiredPaymentReqResult = result;
+        if (result.data) {
+            this.showViewBreakdownBtn = true;
+            var statusValue = getFieldValue(result.data, PAYMENT_REQ_STATUS_FIELD);
+            this.selectedMonth = getFieldValue(result.data, PAYMENT_REQ_MONTH_FIELD);
+            console.log('allowSubmit: '+this.allowSubmit);
+            console.log('statusValue: '+statusValue);
+            if(statusValue != 'Draft' && statusValue != 'Pending Partner') {
+                this.cardTitle = 'Payment Request Status - ' + statusValue;
+                this.allowSubmit = false;
+            } else {
+                this.cardTitle = 'Payment Request is Pending to be Submitted';
+                this.submitButtonLabel = 'Submit';
+                this.allowSubmit = true;
+            }
+            console.log('cardTitle: '+this.cardTitle);
+            console.log('allowSubmit: '+this.allowSubmit);
+        } 
     }
 
+    handleSpiffAmountChange(event) {
+        this.spiffAmount = event.detail.value;
+        console.log('spiffAmount: '+this.spiffAmount);
+        if(this.spiffAmount != null && this.spiffAmount != '' && this.spiffAmount > 0) {
+            this.showUploadSpiffFiles = true;
+            this.fileKeySpiff = this.newPaymentRequestId + '2';
+        }
+        else this.showUploadSpiffFiles = false;
+        console.log('showUploadSpiffFiles: '+this.showUploadSpiffFiles);
+    }
 
+    handleMdfAmountChange(event) {
+        this.mdfAmount = event.detail.value;
+        console.log('mdfAmount: '+this.mdfAmount);
+        if(this.mdfAmount != null && this.mdfAmount != '' && this.mdfAmount > 0) {
+            this.showUploadMdfFiles = true;
+            this.fileKeyMdf = this.newPaymentRequestId + '1';
+        }
+        else this.showUploadMdfFiles = false;
+        console.log('showUploadMdfFiles: '+this.showUploadMdfFiles);
+    }
+
+    onViewBreakdownClick(){
+        this.viewBreakdownMode = true;
+        this.showModal = true;
+        this.loadDataScreen();
+    }
+
+    onSubmitClick(){
+        this.showModal = true;
+        if(this.runningFromHomepage) {
+            this.loadMonthsPicklist();
+        } else {
+            this.loadDataScreen();
+        }
+    }
+    
     loadMonthsPicklist(){
         this.error = '';
         this.customError = '';
-        this.showSpinner = true;
-        this.fileId = null;
+        this.isLoading = true;
         getMonthsPicklist()
         .then(result => {
+            this.isLoading = false;
             if(result.status_lwc == 'success'){
-                console.debug(JSON.stringify(result));
                 this.monthsList = result.monthsSelectionOptions_lwc;
                 this.monthValue = this.monthsList[0].value;
                 this.selectedMonth = this.monthsList[0].label;
@@ -71,50 +157,172 @@ export default class SubmitPaymentRequest extends LightningElement {
                     this.monthsMap[element.value] = element.label;
                 });
                 this.userFullName = result.userFullName_lwc;
-                this.showModal = true;
                 this.monthScreen = true;
             } else { //custom error
-                this.isCustomError = true;
                 this.customError = result.errorMsg_lwc;
             }
         })
         .catch(error => {
             this.error = error;
-            this.showSpinner = false;
+            this.isLoading = false;
         });
     }
 
     loadDataScreen() {
         this.error = '';
         this.customError = '';
-        this.showSpinner = true;
-        getData({month: this.monthValue})
+        this.isLoading = true;
+        this.paymentRequestLink = '';
+        getData({
+            month: this.monthValue,
+            paymentRequestId: this.recordId
+        })
         .then(result => {
-            this.showSpinner = false;
-            console.debug(result.status_lwc);
-            console.debug(JSON.stringify(result.collectionsList_lwc));
+            this.isLoading = false;
+            if(result.isPartnerUser_lwc){
+                this.urlPrefix = '/partners/s/';
+                this.urlSuffix = '';
+            }
             if(result.status_lwc == 'success'){
-                this.data = result.collectionsList_lwc;
+                this._allData = result.collectionsList_lwc.map((item) => ({
+                    ...item,
+                    MondayAccountName: item.Monday_Account__r.Name,
+                    MondayAccountURL: this.urlPrefix + 'account/' + item.Monday_Account__r.Id + this.urlSuffix,
+                    PartnerCompanyName: item.Partner_Company__r.Name,
+                    PartnerCompanyURL: this.urlPrefix + item.Partner_Company__r.Id + this.urlSuffix
+                }));
+                this.totalRecountCount = this._allData.length; 
+                this.totalPage = Math.ceil(this.totalRecountCount / this.pageSize); 
+                this.filteredData = this._allData;
+                this.data = this._allData.slice(0,this.pageSize); 
+                this.endingRecord = this.pageSize;
                 this.monthlyAmount = result.monthlyAmount_lwc;
                 this.yearlyAmount = result.yearlyAmount_lwc;
                 this.twoYearlyAmount = result.twoYearlyAmount_lwc;
                 this.totalAmount = result.totalAmount_lwc;
                 this.inboundPercent = result.inboundPercent_lwc;
                 this.outboundPercent = result.outboundPercent_lwc;
-                this.monthScreen = false;
+                this.paymentRequestLink = this.urlPrefix + 'detail/' + result.newPaymentRequestId_lwc + this.urlSuffix;
+                this.newPaymentRequestId = result.newPaymentRequestId_lwc;
+                console.log('this.newPaymentRequestId: ' + this.newPaymentRequestId);
+                if(!this.viewBreakdownMode){
+                    this.showCancelButton = false;
+                    this.monthScreen = false;
+                }
                 this.dataScreen = true;
             } else { //custom error
-                this.isCustomError = true;
                 this.customError = result.errorMsg_lwc;
                 if(result.existingPaymentRequestId_lwc != null){
-                    this.paymentRequestLink = '/one/one.app?#/sObject/'+ result.existingPaymentRequestId_lwc + '/view';
+                    this.paymentRequestLink = this.urlPrefix + 'detail/' + result.existingPaymentRequestId_lwc + this.urlSuffix;
                 }
             } 
         })
         .catch(error => {
             this.error = error;
-            this.showSpinner = false;
+            this.isLoading = false;
         });
+    }
+
+    submitPaymentRequestForApproval(event){
+        this.error = '';
+        this.customError = '';
+        var validateFileUpload = this.template.querySelector('c-file-upload-improved').validate();
+        if(!validateFileUpload.isValid){
+            this.customError = validateFileUpload.errorMessage;
+        } else {
+            this.isLoading = true;
+            submitForApproval({
+                paymentRequestId: this.newPaymentRequestId,
+                mdfAmount: this.mdfAmount,
+                spiffAmount: this.spiffAmount
+            })
+            .then(result => {
+                this.isLoading = false;
+                if(result.status_lwc == 'success'){
+                    if(this.recordId) {
+                        this.submittedScreenTitle = 'Payment Request Submitted Successfully!'
+                    }
+                    this.submittedScreenText = 'It is submitted for approval process and you will be notified on the progress.';
+                    this.showCancelButton = true;
+                    this.filesScreen = false;
+                    this.submittedScreen = true;
+                } else {
+                    this.customError = result.errorMsg_lwc;
+                } 
+                return refreshApex(this.wiredPaymentReqResult);
+            })
+            .catch(error => {
+                this.error = error;
+                this.isLoading = false;
+            });
+        }
+    }
+
+    handleResults(event){
+        this.filteredData = event.detail.filteredData;
+        this.page = 1;
+        this.totalRecountCount = this.filteredData.length; 
+        this.totalPage = Math.ceil(this.totalRecountCount / this.pageSize); 
+        this.displayRecordPerPage(this.page);
+    }
+
+    //clicking on previous button this method will be called
+    previousHandler() {
+        if (this.page > 1) {
+            this.page = this.page - 1; //decrease page by 1
+            this.displayRecordPerPage(this.page);
+        }
+    }
+
+    //clicking on next button this method will be called
+    nextHandler() {
+        if((this.page<this.totalPage) && this.page !== this.totalPage){
+            this.page = this.page + 1; //increase page by 1
+            this.displayRecordPerPage(this.page);            
+        }             
+    }
+
+    //this method displays records page by page
+    displayRecordPerPage(page){
+        this.startingRecord = ((page -1) * this.pageSize) ;
+        this.endingRecord = (this.pageSize * page);
+        this.endingRecord = (this.endingRecord > this.totalRecountCount) ? this.totalRecountCount : this.endingRecord; 
+        this.data = this.filteredData.slice(this.startingRecord, this.endingRecord);
+        this.startingRecord = this.startingRecord + 1;
+    } 
+
+    // Used to sort the 'Age' column
+    sortBy(field, reverse, primer) {
+        const key = primer
+            ? function (x) {
+                  return primer(x[field]);
+              }
+            : function (x) {
+                  return x[field];
+              };
+
+        return function (a, b) {
+            a = key(a);
+            b = key(b);
+            return reverse * ((a > b) - (b > a));
+        };
+    }
+
+    onHandleSort(event) {
+        const { fieldName: sortedBy, sortDirection } = event.detail;
+        const cloneData = [...this._allData];
+
+        cloneData.sort(this.sortBy(sortedBy, sortDirection === 'asc' ? 1 : -1));
+        this._allData = cloneData;
+        this.sortDirection = sortDirection;
+        this.sortedBy = sortedBy;
+        this.displayRecordPerPage(this.page);
+    }
+
+
+    handleMonthChange(event) {
+        this.monthValue = event.detail.value;
+        this.selectedMonth = this.monthsMap[event.detail.value];
     }
 
     handleCancelClick(){
@@ -123,55 +331,38 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.filesScreen = false;
         this.monthScreen = false;
         this.submittedScreen = false;
+        localStorage.clear();
+        return refreshApex(this.wiredPaymentReqResult);
     }
 
     loadFilesScreen(){
+        this.error = '';
+        this.customError = '';
         this.dataScreen = false;
         this.filesScreen = true;
     }
 
     goBackToDataScreen(){
+        this.error = '';
+        this.customError = '';
         this.filesScreen = false;
         this.dataScreen = true;
     }
 
-    goBackToMonthScreen(){
-        this.dataScreen = false;
-        this.monthScreen = true;
-    }
-
-    createNewPaymentRequest(event){
-        if(event.target.name == 'saveAsDraft') {
-            this.isSaveAsDraftChosen = true;
-        }
-        saveNewPaymentRequest({paymentRequestDate: this.monthValue, monthlyAmount_apex: this.monthlyAmount, yearlyAmount_apex: this.yearlyAmount, twoYearlyAmount_apex: this.twoYearlyAmount, saveAsDraft: this.isSaveAsDraftChosen, fileId_apex: this.fileId})
-        .then(result => {
-            this.showSpinner = false;
-            this.filesScreen = false;
-            this.submittedScreen = true;
-            if(result.status_lwc == 'success'){
-                this.paymentRequestLink = '/one/one.app?#/sObject/'+ result.newPaymentRequestId_lwc + '/view';
-                if(this.isSaveAsDraftChosen){
-                    this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
-                } else {
-                    this.submittedScreenText = 'It is submitted for approval process and you will be notified on the progress.';
-                }
-            } else {
-                this.isCustomError = true;
-                this.customError = result.errorMsg_lwc;
-            } 
-        })
-        .catch(error => {
-            this.error = error;
-            this.showSpinner = false;
-        });
+    saveAsDraft(){
+        this.error = '';
+        this.customError = '';
+        this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
+        this.showCancelButton = true;
+        this.filesScreen = false;
+        this.submittedScreen = true;
     }
 
     downloadCSVFile() {   
         let rowEnd = '\n';
         let csvString = '';
         let rowData = new Set();
-        this.data.forEach(function (record) {
+        this._allData.forEach(function (record) {
             Object.keys(record).forEach(function (key) {
                 rowData.add(key);
             });
@@ -181,7 +372,7 @@ export default class SubmitPaymentRequest extends LightningElement {
         csvString += rowData.join(',');
         csvString += rowEnd;
 
-        for(let i=0; i < this.data.length; i++){
+        for(let i=0; i < this._allData.length; i++){
             let colValue = 0;
             for(let key in rowData) {
                 if(rowData.hasOwnProperty(key)) {
@@ -189,7 +380,7 @@ export default class SubmitPaymentRequest extends LightningElement {
                     if(colValue > 0){
                         csvString += ',';
                     }
-                    let value = this.data[i][rowKey] === undefined ? '' : this.data[i][rowKey];
+                    let value = this._allData[i][rowKey] === undefined ? '' : this._allData[i][rowKey];
                     csvString += '"'+ value +'"';
                     colValue++;
                 }
@@ -201,16 +392,5 @@ export default class SubmitPaymentRequest extends LightningElement {
         downloadElement.target = '_self';
         downloadElement.download = 'Collections Data.csv';
         downloadElement.click(); 
-    }
-
-    get acceptedFormats() {
-        return ['.pdf', '.doc', '.docx'];
-    }
-
-    handleUploadFinished(event) {
-        // Get the list of uploaded files
-        const uploadedFiles = event.detail.files;
-        this.fileId = uploadedFiles[0].documentId;
-        console.debug('event.detail.files : '+ JSON.stringify(event.detail.files));
     }
 }
