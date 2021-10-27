@@ -8,7 +8,7 @@
             <template iterator:it={teams}>
                 <li class="slds-m-around_small" style="list-style-type:none" key={it.value.Id}>
                     <div class="slds-media__figure">
-                        <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                        <span class="slds-avatar slds-avatar_circle slds-avatar_medium slds-align_absolute-center">
                             <img slot="media" alt="" src="https://www.lightningdesignsystem.com/assets/images/avatar1.jpg" title={it.value.Name}/>
                         </span>
                         </div>
@@ -16,11 +16,6 @@
                         <h3 class="slds-tile__title slds-truncate" title={it.value.Name}>
                             <lightning-button variant="Base" label={it.value.Name} onclick={viewRecord} value={it.value.Id}></lightning-button>
                         </h3>
-                        <div class="slds-tile__detail">
-                            <dl class="slds-list_horizontal slds-wrap">
-                                <dd class="slds-item_detail" title="Description for Department">{it.value.Department__c}</dd>
-                            </dl>
-                        </div>
                     </div>
                 </li>
             </template>
