@@ -13,6 +13,7 @@ public class DealRegistration_Handler_Test {
 
     @TestSetup
     static void setupTest(){
+        Globals.CodeOff = true;
         Country_Region_Mapping__c setting = new Country_Region_Mapping__c();
         setting.Country_Name__c = 'Australia';
         setting.Region__c = 'ANZ';
@@ -90,6 +91,8 @@ public class DealRegistration_Handler_Test {
     }
     
     @isTest public static void createDealReg_allCompaniesExist(){
+        Globals.CodeOff = true;
+
         Id mondayAccounyId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
         
         Account globAcc = [SELECT Id, Website FROM Account WHERE Account_Territory__c = 'Global' LIMIT 1];
@@ -124,6 +127,8 @@ public class DealRegistration_Handler_Test {
     }
     
     @isTest public static void convertedLeadQueueable(){
+        Globals.CodeOff = true;
+
         Id partnerLead = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Partner_Lead').getRecordTypeId();
         
         Account globAcc = [SELECT Id, Website FROM Account WHERE Account_Territory__c = 'Global' LIMIT 1];
@@ -168,6 +173,8 @@ public class DealRegistration_Handler_Test {
     }
     
     @isTest public static void convertedOpportunityQueueable(){
+        Globals.CodeOff = true;
+
         Id partnerLead = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Partner_Lead').getRecordTypeId();
         
         Account globAcc = [SELECT Id, Website FROM Account WHERE Account_Territory__c = 'Global' LIMIT 1];
@@ -223,6 +230,8 @@ public class DealRegistration_Handler_Test {
     }
     
     @isTest public static void convertedMaAccountQueueable(){
+        Globals.CodeOff = true;
+
         Id partnerLead = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Partner_Lead').getRecordTypeId();
         
         Account globAcc = [SELECT Id, Website FROM Account WHERE Account_Territory__c = 'Global' LIMIT 1];
@@ -278,6 +287,8 @@ public class DealRegistration_Handler_Test {
     }
     
     @isTest public static void createCompanyHierarchyQueueable(){
+        Globals.CodeOff = true;
+
         Id partnerLead = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Partner_Lead').getRecordTypeId();
         
         Account globAcc = [SELECT Id, Website FROM Account WHERE Account_Territory__c = 'Global' LIMIT 1];
