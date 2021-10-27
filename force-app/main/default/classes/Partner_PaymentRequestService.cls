@@ -204,8 +204,8 @@ public without sharing class Partner_PaymentRequestService {
             //calculate amounts
             Decimal monthlyAmount = 0, yearlyAmount = 0, twoYearlyAmount = 0;
             for(Commission_Collection__c collection: collectionsMap.values()){
-                if(collection.Plan_Period__c == 'monthly') monthlyAmount += collection.Commission_Amount_USD__c;
-                if(collection.Plan_Period__c == 'yearly') yearlyAmount += collection.Commission_Amount_USD__c;
+                if(collection.Plan_Period__c == 'monthly' || collection.Plan_Period__c == 'Monthly') monthlyAmount += collection.Commission_Amount_USD__c;
+                if(collection.Plan_Period__c == 'yearly' || collection.Plan_Period__c == 'Yearly') yearlyAmount += collection.Commission_Amount_USD__c;
                 if(collection.Plan_Period__c == 'two_yearly') twoYearlyAmount += collection.Commission_Amount_USD__c;
             }
             Id newPaymentReqId = paymentRequestId;
