@@ -74,7 +74,7 @@
                                     <p>Total Amount:</p>
                                 </dt>
                                 <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
-                                    <p class="slds-truncate">{paymentRequest.Total_Commission_Amount__c}</p>
+                                    <p><lightning-formatted-number value={paymentRequest.Total_Commission_Amount__c} maximum-fraction-digits="2"></lightning-formatted-number></p>
                                 </dd>
                             </dl>
                         </lightning-tile>
