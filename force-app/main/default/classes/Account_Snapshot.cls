@@ -4,13 +4,8 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
     public Integer totalSnapsCreated=0;
     public Integer totalSnapsErrors=0;
     public String errorsFound='';
-    //public map<String,Schema.FieldSetMember> accountFieldByName;
-    //public map<String,Schema.FieldSetMember> snapshotFieldByName;
-    //public list<String> accountHeaderFields;
-    //public list<String> snapshotHeaderFields;
     public map<String,String> snapshotFieldByAccField;
     public id accountId;
-    //public boolean forceCreate=false;
     
     public Account_Snapshot() {
     }
@@ -18,9 +13,6 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
     public Account_Snapshot(id testAccId) {
         accountId=testAccId;
     }
-    /*public Account_Snapshot(boolean forceCreateVar) {
-        forceCreate=forceCreateVar;
-    }*/
     @InvocableMethod
     public static void ManualRun(list<id> testAccId){
         Utilities.cleanFlexQueue();
@@ -40,20 +32,6 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             string fieldsToQuery='';
             totalAccountsFromQuery=0;
             snapshotFieldByAccField=new map<String,String>();
-            /*accountHeaderFields=new list<String>();
-            accountFieldByName=new map<String,Schema.FieldSetMember>();
-            for (Schema.FieldSetMember fsm :SObjectType.Account.FieldSets.Account_Snapshot_Fields.getFields()){
-                accountHeaderFields.add(fsm.getFieldPath());
-                accountFieldByName.put(fsm.getFieldPath(),fsm);
-                fieldsToQuery+=','+fsm.getFieldPath();
-            }
-            snapshotHeaderFields=new list<String>();
-            snapshotFieldByName=new map<String,Schema.FieldSetMember>();
-            for (Schema.FieldSetMember fsm :SObjectType.Account_Snapshot__c.FieldSets.Snapshot_Creation_Fields.getFields()){
-                snapshotHeaderFields.add(fsm.getFieldPath());
-                snapshotFieldByName.put(fsm.getFieldPath(),fsm);
-            }*/
-            //
             for(Account_Snapshot_Mapping__mdt asm :[select id,Account_Field_API__c,Snapshot_Field_API__c 
                                                     from Account_Snapshot_Mapping__mdt]){
                 snapshotFieldByAccField.put(asm.Account_Field_API__c,asm.Snapshot_Field_API__c);
@@ -71,9 +49,8 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             //query+=' and Id NOT IN (SELECT Account__c FROM Account_Snapshot__c where Date__c=today) ';
             if(accountId!=null)
                 query+=' and id=\''+accountId+'\' '; 
-            if(!(today.format('E')=='Sun'||today.format('E')=='Mon'||today.day()==1||today.day()>tomorrow.day()||accountId!=null)&&!test.isRunningTest())
+            if(!(today.format('E')=='Sun'||today.day()==1||today.day()>tomorrow.day()||accountId!=null)&&!test.isRunningTest())
                 query+=' limit 0 ';
-            //system.debug('Raz Ben Ron accSnap forceCreate: '+forceCreate); 
             system.debug('Raz Ben Ron accSnap query: '+query); 
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage());   
@@ -86,7 +63,7 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
             list<Account_Snapshot__c> snapsToCreate= new list<Account_Snapshot__c>();
             dateTime today=dateTime.now();
             dateTime tomorrow=today+1;
-            boolean isOngoing=today.format('E')=='Sun'||today.format('E')=='Mon'?true:false;
+            boolean isOngoing=today.format('E')=='Sun'?true:false;
             boolean isFirst=today.day()==1?true:false;
             boolean isLast=today.day()>tomorrow.day()?true:false;
 
@@ -104,22 +81,18 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
                 os.Start_of_Month__c=isFirst;
                 if(accountId!=null)
                     os.Test_Snapshot__c=true;
-                /*for (Integer i=0;i<accountHeaderFields.size();i++){
-                    String accFieldName=accountHeaderFields[i];
-                    String snapFieldName=snapshotHeaderFields[i];
-                    os.put(snapFieldName,acc.get(accFieldName));
-                }*/
-                //
                 for (String accField: snapshotFieldByAccField.keySet()){
                     String accFieldName=accField;
                     String snapFieldName=snapshotFieldByAccField.get(accField);
                     os.put(snapFieldName,acc.get(accFieldName));
                 }//
-                if(accountWithLatestSnapshot.get(acc.Id).Account_Snapshots__r.size()>0){
-                    os.Previous_Snapshot__c=accountWithLatestSnapshot.get(acc.Id).Account_Snapshots__r[0].Id;
+                list<Account_Snapshot__c> prevSnaps=accountWithLatestSnapshot.get(acc.Id).Account_Snapshots__r;
+                if(prevSnaps.size()>0){
+                    os.Previous_Snapshot__c=prevSnaps[0].Id;
                     //os.Previous_Snapshot__c=acc.Account_Snapshots__r[0].Id;
                 }
-                if(accountWithLatestSnapshot.get(acc.Id).Account_Snapshots__r[0].Date__c!=os.Date__c)//to avoid duplications
+                if(prevSnaps.size()==0||
+                    (prevSnaps.size()>0&&prevSnaps[0].Date__c!=os.Date__c))//to avoid duplications
                     snapsToCreate.add(os);
             }
             num+=1;
@@ -140,7 +113,6 @@ public without sharing class Account_Snapshot implements Database.Batchable<sObj
                 }
             }
             totalAccountsFromQuery+=snapsToCreate.isEmpty()?0:snapsToCreate.size();
-            //insert snapsToCreate;
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Account_Snapshot ',e,e.getMessage());   
         }
