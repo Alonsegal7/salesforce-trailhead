@@ -22,11 +22,12 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
         if (trigger.isInsert||trigger.IsUpdate){
             Account_MapRegions.Account_MapRegions (trigger.new,trigger.oldmap);
             Account_SetPartnerCompany.Account_SetPartnerCompany (trigger.new,trigger.oldmap);
-            System.debug('Collision state is: '+ Account_Rollup.collisionState);
-            if(!Account_Rollup.collisionState)Account_Rollup.Account_Rollup(trigger.new, trigger.oldMap);
         }
     }
     if (Trigger.isAfter) {
+        if (trigger.isInsert||trigger.IsUpdate) {
+            Account_Rollup.Account_Rollup(trigger.new, trigger.oldMap);
+        }
         if(Trigger.isUpdate){
             // Partner Commission - start 
             if(PartnerCommissionService.firstRunAccARR || PartnerCommissionService.firstRunAccTrans || PartnerCommissionService.firstRunAccSource || PartnerCommissionService.firstRunAccMerge) {
