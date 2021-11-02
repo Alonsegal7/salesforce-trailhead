@@ -1,4 +1,4 @@
-public with sharing class Opportunity_RenewalCreation {
+public without sharing class Opportunity_RenewalCreation {
     //Check if there is already a CS Opportunity related to Contract - if so, the component will not show the ability to create a new Opp
     @AuraEnabled(cacheable=true)
     public static List<Opportunity> checkOpenRenewalOpps(Id recordId){
@@ -47,7 +47,9 @@ public with sharing class Opportunity_RenewalCreation {
         String paymentMethod = '';
 
         Profile userProfile = [SELECT Id, Name FROM Profile WHERE Id =: currentUserProfile];
+        System.debug('### recordId: ' + recordId);
         System.debug('### userProfile: ' + userProfile);
+        System.debug('### contractQuery: ' + [SELECT Id FROM Contract WHERE Id =: recordId LIMIT 1]);
 
         Contract cont = [
             SELECT Id, Name, EndDate, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Manager__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c 
@@ -57,6 +59,8 @@ public with sharing class Opportunity_RenewalCreation {
         
         for(Contract_Event__c evt : [SELECT Id, Name, Contract__c, Quote_Line_Item__c, Subscription__c, Billing_Entity__c FROM Contract_Event__c WHERE Contract__c =: recordId ORDER BY CreatedDate DESC LIMIT 1]){
             billingEntity = evt.Billing_Entity__c;
+            System.debug('### evt.Billing_Entity__c: ' + evt.Billing_Entity__c);
+            System.debug('### billingEntity: ' + billingEntity);
             if(evt.Quote_Line_Item__c != null){
                 qli = evt.Quote_Line_Item__c;
             }
@@ -86,8 +90,8 @@ public with sharing class Opportunity_RenewalCreation {
 
         List<Account> mondayAcc  = [SELECT Id, Name, Active_Contract__c, Company__c, Company__r.Name, Pricing_Version__c, Latest_Billing_Entity__c FROM Account WHERE Active_Contract__c =: recordId AND ARR__c != null ORDER BY ARR__c DESC LIMIT 1];
         System.debug('### mondayAcc: ' + mondayAcc);
-
-        if((billingEntity == '' || billingEntity == null) && qli == null && subs == null && !mondayAcc.isEmpty()){
+		System.debug('### billingEntity_v1 ' + billingEntity);
+        if(billingEntity == null && qli == null && subs == null && !mondayAcc.isEmpty()){
             billingEntity = mondayAcc[0].Latest_Billing_Entity__c;
         }
 
