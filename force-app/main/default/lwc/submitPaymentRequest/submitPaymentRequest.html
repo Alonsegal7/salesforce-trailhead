@@ -192,7 +192,8 @@
                                     <lightning-layout-item size="6">
                                         <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={spiffAmount} onchange={handleSpiffAmountChange}></lightning-input>
                                     </lightning-layout-item>
-                                </lightning-layout>                                
+                                </lightning-layout>  
+                                <p class="slds-p-top_medium">By Submitting the request you confirm that your commission invoice matches the numbers populated in monday.com’s commission report. Any issues with specific deal not appearing in the report should be reported here.</br>Please note, changes will be reconciled in the following month’s commission report.</br>Our commission payment terms are net 45.</p>                              
                                 <p class="slds-p-top_medium">If you don't have the invoice prepared yet, please click on Save As Draft and come back later to upload the invoice and submit.</p>
                             </template>
                             <template if:true={submittedScreen}>
