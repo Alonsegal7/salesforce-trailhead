@@ -184,8 +184,11 @@ public without sharing class SubscriptionPickerController {
                     sub.Claim_Date_Co_Sell__c=null;
                     
                 }
-                sub.Opportunity_Product_Id__c=null;
-                sub.Is_Claimed__c=false;
+                //mark as unclaimed only if not claimed on any opportunity (main or co-sell)
+                if(sub.Claimed_On_Opportunity__c==null&&sub.Claimed_On_Opportunity_Co_Sell__c==null){
+                    sub.Opportunity_Product_Id__c=null;
+                    sub.Is_Claimed__c=false;
+                }
                 ///remove id from Billing ids on oppotunity
                 list<string> billIds=sub.Billing_Ids__c.split(',');
                 if(billingIdsTemp!=null){
