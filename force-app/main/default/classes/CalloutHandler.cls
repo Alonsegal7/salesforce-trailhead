@@ -5,16 +5,13 @@ public class CalloutHandler
     public static list <sobject> so4CalloutDelete = new list <sobject>();
     public static list <sobject> so4calloutUpdate = new list <sobject>();
     
-    public static void GenObjectControl()
-    {
-        ObjectControls.clear();
+    public static void GenObjectControl(){
         list <BigBrain_Callout_Control__mdt> Sett = [select id,DELETE__c,INSERT__c,UPDATE__c,Field_Set_Name__c,masterlabel from BigBrain_Callout_Control__mdt];
         for (BigBrain_Callout_Control__mdt md : Sett) ObjectControls.put (md.masterlabel.tolowercase(),md);
     }
     
-    public static void HandleCallout (list <sobject> solist, string event, map <id,sobject> oldmap)
-    {
-        GenObjectControl();
+    public static void HandleCallout (list <sobject> solist, string event, map <id,sobject> oldmap){
+        if(ObjectControls.isEmpty()) GenObjectControl();
         system.debug('TESTING HandleCallout called. event is '+event);
         system.debug('TESTING sobject list size is '+solist.size());
 
@@ -57,8 +54,7 @@ public class CalloutHandler
         if (so4calloutUpdate.size()>0&&!System.isFuture()){ Callout.CallUpdate (so4calloutUpdate); if (!test.isrunningtest()) so4calloutUpdate.clear();}
     }
     
-    public static boolean UpdateCheckFieldSet (sobject so,string sotype, sobject oldso, BigBrain_Callout_Control__mdt mt)
-    {
+    public static boolean UpdateCheckFieldSet (sobject so,string sotype, sobject oldso, BigBrain_Callout_Control__mdt mt){
         boolean b = false;
         system.debug('TESTING UpdateCHeckFieldSet fired.');
         system.debug('TESTING so is '+so);
