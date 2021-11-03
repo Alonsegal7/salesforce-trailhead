@@ -72,6 +72,8 @@ export default class SubmitPaymentRequest extends LightningElement {
     showUploadSpiffFiles = false;
     fileKeyMdf;
     fileKeySpiff;
+    headerCardText;
+    headerIconName = 'custom:custom17';
 
     //sort & filter variables
     defaultSortDirection = 'asc';
@@ -104,11 +106,15 @@ export default class SubmitPaymentRequest extends LightningElement {
                 this.showUploadSpiffFiles = true;
                 this.fileKeySpiff = this.newPaymentRequestId + '2';
             }
+            this.cardTitle = 'Payment Request Status - ' + statusValue;
             if(statusValue != 'Draft' && statusValue != 'Pending Partner') {
-                this.cardTitle = 'Payment Request Status - ' + statusValue;
                 this.allowSubmit = false;
             } else {
-                this.cardTitle = 'Payment Request is Pending to be Submitted';
+                if(statusValue == 'Draft') this.headerCardText = 'Please make sure to submit your request';
+                else if(statusValue == 'Pending Partner') {
+                    this.headerCardText = 'Your Payment Request was rejected, please re:submit your request';
+                    this.headerIconName = 'standard:first_non_empty';
+                }
                 this.submitButtonLabel = 'Submit';
                 this.allowSubmit = true;
             }
@@ -302,7 +308,6 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.startingRecord = this.startingRecord + 1;
     } 
 
-    // Used to sort the 'Age' column
     sortBy(field, reverse, primer) {
         const key = primer
             ? function (x) {
@@ -321,10 +326,10 @@ export default class SubmitPaymentRequest extends LightningElement {
 
     onHandleSort(event) {
         const { fieldName: sortedBy, sortDirection } = event.detail;
-        const cloneData = [...this._allData];
+        const cloneData = [...this.filteredData];
 
         cloneData.sort(this.sortBy(sortedBy, sortDirection === 'asc' ? 1 : -1));
-        this._allData = cloneData;
+        this.filteredData = cloneData;
         this.sortDirection = sortDirection;
         this.sortedBy = sortedBy;
         this.displayRecordPerPage(this.page);
@@ -340,11 +345,14 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.showModal = false;
         this.dataScreen = false;
         this.filesScreen = false;
-        this.monthScreen = false;
         this.submittedScreen = false;
-        this.viewBreakdownMode = false;
         localStorage.clear();
-        window.location.reload();
+        if(this.viewBreakdownMode || this.monthScreen){
+            this.viewBreakdownMode = false;
+            this.monthScreen = false;
+        } else {
+            window.location.reload();
+        }
     }
 
     loadFilesScreen(){

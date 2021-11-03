@@ -1,10 +1,13 @@
 <template>
-    <lightning-card if:true={cardTitle} title={cardTitle} icon-name="custom:custom17">
+    <lightning-card if:true={cardTitle} title={cardTitle} icon-name={headerIconName}>
         <template if:true={allowSubmit}>
             <lightning-button label={submitButtonLabel} onclick={onSubmitClick} slot="actions" class="slds-m-left_x-small"></lightning-button>
         </template>
         <template if:true={showViewBreakdownBtn}>
             <lightning-button label="View Breakdown" onclick={onViewBreakdownClick} slot="actions" class="slds-m-left_x-small"></lightning-button>
+        </template>
+        <template if:true={headerCardText}>
+            <p class="slds-m-left_medium slds-text-color_weak"><i>{headerCardText}</i></p>
         </template>
     </lightning-card>
     <!-- MODAL - CREATE NEW -->
@@ -179,25 +182,17 @@
                             </template>
                             <template if:true={filesScreen}>
                                 <p>In order to get the payment for {selectedMonth} commission, please update your invoice here:</p>
-                                <c-file-upload-improved allow-multiple accepted-formats=".pdf,.docx" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>
+                                <c-file-upload-improved allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>
                                 <lightning-layout>
                                     <lightning-layout-item size="6">
                                         <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={mdfAmount} onchange={handleMdfAmountChange}></lightning-input>
                                     </lightning-layout-item>
                                 </lightning-layout>
-                                <template if:true={showUploadMdfFiles}>
-                                    <p class="slds-p-top_medium">In order to get the payment for {selectedMonth} MDF, please update your invoice here:</p>
-                                    <c-file-upload-improved allow-multiple accepted-formats=".pdf,.docx" session-key={fileKeyMdf} record-id={newPaymentRequestId} required community></c-file-upload-improved>
-                                </template>
                                 <lightning-layout>
                                     <lightning-layout-item size="6">
                                         <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={spiffAmount} onchange={handleSpiffAmountChange}></lightning-input>
                                     </lightning-layout-item>
                                 </lightning-layout>                                
-                                <template if:true={showUploadSpiffFiles}>
-                                    <p class="slds-p-top_medium">In order to get the payment for {selectedMonth} Spiff, please update your invoice here:</p>
-                                    <c-file-upload-improved allow-multiple accepted-formats=".pdf,.docx" session-key={fileKeySpiff} record-id={newPaymentRequestId} required community></c-file-upload-improved>
-                                </template>
                                 <p class="slds-p-top_medium">If you don't have the invoice prepared yet, please click on Save As Draft and come back later to upload the invoice and submit.</p>
                             </template>
                             <template if:true={submittedScreen}>
