@@ -67,13 +67,10 @@ export default class SubmitPaymentRequest extends LightningElement {
     showViewBreakdownBtn = false;
     viewBreakdownMode = false;
     mdfAmount;
-    showUploadMdfFiles = false;
     spiffAmount;
-    showUploadSpiffFiles = false;
-    fileKeyMdf;
-    fileKeySpiff;
     headerCardText;
     headerIconName = 'custom:custom17';
+    filesScreenFirstRun = true;
 
     //sort & filter variables
     defaultSortDirection = 'asc';
@@ -97,15 +94,7 @@ export default class SubmitPaymentRequest extends LightningElement {
             var statusValue = getFieldValue(result.data, PAYMENT_REQ_STATUS_FIELD);
             this.selectedMonth = getFieldValue(result.data, PAYMENT_REQ_MONTH_FIELD);
             this.mdfAmount = getFieldValue(result.data, PAYMENT_REQ_MDF_FIELD);
-            if(this.mdfAmount != null && this.mdfAmount != '' && this.mdfAmount > 0) {
-                this.showUploadMdfFiles = true;
-                this.fileKeyMdf = this.newPaymentRequestId + '1';
-            }
             this.spiffAmount = getFieldValue(result.data, PAYMENT_REQ_SPIFF_FIELD);
-            if(this.spiffAmount != null && this.spiffAmount != '' && this.spiffAmount > 0) {
-                this.showUploadSpiffFiles = true;
-                this.fileKeySpiff = this.newPaymentRequestId + '2';
-            }
             this.cardTitle = 'Payment Request Status - ' + statusValue;
             if(statusValue != 'Draft' && statusValue != 'Pending Partner') {
                 this.allowSubmit = false;
@@ -123,20 +112,10 @@ export default class SubmitPaymentRequest extends LightningElement {
 
     handleSpiffAmountChange(event) {
         this.spiffAmount = event.detail.value;
-        if(this.spiffAmount != null && this.spiffAmount != '' && this.spiffAmount > 0) {
-            this.showUploadSpiffFiles = true;
-            this.fileKeySpiff = this.newPaymentRequestId + '2';
-        }
-        else this.showUploadSpiffFiles = false;
     }
 
     handleMdfAmountChange(event) {
         this.mdfAmount = event.detail.value;
-        if(this.mdfAmount != null && this.mdfAmount != '' && this.mdfAmount > 0) {
-            this.showUploadMdfFiles = true;
-            this.fileKeyMdf = this.newPaymentRequestId + '1';
-        }
-        else this.showUploadMdfFiles = false;
     }
 
     onViewBreakdownClick(){
@@ -233,6 +212,64 @@ export default class SubmitPaymentRequest extends LightningElement {
             this.error = error;
             this.isLoading = false;
         });
+    }
+
+    loadFilesScreen(){
+        this.error = '';
+        this.customError = '';
+        if(this.recordId && this.filesScreenFirstRun){
+            this.isLoading = true;
+            this.filesScreenFirstRun = false;
+            deleteOldFiles({
+                paymentRequestId: this.recordId
+            })
+            .then(result => {
+                this.isLoading = false;
+                if(result.status_lwc == 'success'){
+                    this.dataScreen = false;
+                    this.filesScreen = true;
+                } else {
+                    this.customError = result.errorMsg_lwc;
+                } 
+            })
+            .catch(error => {
+                this.error = error;
+                this.isLoading = false;
+            });
+        } else {
+            this.dataScreen = false;
+            this.filesScreen = true;
+        }
+    }
+
+    saveAsDraft(){
+        this.error = '';
+        this.customError = '';
+        if((this.mdfAmount != null && this.mdfAmount > 0) || (this.spiffAmount != null && this.spiffAmount)){
+            this.isLoading = true;
+            updateMdfAndSpiff({
+                paymentRequestId: this.newPaymentRequestId,
+                mdfAmount: this.mdfAmount,
+                spiffAmount: this.spiffAmount
+            })
+            .then(result => {
+                this.isLoading = false;
+                this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
+                this.showCancelButton = true;
+                this.filesScreen = false;
+                this.submittedScreen = true;
+                return refreshApex(this.wiredPaymentReqResult);
+            })
+            .catch(error => {
+                this.error = error;
+                this.isLoading = false;
+            });
+        } else {
+            this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
+            this.showCancelButton = true;
+            this.filesScreen = false;
+            this.submittedScreen = true;
+        }
     }
 
     submitPaymentRequestForApproval(event){
@@ -355,48 +392,11 @@ export default class SubmitPaymentRequest extends LightningElement {
         }
     }
 
-    loadFilesScreen(){
-        this.error = '';
-        this.customError = '';
-        this.dataScreen = false;
-        this.filesScreen = true;
-    }
-
     goBackToDataScreen(){
         this.error = '';
         this.customError = '';
         this.filesScreen = false;
         this.dataScreen = true;
-    }
-
-    saveAsDraft(){
-        this.error = '';
-        this.customError = '';
-        if((this.mdfAmount != null && this.mdfAmount > 0) || (this.spiffAmount != null && this.spiffAmount)){
-            this.isLoading = true;
-            updateMdfAndSpiff({
-                paymentRequestId: this.newPaymentRequestId,
-                mdfAmount: this.mdfAmount,
-                spiffAmount: this.spiffAmount
-            })
-            .then(result => {
-                this.isLoading = false;
-                this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
-                this.showCancelButton = true;
-                this.filesScreen = false;
-                this.submittedScreen = true;
-                return refreshApex(this.wiredPaymentReqResult);
-            })
-            .catch(error => {
-                this.error = error;
-                this.isLoading = false;
-            });
-        } else {
-            this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
-            this.showCancelButton = true;
-            this.filesScreen = false;
-            this.submittedScreen = true;
-        }
     }
 
     downloadCSVFile() {   

@@ -108,7 +108,7 @@ public without sharing class Partner_PaymentRequestService {
             }
             return new resWrapper(draftPaymentReqList, rejectedPaymentReqList, recentSubmitPaymentReqList, paidPaymentReqList, isPartnerUser);
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
         }
     }
 
@@ -225,12 +225,23 @@ public without sharing class Partner_PaymentRequestService {
     }
 
     @AuraEnabled
+    public static resWrapper deleteOldFiles(Id paymentRequestId){
+        try {
+            list<ContentDocumentLink> filesList = [select Id from ContentDocumentLink where LinkedEntityId =: paymentRequestId];
+            if(!filesList.isEmpty()) Database.delete(filesList);
+            return new resWrapper(paymentRequestId);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
+        }
+    }
+
+    @AuraEnabled
     public static void updateMdfAndSpiff(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount){
         try {
             Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(Id = paymentRequestId, MDF_Amount__c = mdfAmount, Spiff_Amount__c = spiffAmount);
             Database.update(paymentRequestToUpdate);
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
         }
     }
 

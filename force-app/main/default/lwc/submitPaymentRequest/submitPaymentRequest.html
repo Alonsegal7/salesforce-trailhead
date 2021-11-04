@@ -184,12 +184,12 @@
                                 <p>In order to get the payment for {selectedMonth} commission, please update your invoice here:</p>
                                 <c-file-upload-improved allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>
                                 <lightning-layout>
-                                    <lightning-layout-item size="6">
+                                    <lightning-layout-item size="4">
                                         <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={mdfAmount} onchange={handleMdfAmountChange}></lightning-input>
                                     </lightning-layout-item>
                                 </lightning-layout>
                                 <lightning-layout>
-                                    <lightning-layout-item size="6">
+                                    <lightning-layout-item size="4">
                                         <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={spiffAmount} onchange={handleSpiffAmountChange}></lightning-input>
                                     </lightning-layout-item>
                                 </lightning-layout>  
