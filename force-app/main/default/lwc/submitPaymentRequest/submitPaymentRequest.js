@@ -3,6 +3,7 @@ import { refreshApex } from '@salesforce/apex';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getMonthsPicklist from '@salesforce/apex/Partner_PaymentRequestService.getMonthsPicklist';
 import getData from '@salesforce/apex/Partner_PaymentRequestService.getData';
+import deleteOldFiles from '@salesforce/apex/Partner_PaymentRequestService.deleteOldFiles';
 import submitForApproval from '@salesforce/apex/Partner_PaymentRequestService.submitForApproval';
 import updateMdfAndSpiff from '@salesforce/apex/Partner_PaymentRequestService.updateMdfAndSpiff';
 import PAYMENT_REQ_STATUS_FIELD from '@salesforce/schema/Payment_Request__c.Status__c';
