@@ -1,21 +1,10 @@
 trigger OnAccountUpdateTrigger on Account (before insert,before update,before delete, after insert, after update, after delete, after undelete) {	
     if (!Globals.CodeOff)
     {
-         if (trigger.isBefore)
-         {
-            if (trigger.isInsert) MondayAccountHelper.HandleBefore(trigger.new, null, 'Insert');
-            if (trigger.IsUpdate) MondayAccountHelper.HandleBefore(trigger.new, trigger.oldmap, 'Update');
-            if (trigger.isDelete) MondayAccountHelper.HandleBefore(trigger.old, null, 'Delete');
-            if (trigger.isUndelete) MondayAccountHelper.HandleBefore(trigger.new, null, 'Undelete');
-         }
-     
-        if (trigger.isAfter)
-        {
-            if (trigger.isDelete) {
-                MondayAccountHelper.HandleAfter(trigger.old, null);  
-            } else { 
-                MondayAccountHelper.HandleAfter(trigger.new, trigger.oldmap);
-            }
+        if (trigger.isBefore && trigger.isInsert){
+            MondayAccountHelper.setCompanyID(trigger.new);
+        } else if (trigger.isAfter && trigger.isUpdate){
+            MondayAccountHelper.HandleAfter(trigger.new, trigger.oldmap);
         }
     }
     if (Trigger.isBefore) {
