@@ -1,5 +1,5 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" 
-                access="global">
+                access="global">    
     <aura:attribute name="variant" type="String" default="non-linear" access="public"/>
     <aura:attribute name="hideUpdateButton" type="Boolean" default="true" access="public"/>
     <aura:attribute name="recordId" type="String" access="public"/>
