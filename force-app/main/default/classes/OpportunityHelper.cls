@@ -127,7 +127,10 @@ public class OpportunityHelper {
             if (opp.Is_SO_Signed__c&&opp.Manual_Signature_Reason__c!='Priority SO') { 
                 SignedQuotes.add(opp.SyncedQuoteId); 
             } 
-            if(opp.StageName!=oldMap.get(opp.Id).StageName&&opp.StageName=='Closed Won'&&opp.Main_Co_Sell_Opportunity__c){
+            if(opp.Main_Co_Sell_Opportunity__c&&opp.StageName=='Closed Won'&&
+                (opp.StageName!=oldMap.get(opp.Id).StageName||
+                opp.Co_Sell_Opportunity__c!=oldMap.get(opp.Id).Co_Sell_Opportunity__c||
+                opp.Main_Co_Sell_Opportunity__c!=oldMap.get(opp.Id).Main_Co_Sell_Opportunity__c)){
                 masterCosellOpps.add(opp);
             }
         }
@@ -152,9 +155,8 @@ public class OpportunityHelper {
             list<opportunitylineitem> olidToDelete=[select Id,Co_Sell_Product_Id__c 
                                                     from Opportunitylineitem
                                                     where Opportunity.Co_Sell_Opportunity__c in: masterCosellOpps and Co_Sell_Product_Id__c!=null]; 
-            
             for(opportunity opp: [select id,Co_Sell_Opportunity__c,Pricebook2Id,Co_Sell_Opportunity__r.Pricebook2Id,Billing_Ids__c,
-                                        Co_Sell_Opportunity__r.Billing_Ids__c,CurrencyIsoCode,Co_Sell_Opportunity__r.CurrencyIsoCode,Is_Primary_SO_Signed__c,
+                                        Co_Sell_Opportunity__r.Billing_Ids__c,CurrencyIsoCode,Co_Sell_Opportunity__r.CurrencyIsoCode,Is_Primary_SO_Signed__c,Co_Sell_Opportunity__r.Main_Co_Sell_Opportunity__c,
                                         (select Id,Is_Primary__c,CC_Claim_Product__c,ARR__c,Discount,ListPrice,ServiceDate,CurrencyIsoCode,PricebookEntry.CurrencyIsoCode,
                                         Name,Plan_Period__c,Product2Id,Product_Type__c,Quantity,UnitPrice,Seats__c,Subtotal,Tier__c,PricebookentryId
                                         from Opportunitylineitems where Is_Primary__c=true and CC_Claim_Product__c=false) 
@@ -162,7 +164,7 @@ public class OpportunityHelper {
                 if(opp.Co_Sell_Opportunity__r.Pricebook2Id==null)
                     oppsToUpdate.put(opp.Co_Sell_Opportunity__c,new opportunity(id=opp.Co_Sell_Opportunity__c,Pricebook2Id=opp.Pricebook2Id!=null?opp.Pricebook2Id:mainPB.id));
                 system.debug('Raz Ben Ron cosc master opp.Co_Sell_Opportunity__r.CurrencyIsoCode: '+opp.Co_Sell_Opportunity__r.CurrencyIsoCode);
-                if(!opp.Opportunitylineitems.isEmpty()){
+                if(!opp.Opportunitylineitems.isEmpty()&&opp.Co_Sell_Opportunity__r.Main_Co_Sell_Opportunity__c==false){
                     if(opp.Is_Primary_SO_Signed__c){
                         for(opportunitylineitem oli: opp.Opportunitylineitems){//copy all primary wire products if SO signed
                             system.debug('Raz Ben Ron cosc master oli.id: '+oli.Id);

@@ -2,7 +2,7 @@ public without sharing class Opportunity_Calculate_ARR {
     public static Id csRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
     public static void Opportunity_Calculate_ARR(List<Opportunity> opps, Map<Id, Opportunity> oldOpps){
         for (Opportunity opp : opps) {
-            ///Controlled from Quotes
+            //Controlled from Quotes
             if(isManagedByDealhub(opp)){
                 system.debug('OCA Raz Ben Ron is managed by dealhub');
                 opp.Expected_ARR__c = opp.Quote_ARR__c;
@@ -15,7 +15,7 @@ public without sharing class Opportunity_Calculate_ARR {
             if(!opp.Is_Primary_SO_Signed__c&&opp.Co_Sell_Opportunity__c!=null&&opp.Main_Co_Sell_Opportunity__c==false){//secondary co-sell opp
                 system.debug('OCA Raz Ben Ron Secondary co-sell');
                 opp.Expected_ARR__c = opp.Product_ARR__c;
-                opp.Claimed_ARR__c = opp.Product_ARR__c; 
+                opp.Claimed_ARR__c = opp.CC_Products_ARR_Sum__c+opp.Co_Sell_Products_ARR_Sum__c; 
 
             }///override
             if(opp.Claimed_ARR_Override__c!=null){
