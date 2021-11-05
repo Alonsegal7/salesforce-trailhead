@@ -8,7 +8,10 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     }
     
     if(Trigger.isBefore && Trigger.isUpdate){
+        //Opportunity_LockValidation lockedValidationService = new Opportunity_LockValidation();
+        //lockedValidationService.runValidation(Trigger.new, Trigger.oldMap);
         OpportunityHelper.beforeUpdate(Trigger.new, Trigger.oldmap);
+        Opportunity_Calculate_ARR.Opportunity_Calculate_ARR(Trigger.new, Trigger.oldmap);
         TargetsService targetServiceHelper = new TargetsService();
         targetServiceHelper.TargetsServiceOnOpps(trigger.new,trigger.oldmap);
         OpportunityHelper.updateOppType(trigger.new,trigger.oldmap);

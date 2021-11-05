@@ -1,5 +1,5 @@
 public class OpportunityHelper {
-    public static Id csRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
+    //public static Id csRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
     public static Id internalRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
     public static Id partnerRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
   public static void beforeUpdate(List<Opportunity> opportunities, map <Id, Opportunity> oldMap){
@@ -16,9 +16,11 @@ public class OpportunityHelper {
                     maIds.add(opp.AccountId);
                     //handleAccountIdChange(opp); 
                 }
-                if (oldOpp != null && (oldOpp.CurrencyIsoCode != opp.CurrencyIsoCode || opp.USD_exchange_rate__c == null)) { ExchangeRateService.apply(opp); }
-                
-                if(isManagedByDealhub(opp)){
+                if (oldOpp != null && (oldOpp.CurrencyIsoCode != opp.CurrencyIsoCode || opp.USD_exchange_rate__c == null)) { 
+                    ExchangeRateService.apply(opp); 
+                }
+                ////// moved to Opportunity_Calculate_ARR class /////
+                /*if(isManagedByDealhub(opp)){
                     opp.Expected_ARR__c = opp.Quote_ARR__c;
 
                     if(opp.Is_Primary_SO_Signed__c) {
@@ -52,7 +54,7 @@ public class OpportunityHelper {
                 }catch(exception e){
                     Utilities.sendDebugEmail('Error in OpportunityHelper: Renewal Metrics ',e,e.getMessage());   
                 }
-                
+                */
                 if(opp.RecordTypeId==partnerRecordTypeId&&
                     (oldMap==null||opp.OwnerId!=oldMap.get(opp.Id).OwnerId)){
                         userIds.add(opp.OwnerId);
@@ -138,9 +140,9 @@ public class OpportunityHelper {
         }
     }
 
-    public static boolean isManagedByDealhub(Opportunity opp){
+    /*public static boolean isManagedByDealhub(Opportunity opp){
         return (opp.Quote_Count__c != null && opp.Quote_Count__c != 0) || (opp.Product_Count__c != null && opp.Product_Count__c != 0);
-    }
+    }*/
 
     public static void cloneOlisForCoSell(list<Opportunity> masterCosellOpps){
         try{
