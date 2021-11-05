@@ -22,8 +22,9 @@ import triggerSlackCelebration from '@salesforce/schema/Opportunity.Trigger_Slac
 import isPrimarySOSigned from '@salesforce/schema/Opportunity.Is_Primary_SO_Signed__c';
 import claimARROverride from '@salesforce/schema/Opportunity.Claimed_ARR_Override__c';
 import billingIds from '@salesforce/schema/Opportunity.Billing_Ids__c';
+import primarySOARR from '@salesforce/schema/Opportunity.Primary_SO_Products_ARR__c';
 import userId from '@salesforce/user/Id';
-const fields = [claimedARR,addedARR,stage,closedOpp,maClaimedARR,ccARR,coSellARR,productsARR,gbARR,isGBOpp,isGBAcc,claimARROverride,isPrimarySOSigned,billingIds];
+const fields = [claimedARR,addedARR,stage,closedOpp,maClaimedARR,ccARR,coSellARR,productsARR,gbARR,isGBOpp,isGBAcc,claimARROverride,isPrimarySOSigned,billingIds,primarySOARR];
 
 export default class Opportunity_ClaimDetails extends LightningElement {
     @api recordId;
@@ -53,6 +54,7 @@ export default class Opportunity_ClaimDetails extends LightningElement {
     claimARROverride;
     bbPickersARR;
     billingIds;
+    primarySOARR;
     overrideFields=[overrideIsGB,overrideReason,triggerSlackCelebration,overrideCLMProcess,overrideCLMProcessReason];
     
 
@@ -73,6 +75,7 @@ export default class Opportunity_ClaimDetails extends LightningElement {
         console.log('Raz Ben Ron this.claimARROverride: '+this.claimARROverride);
         this.isOppClosed=getFieldValue(this.oppDetails, closedOpp);
         this.billingIds=getFieldValue(this.oppDetails, billingIds);
+        this.primarySOARR=getFieldValue(this.oppDetails, primarySOARR);
         //this.expectedArrOnWon=this.maClaimedARR+this.claimedARR;
         if(this.isGBAcc==true){
             this.expectedArrOnWon=this.claimedARR; 
@@ -80,25 +83,19 @@ export default class Opportunity_ClaimDetails extends LightningElement {
             this.expectedArrOnWon=this.maClaimedARR+this.claimedARR; 
         }
         if(this.isPrimarySOSigned==true){
-            this.soARR=this.productsARR-this.ccARR-this.coSellARR;
+            //this.soARR=this.productsARR-this.ccARR-this.coSellARR;
+            this.soARR=this.primarySOARR;
         }else{
             this.soARR=0;
         }
         
-        /*if(this.maClaimedARR&&this.maClaimedARR!=0)
-            this.helpText=this.maClaimedARR.toString()+' (OB ARR)';
-        if(this.claimedARR&&this.claimedARR!=0){
-            if(this.helpText!=''){
-                this.helpText+=' + ';
-            }
-            this.helpText+=this.claimedARR.toString()+' (claimed ARR)';
-        }*/
         if(!this.maClaimedARR||this.maClaimedARR=='')
             this.maClaimedARR=0;
         if(!this.claimedARR||this.claimedARR=='')
             this.claimedARR=0;
         if(this.billingIds&&this.billingIds!=''){
-            this.bbPickersARR=this.claimedARR-this.productsARR;
+            //this.bbPickersARR=this.claimedARR-this.productsARR;
+            this.bbPickersARR=this.claimedARR-this.soARR-this.ccARR-this.coSellARR;
         }
         this.loading=false;
     }
