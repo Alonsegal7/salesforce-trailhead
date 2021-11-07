@@ -117,4 +117,31 @@ public without sharing class Utils {
             this.value = value;
         }
     }
+    //method used to process DML operation results, will iterate through the result and will log errors
+    public static void validateDmlOperationResults (List<Database.SaveResult> srList, String c, String m){
+        try {
+            for (Database.SaveResult sr : srList) {
+                if (!sr.isSuccess()) {
+                    // Operation failed, get errors                
+                    for(Database.Error err : sr.getErrors()) {
+                        System.debug('The following error has occurred.');                    
+                        System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                        System.debug('Fields affected this error: ' + err.getFields());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logApexExceptions(e, 'OperationResultHandler', 'validateDmlOperationResults');
+        }
+    }
+    //method used to process general apex exceptions
+    public static void logApexExceptions (Exception e, String c, String m) {
+            System.debug('Class: ' + c);    
+            System.debug('Method: ' + m);    
+            System.debug('Exception type caught: ' + e.getTypeName());    
+            System.debug('Message: ' + e.getMessage());    
+            System.debug('Cause: ' + e.getCause());
+            System.debug('Line number: ' + e.getLineNumber());    
+            System.debug('Stack trace: ' + e.getStackTraceString()); 
+    }
 }

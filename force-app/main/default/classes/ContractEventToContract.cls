@@ -23,6 +23,8 @@ public with sharing class ContractEventToContract {
                 }
             }
         }
+        System.debug('@@createdContsMap: '+createdContsMap);
+        System.debug('@@createdContsMap: '+createdContsMap.values());
         //Now, insert the contract and assign the contract events to the created contract     
         if (!createdContsMap.isEmpty()) {
             insert createdContsMap.values();
