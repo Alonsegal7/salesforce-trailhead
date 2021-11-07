@@ -1,20 +1,34 @@
-public with sharing class Account_Rollup_Scheduled implements Schedulable {
+public with sharing class Account_Rollup_Scheduled implements Database.Batchable<sObject>,Schedulable {
     public void execute(SchedulableContext SC) {
 
         System.debug('Michael - Account_Rollup_Scheduled - Entered scheduled');
-        Map<Id,Account> relevantCompaniesMap = new Map<Id,Account>([SELECT Id,ParentId FROM Account WHERE Pending_Rollup__c = true ORDER BY LastModifiedDate ASC LIMIT 10000]);
-        Set<Id> relevantCompanies = relevantCompaniesMap.keyset();
-        System.debug('Michael - Account_Rollup_Scheduled - relevantCompaniesMap: '+relevantCompaniesMap);
+        try{
+            Utilities.cleanFlexQueue();
+            Database.executeBatch(this, 200);
+        }catch(Exception e){
+            Utilities.sendDebugEmail('Error in Account_Rollup_Scheduled ', e, e.getMessage());   
+        }
+    }
+
+    public Database.QueryLocator start(Database.BatchableContext BC){
+        String query = 'SELECT Id,ParentId FROM Account WHERE Pending_Rollup__c = true';
+        return Database.getQueryLocator(query);
+     }
+
+     public void execute(Database.BatchableContext BC, list<Account> scope){
+        Set<Id> relevantCompanies = (new Map<Id,Account>(scope)).keySet();
         try {
             ID jobID = System.enqueueJob(new updateAccountsRollupQueueable(relevantCompanies));
-            System.debug('Michael - Account_Rollup_Scheduled - Sent to queueable');
+            System.debug('Michael - Account_Rollup_Batchable - Sent to queueable');
             System.debug('JobIDNo: '+jobID);
         } catch (Exception e) {
             System.debug('Message: ' + e.getMessage());
-            Utilities.sendDebugEmail('Error in AccountRollup Initiate part: ',e,e.getMessage());   
-            Utilities.sendSlackMessage('Error in AccountRollup Initiate part: ', 'biz-tech-monitoring', null , e, e.getMessage(), null, null);
+            Utilities.sendSlackMessage('Error in AccountRollup Batchable part: ', 'biz-tech-monitoring', null , e, e.getMessage(), null, null);
         }
-    }
+     }
+
+    public void finish(Database.BatchableContext BC){}
+
     public class updateAccountsRollupQueueable implements Queueable{
         private Set<Id> relevantCompanies;
 
