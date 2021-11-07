@@ -2,7 +2,7 @@ public with sharing class Account_Rollup_Scheduled implements Schedulable {
     public void execute(SchedulableContext SC) {
 
         System.debug('Michael - Account_Rollup_Scheduled - Entered scheduled');
-        Map<Id,Account> relevantCompaniesMap = new Map<Id,Account>([SELECT Id,ParentId FROM Account WHERE Pending_Rollup__c = true]);
+        Map<Id,Account> relevantCompaniesMap = new Map<Id,Account>([SELECT Id,ParentId FROM Account WHERE Pending_Rollup__c = true ORDER BY LastModifiedDate ASC LIMIT 10000]);
         Set<Id> relevantCompanies = relevantCompaniesMap.keyset();
         System.debug('Michael - Account_Rollup_Scheduled - relevantCompaniesMap: '+relevantCompaniesMap);
         try {
@@ -74,6 +74,7 @@ public with sharing class Account_Rollup_Scheduled implements Schedulable {
             }
             if(!companiesToUpdate.isEmpty()) {
                 try {
+                    System.debug('Michael Account_Rollup_Scheduled size of companiesToUpdate is: '+companiesToUpdate.size());
                     Database.SaveResult[] SrList = Database.update(companiesToUpdate, false);
                 } catch (Exception e) {
                     System.debug('Message: ' + e.getMessage());
@@ -82,6 +83,7 @@ public with sharing class Account_Rollup_Scheduled implements Schedulable {
                 }
                 //remove the triggrt flag
                 try {
+                    System.debug('Michael Account_Rollup_Scheduled size of companiesToRemoveFlag is: '+companiesToRemoveFlag.size());
                     Database.SaveResult[] SrList = Database.update(companiesToRemoveFlag, false);
                 } catch (Exception e) {
                     System.debug('Message: ' + e.getMessage());
