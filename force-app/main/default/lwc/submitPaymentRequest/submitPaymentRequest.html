@@ -182,7 +182,7 @@
                             </template>
                             <template if:true={filesScreen}>
                                 <p>In order to get the payment for {selectedMonth} commission, please update your invoice here:</p>
-                                <c-file-upload-improved allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>
+                                <c-file-upload-improved allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>
                                 <lightning-layout>
                                     <lightning-layout-item size="4">
                                         <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={mdfAmount} onchange={handleMdfAmountChange}></lightning-input>
@@ -193,7 +193,7 @@
                                         <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={spiffAmount} onchange={handleSpiffAmountChange}></lightning-input>
                                     </lightning-layout-item>
                                 </lightning-layout>  
-                                <p class="slds-p-top_medium">By Submitting the request you confirm that your commission invoice matches the numbers populated in monday.com’s commission report. Any issues with specific deal not appearing in the report should be reported here.</br>Please note, changes will be reconciled in the following month’s commission report.</br>Our commission payment terms are net 45.</p>                              
+                                <p class="slds-p-top_medium">By Submitting the request you confirm that your commission invoice matches the numbers populated in monday.com’s commission report. Any issues with specific deal not appearing in the report should be reported <a href="https://forms.monday.com/forms/746a664544adda5a98de077b7b99d4bd?r=use1" target="_blank">here</a>.</br>Please note, changes will be reconciled in the following month’s commission report.</br>Our commission payment terms are net 45.</p>                              
                                 <p class="slds-p-top_medium">If you don't have the invoice prepared yet, please click on Save As Draft and come back later to upload the invoice and submit.</p>
                             </template>
                             <template if:true={submittedScreen}>
