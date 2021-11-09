@@ -221,7 +221,7 @@
                             <c-error-panel errors={error}></c-error-panel>
                         </template>
                         <template if:true={showCancelButton}>
-                            <lightning-button variant="neutral" name="cancel" label="Cancel" title="Cancel" onclick={handleCancelClick} class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button variant="neutral" name="cancel" label={cancelBtnLabel} title="Cancel" onclick={handleCancelClick} class="slds-m-left_x-small"></lightning-button>
                         </template>
                         <template if:true={monthScreen}>
                             <lightning-button variant="brand" name="nextFromMonthsScreen" label="Next" title="Next" onclick={loadDataScreen} class="slds-m-left_x-small" ></lightning-button>

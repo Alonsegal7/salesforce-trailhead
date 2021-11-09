@@ -72,6 +72,7 @@ export default class SubmitPaymentRequest extends LightningElement {
     headerCardText;
     headerIconName = 'custom:custom17';
     filesScreenFirstRun = true;
+    cancelBtnLabel = 'Cancel';
 
     //sort & filter variables
     defaultSortDirection = 'asc';
@@ -259,6 +260,7 @@ export default class SubmitPaymentRequest extends LightningElement {
                 this.showCancelButton = true;
                 this.filesScreen = false;
                 this.submittedScreen = true;
+                this.cancelBtnLabel = 'Finish';
                 return refreshApex(this.wiredPaymentReqResult);
             })
             .catch(error => {
@@ -270,6 +272,7 @@ export default class SubmitPaymentRequest extends LightningElement {
             this.showCancelButton = true;
             this.filesScreen = false;
             this.submittedScreen = true;
+            this.cancelBtnLabel = 'Finish';
         }
     }
 
@@ -301,6 +304,7 @@ export default class SubmitPaymentRequest extends LightningElement {
                     this.showCancelButton = true;
                     this.filesScreen = false;
                     this.submittedScreen = true;
+                    this.cancelBtnLabel = 'Finish';
                 } else {
                     this.customError = result.errorMsg_lwc;
                 } 
@@ -384,6 +388,7 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.dataScreen = false;
         this.filesScreen = false;
         this.submittedScreen = false;
+        this.cancelBtnLabel = 'Cancel';
         localStorage.clear();
         if(this.viewBreakdownMode || this.monthScreen){
             this.viewBreakdownMode = false;
