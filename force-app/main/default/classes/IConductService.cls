@@ -25,6 +25,7 @@ public class IConductService implements Queueable, Database.AllowsCallouts{
         request.setBody(payload);
         request.setTimeout(120000);   
         if (!Test.isRunningTest()) {
+            Utilities.cleanFlexQueue(); 
             HttpResponse response = http.send(request);
         }
     }
