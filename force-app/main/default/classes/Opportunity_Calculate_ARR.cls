@@ -12,7 +12,8 @@ public without sharing class Opportunity_Calculate_ARR {
                 }
             }
             //co-sell
-            if(!opp.Is_Primary_SO_Signed__c&&opp.Co_Sell_Opportunity__c!=null&&opp.Main_Co_Sell_Opportunity__c==false){//secondary co-sell opp
+            if(opp.Product_Count__c != null && opp.Product_Count__c != 0&&
+            !opp.Is_Primary_SO_Signed__c&&opp.Co_Sell_Opportunity__c!=null&&opp.Main_Co_Sell_Opportunity__c==false){//secondary co-sell opp
                 system.debug('OCA Raz Ben Ron Secondary co-sell');
                 opp.Expected_ARR__c = opp.Product_ARR__c;
                 opp.Claimed_ARR__c = opp.CC_Products_ARR_Sum__c+opp.Co_Sell_Products_ARR_Sum__c; 
