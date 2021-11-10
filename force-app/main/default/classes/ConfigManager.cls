@@ -8,6 +8,10 @@ public class ConfigManager {
     public static String BillingCycleEP(String pulseId){
         return getBigBrainBaseUrl() + '/salesforce/billing_cycle/' + pulseId;
     }
+
+    public static String getBigBrainGraphQLUrl(){
+        return 'https://data.bigbrain.me/graphql/v1';
+    }
     
     public static String getIConductQuoteSyncPID(){
         //return IsSandbox ? 'x23580' : 'x23495';
