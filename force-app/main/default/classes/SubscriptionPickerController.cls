@@ -107,7 +107,7 @@ public without sharing class SubscriptionPickerController {
                 if(!claimedSubsFromOlis.contains(sub.Id)){//prevent duplications subscription claiming, allow to create each sub only once
                     system.debug('Raz Ben Ron productByCode.get(sub.Product_Code__c):'+ productByCode.get(sub.Product_Code__c));
                     system.debug('Raz Ben Ron productByCode.get(sub.Product_Code__c-F):'+ productByCode.get(sub.Product_Code__c+'-F'));
-                    sub.Paid_Months__c=sub.Paid_Months__c==null?1:sub.Paid_Months__c;
+                    sub.Paid_Months__c=sub.Paid_Months__c==null||sub.Paid_Months__c==0?1:sub.Paid_Months__c;
                     opportunitylineitem oli=Utilities.createOLIfromSubscription(oppId,sub,productByCode.get(sub.Product_Code__c),false);
                     olisToInsert.add(oli);
                     opportunitylineitem freeOli=null;
