@@ -16,9 +16,9 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
      }
 
      public void execute(Database.BatchableContext BC, list<Account> scope){
-        Set<Id> relevantCompanies = (new Map<Id,Account>(scope)).keySet();
+        Set<Id> relevantAccounts = (new Map<Id,Account>(scope)).keySet();
         try {
-            ID jobID = System.enqueueJob(new updateAccountsRollupQueueable(relevantCompanies));
+            ID jobID = System.enqueueJob(new updateAccountsRollupQueueable(relevantAccounts));
             System.debug('Michael - Account_Rollup_Batchable - Sent to queueable');
             System.debug('JobIDNo: '+jobID);
         } catch (Exception e) {
@@ -30,10 +30,10 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
     public void finish(Database.BatchableContext BC){}
 
     public class updateAccountsRollupQueueable implements Queueable{
-        private Set<Id> relevantCompanies;
+        private Set<Id> relevantAccounts;
 
-        public updateAccountsRollupQueueable(Set<Id> relevantCompanies){
-            this.relevantCompanies = relevantCompanies;
+        public updateAccountsRollupQueueable(Set<Id> relevantAccounts){
+            this.relevantAccounts = relevantAccounts;
         }
         public void execute(System.QueueableContext ctx) {
             Decimal updatedArr;
@@ -41,7 +41,22 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
             Decimal updatedMapp;
             Decimal updatedWapp;
             Decimal updatedMembers;
-
+            Id CompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
+            Id MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+            Set<Id> relevantCompanies=new Set<Id>();
+            Set<Id> relevantMAs=new Set<Id>();
+            
+            List<Account> accountsList=new List<Account>([SELECT Id,RecordTypeId FROM Account WHERE Id IN: relevantAccounts]);
+            
+            for (Account acc : accountsList) {
+                if (acc.recordTypeId == CompanyRecordTypeId) {
+                    relevantCompanies.add(acc.Id);
+                }
+                if (acc.recordTypeId == MARecordTypeId) {
+                    relevantMAs.add(acc.Id);
+                }
+            }
+            
             System.debug('Michael - updateAccountsRollupQueueable - Entered queueable');
             Map<Id, List<Account>> accountsWithChildAccounts = new Map<Id, List<Account>>();
             List<Account> childrenAccounts = [SELECT id, ParentId, ARR__c, Plan_Seats__c, MAPP__c, WAPP__c, Members__c FROM Account WHERE ParentId IN:relevantCompanies];
@@ -54,16 +69,16 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
                     accountsWithChildAccounts.put(child.ParentId,new List<Account>{child});
                 }
             }
-
+            //Separation to 2 sets- 1 for Monday Accounts (came from ValueChange) and 1 for Companies (Came from ParentChange or sent to queueble from child)
             List<Account> companiesToUpdate = new List<Account>();
-            List<Account> companiesToRemoveFlag = new List<Account>();
+            List<Account> accountsToRemoveFlag = new List<Account>();
+            //Value calculation - for companies
             for (Id compId : relevantCompanies) {
                 updatedArr = 0;
                 updatedSeats = 0;
                 updatedMapp = 0;
                 updatedWapp = 0;
                 updatedMembers = 0;
-                //System.debug('Michael3: ')
                 if(!accountsWithChildAccounts.isEmpty()&&accountsWithChildAccounts.containsKey(compId)){
                     for( Account child: accountsWithChildAccounts.get(compId)) {
                         if (child.ARR__c!=null) {
@@ -84,7 +99,10 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
                     }
                 }
                 companiesToUpdate.add(new Account(Id=compId,ARR__c=updatedArr,Plan_Seats__c=updatedSeats,MAPP__c=updatedMapp,WAPP__c=updatedWapp,Members__c=updatedMembers));
-                companiesToRemoveFlag.add(new Account(Id=compId,Pending_Rollup__c = false));
+                accountsToRemoveFlag.add(new Account(Id=compId,Pending_Rollup__c = false));
+            }
+            for (Id maId : relevantMAs) {
+                accountsToRemoveFlag.add(new Account(Id=maId,Pending_Rollup__c = false));
             }
             if(!companiesToUpdate.isEmpty()) {
                 try {
@@ -92,20 +110,20 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
                     Database.SaveResult[] SrList = Database.update(companiesToUpdate, false);
                 } catch (Exception e) {
                     System.debug('Message: ' + e.getMessage());
-                    Utilities.sendDebugEmail('Error in AccountRollup Update part: ',e,e.getMessage());   
                     Utilities.sendSlackMessage('Error in AccountRollup Update part: ', 'biz-tech-monitoring', null , e, e.getMessage(), null, null);                     
                 }
-                //remove the triggrt flag
+            }
+            if(!accountsToRemoveFlag.isEmpty()){
+                //remove the trigger flag
                 try {
-                    System.debug('Michael Account_Rollup_Scheduled size of companiesToRemoveFlag is: '+companiesToRemoveFlag.size());
-                    Database.SaveResult[] SrList = Database.update(companiesToRemoveFlag, false);
+                    System.debug('Michael Account_Rollup_Scheduled size of companiesToRemoveFlag is: '+accountsToRemoveFlag.size());
+                    Database.SaveResult[] SrList = Database.update(accountsToRemoveFlag, false);
                 } catch (Exception e) {
                     System.debug('Message: ' + e.getMessage());
-                    Utilities.sendDebugEmail('Error in AccountRollup Update2 part: ',e,e.getMessage());   
-                    Utilities.sendSlackMessage('Error in AccountRollup Update2 part: ', 'biz-tech-monitoring', null , e, e.getMessage(), null, null);                     
+                    Utilities.sendSlackMessage('Error in AccountRollup Remove Flag Update part: ', 'biz-tech-monitoring', null , e, e.getMessage(), null, null);                     
                 }
-                //check which companies from the list has parents and update the parents as well
-                List<Account>relevantChildAccounts = new List<Account>([SELECT Id,ParentId FROM Account WHERE Id IN:relevantCompanies]);
+                //check which companies from the list has parents and send the parents to a rollup calculation as well
+                List<Account>relevantChildAccounts = new List<Account>([SELECT Id,ParentId FROM Account WHERE Id IN:relevantAccounts]);
                 Set<Id> relevantParents = new Set<Id>();
                 for (Account childAcc : relevantChildAccounts) {
                     if(childAcc.ParentId!=null){
