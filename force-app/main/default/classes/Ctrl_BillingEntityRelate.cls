@@ -318,7 +318,7 @@ public class Ctrl_BillingEntityRelate  {
 			rw.objName = 'Billing_Entity__c';
 			rw.val = String.valueOf(lbe[0].Id);
 			rw.text = lbe[0].Name;
-			res = JSON.serialize(rw);			
+			res = JSON.serialize(rw);
 		}
 
 		System.debug('iCloudius - Uniquness test result: ' + res);
@@ -329,18 +329,12 @@ public class Ctrl_BillingEntityRelate  {
 	public static string searchDB(String objectName, String searchText, Integer lim, String VATvalue, String VATno){
 
 		// searchText = '\'%' + String.escapeSingleQuotes(searchText.trim()) + '%\'';
-		system.debug('### in secarch:');
 		String query =  'SELECT ' + VATno;
-		system.debug('Tal - Searching_v2: ' + query);
 		query += ', Id FROM Billing_Entity__c WHERE Status__c = \'Active\' AND ' + VATno + ' = ' + VATvalue;
-		system.debug('Tal - Searching_v1: ' + query);
 
 		if (lim != null){
 			query += ' LIMIT ' + lim;
-			system.debug('Tal - Searching_v3: ' + query);
 		}
-
-		system.debug('Tal - Searching: ' + query);
 
 		List<sObject> sobjList = Database.query(query);
 		List<ResultWrapper> lstRet = new List<ResultWrapper>();
@@ -402,6 +396,12 @@ public class Ctrl_BillingEntityRelate  {
 		System.debug('iCloudius - doRelate response:\n' + JSON.serializePretty(mso));
 		return mso;
 	}
+	@AuraEnabled(cacheable=true)
+	public static String CallVatService(String countryName, String vatNumber){
+		system.debug('### countryName: ' + countryName);
+		system.debug('### vatNumber: ' + vatNumber);
+		return VatVerificationService.CallVatService(countryName,vatNumber);
+	}
 
 	public class BillingEntityWrap {
 		public Id bEId {get; set;}
@@ -457,4 +457,45 @@ public class Ctrl_BillingEntityRelate  {
 			this.shippingAddress = shippingAddress;
 		}
 	}
+
+	//Start Tal - VAT Logic
+	@AuraEnabled(cacheable=true)
+	public static String getValuesCallVatService(String BEId){
+		List<Billing_Entity__c> beToSearch = [SELECT Id, VAT_Number__c, Shipping_Country_G__c FROM Billing_Entity__c WHERE Id =: BEId];
+		String getVatVerification = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].VAT_Number__c);
+		return getVatVerification;
+	}
+
+	@AuraEnabled
+	public static void updateBillingEntityFields(Id BEId, String customerVat, String vatNumber, String vatServiceStatus){
+		String getVatServiceStatus = '';
+		
+		List<Billing_Entity__c> beToUpdate = [SELECT Id, Customer_Has_VAT_Number__c, VAT_Number__c, Last_VAT_Validation_Date__c FROM Billing_Entity__c WHERE Id =: BEId];
+		if(!beToUpdate.isEmpty()){
+			beToUpdate[0].Customer_Has_VAT_Number__c = customerVat;
+			if(customerVat == 'No'){
+				beToUpdate[0].VAT_Number__c = '';
+			}
+
+			else if(customerVat == 'Yes'){
+				beToUpdate[0].VAT_Number__c = vatNumber;
+			}
+			
+			if(vatServiceStatus != 'irrelevant'){
+				beToUpdate[0].Last_VAT_Validation_Date__c = System.today();
+			}
+			Database.update(beToUpdate[0]);
+		}
+	}
+
+	@AuraEnabled
+	public static String isVATrequiresChecking(){
+		String getVatServiceStatus = '';
+
+		Apex_Services_Status__mdt vatServiceStatus = [SELECT Id, Label, Status__c FROM Apex_Services_Status__mdt WHERE Label = 'VatService'][0];
+		getVatServiceStatus = vatServiceStatus.Status__c;
+
+		return getVatServiceStatus;
+	}
+	//End Tal - VAT Logic
 }

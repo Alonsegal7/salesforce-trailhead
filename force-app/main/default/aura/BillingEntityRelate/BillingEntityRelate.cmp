@@ -51,11 +51,30 @@
 	<aura:attribute name="limit" type="Integer" access="public" default="5" description="Total number of record to be returned"/>
 	<!--End Tal-->
 
+	<!--Start Tal - VAT Logic-->
+	<aura:attribute name="customerVatNumber" type="String" default="Yes"/>
+	<aura:attribute name="showVatErrorCmp" type="Boolean" default="false"/>
+	<aura:attribute name="invalidVATForm" type="Boolean" default="false"/>
+	<aura:attribute name="endPoint_duplicate" type="Boolean" default="false"/>
+	<aura:attribute name="vatNumberValue" type="String" default=""/>
+	<aura:attribute name="billingEntityId" type="Id"/>
+	<aura:attribute name="beToUPdate" type="Id"/>
+	<aura:attribute name="beIdAfterSuccess" type="Id"/>
+	<aura:attribute name="getServiceStatus" type="String" default=""/><!--If vatService is 'irrelevant' - we shouldn't populate the 'Last_VAT_Validation_Date__c' field on the Billing Entity level-->
+	<aura:attribute name="getVatServiceStatus" type="String" default="" />
+	<!--End Tal - VAT Logic-->
+
 	<aura:handler name="init" value="{! this }" action="{! c.doInit }" />
 	<aura:handler name="change" value="{! v.selected_be }" action="{! c.beChanged }" />
     
     <header class="slds-modal__header">
-        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Billing Entity</h2>
+		<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Billing Entity</h2>
+		<!--Start Tal - VAT Logic-->
+		<p>Welcome to the Billing Entity screen!</p>
+		<p>Here you select the Billing Entity for your sales orders</p>
+		<p>Please note - In order to change the billing information for existing entities <b>(The Bill-To section on the billing entity)</b>, please 
+			<a href="https://monday.monday.com/boards/844875220" target="_blank">👉 Click Here 👈</a> and open a ticket for the finance team</p>
+		<!--End Tal - VAT Logic-->
 		<aura:if isTrue="{! v.validationRulesCloseToLimit }">
 			<div class="message">Your system is running close to the limit of defined validations. Please contact your administrator to reduce number of validations</div>
 		</aura:if>
@@ -246,6 +265,7 @@
 							</span>
 						</div>
 					</div>
+					<!--End Tal - VAT Logic-->
 					<lightning:recordEditForm aura:id="mainBEForm"
 											objectApiName="Billing_Entity__c"
 											onsubmit="{!c.handleSubmit}"
@@ -256,10 +276,24 @@
 							<aura:iteration items="{! v.form_new_fields }" var="field" indexVar="i">
 								<div class="slds-grid slds-gutters">
 									<div class="slds-col slds-size_1-of-1">
-									<lightning:inputField onchange="{!c.handleToggleChanged}" rendered="" variant="label-stacked" required="{! field.req }" fieldName="{! field.name }" value="{! field.val }" />
+										<lightning:inputField onchange="{!c.handleToggleChanged}" rendered="" variant="label-stacked" required="{! field.req }" fieldName="{! field.name }" value="{! field.val }" />
 									</div>
 								</div>
 							</aura:iteration>
+							<!--Start Tal - VAT Logic-->
+							<aura:if isTrue="{!v.getVatServiceStatus == 'Inactive'}">
+								<lightning:inputField aura:id="vatValue" variant="label-stacked" fieldName="VAT_Number__c" value="{!v.vatAttribute}" required="true" onchange="{!c.updateVatNumberValue}"/>
+							</aura:if>
+							<aura:if isTrue="{!v.getVatServiceStatus == 'Active'}">
+								<lightning:inputField variant="label-stacked" fieldName="Customer_Has_VAT_Number__c" value="{!v.customerVatNumber}" required="true" onchange="{!c.updateRequiredVAT}"/>
+								<aura:if isTrue="{!v.customerVatNumber == 'No'}">
+									<p style="color: red; padding-left: 15px;">Please Note: Customer will be subjected to indirect taxes</p>
+								</aura:if>
+								<aura:if isTrue="{!v.customerVatNumber == 'Yes'}">
+									<lightning:inputField aura:id="vatValue" variant="label-stacked" fieldName="VAT_Number__c" value="{!v.vatAttribute}" required="true" onchange="{!c.updateVatNumberValue}"/>
+								</aura:if>
+							</aura:if>
+							<!--End Tal - VAT Logic-->
 							<div style="margin-left: 150px; padding-top: 10px;">
 								<lightning:input type="toggle" label="Sync Billing Address to Shipping Address" name="input1" checked="{!v.toggleChecked}" onchange="{!c.handleToggleChanged}"/>							
 							</div>
@@ -377,8 +411,164 @@
 					</div>
 				</section>
 			</aura:if>
+			<!--Start Tal - VAT Logic-->
+			<aura:if isTrue="{!v.showVatErrorCmp}">
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_small slds-fade-in-open" style="background: rgba(0, 0, 0, 0.75);">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<lightning:buttonIcon iconName="utility:close"
+													onclick="{!c.closeModal}"
+													alternativeText="close"
+													variant="bare-inverse"
+													class="slds-modal__close"/>
+								<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Wrong VAT Number</h2>
+								<p class="slds-m-top_x-small">We identified that the customer's VAT number is invalid.</p>
+								<p class="slds-m-top_x-small">Please add the correct VAT number and check your Ship-To-Country</p>
+								<p class="slds-m-top_x-small">You can head to this 
+									<a href="https://app.getguru.com/card/izppRnoT/VAT-format-per-country" target="_blank">Guru Card</a> for VAT format per country
+								</p>
+								<p class="slds-m-top_x-small">For any additional questions, please reach out to the  
+									<a href="https://monday.monday.com/boards/1458211432" target="_blank">Finance Team</a>
+								</p>
+						</header>
+						<footer class="slds-modal__footer">
+							<lightning:button class="slds-align_absolute-center" label="OK" onclick="{!c.closeModal}" />
+						</footer>
+					</div>
+				</section>
+			</aura:if>
+			<!--End Tal - VAT Logic-->
 		</div>
 	</aura:if>
+
+	<!--Start Tal - VAT Logic-->
+	<aura:if isTrue="{!v.invalidVATForm}">
+		<div class="full-mask">
+			<section class="{! 'form-new-container ' + v.showAltPopup }">
+				<div class="error-msg">{! v.message }</div>
+				<div>
+					<div class="slds-section__title slds-truncate slds-text-align_center">
+						<span class="header-title-container">
+							<lightning:icon iconName="utility:moneybag" alternativeText="moneybag" title="moneybag"/>
+							<span style="margin-left: 10px;">Update your Billing Entity</span>
+						</span>
+					</div>
+				</div>
+				<!--End Tal - VAT Logic-->
+				<lightning:recordEditForm
+					aura:id="invalidVATFormId"
+					recordId="{!v.beToUPdate}"
+					objectApiName="Billing_Entity__c"
+					onsubmit="{!c.handleSubmit}">
+					<lightning:messages />
+					<lightning:outputField aura:id="vatValue" variant="label-stacked" fieldName="Name" required="true"/>
+					<lightning:inputField aura:id="vatValue" variant="label-stacked" fieldName="Customer_Has_VAT_Number__c" required="true" onchange="{!c.updateRequiredVAT}" value="{!v.customerVatNumber}"/>
+					<aura:if isTrue="{!v.customerVatNumber == 'No'}">
+						<p style="color: red; padding-left: 15px;">Please Note: Customer will be subjected to indirect taxes</p>
+					</aura:if>
+					<aura:if isTrue="{!v.customerVatNumber == 'Yes'}">
+						<lightning:inputField aura:id="vatValue" variant="label-stacked" fieldName="VAT_Number__c" required="true" onchange="{!c.updateVatNumberValue}"/>
+					</aura:if>
+					<lightning:outputField aura:id="vatValue" variant="label-stacked" fieldName="CurrencyIsoCode" required="true"/>
+					<lightning:inputField aura:id="vatValue" variant="label-stacked" fieldName="Shipping_Country_G__c" required="true"/>
+					<lightning:outputField aura:id="vatValue" variant="label-stacked" fieldName="Country__c" required="true"/>
+					<lightning:outputField aura:id="vatValue" variant="label-stacked" fieldName="City__c" required="true"/>
+					<section class="form-btn-container">
+						<lightning:button label="Cancel" onclick="{! c.closeInvalidModal }" />
+						<lightning:button variant="brand" type="submit" label="Submit"/>
+					</section>
+				</lightning:recordEditForm>
+			
+				<lightning:spinner alternativeText="Loading" size="medium" class="slds-hide" aura:id="cmspinnernew" />
+			</section>
+			
+			<aura:if isTrue="{! v.showAltPopup }">
+				<section class="form-new-container">
+					<div class="error-msg">{! v.message }</div>
+					<div>
+						<div class="slds-section__title slds-truncate slds-text-align_center">
+							<span class="header-title-container">
+								<lightning:icon iconName="utility:moneybag" alternativeText="moneybag" title="moneybag"/>
+								<span style="margin-left: 10px;">Existing billing entities found</span>
+							</span>
+						</div>
+						<div class="sub-header">
+							Please note that we found existing billing entities based on your inputs.<br />
+							Please review the billing entities below
+						</div>
+						<section class="form-new-container">
+							<table class="matches validations">
+								<thead>
+									<tr>
+										<th>&nbsp;</th>
+										<th>Found Billing Entity</th>
+										<th>Country</th>
+										<th>VAT Number</th>
+									</tr>
+								</thead>
+								<tbody>
+									<aura:iteration items="{! v.altList }" var="match" indexVar="i">
+										<tr class="">
+											<td>
+												<ui:inputRadio name="validations" labelClass="label-hidden" text="{! match.customerName }" label="{! match.bEId }" change="{! c.validationListItemClicked }" />
+											</td>
+											<td>
+												<span class="validation-error">{! match.errorMessage }:</span>&nbsp;
+												<lightning:formattedUrl label="{! match.customerName }" value="{! '/lightning/r/Billing_Entity__c/' + match.bEId + '/view' }" tooltip="Billing Entity" target="_blank" />
+											</td>
+											<td>{! match.country }</td>
+											<td>{! match.VATNumber }</td>
+										</tr>
+									</aura:iteration>
+								</tbody>
+							</table>
+						</section>
+						<section class="form-btn-container">
+							<div class="row al-left">
+								<label class="to-left">If you found the relevant billing entity, please chose it and click here</label>
+								<lightning:button variant="brand" label="Select" onclick="{! c.setSelectedToMain }" disabled="{! not(v.enableSet) }" />
+							</div>
+							<aura:if isTrue="{! v.allowSubmit }">
+								<div class="row al-left">
+									<label class="to-left">Didn’t find a matching billing entity? No worries - please click here to submit the new one</label>
+									<lightning:button variant="brand" label="Submit New Billing Entity" onclick="{! c.submitOriginal }" />
+								</div>
+							</aura:if>
+							<div class="row">
+								<lightning:button label="Cancel" onclick="{! c.closeAltPopup }" />
+							</div>
+						</section>
+					</div>
+				</section>
+			</aura:if>
+			<aura:if isTrue="{!v.showVatErrorCmp}">
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_small slds-fade-in-open" style="background: rgba(0, 0, 0, 0.75);">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<lightning:buttonIcon iconName="utility:close"
+													onclick="{!c.closeModal}"
+													alternativeText="close"
+													variant="bare-inverse"
+													class="slds-modal__close"/>
+							<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Wrong VAT Number</h2>
+							<p class="slds-m-top_x-small">We identified that the customer's VAT number is invalid.</p>
+							<p class="slds-m-top_x-small">Please add the correct VAT number and check your Ship-To-Country</p>
+							<p class="slds-m-top_x-small">You can head to this 
+								<a href="https://app.getguru.com/card/izppRnoT/VAT-format-per-country" target="_blank">Guru Card</a> for VAT format per country
+							</p>
+							<p class="slds-m-top_x-small">For any additional questions, please reach out to the  
+								<a href="https://monday.monday.com/boards/1458211432" target="_blank">Finance Team</a>
+							</p>
+						</header>
+						<footer class="slds-modal__footer">
+							<lightning:button class="slds-align_absolute-center" label="OK" onclick="{!c.closeModal}" />
+						</footer>
+					</div>
+				</section>
+			</aura:if>
+		</div>
+	</aura:if>
+	<!--END TAL - VAT Logic-->
 
 	<aura:if isTrue="{! v.edit_existing }">
 		<div class="full-mask">

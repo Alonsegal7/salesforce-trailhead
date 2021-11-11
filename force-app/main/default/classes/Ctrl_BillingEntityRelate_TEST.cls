@@ -22,9 +22,22 @@ private class Ctrl_BillingEntityRelate_TEST {
 		Company_Billing__c cb = TestObjectCreator.CreateCompanyBilling(aa, be);
 		insert cb;
 
+		Country_Region_Mapping__c rgn = new Country_Region_Mapping__c();
+		rgn.Country_Name__c = 'Luxembourg';
+		rgn.Name = 'LU';
+		insert rgn;
+
 		Ctrl_BillingEntityRelate.fieldValidations(be);
 		Ctrl_BillingEntityRelate.getInitialParameters(o.Id);
 		Ctrl_BillingEntityRelate.testUniquness(be.VAT_Number__c, '', '', '', '');
 		Ctrl_BillingEntityRelate.doRelate(o.Id, be.Id);
+		Test.isRunningTest();
+		Ctrl_BillingEntityRelate.CallVatService('Luxembourg','LU26375245');
+
+		Ctrl_BillingEntityRelate.getValuesCallVatService(be.Id);
+		Ctrl_BillingEntityRelate.updateBillingEntityFields(be.Id, 'Yes', 'LU26375245', 'irrelevant'); //scenario #1 - VAT is required
+		Ctrl_BillingEntityRelate.updateBillingEntityFields(be.Id, 'No', 'LU26375245', 'unknown'); // scenario #2 - VAT is not required
+		Ctrl_BillingEntityRelate.isVATrequiresChecking();
+
 	}
 }

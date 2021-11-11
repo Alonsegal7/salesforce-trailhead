@@ -7,46 +7,26 @@
             var state = response.getState();
             if (state === "SUCCESS") {
 				var storeResponse = response.getReturnValue();
-				console.log('### storeResponse: ' + storeResponse);
-				console.log('### isEmpty: ' + this.isEmpty(storeResponse));
                 if (!this.isEmpty(storeResponse)){
 					//console.log('Init call response: ' + storeResponse);
 					storeResponse = JSON.parse(storeResponse);
-					console.log('### storeResponse: ' + this.isEmpty(storeResponse));
-					console.log('### storeResponse1: ' + storeResponse.hasOwnProperty('opportunity'));
 					if (storeResponse.hasOwnProperty('opportunity')){
-						console.log('### storeResponse2: ' + storeResponse.hasOwnProperty('opportunity'));
 						var lbe = {};
 						cmp.set('v.loadedOpp', storeResponse.opportunity);
-						console.log('### storeResponse3: ' + cmp.get('v.loadedOpp'));
 						if (!this.isEmpty(storeResponse.opportunity) && !this.isEmpty(storeResponse.opportunity.Billing_Entity__c)){
-							console.log('### storeResponse0: ' + this.isEmpty(storeResponse.opportunity.Billing_Entity__c));
-							console.log('### storeResponse4: ' + this.isEmpty(storeResponse.opportunity));
 							lbe.val = storeResponse.opportunity.Billing_Entity__c;
-							console.log('### storeResponse5: ' + lbe.val);
 							lbe.text = storeResponse.opportunity.Billing_Entity__r.Name;
-							console.log('### storeResponse6: ' + lbe.text);
 							cmp.set('v.has_existing', true);
 							if(!this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__c) && !this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r)){
-								console.log('### storeResponse7: ' + (this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r.VAT_Number__c)));
 								cmp.set('v.showVATInEdtForm', (this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r.VAT_Number__c)));
 							}
-							console.log('### storeResponse8: ' + cmp.get('v.has_existing'));
-							console.log('### storeResponse9: ' + cmp.get('v.showVATInEdtForm'));
 						}
 						cmp.set('v.latest_be', lbe);
-						console.log('### storeResponse10: ' + cmp.get('v.latest_be'));
 					}
-					console.log('### storeResponse11: ' + storeResponse.hasOwnProperty('bestMatch'));
 					if (storeResponse.hasOwnProperty('bestMatch')) {
-						console.log('### storeResponse12: ' + storeResponse.hasOwnProperty('bestMatch'));
-						console.log('### storeResponse13: ' + cmp.get('v.list_best_match'));
 						cmp.set('v.list_best_match', storeResponse.bestMatch);
-						console.log('### storeResponse14: ' + cmp.get('v.list_best_match'));
 						for (var i = 0; i < storeResponse.bestMatch.length; i++){
-							console.log('### storeResponse15: ' + storeResponse.bestMatch.length);
 							if (storeResponse.bestMatch[i].selected){
-								console.log('### storeResponse16: ' + storeResponse.bestMatch[i].selected);
 								cmp.set('v.currently_selected', storeResponse.bestMatch[i].bEId);
 							}
 							console.log('Selected by default: ' + cmp.get('v.currently_selected'));
@@ -55,45 +35,29 @@
 					if (storeResponse.hasOwnProperty('moreOptions')) {
 						cmp.set('v.list_more_options', storeResponse.moreOptions);
 					}
-					console.log('### enable_form_new: ' + cmp.get('v.enable_form_new'));
 					if (storeResponse.hasOwnProperty('newFormFields') && storeResponse.newFormFields.length > 0) {
-						console.log('### Tal Test1 - enable_form_new: ' + cmp.get('v.enable_form_new'));
 						var theFields = new Array();
-						console.log('### Tal Test2: ' + theFields);
 						for (var i = 0; i < storeResponse.newFormFields.length; i++){
 							var f = {};
 							f.name = storeResponse.newFormFields[i].name;
-							console.log('### Tal Test3: ' + f.name);
 							f.req = storeResponse.newFormFields[i].required;
-							console.log('### Tal Test4: ' + f.req);
 							theFields.push(JSON.parse(JSON.stringify(f)));
-							console.log('### Tal Test5: ' + theFields);
 						}
 						cmp.set('v.form_new_fields', theFields);
 						cmp.set('v.enable_form_new', true);
-						console.log('### Tal Test6: ' + cmp.get('v.form_new_fields'));
-						console.log('### Tal Test7: ' + cmp.get('v.enable_form_new'));
-						
 					}
 
 					//Start Tal
 					if (storeResponse.hasOwnProperty('newFormShippingFields') && storeResponse.newFormShippingFields.length > 0) {
-						console.log('@@@ Tal Test1 - enable_form_new: ' + cmp.get('v.enable_form_new'));
 						var theShippingFields = new Array();
-						console.log('@@@ Tal Test2: ' + theFields);
 						for (var i = 0; i < storeResponse.newFormShippingFields.length; i++){
 							var f = {};
 							f.name = storeResponse.newFormShippingFields[i].name;
-							console.log('@@@ Tal Test3: ' + f.name);
 							f.req = storeResponse.newFormShippingFields[i].required;
-							console.log('@@@ Tal Test4: ' + f.req);
 							theShippingFields.push(JSON.parse(JSON.stringify(f)));
-							console.log('@@@ Tal Test5: ' + theFields);
 						}
 						cmp.set('v.form_new_shipping_fields', theShippingFields);
 						cmp.set('v.enable_form_new', true);
-						console.log('@@@ Tal Test6: ' + cmp.get('v.form_new_fields'));
-						console.log('@@@ Tal Test7: ' + cmp.get('v.enable_form_new'));
 						
 					}
 					//End Tal
@@ -161,14 +125,82 @@
         $A.util.removeClass(spinner, "slds-hide");
         $A.enqueueAction(action);
 	},
+
+	callVatService : function(cmp, evt){
+		console.log('--------------callVatService---------------')
+		var fields = evt.getParam("fields");
+		console.log('fields: ' + JSON.stringify(fields));
+		console.log('--------------callVatService---------------+'+fields);
+		var allowSubmit = cmp.get('v.allowSubmit');
+		//Start Tal - VAT Logic
+		var getVatNumber = fields.VAT_Number__c;
+		if (!this.isEmpty(fields)){
+			var action = cmp.get("c.CallVatService");
+			action.setParams({
+				"countryName": fields.Shipping_Country_G__c,           
+                "vatNumber": getVatNumber
+			});
+			
+		}
+		//End Tal - VAT Logic
+	
+		action.setCallback(this, function(response) {
+			var state = response.getState();
+			if (state === "SUCCESS"){
+				var storeResponse = response.getReturnValue();
+				console.log('VAT-SERVICE----' + storeResponse);
+				cmp.set('v.getServiceStatus', storeResponse);
+				if (storeResponse=='invalid') {
+					//Before all - Check vat number
+					//Start Tal -VAT Logic - Remove this Toast
+						// cmp.find('notifLib').showToast({
+						// 	"title": 'Wrong VAT Number- ',
+						// 	"variant": 'warning',
+						// 	"mode":"sticky",
+						// 	"message": 'Please check VAT and country information'
+						// });
+					//End Tal - VAT Logic - Remove this Toast
+					//Start Tal - VAT Logic
+					if(cmp.get('v.endPoint_duplicate') == false){
+						cmp.set('v.showVatErrorCmp', true);
+					}
+					
+					if(cmp.get('v.endPoint_duplicate') == true){
+						cmp.set('v.showVatErrorCmp', true);
+						cmp.set('v.invalidVATForm', true);
+					}
+					//End Tal - VAT Logic
+				}
+				//service is down
+				else if (storeResponse=='unknown') {
+					cmp.find('notifLib').showToast({
+						"title": 'Wrong VAT Number- ',
+						"variant": 'warning',
+						"mode":"sticky",
+						"message": 'Service is down - please contract bizops'
+					});
+				}
+				else{//Vat number returned true - go next step
+					this.testUniqu(cmp,evt);
+				}
+			}
+		})
+		
+		$A.enqueueAction(action);
+	},
+
 	testUniqu : function(cmp, evt){
+		console.log('submited')
 		var fields = evt.getParam("fields");
 		console.log('fields: ' + JSON.stringify(fields));
 		var allowSubmit = cmp.get('v.allowSubmit');
+		//Start Tal - VAT Logic
+		var getVatNumber = fields.VAT_Number__c;
+		//End Tal - VAT Logic
 		if (!this.isEmpty(fields)){
 			var action = cmp.get("c.testUniquness");
 			action.setParams({
-                "vatNumber": fields.VAT_Number__c,
+                "vatNumber": getVatNumber,
 				"cBillingCurrency": fields.CurrencyIsoCode,
 				"cCountry": fields.Country__c,
 				"cCity": fields.City__c,
@@ -193,6 +225,11 @@
 							console.log('Submit');
 							var mainForm = cmp.find('mainBEForm');
 							mainForm.submit(fields);
+							//Start Tal - VAT Logic
+							if(cmp.get('v.getVatServiceStatus') == 'Active'){
+								this.updateBillingEntityFields(cmp, evt);
+							}
+							//End Tal - VAT Logic
 						}
 					}   
 				}
@@ -208,7 +245,6 @@
 		console.log('Initiating field validations');
 		var fields = evt.getParam("fields");
 		cmp.set('v.formFieldsToSubmit', fields);
-		
 		var action = cmp.get("c.fieldValidations");
 		action.setParams({ "be": fields });
 		action.setCallback(this, function(response) {
@@ -223,10 +259,23 @@
 						cmp.set('v.allowSubmit', true);
 					}
 					if (this.isEmpty(storeResponse.matchesFound) || !Array.isArray(storeResponse.matchesFound) || storeResponse.matchesFound.length == 0){
-						console.log('Submitting...');
-						var mainForm = cmp.find('mainBEForm');
-						mainForm.submit(fields);
+						console.log('Submitting...' + cmp.get('v.invalidVATForm'));
+						if(cmp.get('v.invalidVATForm') == false){
+							var mainForm = cmp.find('mainBEForm');
+							mainForm.submit(fields);
+						}
+						if(cmp.get('v.invalidVATForm') == true){
+							var mainForm = cmp.find('invalidVATFormId');
+							mainForm.submit(fields);
+						}
+						//Start Tal - VAT Logic
+						if(cmp.get('v.billingEntityId') != null || cmp.get('v.beToUPdate') != null){
+							this.updateBillingEntityFields(cmp, evt);
+							this.relate(cmp, evt);
+						}
+						//End Tal - VAT Logic
 					} else {
+						console.log('Not Submitting...');
 						cmp.set('v.altList', storeResponse.matchesFound);
 						cmp.set('v.showAltPopup', true);
 					}
@@ -262,17 +311,25 @@
 			if (!this.isEmpty(beId)){
 				beId = beId.val;
 			}
+			//Start Tal - VAT Logic
+			if(cmp.get('v.getVatServiceStatus') == 'Active'){
+				if(this.isEmpty(beId) && cmp.get('v.beIdAfterSuccess') != null && cmp.get('v.beIdAfterSuccess') != '' && cmp.get('v.beIdAfterSuccess') != undefined){
+					beId = cmp.get('v.beIdAfterSuccess');
+				}
+			}
+			//End Tal - VAT Logic
 		}
 
 		var action = cmp.get("c.doRelate");
         action.setParams({ "oppId" : oppId, "BEId" :  beId});
         action.setCallback(this, function(response) {
-            var state = response.getState();
+			var state = response.getState();
             if (state === "SUCCESS") {
-                var storeResponse = response.getReturnValue();
+				var storeResponse = response.getReturnValue();
                 if (!this.isEmpty(storeResponse) && storeResponse.hasOwnProperty('status') && storeResponse.status == 'success'){
 					cmp.set('v.latest_be', storeResponse.related_be);
 					cmp.set('v.has_existing', true);
+					cmp.set('v.endPoint_duplicate', false);
 					$A.get("e.force:closeQuickAction").fire();
 					$A.get('e.force:refreshView').fire();
 					/*
@@ -302,5 +359,164 @@
 	},
 	isEmpty : function (obj){
 		return (obj == null || typeof(obj) == 'undefined' || obj == '' || obj == 'undefined');
+	},
+
+	//Start Tal - VAT Logic
+	checkVATBeforeRelate : function(cmp, evt){
+		var beId = cmp.get('v.currently_selected');
+		if (this.isEmpty(beId)){
+			beId = cmp.get('v.selected_be');
+			if (!this.isEmpty(beId)){
+				beId = beId.val;
+			}
+		}
+		cmp.set('v.beToUPdate', beId);
+
+		var action = cmp.get("c.getValuesCallVatService");
+        action.setParams({ "BEId" :  beId});
+        action.setCallback(this, function(response) {
+			var state = response.getState();
+			var storeResponse = response.getReturnValue();
+			cmp.set('v.getServiceStatus', storeResponse);
+			if (state === "SUCCESS") {
+				if (storeResponse=='invalid') {
+					cmp.set('v.showVatErrorCmp', true);
+					cmp.set('v.invalidVATForm', true);
+				}
+				//service is down
+				else if (storeResponse=='unknown') {
+					cmp.find('notifLib').showToast({
+						"title": 'Wrong VAT Number- ',
+						"variant": 'warning',
+						"mode":"sticky",
+						"message": 'Service is down - please contract bizops'
+					});
+				}
+				else{
+					if(cmp.get('v.selection_mode') == 'choose existing' || cmp.get('v.selection_mode') == 'search'){
+						this.relate(cmp, evt);
+					}
+
+					if(cmp.get('v.endPoint_duplicate') == false){
+						this.testUniqu(cmp,evt);
+					}
+				}
+			}
+
+			else if(state === "ERROR"){
+				var errors = action.getError();
+				if (errors) {
+					if (errors[0] && errors[0].message) {
+						console.log('### error message: '+ errors[0].message);
+					}
+				}
+			}
+            var spinner = cmp.find("cmspinner");
+        	$A.util.addClass(spinner, "slds-hide");
+        });
+        var spinner = cmp.find("cmspinner");
+        $A.util.removeClass(spinner, "slds-hide");
+        $A.enqueueAction(action);
+	},
+
+	updateBillingEntityFields : function(cmp, evt){
+		var BEId = cmp.get('v.billingEntityId');
+		var vatServiceStatus = cmp.get('v.getServiceStatus');
+		if (this.isEmpty(BEId) || BEId == null){
+			BEId = cmp.get('v.beToUPdate');
+		}
+		
+		var customerVat = cmp.get('v.customerVatNumber');
+		var vatNumber = cmp.get('v.vatNumberValue');
+		var action = cmp.get("c.updateBillingEntityFields");
+        action.setParams({ "BEId" :  BEId, "customerVat" : customerVat, "vatNumber" : vatNumber, "vatServiceStatus" : vatServiceStatus});
+        action.setCallback(this, function(response) {
+			var state = response.getState();
+            if (state === "SUCCESS") {
+				if(cmp.get('v.endPoint_duplicate') == false){
+					cmp.set('v.selected_be', BEId);
+					cmp.set('v.enableSet', false);
+					cmp.set('v.temp_selected_be', null);
+					cmp.set('v.form_new', false);
+					cmp.set('v.showAltPopup', false);
+					cmp.set('v.invalidVATForm', false);
+					cmp.find('notifLib').showToast({
+						"title": 'Success!',
+						"variant": 'success',
+						"mode":"dismissable",
+						"message": 'Billing Entity successfully updated'
+					});
+				}
+				else{
+					this.relate(cmp, evt);
+				}
+				// $A.get("e.force:closeQuickAction").fire();
+				// $A.get('e.force:refreshView').fire();
+				
+            }
+            var spinner = cmp.find("cmspinner");
+        	$A.util.addClass(spinner, "slds-hide");
+        });
+        var spinner = cmp.find("cmspinner");
+        $A.util.removeClass(spinner, "slds-hide");
+        $A.enqueueAction(action);
+	},
+
+	updateBillingEntityFieldsFromCreate : function(cmp, evt){
+		var BEId = cmp.get('v.beIdAfterSuccess');
+		var vatServiceStatus = cmp.get('v.getServiceStatus');
+
+		var customerVat = cmp.get('v.customerVatNumber');
+		var vatNumber = cmp.get('v.vatNumberValue');
+
+		var action = cmp.get("c.updateBillingEntityFields");
+        action.setParams({ "BEId" :  BEId, "customerVat" : customerVat, "vatNumber" : vatNumber, "vatServiceStatus" : vatServiceStatus});
+        action.setCallback(this, function(response) {
+			var state = response.getState();
+            if (state === "SUCCESS") {
+				if(cmp.get('v.endPoint_duplicate') == false){
+					cmp.set('v.selected_be', BEId);
+					cmp.set('v.enableSet', false);
+					cmp.set('v.temp_selected_be', null);
+					cmp.set('v.form_new', false);
+					cmp.set('v.showAltPopup', false);
+					cmp.set('v.invalidVATForm', false);
+					cmp.find('notifLib').showToast({
+						"title": 'Success!',
+						"variant": 'success',
+						"mode":"dismissable",
+						"message": 'Billing Entity successfully updated'
+					});
+				}
+				else{
+					this.relate(cmp, evt);
+				}
+				// $A.get("e.force:closeQuickAction").fire();
+				// $A.get('e.force:refreshView').fire();
+				
+            }
+            var spinner = cmp.find("cmspinner");
+        	$A.util.addClass(spinner, "slds-hide");
+        });
+        var spinner = cmp.find("cmspinner");
+        $A.util.removeClass(spinner, "slds-hide");
+        $A.enqueueAction(action);
+	},
+
+	isVATrequiresChecking : function(cmp, evt){
+		var action = cmp.get("c.isVATrequiresChecking");
+        action.setCallback(this, function(response) {
+			var state = response.getState();
+			var storeResponse = response.getReturnValue();
+            if (state === "SUCCESS") {
+				cmp.set('v.getVatServiceStatus', storeResponse);
+            }
+            var spinner = cmp.find("cmspinner");
+        	$A.util.addClass(spinner, "slds-hide");
+        });
+        var spinner = cmp.find("cmspinner");
+        $A.util.removeClass(spinner, "slds-hide");
+        $A.enqueueAction(action);
 	}
+	//End Tal - VAT Logic
 })

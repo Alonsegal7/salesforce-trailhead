@@ -1,6 +1,11 @@
 .THIS{
     position: relative;
 }
+.THIS .top-most-div{
+    overflow-y: scroll;
+    height:680px;
+    scroll-behavior: smooth;
+}
 .THIS.slds-modal__header{
     padding-top: 0;
     border-bottom: none;

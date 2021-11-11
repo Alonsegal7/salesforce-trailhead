@@ -1,6 +1,7 @@
 ({
 	doInit: function (cmp, evt, hlp) {
 		console.log('Billing Entity Relate Initializing...');
+		hlp.isVATrequiresChecking(cmp, evt);
 		hlp.loadInitialParameters(cmp, evt);
 	},
 	modeChanged : function(cmp, evt, hlp){
@@ -47,7 +48,20 @@
 		evt.preventDefault();
 		var spinner = cmp.find("cmspinneredit");
 		$A.util.removeClass(spinner, "slds-hide");
-		hlp.testUniqu(cmp, evt);
+		//Start Tal - VAT Logic
+		if(cmp.get('v.getVatServiceStatus') == 'Active'){
+			if(cmp.get('v.customerVatNumber') == 'Yes'){
+				hlp.callVatService(cmp,evt);
+			}
+			else{
+				hlp.testUniqu(cmp, evt);
+			}
+		}
+
+		else{
+			hlp.testUniqu(cmp, evt);
+		}
+		//End Tal - VAT Logic
 	},
 	handleEditSubmit : function (cmp, evt, hlp) {
 		console.log('Edit Billing Entity form attempt submit');
@@ -59,9 +73,16 @@
 		//hlp.testUniqu(cmp, evt);
 	},
 	handleSuccess : function (cmp, evt, hlp) {
+		console.log('in success: ' + id);
 		var payload = evt.getParams().response;
 		var id = payload.id;
-		console.log('Saved Billing Entity Id: ' + id); 
+		console.log('Saved Billing Entity Id: ' + id);
+		//Start Tal - VAT Logic
+		if(cmp.get('v.getVatServiceStatus') == 'Active'){
+			cmp.set('v.beIdAfterSuccess', id);
+			hlp.updateBillingEntityFieldsFromCreate(cmp, evt);
+		}
+		//End Tal - VAT Logic
 		cmp.set('v.currently_selected', id);
 		cmp.find('notifLib').showToast({
 			"title": 'Success!',
@@ -120,7 +141,20 @@
 		$A.util.addClass(spinner, "slds-hide");
 	},
 	relate : function(cmp, evt, hlp){
-		hlp.relate(cmp, evt);
+		//Start Tal - VAT Logic
+		if(cmp.get('v.getVatServiceStatus') == 'Active'){
+			if(cmp.get('v.endPoint_duplicate') == false){
+				hlp.checkVATBeforeRelate(cmp, evt);
+			}
+			else{
+				hlp.relate(cmp, evt);
+			}
+		}
+		//End Tal - VAT Logic
+
+		else{
+			hlp.relate(cmp, evt);
+		}
 	},
     closeDialog : function(){
     	$A.get("e.force:closeQuickAction").fire();
@@ -136,13 +170,21 @@
 		selectedBE.text = BEName;
 		cmp.set('v.temp_selected_be', selectedBE);
 		cmp.set('v.enableSet', true);
+		//Start Tal - VAT Logic
+		cmp.set('v.billingEntityId', BEId);
+		//End Tal - VAT Logic
 	},
 	setSelectedToMain : function(cmp, evt, hlp){
+		//Start Tal - VAT Logic
+		cmp.set('v.endPoint_duplicate', true);
+		hlp.updateBillingEntityFields(cmp, evt);
+		//End Tal - VAT Logic
 		cmp.set('v.selected_be', cmp.get('v.temp_selected_be'));
 		cmp.set('v.enableSet', false);
 		cmp.set('v.temp_selected_be', null);
 		cmp.set('v.form_new', false);
 		cmp.set('v.showAltPopup', false);
+		cmp.set('v.invalidVATForm', false);
 	},
 	closeAltPopup : function(cmp, evt, hlp){
 		cmp.set('v.temp_selected_be', null);
@@ -166,37 +208,6 @@
 		var target = event.getSource();
 		var txtValField = target.get("v.fieldName");
 		var toggleValue = component.get("v.toggleChecked");
-		console.log('W### Here');
-		// if(txtValField === 'VAT_Number__c'){
-		// 	var target_v2 = event.getSource();
-		// 	var searchText = target_v2.value;
-		// 	console.log('W### target_v2: ' + target_v2);
-		// 	console.log('$$$ searchText: ' + searchText);
-        //     var objectName = component.get("v.objectName");
-		// 	var VATno = txtValField;
-		// 	var VATvalue = target.get("v.value");
-		// 	var limit = component.get("v.limit");
-		// 	console.log('### VATno: ' + VATno);
-		// 	console.log('### VATvalue: ' + VATvalue);
-        //     var action = component.get("c.searchDB");
-        //     action.setStorable();
-            
-        //     action.setParams({
-		// 		objectName : objectName,
-		// 		searchText : searchText,
-		// 		lim : limit,
-		// 		VATvalue : VATvalue,
-        //         VATno : VATno
-        //     });
-
-        //     action.setCallback(this,function(a){
-		// 		console.log('@@@ Handler: ');
-        //         // this.handleResponse(a, component, helper);
-        //     });
-            
-        //     console.log('Server call made');
-        //     $A.enqueueAction(action);
-		// }
 
 		if(toggleValue == true){
 			if(txtValField === 'Name'){
@@ -223,6 +234,29 @@
 				component.set('v.shippingZipCode', target.get("v.value"));
 			}
 		}
-	}
+	},
 	//End Tal
+
+	//Start Tal - VAT Logic
+	updateRequiredVAT : function(component, event, helper){
+        var requiredVat = event.getParam('value');
+        component.set('v.customerVatNumber', requiredVat);
+        event.preventDefault();
+    },
+	//End Tal - Vat Logic
+
+	//Start Tal - VAT Logic
+    closeModal : function(component, event, helper) {
+        component.set('v.showVatErrorCmp', false);
+	},
+
+	closeInvalidModal : function(cmp, evt){
+		cmp.set('v.invalidVATForm', false);
+	},
+	
+	updateVatNumberValue : function(cmp, evt){
+		var vatNum = evt.getParam('value');
+		cmp.set('v.vatNumberValue', vatNum);
+	}
+    //End Tal - VAT Logic
 })

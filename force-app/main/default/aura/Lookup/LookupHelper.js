@@ -14,9 +14,10 @@
 	}, 
     serverCall : function(cmp, evt, hlp) {  
         var target = evt.target;
-        var searchText = target.value; 
+        var searchText = target.value;
         var minimumKeys = cmp.get('v.minimumKeys');
         var last_SearchText = cmp.get("v.last_SearchText");
+        console.log('### last_SearchText: ' + last_SearchText);
         //Escape button pressed 
         if (evt.keyCode == 27 || !searchText.trim()) { 
             hlp.clearSelection(cmp, evt, hlp);
