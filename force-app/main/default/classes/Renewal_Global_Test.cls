@@ -33,9 +33,8 @@ public class Renewal_Global_Test {
         System.runAs(userRecord){
             opportunity_RenewalCreation.checkOpenRenewalOpps(con.Id);
             opportunity_RenewalCreation.insertOpportunity(con.Id); 
-
+            opportunity_RenewalCreation.checkOpenExpansionOpps(con.Id);
         }
-
     }
     
     public static testmethod void createOpportunityWithSubs() {
@@ -70,6 +69,4 @@ public class Renewal_Global_Test {
             opportunity_RenewalCreation.insertOpportunity(con.Id); 
         }
     }
-    
-    
 }

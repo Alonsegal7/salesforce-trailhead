@@ -7,6 +7,7 @@ import checkOpenRenewalOpps from '@salesforce/apex/Opportunity_RenewalCreation.c
 import checkOpenExpansionOpps from '@salesforce/apex/Opportunity_RenewalCreation.checkOpenExpansionOpps';
 import checkRelatedMAs from '@salesforce/apex/Opportunity_RenewalCreation.checkRelatedMAs';
 import primaryRenewalOwner from "@salesforce/schema/Contract.Primary_Renewal_Owner__c";
+import relatedContractCompany from "@salesforce/schema/Contract.AccountId";
 import renewal_primaryRenewalLabel from '@salesforce/label/c.renewal_primaryRenewalLabel';
 import renewal_relatedMondayAccountLabel from '@salesforce/label/c.renewal_relatedMondayAccountLabel';
 
@@ -31,8 +32,12 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
     displayOpportunity = false;
     primaryRenewalOwner;
     primaryRenewal = '';
+    /*
+    relatedContractCompany;
+    relatedContractCompanyId = '';
+    */
 
-    /*  Get the 'Primary_Renewal_Owner__c' fron Contract level
+    /*  Get the 'Primary_Renewal_Owner__c' from Contract level
         While this field is empty:
         - It will show an error message via the Custom label --> 'renewal_primaryRenewalLabel'
         - It will disable the 'Create Renewal Opportunity' button

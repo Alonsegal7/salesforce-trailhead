@@ -2,10 +2,18 @@ public without sharing class Opportunity_RenewalCreation {
     //Check if there is already a CS Opportunity related to Contract - if so, the component will not show the ability to create a new Opp
     @AuraEnabled(cacheable=true)
     public static List<Opportunity> checkOpenRenewalOpps(Id recordId){
+        system.debug('### recordId: ' + recordId);
+        Contract cont = [SELECT Id, Name, AccountId FROM Contract WHERE Id =: recordId LIMIT 1];
+        Account company = [SELECT Id, Name FROM ACCOUNT WHERE Id =: cont.AccountId LIMIT 1];
         List<Opportunity> renewalOpps = [
             SELECT Id, Name, StageName, Selected_Company_Contract__c 
             FROM Opportunity 
             WHERE StageName != 'Closed Won' AND StageName != 'Closed Lost' AND Selected_Company_Contract__c =: recordId AND (RecordType.DeveloperName = 'CS_Opportunity' OR Type LIKE '%Renewal%')];
+
+        // List<Opportunity> renewalOpps = [
+        //     SELECT Id, Name, StageName, Selected_Company_Contract__c 
+        //     FROM Opportunity 
+        //     WHERE StageName != 'Closed Won' AND StageName != 'Closed Lost' AND Company__c =: company.Id AND (RecordType.DeveloperName = 'CS_Opportunity' OR Type LIKE '%Renewal%')];
         system.debug('### renewalOpps: ' + renewalOpps);
         return renewalOpps;
     }
@@ -35,7 +43,9 @@ public without sharing class Opportunity_RenewalCreation {
     @AuraEnabled
     public static Opportunity insertOpportunity(Id recordId){
         Id csOpportunityRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
+        System.debug('### csOpportunityRT: ' + csOpportunityRT);
         Id salesOpportunityRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
+        System.debug('### salesOpportunityRT: ' + salesOpportunityRT);
         Id currentUserProfile = userinfo.getProfileId();
         Id getRelevantRT;
         Id qli;
@@ -96,12 +106,16 @@ public without sharing class Opportunity_RenewalCreation {
         }
 
         if(userProfile.Name == 'Renewals'){
+            System.debug('### userProfile.Name: ' + userProfile.Name);
             getRelevantRT = csOpportunityRT;
         }
 
         else if(userProfile.Name != 'Partner Community Custom' && userProfile.Name != 'GSI Community User' && userProfile.Name != 'Channel Managers'){
+            System.debug('### userProfile.Name_v1: ' + userProfile.Name);
             getRelevantRT = salesOpportunityRT;
         }
+        
+        System.debug('### getRelevantRT: ' + getRelevantRT);
 
         system.debug('### pricingVersion: ' + pricingVersion);
         system.debug('### cont_v1: ' + cont);
@@ -161,8 +175,9 @@ public without sharing class Opportunity_RenewalCreation {
 
     public static void updateRelatedRecordsFields(Map<Id, Contract> oldContracts, Map<Id, Contract> newContracts){
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
-        List<Opportunity> opp = [SELECT Id, Selected_Company_Contract__c, Original_Contract_ARR__c FROM Opportunity WHERE Selected_Company_Contract__c IN: newContracts.keySet() AND RecordType.DeveloperName = 'CS_Opportunity' AND StageName != 'Closed Won' AND StageName != 'Closed Lost' LIMIT 1];
-        System.debug('### opp: ' + opp);
+        List<Account> accsToUpdate = new List<Account>();
+        List<Opportunity> oppList = [SELECT Id, Selected_Company_Contract__c, Original_Contract_ARR__c FROM Opportunity WHERE Selected_Company_Contract__c IN: newContracts.keySet() AND RecordType.DeveloperName = 'CS_Opportunity' AND StageName != 'Closed Won' AND StageName != 'Closed Lost' LIMIT 1];
+        System.debug('### oppList: ' + oppList);
         List<Account> realtedMA = [SELECT Id, Renewal_Manager__c, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: newContracts.keySet()];
         System.debug('### realtedMA: ' + realtedMA);
 
@@ -172,6 +187,7 @@ public without sharing class Opportunity_RenewalCreation {
                     if(acc.Active_Contract__c == contr.Id){
                         acc.Renewal_Manager__c = contr.Renewal_Manager__c;
                         acc.Renewal_Owner__c  = contr.Primary_Renewal_Owner__c;
+                        accsToUpdate.add(acc);
                     }
                 }
             }
@@ -179,17 +195,25 @@ public without sharing class Opportunity_RenewalCreation {
             system.debug('### oldContracts.get(contr.Id).Contract_ARR__c: ' + oldContracts.get(contr.Id).Contract_ARR__c);
             if(newContracts.get(contr.Id).Contract_ARR__c != oldContracts.get(contr.Id).Contract_ARR__c){
                 system.debug('### in:');
-                if(!opp.isEmpty() && opp[0].Selected_Company_Contract__c == contr.Id){
-                    system.debug('### in2:');
-                    opp[0].Original_Contract_ARR__c = contr.Contract_ARR__c;
-                    oppsToUpdate.add(opp[0]);
-                    system.debug('### oppsToUpdate: ' + oppsToUpdate);
+                if(!oppList.isEmpty()){
+                    for(Opportunity oppty : oppList){
+                        system.debug('### in2:');
+                        if(oppty.Selected_Company_Contract__c == contr.Id){
+                            oppty.Original_Contract_ARR__c = contr.Contract_ARR__c;
+                            oppsToUpdate.add(oppty);
+                            system.debug('### oppsToUpdate: ' + oppsToUpdate);
+                        }
+                    }
                 }
             }
         }
 
         if(!oppsToUpdate.isEmpty()){
             Database.update(oppsToUpdate);
+        }
+
+        if(!accsToUpdate.isEmpty()){
+            Database.update(accsToUpdate);
         }
     }
 }
