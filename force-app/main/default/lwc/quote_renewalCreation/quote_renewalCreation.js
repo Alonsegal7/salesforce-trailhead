@@ -21,6 +21,7 @@ export default class Quote_renewalCreation extends LightningElement{
     customError;
     showCreateRenewalSoSection=false;
     showNewQuoteSection=false;
+    showConfirmation=false;
     showCreateButton=true;
     oppDetails;
     originalContract;
@@ -100,7 +101,19 @@ export default class Quote_renewalCreation extends LightningElement{
         }
     }
     
+    handleSubmitClick(e) {
+        this.showCreateRenewalSoSection=false;
+        this.showConfirmation=true;
+    }
+    
+    handleConfirmationCancel(e) {
+        this.showConfirmation=false;
+        this.showCreateRenewalSoSection=true;
+    }
+    
     handleCreateClick(e) {
+        this.showConfirmation=false;
+        this.showCreateRenewalSoSection=true;
         this.loadingModal=true;
         console.log('Entered createClick');
         const oppIds = [this.recordId];
@@ -123,8 +136,8 @@ export default class Quote_renewalCreation extends LightningElement{
                         mode: 'sticky',
                     }),
                 );
-            } else { //custom error
-                // this.customError = response.errorMsg_lwc;
+            } else { 
+                console.log('### error: empty response');
             }
         })
         .catch(error => {
