@@ -100,11 +100,12 @@ public class TargetsService {
         Set<Id> partnerCompanyIds= new Set<Id>();
         Map<String,Id> targetsMap = filterTargets(newTargets, usersIds, monthsSet, yearsSet, partnerCompanyIds);
         if(targetsMap.isEmpty()) return;
-        List<Opportunity> allOpps=[select Id,OwnerId,RecordTypeId,Owner_s_Manager__c,CloseDate,Owner.Contact.AccountId
+        List<Opportunity> allOpps=[select Id,OwnerId,RecordTypeId,Owner_s_Manager__c,CloseDate,Owner.Contact.AccountId,GSI__c
                                     from Opportunity 
                                     WHERE Target__c = null AND 
                                     ((RecordTypeId =: internalOppRtId AND OwnerId in: usersIds ) or /*internal*/
                                     (RecordTypeId =: oppPartnerCompanyRtId AND Owner.Contact.AccountId in: partnerCompanyIds) or /*partners */
+                                    (GSI__c in: partnerCompanyIds) or /*GSIs */
                                     (RecordTypeId =: oppPartnerCompanyRtId AND Owner_s_Manager__c in: usersIds)) /*cpms*/
                                         AND CALENDAR_MONTH(CloseDate) in: monthsSet
                                         AND CALENDAR_YEAR(CloseDate) in:yearsSet];
@@ -196,28 +197,46 @@ public class TargetsService {
         try{
             String key = '';
             for(Opportunity opp : newOpps){
-                if(oldOpps == null || oldOpps.get(opp.Id).CloseDate != opp.CloseDate || oldOpps.get(opp.Id).OwnerId != opp.OwnerId || oldOpps.get(opp.Id).Owner_s_Manager__c != opp.Owner_s_Manager__c || (opp.Manual_Trigger__c == 'Link Target' && oldOpps.get(opp.Id).Manual_Trigger__c != opp.Manual_Trigger__c)){
-                    if(opp.CloseDate == null || opp.OwnerId == null){
-                        opp.Target__c = null;
-                        opp.CP_Target__c = null;
-                        continue;
-                    }
-                    if(opp.RecordTypeId == oppPartnerCompanyRtId){
-                        if(opp.Owner_s_Manager__c != null) {
-                            key = getUniqueueKey(opp.Owner_s_Manager__c, opp.CloseDate);
-                        } else {
+                if(
+                    oldOpps == null || 
+                    oldOpps.get(opp.Id).CloseDate != opp.CloseDate || //close date change
+                    oldOpps.get(opp.Id).OwnerId != opp.OwnerId || //owner change
+                    oldOpps.get(opp.Id).Owner_s_Manager__c != opp.Owner_s_Manager__c || //cpm change
+                    (oldOpps.get(opp.Id).GSI__c == null && opp.GSI__c != null) || //GSI assignment
+                    oldOpps.get(opp.Id).GSI__c != opp.GSI__c || //GSI change
+                    (opp.Manual_Trigger__c == 'Link Target' && oldOpps.get(opp.Id).Manual_Trigger__c != opp.Manual_Trigger__c)) //manual trigger
+                    {
+                        //is the opportunity valid for target?
+                        if(opp.CloseDate == null || opp.OwnerId == null){
+                            opp.Target__c = null;
+                            opp.CP_Target__c = null;
+                            continue;
+                        }
+                        //partner opportunity
+                        if(opp.RecordTypeId == oppPartnerCompanyRtId){
+                            if(opp.Owner_s_Manager__c != null) {
+                                key = getUniqueueKey(opp.Owner_s_Manager__c, opp.CloseDate);
+                            } else {
+                                key = getUniqueueKey(opp.OwnerId, opp.CloseDate);
+                            }
+                            userIdsForPartnerCompanyQuery.put(opp.OwnerId, opp.CloseDate);
+                        } 
+                        //internal opportunity
+                        else {
                             key = getUniqueueKey(opp.OwnerId, opp.CloseDate);
                         }
-                        userIdsForPartnerCompanyQuery.put(opp.OwnerId, opp.CloseDate);
-                    } else {
-                        key = getUniqueueKey(opp.OwnerId, opp.CloseDate);
+                        userIdDateTargetKeys.add(key);
+                        oppsToUpdate.add(opp);
+                        if(opp.Manual_Trigger__c == 'Link Target') opp.Manual_Trigger__c = '';
+                        
+                        //GSI target
+                        if (opp.GSI__C != null) {
+                            partnerCompanyDateTargetKeys.add(getUniqueueKey(opp.GSI__c, opp.CloseDate));
+                        }
                     }
-                    userIdDateTargetKeys.add(key);
-                    oppsToUpdate.add(opp);
-                    if(opp.Manual_Trigger__c == 'Link Target') opp.Manual_Trigger__c = '';
-                }
             }
             if(oppsToUpdate.isEmpty()) return;
+            //map users to partner companies and create a map of the company id to the target date
             if(!userIdsForPartnerCompanyQuery.isEmpty()){
                 for(User userRec: [select Contact.AccountId from User where Id IN: userIdsForPartnerCompanyQuery.keySet()]){
                     if(userRec.Contact.AccountId != null) {
@@ -226,6 +245,7 @@ public class TargetsService {
                     }
                 }
             }
+            
             Map<String,Id> targetsMap = getTargetsMap(userIdDateTargetKeys, partnerCompanyDateTargetKeys);
     
             for(Opportunity opp: oppsToUpdate){
@@ -250,6 +270,17 @@ public class TargetsService {
                     }
                 } else if (opp.CP_Target__c != null){
                     opp.CP_Target__c = null;
+                }
+                //GSI target
+                if(opp.GSI__c != null){
+                    key = getUniqueueKey(opp.GSI__c, opp.CloseDate);
+                    if(targetsMap.containsKey(key)){
+                        opp.GSI_Target__c = targetsMap.get(key);
+                    } else {
+                        opp.GSI_Target__c = null;
+                    }
+                } else if (opp.GSI_Target__c != null){
+                    opp.GSI_Target__c = null;
                 }
             }
         } catch(Exception e){

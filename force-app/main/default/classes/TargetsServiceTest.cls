@@ -118,6 +118,32 @@ public class TargetsServiceTest {
         System.assertEquals(target.Id, opp.Target__c);
     }
 
+    static testMethod void shouldLinkOpportunityOnCreateGSI() {        
+        Account company = new Account(Name='test company');
+        insert company;
+
+        Account partnerGSI = new Account(Name='test GSI');
+        insert partnerGSI;
+        
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+        Profile admin = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User manager = new User(Alias = 'manager',Country='United Kingdom',Email='manager@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = admin.Id,TimeZoneSidKey='America/Los_Angeles', UserName='manager@monday.com');
+		insert manager;
+        
+		User user = new User(Alias = 'standt1',Country='United Kingdom', ManagerId=manager.Id, Email='demo1@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing123@monday.com');
+		insert user;
+        
+        Target__c target = new Target__c(Partner_Company__c=partnerGSI.Id, Target_Date__c=Date.newInstance(2019, 12, 1));
+        insert target;
+
+        Opportunity opp = new Opportunity(StageName = 'Qualification', OwnerId = user.Id, CloseDate = Date.newInstance(2019, 12, 17), Name = 'test', AccountId = company.Id, GSI__c = partnerGSI.Id);
+        Test.startTest();
+        insert opp;
+        Test.stopTest();
+        opp = [select GSI_Target__c from Opportunity];
+        System.assertEquals(target.Id, opp.GSI_Target__c);
+    }
+
     static testMethod void oppCloseWonUpdateTarget() {      
         Account company = TestObjectCreator.CreateCompany();
         insert company;
@@ -157,6 +183,34 @@ public class TargetsServiceTest {
         system.debug('$$Ksenia: Green_Bucket_ARR_V2__c = '+ opp.Green_Bucket_ARR_V2__c);
         target = [select Closed_Won_Arr__c from Target__c where Id =: target.Id];
         //System.assertEquals(10000, target.Closed_Won_Arr__c);
+    }
+
+    static testMethod void shouldLinkGSIOpportunityOnCreateTarget() {        
+        Account company = new Account(Name='test company');
+        insert company;
+
+        Account partnerGSI = new Account(Name='test GSI');
+        insert partnerGSI;
+        
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+        Profile admin = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User manager = new User(Alias = 'manager',Country='United Kingdom',Email='manager@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = admin.Id,TimeZoneSidKey='America/Los_Angeles', UserName='manager@monday.com');
+		insert manager;
+        
+		User user = new User(Alias = 'standt1',Country='United Kingdom', ManagerId=manager.Id, Email='demo1@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing123@monday.com');
+		insert user;
+
+        Opportunity opp = new Opportunity(StageName = 'Qualification', OwnerId = user.Id, CloseDate = Date.newInstance(2019, 12, 17), Name = 'test', AccountId = company.Id, GSI__c = partnerGSI.Id);
+        insert opp;
+
+        Test.startTest();
+        Target__c target = new Target__c(Partner_Company__c=partnerGSI.Id, Target_Date__c=Date.newInstance(2019, 12, 1));
+        insert target;
+        Test.stopTest();
+
+        opp = [select GSI_Target__c from Opportunity];
+        System.assertEquals(target.Id, opp.GSI_Target__c);
     }
 
     static testMethod void shouldLinkOpportunityOnCreateTarget() {        

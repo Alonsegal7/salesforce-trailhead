@@ -10,7 +10,7 @@ public class Batch_UpdateOppsTargets implements Database.Batchable<sObject>{
     }
 
     public Database.QueryLocator start(Database.BatchableContext BC){
-        String query = 'select Id, OwnerId, RecordTypeId, Owner_s_Manager__c, CloseDate, Owner.Contact.AccountId, CP_Target__c from Opportunity where Id IN: oppIds';
+        String query = 'select Id, OwnerId, RecordTypeId, Owner_s_Manager__c, CloseDate, Owner.Contact.AccountId, CP_Target__c, GSI__c from Opportunity where Id IN: oppIds';
         return Database.getQueryLocator(query);
      }
 
@@ -38,6 +38,18 @@ public class Batch_UpdateOppsTargets implements Database.Batchable<sObject>{
                         oppsToUpdate.get(opp.Id).CP_Target__c = targetsMap.get(key);
                     } else {
                         oppsToUpdate.put(opp.Id, new Opportunity(Id = opp.Id, CP_Target__c = targetsMap.get(key)));
+                    }
+                }
+            }
+            //gsi target
+            if (opp.GSI__c != null) {
+                key = helper.getUniqueueKey(opp.GSI__c, opp.CloseDate);
+                if(targetsMap.containsKey(key)){
+                    opp.GSI_Target__c = targetsMap.get(key);
+                    if(oppsToUpdate.containsKey(opp.Id)){
+                        oppsToUpdate.get(opp.Id).GSI_Target__c = targetsMap.get(key);
+                    } else {
+                        oppsToUpdate.put(opp.Id, new Opportunity(Id = opp.Id, GSI_Target__c = targetsMap.get(key)));
                     }
                 }
             }
