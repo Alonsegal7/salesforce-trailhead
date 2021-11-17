@@ -1,0 +1,31 @@
+<template>
+    <lightning-card title="Set Team Targets" icon-name="standard:team_member">
+        <lightning-combobox class="slds-p-horizontal_small" name="year"
+            label="Choose a year to create/update team targets for" value={chosenYear} placeholder={chosenYear}
+            options={yearOptions} onchange={handleYearChange} required></lightning-combobox>
+        <lightning-button label="Start" slot="footer" onclick={handleStart}></lightning-button>
+        <!-- <p slot="footer">Chosen Year is: {chosenYear}</p> -->
+    </lightning-card>
+    <template if:true={showSetTargets}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small"
+        aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+        <div class="slds-modal__container">
+                <template if:true={loadingModal}><lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner></template>
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Set Team Targets for {chosenYear} - {currentUserName}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: 700px;">
+                    <lightning-datatable key-field="Target_Date__c" data={tableData} columns={columns}
+                        onsave={handleSaveClick} oncancel={handleCancelClick}>
+                    </lightning-datatable>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={handleCancelClick}>
+                    </lightning-button>
+                    <!-- <lightning-button variant="brand" label="Save" onclick={handleSaveClick} ></lightning-button> -->
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
