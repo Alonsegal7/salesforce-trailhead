@@ -69,6 +69,8 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
     accountChecked=false;
     showButtons;
     isBBIdEmpty=false;
+    disableButton=false;
+    monAccPvAboveOppPv=false;
     
 
     @wire(contractFromBB,{oppId:'$recordId'})
@@ -143,6 +145,11 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
                 //this.originalBBId==data.Account.primary_pulse_account_id__c;
                 this.maBBId=data.Account.primary_pulse_account_id__c;
                 this.oppId=data.Id;
+                if (data.Account.Pricing_Version__c>data.Pricing_Version__c) {
+                    this.disableButton=true;
+                    this.monAccPvAboveOppPv=true;
+                    console.log('monAccPvAboveOppPv'+this.monAccPvAboveOppPv);
+                }
             }
             else if (error) {
                 console.log('Raz Ben Ron error in find existing contracts in SF:',this.error);
@@ -272,6 +279,7 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
                     variant: "success"
                 });
                 this.dispatchEvent(evt);
+                console.log('disableButton'+this.disableButton);
                 this.goToDealHubScreen();
                 //this.success=true;
                 //this.title='Thank You!';
@@ -304,7 +312,18 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
     handleSaveOpp(event){
         const fields = event.detail.fields;
         this.template.querySelector('lightning-record-form').submit(fields);
-        this.presentMessgaes=false;
+        //this.presentMessgaes=false;
+    }
+    handleSuccessOpp(event){
+        const selectedPV = event.detail.fields.Pricing_Version__c.value;
+        if (selectedPV>=this.accPV) {
+             this.disableButton=false;
+             this.monAccPvAboveOppPv=false;
+        }
+        else{
+            this.disableButton=true;
+            this.monAccPvAboveOppPv=true;
+        }
     }
     handleToggleChange(event){
         this.connectAccount=event.target.checked;
@@ -404,8 +423,8 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
         return ;   
     }
 
-    get isDiffPV() {
-        if (this.accPV!==this.oppPV&&this.presentMessgaes) {
+    get monAccPvUnderOppPv() {
+        if (this.accPV!==this.oppPV&&this.accPV<this.oppPV&&this.presentMessgaes) {
             return true;
         } else {
             return false;

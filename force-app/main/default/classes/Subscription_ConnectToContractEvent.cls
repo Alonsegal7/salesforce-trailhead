@@ -113,6 +113,27 @@ public without sharing class Subscription_ConnectToContractEvent {
         }
     }
 
+    public static List<Subscription__c> sortSubsByContractCreation(List <Subscription__c> subs){
+        List<Subscription__c> sortedSubsByContractCreationField = new List<Subscription__c>();
+        List<Subscription__c> NotContractCreationSubs = new List<Subscription__c>();
+        try {
+        for (Subscription__c sub : subs) {
+            if (sub.SKU__c.contains('CORE')) {
+                sortedSubsByContractCreationField.add(sub);
+            }
+            else {
+                NotContractCreationSubs.add(sub);
+            }
+        }
+        if (!NotContractCreationSubs.isempty()) {
+            sortedSubsByContractCreationField.addall(NotContractCreationSubs);
+        }
+    }catch(Exception e){
+        Utilities.sendDebugEmail('Error in SubscriptionToContractEvent ',e,e.getMessage());   
+    }
+    return sortedSubsByContractCreationField;
+}
+
     public static void SubscriptionToContractEvent(List<Subscription__c> newSubs, map<Id, Subscription__c> oldMap) {
         try {
         Map<Id, Subscription__c> subsMapToGetARR = new Map<Id, Subscription__c>();
