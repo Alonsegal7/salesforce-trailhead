@@ -35,7 +35,7 @@ export default class TeamTargetsCreator extends LightningElement {
     thisYear;
     yearOptions;
     targetsList;
-    targetsMap = {};
+    targetsMap = [];
     showSetTargets=false;
     loadingModal=false;
     @track tableData = [];
@@ -73,7 +73,7 @@ export default class TeamTargetsCreator extends LightningElement {
     handleYearChange(event) {
         this.chosenYear = event.target.value;
     }
-    
+
     handleStart(){
         console.log('##Chosen year is: '+this.chosenYear);
         findExistingTeamTargets({year: this.chosenYear, ownerId: this.currentUserId})
@@ -81,11 +81,6 @@ export default class TeamTargetsCreator extends LightningElement {
             this.targetsList = result;
             console.log('##Targets found: '+JSON.stringify(this.targetsList));
             this.tableData = result;
-            result.forEach(element => {
-                this.targetsMap[element.Target_Date__c] = element;
-            });
-            console.log('##Targets map: '+JSON.stringify(this.targetsMap));
-            console.log('##Targets map values: '+JSON.stringify(Object.values(this.targetsMap)));
             this.showSetTargets=true;
         })
         .catch(error => {
@@ -97,18 +92,27 @@ export default class TeamTargetsCreator extends LightningElement {
         console.log('##Modal closed');
         this.showSetTargets = false;
     }
-    
+
     handleSaveClick(event) {
         this.loadingModal=true;
-        const draftValues = event.detail.draftValues;
+        const draftValues = event.detail.draftValues
+        const updatedTargets = this.targetsList;
         console.log('##Targets saved, draft list: '+JSON.stringify(draftValues));
         draftValues.forEach(newTarget => {
             console.log('##Loop - new target date: '+newTarget.Target_Date__c);
-            console.log('##Loop - target from map: '+JSON.stringify(this.targetsMap[newTarget.Target_Date__c]));
-            this.targetsMap[newTarget.Target_Date__c].Amount__c = newTarget.Amount__c;
+            updatedTargets.forEach(originalTarget => {
+                console.log('##Loop - original target date: '+originalTarget.Target_Date__c);
+                if(newTarget.Target_Date__c === originalTarget.Target_Date__c) {
+                    console.log('##Loop - match found, original: '+JSON.stringify(originalTarget)+' New: '+JSON.stringify(newTarget));
+                    originalTarget.Amount__c = newTarget.Amount__c;
+                    // console.log('##Loop - map: '+JSON.stringify(this.targetsMap[originalTarget.Target_Date__c]));
+                    //this.targetsMap[originalTarget.Target_Date__c].Amount__c=newTarget.Amount__c;
+                }
+            })
         });
-        console.log('##Targets map: '+JSON.stringify(this.targetsMap));
-        upsertTargets({finalTargets: Object.values(this.targetsMap)})
+        console.log('##Targets upserted! list: '+JSON.stringify(updatedTargets));
+        // console.log('##Targets updated! map: '+JSON.stringify(this.targetsMap));
+        upsertTargets({finalTargets: updatedTargets})
         .then(result => {
             console.log('##Targets upserted: '+JSON.stringify(result));
             this.showSetTargets = false;

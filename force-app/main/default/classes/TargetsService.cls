@@ -279,8 +279,17 @@ public class TargetsService {
                     } else {
                         opp.GSI_Target__c = null;
                     }
-                } else if (opp.GSI_Target__c != null){
-                    opp.GSI_Target__c = null;
+                }
+
+                if(userIdToPartnerCompanyMap.containsKey(opp.OwnerId)){
+                    key = getUniqueueKey(userIdToPartnerCompanyMap.get(opp.OwnerId), opp.CloseDate);
+                    if(targetsMap.containsKey(key)){
+                        opp.CP_Target__c = targetsMap.get(key);
+                    } else {
+                        opp.CP_Target__c = null;
+                    }
+                } else if (opp.CP_Target__c != null){
+                    opp.CP_Target__c = null;
                 }
             }
         } catch(Exception e){
