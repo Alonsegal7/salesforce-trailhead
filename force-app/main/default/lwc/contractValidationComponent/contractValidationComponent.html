@@ -122,7 +122,18 @@
                             <h2>Attention! the Currency on the Monday Account is <b>{accCurrency}</b> </h2>
                         </div>
                     </template>
-                    <template if:true={isDiffPV}>
+                    <template if:true={monAccPvAboveOppPv}>
+                        <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+                            <span class="slds-assistive-text">warning</span>
+                            <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
+                            <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                            </svg>  
+                            </span>
+                            <h2>Attention! the Pricing Version on the Monday Account is <b>V{accPV}</b>.            You cannot set a pricing version lower than the monday account pricing version. Please change the opportunity pricing version before creating a quote </h2>
+                        </div>
+                    </template>
+                    <template if:true={monAccPvUnderOppPv}>
                         <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
                             <span class="slds-assistive-text">warning</span>
                             <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
@@ -137,7 +148,7 @@
                         <div class="slds-p-around_medium lgc-bg">
                             <lightning-tile type="media">
                                 <lightning-icon slot="media" icon-name="action:lead_convert" size="x-small"></lightning-icon>
-                                <lightning-button class="slds-p-top_x-large" label="Continue to DealHub" onclick={goToDealHub}></lightning-button>
+                                <lightning-button class="slds-p-top_x-large" label="Continue to DealHub" onclick={goToDealHub} disabled={disableButton}></lightning-button>
                             </lightning-tile>
                         </div>
                     </lightning-layout-item>
@@ -148,7 +159,8 @@
                             fields={fields}
                             columns="1"
                             mode="view"
-                            onsubmit={handleSaveOpp}>
+                            onsubmit={handleSaveOpp}
+                            onsuccess={handleSuccessOpp}>
                     </lightning-record-form>
                     <template if:true={isBBIdEmpty}>
                         <br/>
