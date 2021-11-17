@@ -36,12 +36,5 @@
 		if (!hlp.isEmpty(selectedItem)){
 			
 		}
-	},
-	checkVatValidity : function(cmp, evt, hlp){
-		console.log('### check');
-		var target = evt.target;
-        var searchText = target.value;
-        console.log('### tal target: ' + target); 
-        console.log('### tal searchText: ' + searchText); 
 	}
 })

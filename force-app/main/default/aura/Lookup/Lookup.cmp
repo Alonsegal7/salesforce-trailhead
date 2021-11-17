@@ -3,9 +3,7 @@
     <aura:attribute Name="query_literal" type="string" access="public" description="This attribute can be used to add lookup conditions in a query literal format"/>
 	<aura:attribute Name="field_API_text_to_add" type="string" access="public" description="This attribute can be used to add descriptive text to the returned results"/>  
     <aura:attribute Name="server_result" type="object[]" access="public" /> 
-    <aura:attribute name="validate_vat_for_existing_form" type="boolean" description="Validate vat number" default="false" />
-	<aura:attribute name="VATno" type="String" access="public" description="API Name of field, to be returned from component"/>
-	<aura:attribute name="billingCountry" type="String"/>
+     
     <aura:attribute name="lookupIcon" type="String" access="public" default="standard:contact"/>
     
     <aura:attribute name="objectName" type="String" access="public" description="Name of Object to be searched"/>
@@ -33,19 +31,11 @@
                         <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
                             <div> 
                                 <aura:if isTrue="{! empty(v.selItem) }"> 
-                                    <!--Start Tal - VAT-->
-                                         <!-- <input type="text" class="slds-input slds-combobox__input" id="combobox-unique-id" Value="{! v.search_txt }"
+                                         <input type="text" class="slds-input slds-combobox__input" id="combobox-unique-id" Value="{! v.search_txt }"
                                                 aria-activedescendant="listbox-option-unique-id-01" aria-autocomplete="list" 
                                                 aria-controls="listbox-unique-id" autocomplete="off" role="combobox" 
                                                 placeholder="{!v.placeholder}" 
-                                                onkeyup="{!c.serverCall}" /> -->
-                                        <input type="text" class="slds-input slds-combobox__input" id="combobox-unique-id" Value="{! v.search_txt }"
-                                            aria-activedescendant="listbox-option-unique-id-01" aria-autocomplete="list" 
-                                            aria-controls="listbox-unique-id" autocomplete="off" role="combobox" 
-                                            placeholder="{!v.placeholder}" 
-                                            onkeyup="{!c.serverCall}"
-                                            oncommit="{!c.checkVatValidity}"/>
-                                    <!--End Tal - VAT-->
+                                                onkeyup="{!c.serverCall}" />
                                         <aura:set attribute="else"> 
                                                 <span class="slds-pill slds-pill_link fullWidth"> 
                                                   <a href="javascript:void(0);" id="{! v.selItem.val }" class="slds-pill__action slds-p-left_x-small" title="{! v.selItem.text }" onclick="{! c.gotoRecord }">
@@ -63,7 +53,6 @@
                                     </aura:if> 
                            	 	</div> 
                             </div>
-    
                             <aura:if isTrue="{! greaterthanorequal(v.server_result.length,1) }"> 
                                 <div id="listbox-unique-id" role="listbox">
                                     <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation"
@@ -92,34 +81,6 @@
                                     </ul>
                                 </div>
                             </aura:if> 
-
-                            <aura:if isTrue="{!v.validate_vat_for_existing_form }">
-                                <div class="full-mask">
-                                        <div class="error-msg">{! v.message }</div>
-                                        <div>
-                                            <div class="slds-section__title slds-truncate slds-text-align_center">
-                                                <span class="header-title-container">
-                                                    <lightning:icon iconName="utility:moneybag" alternativeText="moneybag" title="moneybag"/>
-                                                    <span style="margin-left: 10px;">VAT Number needs to be added before selecting this billing entity</span>
-                                                </span>                                                
-                                            </div>
-                                            <lightning:recordEditForm aura:id="mainBEForm"
-											objectApiName="Billing_Entity__c"
-											onsubmit="{!c.handleSubmit}"
-											onsuccess="{!c.handleSuccess}"
-											onerror="{!c.handleError}">
-                                            <lightning:messages />
-                                            <div class="slds-col slds-size_4-of-12">
-                                                <lightning:inputField variant="label-stacked" fieldName="VAT_Number__c" value="{!v.VATno}" required="true"/>
-                                                <lightning:inputField variant="label-stacked" fieldName="Country__c" value="{!v.billingCountry}" required="true"/>
-                                            </div>
-                                        </lightning:recordEditForm>
-                                        <section class="form-btn-container">
-                                           <!--  <lightning:button variant="brand" type="submit" label="Submit" onclick="{! c.openNew }" disabled="{! not(v.enable_form_new) }" />-->
-                                        </section>
-                                    </div>
-                                </div>
-                             </aura:if>
                         </div>
                     </div>
                 </div>
