@@ -20,17 +20,14 @@ public with sharing class ContractEventHandler {
             Map<Id, Decimal> priorContractSeatsMap = new Map<Id, Decimal>();
 
             //First, Check if the quote signed
-            System.debug('@@Entered the ContractEventHandler Class');
             for (Quote quote : quotes) {
                 if (((quote.Is_Finalized__c == true && oldQuotes.get(quote.Id).Is_Finalized__c == false && quote.ContractId==null) ||
-                (oldQuotes.get(quote.Id).Manual_Trigger__c != quote.Manual_Trigger__c && quote.Manual_Trigger__c == 'Create Active Contract')) && !alreadyHandledQuotes.containskey(quote.id)) {
-                    System.debug('@@Entered the ContractEventHandler IsFinalized condition');
+                    (oldQuotes.get(quote.Id).Manual_Trigger__c != quote.Manual_Trigger__c && quote.Manual_Trigger__c == 'Create Active Contract')) && !alreadyHandledQuotes.containskey(quote.id)) {
                     //For pro-rated, get the contract id in order to retrive the current contract seats to add the event added seats
                     if (quote.Quote_Type__c=='Pro-rated- Additional Seats' && quote.Get_Contract_Id__c!=null) {
                         currentQuotesProRatedContracts.add((Id)quote.Get_Contract_Id__c);
                     }
                     quotesToHandle.add(quote);
-                    System.debug('@@quotesToHandle is: '+quotesToHandle);
                     //Avoid duplicate operation within single transaction (First run will not work due to dealhub multiple DML's)
                     alreadyHandledQuotes.put(quote.Id,quote);
                 }
@@ -57,22 +54,17 @@ public with sharing class ContractEventHandler {
                 }
             }
             if (!quotesToHandle.isempty()) {
-                System.debug('@@Entered the !quotesToHandle.isempty() condition');
                 //Prepere the qury to include all fields (To avoide missing new fields added from the mdt to dynamic function )
-                System.debug('@@quotesToHandle2 is: '+quotesToHandle);
                 Map<String, Schema.SObjectField> qlisFieldMap = QuoteLineItem.sObjectType.getDescribe().fields.getMap();
                 Set<String> qlisFieldNames = qlisFieldMap.keySet();
                 String Set_Joined = String.join((Iterable<String>)qlisFieldNames, ', ');
                 List<QuoteLineItem> quoteQlis = Database.query('select ' + Set_Joined + ' from QuoteLineItem WHERE Quote.Id IN: quotesToHandle');
-                System.debug('@@Query result is: '+ [select Id from QuoteLineItem WHERE Quote.Id IN: quotesToHandle]);
-                System.debug('@@quoteQlis is: '+quoteQlis);
                 Map<Id, List<QuoteLineItem>> qlisMap = new Map<Id, List<QuoteLineItem>>();
                 //this map is used for getting the recuring line item (crrntly alwys will be licnse) of the quote to add the added seats to the contract
                 Map<Id, QuoteLineItem> rcringLineItems = new Map<Id, QuoteLineItem>();
                 
                 //Set a map of quotes and qlis
                 for(QuoteLineItem quoteQli : quoteQlis){
-                    System.debug('@@Entered the quoteQli : quoteQlis for loop');
                     if (qlisMap.containskey(quoteQli.QuoteId) && quoteQli.Contract_Event_Product__c) {
                         qlisMap.get(quoteQli.QuoteId).add(quoteQli);
                         if (quoteQli.IsRecurring__c) {
@@ -88,7 +80,6 @@ public with sharing class ContractEventHandler {
                 }
                 //After map defined with signed quotes, check if pro-rated or new contract
                 if (!qlisMap.isempty()) {
-                    System.debug('@@Entered the condition !qlisMap.isempty()');
                     for (Quote quote : quotesToHandle) {
                         isRevisedProRatedQuote=false;
                         if (quote.Quote_Type__c=='Pro-rated- Additional Seats') {
@@ -118,7 +109,6 @@ public with sharing class ContractEventHandler {
                             proRatedQuotesToUpdate.add(new Quote(Id=quote.id, ContractId=quote.Selected_Company_Contract__c));
                         }
                         else if (quote.Quote_Type__c=='New Contract' || quote.Quote_Type__c=='Change Tier in the same term'){
-                            System.debug('@@Entered the condition that adds the quote to newContractEvents');
                             list<Contract_Event__c> conEventsToCreate = DefineContractEvent(qlisMap.get(quote.id));
                             newContractEvents.put(quote.id,conEventsToCreate);
                             newContractQuote.add(quote);
@@ -149,16 +139,12 @@ public with sharing class ContractEventHandler {
                     }
                     //Creating a new contract for contract events (Contract creation is on ContractEventToContract class)
                     if (!newContractEvents.isempty()) {
-                        System.debug('@@Entered the Contract creation condition');
-                        System.debug('@@newContractEvents: '+newContractEvents);
-                        System.debug('@@newContractQuote: '+newContractQuote);
                         ContractEventToContract.ContractEventCreateNewContract(newContractEvents,newContractQuote,'Quote');
                     }
                 }
             }
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in ContractEventHandler ',e,e.getMessage());   
-            Utilities.sendSlackMessage('Contract exception sandbox', 'biz-tech-monitoring', null , e, e.getMessage(), null, null);   
         }
     }
 

@@ -110,6 +110,7 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
                     Database.SaveResult[] SrList = Database.update(companiesToUpdate, false);
                 } catch (Exception e) {
                     System.debug('Message: ' + e.getMessage());
+                    Utilities.sendDebugEmail('Error in AccountRollup Update part: ',e,e.getMessage());   
                     Utilities.sendSlackMessage('Error in AccountRollup Update part: ', 'biz-tech-monitoring', null , e, e.getMessage(), null, null);                     
                 }
             }
@@ -120,9 +121,10 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
                     Database.SaveResult[] SrList = Database.update(accountsToRemoveFlag, false);
                 } catch (Exception e) {
                     System.debug('Message: ' + e.getMessage());
-                    Utilities.sendSlackMessage('Error in AccountRollup Remove Flag Update part: ', 'biz-tech-monitoring', null , e, e.getMessage(), null, null);                     
+                    Utilities.sendDebugEmail('Error in AccountRollup Update2 part: ',e,e.getMessage());   
+                    Utilities.sendSlackMessage('Error in AccountRollup Update2 part: ', 'biz-tech-monitoring', null , e, e.getMessage(), null, null);                     
                 }
-                //check which companies from the list has parents and send the parents to a rollup calculation as well
+                //check which companies from the list has parents and update the parents as well
                 List<Account>relevantChildAccounts = new List<Account>([SELECT Id,ParentId FROM Account WHERE Id IN:relevantAccounts]);
                 Set<Id> relevantParents = new Set<Id>();
                 for (Account childAcc : relevantChildAccounts) {
