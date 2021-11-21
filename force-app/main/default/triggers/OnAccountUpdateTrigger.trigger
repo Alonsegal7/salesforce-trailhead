@@ -17,6 +17,8 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
     if (Trigger.isAfter) {
         if (trigger.isInsert||trigger.IsUpdate) {
             Account_Rollup.Account_Rollup_ParentChange(trigger.new, trigger.oldMap);
+            Partners_SharingService.createAccountShares(trigger.new, trigger.oldMap);
+            Partners_SharingService.createAccountSharesOwnerChange(trigger.new, trigger.oldMap);
         }
         if(Trigger.isUpdate){
             // Partner Commission - start 

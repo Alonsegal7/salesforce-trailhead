@@ -3,6 +3,7 @@ public class TestObjectCreator
 {
     public static Id mondayAccRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
     public static Id companyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
+    public static final Id ACC_PARTNER_COMP_RT_CONST = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();
     public static boolean persistImmediate = false;
     static Integer s_num = 1;
 
@@ -271,5 +272,27 @@ public class TestObjectCreator
       String result = String.valueOf(s_num++);
       return sot.getDescribe().getKeyPrefix() + 
          '0'.repeat(12-result.length()) + result;
+   }
+
+   public static User createValidPartnerUser(){
+       //create partner company
+       List<Account> partnersList = new List<Account>();
+       partnersList.add(new Account(Name = 'testPartner', RecordTypeId = ACC_PARTNER_COMP_RT_CONST));
+       insert partnersList;
+   
+       for(Account partner: partnersList){
+           partner.Partner_Company_Status__c = 'Signed';
+           partner.Signature_Approval_Status__c = 'Approved';
+       }
+       update partnersList;
+
+       Contact con = new Contact(Email='demo1@randomdemodomain.com', FirstName = 'test', LastName = 'bla', AccountId = partnersList.get(0).Id);
+       insert con;
+
+       Profile p = [SELECT Id FROM Profile WHERE Name='Partner Community Custom'];
+       User manager2 = [select Id from User where IsActive = true and Profile.Name='Channel Managers' limit 1];
+       User user = new User(ContactId = con.Id, Alias='standt1', ManagerId=manager2.Id, Country='United Kingdom',Email='demo1@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing123@monday.com');
+       insert user;
+       return user;
    }
 }
