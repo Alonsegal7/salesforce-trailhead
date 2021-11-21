@@ -1,0 +1,15 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+    </template>
+    <template if:true={approvalProcessId}>
+        <div class="slds-align_absolute-center">
+            <button class="slds-button slds-button_success slds-button_stretch" onclick={callApproveRecord}>Approve</button>
+            <button class="slds-button slds-button_destructive slds-button_stretch" onclick={callRejectRecord}>Reject</button>
+        </div>
+        <lightning-textarea name="comments" placeholder="type here approval/ rejection comments..." value={comments} onchange={handleCommentsChange}></lightning-textarea>
+        <template if:true={error}>
+            <c-error-panel errors={error}></c-error-panel>
+        </template>
+    </template>
+</template>
