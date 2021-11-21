@@ -1,14 +1,15 @@
 import { LightningElement, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
 import getAllPaymentRequests from '@salesforce/apex/Partner_PaymentRequestService.getAllPaymentRequests';
 
-export default class SubmitPaymentRequest extends LightningElement {
+export default class PaymentRequestsTool extends LightningElement {
     error;
     draftPaymentReqs;
     rejectedPaymentReqs;
     submittedPaymentReqs;
     paidPaymentReqs;
-    urlPrefix = '/lightning/r/';
-    urlSuffix = '/view';
+    urlPrefix;
+    urlSuffix;
     wiredPaymentRequestsResult;
     
     @wire(getAllPaymentRequests)
@@ -20,6 +21,9 @@ export default class SubmitPaymentRequest extends LightningElement {
             if(result.data.isPartnerUser_lwc){
                 this.urlPrefix = '/partners/s/';
                 this.urlSuffix = '';
+            } else {
+                this.urlPrefix = '/lightning/r/';
+                this.urlSuffix = '/view';
             }
             if(result.data.draftPaymentReqList_lwc.length > 0){
                 this.draftPaymentReqs = result.data.draftPaymentReqList_lwc.map((item) => ({
@@ -60,5 +64,9 @@ export default class SubmitPaymentRequest extends LightningElement {
     getShortDate(longDateValue){
         var date = new Date(longDateValue);
         return ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + date.getFullYear();
+    }
+
+    handleRefreshPayments(event){
+        refreshApex(this.wiredPaymentRequestsResult);
     }
 }

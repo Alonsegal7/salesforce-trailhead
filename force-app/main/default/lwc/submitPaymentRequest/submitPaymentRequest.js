@@ -10,7 +10,7 @@ import PAYMENT_REQ_STATUS_FIELD from '@salesforce/schema/Payment_Request__c.Stat
 import PAYMENT_REQ_MONTH_FIELD from '@salesforce/schema/Payment_Request__c.Month__c';
 import PAYMENT_REQ_MDF_FIELD from '@salesforce/schema/Payment_Request__c.MDF_Amount__c';
 import PAYMENT_REQ_SPIFF_FIELD from '@salesforce/schema/Payment_Request__c.Spiff_Amount__c';
-
+import submittedScreenGif from '@salesforce/resourceUrl/makeItRainGif';
 
 const columns = [
     { label: 'Partner Company', fieldName: 'PartnerCompanyURL', type: 'url', typeAttributes: { label: { fieldName: 'PartnerCompanyName' }, target: '_blank' }, sortable: true, wrapText: true , hideDefaultActions: true, hideDefaultActions: true},
@@ -61,18 +61,20 @@ export default class SubmitPaymentRequest extends LightningElement {
     newPaymentRequestId;
     submittedScreenText;
     submittedScreenTitle = 'Payment Request Created Successfully!';
-    urlPrefix = '/lightning/r/';
-    urlSuffix = '/view';
+    urlPrefix;
+    urlSuffix;
     showCancelButton = true;
     wiredPaymentReqResult;
     showViewBreakdownBtn = false;
     viewBreakdownMode = false;
-    mdfAmount;
-    spiffAmount;
+    mdfAmount = 0;
+    spiffAmount = 0;
     headerCardText;
     headerIconName = 'custom:custom17';
     filesScreenFirstRun = true;
     cancelBtnLabel = 'Cancel';
+    submittedScreenGifIcon = submittedScreenGif;
+    submittedForApproval = false;
 
     //sort & filter variables
     defaultSortDirection = 'asc';
@@ -100,9 +102,13 @@ export default class SubmitPaymentRequest extends LightningElement {
             this.cardTitle = 'Payment Request Status - ' + statusValue;
             if(statusValue != 'Draft' && statusValue != 'Pending Partner') {
                 this.allowSubmit = false;
+                this.headerCardText = undefined;
+                this.headerIconName = 'custom:custom17';
             } else {
-                if(statusValue == 'Draft') this.headerCardText = 'Please make sure to submit your request';
-                else if(statusValue == 'Pending Partner') {
+                if(statusValue == 'Draft') {
+                    this.headerCardText = 'Please make sure to submit your request';
+                    this.headerIconName = 'custom:custom17';
+                } else if(statusValue == 'Pending Partner') {
                     this.headerCardText = 'Your Payment Request was rejected, please re:submit your request';
                     this.headerIconName = 'standard:first_non_empty';
                 }
@@ -126,7 +132,7 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.loadDataScreen();
     }
 
-    onSubmitClick(){
+    openModal(){
         this.showModal = true;
         if(this.runningFromHomepage) {
             this.loadMonthsPicklist();
@@ -136,8 +142,8 @@ export default class SubmitPaymentRequest extends LightningElement {
     }
     
     loadMonthsPicklist(){
-        this.error = '';
-        this.customError = '';
+        this.error = undefined;
+        this.customError = undefined;
         this.isLoading = true;
         getMonthsPicklist()
         .then(result => {
@@ -162,10 +168,10 @@ export default class SubmitPaymentRequest extends LightningElement {
     }
 
     loadDataScreen() {
-        this.error = '';
-        this.customError = '';
+        this.error = undefined;
+        this.customError = undefined;
         this.isLoading = true;
-        this.paymentRequestLink = '';
+        this.paymentRequestLink = undefined;
         getData({
             month: this.monthValue,
             paymentRequestId: this.recordId
@@ -175,6 +181,9 @@ export default class SubmitPaymentRequest extends LightningElement {
             if(result.isPartnerUser_lwc){
                 this.urlPrefix = '/partners/s/';
                 this.urlSuffix = '';
+            } else {
+                this.urlPrefix = '/lightning/r/';
+                this.urlSuffix = '/view';
             }
             if(result.status_lwc == 'success'){
                 this._allData = result.collectionsList_lwc.map((item) => ({
@@ -202,6 +211,7 @@ export default class SubmitPaymentRequest extends LightningElement {
                     this.showCancelButton = false;
                     this.monthScreen = false;
                 }
+                this.setModalToLarge();
                 this.dataScreen = true;
             } else { //custom error
                 this.customError = result.errorMsg_lwc;
@@ -217,8 +227,8 @@ export default class SubmitPaymentRequest extends LightningElement {
     }
 
     loadFilesScreen(){
-        this.error = '';
-        this.customError = '';
+        this.error = undefined;
+        this.customError = undefined;
         if(this.recordId && this.filesScreenFirstRun){
             this.isLoading = true;
             this.filesScreenFirstRun = false;
@@ -229,6 +239,7 @@ export default class SubmitPaymentRequest extends LightningElement {
                 this.isLoading = false;
                 if(result.status_lwc == 'success'){
                     this.dataScreen = false;
+                    this.setModalToNormal();
                     this.filesScreen = true;
                 } else {
                     this.customError = result.errorMsg_lwc;
@@ -240,13 +251,14 @@ export default class SubmitPaymentRequest extends LightningElement {
             });
         } else {
             this.dataScreen = false;
+            this.setModalToNormal();
             this.filesScreen = true;
         }
     }
 
     saveAsDraft(){
-        this.error = '';
-        this.customError = '';
+        this.error = undefined;
+        this.customError = undefined;
         if((this.mdfAmount != null && this.mdfAmount > 0) || (this.spiffAmount != null && this.spiffAmount)){
             this.isLoading = true;
             updateMdfAndSpiff({
@@ -261,7 +273,7 @@ export default class SubmitPaymentRequest extends LightningElement {
                 this.filesScreen = false;
                 this.submittedScreen = true;
                 this.cancelBtnLabel = 'Finish';
-                return refreshApex(this.wiredPaymentReqResult);
+                if(this.recordId != null) refreshApex(this.wiredPaymentReqResult);
             })
             .catch(error => {
                 this.error = error;
@@ -276,9 +288,17 @@ export default class SubmitPaymentRequest extends LightningElement {
         }
     }
 
+    setModalToLarge() {
+        this.template.querySelector('[data-id="submitmodal"]').classList.add('slds-modal_large');
+    }
+
+    setModalToNormal() {
+        this.template.querySelector('[data-id="submitmodal"]').classList.remove('slds-modal_large');
+    }
+
     submitPaymentRequestForApproval(event){
-        this.error = '';
-        this.customError = '';
+        this.error = undefined;
+        this.customError = undefined;
         var fileUploadIsValid = true;
         this.template.querySelectorAll('c-file-upload-improved').forEach(element => { // validate files upload
             var validateFileUpload = element.validate();
@@ -305,10 +325,11 @@ export default class SubmitPaymentRequest extends LightningElement {
                     this.filesScreen = false;
                     this.submittedScreen = true;
                     this.cancelBtnLabel = 'Finish';
+                    this.submittedForApproval = true;
                 } else {
                     this.customError = result.errorMsg_lwc;
                 } 
-                return refreshApex(this.wiredPaymentReqResult);
+                if(this.recordId != null) refreshApex(this.wiredPaymentReqResult);
             })
             .catch(error => {
                 this.error = error;
@@ -389,19 +410,24 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.filesScreen = false;
         this.submittedScreen = false;
         this.cancelBtnLabel = 'Cancel';
+        this.mdfAmount = 0;
+        this.spiffAmount = 0;
         localStorage.clear();
         if(this.viewBreakdownMode || this.monthScreen){
             this.viewBreakdownMode = false;
             this.monthScreen = false;
-        } else {
-            window.location.reload();
+        }
+        if(this.recordId == null){ //cancel from homepage
+            const refreshPaymentRequestsListEvent = new CustomEvent("refreshpaymentslist");
+            this.dispatchEvent(refreshPaymentRequestsListEvent);
         }
     }
 
     goBackToDataScreen(){
-        this.error = '';
-        this.customError = '';
+        this.error = undefined;
+        this.customError = undefined;
         this.filesScreen = false;
+        this.setModalToLarge();
         this.dataScreen = true;
     }
 
