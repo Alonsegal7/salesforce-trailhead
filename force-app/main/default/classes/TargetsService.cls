@@ -30,12 +30,16 @@ public class TargetsService {
                     //update targets
                     if(opp.Target__c != null) targetIds.add(opp.Target__c);
                     if(opp.CP_Target__c != null) targetIds.add(opp.CP_Target__c);
+                    if(opp.GSI_Target__c != null) targetIds.add(opp.GSI_Target__c);
                     //if target changed not from null - update old targets too
                     if(opp.Target__c != oldOpps.get(opp.Id).Target__c && oldOpps.get(opp.Id).Target__c != null){
                         targetIds.add(oldOpps.get(opp.Id).Target__c);
                     }
                     if(opp.CP_Target__c != oldOpps.get(opp.Id).CP_Target__c && oldOpps.get(opp.Id).CP_Target__c != null){
                         targetIds.add(oldOpps.get(opp.Id).CP_Target__c);
+                    }
+                    if(opp.GSI_Target__c != oldOpps.get(opp.Id).GSI_Target__c && oldOpps.get(opp.Id).GSI_Target__c != null){
+                        targetIds.add(oldOpps.get(opp.Id).GSI_Target__c);
                     }
             }
         }
@@ -52,10 +56,10 @@ public class TargetsService {
         public void execute(System.QueueableContext ctx) {
             Map<Id,Target__c> targetIdToAddedArrMap = new Map<Id,Target__c>();
             for(Id targetId: targetIds){
-                targetIdToAddedArrMap.put(targetId, new Target__c(Id = targetId,Closed_Won_Arr__c = 0, Actual_ARR_Inbound_LIVE__c = 0, Actual_ARR_Outbound_LIVE__c = 0));
+                targetIdToAddedArrMap.put(targetId, new Target__c(Id = targetId,Closed_Won_Arr__c = 0, Actual_ARR_Inbound_LIVE__c = 0, Actual_ARR_Outbound_LIVE__c = 0, Actual_ARR_Sourced_LIVE__c = 0, Actual_ARR_Influenced_LIVE__c = 0));
             }
             // query all GB closed won opps
-            List<Opportunity> oppsList = [select Target__c, CP_Target__c, CP_Target__r.Partner_Company__c, Channel_Partner__c, Green_Bucket_ARR_V2__c, Account.Account_Source_Type__c from Opportunity where (Target__c IN: targetIds or CP_Target__c IN: targetIds) and StageName = 'Closed Won' and Green_Bucket_ARR_V2__c != null and (Transition_to_GB__c = true or Is_Potential_GB_Opportunity__c=true)];
+            List<Opportunity> oppsList = [select Target__c, CP_Target__c, CP_Target__r.Partner_Company__c, GSI_Target__c, Opportunity_Origin__c, Channel_Partner__c, Green_Bucket_ARR_V2__c, Account.Account_Source_Type__c from Opportunity where (Target__c IN: targetIds or CP_Target__c IN: targetIds or GSI_Target__c IN: targetIds) and StageName = 'Closed Won' and Green_Bucket_ARR_V2__c != null and (Transition_to_GB__c = true or Is_Potential_GB_Opportunity__c=true)];
             if(!oppsList.isEmpty()) {
                 for(Opportunity opp: oppsList){
                     if(opp.Target__c != null && targetIdToAddedArrMap.containsKey(opp.Target__c)){
@@ -71,6 +75,14 @@ public class TargetsService {
                             targetIdToAddedArrMap.get(opp.CP_Target__c).Actual_ARR_Inbound_LIVE__c += opp.Green_Bucket_ARR_V2__c;
                         } else if (opp.Account.Account_Source_Type__c == 'Outbound'){
                             targetIdToAddedArrMap.get(opp.CP_Target__c).Actual_ARR_Outbound_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
+                        }
+                    }
+                    if(opp.GSI_Target__c != null && targetIdToAddedArrMap.containsKey(opp.GSI_Target__c)){
+                        targetIdToAddedArrMap.get(opp.GSI_Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
+                        if(opp.Opportunity_Origin__c == 'Sourced'){
+                            targetIdToAddedArrMap.get(opp.GSI_Target__c).Actual_ARR_Sourced_LIVE__c += opp.Green_Bucket_ARR_V2__c;
+                        } else if (opp.Opportunity_Origin__c == 'Influenced'){
+                            targetIdToAddedArrMap.get(opp.GSI_Target__c).Actual_ARR_Influenced_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
                         }
                     }
                 }
@@ -102,7 +114,7 @@ public class TargetsService {
         if(targetsMap.isEmpty()) return;
         List<Opportunity> allOpps=[select Id,OwnerId,RecordTypeId,Owner_s_Manager__c,CloseDate,Owner.Contact.AccountId,GSI__c
                                     from Opportunity 
-                                    WHERE Target__c = null AND 
+                                    WHERE (Target__c = null OR GSI_Target__c = null) AND 
                                     ((RecordTypeId =: internalOppRtId AND OwnerId in: usersIds ) or /*internal*/
                                     (RecordTypeId =: oppPartnerCompanyRtId AND Owner.Contact.AccountId in: partnerCompanyIds) or /*partners */
                                     (GSI__c in: partnerCompanyIds) or /*GSIs */
@@ -279,17 +291,8 @@ public class TargetsService {
                     } else {
                         opp.GSI_Target__c = null;
                     }
-                }
-
-                if(userIdToPartnerCompanyMap.containsKey(opp.OwnerId)){
-                    key = getUniqueueKey(userIdToPartnerCompanyMap.get(opp.OwnerId), opp.CloseDate);
-                    if(targetsMap.containsKey(key)){
-                        opp.CP_Target__c = targetsMap.get(key);
-                    } else {
-                        opp.CP_Target__c = null;
-                    }
-                } else if (opp.CP_Target__c != null){
-                    opp.CP_Target__c = null;
+                } else if (opp.GSI_Target__c != null){
+                    opp.GSI_Target__c = null;
                 }
             }
         } catch(Exception e){

@@ -178,7 +178,7 @@ public without sharing class Opportunity_RenewalCreation {
         List<Account> accsToUpdate = new List<Account>();
         List<Opportunity> oppList = [SELECT Id, Selected_Company_Contract__c, Original_Contract_ARR__c FROM Opportunity WHERE Selected_Company_Contract__c IN: newContracts.keySet() AND RecordType.DeveloperName = 'CS_Opportunity' AND StageName != 'Closed Won' AND StageName != 'Closed Lost' LIMIT 1];
         System.debug('### oppList: ' + oppList);
-        List<Account> realtedMA = [SELECT Id, Renewal_Manager__c, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: newContracts.keySet()];
+        List<Account> realtedMA = [SELECT Id, Renewal_Manager__c, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: newContracts.keySet() AND ARR__c != null ORDER BY ARR__c DESC LIMIT 1];
         System.debug('### realtedMA: ' + realtedMA);
 
         for(Contract contr : [SELECT Id, Renewal_Manager__c, Primary_Renewal_Owner__c, Contract_ARR__c FROM Contract WHERE Id IN: newContracts.keySet()]){

@@ -35,7 +35,7 @@ export default class TeamTargetsCreator extends LightningElement {
     thisYear;
     yearOptions;
     targetsList;
-    targetsMap = [];
+    targetsMap = {};
     showSetTargets=false;
     loadingModal=false;
     @track tableData = [];
@@ -81,6 +81,10 @@ export default class TeamTargetsCreator extends LightningElement {
             this.targetsList = result;
             console.log('##Targets found: '+JSON.stringify(this.targetsList));
             this.tableData = result;
+            result.forEach(element => {
+                this.targetsMap[element.Target_Date__c] = element;
+            });
+            console.log('##Targets map: '+JSON.stringify(this.targetsMap));
             this.showSetTargets=true;
         })
         .catch(error => {
