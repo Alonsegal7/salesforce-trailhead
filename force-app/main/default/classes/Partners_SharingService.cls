@@ -102,7 +102,7 @@ public without sharing class Partners_SharingService {
             system.debug('groupIdsForDelete: '+groupIdsForDelete);
             system.debug('oppIds: '+oppIds);
 
-            List<OpportunityShare> oppSharesToDelete = [select Id from OpportunityShare where OpportunityId in: oppIds and UserOrGroupId in: groupIdsForDelete and RowCause = 'Manual'];
+            List<OpportunityShare> oppSharesToDelete = [select Id, OpportunityId, UserOrGroupId from OpportunityShare where OpportunityId in: oppIds and UserOrGroupId in: groupIdsForDelete and RowCause = 'Manual'];
             if(!oppSharesToDelete.isEmpty()) deleteShares(oppSharesToDelete, 'OpportunityShare');
             system.debug('oppSharesToDelete: '+oppSharesToDelete);
         }
@@ -172,7 +172,7 @@ public without sharing class Partners_SharingService {
                     groupIdsForDelete.add(groupId);
                 }
             }
-            List<AccountShare> accountSharesToDelete = [select Id from AccountShare where AccountId in: accountToDeleteSharesIds and UserOrGroupId in: groupIdsForDelete and RowCause = 'Manual'];
+            List<AccountShare> accountSharesToDelete = [select Id, AccountId, UserOrGroupId from AccountShare where AccountId in: accountToDeleteSharesIds and UserOrGroupId in: groupIdsForDelete and RowCause = 'Manual'];
             if(!accountSharesToDelete.isEmpty()) deleteShares(accountSharesToDelete, 'AccountShare');
         }
         //create account shares
@@ -239,7 +239,7 @@ public without sharing class Partners_SharingService {
             userRolesToPartnerCompMap.put(user.UserRoleId, user.Contact.AccountId);
         }
         //get the groups by the userRoles
-        List<Group> groupsList = [select Id, DeveloperName, RelatedId, Type from Group where RelatedId in: userRolesToPartnerCompMap.keySet() and Type = 'Role'];
+        List<Group> groupsList = [select Id, DeveloperName, RelatedId, Type from Group where RelatedId in: userRolesToPartnerCompMap.keySet() and Type = 'Role' and (DeveloperName like '%PartnerUser' or DeveloperName like '%PartnerManager')];
         Map<Id,List<Id>> partnerCompToGroupsMap = new Map<Id,List<Id>>();
         Id partnerCompId;
         for(Group groupRec: groupsList){ //for every group (can be max 2 per partner comp - user and manager) we will create account share
@@ -266,9 +266,9 @@ public without sharing class Partners_SharingService {
                 }
             }
         }
-        if(!successIds.isEmpty()){
+        /*if(!successIds.isEmpty()){
             Utilities.sendEmail('Partners_SharingService - Successfully deleted '+entityName+'!', 'Ids of deleted '+entityName+': ' + successIds + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), new List<String>{'kseniasm@monday.com'});
-        }
+        }*/
         if(errorsFound != ''){
             Utilities.sendEmail('Partners_SharingService - Error in deleting '+entityName, 'Errors found: ' + errorsFound + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), new List<String>{'kseniasm@monday.com'});
         }
@@ -289,9 +289,9 @@ public without sharing class Partners_SharingService {
                 }
             }
         }
-        if(!successIds.isEmpty()){
+        /*if(!successIds.isEmpty()){
             Utilities.sendEmail('Partners_SharingService - Successfully created '+entityName+'!', 'Ids of new '+entityName+': ' + successIds + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), new List<String>{'kseniasm@monday.com'});
-        }
+        }*/
         if(errorsFound != ''){
             Utilities.sendEmail('Partners_SharingService - Error in creating '+entityName+'', 'Errors found: ' + errorsFound + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), new List<String>{'kseniasm@monday.com'});
         }
