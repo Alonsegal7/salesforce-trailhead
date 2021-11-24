@@ -81,6 +81,9 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
             this.versIds.push(file.contentVersionId);
             this.fileNames.push(file.name);
         });
+        let returnObj = {versIds: this.versIds};
+        const sendVersIdsEvent = new CustomEvent("sendversids", {detail: returnObj});
+        this.dispatchEvent(sendVersIdsEvent);
 
         this.communicateEvent(this.docIds,this.versIds,this.fileNames,this.objFiles);
         if(this.community === true && this.value.data != ''){

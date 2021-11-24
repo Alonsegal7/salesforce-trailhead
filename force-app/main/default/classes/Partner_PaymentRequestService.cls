@@ -236,9 +236,12 @@ public without sharing class Partner_PaymentRequestService {
     }
 
     @AuraEnabled
-    public static void updateMdfAndSpiff(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount){
+    public static void updatePaymentRequest(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id incoiveFileVerId){
         try {
-            Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(Id = paymentRequestId, MDF_Amount__c = mdfAmount, Spiff_Amount__c = spiffAmount);
+
+            Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(Id = paymentRequestId, MDF_Amount__c = 0, Spiff_Amount__c = 0, Invoice_Content_Version_Id__c = incoiveFileVerId);
+            if(mdfAmount != null && mdfAmount > 0) paymentRequestToUpdate.MDF_Amount__c = mdfAmount;
+            if(spiffAmount != null && spiffAmount > 0) paymentRequestToUpdate.Spiff_Amount__c = spiffAmount;
             Database.update(paymentRequestToUpdate);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
@@ -246,9 +249,9 @@ public without sharing class Partner_PaymentRequestService {
     }
 
     @AuraEnabled
-    public static resWrapper submitForApproval(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount){
+    public static resWrapper submitForApproval(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id incoiveFileVerId){
         try {
-            if((mdfAmount != null && mdfAmount > 0) || (spiffAmount != null && spiffAmount > 0)) updateMdfAndSpiff(paymentRequestId, mdfAmount, spiffAmount);
+            updatePaymentRequest(paymentRequestId, mdfAmount, spiffAmount, incoiveFileVerId);
             Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();          
             req.setObjectId(paymentRequestId);
             req.setProcessDefinitionNameOrId('Payment_Request_Approval_Process');
