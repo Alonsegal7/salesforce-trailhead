@@ -152,7 +152,6 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                         End_Date__c=oppsWithContracts.get(opp.Id).EndDate.addDays(366),
                         PricebookEntryId=mappedSkuCurrencyToPBE.get(cp.SKU__c+currentContract1.CurrencyIsoCode),
                         UnitPrice=cp.Net_Per_Unit__c,
-                        //ListPrice=cp.Net_Per_Unit__c,
                         Net_Per_Unit__c=cp.Net_Per_Unit__c,
                         Renewal_Unit_Price__c=cp.Net_Per_Unit__c,
                         ARR__c=cp.Recurring_Product_ARR__c,
@@ -163,9 +162,11 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                         Duration__c=12.0,
                         Discount=0,
                         Product_Type__c='License',
-                        DealHub_Net_Price__c=cp.Net_Per_Unit__c,
+                        List_Price__c=cp.Net_Per_Unit__c,
                         Seats__c=cp.Quantity__c,
-                        Quantity=cp.Quantity__c));
+                        Subtotal__c=(cp.Quantity__c)*12*(cp.Net_Per_Unit__c),
+                        DealHub_Net_Price__c=(cp.Quantity__c)*12*(cp.Net_Per_Unit__c),
+                        Quantity=(cp.Quantity__c)*12));
                 }
                 //add Current Account ARR as QLI with negative ammount - contract arr
                 qlisToCreate.add(new QuoteLineItem(QuoteId=currentQuote.Id,Is_Primary__c=true,PricebookEntryId=ArrProductId,UnitPrice=0,ARR__c=(currentContract1.Contract_ARR__c*(-1)),Quantity=1));
@@ -222,24 +223,6 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
         return quotesToCreate;
     }
-
-    // @AuraEnabled(Cacheable=false)
-    // public static Id checkNewQuotes(Id oppId) {
-    //     try {
-    //         System.debug('@@ Renewal_Flat_CreateSalesOrder opp id: '+ oppId);
-    //         System.debug('@@ Renewal_Flat_CreateSalesOrder Query1 output: '+[SELECT Id FROM Quote WHERE OpportunityId=:oppId AND Quote_Source__c = 'Auto Renewal - Flat' ORDER BY CreatedDate DESC LIMIT 1 ]);
-    //         System.debug('@@ Renewal_Flat_CreateSalesOrder Query2 output: '+[SELECT Id FROM Quote WHERE OpportunityId=:oppId AND Quote_Source__c = 'Auto Renewal - Flat' ORDER BY CreatedDate DESC][0].Id);
-    //         return [SELECT Id FROM Quote WHERE OpportunityId=:oppId AND Quote_Source__c	 = 'Auto Renewal - Flat' ORDER BY CreatedDate DESC][0].Id;
-    //     }
-    //     catch (Exception e) {
-    //         System.debug('Exception type caught: ' + e.getTypeName());    
-    //         System.debug('Message: ' + e.getMessage());    
-    //         System.debug('Cause: ' + e.getCause());
-    //         System.debug('Line number: ' + e.getLineNumber());    
-    //         System.debug('Stack trace: ' + e.getStackTraceString()); 
-    //         throw new AuraHandledException(e.getMessage());
-    //     }
-    // }
     
     @AuraEnabled(Cacheable=false)
     public static Contract getSelectedContractDetails(Id contractId) {
