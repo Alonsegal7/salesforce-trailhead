@@ -119,7 +119,8 @@ public with sharing class ContractEventToContract {
     public static Contract createContract(Contract_Event__c conEvent){
         //Contract define fields are added on ConEventMetadata
             String conName;
-            conName=conEvent.Company_Name__c + ' - ' + conEvent.Subscription_Tier__c+ ' - '+conEvent.Quantity__c;
+            String strEndDate = conEvent.End_Date__c.day() + '/'+ conEvent.End_Date__c.month() + '/' +  conEvent.End_Date__c.year() ;
+            conName=conEvent.Company_Name__c + ' - ' + conEvent.Subscription_Tier__c.capitalize()+ ' - '+strEndDate;
             Contract contract = new Contract(
             Name = conName.left(80),
         	AccountId = conEvent.Company_Id__c,

@@ -24,6 +24,7 @@ public class Renewal_Flat_CreateSalesOrder_Test {
         Contract con = TestObjectCreator.CreateContract(comp);
         con.Primary_Renewal_Owner__c = userRecord.Id;
         con.EndDate = System.today();
+        con.Tier__c='Pro';
         update con;
 
         System.debug('@@@ Renewal_Global_Test Contract Created: '+con);
