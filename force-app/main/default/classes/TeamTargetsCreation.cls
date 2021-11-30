@@ -7,6 +7,9 @@ public with sharing class TeamTargetsCreation {
         System.debug('Michael TeamTargetsCreation Class - Starting findExistingTeamTargets. Year is: '+year+' OwnerId is: '+ownerId);
         List<Target__c> targets = [SELECT id,Target_Date__c,Amount__c, Month__c,Year_Month__c,Period__c FROM Target__c  WHERE RecordTypeId =:teamTargetRtId AND Year__c =:year AND Team_Leader__c =: ownerId ORDER BY Month__c ASC];
         System.debug('Michael TeamTargetsCreation Class - Query result for findExistingTeamTargets is: '+targets);
+        User teamLeader = [Select Id, Team__c FROM User WHERE Id =: ownerId LIMIT 1];
+        
+        //In case no Team Targets found for the user- create
         if (targets.isempty()) {
             for (Integer i = 1; i < 13; i++) {
                 targets.add(new Target__c(
@@ -15,7 +18,8 @@ public with sharing class TeamTargetsCreation {
                     Team_Leader__c = ownerId,
                     Name = 'temp'+i,
                     Period__c = 'Monthly',
-                    Amount__c = 0
+                    Amount__c = 0,
+                    Team__c = teamLeader.Team__c
                     ));
                 }
             System.debug('Michael TeamTargetsCreation Class - New targets created: '+targets);
@@ -37,7 +41,8 @@ public with sharing class TeamTargetsCreation {
                         Team_Leader__c = ownerId,
                         Name = 'temp'+i,
                         Period__c = 'Monthly',
-                        Amount__c = 0
+                        Amount__c = 0,
+                        Team__c = teamLeader.Team__c
                         ));
                 }
             }
