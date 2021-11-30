@@ -73,7 +73,7 @@ public without sharing class Subscription_ConnectToContractEvent {
                             }
                         }
                         else if(acc.Active_Contract__c!=null&&sub.Deactivation_Date__c!=acc.Active_Contract__r.EndDate) {//Active Contract is related to the account and subscription dates are above contract end date -needs to decativate
-                                contractsToDeactivate.add(new contract(id=acc.Active_Contract__c,Status__c='Deactivated'));
+                                //contractsToDeactivate.add(new contract(id=acc.Active_Contract__c,Status__c='Deactivated'));
                                 priorContsMap.put(sub.BigBrain_Id__c,acc.Active_Contract__c);//We use this map in order to update this contract on the new contract created
                                 sub.ContractCreatedByThisSubscription__c=true;//This subscription is going to create the contract - indicate that on the sub
                         }

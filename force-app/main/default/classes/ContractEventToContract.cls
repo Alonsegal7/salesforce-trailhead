@@ -9,8 +9,8 @@ public with sharing class ContractEventToContract {
         List<Account> masterMondayAccountToUpdate = new List<Account>();
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
         List<Subscription__c> subsToUpdate = new List<Subscription__c>();
-        List<Contract> contractToDeactivate = new List<Contract>();
-        List<Contract> priorContractsToUpdate = new List<Contract>();
+        List<Contract> prevContractToUpdate= new List<Contract>();
+        List<Contract> createdContractsToUpdate = new List<Contract>();
 
         //Find the Contract_Creation_Product__c event to create contract (There could be many - for now, take the frist added)
         for (Id key : conEvents.keyset()) {
@@ -49,19 +49,26 @@ public with sharing class ContractEventToContract {
         //After the contracts created, update it on Master monday account, opp, chain prior contract (if exist) and quote and deactivate selected company contract
         if (objType=='Quote') {
             for (SObject obj : objects) { 
-                masterMondayAccountToUpdate.add(new Account(Id=(Id)obj.get('AccountId'),Active_Contract__c = createdContsMap.get(obj.Id).Id));
-                oppsToUpdate.add(new Opportunity(Id=(Id)obj.get('OpportunityId'),ContractId=createdContsMap.get(obj.Id).Id));
-                quoteToUpdate.add(new Quote(Id=obj.Id,ContractId=createdContsMap.get(obj.Id).Id));
+                if (createdContsMap.get(obj.Id).Status__c=='Active' || (createdContsMap.get(obj.Id).Status__c=='Future Activation' && obj.get('Selected_Company_Contract__c')==null)) {//if it is future and the account dont have contract - keep it as future and attach to ma
+                    masterMondayAccountToUpdate.add(new Account(Id=(Id)obj.get('AccountId'),Active_Contract__c = createdContsMap.get(obj.Id).Id));
+                }
+                    oppsToUpdate.add(new Opportunity(Id=(Id)obj.get('OpportunityId'),ContractId=createdContsMap.get(obj.Id).Id));
+                    quoteToUpdate.add(new Quote(Id=obj.Id,ContractId=createdContsMap.get(obj.Id).Id));
                 if (obj.get('Manual_Trigger__c')=='Create Active Contract') {
                     if (obj.get('ContractId')!=null) {
-                        contractToDeactivate.add(new Contract(Id=(Id)obj.get('ContractId'), Status__c='Deactivated'));
-                        priorContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=(Id)obj.get('ContractId')));
+                        prevContractToUpdate.add(new Contract(Id=(Id)obj.get('ContractId'), Status__c='Deactivated', Continuation_Contract__c=createdContsMap.get(obj.Id).Id));
+                        createdContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=(Id)obj.get('ContractId')));
                     }
                 }
                 else {
                     if (obj.get('Selected_Company_Contract__c')!=null) {
-                        contractToDeactivate.add(new Contract(Id=(Id)obj.get('Selected_Company_Contract__c'), Status__c='Deactivated'));//For pilot, the selected company contract will be the monday account active contract (defined on Selected_Company_Contract__c formula)
-                        priorContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=(Id)obj.get('Selected_Company_Contract__c')));
+                        createdContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=(Id)obj.get('Selected_Company_Contract__c')));
+                        if (createdContsMap.get(obj.Id).Status__c!='Future Activation') {
+                            prevContractToUpdate.add(new Contract(Id=(Id)obj.get('Selected_Company_Contract__c'), Status__c='Deactivated', Continuation_Contract__c=createdContsMap.get(obj.Id).Id));//For pilot, the selected company contract will be the monday account active contract (defined on Selected_Company_Contract__c formula)
+                        }
+                        else {
+                            prevContractToUpdate.add(new Contract(Id=(Id)obj.get('Selected_Company_Contract__c'),Continuation_Contract__c=createdContsMap.get(obj.Id).Id));
+                        }
                     }
                 }
             }
@@ -72,29 +79,31 @@ public with sharing class ContractEventToContract {
             if (!oppsToUpdate.isEmpty()) {
                 System.enqueueJob(new updateOppQueueable(oppsToUpdate));
             }
-            if (!contractToDeactivate.isEmpty()) {
-                System.enqueueJob(new updateContractToInactiveQueueable(contractToDeactivate));
+            if (!prevContractToUpdate.isEmpty()) {
+                System.enqueueJob(new updatePrevContractQueueable(prevContractToUpdate));
             }
             if (!masterMondayAccountToUpdate.isEmpty()) {
                 System.enqueueJob(new updateAccountQueueable(masterMondayAccountToUpdate));
             }
-            if (!priorContractsToUpdate.isEmpty()) {
-                System.enqueueJob(new updatePriorContract(priorContractsToUpdate));
+            if (!createdContractsToUpdate.isEmpty()) {
+                System.enqueueJob(new updateValuesToCreatedContract(createdContractsToUpdate));
             }
         }
         if (objType=='Subscription') {
             for (SObject obj : objects) { 
                 if (obj.get('Manual_Trigger__c')=='Create Active Contract') {
                     subsToUpdate.add(new Subscription__c(Id=obj.id,Contract__c=createdContsMap.get(obj.Id).Id,Manual_Trigger__c=''));
-                    contractToDeactivate.add(new Contract(Id=(Id)obj.get('Contract__c'),Status__c='Deactivated'));
-                    priorContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=Subscription_ConnectToContractEvent.priorContsMap.get((string)obj.get('BigBrain_Id__c'))));
-
+                    createdContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=Subscription_ConnectToContractEvent.priorContsMap.get((string)obj.get('BigBrain_Id__c'))));
+                    prevContractToUpdate.add(new Contract(Id=(Id)obj.get('Contract__c'),Status__c='Deactivated', Continuation_Contract__c=createdContsMap.get(obj.Id).Id));
                 }
-                
                 else {
                     subsToUpdate.add(new Subscription__c(Id=obj.id,Contract__c=createdContsMap.get(obj.Id).Id));
                     createdContForSubOrder.put((string)obj.get('Order_Number__c'),createdContsMap.get(obj.Id).Id);
-                    priorContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=Subscription_ConnectToContractEvent.priorContsMap.get((string)obj.get('BigBrain_Id__c'))));
+                    createdContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=Subscription_ConnectToContractEvent.priorContsMap.get((string)obj.get('BigBrain_Id__c'))));
+                    if (Subscription_ConnectToContractEvent.priorContsMap.get((string)obj.get('BigBrain_Id__c'))!=null) {
+                        prevContractToUpdate.add(new Contract(Id=Subscription_ConnectToContractEvent.priorContsMap.get((string)obj.get('BigBrain_Id__c')),Status__c='Deactivated', Continuation_Contract__c=createdContsMap.get(obj.Id).Id));
+                    }
+
                 }
                 masterMondayAccountToUpdate.add(new Account(Id=(Id)obj.get('Monday_Account__c'),Active_Contract__c = createdContsMap.get(obj.Id).Id));
             }
@@ -105,11 +114,11 @@ public with sharing class ContractEventToContract {
             if (!masterMondayAccountToUpdate.isEmpty()) {
                 System.enqueueJob(new updateAccountQueueable(masterMondayAccountToUpdate));
             }
-            if (!contractToDeactivate.isEmpty()) {
-                System.enqueueJob(new updateContractToInactiveQueueable(contractToDeactivate));
+            if (!prevContractToUpdate.isEmpty()) {
+                System.enqueueJob(new updatePrevContractQueueable(prevContractToUpdate));
             }
-            if (!priorContractsToUpdate.isEmpty()) {
-                System.enqueueJob(new updatePriorContract(priorContractsToUpdate));
+            if (!createdContractsToUpdate.isEmpty()) {
+                System.enqueueJob(new updateValuesToCreatedContract(createdContractsToUpdate));
             }
         }
      }catch(Exception e){
@@ -124,7 +133,7 @@ public with sharing class ContractEventToContract {
             Contract contract = new Contract(
             Name = conName.left(80),
         	AccountId = conEvent.Company_Id__c,
-            Status__c='Active',
+            Status__c=conEvent.Start_Date__c>dateTime.now()?'Future Activation':'Active',
             ContractTerm = conEvent.Duration__c.intValue()>0?conEvent.Duration__c.intValue():1,
             CurrencyIsoCode = conEvent.CurrencyIsoCode,
             StartDate = conEvent.Start_Date__c,
@@ -196,9 +205,9 @@ public with sharing class ContractEventToContract {
         }
     }
 
-    private class updateContractToInactiveQueueable implements System.Queueable {
+    private class updatePrevContractQueueable implements System.Queueable {
         private List<Contract> contractToUpdateList; 
-        public updateContractToInactiveQueueable(List<Contract> contractToUpdateList) {
+        public updatePrevContractQueueable(List<Contract> contractToUpdateList) {
             this.contractToUpdateList = contractToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
@@ -206,9 +215,9 @@ public with sharing class ContractEventToContract {
         }
     }
 
-    private class updatePriorContract implements System.Queueable {
+    private class updateValuesToCreatedContract implements System.Queueable {
         private List<Contract> contractToUpdateList; 
-        public updatePriorContract(List<Contract> contractToUpdateList) {
+        public updateValuesToCreatedContract(List<Contract> contractToUpdateList) {
             this.contractToUpdateList = contractToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
