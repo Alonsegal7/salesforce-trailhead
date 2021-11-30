@@ -8,6 +8,7 @@ trigger CommissionCollectionTrigger on Commission_Collection__c (before insert, 
     }
 
     if(Trigger.isAfter){
+        Partners_SharingService.createCollectionsShares(Trigger.new, Trigger.oldMap);
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
         if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);
         if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);

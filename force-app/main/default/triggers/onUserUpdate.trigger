@@ -7,10 +7,12 @@ trigger onUserUpdate on User (after insert, after update, after delete, before i
         if (trigger.isInsert) {
             CalloutHandler.HandleCallout (trigger.new,'Insert',null);
             User_CreateLeadsCap.User_CreateLeadsCap(trigger.new, trigger.oldMap);
+            Partners_SharingService.addToEligibleCommissionGroup(trigger.new, trigger.oldMap);
         }
 
         if (trigger.IsUpdate) {
             CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
+            Partners_SharingService.addToEligibleCommissionGroup(trigger.new, trigger.oldMap);
             if(Account_UpdateCsmManager.firstRun){
                 Account_UpdateCsmManager.firstRun = false;
                 Account_UpdateCsmManager updateCsmManagerHandler = new Account_UpdateCsmManager();

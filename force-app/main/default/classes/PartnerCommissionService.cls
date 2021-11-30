@@ -255,29 +255,6 @@ public class PartnerCommissionService {
         return gbThresholdsMap;
     }
 
-    public void connectNewReportsToCollectionsCommitments(List<Commission_Report__c> newReports){
-        Map<String,Id> reportNumberToReportIdMap = new Map<String,Id>();
-        for(Commission_Report__c report: newReports){
-            reportNumberToReportIdMap.put(report.Big_Brain_Id__c, report.Id);
-        }
-        String query;
-        for(String reportNum: reportNumberToReportIdMap.keySet()){
-            query = 'select Id from Commission_Commitment__c where report_id__c = \''+reportNum+'\'';
-            Batch_SearchAndReplace commitments = new Batch_SearchAndReplace(query, 'Commission_Report__c', reportNumberToReportIdMap.get(reportNum), 'connectNewReportsToCollectionsCommitments');
-            query = 'select Id from Commission_Collection__c where report_id__c = \''+reportNum+'\'';
-            Batch_SearchAndReplace collections = new Batch_SearchAndReplace(query, 'Commission_Report__c', reportNumberToReportIdMap.get(reportNum), 'connectNewReportsToCollectionsCommitments');
-            Utilities.cleanFlexQueue();
-            Database.executeBatch(commitments,100);
-            Database.executeBatch(collections,100);
-        }
-    }
-
-    public void setReportName(List<Commission_Report__c> newReports){
-        for(Commission_Report__c report: newReports){
-            report.name = 'report-'+report.Big_Brain_Id__c;
-        }
-    }
-
     public Map<Id,List<Partner_Commission__c>> getLastPcsMap(Set<Id> mondayAccountsIds){
         Map<Id,List<Partner_Commission__c>> mondayAccIdPartnerCommisionMap = new Map<Id,List<Partner_Commission__c>>();
         List<Partner_Commission__c> lastPartnerCommissionList = [select Id, Monday_Account__c, Partner_Company__c, End_Date__c, Counter__c, Previous_Partner_Commission__c, Pulse_Account_Id__c from Partner_Commission__c where Monday_Account__c IN: mondayAccountsIds and is_Last__c = true and Renewable__c = true];

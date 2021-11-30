@@ -49,6 +49,11 @@
 		contactToUpdate['OwnerId'] = component.get("v.managerId");
 		contactToUpdate['Id'] = component.get("v.recordId");
 		contactToUpdate['Send_Welcome_Email__c'] = component.get("v.sendWelcomeEmail");
+		if(contactToUpdate['Partner_Role__c'] == 'Finance') {
+			contactToUpdate['Eligible_for_Partners_Commission__c'] = true;
+		} else {
+			contactToUpdate['Eligible_for_Partners_Commission__c'] = component.get("v.eligibleForPartnersCommission");
+		}
 		var action = component.get('c.submitNewUserRequest'); //this also checks for existing user with same email
         action.setParams({
 			contactId: component.get("v.recordId"),
@@ -85,6 +90,10 @@
         var fieldName = event.getSource().get("v.fieldName");
         var fieldValue = event.getSource().get("v.value");
         var attributeVar = component.get(attributeName);
+		if(fieldName == 'Partner_Role__c'){
+			if(fieldValue == 'Finance') component.set("v.showEligibleCheckbox", false);
+			else component.set("v.showEligibleCheckbox", true);
+		}
         attributeVar[fieldName] = fieldValue;
         component.set(attributeName, attributeVar);  
     },

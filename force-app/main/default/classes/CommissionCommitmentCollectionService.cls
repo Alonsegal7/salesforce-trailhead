@@ -80,6 +80,32 @@ public without sharing class CommissionCommitmentCollectionService {
         }
     }
 
+    public void connectNewReportsToCollectionsCommitments(List<Commission_Report__c> newReports){
+        Map<String,Id> reportNumberToReportIdMap = new Map<String,Id>();
+        for(Commission_Report__c report: newReports){
+            reportNumberToReportIdMap.put(report.Big_Brain_Id__c, report.Id);
+        }
+        List<Commission_Collection__c> collections = [select Id from Commission_Collection__c where report_id__c IN: reportNumberToReportIdMap.keySet() limit 1];
+        if(!collections.isEmpty()){
+            Batch_UpdateCollectionsReport connectReportToCollections = new Batch_UpdateCollectionsReport(newReports);
+            Utilities.cleanFlexQueue();
+            Database.executeBatch(connectReportToCollections, 100);
+        }
+
+        List<Commission_Commitment__c> commitments = [select Id from Commission_Commitment__c where report_id__c IN: reportNumberToReportIdMap.keySet() limit 1];
+        if(!commitments.isEmpty()){
+            Batch_UpdateCommitmentsReport connectReportToCommitments = new Batch_UpdateCommitmentsReport(newReports);
+            Utilities.cleanFlexQueue();
+            Database.executeBatch(connectReportToCommitments, 100);
+        }
+    }
+
+    public void setReportName(List<Commission_Report__c> newReports){
+        for(Commission_Report__c report: newReports){
+            report.name = 'report-'+report.Big_Brain_Id__c;
+        }
+    }
+
     public void setOpportunity(List<sObject> sobjectList, Map<Id,sObject> oldSobjectMap){
         List<sObject> relevantObjs = new List<sObject>();
         Set<Id> pcIds = new Set<Id>();

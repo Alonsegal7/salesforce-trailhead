@@ -152,7 +152,6 @@ public without sharing class Partner_PaymentRequestService {
     @AuraEnabled
     public static resWrapper getData(Date month, Id paymentRequestId){
         try {
-            Set<Id> collectionsToSetHidden = new Set<Id>();
             User runningUser = [select ManagerId, Contact.AccountId, Contact.Account.Name, Profile.Name from User where Id =: UserInfo.getUserId() limit 1];
             String partnerForTest = [select Value__c from Environment_Variable__mdt where DeveloperName = 'Partner_Commission_Payment_Req_Test_Acc' limit 1].Value__c;
             Id partnerCompanyId = partnerForTest;
@@ -174,29 +173,8 @@ public without sharing class Partner_PaymentRequestService {
             Decimal inboundPercent = pcm.Commission_Model__r.Inbound_Percent__c / 100;
             Decimal outboundPercent = pcm.Commission_Model__r.Outbound_Percent__c / 100;
             //query all relevant data of collections and remove fix collections - should be hidden for same report
-            Map<Id,Commission_Collection__c> collectionsMap = new Map<Id,Commission_Collection__c>([select Pulse_Account_Id__c, Is_Fix__c, Monday_Account__c, Monday_Account__r.Name, Account_Source_Type__c, Partner_Company__c, Partner_Company__r.Name, Partner_Tier__c, Plan_Name__c, Plan_Period__c, Plan_Tier__c, Account_Slug__c, Collection_Amount_USD__c, Commission_Amount_USD__c, Collection_Happened_At__c, Event_Type__c, Payment_Type__c, Commission_Report__r.Date__c, Commission_Report__r.Id, Commission_Report__r.Is_Available_For_Payment_Request__c from Commission_Collection__c where Partner_Company__c =: partnerCompanyId and Commission_Report__r.Is_Available_For_Payment_Request__c = true and CALENDAR_MONTH(Commission_Report__r.Date__c) =: monthForQuery.month() and CALENDAR_YEAR(Commission_Report__r.Date__c) =: monthForQuery.year()]);
+            Map<Id,Commission_Collection__c> collectionsMap = new Map<Id,Commission_Collection__c>([select Pulse_Account_Id__c, Is_Fix__c, Monday_Account__c, Monday_Account__r.Name, Account_Source_Type__c, Partner_Company__c, Partner_Company__r.Name, Partner_Tier__c, Plan_Name__c, Plan_Period__c, Plan_Tier__c, Account_Slug__c, Collection_Amount_USD__c, Commission_Amount_USD__c, Collection_Happened_At__c, Event_Type__c, Payment_Type__c, Commission_Report__r.Date__c, Commission_Report__r.Id, Commission_Report__r.Is_Available_For_Payment_Request__c from Commission_Collection__c where Is_Hidden__c = false and Partner_Company__c =: partnerCompanyId and Commission_Report__r.Is_Available_For_Payment_Request__c = true and CALENDAR_MONTH(Commission_Report__r.Date__c) =: monthForQuery.month() and CALENDAR_YEAR(Commission_Report__r.Date__c) =: monthForQuery.year()]);
             Map<String,Commission_Collection__c> fixCollectionsMap = new Map<String,Commission_Collection__c>();
-            for(Commission_Collection__c collection: collectionsMap.values()){
-                String key = getCollectionUniqueKey(collection);
-                if(fixCollectionsMap.containsKey(key)){
-                    Commission_Collection__c existingCollection = fixCollectionsMap.get(key);
-                    if(existingCollection.Collection_Amount_USD__c + collection.Collection_Amount_USD__c == 0 && existingCollection.is_Fix__c != collection.is_Fix__c){
-                        //remove the two collections
-                        collectionsMap.remove(collection.Id);
-                        collectionsMap.remove(existingCollection.Id);
-                        collectionsToSetHidden.add(collection.Id);
-                        collectionsToSetHidden.add(existingCollection.Id);
-                    }
-                } else {
-                    fixCollectionsMap.put(key, collection);
-                }
-            }
-            if(paymentRequestId == null && !collectionsToSetHidden.isEmpty()){
-                //run a batch to update the hidden collections
-                Batch_UpdatePartnerCollectionsHidden setCollectionsToHiddenBatch = new Batch_UpdatePartnerCollectionsHidden(collectionsToSetHidden);
-                Utilities.cleanFlexQueue();
-                //Database.executeBatch(setCollectionsToHiddenBatch,20);
-            }
             if(collectionsMap.isEmpty()) {
                 Datetime dt = monthForQuery;
                 return new resWrapper('No collections for ' + dt.format('MMM') + ' ' + dt.year());
@@ -261,12 +239,6 @@ public without sharing class Partner_PaymentRequestService {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
         }
-    }
-
-    private static String getCollectionUniqueKey(Commission_Collection__c collection){
-        Decimal absoluteAmount = collection.Collection_Amount_USD__c;
-        if(absoluteAmount < 0) absoluteAmount = -absoluteAmount;
-        return collection.Commission_Report__r.Id + String.valueOf(collection.Monday_Account__c) + String.valueOf(collection.Collection_Happened_At__c) + String.valueOf(absoluteAmount);
     }
 
     private static Id saveNewPaymentRequest(User runningUser, Id partnerCompanyId, Date paymentRequestDate, Decimal monthlyAmount, Decimal yearlyAmount, Decimal twoYearlyAmount){

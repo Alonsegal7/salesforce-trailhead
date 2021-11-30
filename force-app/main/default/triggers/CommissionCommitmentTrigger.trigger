@@ -6,6 +6,7 @@ trigger CommissionCommitmentTrigger on Commission_Commitment__c (before insert, 
         helper.setPartnerCommissionReport(Trigger.new, Trigger.oldMap);
     }
     if(Trigger.isAfter){
+        Partners_SharingService.createCommitmentsShares(Trigger.new, Trigger.oldMap);
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
         if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);
         if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);

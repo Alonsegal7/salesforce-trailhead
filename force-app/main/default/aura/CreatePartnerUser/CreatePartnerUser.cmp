@@ -24,6 +24,8 @@
 	<aura:attribute name="managerId" type="String" default=""/>
 	<aura:attribute name="displayWelcomeEmailCheckbox" type="boolean" default="false"/>
 	<aura:attribute name="sendWelcomeEmail" type="boolean" default="true"/>
+	<aura:attribute name="eligibleForPartnersCommission" type="boolean" default="false"/>
+	<aura:attribute name="showEligibleCheckbox" type="boolean" default="true"/>
 	<aura:attribute name="initialContact" type="Contact" default="{}"/>
 	<aura:attribute name="contactToUpdate" type="Contact" default="{}"/>
 	<aura:attribute name="contactFieldNamesList" type="String[]" default=""/>
@@ -83,9 +85,12 @@
 							<lightning:recordEditForm objectApiName="User" density="comfy">
 								<lightning:inputField aura:id="field" fieldName="ManagerId" value="{!v.managerId}" required="true" />
 							</lightning:recordEditForm>
+							<aura:if isTrue="{!v.showEligibleCheckbox}">
+								<lightning:input type="checkbox" label="Eligible for Partners Commission" name="eligibleForPartnersCommission" checked="{!v.eligibleForPartnersCommission}"/>
+							</aura:if>
 							<aura:if isTrue="{!v.displayWelcomeEmailCheckbox}">
 								<div class="slds-text-title slds-text-title_bold slds-text-align_left slds-m-bottom_xx-small">Please select mark this checkbox if you would like the Partner User to get a welcome email to Salesforce immediately:</div>
-								<lightning:input type="checkbox" label="Send Welcome Email" name="welcomeEmailCheckbox" checked="{!v.sendWelcomeEmail}"/>
+								<lightning:input type="checkbox" label="" name="welcomeEmailCheckbox" checked="{!v.sendWelcomeEmail}"/>
 							</aura:if>
 						</aura:if>
 						<aura:if isTrue="{!and(v.screen2,v.errMsg=='')}">

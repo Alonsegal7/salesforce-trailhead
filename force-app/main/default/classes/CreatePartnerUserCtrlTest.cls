@@ -62,7 +62,7 @@ public class CreatePartnerUserCtrlTest {
 	}
 
     static testmethod void test_ContactGetsApproved_TestSubmitApproved(){
-		Contact con = [select Id, Email from Contact limit 1];
+		Contact con = [select Id, Email, Partner_Role__c from Contact limit 1];
         con.Send_Welcome_Email__c = true;
 		Test.startTest();
         User newUser = CreatePartnerUserCtrl.submitNewUserRequest(con.Id, con, 'Approved');
@@ -74,7 +74,7 @@ public class CreatePartnerUserCtrlTest {
 	}
 
     static testmethod void test_ContactGetsApproved_TestSubmit(){
-		Contact con = [select Id, Email from Contact limit 1];
+		Contact con = [select Id, Email, Partner_Role__c from Contact limit 1];
         con.Send_Welcome_Email__c = true;
 		Test.startTest();
         CreatePartnerUserCtrl.submitNewUserRequest(con.Id, con, '');

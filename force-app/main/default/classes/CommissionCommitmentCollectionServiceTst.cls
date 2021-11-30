@@ -96,4 +96,32 @@ public without sharing class CommissionCommitmentCollectionServiceTst {
         System.assertEquals(null, commitment.Monday_Account__c);
         System.assertEquals(null, commitment.Opportunity__c);
     }
+
+    static testmethod void testReport(){
+        List<Partner_Commission__c> pcList = [select Id from Partner_Commission__c];
+        Commission_Commitment__c commitment = new Commission_Commitment__c(Name = 'test');
+        commitment.Partner_Commission__c = pcList.get(0).Id;
+        commitment.Pulse_Account_Id__c = '12345';
+        commitment.External_Source_ID__c = '879';
+        commitment.Report_Id__c = '12';
+        Commission_Collection__c collection = new Commission_Collection__c(Name = 'test');
+        collection.Partner_Commission__c = pcList.get(0).Id;
+        collection.Pulse_Account_Id__c = '12345';
+        collection.Commitment_Big_Brain_Id__c = '879';
+        collection.Report_Id__c = '12';
+        
+        insert commitment;
+        insert collection; 
+
+        Commission_Report__c report = new Commission_Report__c();
+        report.name = 'test';
+        report.Big_Brain_Id__c = '12';
+        report.Date__c = Date.today();
+        Test.startTest();
+        insert report;
+        //report.Big_Brain_Id__c = '13';
+        //update report;
+        //delete report;
+        Test.stopTest();
+    }
 }

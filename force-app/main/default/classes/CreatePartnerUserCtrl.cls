@@ -47,11 +47,14 @@ public class CreatePartnerUserCtrl {
 	public static User submitNewUserRequest(Id contactId, Contact contactToUpdate, String approvalStatus){
 		try {
 			if(contactToUpdate != null) Database.update(contactToUpdate);
-			if(approvalStatus != 'Approved'){
+			if(approvalStatus != 'Approved' && contactToUpdate.Partner_Role__c != 'Finance'){
 				submitForApproval(contactId);
 				return null;
 			} else {
+				Partners_SharingService.stopAddToEligibleCommissionGroup = true;
 				List<User> newUserRecList = createUsers(new Set<Id>{contactId});
+				Partners_SharingService.stopAddToEligibleCommissionGroup = false;
+				Partners_SharingService.addToEligibleCommissionGroup(newUserRecList, null);
 				updateUserIdsOnContacts(newUserRecList);
 				return new User(Id = newUserRecList.get(0).Id, Username = newUserRecList.get(0).Username);
 			}

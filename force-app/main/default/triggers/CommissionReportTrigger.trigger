@@ -1,6 +1,6 @@
 trigger CommissionReportTrigger on Commission_Report__c (before insert, after insert, after update, after delete) {
     if(Trigger.isInsert){
-        PartnerCommissionService commissionHandler = new PartnerCommissionService();
+        CommissionCommitmentCollectionService commissionHandler = new CommissionCommitmentCollectionService();
         if(Trigger.isBefore){
             commissionHandler.setReportName(Trigger.new);
         }
