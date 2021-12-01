@@ -298,36 +298,28 @@ export default class SubmitPaymentRequest extends LightningElement {
     saveAsDraft(){
         this.error = undefined;
         this.customError = undefined;
-        if((this.mdfAmount != null && this.mdfAmount > 0) || (this.spiffAmount != null && this.spiffAmount) || this.uploadedInvoiceId != null){
-            this.isLoading = true;
-            console.log('this.uploadedInvoiceId: '+ this.uploadedInvoiceId);
-            updatePaymentRequest({
-                paymentRequestId: this.newPaymentRequestId,
-                mdfAmount: this.mdfAmount,
-                spiffAmount: this.spiffAmount,
-                incoiveFileVerId: this.uploadedInvoiceId,
-                invoiceCurrency: this.currencyValue
-            })
-            .then(result => {
-                this.isLoading = false;
-                this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
-                this.showCancelButton = true;
-                this.filesScreen = false;
-                this.submittedScreen = true;
-                this.cancelBtnLabel = 'Finish';
-                if(this.recordId != null) refreshApex(this.wiredPaymentReqResult);
-            })
-            .catch(error => {
-                this.error = error;
-                this.isLoading = false;
-            });
-        } else {
+        this.isLoading = true;
+        console.log('this.uploadedInvoiceId: '+ this.uploadedInvoiceId);
+        updatePaymentRequest({
+            paymentRequestId: this.newPaymentRequestId,
+            mdfAmount: this.mdfAmount,
+            spiffAmount: this.spiffAmount,
+            incoiveFileVerId: this.uploadedInvoiceId,
+            invoiceCurrency: this.currencyValue
+        })
+        .then(result => {
+            this.isLoading = false;
             this.submittedScreenText = 'It is saved as a draft and you can go back and edit it.';
             this.showCancelButton = true;
             this.filesScreen = false;
             this.submittedScreen = true;
             this.cancelBtnLabel = 'Finish';
-        }
+            if(this.recordId != null) refreshApex(this.wiredPaymentReqResult);
+        })
+        .catch(error => {
+            this.error = error;
+            this.isLoading = false;
+        });
     }
 
     setModalToLarge() {
