@@ -181,6 +181,14 @@
                                 </div>
                             </template>
                             <template if:true={filesScreen}>
+                                <lightning-combobox
+                                    name="currency"
+                                    label="Select invoice currency:"
+                                    value={currencyValue}
+                                    placeholder="Select currency"
+                                    options={currencies}
+                                    onchange={handleCurrencyChange} >
+                                </lightning-combobox>
                                 <c-file-upload-improved onsendversids={handleSendVersIds} uploadedlabel={invoiceFileUploadLabel} accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>
                                 <div class="slds-m-top_x-small slds-border_bottom"></div>
                                 <lightning-layout>
@@ -216,11 +224,11 @@
                         </template>
                         <template if:true={customError}>
                             <div class="slds-var-m-vertical_small">
-                                <span class="slds-text-color_destructive">{customError}</span>
+                                <span class="slds-text-heading_small slds-text-color_destructive">{customError}</span>
                             </div>
                             <template if:true={monthScreen}>
                                 <template if:true={paymentRequestLink}>
-                                    <a href={paymentRequestLink} target="_blank">Link to Payment Request</a>
+                                    <a href={paymentRequestLink} target="_blank">Existing Payment Request Link</a>
                                 </template>
                             </template>
                         </template>

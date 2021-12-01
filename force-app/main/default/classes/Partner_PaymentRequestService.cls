@@ -102,7 +102,7 @@ public without sharing class Partner_PaymentRequestService {
             List<Payment_Request__c> paidPaymentReqList = new List<Payment_Request__c>();
             for(Payment_Request__c paymentReq: paymentReqList){
                 if(paymentReq.Status__c == 'Draft') draftPaymentReqList.add(paymentReq);
-                else if(paymentReq.Status__c == 'Pending Partner')rejectedPaymentReqList.add(paymentReq);
+                else if(paymentReq.Status__c == 'Rejected')rejectedPaymentReqList.add(paymentReq);
                 else if(paymentReq.Status__c == 'Paid') paidPaymentReqList.add(paymentReq);
                 else if(recentSubmitPaymentReqList.size() < 3) recentSubmitPaymentReqList.add(paymentReq);
             }
@@ -163,7 +163,7 @@ public without sharing class Partner_PaymentRequestService {
             if(paymentRequestId == null){
                 //check if payment req already exists
                 List<Payment_Request__c> existingPaymentRequest = [select Id from Payment_Request__c where Month__c =: month.toStartOfMonth() and Channel_Partner__c =: partnerCompanyId order by CreatedDate DESC];
-                if(existingPaymentRequest != null && !existingPaymentRequest.isEmpty()) return new resWrapper(existingPaymentRequest.get(0).Id, 'Payment Request already exists for ' + month.month() +'/'+month.year(), isPartnerUser);
+                if(existingPaymentRequest != null && !existingPaymentRequest.isEmpty()) return new resWrapper(existingPaymentRequest.get(0).Id, 'Payment Request already exists for ' + month.month() +'/'+month.year()+'! In case it was rejected, please follow to link to the exising payment request and resubmit it according to the reject notes.', isPartnerUser);
             } else {
                 monthForQuery = [select Month__c from Payment_Request__c where Id =: paymentRequestId].Month__c;
             }
@@ -173,15 +173,18 @@ public without sharing class Partner_PaymentRequestService {
             Decimal inboundPercent = pcm.Commission_Model__r.Inbound_Percent__c / 100;
             Decimal outboundPercent = pcm.Commission_Model__r.Outbound_Percent__c / 100;
             //query all relevant data of collections and remove fix collections - should be hidden for same report
-            Map<Id,Commission_Collection__c> collectionsMap = new Map<Id,Commission_Collection__c>([select Pulse_Account_Id__c, Is_Fix__c, Monday_Account__c, Monday_Account__r.Name, Account_Source_Type__c, Partner_Company__c, Partner_Company__r.Name, Partner_Tier__c, Plan_Name__c, Plan_Period__c, Plan_Tier__c, Account_Slug__c, Collection_Amount_USD__c, Commission_Amount_USD__c, Collection_Happened_At__c, Event_Type__c, Payment_Type__c, Commission_Report__r.Date__c, Commission_Report__r.Id, Commission_Report__r.Is_Available_For_Payment_Request__c from Commission_Collection__c where Is_Hidden__c = false and Partner_Company__c =: partnerCompanyId and Commission_Report__r.Is_Available_For_Payment_Request__c = true and CALENDAR_MONTH(Commission_Report__r.Date__c) =: monthForQuery.month() and CALENDAR_YEAR(Commission_Report__r.Date__c) =: monthForQuery.year()]);
-            Map<String,Commission_Collection__c> fixCollectionsMap = new Map<String,Commission_Collection__c>();
-            if(collectionsMap.isEmpty()) {
+            Map<Id,Commission_Collection__c> collectionsMap = new Map<Id,Commission_Collection__c>([select Pulse_Account_Id__c, Is_Hidden__c, Is_Fix__c, Monday_Account__c, Monday_Account__r.Name, Account_Source_Type__c, Partner_Company__c, Partner_Company__r.Name, Partner_Tier__c, Plan_Name__c, Plan_Period__c, Plan_Tier__c, Account_Slug__c, Collection_Amount_USD__c, Commission_Amount_USD__c, Collection_Happened_At__c, Event_Type__c, Payment_Type__c, Commission_Report__r.Date__c, Commission_Report__r.Id, Commission_Report__r.Is_Available_For_Payment_Request__c from Commission_Collection__c where Partner_Company__c =: partnerCompanyId and Commission_Report__r.Is_Available_For_Payment_Request__c = true and CALENDAR_MONTH(Commission_Report__r.Date__c) =: monthForQuery.month() and CALENDAR_YEAR(Commission_Report__r.Date__c) =: monthForQuery.year()]);
+            List<Commission_Collection__c> collectionsToDisplay = new List<Commission_Collection__c>();
+            for(Commission_Collection__c collection: collectionsMap.values()){
+                if(!collection.Is_Hidden__c) collectionsToDisplay.add(collection);
+            }
+            if(collectionsToDisplay.isEmpty()) {
                 Datetime dt = monthForQuery;
                 return new resWrapper('No collections for ' + dt.format('MMM') + ' ' + dt.year());
             }
             //calculate amounts
             Decimal monthlyAmount = 0, yearlyAmount = 0, twoYearlyAmount = 0;
-            for(Commission_Collection__c collection: collectionsMap.values()){
+            for(Commission_Collection__c collection: collectionsToDisplay){
                 if(collection.Plan_Period__c.containsIgnoreCase('monthly')) monthlyAmount += collection.Commission_Amount_USD__c;
                 if(collection.Plan_Period__c.containsIgnoreCase('yearly')) {
                     if(collection.Plan_Period__c.containsIgnoreCase('two_yearly')) twoYearlyAmount += collection.Commission_Amount_USD__c;
@@ -193,10 +196,10 @@ public without sharing class Partner_PaymentRequestService {
                 newPaymentReqId = saveNewPaymentRequest(runningUser, partnerCompanyId, month, monthlyAmount, yearlyAmount, twoYearlyAmount);
                 Batch_SearchAndReplace linkPaymentReqToCollectionsBatch = new Batch_SearchAndReplace(collectionsMap.keySet(), 'Commission_Collection__c', 'Payment_Request__c', String.valueOf(newPaymentReqId), 'Link Collections to Payment Request Id: ' + newPaymentReqId);
                 Utilities.cleanFlexQueue();
-                //Database.executeBatch(linkPaymentReqToCollectionsBatch,20);
+                Database.executeBatch(linkPaymentReqToCollectionsBatch, 100);
             }
             
-            return new resWrapper(collectionsMap.values(), monthlyAmount, yearlyAmount, twoYearlyAmount, inboundPercent, outboundPercent, newPaymentReqId, isPartnerUser);
+            return new resWrapper(collectionsToDisplay, monthlyAmount, yearlyAmount, twoYearlyAmount, inboundPercent, outboundPercent, newPaymentReqId, isPartnerUser);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
         }
@@ -214,10 +217,9 @@ public without sharing class Partner_PaymentRequestService {
     }
 
     @AuraEnabled
-    public static void updatePaymentRequest(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id incoiveFileVerId){
+    public static void updatePaymentRequest(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id incoiveFileVerId, String invoiceCurrency){
         try {
-
-            Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(Id = paymentRequestId, MDF_Amount__c = 0, Spiff_Amount__c = 0, Invoice_Content_Version_Id__c = incoiveFileVerId);
+            Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(Id = paymentRequestId, MDF_Amount__c = 0, Spiff_Amount__c = 0, Invoice_Content_Version_Id__c = incoiveFileVerId, CurrencyIsoCode = invoiceCurrency);
             if(mdfAmount != null && mdfAmount > 0) paymentRequestToUpdate.MDF_Amount__c = mdfAmount;
             if(spiffAmount != null && spiffAmount > 0) paymentRequestToUpdate.Spiff_Amount__c = spiffAmount;
             Database.update(paymentRequestToUpdate);
@@ -227,9 +229,9 @@ public without sharing class Partner_PaymentRequestService {
     }
 
     @AuraEnabled
-    public static resWrapper submitForApproval(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id incoiveFileVerId){
+    public static resWrapper submitForApproval(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id incoiveFileVerId, String invoiceCurrency){
         try {
-            updatePaymentRequest(paymentRequestId, mdfAmount, spiffAmount, incoiveFileVerId);
+            updatePaymentRequest(paymentRequestId, mdfAmount, spiffAmount, incoiveFileVerId, invoiceCurrency);
             Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();          
             req.setObjectId(paymentRequestId);
             req.setProcessDefinitionNameOrId('Payment_Request_Approval_Process');

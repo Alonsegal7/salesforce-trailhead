@@ -44,6 +44,11 @@ export default class SubmitPaymentRequest extends LightningElement {
     filesScreen = false;
     monthScreen = false;
     submittedScreen = false;
+    showCancelButton = true;
+    showViewBreakdownBtn = false;
+    viewBreakdownMode = false;
+    filesScreenFirstRun = true;
+    submittedForApproval = false;
     columns = columns;
     data;
     monthlyAmount;
@@ -63,24 +68,20 @@ export default class SubmitPaymentRequest extends LightningElement {
     submittedScreenTitle = 'Payment Request Created Successfully!';
     urlPrefix;
     urlSuffix;
-    showCancelButton = true;
     wiredPaymentReqResult;
-    showViewBreakdownBtn = false;
-    viewBreakdownMode = false;
-    mdfAmount = 0;
-    spiffAmount = 0;
+    mdfAmount;
+    spiffAmount;
     showUploadMdfFiles;
     fileKeyMdf;
     headerCardText;
-    headerIconName = 'custom:custom17';
-    filesScreenFirstRun = true;
-    cancelBtnLabel = 'Cancel';
-    submittedScreenGifIcon = submittedScreenGif;
-    submittedForApproval = false;
     uploadedInvoiceId;
     invoiceFileUploadLabel;
     mdfFileUploadLabel;
-
+    headerIconName = 'custom:custom17';
+    cancelBtnLabel = 'Cancel';
+    submittedScreenGifIcon = submittedScreenGif;
+    currencyValue = 'USD';
+    
     //sort & filter variables
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
@@ -95,6 +96,16 @@ export default class SubmitPaymentRequest extends LightningElement {
     totalPage = 0;
     //filterableFields = ['Pulse_Account_Id__c','MondayAccountName','PartnerCompanyName']; //use in case you want to filter only on specific fields in the datatable
 
+    get currencies() {
+        return [
+            { label: 'USD', value: 'USD' },
+            { label: 'EUR', value: 'EUR' },
+            { label: 'GBP', value: 'GBP' },
+        ];
+    }
+
+    
+
     @wire(getRecord, { recordId: '$recordId', fields: [PAYMENT_REQ_STATUS_FIELD, PAYMENT_REQ_MONTH_FIELD, PAYMENT_REQ_MDF_FIELD, PAYMENT_REQ_SPIFF_FIELD] })
     wiredPaymentReq(result) {
         this.wiredPaymentReqResult = result;
@@ -105,7 +116,7 @@ export default class SubmitPaymentRequest extends LightningElement {
             this.mdfAmount = getFieldValue(result.data, PAYMENT_REQ_MDF_FIELD);
             this.spiffAmount = getFieldValue(result.data, PAYMENT_REQ_SPIFF_FIELD);
             this.cardTitle = 'Payment Request Status - ' + statusValue;
-            if(statusValue != 'Draft' && statusValue != 'Pending Partner') {
+            if(statusValue != 'Draft' && statusValue != 'Rejected') {
                 this.allowSubmit = false;
                 this.headerCardText = undefined;
                 this.headerIconName = 'custom:custom17';
@@ -113,11 +124,12 @@ export default class SubmitPaymentRequest extends LightningElement {
                 if(statusValue == 'Draft') {
                     this.headerCardText = 'Please make sure to submit your request';
                     this.headerIconName = 'custom:custom17';
-                } else if(statusValue == 'Pending Partner') {
+                    this.submitButtonLabel = 'Submit';
+                } else if(statusValue == 'Rejected') {
                     this.headerCardText = 'Your Payment Request was rejected, please re:submit your request';
                     this.headerIconName = 'standard:first_non_empty';
+                    this.submitButtonLabel = 'Resubmit';
                 }
-                this.submitButtonLabel = 'Submit';
                 this.allowSubmit = true;
             }
             if(this.mdfAmount != null && this.mdfAmount != '' && this.mdfAmount > 0) {
@@ -126,6 +138,10 @@ export default class SubmitPaymentRequest extends LightningElement {
                 this.mdfFileUploadLabel = 'In order to get the payment for ' + this.selectedMonth + ' MDF, please upload relevant files here:';
             } else this.showUploadMdfFiles = false;
         } 
+    }
+
+    handleCurrencyChange(event) {
+        this.currencyValue = event.detail.value;
     }
 
     handleSpiffAmountChange(event) {
@@ -268,6 +284,11 @@ export default class SubmitPaymentRequest extends LightningElement {
                 this.isLoading = false;
             });
         } else {
+            if(this.runningFromHomepage && this.filesScreenFirstRun) {
+                this.filesScreenFirstRun = false;
+                this.mdfAmount = 0;
+                this.spiffAmount = 0;
+            }
             this.dataScreen = false;
             this.setModalToNormal();
             this.filesScreen = true;
@@ -284,7 +305,8 @@ export default class SubmitPaymentRequest extends LightningElement {
                 paymentRequestId: this.newPaymentRequestId,
                 mdfAmount: this.mdfAmount,
                 spiffAmount: this.spiffAmount,
-                incoiveFileVerId: this.uploadedInvoiceId
+                incoiveFileVerId: this.uploadedInvoiceId,
+                invoiceCurrency: this.currencyValue
             })
             .then(result => {
                 this.isLoading = false;
@@ -334,7 +356,8 @@ export default class SubmitPaymentRequest extends LightningElement {
                 paymentRequestId: this.newPaymentRequestId,
                 mdfAmount: this.mdfAmount,
                 spiffAmount: this.spiffAmount,
-                incoiveFileVerId: this.uploadedInvoiceId
+                incoiveFileVerId: this.uploadedInvoiceId,
+                invoiceCurrency: this.currencyValue
             })
             .then(result => {
                 this.isLoading = false;
