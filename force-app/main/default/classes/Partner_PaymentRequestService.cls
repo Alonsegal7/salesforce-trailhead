@@ -219,7 +219,7 @@ public without sharing class Partner_PaymentRequestService {
     @AuraEnabled
     public static void updatePaymentRequest(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id incoiveFileVerId, String invoiceCurrency){
         try {
-            Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(Id = paymentRequestId, MDF_Amount__c = 0, Spiff_Amount__c = 0, Invoice_Content_Version_Id__c = incoiveFileVerId, CurrencyIsoCode = invoiceCurrency);
+            Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(Id = paymentRequestId, MDF_Amount__c = 0, Spiff_Amount__c = 0, Invoice_Content_Version_Id__c = incoiveFileVerId, Invoice_Currency__c = invoiceCurrency);
             if(mdfAmount != null && mdfAmount > 0) paymentRequestToUpdate.MDF_Amount__c = mdfAmount;
             if(spiffAmount != null && spiffAmount > 0) paymentRequestToUpdate.Spiff_Amount__c = spiffAmount;
             Database.update(paymentRequestToUpdate);
