@@ -42,6 +42,7 @@ public without sharing class Partners_SharingService {
                 Group newGroup = new Group();
                 newGroup.Name = getPartnerEFCGroupName(userRec.Contact.AccountId);
                 newGroup.Type = 'Regular';
+                newGroup.DoesIncludeBosses = false;
                 partnerIdToNewGroups.put(userRec.Contact.AccountId, newGroup);
                 usersToCreateNewGroupsFor.add(userRec);
             }
@@ -126,7 +127,7 @@ public without sharing class Partners_SharingService {
                 Id groupId = partnerCompToGroupsMap.get(collection.Partner_Company__c);
                 Commission_Collection__Share newcollectionShare = new Commission_Collection__Share();
                 newcollectionShare.ParentID = collection.Id;
-                newcollectionShare.AccessLevel = 'Edit';
+                newcollectionShare.AccessLevel = 'Read';
                 newcollectionShare.UserOrGroupId = groupId;
                 collectionSharesToCreate.add(newcollectionShare);
             }
@@ -159,7 +160,7 @@ public without sharing class Partners_SharingService {
                 Id groupId = partnerCompToGroupsMap.get(commitment.Partner_Company__c);
                 Commission_Commitment__Share newcommitmentShare = new Commission_Commitment__Share();
                 newcommitmentShare.ParentID = commitment.Id;
-                newcommitmentShare.AccessLevel = 'Edit';
+                newcommitmentShare.AccessLevel = 'Read';
                 newcommitmentShare.UserOrGroupId = groupId;
                 commitmentSharesToCreate.add(newcommitmentShare);
             }
