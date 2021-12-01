@@ -67,8 +67,9 @@ public without sharing class Opportunity_RenewalCreation {
             WHERE Id =: recordId LIMIT 1];
         System.debug('### cont: ' + cont);
         
-        for(Contract_Event__c evt : [SELECT Id, Name, Contract__c, Quote_Line_Item__c, Subscription__c, Billing_Entity__c FROM Contract_Event__c WHERE Contract__c =: recordId ORDER BY CreatedDate DESC LIMIT 1]){
+        for(Contract_Event__c evt : [SELECT Id, Name, Contract__c,Payment_Terms__c, Quote_Line_Item__c, Subscription__c, Billing_Entity__c FROM Contract_Event__c WHERE Contract__c =: recordId ORDER BY CreatedDate DESC LIMIT 1]){
             billingEntity = evt.Billing_Entity__c;
+            paymentTerms=evt.Payment_Terms__c;
             System.debug('### evt.Billing_Entity__c: ' + evt.Billing_Entity__c);
             System.debug('### billingEntity: ' + billingEntity);
             if(evt.Quote_Line_Item__c != null){
@@ -84,7 +85,7 @@ public without sharing class Opportunity_RenewalCreation {
             QuoteLineItem getQuoteInfo = [SELECT Id, QuoteId, Quote.Pricing_Version__c, Quote.Payment_Terms__c FROM QuoteLineItem WHERE Id =: qli];
             if(getQuoteInfo != null){
                 paymentMethod = 'Wire';
-                paymentTerms = getQuoteInfo.Quote.Payment_Terms__c;
+                //paymentTerms = getQuoteInfo.Quote.Payment_Terms__c;
                 pricingVersion = String.valueof(getQuoteInfo.Quote.Pricing_Version__c);
             }
         }
@@ -93,7 +94,7 @@ public without sharing class Opportunity_RenewalCreation {
             Subscription__c getSubsInfo = [SELECT Id, Pricing_Version__c, Payment_Method__c FROM Subscription__c WHERE Id =: subs];
             if(getSubsInfo != null){
                 paymentMethod = getSubsInfo.Payment_Method__c;
-                paymentTerms = '';
+                //paymentTerms = '';
                 pricingVersion = String.valueof(Integer.valueOf(getSubsInfo.Pricing_Version__c));
             }
         }
