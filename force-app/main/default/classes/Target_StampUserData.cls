@@ -18,7 +18,6 @@ public class Target_StampUserData {
             target.User_Segment__c = currUser.Segment__c;
             target.User_Seniority__c = currUser.Seniority__c;
             target.User_Quota_Carrying__c = currUser.Quota_Carrying__c;
-            target.User_Team__c = currUser.Team__c;
             target.Team__c = currUser.Team__c;
             target.User_Office__c = currUser.Office__c;
             target.User_Office_Region__c = currUser.Office_Region__c;
