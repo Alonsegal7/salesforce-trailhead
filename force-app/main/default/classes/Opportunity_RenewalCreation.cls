@@ -85,7 +85,6 @@ public without sharing class Opportunity_RenewalCreation {
             QuoteLineItem getQuoteInfo = [SELECT Id, QuoteId, Quote.Pricing_Version__c, Quote.Payment_Terms__c FROM QuoteLineItem WHERE Id =: qli];
             if(getQuoteInfo != null){
                 paymentMethod = 'Wire';
-                //paymentTerms = getQuoteInfo.Quote.Payment_Terms__c;
                 pricingVersion = String.valueof(getQuoteInfo.Quote.Pricing_Version__c);
             }
         }
@@ -94,7 +93,6 @@ public without sharing class Opportunity_RenewalCreation {
             Subscription__c getSubsInfo = [SELECT Id, Pricing_Version__c, Payment_Method__c FROM Subscription__c WHERE Id =: subs];
             if(getSubsInfo != null){
                 paymentMethod = getSubsInfo.Payment_Method__c;
-                //paymentTerms = '';
                 pricingVersion = String.valueof(Integer.valueOf(getSubsInfo.Pricing_Version__c));
             }
         }
@@ -158,38 +156,34 @@ public without sharing class Opportunity_RenewalCreation {
     public static void updateRelatedRecordsFields(Map<Id, Contract> oldContracts, Map<Id, Contract> newContracts){
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
         List<Account> accsToUpdate = new List<Account>();
-        List<Opportunity> oppList = [SELECT Id, Selected_Company_Contract__c, Original_Contract_ARR__c FROM Opportunity WHERE Selected_Company_Contract__c IN: newContracts.keySet() AND RecordType.DeveloperName = 'CS_Opportunity' AND StageName != 'Closed Won' AND StageName != 'Closed Lost' LIMIT 1];
-        System.debug('### oppList: ' + oppList);
-        List<Account> realtedMA = [SELECT Id, Renewal_Manager__c, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: newContracts.keySet() AND ARR__c != null ORDER BY ARR__c DESC LIMIT 1];
-        System.debug('### realtedMA: ' + realtedMA);
+        Map<Id, Contract> relevantContMap = new Map<Id, Contract>();
+        Boolean NeedToUpdateOpp=false;
 
-        for(Contract contr : [SELECT Id, Renewal_Manager__c, Primary_Renewal_Owner__c, Contract_ARR__c FROM Contract WHERE Id IN: newContracts.keySet()]){
-            if(contr.Renewal_Manager__c != oldContracts.get(contr.Id).Renewal_Manager__c || contr.Primary_Renewal_Owner__c != oldContracts.get(contr.Id).Primary_Renewal_Owner__c && !realtedMA.isEmpty()){
-                for(Account acc : realtedMA){
-                    if(acc.Active_Contract__c == contr.Id){
-                        acc.Renewal_Manager__c = contr.Renewal_Manager__c;
-                        acc.Renewal_Owner__c  = contr.Primary_Renewal_Owner__c;
-                        accsToUpdate.add(acc);
-                    }
-                }
-            }
-            system.debug('### newContracts.get(contr.Id).Contract_ARR__c: ' + newContracts.get(contr.Id).Contract_ARR__c);
-            system.debug('### oldContracts.get(contr.Id).Contract_ARR__c: ' + oldContracts.get(contr.Id).Contract_ARR__c);
-            if(newContracts.get(contr.Id).Contract_ARR__c != oldContracts.get(contr.Id).Contract_ARR__c){
-                system.debug('### in:');
-                if(!oppList.isEmpty()){
-                    for(Opportunity oppty : oppList){
-                        system.debug('### in2:');
-                        if(oppty.Selected_Company_Contract__c == contr.Id){
-                            oppty.Original_Contract_ARR__c = contr.Contract_ARR__c;
-                            oppsToUpdate.add(oppty);
-                            system.debug('### oppsToUpdate: ' + oppsToUpdate);
-                        }
-                    }
+        for (Contract singleCon : newContracts.values()) {
+            if((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c) || (singleCon.Renewal_Manager__c != oldContracts.get(singleCon.Id).Renewal_Manager__c || singleCon.Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c)){
+                relevantContMap.put(singleCon.Id, singleCon);
+                if ((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c)) {
+                    NeedToUpdateOpp=true;
                 }
             }
         }
-
+        if (!relevantContMap.isEmpty()) {
+            List<Account> realtedMA = [SELECT Id, Renewal_Manager__c, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: relevantContMap.keySet() AND ARR__c != null ORDER BY ARR__c DESC];  
+            for (Account acc : realtedMA) {
+                acc.Renewal_Manager__c = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
+                acc.Renewal_Owner__c  = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
+                accsToUpdate.add(acc);
+            }
+        }   
+         if (NeedToUpdateOpp) {
+             List<Opportunity> oppList = [SELECT Id, Selected_Company_Contract__c, Original_Contract_ARR__c FROM Opportunity WHERE Selected_Company_Contract__c IN: relevantContMap.keySet() AND RecordType.DeveloperName = 'CS_Opportunity' AND StageName != 'Closed Won' AND StageName != 'Closed Lost'];
+                 if (!oppList.isEmpty()) {
+                        for (Opportunity oppty : oppList) {
+                            oppty.Original_Contract_ARR__c = relevantContMap.get(oppty.Selected_Company_Contract__c).Contract_ARR__c;
+                            oppsToUpdate.add(oppty);
+                        }
+                    }
+                }
         if(!oppsToUpdate.isEmpty()){
             Database.update(oppsToUpdate);
         }
