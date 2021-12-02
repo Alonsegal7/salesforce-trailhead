@@ -155,26 +155,6 @@ public without sharing class Opportunity_RenewalCreation {
         }
     }
 
-    public static void updateRelatedRenewalOpportunities(Map<Id, Contract> oldContracts, Map<Id, Contract> newContracts){
-        List<Opportunity> opp = [SELECT Id, Name, StageName, Selected_Company_Contract__c, ContractId FROM Opportunity WHERE Selected_Company_Contract__c IN: newContracts.keySet() AND RecordType.DeveloperName = 'CS_Opportunity' AND StageName != 'Closed Won' AND StageName != 'Closed Lost' LIMIT 1];
-        System.debug('### opp: ' + opp);
-
-        for(Contract contr : [SELECT Id, Renewal_Manager__c, Primary_Renewal_Owner__c FROM Contract WHERE Id IN: newContracts.keySet()]){
-            if(contr.Renewal_Manager__c != oldContracts.get(contr.Id).Renewal_Manager__c || contr.Primary_Renewal_Owner__c != oldContracts.get(contr.Id).Primary_Renewal_Owner__c){
-                
-            }
-            System.debug('### Primary_Renewal_Owner__c: ' + newContracts.get(contr.Id).Primary_Renewal_Owner__c);
-            System.debug('### old Primary_Renewal_Owner__c: ' + oldContracts.get(contr.Id).Primary_Renewal_Owner__c);
-            if(newContracts.get(contr.Id).Primary_Renewal_Owner__c != oldContracts.get(contr.Id).Primary_Renewal_Owner__c){
-                if(!opp.isEmpty()){
-                    System.debug('### in error: ');
-                    newContracts.get(contr.Id).addError('You cannot change the Primary Renewal Owner due to an open Renewal Opportunity: ' + opp[0].Name);
-                    return;
-                }
-            }
-        }
-    }
-
     public static void updateRelatedRecordsFields(Map<Id, Contract> oldContracts, Map<Id, Contract> newContracts){
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
         List<Account> accsToUpdate = new List<Account>();
