@@ -1,5 +1,27 @@
 public without sharing class CommissionCommitmentCollectionService {
 
+    public List<sObject> updateOwnerToManagerUser(List<sObject> sobjectList, Map<Id,sObject> oldSobjectMap){
+        List<sObject> relevantObjs = new List<sObject>();
+        Set<Id> accountIds = new Set<Id>();
+        for(sObject obj: sobjectList){
+            if(oldSobjectMap == null || obj.get('Partner_Company__c') != oldSobjectMap.get(String.valueOf(obj.get('Id'))).get('Partner_Company__c')){
+                if(obj.get('Partner_Company__c') == null) continue;
+                relevantObjs.add(obj);
+                accountIds.add(String.valueOf(obj.get('Partner_Company__c'))); 
+            }
+        }
+        if(relevantObjs.isEmpty()) return relevantObjs;
+        // select all eligible for commission users of those partners
+        Map<String,Id> partnerCompsToUserId = new Map<String,Id>();
+        for(User u: [select Id, Contact.AccountId from User where Eligible_for_Partners_Commission__c = true and Contact.AccountId in: accountIds and IsActive = true order by CreatedDate DESC]){
+            partnerCompsToUserId.put(String.valueOf(u.Contact.AccountId), u.Id);
+        }
+        for(sObject obj: relevantObjs) {
+            if(partnerCompsToUserId.containsKey(String.valueOf(obj.get('Partner_Company__c')))) obj.put('OwnerId', partnerCompsToUserId.get(String.valueOf(obj.get('Partner_Company__c'))));
+        }
+        return relevantObjs;
+    }
+
     public void setPartnerCommissionReport(List<sObject> sobjectList, Map<Id,sObject> oldSobjectMap){
         List<sObject> relevantObjs = new List<sObject>();
         Set<String> reportIds = new Set<String>();

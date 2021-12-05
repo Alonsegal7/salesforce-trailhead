@@ -16,13 +16,11 @@ public without sharing class CommissionCommitmentCollectionServiceTst {
         //create partner company
         List<Account> partnersList = new List<Account>();
         partnersList.add(new Account(Name = 'testPartner', RecordTypeId = accountRecordTypesMap.get('Partner_Company').getRecordTypeId()));
-        partnersList.add(new Account(Name = 'testPartner2', RecordTypeId = accountRecordTypesMap.get('Partner_Company').getRecordTypeId()));
         insert partnersList;
     
         //create partner commission model
         List<Partner_Commission_Model__c> pcmList = new List<Partner_Commission_Model__c>();
         pcmList.add(new Partner_Commission_Model__c(Commission_Model__c = commissionModel.Id, Partner_Company__c = partnersList.get(0).Id, Start_Date__c = Datetime.now()));
-        pcmList.add(new Partner_Commission_Model__c(Commission_Model__c = commissionModel.Id, Partner_Company__c = partnersList.get(1).Id, Start_Date__c = Datetime.now()));
         insert pcmList;
 
         Contact con = new Contact(Email='demo1@randomdemodomain.com', FirstName = 'test', LastName = 'bla', AccountId = partnersList.get(0).Id);
@@ -52,6 +50,7 @@ public without sharing class CommissionCommitmentCollectionServiceTst {
     }
 
     static testmethod void testInsert(){
+        Id accId = [select Id from Account where RecordType.DeveloperName = 'Partner_Company' limit 1].Id;
         Commission_Report__c test = new Commission_Report__c();
         test.name = 'test';
         test.Big_Brain_Id__c = '12';
@@ -64,11 +63,13 @@ public without sharing class CommissionCommitmentCollectionServiceTst {
         commitment.Pulse_Account_Id__c = '12345';
         commitment.External_Source_ID__c = '879';
         commitment.Report_Id__c = '12';
+        commitment.Partner_Company__c = accId;
         Commission_Collection__c collection = new Commission_Collection__c(Name = 'test');
         collection.Partner_Commission__c = pcList.get(0).Id;
         collection.Pulse_Account_Id__c = '12345';
         collection.Commitment_Big_Brain_Id__c = '879';
         collection.Report_Id__c = '12';
+        collection.Partner_Company__c = accId;
         
         insert commitment;
         insert collection; 

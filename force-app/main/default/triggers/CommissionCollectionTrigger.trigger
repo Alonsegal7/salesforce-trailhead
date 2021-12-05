@@ -1,6 +1,7 @@
 trigger CommissionCollectionTrigger on Commission_Collection__c (before insert, before update, after update, after insert, after delete) {
     if((Trigger.isInsert || Trigger.isUpdate) && Trigger.isBefore){
         CommissionCommitmentCollectionService helper = new CommissionCommitmentCollectionService();
+        helper.updateOwnerToManagerUser(Trigger.new, Trigger.oldMap);
         helper.setMondayAcc(Trigger.new, Trigger.oldMap);
         helper.setOpportunity(Trigger.new, Trigger.oldMap);
         helper.setPartnerCommissionReport(Trigger.new, Trigger.oldMap);
