@@ -1,6 +1,9 @@
 ({
 	callbackInit : function(component) {   
 		var contactRec = component.get("v.initialContact");
+		if(component.get("v.initialContact").Partner_Role__c == 'Finance'){
+			component.set("v.showEligibleCheckbox", false);
+		}
         var action = component.get('c.getFieldsList'); //this also checks for existing user with same email
         action.setParams({
 			contactId: component.get("v.recordId"),
@@ -49,8 +52,9 @@
 		contactToUpdate['OwnerId'] = component.get("v.managerId");
 		contactToUpdate['Id'] = component.get("v.recordId");
 		contactToUpdate['Send_Welcome_Email__c'] = component.get("v.sendWelcomeEmail");
-		if(contactToUpdate['Partner_Role__c'] == 'Finance') {
+		if(contactToUpdate['Partner_Role__c'] == 'Finance' || (contactToUpdate['Partner_Role__c'] == undefined && component.get("v.initialContact").Partner_Role__c == 'Finance')) {
 			contactToUpdate['Eligible_for_Partners_Commission__c'] = true;
+			contactToUpdate['Partner_Role__c'] = 'Finance';
 		} else {
 			contactToUpdate['Eligible_for_Partners_Commission__c'] = component.get("v.eligibleForPartnersCommission");
 		}

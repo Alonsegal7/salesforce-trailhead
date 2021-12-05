@@ -37,7 +37,7 @@
 
 	<force:recordData aura:id="recordLoader"
         recordId="{!v.recordId}"
-        fields="Email, AccountId, Account.IsPartner, Approval_Status_Partner_Users__c"
+        fields="Email, AccountId, Account.IsPartner, Approval_Status_Partner_Users__c, Partner_Role__c"
         targetFields="{!v.initialContact}"
         recordUpdated="{!c.doInit}" 
     />
