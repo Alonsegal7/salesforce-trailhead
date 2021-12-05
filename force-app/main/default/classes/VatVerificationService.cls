@@ -15,7 +15,7 @@ public with sharing class VatVerificationService {
             HttpRequest request = new HttpRequest();
             string url = ConfigManager.getBillingVatServiceUrl();
             String authenticationToken = whMTD.Key__c;
-            String endpoint = url+'/billing-subscriptions/salesforce/taxes/validate-vat-number?country='+countryCode[0].Name+'&vatNumber='+vatNumber+'&token='+authenticationToken;
+            String endpoint = url+'/billing-subscriptions/sales-managed/salesforce/taxes/validate-vat-number/?country='+countryCode[0].Name+'&vatNumber='+vatNumber+'&token='+authenticationToken;
             request.setEndpoint(endpoint);
             request.setMethod('GET');
             HttpResponse response=null;
