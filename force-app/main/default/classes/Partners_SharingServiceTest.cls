@@ -26,33 +26,12 @@ public with sharing class Partners_SharingServiceTest {
 
     static testmethod void test2(){
         Id userId = [select OwnerId from Opportunity limit 1].OwnerId;
-        User partnerUser = [select Contact.AccountId, ManagerId from User where Id =: userId];
-        Commission_Commitment__c commitment = new Commission_Commitment__c(Name = 'test');
-        commitment.Pulse_Account_Id__c = '12345';
-        commitment.Partner_Company__c = partnerUser.Contact.AccountId;
-        commitment.External_Source_ID__c = '879';
-        commitment.Report_Id__c = '12';
-        Commission_Collection__c collection = new Commission_Collection__c(Name = 'test');
-        collection.Pulse_Account_Id__c = '12345';
-        collection.Commitment_Big_Brain_Id__c = '879';
-        collection.Report_Id__c = '12';
-        collection.Partner_Company__c = partnerUser.Contact.AccountId;
-        Payment_Request__c pr1 = new Payment_Request__c(
-            Month__c = Date.today().toStartOfMonth(), 
-            Channel_Partner__c = partnerUser.Contact.AccountId, 
-            CPM__c = partnerUser.ManagerId, 
-            Monthly_Commission_Amount__c = 100, 
-            Yearly_Commission_Amount__c = 200, 
-            Two_Yearly_Commission_Amount__c = 300,
-            MDF_Amount__c = 100,
-            Spiff_Amount__c = 50,
-            Status__c = 'Draft',
-            CurrencyIsoCode = 'USD'
-        );        
-        insert commitment;
-        insert collection; 
-        insert pr1;
+        List<User> uList = [select Id, Contact.AccountId from User where Id =: userId];
+        uList.get(0).Eligible_for_Partners_Commission__c = true;
+        Set<Id> partnerCompsIds = new Set<Id>{uList.get(0).Contact.AccountId};
+        Partners_SharingService.addToEligibleCommissionGroup(uList, partnerCompsIds);
     }
+
     static testmethod void checkAccountOwnerBecamePartner(){
         Account acc = [select Id, OwnerId from Account where RecordType.DeveloperName = 'Monday_Account' limit 1];
         User u = new User(Id = acc.OwnerId);

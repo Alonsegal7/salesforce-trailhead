@@ -1,5 +1,9 @@
 trigger onUserUpdate on User (after insert, after update, after delete, before insert, before update, before delete) {
+
     if(Trigger.isAfter){
+        if(Trigger.isInsert || Trigger.isUpdate){
+            Partners_SharingService.handleEligibleUsersUserRole(Trigger.new, Trigger.oldMap);
+        }
         if (Trigger.isDelete) {
             CalloutHandler.HandleCallout (trigger.old,'Delete',null);
         }
@@ -7,12 +11,10 @@ trigger onUserUpdate on User (after insert, after update, after delete, before i
         if (trigger.isInsert) {
             CalloutHandler.HandleCallout (trigger.new,'Insert',null);
             User_CreateLeadsCap.User_CreateLeadsCap(trigger.new, trigger.oldMap);
-            Partners_SharingService.addToEligibleCommissionGroup(trigger.new, trigger.oldMap);
         }
 
         if (trigger.IsUpdate) {
             CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
-            Partners_SharingService.addToEligibleCommissionGroup(trigger.new, trigger.oldMap);
             if(Account_UpdateCsmManager.firstRun){
                 Account_UpdateCsmManager.firstRun = false;
                 Account_UpdateCsmManager updateCsmManagerHandler = new Account_UpdateCsmManager();
@@ -21,10 +23,5 @@ trigger onUserUpdate on User (after insert, after update, after delete, before i
             }
         }
     }
-    /*if(Trigger.isBefore){
-        if (trigger.isInsert||trigger.IsUpdate) {
-            User_CreateLeadsCap.User_CreateLeadsCap(trigger.new, trigger.oldMap);
-        }
-
-    }*/
+    
 }

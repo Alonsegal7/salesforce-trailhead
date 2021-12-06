@@ -3,7 +3,4 @@ trigger PaymentRequestTrigger on Payment_Request__c (before insert, before updat
         PaymentRequest_InitService initService = new PaymentRequest_InitService();
         initService.updateStatusPicklist(Trigger.new, Trigger.oldMap);
     }
-    if(Trigger.isAfter && (Trigger.isInsert || Trigger.isUpdate)){
-        Partners_SharingService.createPaymentRequestShares(Trigger.new, Trigger.oldMap);
-    }
 }

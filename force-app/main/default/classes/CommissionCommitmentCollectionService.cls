@@ -4,8 +4,9 @@ public without sharing class CommissionCommitmentCollectionService {
         List<sObject> relevantObjs = new List<sObject>();
         Set<Id> accountIds = new Set<Id>();
         for(sObject obj: sobjectList){
-            if(oldSobjectMap == null || obj.get('Partner_Company__c') != oldSobjectMap.get(String.valueOf(obj.get('Id'))).get('Partner_Company__c')){
+            if(oldSobjectMap == null || obj.get('Manual_Trigger__c') == 'UpdateOwnerToManager' || obj.get('Partner_Company__c') != oldSobjectMap.get(String.valueOf(obj.get('Id'))).get('Partner_Company__c')){
                 if(obj.get('Partner_Company__c') == null) continue;
+                obj.put('Manual_Trigger__c', null);
                 relevantObjs.add(obj);
                 accountIds.add(String.valueOf(obj.get('Partner_Company__c'))); 
             }

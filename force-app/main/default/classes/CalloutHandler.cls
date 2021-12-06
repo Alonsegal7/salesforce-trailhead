@@ -81,6 +81,9 @@ public class CalloutHandler
         if (fsname!=null && sotype.equalsignorecase('Contract')) fs = Schema.SObjectType.Contract.fieldSets.getMap().get(fsname);
         if (fsname!=null && sotype.equalsignorecase('Contract_Event__c')) fs = Schema.SObjectType.Contract_Event__c.fieldSets.getMap().get(fsname);
         if (fsname!=null && sotype.equalsignorecase('Company_Domain__c')) fs = Schema.SObjectType.Company_Domain__c.fieldSets.getMap().get(fsname);
+        if (fsname!=null && sotype.equalsignorecase('Commission_Collection__c')) fs = Schema.SObjectType.Company_Domain__c.fieldSets.getMap().get(fsname);
+        if (fsname!=null && sotype.equalsignorecase('Commission_Commitment__c')) fs = Schema.SObjectType.Company_Domain__c.fieldSets.getMap().get(fsname);
+        if (fsname!=null && sotype.equalsignorecase('Commission_Report__c')) fs = Schema.SObjectType.Company_Domain__c.fieldSets.getMap().get(fsname);
 
         system.debug('TESTING fs is '+fs);
         if (fs != null){

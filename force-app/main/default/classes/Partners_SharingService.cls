@@ -2,32 +2,103 @@ public without sharing class Partners_SharingService {
     
     public static Id partnerOppRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
     public static Boolean stopAddToEligibleCommissionGroup = false;
+    public static Id allEligibleGroupId;
 
-    public static void addToEligibleCommissionGroup(List<User> newUsers, Map<Id,User> oldUsersMap){
+    public static void handleEligibleUsersUserRole(List<User> newUsers, Map<Id,User> oldUsersMap){
         if(stopAddToEligibleCommissionGroup) return;
         Set<Id> eligibleUsersIds = new Set<Id>();
         for(User userRec: newUsers){
-            if(userRec.IsActive && 
+            if(userRec.IsActive && userRec.ContactId != null &&
                 ((userRec.Eligible_for_Partners_Commission__c && oldUsersMap == null) ||
                 (oldUsersMap != null && userRec.Eligible_for_Partners_Commission__c != oldUsersMap.get(userRec.Id).Eligible_for_Partners_Commission__c))){ //new eligible user or updated to be eligible for commission
-                eligibleUsersIds.add(userRec.Id);
+                    eligibleUsersIds.add(userRec.Id);
             }
         }
         if(eligibleUsersIds.isEmpty()) return;
-        List<User> eligibleUsersList = [select Contact.AccountId, Contact.Account.Name, Eligible_for_Partners_Commission__c from User where Id in: eligibleUsersIds];
+
+        List<User> eligibleUsersList = [select Contact.AccountId, Contact.Account.Name, Eligible_for_Partners_Commission__c, UserRole.DeveloperName from User where Id in: eligibleUsersIds];
         Set<Id> partnerCompsIds = new Set<Id>();
         for(User userRec: eligibleUsersList){
             partnerCompsIds.add(userRec.Contact.AccountId);
         }
+
+        Id partnerCompId;
+        Map<Id,Map<String,Id>> partnerCompToRolesMap = getPartnerCompToRoleMap(partnerCompsIds);
+        List<User> usersWithPublicGroups = new List<User>();
+        Set<Id> partnerCompsIds_EFC = new Set<Id>();
+        Set<Id> rolesToAddToAll = new Set<Id>();
+
+        for(User userRec: eligibleUsersList){ //go over users and check if the partner comp has a manager group
+            partnerCompId = userRec.Contact.AccountId;
+            if(partnerCompId == null) continue;
+            if(userRec.Eligible_for_Partners_Commission__c){
+                if(partnerCompToRolesMap.containsKey(partnerCompId) && partnerCompToRolesMap.get(partnerCompId).containsKey('Manager')){
+                    userRec.UserRoleId = partnerCompToRolesMap.get(partnerCompId).get('Manager');
+                    rolesToAddToAll.add(userRec.UserRoleId); //add role to All_Eligible_for_Commission_Partners group
+                } else { //users of the 29 partner comps that have only one role of user (no manager role) so we need to create a public group for them EFC_AccountId
+                    usersWithPublicGroups.add(userRec);
+                    partnerCompsIds_EFC.add(partnerCompId);
+                }
+            } else {
+                if(partnerCompToRolesMap.containsKey(partnerCompId) && partnerCompToRolesMap.get(partnerCompId).containsKey('User')){
+                    userRec.UserRoleId = partnerCompToRolesMap.get(partnerCompId).get('User');
+                }
+            }
+        }
+        Database.update(eligibleUsersList);
+        if(!usersWithPublicGroups.isEmpty()){
+            addToEligibleCommissionGroup(usersWithPublicGroups, partnerCompsIds_EFC);
+        }
+        if(!rolesToAddToAll.isEmpty()){
+            Map<Id, Group> groupsMap = new Map<Id, Group>([select Id, DeveloperName, RelatedId, Type from Group where RelatedId in: rolesToAddToAll and Type = 'Role' and (DeveloperName like '%PartnerUser' or DeveloperName like '%PartnerManager')]);
+            if(allEligibleGroupId == null) allEligibleGroupId = [select Id from Group where DeveloperName = 'All_Eligible_for_Commission_Partners' limit 1].Id;
+            for(GroupMember gm: [select Id, UserOrGroupId from GroupMember where GroupId =: allEligibleGroupId and UserOrGroupId in: groupsMap.keySet()]){
+                groupsMap.remove(gm.UserOrGroupId);
+            }
+            if(groupsMap.isEmpty()) return;
+            List<GroupMember> newGroupMembersList =new List<GroupMember>(); 
+            for(Group gr: groupsMap.values()){
+                GroupMember newGm = new GroupMember(); 
+                newGm.GroupId = allEligibleGroupId;
+                newGm.UserOrGroupId = gr.Id;
+                newGroupMembersList.add(newGm);
+            }
+            Database.insert(newGroupMembersList);
+        }
+    }
+
+    private static Map<Id,Map<String,Id>> getPartnerCompToRoleMap(Set<Id> partnerCompsIds){
+        Map<Id,Map<String,Id>> res = new Map<Id,Map<String,Id>>();
+        //get user roles by Portal Account ids
+        List<UserRole> userRolesList = [select Id, PortalAccountId, DeveloperName from UserRole where PortalAccountId in: partnerCompsIds and PortalType = 'Partner'];
+        system.debug('userRolesList: '+ userRolesList);
+        Id partnerCompId;
+        String key;
+        for(UserRole uRole: userRolesList){ //for every group (can be max 2 per partner comp - user and manager) we will create account share
+            if(uRole.DeveloperName.endsWith('PartnerManager')) key = 'Manager';
+            else key = 'User';
+            partnerCompId = uRole.PortalAccountId;
+            if(res.containsKey(partnerCompId)){
+                res.get(partnerCompId).put(key, uRole.Id);
+            } else {
+                Map<String,Id> temp = new Map<String,Id>();
+                temp.put(key,uRole.Id);
+                res.put(partnerCompId, temp);
+            }
+        }
+        system.debug('getPartnerCompToRoleMap res: '+ res);
+        return res;
+    }
+
+    public static void addToEligibleCommissionGroup(List<User> usersList, Set<Id> partnerCompsIds){
         Set<Id> usersIdsToRemove = new Set<Id>();
         Set<Id> groupIdsToRemove = new Set<Id>();
-
         Map<Id,Id> partnerCompToGroupsMap = getPartnerCompToEligibleGroupMap(partnerCompsIds);
         List<GroupMember> newGroupMembersList =new List<GroupMember>(); 
         List<User> usersToCreateNewGroupsFor = new List<User>();
         Map<Id, Group> partnerIdToNewGroups = new Map<Id, Group>();
 
-        for(User userRec: eligibleUsersList){
+        for(User userRec: usersList){
             if(partnerCompToGroupsMap.containsKey(userRec.Contact.AccountId)){ //group already exists
                 if(userRec.Eligible_for_Partners_Commission__c){
                     GroupMember gmExistingGroup = new GroupMember(); 
@@ -53,7 +124,7 @@ public without sharing class Partners_SharingService {
         }
         if(!partnerIdToNewGroups.isEmpty()){
             Database.insert(partnerIdToNewGroups.values());
-            Id allEligibleGroupId = [select Id from Group where DeveloperName = 'All_Eligible_for_Commission_Partners' limit 1].Id;
+            if(allEligibleGroupId == null) allEligibleGroupId = [select Id from Group where DeveloperName = 'All_Eligible_for_Commission_Partners' limit 1].Id;
             for(Group groupRec: partnerIdToNewGroups.values()){
                 GroupMember gmGeneralGroup = new GroupMember(); 
                 gmGeneralGroup.GroupId = allEligibleGroupId;
@@ -68,105 +139,6 @@ public without sharing class Partners_SharingService {
             }
         }
         if(!newGroupMembersList.isEmpty()) Database.insert(newGroupMembersList);
-    }
-    
-    public static void createPaymentRequestShares(List<Payment_Request__c> newPaymentRequestsList, Map<Id,Payment_Request__c> oldPaymentRequestsMap){
-        Set<Id> partnerCompsIds = new Set<Id>();
-        List<Payment_Request__c> paymentReqsToCreateShares = new List<Payment_Request__c>();
-
-        //go over payment requests and collect payment request that need to create shares for and payment requests that their shares needs to be deleted
-        for(Payment_Request__c paymentReq :newPaymentRequestsList){
-            if(oldPaymentRequestsMap == null || paymentReq.Channel_Partner__c != oldPaymentRequestsMap.get(paymentReq.Id).Channel_Partner__c){
-                if(paymentReq.Channel_Partner__c != null){ //new partner company is assigned to the payment request - need to create new shares
-                    partnerCompsIds.add(paymentReq.Channel_Partner__c);
-                    paymentReqsToCreateShares.add(paymentReq);
-                }
-            }
-        }
-        if(partnerCompsIds.isEmpty()) return;
-        Map<Id,Id> partnerCompToGroupsMap = getPartnerCompToEligibleGroupMap(partnerCompsIds);
-
-        //create payment request shares
-        if(!paymentReqsToCreateShares.isEmpty()){
-            List<Payment_Request__Share> paymentReqSharesToCreate = new List<Payment_Request__Share>();
-            for(Payment_Request__c paymentReq : paymentReqsToCreateShares){
-                if(!partnerCompToGroupsMap.containsKey(paymentReq.Channel_Partner__c)) continue;
-                Id groupId = partnerCompToGroupsMap.get(paymentReq.Channel_Partner__c);
-                Payment_Request__Share newPaymentReqShare = new Payment_Request__Share();
-                newPaymentReqShare.ParentID = paymentReq.Id;
-                newPaymentReqShare.AccessLevel = 'Edit';
-                newPaymentReqShare.UserOrGroupId = groupId;
-                paymentReqSharesToCreate.add(newPaymentReqShare);
-            }
-            if(paymentReqSharesToCreate.isEmpty()) return;
-            createShares(paymentReqSharesToCreate,'Payment_Request__Share');
-        }  
-    }
-
-    public static void createCollectionsShares(List<Commission_Collection__c> newCollectionsList, Map<Id,Commission_Collection__c> oldCollectionsMap){
-        Set<Id> partnerCompsIds = new Set<Id>();
-        List<Commission_Collection__c> collectionsToCreateShares = new List<Commission_Collection__c>();
-
-        //go over collections and collect collection that need to create shares for and collections that their shares needs to be deleted
-        for(Commission_Collection__c collection :newCollectionsList){
-            if(oldCollectionsMap == null || collection.Partner_Company__c != oldCollectionsMap.get(collection.Id).Partner_Company__c){
-                if(collection.Partner_Company__c != null){ //new partner company is assigned to the collection - need to create new shares
-                    partnerCompsIds.add(collection.Partner_Company__c);
-                    collectionsToCreateShares.add(collection);
-                }
-            }
-        }
-        if(partnerCompsIds.isEmpty()) return;
-        Map<Id,Id> partnerCompToGroupsMap = getPartnerCompToEligibleGroupMap(partnerCompsIds);
-
-        //create collection shares
-        if(!collectionsToCreateShares.isEmpty()){
-            List<Commission_Collection__Share> collectionSharesToCreate = new List<Commission_Collection__Share>();
-            for(Commission_Collection__c collection : collectionsToCreateShares){
-                if(!partnerCompToGroupsMap.containsKey(collection.Partner_Company__c)) continue;
-                Id groupId = partnerCompToGroupsMap.get(collection.Partner_Company__c);
-                Commission_Collection__Share newcollectionShare = new Commission_Collection__Share();
-                newcollectionShare.ParentID = collection.Id;
-                newcollectionShare.AccessLevel = 'Read';
-                newcollectionShare.UserOrGroupId = groupId;
-                collectionSharesToCreate.add(newcollectionShare);
-            }
-            if(collectionSharesToCreate.isEmpty()) return;
-            createShares(collectionSharesToCreate,'Commission_Collection__Share');
-        }  
-    }
-
-    public static void createCommitmentsShares(List<Commission_Commitment__c> newCommitmentsList, Map<Id,Commission_Commitment__c> oldCommitmentsMap){
-        Set<Id> partnerCompsIds = new Set<Id>();
-        List<Commission_Commitment__c> commitmentsToCreateShares = new List<Commission_Commitment__c>();
-
-        //go over commitments and collect commitment that need to create shares for and commitments that their shares needs to be deleted
-        for(Commission_Commitment__c commitment :newCommitmentsList){
-            if(oldCommitmentsMap == null || commitment.Partner_Company__c != oldCommitmentsMap.get(commitment.Id).Partner_Company__c){
-                if(commitment.Partner_Company__c != null){ //new partner company is assigned to the commitment - need to create new shares
-                    partnerCompsIds.add(commitment.Partner_Company__c);
-                    commitmentsToCreateShares.add(commitment);
-                }
-            }
-        }
-        if(partnerCompsIds.isEmpty()) return;
-        Map<Id,Id> partnerCompToGroupsMap = getPartnerCompToEligibleGroupMap(partnerCompsIds);
-
-        //create commitment shares
-        if(!commitmentsToCreateShares.isEmpty()){
-            List<Commission_Commitment__Share> commitmentSharesToCreate = new List<Commission_Commitment__Share>();
-            for(Commission_Commitment__c commitment : commitmentsToCreateShares){
-                if(!partnerCompToGroupsMap.containsKey(commitment.Partner_Company__c)) continue;
-                Id groupId = partnerCompToGroupsMap.get(commitment.Partner_Company__c);
-                Commission_Commitment__Share newcommitmentShare = new Commission_Commitment__Share();
-                newcommitmentShare.ParentID = commitment.Id;
-                newcommitmentShare.AccessLevel = 'Read';
-                newcommitmentShare.UserOrGroupId = groupId;
-                commitmentSharesToCreate.add(newcommitmentShare);
-            }
-            if(commitmentSharesToCreate.isEmpty()) return;
-            createShares(commitmentSharesToCreate,'Commission_Commitment__Share');
-        }  
     }
 
     public static void newPartnerOppsSharingValidation(List<Opportunity> newOppsList){

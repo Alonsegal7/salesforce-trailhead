@@ -54,7 +54,7 @@ public class CreatePartnerUserCtrl {
 				Partners_SharingService.stopAddToEligibleCommissionGroup = true;
 				List<User> newUserRecList = createUsers(new Set<Id>{contactId});
 				Partners_SharingService.stopAddToEligibleCommissionGroup = false;
-				Partners_SharingService.addToEligibleCommissionGroup(newUserRecList, null);
+				Partners_SharingService.handleEligibleUsersUserRole(newUserRecList, null);
 				updateUserIdsOnContacts(newUserRecList);
 				return new User(Id = newUserRecList.get(0).Id, Username = newUserRecList.get(0).Username);
 			}
