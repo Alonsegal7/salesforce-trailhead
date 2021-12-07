@@ -22,7 +22,7 @@ public without sharing class Batch_UpdateHiddenCollections implements Database.B
             for(Commission_Report__c report: scope){
                 reportNumberToReportIdMap.put(report.Big_Brain_Id__c, report.Id);
             }
-            List<Commission_Collection__c> collections = [select Id, External_Source_ID__c, Commission_Report__r.Id, Monday_Account__c, Report_Id__c, Collection_Happened_At__c, Collection_Amount_USD__c, is_Fix__c from Commission_Collection__c where report_id__c IN: reportNumberToReportIdMap.keySet()];
+            List<Commission_Collection__c> collections = [select Id, External_Source_ID__c, Commission_Report__r.Id, Monday_Account__c, Report_Id__c, Collection_Happened_At__c, Commission_Amount_USD__c, is_Fix__c from Commission_Collection__c where report_id__c IN: reportNumberToReportIdMap.keySet()];
             if(collections.isEmpty()) return;
 
             Set<Id> collectionsToSetHidden = new Set<Id>();
@@ -32,7 +32,7 @@ public without sharing class Batch_UpdateHiddenCollections implements Database.B
                 String key = getCollectionUniqueKey(collection);
                 if(fixCollectionsMap.containsKey(key)){
                     Commission_Collection__c existingCollection = fixCollectionsMap.get(key);
-                    if(existingCollection.Collection_Amount_USD__c + collection.Collection_Amount_USD__c == 0 && existingCollection.is_Fix__c != collection.is_Fix__c){
+                    if(existingCollection.Commission_Amount_USD__c + collection.Commission_Amount_USD__c == 0 && existingCollection.is_Fix__c != collection.is_Fix__c){
                         collection.Is_Hidden__c = true;
                         fixCollectionsMap.get(key).Is_Hidden__c = true;
                     }
@@ -50,7 +50,7 @@ public without sharing class Batch_UpdateHiddenCollections implements Database.B
     }
 
     private static String getCollectionUniqueKey(Commission_Collection__c collection){
-        Decimal absoluteAmount = collection.Collection_Amount_USD__c; //Total_Commission_USD__c
+        Decimal absoluteAmount = collection.Commission_Amount_USD__c;
         if(absoluteAmount < 0) absoluteAmount = -absoluteAmount;
         return collection.Commission_Report__r.Id + String.valueOf(collection.Monday_Account__c) + String.valueOf(collection.Collection_Happened_At__c) + String.valueOf(absoluteAmount) + collection.External_Source_ID__c;
     }
