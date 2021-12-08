@@ -155,9 +155,9 @@ public without sharing class Partner_PaymentRequestService {
             User runningUser = [select ManagerId, Contact.AccountId, Contact.Account.Name, Profile.Name from User where Id =: UserInfo.getUserId() limit 1];
             String partnerForTest = [select Value__c from Environment_Variable__mdt where DeveloperName = 'Partner_Commission_Payment_Req_Test_Acc' limit 1].Value__c;
             Id partnerCompanyId = partnerForTest;
-            if(runningUser.Profile.Name != 'System Administrator') partnerCompanyId = runningUser.Contact.AccountId;
             Boolean isPartnerUser = false;
-            if(runningUser.Profile.Name != 'System Administrator') isPartnerUser = true;
+            if(runningUser.Profile.Name != 'System Administrator' && runningUser.Profile.Name != 'Channel Managers') partnerCompanyId = runningUser.Contact.AccountId;
+            else if(runningUser.Profile.Name == 'Partner Community Custom') isPartnerUser = true;
             
             Date monthForQuery = month;
             if(paymentRequestId == null){
@@ -165,7 +165,9 @@ public without sharing class Partner_PaymentRequestService {
                 List<Payment_Request__c> existingPaymentRequest = [select Id from Payment_Request__c where Month__c =: month.toStartOfMonth() and Channel_Partner__c =: partnerCompanyId order by CreatedDate DESC];
                 if(existingPaymentRequest != null && !existingPaymentRequest.isEmpty()) return new resWrapper(existingPaymentRequest.get(0).Id, 'Payment Request already exists for ' + month.month() +'/'+month.year()+'! In case it was rejected, please follow to link to the exising payment request and resubmit it according to the reject notes.', isPartnerUser);
             } else {
-                monthForQuery = [select Month__c from Payment_Request__c where Id =: paymentRequestId].Month__c;
+                Payment_Request__c currPaymentReq = [select Month__c, Channel_Partner__c from Payment_Request__c where Id =: paymentRequestId];
+                monthForQuery = currPaymentReq.Month__c;
+                partnerCompanyId = currPaymentReq.Channel_Partner__c;
             }
             
             //get inbound outbound percent
