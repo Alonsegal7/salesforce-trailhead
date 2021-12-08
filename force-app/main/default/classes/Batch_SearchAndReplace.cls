@@ -7,6 +7,7 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
     private Set<Id> idsToQuery;
     private String sobjectName;
     public List<String> updatedIdsList = new List<String>();
+    public List<String> emailRecepients = new List<String>{'kseniasm@monday.com'};
 
   
     public Batch_SearchAndReplace(String q, String f, String v, String textForEmail){
@@ -14,6 +15,7 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
        this.field = f;
        this.value = v;
        this.textForEmail = textForEmail;
+       if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
     }
 
     public Batch_SearchAndReplace(Set<Id> idsToQuery, String sobjectName, String f, String v, String textForEmail){
@@ -22,6 +24,7 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
         this.field = f;
         this.value = v;
         this.textForEmail = textForEmail;
+        if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
      }
   
     public Database.QueryLocator start(Database.BatchableContext BC){
@@ -29,7 +32,7 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
             if(query == null) query = 'select Id from ' + sobjectName + ' where Id in: idsToQuery';
             return Database.getQueryLocator(query);
         }catch(Exception e){
-            Utilities.sendEmail('Error in Apex Job Batch_SearchAndReplace: ', e.getMessage() + '\n' + e.getStackTraceString(), new List<String>{UserInfo.getUserEmail(),'kseniasm@monday.com'}); 
+            Utilities.sendEmail('Error in Apex Job Batch_SearchAndReplace: ', e.getMessage() + '\n' + e.getStackTraceString(), emailRecepients); 
             return null;
         }
     }
@@ -42,11 +45,11 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
             }
             Database.update(scope);
         }catch(Exception e){
-            Utilities.sendEmail('Error in Apex Job Batch_SearchAndReplace: ', e.getMessage() + '\n' + e.getStackTraceString(), new List<String>{UserInfo.getUserEmail(),'kseniasm@monday.com'}); 
+            Utilities.sendEmail('Error in Apex Job Batch_SearchAndReplace: ', e.getMessage() + '\n' + e.getStackTraceString(), emailRecepients); 
         }
     }
   
     public void finish(Database.BatchableContext BC){
-        Utilities.sendEmail(textForEmail+' is finished!', 'List of Ids updated: ' + updatedIdsList.toString(), new List<String>{UserInfo.getUserEmail(),'kseniasm@monday.com'}); 
+        Utilities.sendEmail(textForEmail+' is finished!', 'List of Ids updated: ' + updatedIdsList.toString(), emailRecepients); 
     }
  }
