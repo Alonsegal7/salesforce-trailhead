@@ -67,7 +67,7 @@ public without sharing class Partners_SharingService {
         }
     }
 
-    private static Map<Id,Map<String,Id>> getPartnerCompToRoleMap(Set<Id> partnerCompsIds){
+    public static Map<Id,Map<String,Id>> getPartnerCompToRoleMap(Set<Id> partnerCompsIds){
         Map<Id,Map<String,Id>> res = new Map<Id,Map<String,Id>>();
         //get user roles by Portal Account ids
         List<UserRole> userRolesList = [select Id, PortalAccountId, DeveloperName from UserRole where PortalAccountId in: partnerCompsIds and PortalType = 'Partner'];

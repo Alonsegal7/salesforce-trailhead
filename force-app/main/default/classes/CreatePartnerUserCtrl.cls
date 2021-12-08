@@ -97,11 +97,16 @@ public class CreatePartnerUserCtrl {
 			for(Create_Community_User_Mapping__mdt cmt: mappingCmtList){
 				if(cmt.Contact_Field_API_Name__c != null && cmt.Contact_Field_API_Name__c != '') contactFieldSet.add(cmt.Contact_Field_API_Name__c);
 			}
-			String dynamicQuery = 'select Id, Account.Name, Account.IsPartner, OwnerId, Owner.Email, Send_Welcome_Email__c';
+			String dynamicQuery = 'select Id, AccountId, Account.Name, Account.IsPartner, OwnerId, Owner.Email, Send_Welcome_Email__c';
 			if(!contactFieldSet.isEmpty()) dynamicQuery += ', ' + String.join(new List<String>(contactFieldSet), ',');
 			dynamicQuery += ' from Contact where Id IN: contactIds';
 			List<Contact> contactRecList = Database.query(dynamicQuery);
 			Map<Id,Contact> contactRecMap = new Map<Id,Contact>(contactRecList);
+			Set<Id> accountIds = new Set<Id>();
+			for(Contact contactRec: contactRecList){
+				accountIds.add(contactRec.AccountId);
+			}
+			Map<Id,Map<String,Id>> accountRolesMap = Partners_SharingService.getPartnerCompToRoleMap(accountIds);
 			for(Contact contactRec: contactRecList){
 				User newUserRec = new User();
 				for(Create_Community_User_Mapping__mdt cmt: mappingCmtList){
@@ -127,6 +132,8 @@ public class CreatePartnerUserCtrl {
 				newUsersList.add(newUserRec);
 				if(contactRec.Send_Welcome_Email__c) contactsToSendWelcomeEmail.add(contactRec);
 				if(!managersUsersMap.containsKey(newUserRec.ManagerId)) managersUsersMap.put(newUserRec.ManagerId, contactRec.Owner.Email);
+				if(accountRolesMap.containsKey(contactRec.AccountId) && accountRolesMap.get(contactRec.AccountId).containsKey('Manager')) newUserRec.IsPrmSuperUser = true;
+				else newUserRec.IsPrmSuperUser = false;
 			}
 			if(!newUsersList.isEmpty()) {
 				Database.insert(newUsersList);
