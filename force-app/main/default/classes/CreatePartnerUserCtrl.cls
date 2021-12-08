@@ -68,7 +68,7 @@ public class CreatePartnerUserCtrl {
 		for(User newUserRec: newUserRecList){
 			contactsToUpdateUserIdsList.add(new Contact(Id = newUserRec.ContactId, Community_User__c = newUserRec.Id));
 		}
-		if(!contactsToUpdateUserIdsList.isEmpty()) System.enqueueJob(new updateContactsQueueable(contactsToUpdateUserIdsList));
+		if(!contactsToUpdateUserIdsList.isEmpty()) System.enqueueJob(new updatesObjectsQueueable(contactsToUpdateUserIdsList));
 	}
 	
 	public static void createUsersForApprovedContacts(List<Contact> newContactsList, Map<Id, Contact> oldContactsMap){
@@ -176,6 +176,24 @@ public class CreatePartnerUserCtrl {
 		}
 	}
 
+	public static void updateEligibleForCommissionOnUser(List<Contact> newContactsList, Map<Id, Contact> oldContactsMap){
+		Set<Id> usersIds = new Set<Id>();
+		for(Contact con: newContactsList){
+			if(con.Eligible_for_Partners_Commission__c != oldContactsMap.get(con.Id).Eligible_for_Partners_Commission__c && con.Community_User__c != null){
+				usersIds.add(con.Community_User__c);
+			}
+		}
+		if(!usersIds.isEmpty()) {
+			firstRun = false;
+			List<Messaging.SingleEmailMessage> allEmailsToSend = new List<Messaging.SingleEmailMessage>();
+			List<User> usersList = [select Id, Contact.Eligible_for_Partners_Commission__c from User where Id IN: usersIds];
+			for(User userRec: usersList){
+				userRec.Eligible_for_Partners_Commission__c = userRec.Contact.Eligible_for_Partners_Commission__c;
+			}
+			if(!Test.isRunningTest() && !usersList.isEmpty()) System.enqueueJob(new updatesObjectsQueueable(usersList));
+		}
+	}
+
 	public static void sendEmails(List<User> newUsersList, Map<Id,String> managersUsersMap, Map<Id,Contact> contactRecMap){
 		Map<String,Id> IdsForEmailsMap = getMetadataForEmails();
 		List<Messaging.SingleEmailMessage> allEmailsToSend = new List<Messaging.SingleEmailMessage>();
@@ -236,13 +254,13 @@ public class CreatePartnerUserCtrl {
 		Approval.ProcessResult result = Approval.process(req);  
 	} 
 
-	private class updateContactsQueueable implements System.Queueable {
-        private List<Contact> contactsToUpdateList; 
-        public updateContactsQueueable(List<Contact> contactsToUpdateList) {
-            this.contactsToUpdateList = contactsToUpdateList;
+	private class updatesObjectsQueueable implements System.Queueable {
+        private List<sObject> sobjectsToUpdate; 
+        public updatesObjectsQueueable(List<sObject> sobjectsToUpdate) {
+            this.sobjectsToUpdate = sobjectsToUpdate;
         }
         public void execute(System.QueueableContext ctx) {
-            Database.update(contactsToUpdateList);
+            Database.update(sobjectsToUpdate);
         }
     }
 }
