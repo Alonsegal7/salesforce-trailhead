@@ -148,7 +148,9 @@ public with sharing class ContractEventToContract {
             Period__c=conEvent.Period__c,
             //Remove after fully go live (We keep this for non pilot users)
             Seats__c =conEvent.Quantity__c,
-            Auto_Renewal__c=conEvent.Auto_Renewal__c
+            Auto_Renewal__c=conEvent.Auto_Renewal__c,
+            Notes_for_renewal__c=conEvent.Notes_for_renewal__c,
+            Discount_on_renewal__c=conEvent.Discount_on_renewal__c
         );
         return contract;
     }
