@@ -81,6 +81,7 @@ export default class SubmitPaymentRequest extends LightningElement {
     cancelBtnLabel = 'Cancel';
     submittedScreenGifIcon = submittedScreenGif;
     currencyValue = 'USD';
+    modalTitle;
     
     //sort & filter variables
     defaultSortDirection = 'asc';
@@ -113,6 +114,7 @@ export default class SubmitPaymentRequest extends LightningElement {
             this.showViewBreakdownBtn = true;
             var statusValue = getFieldValue(result.data, PAYMENT_REQ_STATUS_FIELD);
             this.selectedMonth = getFieldValue(result.data, PAYMENT_REQ_MONTH_FIELD);
+            this.monthValue = this.selectedMonth;
             this.mdfAmount = getFieldValue(result.data, PAYMENT_REQ_MDF_FIELD);
             this.spiffAmount = getFieldValue(result.data, PAYMENT_REQ_SPIFF_FIELD);
             this.cardTitle = 'Payment Request Status - ' + statusValue;
@@ -161,11 +163,13 @@ export default class SubmitPaymentRequest extends LightningElement {
 
     onViewBreakdownClick(){
         this.viewBreakdownMode = true;
+        this.modalTitle = 'View Payment Request Breakdown';
         this.showModal = true;
         this.loadDataScreen();
     }
 
     openModal(){
+        this.modalTitle = 'Submit Payment Request';
         this.showModal = true;
         if(this.runningFromHomepage) {
             this.loadMonthsPicklist();
