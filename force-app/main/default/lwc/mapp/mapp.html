@@ -1,0 +1,27 @@
+<template>
+    <div class="wrap-all">
+        <article class="slds-card clear dashboard-card">
+            <h3 class="card-title">% MAPP (Seats)</h3>
+            <div class="card-body">
+                <div class="bar-container">
+                    <div class="bar-outer mapp">
+                        <div class="bar-section silver">
+                            &nbsp;
+                        </div>
+                        <div class="bar-section gold">
+                            <div class="bar-label">60%</div>
+                        </div>
+                        <div class="bar-section platinum">
+                            <div class="bar-label">70%</div>
+                        </div>
+                        <!-- Dynamic Marker -->
+                        <div class="actual-label-box" style={mapsPositionStyle}>
+                            <div class="actual-label-inner">{mapsLabel}</div>
+                        </div>
+                        <!-- .Dynamic Marker -->
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</template>

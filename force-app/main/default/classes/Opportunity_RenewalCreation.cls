@@ -85,6 +85,7 @@ public without sharing class Opportunity_RenewalCreation {
             QuoteLineItem getQuoteInfo = [SELECT Id, QuoteId, Quote.Pricing_Version__c, Quote.Payment_Terms__c FROM QuoteLineItem WHERE Id =: qli];
             if(getQuoteInfo != null){
                 paymentMethod = 'Wire';
+                //paymentTerms = getQuoteInfo.Quote.Payment_Terms__c;
                 pricingVersion = String.valueof(getQuoteInfo.Quote.Pricing_Version__c);
             }
         }
@@ -93,6 +94,7 @@ public without sharing class Opportunity_RenewalCreation {
             Subscription__c getSubsInfo = [SELECT Id, Pricing_Version__c, Payment_Method__c FROM Subscription__c WHERE Id =: subs];
             if(getSubsInfo != null){
                 paymentMethod = getSubsInfo.Payment_Method__c;
+                //paymentTerms = '';
                 pricingVersion = String.valueof(Integer.valueOf(getSubsInfo.Pricing_Version__c));
             }
         }

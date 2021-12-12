@@ -1,0 +1,92 @@
+.wrap-all{
+    position: relative;
+}
+h3{
+    font-size: 1.25rem;
+    display: block;
+    margin-bottom: 8px;
+}
+.clear:before, .clear:after{
+    display: table;
+    content: '';
+}
+.clear:after{
+    clear: both;
+}
+.dashboard-card{
+    border: none;
+    display: block;
+    padding: 10px 16px 16px;
+}
+.badge-container{
+    position: absolute;
+    right: 16px;
+    width: 164px;
+    z-index: 9;
+    top: 10px;
+}
+.gague-container{
+    min-height: 160px;
+    margin-top: 38px;
+}
+.gague-label{
+    margin-top: -124px;
+    text-align: center;
+}
+.gague-label span.main-text{
+    color: #000;
+    display: block;
+    font-size: 24px;
+}
+.gague-label span{
+    color: #959595;
+    font-size: 16px;
+}
+.gague-label span.silver-label{
+    color: #e2e3eb;
+}
+.gague-label span.gold-label{
+    color: #ffd02a;
+}
+.gague-label span.platinum-label{
+    color: #97aab9;
+}
+.actual-label-box {
+    background-image : url('https://monday--partial--c.visualforce.com/resource/DashboardTierStatus/ArrowMarker.png');
+    height: 44px;
+    background-position: bottom center;
+    position: relative;
+    top: -44px;
+    background-repeat: no-repeat;
+    background-size: 44%;
+    display: inline-block;
+    width: 52px;
+}
+    .actual-label-box .actual-label-inner {
+        background-color: #313237;
+        border-radius: 0.25rem;
+        color: #fff;
+        display: inline-block;
+        padding: 6px 10px;
+        box-shadow: 0px 0px 2px 0px #000;
+        width: 100%;
+        text-align: center;
+    }
+.next-review-label{
+    margin-top: 30px;
+    color: #959595;
+    text-align: center;
+}
+.gauge{
+    position: relative;
+    height: 314px;
+    max-width: 314px;
+    margin: 8px;
+    margin: 0 auto;
+}
+.b-gauge {
+    padding-top: 24px;
+}
+svg.b-gauge__paths.b-gauge__block {
+    overflow: visible;
+}

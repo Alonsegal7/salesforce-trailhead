@@ -1,0 +1,53 @@
+<template>
+    <template if:true={dataLoaded}>
+        <div class="wrap-all">
+            <h3 class="section-title">Targets vs. Actual</h3>
+            <ul class="target-list clear">
+                <li class="tile">
+                    <div class="title">{mTile.titleText}&nbsp;<b>{mTile.titleValue}</b></div>
+                    <div class="d-container">
+                        <canvas class="myChart0" width="200" height="200"></canvas>
+                        <div class="inner-label-container">
+                            <div class="title">{mTile.innerTitleText}</div>
+                            <div class="value">{mTile.innerTitleValue}</div>
+                        </div>
+                    </div>
+                    <div class="footer clear">
+                        <div class="inbound"><span class="marker"></span>Influenced ARR: <b>{mTile.inboundARR}</b></div>
+                        <div class="outbound"><span class="marker"></span>Sourced ARR: <b>{mTile.outboundARR}</b></div>
+                    </div>
+                </li>
+
+                <li class="tile">
+                    <div class="title">{qTile.titleText}&nbsp;<b>{qTile.titleValue}</b></div>
+                    <div class="d-container">
+                        <canvas class="myChart1" width="200" height="200"></canvas>
+                        <div class="inner-label-container">
+                            <div class="title">{qTile.innerTitleText}</div>
+                            <div class="value">{qTile.innerTitleValue}</div>
+                        </div>
+                    </div>
+                    <div class="footer clear">
+                        <div class="inbound"><span class="marker"></span>Influenced ARR: <b>{qTile.inboundARR}</b></div>
+                        <div class="outbound"><span class="marker"></span>Sourced ARR: <b>{qTile.outboundARR}</b></div>
+                    </div>
+                </li>
+    
+                <li class="tile">
+                    <div class="title">{yTile.titleText}&nbsp;<b>{yTile.titleValue}</b></div>
+                    <div class="d-container">
+                        <canvas class="myChart2" width="200" height="200"></canvas>
+                        <div class="inner-label-container">
+                            <div class="title">{yTile.innerTitleText}</div>
+                            <div class="value">{yTile.innerTitleValue}</div>
+                        </div>
+                    </div>
+                    <div class="footer clear">
+                        <div class="inbound"><span class="marker"></span>Influenced ARR: <b>{yTile.inboundARR}</b></div>
+                        <div class="outbound"><span class="marker"></span>Sourced ARR: <b>{yTile.outboundARR}</b></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </template>
+</template>

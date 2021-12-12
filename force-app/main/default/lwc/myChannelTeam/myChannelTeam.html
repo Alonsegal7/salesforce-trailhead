@@ -1,0 +1,29 @@
+<template>
+    <div class="wrap-all">
+        <template if:true={teamLoaded}>
+            <article class="slds-card clear dashboard-card">
+                <h3 class="card-title">Your Channel Team</h3>
+                <div class="card-body">
+                    <ul class="team-list clear">
+                        <template for:each={theTeam} for:item="teamMember">
+                            <li key={teamMember.Id}>
+                                <div class="member-box clear">
+                                    <div class="member-img-box">
+                                        <img src={teamMember.SmallPhotoUrl} />
+                                    </div>
+                                    <div class="member-email">
+                                        <lightning-formatted-email value={teamMember.Email}></lightning-formatted-email>
+                                    </div>
+                                    <div class="member-info-box">
+                                        <label>{teamMember.Name}</label>
+                                        {teamMember.Title}
+                                    </div>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </article>
+        </template>
+    </div>
+</template>

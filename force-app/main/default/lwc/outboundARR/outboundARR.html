@@ -1,0 +1,27 @@
+<template>
+    <div class="wrap-all">
+        <article class="slds-card clear dashboard-card">
+            <h3 class="card-title">Outbound ARR</h3>
+            <div class="card-body">
+                <div class="bar-container">
+                    <div class="bar-outer arr">
+                        <div class="bar-section silver">
+                            <div class="bar-label"></div>
+                        </div>
+                        <div class="bar-section gold">
+                            <div class="bar-label">$150K</div>
+                        </div>
+                        <div class="bar-section platinum">
+                            <div class="bar-label">$375K</div>
+                        </div>
+                        <!-- Dynamic Marker -->
+                        <div class="actual-label-box" style={outboundArrPositionStyle}>
+                            <div class="actual-label-inner">{outboundArrLabel}</div>
+                        </div>
+                        <!-- .Dynamic Marker -->
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</template>

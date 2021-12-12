@@ -295,4 +295,15 @@ public class TestObjectCreator
        insert user;
        return user;
    }
+
+   public static Target__c CreateTarget(Account company){
+        Target__c t = new Target__c(
+            Name = 'Test target',
+            Target_Date__c = date.today(),
+            Partner_Company__c = company.Id
+        );
+        
+        if (persistImmediate) insert t;
+        return t;
+   }
 }

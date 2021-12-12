@@ -1,0 +1,28 @@
+<template>
+    <div class="wrap-all">
+        <article class="slds-card clear dashboard-card">
+            <h3 class="card-title">Tier Status</h3>
+            <div class="badge-container">
+                <img src={badgeSrc} class="badge" />
+            </div>
+            <div class="next-review-label">{nextReviewLabel}</div>
+            <div class="card-body">
+                <div class="gague-container">
+                    <div class="gauge"></div>
+                </div>
+                <div class="gague-label">
+                    <span class="main-text">{gagueLabel}</span>
+                    <template if:true={isSilver}>
+                        <span class="silver-label">Silver partner</span>&nbsp;<span class="range">$60k-300k</span>
+                    </template>
+                    <template if:true={isGold}>
+                        <span class="gold-label">Gold partner</span>&nbsp;<span class="range">$300k-750k</span>
+                    </template>
+                    <template if:true={isPlatinum}>
+                        <span class="platinum-label">Platinum partner</span>&nbsp;<span class="range">>750k</span>
+                    </template>
+                </div>
+            </div>
+        </article>
+    </div>
+</template>

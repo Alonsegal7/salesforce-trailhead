@@ -1,0 +1,152 @@
+.wrap-all{
+    position: relative;
+}
+h3{
+    font-size: 1.25rem;
+    display: block;
+    margin-bottom: 8px;
+}
+.clear:before, .clear:after{
+    display: table;
+    content: '';
+}
+.clear:after{
+    clear: both;
+}
+li.tile{
+    float: left;
+    margin: 0 12px;
+    background-color: #fff;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    padding: 12px;
+    width: calc(33% - 8px);
+    max-width: 278px;
+    height: 278px;
+    position: relative;
+}
+li.tile:first-child{
+    margin-left: 0;
+}
+li.tile .title:before, li.tile .title:after{
+    content: '';
+    display: table;
+}
+li.tile .title:after{
+    clear: both;
+}
+li.tile .title{
+    height: 18px;
+}
+li.tile .title .left{
+    float: left;
+}
+li.tile .title .right{
+    float: right;
+}
+li.tile .title .color{
+    font-weight: 600;
+}
+li.tile.blue .title .color{
+    color: #0fd8f4;
+}
+li.tile.purple .title .color{
+    color: #5b5ed1;
+}
+li.tile .body{
+    margin: 64px auto 0;
+    position: relative;
+    text-align: center;
+}
+li.tile .body .main{
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+li.tile .body .text{
+    font-size: 0.9rem;
+}
+li.tile .body .text span{
+    font-weight: 600;
+}
+li.tile.bar .body{
+    padding: 0 24px;
+}
+li.tile .body .bar-titles:before, li.tile .body .bar-titles:after{
+    content: '';
+    display: table;
+}
+li.tile .body .bar-titles:after{
+    clear: both;
+}
+li.tile .body .bar-titles{
+    font-size: 1.72rem;
+    font-weight: 700;
+}
+li.tile .body .bar-titles .purple{
+    float: left;
+}
+li.tile .body .bar-titles .blue{
+    float: right;
+}
+li.tile .body .bar:before, li.tile .body .bar:after{
+    content: '';
+    display: table;
+}
+li.tile .body .bar:after{
+    clear: both;
+}
+li.tile .body .bar{
+    width: 100%;
+    height: 32px;
+}
+li.tile .body .bar .purple{
+    float: left;
+    background-color: #5b5ed1;
+    height: 100%;
+}
+li.tile .body .bar .blue{
+    float: left;
+    background-color: #0fd8f4;
+    height: 100%;
+}
+li.tile .footer{
+    color: #000;
+    position: absolute;
+    bottom: 12px;
+    font-size: 11px;
+}
+li.tile.orange .footer{
+    background-color: #fcaa47;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+}
+li.tile.green .footer{
+    background-color: #1aca75;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+}
+li.tile .footer .purple{
+    float: left;
+    margin-right: 12px;
+}
+li.tile .footer .blue{
+    float: left;
+}
+li.tile .footer .marker{
+    display: inline-block;
+    margin-right: 5px;
+    height: 10px;
+    width: 10px;
+    position: relative;
+    top: 1px;
+}
+li.tile .footer .purple .marker{
+    background-color: #5b5ed1;
+}
+li.tile .footer .blue .marker{
+    background-color: #0fd8f4;
+}

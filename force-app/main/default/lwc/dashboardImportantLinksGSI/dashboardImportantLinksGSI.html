@@ -1,0 +1,19 @@
+<template>
+    <div class="wrap-all">
+        <h3 class="section-title">Important Links</h3>
+        <template if:true={linksLoaded}>
+            <ul class="">
+                <template for:each={links} for:item="link">
+                    <li key={link.index}>
+                        <a href={link.url} target="_blank" class="slds-card dashboard-card">
+                            <div class="card-inner-wrap">
+                                <img src={link.src} title={link.title} />
+                                <label>{link.title}</label>
+                            </div>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </template>
+    </div>
+</template>

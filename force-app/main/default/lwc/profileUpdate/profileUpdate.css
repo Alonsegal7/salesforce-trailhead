@@ -1,0 +1,42 @@
+.wrap-all{
+    position: relative;
+}
+h3{
+    font-size: 1.25rem;
+}
+.clear:before, .clear:after{
+    display: table;
+    content: '';
+}
+.clear:after{
+    clear: both;
+}
+.dashboard-card{
+    border: none;
+    padding: 10px 16px 16px;
+}
+.blue-btn{
+    background-color: #1374e7;
+    padding: 10px 38px;
+}
+.blue-btn.alert{
+    background-color: #e7c013;
+    animation: blinker 0.75s linear infinite;
+}
+@keyframes blinker{
+    50% {
+        background-color: #d10000;
+    }
+}
+.card-body .left{
+    float: left;
+}
+.card-body .right{
+    float: right;
+}
+.card-body .row{
+    padding: 6px 0;
+}
+.b{
+    font-weight: 600;
+}

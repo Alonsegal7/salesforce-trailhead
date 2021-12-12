@@ -1,0 +1,59 @@
+.wrap-all{
+    position: relative;
+}
+h3{
+    font-size: 1.25rem;
+}
+.clear:before, .clear:after{
+    display: table;
+    content: '';
+}
+.clear:after{
+    clear: both;
+}
+.dashboard-card{
+    border: none;
+    padding: 10px 16px 16px;
+}
+.team-list{
+    margin-top: 8px;
+}
+.team-list li{
+    float: left;
+    width: 50%;
+    min-height: 72px;
+}
+.member-img-box{
+    float: left;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.member-box{
+    position: relative;
+}
+.member-info-box{
+    float: left;
+    width: 108px;
+    padding: 0 8px;
+}
+.member-info-box label{
+    display: block;
+    font-weight: 600;
+}
+.member-email {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    padding: 3px 8px;
+    border-radius: 5px;
+    width: max-content;
+    box-shadow: 1px 1px 2px 1px #ccc;
+    left: -10px;
+    top: 4px;
+    z-index: 9;
+}
+.member-img-box:hover + .member-email, .member-email:hover{
+    display: block;
+}

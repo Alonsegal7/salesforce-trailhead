@@ -1,0 +1,76 @@
+.wrap-all{
+    position: relative;
+}
+h3{
+    font-size: 1.25rem;
+    display: block;
+    margin-bottom: 8px;
+}
+.clear:before, .clear:after{
+    display: table;
+    content: '';
+}
+.clear:after{
+    clear: both;
+}
+li.tile{
+    float: left;
+    margin: 0 12px;
+    background-color: #fff;
+    border-radius: 0.25rem;
+    padding: 12px;
+    width: calc(33% - 8px);
+    max-width: 278px;
+    height: 278px;
+    position: relative;
+}
+li.tile:last-child, li.tile:first-child{
+    margin: 0;
+}
+li.tile .title{
+    text-align: center;
+}
+li.tile .d-container{
+    margin: 6px auto 0;
+    position: relative;
+}
+li.tile .d-container .inner-label-container{
+    margin: -128px auto 0;
+    width: 138px;
+}
+li.tile .d-container .inner-label-container .title{
+    font-size: 0.9rem;
+}
+li.tile .d-container .inner-label-container .value{
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.72rem;
+}
+li.tile .d-container .myChart0, li.tile .d-container .myChart1, li.tile .d-container .myChart2{
+    margin: 0 auto;
+}
+li.tile .footer{
+    color: #000;
+    position: absolute;
+    bottom: 12px;
+    font-size: 11px;
+}
+li.tile .footer .inbound{
+    float: left;
+    margin-right: 12px;
+}
+li.tile .footer .outbound{
+    float: left;
+}
+li.tile .footer .marker{
+    display: inline-block;
+    margin-right: 5px;
+    height: 10px;
+    width: 10px;
+}
+li.tile .footer .inbound .marker{
+    background-color: #5b5ed1;
+}
+li.tile .footer .outbound .marker{
+    background-color: #0fd8f4;
+}
