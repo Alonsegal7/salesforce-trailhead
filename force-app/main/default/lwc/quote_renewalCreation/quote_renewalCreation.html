@@ -18,8 +18,8 @@
                                 <lightning-input type="text" label="Contract Seats" value={contractSeats} disabled=true></lightning-input>
                                 <lightning-input type="text" label="Tier" value={contractTier} disabled=true></lightning-input>
                                 <lightning-input type="text" label="Period" value={contractPeriod} disabled=true></lightning-input>
-                                <lightning-input type="number" label="Price Per Unit" formatter="currency" value={contractUnitPrice} disabled=true></lightning-input>
-                                <lightning-input type="number" label="Total" formatter="currency" value={total} disabled=true></lightning-input>
+                                <lightning-input type="text" label="Price Per Unit" value={contractUnitPriceWithCurrencyText} disabled=true></lightning-input>
+                                <lightning-input type="text" label="Total" value={total} disabled=true></lightning-input>
                             </div>                            
                             <footer class="slds-modal__footer">
                                 <lightning-button variant="neutral" name="cancel" label="Cancel" title="Cancel" onclick={handleCancelClick} ></lightning-button>

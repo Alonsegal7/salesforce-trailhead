@@ -7,12 +7,13 @@ import paymentTerms from '@salesforce/schema/Opportunity.Payment_Terms__c';
 import billingEntity from '@salesforce/schema/Opportunity.Billing_Entity__c';
 import contractSeats from '@salesforce/schema/Opportunity.Selected_Company_Contract__r.Contract_Seats__c';
 import contractEndDate from '@salesforce/schema/Opportunity.Selected_Company_Contract__r.EndDate';
+import oppCurrencyCode from '@salesforce/schema/Opportunity.CurrencyIsoCode';
 import contractTier from '@salesforce/schema/Opportunity.Selected_Company_Contract__r.Tier__c';
 import contractPeriod from '@salesforce/schema/Opportunity.Selected_Company_Contract__r.Period__c';
 import contractUnitPrice from '@salesforce/schema/Opportunity.Selected_Company_Contract__r.Weighted_Average_Net_Per_Unit__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-const fields = [originalContract,billingEntity,contractSeats,contractEndDate,contractTier,contractPeriod,contractUnitPrice];                    
+const fields = [oppCurrencyCode,originalContract,billingEntity,contractSeats,paymentTerms,contractEndDate,contractTier,contractPeriod,contractUnitPrice];                    
 
 export default class Quote_renewalCreation extends LightningElement{
     @track opportunityId;
@@ -29,11 +30,12 @@ export default class Quote_renewalCreation extends LightningElement{
     paymentTerms;
     billingEntity;
     contractSeats;
-    contractSeats;
     contractEndDate;
     contractTier;
     contractPeriod;
     contractUnitPrice;
+    contractUnitPriceWithCurrencyText;
+    oppCurrencyCode;
     missingBe = false;
     missingContract = false;
     missingPaymentTerms = false;
@@ -41,13 +43,14 @@ export default class Quote_renewalCreation extends LightningElement{
     loadingModal=true;
     StartDate;
     total=0;
-    formFields= [originalContract,billingEntity,contractSeats,paymentTerms,contractEndDate,contractTier,contractPeriod,contractUnitPrice]; 
+    formFields= [oppCurrencyCode,originalContract,billingEntity,contractSeats,paymentTerms,contractEndDate,contractTier,contractPeriod,contractUnitPrice]; 
 
     @wire(getRecord, { recordId: '$recordId', fields })
     opp({data, error}){
         if (data) {
             this.oppDetails=data;
             this.originalContract= getFieldValue(this.oppDetails, originalContract);
+            this.oppCurrencyCode= getFieldValue(this.oppDetails, oppCurrencyCode);
             this.billingEntity=getFieldValue(this.oppDetails, billingEntity);
             this.paymentTerms=getFieldValue(this.oppDetails, paymentTerms);
             this.contractSeats=getFieldValue(this.oppDetails, contractSeats);
@@ -55,13 +58,13 @@ export default class Quote_renewalCreation extends LightningElement{
             this.contractTier=getFieldValue(this.oppDetails, contractTier);
             this.contractPeriod=getFieldValue(this.oppDetails, contractPeriod);
             this.contractUnitPrice=getFieldValue(this.oppDetails, contractUnitPrice);
-            console.log('Calc original contract End Date-'+this.contractEndDate);
-            console.log('Calc new contract Start Date-'+ Date(this.contractEndDate));
-            console.log('Calc contract Start Date-'+this.StartDate);
+            this.contractUnitPriceWithCurrencyText = this.contractUnitPrice +' '+ this.oppCurrencyCode;
+            console.log('contractUnitPriceText '+this.contractUnitPriceWithCurrencyText);
+            console.log('Payment Terms- '+this.paymentTerms);
+            console.log('BE- '+this.billingEntity);
+            console.log('Contract- '+this.originalContract);
             var calcTotal = this.contractSeats*this.contractUnitPrice*12;
-            this.total=calcTotal;
-            console.log('Calc total: '+this.total);
-            
+            this.total=calcTotal +' ' + this.oppCurrencyCode;            
 
             if(this.originalContract == null) {
                 this.missingContract = true;
@@ -91,7 +94,7 @@ export default class Quote_renewalCreation extends LightningElement{
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Required fields are missing!',
-                    message: 'Make sure to have a billing entity, primary contract and payment terms on the opportunity before creating a renewal SO',
+                    message: 'Make sure to have a billing entity, primary contract and payment terms on the opportunity before creating a renewal SO. Once added, refresh the page',
                     variant: 'error',
                 }),
             );
