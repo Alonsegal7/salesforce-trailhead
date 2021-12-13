@@ -57,8 +57,16 @@ public with sharing class ContractEventHandler {
                 //Prepere the qury to include all fields (To avoide missing new fields added from the mdt to dynamic function )
                 Map<String, Schema.SObjectField> qlisFieldMap = QuoteLineItem.sObjectType.getDescribe().fields.getMap();
                 Set<String> qlisFieldNames = qlisFieldMap.keySet();
-                String Set_Joined = String.join((Iterable<String>)qlisFieldNames, ', ');
-                List<QuoteLineItem> quoteQlis = Database.query('select ' + Set_Joined + ' from QuoteLineItem WHERE Quote.Id IN: quotesToHandle');
+                String Set_Joined_QLI = String.join((Iterable<String>)qlisFieldNames, ', ');
+                
+                //Get quote fields for parent object refrences
+                Map<String, Schema.SObjectField> quoteFieldMap = Quote.sObjectType.getDescribe().fields.getMap();
+                Set<String> quoteFieldNames = quoteFieldMap.keySet();
+                String Set_Joined_Quote = String.join((Iterable<String>)quoteFieldNames, ' ,Quote.');
+                String qry = Set_Joined_QLI+', '+'Quote.'+Set_Joined_Quote;
+                //qry = qry.replaceAll('[(){};\\"\']', '');
+                system.debug('qry'+qry);
+                List<QuoteLineItem> quoteQlis = Database.query('select ' + qry + ' from QuoteLineItem WHERE Quote.Id IN: quotesToHandle');
                 Map<Id, List<QuoteLineItem>> qlisMap = new Map<Id, List<QuoteLineItem>>();
                 //this map is used for getting the recuring line item (crrntly alwys will be licnse) of the quote to add the added seats to the contract
                 Map<Id, QuoteLineItem> rcringLineItems = new Map<Id, QuoteLineItem>();
@@ -174,7 +182,7 @@ public with sharing class ContractEventHandler {
         Id contractId;
         List<Contract_Event__c> contEvents = new List<Contract_Event__c>();
         Map<String, Object> contEventsfieldValueMap = new Map<String, Object>();
-        List<ContractEventMapping__mdt> eventMapMtd = [SELECT ObjectAPI__c,ObjectFieldAPI__c,ContractEventFieldAPI__c,Constant_Value_Mapping__c,Constant_Value__c 
+        List<ContractEventMapping__mdt> eventMapMtd = [SELECT ObjectAPI__c,MapValueFromQuote__c,ObjectFieldAPI__c,ContractEventFieldAPI__c,Constant_Value_Mapping__c,Constant_Value__c 
         FROM ContractEventMapping__mdt WHERE ObjectAPI__c =:String.valueOf(events[0].getSObjectType())];
         try{
         for (SObject obj : events) {
@@ -186,12 +194,19 @@ public with sharing class ContractEventHandler {
             }
             Contract_Event__c conEven = new Contract_Event__c();
             for (ContractEventMapping__mdt contEvenMapData : eventMapMtd) {
+                //Contract was assigne for primary contract event (subscription)
                 if (contEvenMapData.ContractEventFieldAPI__c=='Contract__c' && contractId!=null ) {
                     conEven.put(contEvenMapData.ContractEventFieldAPI__c,contractId);
                 }
+                //Constent value mapping
                 else if (contEvenMapData.Constant_Value_Mapping__c=='Yes') {
                     conEven.put(contEvenMapData.ContractEventFieldAPI__c,contEvenMapData.Constant_Value__c);
                 }
+                //Value from quote level
+                else if (contEvenMapData.MapValueFromQuote__c){
+                    conEven.put(contEvenMapData.ContractEventFieldAPI__c,obj.getSObject('Quote').get(contEvenMapData.ObjectFieldAPI__c));
+                }
+                //Value from quote or subscription level (by object in qry);
                 else {
                     conEven.put(contEvenMapData.ContractEventFieldAPI__c,obj.get(contEvenMapData.ObjectFieldAPI__c));
                 }
