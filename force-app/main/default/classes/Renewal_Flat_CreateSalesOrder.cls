@@ -149,7 +149,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                     qlisToCreate.add(new QuoteLineItem(
                         QuoteId=currentQuote.Id,
                         ServiceDate=oppsWithContracts.get(opp.Id).EndDate.addDays(1),
-                        End_Date__c=oppsWithContracts.get(opp.Id).EndDate.addDays(366),
+                        End_Date__c=oppsWithContracts.get(opp.Id).EndDate.addDays(365),
                         PricebookEntryId=mappedSkuCurrencyToPBE.get(cp.SKU__c+currentContract1.CurrencyIsoCode),
                         UnitPrice=cp.Net_Per_Unit__c,
                         Net_Per_Unit__c=cp.Net_Per_Unit__c,
