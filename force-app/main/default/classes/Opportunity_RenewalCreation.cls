@@ -1,4 +1,5 @@
 public without sharing class Opportunity_RenewalCreation {
+
     //Check if there is already a CS Opportunity related to Contract - if so, the component will not show the ability to create a new Opp
     @AuraEnabled(cacheable=true)
     public static List<Opportunity> checkOpenRenewalOpps(Id recordId){
@@ -192,6 +193,43 @@ public without sharing class Opportunity_RenewalCreation {
 
         if(!accsToUpdate.isEmpty()){
             Database.update(accsToUpdate);
+        }
+    }
+
+    public static void getProFromActiveContract(Map<Id, Account> oldAccts, List<Account> newAccts){
+        try{
+        List<Account> relevanAccts = new List<Account>();
+        Map<Id, Contract> relevantContMap = new Map<Id, Contract>();
+        Set<Id> relevantContId = new Set<Id>();
+        //Get account that changed thier active contract
+        if (oldAccts==null) {//Insert
+            for (Account acc : newAccts) {
+                if (acc.Active_Contract__c!=null) {
+                    relevantContId.add(acc.Active_Contract__c);
+                    relevanAccts.add(acc);
+                }
+            }
+        }
+        else {//Update
+            for (Account acc : newAccts) {
+                if (acc.Active_Contract__c!=null && acc.Active_Contract__c!=oldAccts.get(acc.Id).Active_Contract__c) {
+                    relevantContId.add(acc.Active_Contract__c);
+                    relevanAccts.add(acc);
+                }
+            }
+        }
+            if (!relevantContId.isEmpty()) {
+                for (Contract con : [select Id,Primary_Renewal_Owner__c from contract where id in:relevantContId]) {
+                    relevantContMap.put(con.Id,con);
+                }
+            }
+            if (!relevanAccts.isEmpty()) {
+                for (Account acc : relevanAccts) {
+                    acc.Renewal_Owner__c=relevantContMap.get(acc.active_contract__c).Primary_Renewal_Owner__c;
+                }   
+            }
+        }catch(Exception e){
+            Utilities.sendDebugEmail('Error in getProFromActiveContract ',e,e.getMessage());   
         }
     }
 }

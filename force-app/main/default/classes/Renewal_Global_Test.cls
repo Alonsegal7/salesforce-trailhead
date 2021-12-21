@@ -69,4 +69,36 @@ public class Renewal_Global_Test {
             opportunity_RenewalCreation.insertOpportunity(con.Id); 
         }
     }
+
+    public static testmethod void changeContractToMondayAccount() {
+        profileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        userRecord = TestUtils.getUserWithoutRole(profileId);
+        insert userRecord;
+        
+        TestObjectCreator.persistImmediate=true;
+        Account comp = TestObjectCreator.CreateCompany();
+        
+        Contract con = TestObjectCreator.CreateContract(comp);
+        con.Primary_Renewal_Owner__c = userRecord.Id;
+        con.EndDate = System.today();
+        update con;
+        
+        Account ma = TestObjectCreator.CreateMondayAccount(comp);
+        ma.Active_Contract__c = con.Id;
+        ma.ARR__c = 100;
+        update ma;
+
+        TestObjectCreator.persistImmediate=false;
+        Account ma2 = TestObjectCreator.CreateMondayAccount(comp);
+        ma2.Active_Contract__c = con.Id;
+        ma2.ARR__c = 1000;
+        insert ma2;
+
+        Account createdAcc = [select id, Renewal_Owner__c from account where arr__c=100 limit 1];
+        Account createdAcc1 = [select id, Renewal_Owner__c from account where arr__c=1000 limit 1];
+
+        System.assertEquals(userRecord.Id, createdAcc.Renewal_Owner__c);
+        System.assertEquals(userRecord.Id, createdAcc1.Renewal_Owner__c);
+
+    }
 }

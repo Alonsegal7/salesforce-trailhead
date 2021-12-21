@@ -5,6 +5,7 @@ public without sharing class Subscription_ConnectToContractEvent {
 
     public static void Subscription_ConnectToContract(List<Subscription__c> newSubs, map<Id, Subscription__c> oldMap) {
         try{
+            
             set<string> subsPulseIds= new set<string>();
             Set<string> subsProductSKUs = new Set<string>();
             Set<string> conProdsKeys = new Set<string>();
