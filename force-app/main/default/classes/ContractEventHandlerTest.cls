@@ -386,4 +386,52 @@ public with sharing class ContractEventHandlerTest {
 
     }
 
+    @IsTest
+    public static void SalesOrderNewContractActivateOnOtherAccount() {
+        DateTime dT = System.now();
+        Date startDate = date.newinstance(dT.year(), dT.month(), dT.day());
+        Date endDate = date.newinstance(dT.year()+1, dT.month(), dT.day());
+        Account company = TestObjectCreator.CreateCompany();
+        insert company;
+        Account ma = TestObjectCreator.CreateMondayAccount(company);
+        Account ma2 = TestObjectCreator.CreateMondayAccount(company);
+        Contract con = TestObjectCreator.CreateContract(company);
+        ma.primary_pulse_account_id__c='12211';
+        ma.Active_Contract__c=con.Id;
+        ma.Monday_Account_Status__c='Trial Account';
+        insert ma;
+        ma2.primary_pulse_account_id__c='3232';
+        insert ma2;
+
+        Opportunity opportunity = TestObjectCreator.CreateOpp(ma);
+        insert opportunity;
+        Quote quoteNewCont = TestObjectCreator.CreateNonContractQuote(opportunity, 'New Contract');
+        insert con;
+        quoteNewCont.contractId=con.Id;
+        insert quoteNewCont;
+
+        
+        Contract createdCon = [select Id,Contract_Arr__c from contract limit 1];
+
+        Subscription__c sub = TestObjectCreator.CreateSubscription();
+        sub.Pulse_Account_Id__c='3232';
+        sub.Deactivation_Date__c=endDate;
+        sub.Activation_Date__c=startDate;
+        sub.Activated_via_Import_SO__c=true;
+        sub.Source_Sales_Order__c=quoteNewCont.Id;
+        sub.Contract__c=createdCon.Id;
+        Test.startTest();
+        insert sub;
+        Test.stopTest();
+
+        Account ma11 = [select id,Active_Contract__c from account where primary_pulse_account_id__c ='3232' limit 1 ];
+        Account ma12 = [select id,Active_Contract__c from account where primary_pulse_account_id__c ='12211' limit 1 ];
+
+        System.assertEquals(createdCon.Id ,ma11.Active_Contract__c);
+        System.assertEquals(null ,ma12.Active_Contract__c);
+
+
+        
+    }
+
 }
