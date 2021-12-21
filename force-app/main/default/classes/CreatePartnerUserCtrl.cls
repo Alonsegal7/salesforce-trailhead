@@ -80,7 +80,10 @@ public class CreatePartnerUserCtrl {
 		}
 		if(!contactIds.isEmpty()) {
 			firstRun = false;
+			Partners_SharingService.stopAddToEligibleCommissionGroup = true;
 			List<User> newUsersList = createUsers(contactIds);
+			Partners_SharingService.stopAddToEligibleCommissionGroup = false;
+			Partners_SharingService.handleEligibleUsersUserRole(newUsersList, null);
 			updateUserIdsOnContacts(newUsersList);
 		}
 	}
