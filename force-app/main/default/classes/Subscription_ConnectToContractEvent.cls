@@ -225,7 +225,10 @@ public without sharing class Subscription_ConnectToContractEvent {
                         //System.enqueueJob(new createContractToSubscriptionsQueueable(subsToUpdateContract));
                     }
                     if (!subImportedBySo.isempty()) {
-                        acctsToUpdateActiveCon.addall(handleDifferentActivation(subImportedBySo));
+                        List<Account> accts = handleDifferentActivation(subImportedBySo);
+                        if (accts!=null) {
+                            acctsToUpdateActiveCon.addall(accts); 
+                        }
                     }
                     //Contract event for existing contract
                     if (!multiContractSubsToEvents.isempty()) {
