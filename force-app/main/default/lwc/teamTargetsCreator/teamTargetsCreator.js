@@ -10,7 +10,7 @@ const columns = [
     { 
         label: 'Date', 
         fieldName: 'Target_Date__c', 
-        type: 'date', 
+        type: 'date-local', 
         editable: false, 
         sortable: true, 
         typeAttributes:{
