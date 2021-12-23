@@ -22,7 +22,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         
         //2. Create a renewal quote based on the opportunity "selected company contract" and related billing entity 
         //List of all opportunities that needs a renewal SO
-        List <Opportunity> renewalOpps = [SELECT Name,Selected_Company_Contract__c,Billing_Entity__c,Pricing_Version__c, Payment_Terms__c FROM Opportunity WHERE Id IN :renewalOppIds];
+        List <Opportunity> renewalOpps = [SELECT Name,Selected_Company_Contract__c,Billing_Entity__c,Pricing_Version__c, Payment_Terms__c, USD_exchange_rate__c FROM Opportunity WHERE Id IN :renewalOppIds];
         Id standardPriceBookId = [SELECT Id FROM Pricebook2 WHERE Is_Main__c = true][0].Id;
         System.debug('@@Renewal_Flat_CreateSalesOrder Renewal Pricebook: '+standardPriceBookId);
 
@@ -35,7 +35,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
 
         //Map of all original contracts with their IDs  
-        Map <Id, Contract> relevantContracts = new Map<Id,Contract>([SELECT Id,Tier__c,Contract_ARR__c,CurrencyIsoCode,EndDate FROM Contract WHERE id in: relevantContractIds]);
+        Map <Id, Contract> relevantContracts = new Map<Id,Contract>([SELECT Id,Tier__c,Contract_ARR__c,CurrencyIsoCode,EndDate,ContractNumber FROM Contract WHERE id in: relevantContractIds]);
         //Map of all original contracts with the related opportunity ID  
         Map<Id, Contract> oppsWithContracts = new Map<Id, Contract>();
         for (Opportunity opp : renewalOpps) {
@@ -69,7 +69,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                 Duration__c = 12,
                 DH_Period__c = 'Yearly',
                 Manual_Signature_Reason__c = 'Auto Renewal',
-                Name = 'temp - '+ oppsWithBEs.get(opp.Id).Name,
+                Name = 'Flat Renewal For Contract #' + oppsWithContracts.get(opp.Id).ContractNumber,
                 CurrencyIsoCode = oppsWithContracts.get(opp.Id).CurrencyIsoCode,
                 Pricebook2Id = standardPriceBookId,
                 Pricing_Version__c = opp.Pricing_Version__c,
@@ -154,7 +154,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                         UnitPrice=cp.Net_Per_Unit__c,
                         Net_Per_Unit__c=cp.Net_Per_Unit__c,
                         Renewal_Unit_Price__c=cp.Net_Per_Unit__c,
-                        ARR__c=cp.Recurring_Product_ARR__c,
+                        ARR__c=opp.USD_exchange_rate__c * cp.Quantity__c * cp.Net_Per_Unit__c*12,
                         DH_Option_Quote_Type__c='New Contract',
                         Is_Primary__c=true,
                         Tier__c=oppsWithContracts.get(opp.Id).Tier__c,
