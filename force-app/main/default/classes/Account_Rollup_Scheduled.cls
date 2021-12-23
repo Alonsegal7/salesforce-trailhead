@@ -9,18 +9,13 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
             Utilities.sendDebugEmail('Error in Account_Rollup_Scheduled ', e, e.getMessage());   
         }
     }
-    
+
     public Database.QueryLocator start(Database.BatchableContext BC){
-        String query = 'SELECT Id,ParentId FROM Account WHERE Pending_Rollup__c = true LIMIT 10000';
-        try {
-            return Database.getQueryLocator(query);
-        }
-        catch(Exception e){
-            Utilities.sendDebugEmail('Error in Account_Rollup_Scheduled  - getQueryLocator Failed:', e, e.getMessage());   
-        }
+        String query = 'SELECT Id,ParentId FROM Account WHERE Pending_Rollup__c = true';
+        return Database.getQueryLocator(query);
      }
 
-    public void execute(Database.BatchableContext BC, list<Account> scope){
+     public void execute(Database.BatchableContext BC, list<Account> scope){
         Set<Id> relevantAccounts = (new Map<Id,Account>(scope)).keySet();
         try {
             ID jobID = System.enqueueJob(new updateAccountsRollupQueueable(relevantAccounts));
