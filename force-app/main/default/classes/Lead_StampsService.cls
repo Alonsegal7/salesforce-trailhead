@@ -45,9 +45,10 @@ public without sharing class Lead_StampsService {
     public static void handleOngoingUpdates(List<Lead> newLeads, Map<Id,Lead> oldLeads){
         for (Lead lead : newLeads) {
             //set owner edit time
-            if((String.valueOf(lead.OwnerId).startsWith('005') && (oldLeads == null || !String.valueOf(oldLeads.get(lead.Id).OwnerId).startsWith('005'))) || // owner is user (not group) on insert or owner is updated from group to user
-            (lead.Status == 'Unqualified' && (oldLeads == null || oldLeads.get(lead.Id).Status != 'Unqualified'))){ // status is Unqualified on insert/updated
-                lead.Owner_edit_time__c = Datetime.now();
+            if(lead.Owner_edit_time__c == null && 
+                ((String.valueOf(lead.OwnerId).startsWith('005') && (oldLeads == null || !String.valueOf(oldLeads.get(lead.Id).OwnerId).startsWith('005'))) || // owner is user (not group) on insert or owner is updated from group to user
+                (lead.Status == 'Unqualified' && (oldLeads == null || oldLeads.get(lead.Id).Status != 'Unqualified')))){ // status is Unqualified on insert/updated
+                    lead.Owner_edit_time__c = Datetime.now();
             }
             //mark Reached Out To Timestamp
             if(lead.Reached_Out_To__c && lead.First_Reachout_Timestamp__c == null && (oldLeads == null || !oldLeads.get(lead.Id).Reached_Out_To__c)){ //reached out to is marked as true on insert/update and timestamp is null
@@ -121,7 +122,8 @@ public without sharing class Lead_StampsService {
                     if ((lead.Status==statusMeta.Name || (statusMeta.Name!='Nurturing' && statusMeta.Name!='Unqualified'))) {
                         for (String stmpField : statusMeta.relatedTimeStampFields) {
                             if (lead.get(stmpField)==null) {
-                                lead.put(stmpField,date.today());
+                                if(stmpField.containsIgnoreCase('_dt_')) lead.put(stmpField,Datetime.now());
+                                else lead.put(stmpField,Date.today());
                             }
                         }
                         if(statusMeta.Name == 'Attempting' && lead.Time_to_Attempting__c == null){
