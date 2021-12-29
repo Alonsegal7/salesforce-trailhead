@@ -97,16 +97,16 @@ public without sharing class Lead_StampsService {
 
     public static void handleMqlSql(List<Lead> newLeads, Map<Id,Lead> oldLeads){
         for (Lead lead : newLeads) {
-            if ((oldLeads==null && lead.SQL__c==true) || (oldLeads.get(lead.Id).SQL__c!=lead.SQL__c && lead.SQL__c==true)) {
+            if (lead.SQL__c && (oldLeads==null || !oldLeads.get(lead.Id).SQL__c)) { //SQL timestamps
                 lead.SQL_Timestamp__c=Date.today();
                 lead.SQL_Timestamp_DT__c=datetime.now();
             }
-            if ((oldLeads!=null && oldLeads.get(lead.Id).IsConverted!=lead.IsConverted && lead.SQL__c==false)) {
+            if (!lead.SQL__c && oldLeads != null && oldLeads.get(lead.Id).IsConverted != lead.IsConverted && lead.IsConverted) { //mark SQL and SQL timestamps on convert if SQL is false
                 lead.SQL_Timestamp__c=Date.today();
                 lead.SQL_Timestamp_DT__c=datetime.now();
                 lead.SQL__c=true;
             }
-            if (lead.Hubspot_Lifecycle_stage__c=='marketingqualifiedlead' && (oldLeads==null || oldLeads.get(lead.Id).Hubspot_Lifecycle_stage__c!='marketingqualifiedlead')) {
+            if (lead.Hubspot_Lifecycle_stage__c=='marketingqualifiedlead' && (oldLeads==null || oldLeads.get(lead.Id).Hubspot_Lifecycle_stage__c!='marketingqualifiedlead')) { // MQL and MQL timestamps
                 lead.MQL__c=true;
                 lead.MQL_Timestamp_DT__c=datetime.now();
             }
