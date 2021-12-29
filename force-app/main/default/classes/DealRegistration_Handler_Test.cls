@@ -359,7 +359,7 @@ public class DealRegistration_Handler_Test {
         lReg.Expected_Closed_Date__c= System.Today();
         lReg.Expected_Tier__c = 'Enterprise';
         lReg.Expected_Plan_Seats__c = 50;
-        lReg.Source__c = 'Webinar ';
+        lReg.Source__c = 'Other';
         lReg.Comments__c = 'Test Comments';
         lReg.Competition_They_re_Evaluating__c = 'Salesforce';
         lReg.Current_Tool__c = 'Asana';
