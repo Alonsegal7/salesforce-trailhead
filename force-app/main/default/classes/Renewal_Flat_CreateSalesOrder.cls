@@ -128,12 +128,13 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
         System.debug('@@ Renewal_Flat_CreateSalesOrder mappedSkuCurrencyToPBE: ' + mappedSkuCurrencyToPBE);
 
+        //Create a map of the Current Account Arr PBE for each currency
+        Map<string, Id> mappedCurrentAccountArrByCurrencyToPBE = new Map<string, Id>();
+        for (PricebookEntry pbe : [SELECT Id, CurrencyIsoCode, ProductCode,Product2.Product_Identifier__c, Pricebook2Id FROM PricebookEntry WHERE Name = 'Current Account ARR' AND Pricebook2Id = :standardPriceBookId]) {
+            mappedCurrentAccountArrByCurrencyToPBE.put(pbe.CurrencyIsoCode,pbe.Id);
+        }
+        System.debug('@@ Renewal_Flat_CreateSalesOrder mappedCurrentAccountArrByCurrencyToPBE: ' + mappedCurrentAccountArrByCurrencyToPBE);
         
-        //Current Account ARR, to be added later as QLI with negative ammount
-        System.debug('@@@Renewal_Flat_CreateSalesOrder standardPriceBookId: '+standardPriceBookId);
-        System.debug('@@@Renewal_Flat_CreateSalesOrder ArrProductIdQuery1: '+[SELECT Id,Name,CurrencyIsoCode,Pricebook2Id,Product2.Name FROM PricebookEntry WHERE Pricebook2Id = :standardPriceBookId]);
-        System.debug('@@@Renewal_Flat_CreateSalesOrder ArrProductIdQuery2: '+[SELECT Id,Name,CurrencyIsoCode,Pricebook2Id,Product2.Name FROM PricebookEntry WHERE Pricebook2Id = :standardPriceBookId]);
-        Id ArrProductId = [SELECT Id FROM PricebookEntry WHERE Name = 'Current Account ARR' AND Pricebook2Id = :standardPriceBookId AND CurrencyIsoCode = 'USD' limit 1][0].Id;
         //Assign Quote and Contract IDs
         Quote currentQuote = new Quote();
         Contract currentContract1 = new Contract();
@@ -169,7 +170,13 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                         Quantity=(cp.Quantity__c)*12));
                 }
                 //add Current Account ARR as QLI with negative ammount - contract arr
-                qlisToCreate.add(new QuoteLineItem(QuoteId=currentQuote.Id,Is_Primary__c=true,PricebookEntryId=ArrProductId,UnitPrice=0,ARR__c=(currentContract1.Contract_ARR__c*(-1)),Quantity=1));
+                qlisToCreate.add(new QuoteLineItem(
+                    QuoteId=currentQuote.Id,
+                    Is_Primary__c=true,
+                    PricebookEntryId=mappedCurrentAccountArrByCurrencyToPBE.get(currentContract1.CurrencyIsoCode),
+                    UnitPrice=0,
+                    ARR__c=(currentContract1.Contract_ARR__c*(-1)),
+                    Quantity=1));
             }
             for (QuoteLineItem qli : qlisToCreate) {
                 System.debug('@@@ Renewal_Flat_CreateSalesOrder PB ID: '+ qli.PricebookEntryId);
