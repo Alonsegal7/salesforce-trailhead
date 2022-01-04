@@ -19,6 +19,8 @@ public class CreatePartnerUserCtrl {
         }
     }
 
+	public class CreatePartnerUserCtrlException extends Exception {}
+
 	@AuraEnabled
 	public static resWrapper getFieldsList(Id contactId, String email, Id accountId, Boolean isPartner, String approvalStatus){
 		if(approvalStatus == 'Pending') throw new AuraHandledException('Oops! This contact is pending approval to grant access to Salesforce and Big Brain. Please wait for the approval process to be completed.');
@@ -152,10 +154,12 @@ public class CreatePartnerUserCtrl {
 					Database.insert(newUsersList);
 					return newUsersList;
 				} catch (Exception secondEx) {
-					throw new AuraHandledException(secondEx.getMessage() + '\n' + secondEx.getStackTraceString());
+					throw new CreatePartnerUserCtrlException(secondEx.getMessage() + '\n' + secondEx.getStackTraceString());
 				}
+			} else if(e.getMessage().containsIgnoreCase('LICENSE_LIMIT_EXCEEDED')){
+				throw new CreatePartnerUserCtrlException('Oops! License Limit Exceeded. We reached the limit of active partner users. Please reach out to Biz Ops.');
 			} else {
-				throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
+				throw new CreatePartnerUserCtrlException(e.getMessage() + '\n' + e.getStackTraceString());
 			}
 		}
 	}
