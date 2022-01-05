@@ -70,16 +70,22 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
                         if(accountIdToOppMap.get(accountId).size() == 3){ //check if there is another opp before the co-sell opp
                             prevOpp = accountIdToOppMap.get(accountId).get(2);
                             deltaSeats = currentOpp.Expected_Plan_Seats__c - prevOpp.Expected_Plan_Seats__c;
-                            if(deltaSeats < 100){
+                            if(deltaSeats < 100){ //
                                 accountIdToOppMap.remove(accountId);
+                                System.debug('Batch_PartnersSendPostOnBoardingSurvey remove account: ' + accountId);
                             }
                         }
                     } else {
                         accountIdToOppMap.remove(accountId);
+                        System.debug('Batch_PartnersSendPostOnBoardingSurvey remove account: ' + accountId);
                     }
                 }
             }
-
+            if(accountIdToOppMap.isEmpty()) {
+                System.debug('Batch_PartnersSendPostOnBoardingSurvey no matching accounts. exiting...');
+                return;
+            }
+            System.debug('Batch_PartnersSendPostOnBoardingSurvey matching accounts: ' + accountIdToOppMap.keySet());
             //query contacts related to accounts of map A and put them to map C of contact id to account id
             List<Contact> contactsList = [select Id, AccountId, Last_Opportunity_For_Survey__c, Of_Post_Onboarding_Surveys__c from Contact where AccountId IN: accountIdToOppMap.keySet()];
             List<Contact> contactsToUpdate = new List<Contact>();
@@ -90,6 +96,8 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
                 if(con.Last_Opportunity_For_Survey__c != idOfCurrentOpp) {
                     Decimal numOfSurveys = con.Of_Post_Onboarding_Surveys__c;
                     contactsToUpdate.add(new Contact(Id = con.Id, Partners_Post_Onboarding_Survey_Date__c = Date.today(), Last_Opportunity_For_Survey__c = idOfCurrentOpp, Of_Post_Onboarding_Surveys__c = numOfSurveys + 1));
+                } else {
+                    System.debug('Batch_PartnersSendPostOnBoardingSurvey excluded contact: ' + con.Id);
                 }
             }
             if(!contactsToUpdate.isEmpty()) Database.update(contactsToUpdate);
