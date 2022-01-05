@@ -37,11 +37,17 @@ public without sharing class Opportunity_Calculate_ARR {
             if(opp.Type!=null&&opp.Type.contains('Renewal')||opp.RecordTypeId==csRecordTypeId){
                 decimal totalDealARR=null;
                 decimal contractaRR=opp.Original_Contract_ARR__c==null?0:opp.Original_Contract_ARR__c;
-                if(opp.SyncedQuoteId==null){
+                //No payments or Quote - Forecast by GB ARR
+                if(opp.SyncedQuoteId==null && opp.CC_Products_Full_ARR_Sum__c==0){
                     totalDealARR=contractaRR+opp.Green_Bucket_ARR_V2__c;
-                    
-                }else{
+                }
+                //Get Renewal ARR By the quote only (can be or quote or cc payments for renewal)
+                if(opp.SyncedQuoteId!=null){
                     totalDealARR=opp.Total_License_ARR__c;
+                }
+                //Dont have quote - check cc claim
+                if (opp.CC_Products_Full_ARR_Sum__c>0) {
+                    totalDealARR=opp.CC_Products_Full_ARR_Sum__c;
                 }
                 decimal retentionRate=contractaRR==0?0:totalDealARR/contractaRR;
                 opp.Total_Renewal_ARR__c=totalDealARR;

@@ -12,11 +12,12 @@ import getLatestPlan from '@salesforce/apex/SubscriptionPickerController.getLate
 import updateOppPlan from '@salesforce/apex/SubscriptionPickerController.updateOppPlan';
 import isclosed from '@salesforce/schema/Opportunity.IsClosed';
 import closeDateThisMonth from '@salesforce/schema/Opportunity.Close_Date_This_Month__c';
+import oppRecordTypeName from '@salesforce/schema/Opportunity.RecordType.DeveloperName';
 import accId from '@salesforce/schema/Opportunity.AccountId';
 import expectedPlan from '@salesforce/schema/Opportunity.Expected_Plan_Name__c';
 import user_Id from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
-const fields = [isclosed,accId,closeDateThisMonth,expectedPlan];
+const fields = [isclosed,accId,closeDateThisMonth,expectedPlan,oppRecordTypeName];
 
 export default class subscriptionPickersComponent extends LightningElement {
     @api recordId;
@@ -39,6 +40,8 @@ export default class subscriptionPickersComponent extends LightningElement {
     //@track totalGainARR=0;
     claimedARR=0;
     selectedARR=0;
+    selectedFullARR=0;
+    claimedFullARR=0
     itemToRemoveIndex;
     arrToRemove=0;
     isAdmin=false;
@@ -52,6 +55,9 @@ export default class subscriptionPickersComponent extends LightningElement {
     latestSub;
     planChecked=false;
     oppExpectedPlan;
+    oppRecordType;
+    showRenewalARR=false;
+    componentTitle;
 
     @wire(getRecord, { recordId: '$recordId', fields })
     opp({data, error}){
@@ -60,6 +66,10 @@ export default class subscriptionPickersComponent extends LightningElement {
         this.maId=getFieldValue(this.oppDetails, accId);
         this.closeDateThisMonth=getFieldValue(this.oppDetails, closeDateThisMonth);
         this.oppExpectedPlan=getFieldValue(this.oppDetails, expectedPlan);
+        this.oppRecordType=getFieldValue(this.oppDetails, oppRecordTypeName);
+        if(this.oppRecordType=='CS_Opportunity') {
+            this.showRenewalARR=true;
+        }
     }
 
 
@@ -72,15 +82,19 @@ export default class subscriptionPickersComponent extends LightningElement {
                 this.error = undefined;
                 const temp=[];
                 for(let key in data) {
+                    var claimName = data[key].Name_for_CC_Claim__c;
+                    if (this.oppRecordType=='CS_Opportunity') {claimName = data[key].Name_for_CC_Claim_Full_ARR__c; }
                     if (data.hasOwnProperty(key)) { 
                         var singleObj2 = {};
                         singleObj2['value'] = key;
-                        singleObj2['label'] = data[key].Name_for_CC_Claim__c;
+                        singleObj2['label'] = claimName;
                         singleObj2['arrGain'] = data[key].ARR_Gain__c;
                         singleObj2['subId'] = data[key].Id;
+                        singleObj2['arr'] = data[key].ARR__c;
                         console.log('singleObj2: '+JSON.stringify(singleObj2));  
                         temp.push(singleObj2);
                         this.subsMap[key]=data[key];
+                        console.log('singleobj'+singleObj2);
                     }
                 }
                 this.subsToClaim=temp;
@@ -93,16 +107,20 @@ export default class subscriptionPickersComponent extends LightningElement {
     @wire(getClaimed,{oppId:'$recordId'})
     wiredClaimedSubs({data, error}){
             if(data){
-                console.log('data: '+JSON.stringify(data));              
+                console.log('data: '+JSON.stringify(data)); 
                 this.error = undefined;
                 const temp3=[];
                 for(let i in data) {
+                    var claimName = data[i].Name_for_CC_Claim__c;
+                    if (this.oppRecordType=='CS_Opportunity') {claimName = data[i].Name_for_CC_Claim_Full_ARR__c; }
                     console.log('data[i]: '+data[i]);
                     var singleObj = {};
-                    singleObj['label'] = data[i].Name_for_CC_Claim__c;
+                    singleObj['label'] = claimName;
                     singleObj['arrGain'] = data[i].ARR_Gain__c;
                     singleObj['subId'] = data[i].Id;
+                    singleObj['arr'] = data[i].ARR__c;
                     this.claimedARR+=data[i].ARR_Gain__c;
+                    this.claimedFullARR+=data[i].ARR__c;
                     temp3.push(singleObj);
                 }
                 this.subsClaimed=temp3;
@@ -162,16 +180,21 @@ export default class subscriptionPickersComponent extends LightningElement {
         const temp2=[];
         const tempCodes=[];
         var totalARRTemp=0;
+        var totalFullARRTemp=0;
         console.log('this.selected: '+this.selected);
         //console.log('Raz Ben Ron this.totalGainARR: '+this.totalGainARR);
         for(let i in this.selected) {
             var singleObj = {};
-            singleObj['label'] = this.subsMap[this.selected[i]].Name_for_CC_Claim__c;
+            var claimName = this.subsMap[this.selected[i]].Name_for_CC_Claim__c;
+            if (this.oppRecordType=='CS_Opportunity') {claimName = this.subsMap[this.selected[i]].Name_for_CC_Claim_Full_ARR__c; }
+            singleObj['label'] = claimName;
             singleObj['arrGain'] = this.subsMap[this.selected[i]].ARR_Gain__c;
             singleObj['subId'] = this.subsMap[this.selected[i]].Id;
+            singleObj['arr'] = this.subsMap[this.selected[i]].ARR__c;
             console.log('Raz Ben Ron this.subsMap[this.selected[i]].ARR_Gain__c: '+this.subsMap[this.selected[i]].ARR_Gain__c);
             console.log('Raz Ben Ron totalARRTemp 1: '+totalARRTemp);
             totalARRTemp+=this.subsMap[this.selected[i]].ARR_Gain__c;
+            totalFullARRTemp+=this.subsMap[this.selected[i]].ARR__c;//Collect entire arr for renewals (sum the sub.arr also for multi product cases)
             console.log('Raz Ben Ron totalARRTemp 2: '+totalARRTemp);
             temp2.push(singleObj);
             tempCodes.push(this.subsMap[this.selected[i]].Product_Code__c);
@@ -180,6 +203,7 @@ export default class subscriptionPickersComponent extends LightningElement {
         this.newSubsCodes=tempCodes;
         this.subsFinal=[];
         this.selectedARR=totalARRTemp;
+        this.selectedFullARR=totalFullARRTemp;
         console.log('Raz Ben Ron totalARRTemp: '+totalARRTemp);
         console.log('this.selected: '+JSON.stringify(this.selected));
         console.log('this.newSubsCodes: '+JSON.stringify(this.newSubsCodes));
@@ -271,6 +295,7 @@ export default class subscriptionPickersComponent extends LightningElement {
         this.loadingSave=false;
     }
 
+    //Currently, renewal opps subs will alwys have a single claim, so we not going to handle deduction of arr on removal
     handleItemRemove (event) {
         if(this.changesDisabled==false){
             this.dialogVisible=true;
@@ -343,6 +368,20 @@ export default class subscriptionPickersComponent extends LightningElement {
 
     get totalARRGain(){
         return this.claimedARR+this.selectedARR;
+    }
+
+    get totalARRFull(){
+        return this.claimedFullARR+this.selectedFullARR;
+    }
+
+    get headerTile(){
+        if(this.oppRecordType=='CS_Opportunity'){
+            this.componentTitle='Claim Credit Card Payments - Renewal Opportuinty'
+        }
+        else{
+            this.componentTitle='Claim Credit Card Payments'
+        }
+        return this.componentTitle;
     }
 
 }

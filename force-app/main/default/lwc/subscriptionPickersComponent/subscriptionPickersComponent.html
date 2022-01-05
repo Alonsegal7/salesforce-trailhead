@@ -2,7 +2,7 @@
     <div style="position:relative">
         <template if:true={loadingSave}><lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner></template>
         <template if:true={loadingComp}><lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner></template>
-        <lightning-card title="Claim Credit Card Payments" icon-name="standard:custom_notification">
+        <lightning-card title={headerTile} icon-name="standard:custom_notification">
             <template if:false={loadingComp}>
                 <template if:false={savedSuccess}>
                     <lightning-layout multiple-rows>
@@ -41,8 +41,13 @@
                                     <lightning-pill-container items={subsFinal} onitemremove={handleItemRemove}>
                                         <lightning-icon icon-name="standard:custom_notification" variant="circle"  alternative-text="plan"></lightning-icon>
                                     </lightning-pill-container>
+                                    <template if:false={showRenewalARR}>
                                     <p class="slds-text-heading_small slds-text-color_success">Total ARR Claimed: <lightning-formatted-number value={totalARRGain} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number></p>
-                            </lightning-layout-item>
+                                </template>
+                                    <template if:true={showRenewalARR}>
+                                    <p class="slds-text-heading_small slds-text-color_success">Total Renewal ARR: <lightning-formatted-number value={totalARRFull} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number></p>
+                                </template>
+                                </lightning-layout-item>
                         </template>
                     </lightning-layout>
                 </template>
@@ -67,6 +72,7 @@
             </template>
         </lightning-card>
         <lightning-card if:true={dialogVisible}>
+            <template if:false={loadingSave}>
             <div class="slds-container_small">
                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
@@ -84,6 +90,7 @@
                 </section>
                 <div class="slds-backdrop slds-backdrop_open"></div>
             </div>
+        </template>
         </lightning-card>
 
         <!---->
