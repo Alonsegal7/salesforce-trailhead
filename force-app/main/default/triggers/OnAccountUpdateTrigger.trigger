@@ -9,11 +9,14 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
         }
     }
     if (Trigger.isBefore) {
-        if (trigger.isInsert||trigger.IsUpdate){
+        if (trigger.isInsert||trigger.IsUpdate){ //before insert & update
             Account_MapRegions.Account_MapRegions (trigger.new,trigger.oldmap);
             Account_SetPartnerCompany.Account_SetPartnerCompany (trigger.new,trigger.oldmap);
             Account_Rollup.Account_Rollup_ValueChange(trigger.new, trigger.oldMap);
             Opportunity_RenewalCreation.getProFromActiveContract(Trigger.oldMap, Trigger.new);
+        }
+        if(Trigger.isUpdate){ //before update only
+            Account_OwnerValidation.companyOwnerValidation(Trigger.new, Trigger.oldMap);
         }
     }
     if (Trigger.isAfter) {
