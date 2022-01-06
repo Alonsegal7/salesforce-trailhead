@@ -71,6 +71,7 @@ public class TargetsService {
                         }
                     }
                     if(opp.CP_Target__c != null && targetIdToAddedArrMap.containsKey(opp.CP_Target__c) && opp.CP_Target__r.Partner_Company__c == opp.Channel_Partner__c){
+                        targetIdToAddedArrMap.get(opp.CP_Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
                         if(opp.Account.Account_Source_Type__c == 'Inbound'){
                             targetIdToAddedArrMap.get(opp.CP_Target__c).Actual_ARR_Inbound_LIVE__c += opp.Green_Bucket_ARR_V2__c;
                         } else if (opp.Account.Account_Source_Type__c == 'Outbound'){
