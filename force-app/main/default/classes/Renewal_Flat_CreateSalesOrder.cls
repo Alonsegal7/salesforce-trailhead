@@ -43,7 +43,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
         
         //Map of all original Billing Entities with their IDs  
-        Map <Id, Billing_Entity__c> relevantBEs = new Map<Id, Billing_Entity__c>([SELECT Id,Name,Priority_Id__c FROM Billing_Entity__c WHERE id in: relevantBEIds]);
+        Map <Id, Billing_Entity__c> relevantBEs = new Map<Id, Billing_Entity__c>([SELECT Id,Shipping_Street__c,Shipping_Zip_Postal_Code__c,Shipping_City__c,Shipping_Country_G__c,Shipping_State__c,Ship_To_Name__c,Name,Priority_Id__c FROM Billing_Entity__c WHERE id in: relevantBEIds]);
         //Map of all original Billing Entities with the related opportunity ID
         Map<Id, Billing_Entity__c> oppsWithBEs = new Map<Id, Billing_Entity__c>();
         for (Opportunity opp : renewalOpps) {
@@ -74,7 +74,13 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                 Pricebook2Id = standardPriceBookId,
                 Pricing_Version__c = opp.Pricing_Version__c,
                 Payment_Terms__c = opp.Payment_Terms__c,
-                Priority_Customer_ID_Text__c = oppsWithBEs.get(opp.Id).Priority_Id__c
+                Priority_Customer_ID_Text__c = oppsWithBEs.get(opp.Id).Priority_Id__c,
+                ShippingStreet=oppsWithBEs.get(opp.Id).Shipping_Street__c,
+                ShippingPostalCode=oppsWithBEs.get(opp.Id).Shipping_Zip_Postal_Code__c,
+                ShippingCity=oppsWithBEs.get(opp.Id).Shipping_City__c,
+                ShippingCountry=oppsWithBEs.get(opp.Id).Shipping_Country_G__c,
+                ShippingState=oppsWithBEs.get(opp.Id).Shipping_State__c,
+                ShippingName=oppsWithBEs.get(opp.Id).Ship_To_Name__c
                 //QuoteToName = renewalBE.Name,
                 //BillingAddress = renewalBE.Billing_Address__c,
                 //BillingName = renewalBE.Name,
