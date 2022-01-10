@@ -1,5 +1,6 @@
 .wrap-all{
     position: relative;
+    max-width: 858px;
 }
 h3{
     font-size: 1.25rem;
@@ -31,6 +32,7 @@ h3{
 ul{
     display: flex;
     justify-content: space-evenly;
+    width: 855px;
 }
 li{
     flex-grow: 0;

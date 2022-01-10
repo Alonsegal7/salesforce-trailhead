@@ -38,13 +38,14 @@ export default class DashboardImportantLinksGSI extends LightningElement {
         item.src = icons + '/Lessonly.png';
         this.links.push(JSON.parse(JSON.stringify(item)));        
         
+        /*
         item = {};
         item.name = 'PCSM Board';
         item.title = 'PCSM Board';
         item.url = dashboardURL;
         item.src = icons + '/BoardwithCPM.png';
         this.links.push(JSON.parse(JSON.stringify(item)));
-
+        */
         item = {};
         item.name = 'Branding Assets';
         item.title = 'Co-branding assets on figma';

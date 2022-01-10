@@ -83,6 +83,7 @@ export default class subscriptionPickersComponent extends LightningElement {
                 const temp=[];
                 for(let key in data) {
                     var claimName = data[key].Name_for_CC_Claim__c;
+                    console.log('rectype'+this.oppRecordType);
                     if (this.oppRecordType=='CS_Opportunity') {claimName = data[key].Name_for_CC_Claim_Full_ARR__c; }
                     if (data.hasOwnProperty(key)) { 
                         var singleObj2 = {};

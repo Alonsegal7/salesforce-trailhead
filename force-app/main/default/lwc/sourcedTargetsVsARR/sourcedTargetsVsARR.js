@@ -48,12 +48,12 @@ export default class TargetsVsARR extends LightningElement {
                 this.tiles = new Array();
                 let tile = {};
                 tile.index = 0;
-                tile.titleText = 'Your monthly target ARR:';
-                tile.titleValue = '$' + data.m_target;
+                tile.titleText = 'Your monthly ' + (data.m_target != 0 ? 'target ' : '') + 'ARR:';
+                tile.titleValue = '$' + this.formatNumber(data.m_target);
                 tile.innerTitleText = 'Monthly ARR';
-                tile.innerTitleValue = '$' + data.m_total;
-                tile.inboundARR = '$' + data.m_inbound;
-                tile.outboundARR = '$' + data.m_outbound;
+                tile.innerTitleValue = '$' + this.formatNumber(data.m_total);
+                tile.inboundARR = '$' + this.formatNumber(data.m_inbound);
+                tile.outboundARR = '$' + this.formatNumber(data.m_outbound);
                 tile.data = new Array();
                 tile.data.push(data.m_inbound);
                 tile.data.push(data.m_outbound);
@@ -61,12 +61,12 @@ export default class TargetsVsARR extends LightningElement {
                 this.tiles.push(JSON.parse(JSON.stringify(tile)));
                 tile = {};
                 tile.index = 1;
-                tile.titleText = 'Your quarterly target ARR:';
-                tile.titleValue = '$' + data.q_target;
+                tile.titleText = 'Your quarterly ' + (data.q_target != 0 ? 'target ' : '') + 'ARR:';
+                tile.titleValue = '$' + this.formatNumber(data.q_target);
                 tile.innerTitleText = 'Quarterly ARR';
-                tile.innerTitleValue = '$' + data.q_total;
-                tile.inboundARR = '$' + data.q_inbound;
-                tile.outboundARR = '$' + data.q_outbound;
+                tile.innerTitleValue = '$' + this.formatNumber(data.q_total);
+                tile.inboundARR = '$' + this.formatNumber(data.q_inbound);
+                tile.outboundARR = '$' + this.formatNumber(data.q_outbound);
                 tile.data = new Array();
                 tile.data.push(data.q_inbound);
                 tile.data.push(data.q_outbound);
@@ -74,12 +74,12 @@ export default class TargetsVsARR extends LightningElement {
                 this.tiles.push(JSON.parse(JSON.stringify(tile)));
                 tile = {};
                 tile.index = 2;
-                tile.titleText = 'Your yearly target ARR:';
-                tile.titleValue = '$' + data.y_target;
+                tile.titleText = 'Your yearly ' + (data.y_target != 0 ? 'target ' : '') + 'ARR:';
+                tile.titleValue = '$' + this.formatNumber(data.y_target);
                 tile.innerTitleText = 'Yearly ARR';
-                tile.innerTitleValue = '$' + data.y_total;
-                tile.inboundARR = '$' + data.y_inbound;
-                tile.outboundARR = '$' + data.y_outbound;
+                tile.innerTitleValue = '$' + this.formatNumber(data.y_total);
+                tile.inboundARR = '$' + this.formatNumber(data.y_inbound);
+                tile.outboundARR = '$' + this.formatNumber(data.y_outbound);
                 tile.data = new Array();
                 tile.data.push(data.y_inbound);
                 tile.data.push(data.y_outbound);
@@ -141,6 +141,22 @@ export default class TargetsVsARR extends LightningElement {
         }
         
         //this.chartsDrawn = true;
+    }
+
+    /**
+    * @param {Number} num Unformatted number
+    * @return {Number} Formatted number
+    */
+     formatNumber(num){
+        if (this.isEmpty(num)) return num;
+        let numAsString = num.toString();
+        let numProcessed = '';
+        if (numAsString.length < 4)  return num;
+        for (let i = 0; i < numAsString.length; i++){
+            if (i != 0 && (i % 3) == 0) numProcessed = ',' + numProcessed;
+            numProcessed = numAsString.substr((numAsString.length - 1 - i), 1) + numProcessed;
+        }
+        return numProcessed;
     }
 
     /**

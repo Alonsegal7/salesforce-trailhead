@@ -32,18 +32,22 @@ export default class MyChannelTeam extends LightningElement {
                 if (Dashboard_SalesTrainerID.substring(0, 15) == user.Id.substring(0, 15) && !controlList.includes(user.Id.substring(0, 15))){
                     //console.log('Handling the trainer');
                     salesTrainer = JSON.parse(JSON.stringify(user));
+                    salesTrainer.Title = 'Sales Trainer';
                     controlList.push(salesTrainer.Id.substring(0, 15));
                 } else if (Dashboard_SalesTrainerID.substring(0, 15) != user.Id.substring(0, 15)) {
                     if (!this.isEmpty(user.ManagerId) && !controlList.includes(user.ManagerId.substring(0, 15))){
                         cpmManager = JSON.parse(JSON.stringify(user.Manager));
+                        cpmManager.Title = 'Channel Partner Manager';
                         controlList.push(cpmManager.Id.substring(0, 15));
                     }
                     if (!this.isEmpty(user.ManagerId) && !this.isEmpty(user.Manager.ManagerId) && !controlList.includes(user.Manager.ManagerId.substring(0, 15))){
                         regionalDirector = JSON.parse(JSON.stringify(user.Manager.Manager));
+                        regionalDirector.Title = 'Channel Partner Regional Director';
                         controlList.push(regionalDirector.Id.substring(0, 15));
                     }
-                    if (!this.isEmpty(user.PSM__c) && !controlList.includes(user.PSM__c.substring(0, 15))){
-                        pcsm = JSON.parse(JSON.stringify(user.PSM__r));
+                    if (!this.isEmpty(user.Account.PSM__c) && !this.isEmpty(user.Account.PSM__c) && !controlList.includes(user.Account.PSM__c.substring(0, 15))){
+                        pcsm = JSON.parse(JSON.stringify(user.Account.PSM__r));
+                        pcsm.Title = 'Partner Success Manager';
                         controlList.push(pcsm.Id.substring(0, 15));
                     }
                 }

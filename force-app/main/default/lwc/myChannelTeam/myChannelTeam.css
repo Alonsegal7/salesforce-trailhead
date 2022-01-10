@@ -3,6 +3,8 @@
 }
 h3{
     font-size: 1.25rem;
+    display: block;
+    margin-bottom: 8px;
 }
 .clear:before, .clear:after{
     display: table;
@@ -23,6 +25,9 @@ h3{
     width: 50%;
     min-height: 72px;
 }
+.team-list li:last-child{
+    min-height: initial;
+}
 .member-img-box{
     float: left;
     width: 50px;
@@ -35,7 +40,7 @@ h3{
 }
 .member-info-box{
     float: left;
-    width: 108px;
+    width: 150px;
     padding: 0 8px;
 }
 .member-info-box label{

@@ -12,8 +12,6 @@ export default class ProfileUpdate extends NavigationMixin(LightningElement) {
 
     connectedCallback(){
         this.init();
-
-        console.log('pageRef: ' + pageRef);
     }
 
     init(){
@@ -34,20 +32,26 @@ export default class ProfileUpdate extends NavigationMixin(LightningElement) {
     }
 
 
-    openModal(){
-        let temp = {
-            type: 'standard__objectPage',
-            attributes: {
-                objectApiName: 'Partner_Metrics__c',
-                actionName: 'new'                
-            },
-            state : {
-                nooverride: '1',
-                defaultFieldValues:"Partner__c=" + this.accountId,
-                retUrl: pageRef
-            }
-        };
-        this[NavigationMixin.Navigate](temp);
+    openModal(e){
+        console.log('Update clicked');
+        try{
+            let temp = {
+                type: 'standard__objectPage',
+                attributes: {
+                    objectApiName: 'Partner_Metrics__c',
+                    actionName: 'new'                
+                },
+                state : {
+                    nooverride: '1',
+                    defaultFieldValues:"Partner__c=" + this.accountId
+                }
+            };
+            console.log('New object params: ' + JSON.stringify(temp));
+        
+            this[NavigationMixin.Navigate](temp);
+        } catch(e){
+            console.log('Error openning new Partner Matrix modal: ' + e);
+        }
     }
 
     /**

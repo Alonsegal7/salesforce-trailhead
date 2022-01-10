@@ -1,14 +1,14 @@
 <template>
     <div class="wrap-all">
+        <h3 class="card-title">Profile Update</h3>
         <article class="slds-card clear dashboard-card">
-            <h3 class="card-title">Profile Update</h3>
             <template if:true={dataLoaded}>
                 <div class="card-body clear">
-                    <div class="left">
+                    <div class="slds-float_left">
                         <div class="row"><label>Last Updated </label><span class="b">{lastUpdate}</span></div>
                         <div class="row"><label>Next Update Required </label><span class="b">{nextUpdate}</span></div>
                     </div>
-                    <div class="right">
+                    <div class="slds-float_right">
                         <button class={btnClass} onclick={openModal}>Update</button>
                     </div>
                 </div>

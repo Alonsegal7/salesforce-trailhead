@@ -28,11 +28,13 @@ export default class MyChannelTeamGSI extends LightningElement {
                 if (Dashboard_SalesTrainerID.substring(0, 15) != user.Id.substring(0, 15)) {
                     if (!this.isEmpty(user.ManagerId) && !controlList.includes(user.ManagerId.substring(0, 15))){
                         let currentUser = JSON.parse(JSON.stringify(user.Manager));
+                        //currentUser.Title = 'Channel Partner Manager';
                         this.theTeam.push(currentUser);
                         controlList.push(currentUser.Id.substring(0, 15));
                     }
                     if (!this.isEmpty(user.ManagerId) && !this.isEmpty(user.Manager.ManagerId) && !controlList.includes(user.Manager.ManagerId.substring(0, 15))){
                         let currentUser = JSON.parse(JSON.stringify(user.Manager.Manager));
+                        //currentUser.Title = 'Channel Partner Regional Director';
                         this.theTeam.push(currentUser);
                         controlList.push(currentUser.Id.substring(0, 15));
                     }

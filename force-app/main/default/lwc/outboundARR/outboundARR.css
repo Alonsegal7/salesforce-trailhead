@@ -2,9 +2,11 @@
     position: relative;
 }
 h3{
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     display: block;
     margin-bottom: 8px;
+    border-top: 1px solid #e2e3eb;
+    padding-top: 4px;
 }
 .clear:before, .clear:after{
     display: table;
@@ -15,6 +17,7 @@ h3{
 }
 .dashboard-card{
     border: none;
+    border-radius: 0;
     display: block;
     padding: 10px 16px 0;
 }
@@ -66,10 +69,10 @@ h3{
 }
 .actual-label-box {
     background-image : url('https://monday--partial--c.visualforce.com/resource/DashboardTierStatus/ArrowMarker.png');
-    height: 44px;
+    height: 48px;
     background-position: bottom center;
     position: relative;
-    top: -44px;
+    top: -48px;
     background-repeat: no-repeat;
     background-size: 44%;
     display: inline-block;

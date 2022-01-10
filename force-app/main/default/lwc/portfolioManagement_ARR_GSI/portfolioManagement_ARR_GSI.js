@@ -1,5 +1,7 @@
 import { LightningElement } from 'lwc';
 import init from '@salesforce/apex/Ctrl_DashboardPageApp.initARRGSIPortfolioManagment';
+import greenURL from '@salesforce/label/c.Dashboard_GreenBucket';
+import orangeURL from '@salesforce/label/c.Dashboard_OrangeBucket';
 
 export default class PortfolioManagement_ARR_GSI extends LightningElement {
     dataLoaded = false;
@@ -11,8 +13,13 @@ export default class PortfolioManagement_ARR_GSI extends LightningElement {
     blueBarTitle = '';
     purpleBarStyle = '';
     blueBarStyle = '';
+    greenBucketURL = '';
+    orangeBucketURL = '';
     
     connectedCallback(){
+        this.greenBucketURL = greenURL;
+        this.orangeBucketURL = orangeURL;
+        
         init()
         .then((data) => {
             if (!this.isEmpty(data)){
