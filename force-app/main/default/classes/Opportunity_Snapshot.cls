@@ -70,7 +70,7 @@ public without sharing class Opportunity_Snapshot implements Database.Batchable<
             query+=' and Id NOT IN (SELECT Opportunity__c FROM Opportunity_Snapshot__c where Snapshot_Date__c=today) ';
             if(oppId!=null)
                 query+=' and id=\''+oppId+'\' '; 
-            if(!(today.format('E')=='Sun'||today.format('E')=='Wed'||today.day()==1||today.day()>tomorrow.day()||oppId!=null||forceCreation)&&!test.isRunningTest())
+            if(!(today.format('E')=='Sun'||today.format('E')=='Wed'||today.day()==1||today.day()==10||today.day()>tomorrow.day()||oppId!=null||forceCreation)&&!test.isRunningTest())
                 query+=' limit 0 '; 
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Opportunity_Snapshot ',e,e.getMessage());   
@@ -87,6 +87,7 @@ public without sharing class Opportunity_Snapshot implements Database.Batchable<
             dateTime tomorrow=today+1;
             boolean isOngoing=today.format('E')=='Sun'||today.format('E')=='Wed'||forceCreation?true:false;
             boolean isFirst=today.day()==1?true:false;
+            boolean isTenth=today.day()==10?true:false;
             boolean isLast=today.day()>tomorrow.day()?true:false;
             system.debug('Raz Ben Ron OppSnap scope: '+scope);
             for(Opportunity opp: scope){
@@ -100,6 +101,7 @@ public without sharing class Opportunity_Snapshot implements Database.Batchable<
                 os.Bi_Weekly_Snapshot__c=isOngoing;
                 os.End_of_Month__c=isLast;
                 os.Start_of_Month__c=isFirst;
+                os.Tenth_of_Month__c=isTenth;
                 for (Integer i=0;i<oppHeaderFields.size();i++){
                     String oppFieldName=oppHeaderFields[i];
                     String oppFieldType=string.valueof(oppFieldByName.get(oppFieldName).getType());
