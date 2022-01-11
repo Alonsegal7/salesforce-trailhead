@@ -95,6 +95,8 @@ public without sharing class Target_ScheduledAlertOppsWoTarget implements Schedu
                     newUserTarget.User__c = userId;
                     newUserTarget.Target_Date__c = Date.today().toStartOfMonth();
                     newUserTarget.Amount__c = 0;
+                    newUserTarget.Department__c = 'Sales';
+                    newUserTarget.Period__c = 'Monthly';
                     newTargets.add(newUserTarget);
                 }
             }
@@ -105,6 +107,7 @@ public without sharing class Target_ScheduledAlertOppsWoTarget implements Schedu
                 newCpTarget.Target_Date__c = Date.today().toStartOfMonth();
                 newCpTarget.Amount__c = 0;
                 newCpTarget.Department__c = 'Channel Partners';
+                newCpTarget.Period__c = 'Monthly';
                 newTargets.add(newCpTarget);
             }
             //GSI TARGETS
@@ -114,6 +117,7 @@ public without sharing class Target_ScheduledAlertOppsWoTarget implements Schedu
                 newGsiTarget.Target_Date__c = Date.today().toStartOfMonth();
                 newGsiTarget.Amount__c = 0;
                 newGsiTarget.Department__c = 'GSI';
+                newGsiTarget.Period__c = 'Monthly';
                 newTargets.add(newGsiTarget);
             }
             if(!newTargets.isEmpty()) {
