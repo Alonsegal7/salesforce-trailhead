@@ -85,6 +85,9 @@
                         <template if:true={showManagersSection}>
                             <br/><lightning-button variant="base" label="Managers Section" onclick={handleOverrideClick} class="slds-m-left_xx-small" icon-name="utility:magicwand"></lightning-button>
                         </template>
+                        <template if:true={showRequesrOverrideSection}>
+                            <br/><lightning-button variant="base" label="Request Override to GB/OB from Manager" onclick={handleRequestOverrideClick} class="slds-m-left_xx-small" icon-name="utility:bucket"></lightning-button>
+                        </template>
                         <lightning-card if:true={showOverrideDetails}>
                             <div class="slds-container_small">
                                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
@@ -100,6 +103,24 @@
                                                                 mode="edit">
                                                                 <lightning-messages></lightning-messages>
                                                         </lightning-record-form>
+                                        </div>
+                                        <footer class="slds-modal__footer">
+                                            <lightning-button variant="neutral" name="cancel" label="Cancel" title="Cancel" onclick={handleCancelClick} ></lightning-button>
+                                        </footer>
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop slds-backdrop_open"></div>
+                            </div>
+                        </lightning-card>
+                        <lightning-card if:true={showRequestOverrideFromManager}>
+                            <div class="slds-container_small">
+                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <header class="slds-modal__header">
+                                            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Request GB/OB Override</h2>
+                                        </header>
+                                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                            To override this opportunity, please contact your manager and ask them to click the "Manager's section" inside this opportunity
                                         </div>
                                         <footer class="slds-modal__footer">
                                             <lightning-button variant="neutral" name="cancel" label="Cancel" title="Cancel" onclick={handleCancelClick} ></lightning-button>

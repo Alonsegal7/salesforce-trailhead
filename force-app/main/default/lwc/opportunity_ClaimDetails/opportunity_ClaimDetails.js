@@ -44,6 +44,7 @@ export default class Opportunity_ClaimDetails extends LightningElement {
     soARR;
     showClaimDetails=false;
     showOverrideDetails=false;
+    showRequestOverrideFromManager=false;
     isOppClosed;
     isGBAcc;
     loading=true;
@@ -116,18 +117,27 @@ export default class Opportunity_ClaimDetails extends LightningElement {
         else
             this.showClaimDetails=false;
     }
+    
     handleOverrideClick(e){
-        if(this.showOverrideDetails==false)
-            this.showOverrideDetails=true;
-        else
-            this.showOverrideDetails=false;
+        this.showOverrideDetails=true;
     }
-    handleCancelClick(e){
-        this.showOverrideDetails=false;
+
+    handleRequestOverrideClick(e){
+        if(this.showRequestOverrideFromManager==false)
+            this.showRequestOverrideFromManager=true;
+        else
+            this.showRequestOverrideFromManager=false;
+        }
+        handleCancelClick(e){
+            this.showOverrideDetails=false;
+            this.showRequestOverrideFromManager=false;
     }
 
     get showManagersSection(){
         return (this.isManager||this.isAdmin)==true;
+    }
+    get showRequesrOverrideSection(){
+        return true;
     }
     get GBOppVar(){
         return this.isGBOpp==true;
