@@ -32,6 +32,10 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
         //Account.Plan_Period__c != Monthly
         try{
             String query = 'select Id, AccountId, Expected_Plan_Period__c, Expected_Plan_Tier__c, Expected_Plan_Seats__c from Opportunity where Expected_Plan_Period__c != \'Monthly\' and Expected_Plan_Tier__c = \'Enterprise\' and Account.Low_Touch_CS__c = null and StageName = \'Closed Won\' and Expected_Plan_Seats__c >= 20 and Account.CSM__c = null and RecordType.DeveloperName = \'Partner_Opportunity\' and CloseDate =: threeMonthsAgo and Account.Plan_Period__c != \'Monthly\'';
+            List<Opportunity> opps = Database.query(query);
+            if(opps == null || opps.isEmpty()){
+                Utilities.sendEmail('Batch_PartnersSendPostOnBoardingSurvey no matching oppps in start', 'Batch_PartnersSendPostOnBoardingSurvey no matching opps in start', emailRecepients); 
+            }
             return Database.getQueryLocator(query);
         }catch(Exception e){
             Utilities.sendEmail('Error in Apex Job Batch_PartnersSendPostOnBoardingSurvey start: ', e.getMessage() + '\n' + e.getStackTraceString(), emailRecepients); 
