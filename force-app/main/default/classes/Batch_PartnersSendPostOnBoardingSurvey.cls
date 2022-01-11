@@ -83,6 +83,7 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
             }
             if(accountIdToOppMap.isEmpty()) {
                 System.debug('Batch_PartnersSendPostOnBoardingSurvey no matching accounts. exiting...');
+                Utilities.sendEmail('Batch_PartnersSendPostOnBoardingSurvey no matching accounts', 'Batch_PartnersSendPostOnBoardingSurvey no matching accounts', emailRecepients); 
                 return;
             }
             System.debug('Batch_PartnersSendPostOnBoardingSurvey matching accounts: ' + accountIdToOppMap.keySet());
@@ -100,7 +101,11 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
                     System.debug('Batch_PartnersSendPostOnBoardingSurvey excluded contact: ' + con.Id);
                 }
             }
-            if(!contactsToUpdate.isEmpty()) Database.update(contactsToUpdate);
+            if(!contactsToUpdate.isEmpty()) {
+                Database.update(contactsToUpdate);
+            }else{
+                Utilities.sendEmail('Batch_PartnersSendPostOnBoardingSurvey execute finished with 0 contacts to send survey', 'Batch_PartnersSendPostOnBoardingSurvey execute finished with 0 contacts to send survey.', emailRecepients); 
+            }
         }catch(Exception e){
             Utilities.sendEmail('Error in Apex Job Batch_PartnersSendPostOnBoardingSurvey execute: ', e.getMessage() + '\n' + e.getStackTraceString(), emailRecepients); 
         }
