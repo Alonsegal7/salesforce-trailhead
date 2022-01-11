@@ -6,7 +6,7 @@ public without sharing class Lead_StampsService {
             handleStatusTimestamps(newLeads,oldLeads);
             handleOngoingUpdates(newLeads,oldLeads);
             ownerStamps(newLeads,oldLeads);
-            markCompanyPayingOnCreation(newLeads,oldLeads);
+            markCompanyRelatedStampsUponCreaion(newLeads,oldLeads);
             handlePhoneChange(newLeads,oldLeads);
             handleMqlSql(newLeads,oldLeads);
         } catch(Exception e) {
@@ -14,8 +14,12 @@ public without sharing class Lead_StampsService {
         }
     }
 
-    public static void markCompanyPayingOnCreation(List<Lead> newLeads, Map<Id,Lead> oldLeads){ //this runs on update as well b/c BB might update the Related_Company short time after lead creation. so business wise this is upon creation but the transaction can be update
-        system.debug('entering markCompanyPayingOnCreation');
+    /*usage: 
+    1. check if the related company's arr is > 0
+    2. check if the related company is an outbound company 
+    updated the corresponding lead fields accordingly */
+    public static void markCompanyRelatedStampsUponCreaion(List<Lead> newLeads, Map<Id,Lead> oldLeads){ //this runs on update as well b/c BB might update the Related_Company short time after lead creation. so business wise this is upon creation but the transaction can be update
+        system.debug('entering markCompanyRelatedStampsUponCreaion');
         List<Lead> relevantLeads = new List<Lead>();
         Set<Id> relatedCompsIds = new Set<Id>();
         for(Lead lead: newLeads){
@@ -27,17 +31,21 @@ public without sharing class Lead_StampsService {
             }
         }
         if(relevantLeads.isEmpty()){
-            System.debug('no relevantLeads were found , exiting markCompanyPayingOnCreation');
+            System.debug('no relevantLeads were found , exiting markCompanyRelatedStampsUponCreaion');
             return;
         }
         Map<Id,Account> relatedCompsWithArr = new Map<Id,Account>([select Id from Account where ARR__c > 0 and Name != 'gmail.com' and Id in: relatedCompsIds]);
-        if(relatedCompsWithArr.isEmpty()) {
-            System.debug('all related companies had ARR <= 0 , exiting markCompanyPayingOnCreation');
+        Map<Id,Account> relatedOutboundComps = new Map<Id,Account>([select Id from Account where Outbound_Company__c = true and Name != 'gmail.com' and Id in: relatedCompsIds]);
+        if(relatedCompsWithArr.isEmpty() && relatedOutboundComps.isEmpty()) {
+            System.debug('all related companies had ARR <= 0 and are non-outbound, exiting markCompanyRelatedStampsUponCreaion');
             return;
         }
         for(Lead lead: relevantLeads){
             if(relatedCompsWithArr.containsKey(lead.Related_Company__c)){
                 lead.Company_paying_on_lead_creation__c = true;
+            }
+            if(relatedOutboundComps.containsKey(lead.Related_Company__c)){
+                lead.Outbound_Lead__c = true;
             }
         }
     }
@@ -66,6 +74,7 @@ public without sharing class Lead_StampsService {
             lead.First_Lead_Source__c = lead.LeadSource;
             lead.First_Sub_source__c = lead.Sub_source__c;
             lead.Channel__c = lead.Channel_Lead_Source__c == 'None' ? '-' : lead.Channel_Lead_Source__c;
+            if (lead.Channel_Lead_Source__c == 'Outbound') lead.Outbound_Lead__c = true;
             lead.Received_timestamp__c = Date.today();
             if(String.valueOf(lead.OwnerId).startsWith('005')) {
                 leadsForDistFirst.add(lead);
@@ -204,6 +213,7 @@ public without sharing class Lead_StampsService {
                     leadRec.SDR_Team__c = currOwner.Team__c;
                     leadRec.SDR_Office_stamp__c = currOwner.Office__c;
                     leadRec.SDR_Manager__c = currOwner.ManagerId;
+                    leadRec.SDR_Business_Role__c = currOwner.Business_Role__c;
                 }
             } 
         }
