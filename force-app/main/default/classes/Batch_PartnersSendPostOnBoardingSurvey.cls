@@ -1,6 +1,6 @@
 public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchable<sObject>,Schedulable{
 
-    public List<String> emailRecepients = new List<String>{'kseniasm@monday.com'};
+    public List<String> emailRecepients = new List<String>{'kseniasm@monday.com','avivc@monday.com'};
     public Date threeMonthsAgo = Date.today().addDays(-90);
 
     public Batch_PartnersSendPostOnBoardingSurvey(){
