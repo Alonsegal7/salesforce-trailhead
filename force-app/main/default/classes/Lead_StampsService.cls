@@ -127,18 +127,27 @@ public without sharing class Lead_StampsService {
         StatusMetaDataList listOfMetaData = new StatusMetaDataList();
         for (Lead lead : newLeads) {
             if (oldLeads==null || (oldLeads.get(lead.Id)!=null && lead.Status!=oldLeads.get(lead.Id).Status)) {
+                //resubmittion statuses clear - if lead status changed from Unqualified to Recieved we clean all status timestamps
+                if(oldLeads != null && lead.Status == 'Received' && oldLeads.get(lead.Id).Status == 'Unqualified'){
+                    for (StatusMetaData statusMeta : listOfMetaData.listOfMeta) {
+                        for (String stmpField : statusMeta.relatedTimeStampFields) { //fill the timestamp fields of the curr status
+                            lead.put(stmpField, null);
+                        }
+                    }
+                }
+                //loop over statuses list to fill prev statuses timestamps if they are blank
                 for (StatusMetaData statusMeta : listOfMetaData.listOfMeta) {
                     if ((lead.Status==statusMeta.Name || (statusMeta.Name!='Nurturing' && statusMeta.Name!='Unqualified'))) {
-                        for (String stmpField : statusMeta.relatedTimeStampFields) {
+                        for (String stmpField : statusMeta.relatedTimeStampFields) { //fill the timestamp fields of the curr status
                             if (lead.get(stmpField)==null) {
                                 if(stmpField.containsIgnoreCase('_dt_')) lead.put(stmpField,Datetime.now());
                                 else lead.put(stmpField,Date.today());
                             }
                         }
-                        if(statusMeta.Name == 'Attempting' && lead.Time_to_Attempting__c == null){
+                        if(statusMeta.Name == 'Attempting' && lead.Time_to_Attempting__c == null){ // time to attempting
                             lead.Time_to_Attempting__c = oldLeads == null ? 0 : (Datetime.now().getTime() - lead.CreatedDate.getTime())/60/1000;
                         }
-                        if (lead.Status == statusMeta.Name) break;
+                        if (lead.Status == statusMeta.Name) break; // when reached the curr lead status - exit
                     }
                 }
             }
