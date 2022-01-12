@@ -177,7 +177,10 @@ export default class BigBrainAccountActions extends LightningElement {
   ungrantFeatures(removedFeatures) {
     this.submitting = true;
     ungrantAccountFeatures({ pulseAccountId: this.pulseAccountId, features: removedFeatures })
-      .then(result => this.successToast("Ungranted features successfully", `Features removed: ${addedFeatures}`))
+      .then(result => {
+        this.successToast("Ungranted features successfully", `Features removed: ${removedFeatures}`)
+        console.log(result)
+      })
       .catch(error => {
         this.errorToast("Error while ungranting features")
         console.log(error)
