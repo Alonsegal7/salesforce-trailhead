@@ -48,7 +48,7 @@ public with sharing class BigBrainAPI {
 
     public static String ungrantAccountFeatures(String pulseAccountId, List<string> features){
         Map<String, String> requestParams = new Map<String, String>();
-        requestParams.put('features', String.join(features,','));
+        requestParams.put('features', JSON.serialize(features));
 
         return put('/salesforce_api/account/' + pulseAccountId + '/ungrant_features', requestParams);
     }
