@@ -81,9 +81,6 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                 ShippingCountry=oppsWithBEs.get(opp.Id).Shipping_Country_G__c,
                 ShippingState=oppsWithBEs.get(opp.Id).Shipping_State__c,
                 ShippingName=oppsWithBEs.get(opp.Id).Ship_To_Name__c
-                //QuoteToName = renewalBE.Name,
-                //BillingAddress = renewalBE.Billing_Address__c,
-                //BillingName = renewalBE.Name,
             ));
         }
         try {
@@ -107,7 +104,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
 
         List<QuoteLineItem> qlisToCreate = new List<QuoteLineItem>();
-        List<Contract_Product__c> relevantContractProducts = ([SELECT Id, Net_Per_Unit__c, Recurring_Product_ARR__c, SKU__c, Product__c, Quantity__c, Contract__c, Contract__r.CurrencyIsoCode FROM Contract_Product__c WHERE Contract__c IN: relevantContractIds]);
+        List<Contract_Product__c> relevantContractProducts = ([SELECT Id, Net_Per_Unit__c, Recurring_Product_ARR__c, SKU__c, Product__c, Quantity__c, Contract__c, Contract__r.CurrencyIsoCode FROM Contract_Product__c WHERE Product__r.IsRecurring__c = true AND Contract__c IN: relevantContractIds]);
         System.debug('@@@ Renewal_Flat_CreateSalesOrder relevantContractProducts: '+relevantContractProducts);
         
         //Map of all Contract Products with their Contract ID
@@ -200,7 +197,6 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
         //4. Update the opportunity - sync the new quote and change the Auto Renewal Status to Completed, used for monitoring
         
-        //Update Opportunity - set IsSyncing to True
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
         for (Id oppId : renewalOppIds) {
             oppsToUpdate.add(new Opportunity (Id = oppId, SyncedQuoteId = oppsWithQuotes.get(oppId).Id, Auto_Renewal_Status__c = 'Completed'));
