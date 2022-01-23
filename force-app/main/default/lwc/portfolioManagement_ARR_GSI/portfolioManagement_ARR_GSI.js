@@ -15,17 +15,19 @@ export default class PortfolioManagement_ARR_GSI extends LightningElement {
     blueBarStyle = '';
     greenBucketURL = '';
     orangeBucketURL = '';
+    portfolioARRURL = '';
     
     connectedCallback(){
-        this.greenBucketURL = greenURL;
-        this.orangeBucketURL = orangeURL;
+        this.greenBucketURL = 'https://monday.force.com/gsis/s/report/00O7T0000017euKUAQ/number-of-accounts-gsis?queryScope=everything';
+        this.orangeBucketURL = 'https://monday.force.com/gsis/s/report/00O7T0000017euUUAQ/total-arr-gsis-portal?queryScope=everything';
+        this.portfolioARRURL = 'https://monday.force.com/gsis/s/report/00O7T0000017euUUAQ/total-arr-gsis-portal?queryScope=everything';
         
         init()
         .then((data) => {
             if (!this.isEmpty(data)){
                 console.log('ARR GSI Portfolio Management: ' + JSON.stringify(data));
                 this.count = data.count;
-                this.totalARR = data.total;
+                this.totalARR = this.formatNumber(data.total);
                 this.totalInfluenced = Math.round(data.totalInfluenced / 1000);
                 this.totalSourced = Math.round(data.totalSourced / 1000);
 
@@ -39,6 +41,22 @@ export default class PortfolioManagement_ARR_GSI extends LightningElement {
             }
         })
         .catch((err) => { console.log('Error initializing Portfolio Management: ' + err); });
+    }
+
+    /**
+    * @param {Number} num Unformatted number
+    * @return {Number} Formatted number
+    */
+     formatNumber(num){
+        if (this.isEmpty(num)) return num;
+        let numAsString = num.toString();
+        let numProcessed = '';
+        if (numAsString.length < 4)  return num;
+        for (let i = 0; i < numAsString.length; i++){
+            if (i != 0 && (i % 3) == 0) numProcessed = ',' + numProcessed;
+            numProcessed = numAsString.substr((numAsString.length - 1 - i), 1) + numProcessed;
+        }
+        return numProcessed;
     }
 
     /**

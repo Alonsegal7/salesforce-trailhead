@@ -9,7 +9,7 @@
                     </div>
                     <div class="body">
                         <div class="title">Total ARR</div>
-                        <div class="main">${totalARR}k</div>
+                        <div class="main">${totalARR}</div>
                         <!--<div class="text">Orange bucket <span>Total ARR: ${orangeTotalARR}k</span></div>-->
                     </div>
                     <!--<div class="footer clear">&nbsp;</div>-->
@@ -31,20 +31,22 @@
             </li>
 
             <li class="tile bar">
-                <div class="title">Portfolio ARR</div>
-                <div class="body">
-                    <div class="bar-titles">
-                        <div class="purple">{purpleBarTitle}</div><div class="blue">{blueBarTitle}</div>
+                <a href={portfolioARRURL} target="_blank">
+                    <div class="title">Portfolio ARR</div>
+                    <div class="body">
+                        <div class="bar-titles">
+                            <div class="purple">{purpleBarTitle}</div><div class="blue">{blueBarTitle}</div>
+                        </div>
+                        <div class="bar">
+                            <div class="purple" style={purpleBarStyle}></div>
+                            <div class="blue" style={blueBarStyle}></div>
+                        </div>
                     </div>
-                    <div class="bar">
-                        <div class="purple" style={purpleBarStyle}></div>
-                        <div class="blue" style={blueBarStyle}></div>
+                    <div class="footer clear">
+                        <div class="purple"><span class="marker"></span>Enabled ARR</div>
+                        <div class="blue"><span class="marker"></span>Sourced ARR</div>
                     </div>
-                </div>
-                <div class="footer clear">
-                    <div class="purple"><span class="marker"></span>Influenced ARR</div>
-                    <div class="blue"><span class="marker"></span>Sourced ARR</div>
-                </div>
+                </a>
             </li>
         </ul>
     </div>

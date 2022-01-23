@@ -116,6 +116,9 @@ export default class TargetsVsARR extends LightningElement {
         try{
             for (let i = 0; i < window._tilesArr.length; i++){
                 ctx[i] = window._template.querySelector('canvas.myChart' + i).getContext('2d');
+                if (window._tilesArr[i].data[2] < 0){
+                    window._tilesArr[i].data[2] = 0;
+                }
                 myChart = new Chart(ctx[i], {
                     type: 'doughnut',
                     data: {

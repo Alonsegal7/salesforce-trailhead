@@ -25,6 +25,9 @@ li.tile{
     height: 278px;
     position: relative;
 }
+li.tile:hover{
+    box-shadow: 0px 0px 6px 0px #ddd;
+}
 li.tile:first-child, li.tile:last-child{
     margin: 0;
 }

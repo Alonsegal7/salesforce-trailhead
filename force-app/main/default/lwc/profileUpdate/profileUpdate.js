@@ -8,6 +8,8 @@ export default class ProfileUpdate extends NavigationMixin(LightningElement) {
     nextUpdate = 'N/A';
     btnClass = 'slds-button slds-button_brand blue-btn';
     hasError = false;
+    partnerMatrics;
+    partnerMatricsURL;
     accountId;
 
     connectedCallback(){
@@ -23,6 +25,10 @@ export default class ProfileUpdate extends NavigationMixin(LightningElement) {
                 this.nextUpdate = data.next_update;
                 this.hasError = data.alert;
                 this.accountId = data.accountId;
+                if (!this.isEmpty(data.partner_matrics)){
+                    this.partnerMatrics = data.partner_matrics;
+                    this.partnerMatricsURL = '/partners/s/detail/' + data.partner_matrics.Id;
+                }
                 if (this.hasError){
                     this.btnClass += ' alert';
                 }

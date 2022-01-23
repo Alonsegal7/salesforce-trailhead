@@ -1,0 +1,36 @@
+.wrap-all{
+    position: relative;
+}
+h3{
+    font-size: 1.25rem;
+    display: block;
+    margin-bottom: 8px;
+}
+.clear:before, .clear:after{
+    display: table;
+    content: '';
+}
+.clear:after{
+    clear: both;
+}
+.dashboard-card{
+    border: none;
+    padding: 10px 16px 16px;
+}
+li{
+    float: left;
+    width: 127px;
+    margin-right: 12px;
+    border: 2px solid #e2e3eb;
+    border-radius: 5px;
+    padding: 12px 10px 6px;
+    overflow: hidden;
+}
+li:last-child{
+    margin-right: 0;
+}
+.title-container{
+    text-align: center;
+    margin-top: 12px;
+    font: normal 14px Arial;
+}

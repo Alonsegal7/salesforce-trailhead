@@ -9,6 +9,51 @@ public without sharing class Ctrl_DashboardPageApp {
     }
 
     @AuraEnabled
+    public static Map <String, Object> getCertifications(Id userId){
+        if (userId == null) userId = UserInfo.getUserId();
+        Map <String, Object> res = new Map <String, Object>();
+        Integer sales = 0;
+        Integer am = 0;
+        Integer csm = 0;
+        Integer salesOutOf = 0;
+        Integer amOutOf = 0;
+        Integer csmOutOf = 0;
+        Id accountId = null;
+        List <User> lu = [SELECT Id, AccountId, Account.Partner_Tier__c FROM User WHERE Id = :userId];
+        if (lu != null && !lu.isEmpty() && lu[0].AccountId != null) accountId = lu[0].AccountId;
+        List <Contact> lc = [SELECT Id, Certified_Sales__c, Certified_Account_Management__c, Certified_PCSM__c 
+                             FROM Contact 
+                             WHERE AccountId = :accountId AND 
+                             ((Certified_Sales__c = true AND Certified_Date_Sales__c = THIS_YEAR) OR 
+                             (Certified_Account_Management__c = true AND Certified_Date_Account_Management__c = THIS_YEAR) OR
+                             (Certified_PCSM__c = true AND Certified_Date_PCSM__c = THIS_YEAR))];
+        if (lc != null && !lc.isEmpty()) for (Contact c: lc){
+            if (c.Certified_Sales__c) sales++;
+            if (c.Certified_Account_Management__c) am++;
+            if (c.Certified_PCSM__c) csm++;
+        }
+
+        if (lu != null && !lu.isEmpty() && lu[0].AccountId != null && lu[0].Account.Partner_Tier__c != null){
+            List <Partner_Tier_Certification__mdt> lptc = [SELECT Id, Sales__c, CSM__c, AM__c FROM Partner_Tier_Certification__mdt WHERE MasterLabel = :lu[0].Account.Partner_Tier__c];
+            if (lptc != null && !lptc.isEmpty()){
+                salesOutOf = (Integer)lptc[0].Sales__c;
+                amOutOf = (Integer)lptc[0].AM__c;
+                csmOutOf = (Integer)lptc[0].CSM__c;
+            }
+        }
+
+        res.put('sales', sales);
+        res.put('am', am);
+        res.put('csm', csm);
+        res.put('sales_out_of', salesOutOf);
+        res.put('am_out_of', amOutOf);
+        res.put('csm_out_of', csmOutOf);
+
+        System.debug('iCloudius - Certifications:\n' + JSON.serializePretty(res));
+        return res;        
+    }
+
+    @AuraEnabled
     public static Map <String, Object> initProfileUpdate(Id userId){
         if (userId == null) userId = UserInfo.getUserId();
         Map <String, Object> res = new Map <String, Object>();
@@ -26,6 +71,7 @@ public without sharing class Ctrl_DashboardPageApp {
                 res.put('last_update', lpm[0].CreatedDate.format('dd.MM.yyyy'));
                 res.put('next_update', lpm[0].CreatedDate.addMonths(6).format('dd.MM.yyyy'));
                 res.put('alert', (lpm[0].CreatedDate.addMonths(6) < Date.today().addDays(-7)));
+                res.put('partner_matrics', lpm[0]);
             }
         }
         System.debug('iCloudius - Profile Update:\n' + JSON.serializePretty(res));
@@ -41,17 +87,22 @@ public without sharing class Ctrl_DashboardPageApp {
         Integer count = 0;
         Decimal totalSourced = 0;
         Decimal totalInfluenced = 0;
+        List <Account> la = null;
+        Set <Id> setId = new Set <Id>();
         List <User> lu = [SELECT Id, AccountId FROM User WHERE Id = :userId];
         if (lu != null && !lu.isEmpty() && lu[0].AccountId != null) accountId = lu[0].AccountId;
         if (Test.isRunningTest()) accountId = [SELECT Id FROM Account LIMIT 1].Id;
         if (accountId != null){
-            List <Opportunity> lo = [SELECT Id, Green_Bucket_ARR_V2__c, Opportunity_Origin__c FROM Opportunity WHERE AccountId =:accountId AND GSI__c != null];
+            List <Opportunity> lo = [SELECT Id, Green_Bucket_ARR__c, Green_Bucket_ARR_V2__c, Opportunity_Origin__c FROM Opportunity WHERE IsWon = true AND GSI__c =:accountId];
             if (lo != null && !lo.isEmpty()) for (Opportunity o: lo){
                 total += o.Green_Bucket_ARR_V2__c != null ? o.Green_Bucket_ARR_V2__c : 0;
-                count++;
-                if (o.Opportunity_Origin__c == 'Influenced' && o.Green_Bucket_ARR__c != null) totalInfluenced += o.Green_Bucket_ARR_V2__c;
+                if (o.Opportunity_Origin__c == 'Enabled' && o.Green_Bucket_ARR__c != null) totalInfluenced += o.Green_Bucket_ARR_V2__c;
                 if (o.Opportunity_Origin__c == 'Sourced' && o.Green_Bucket_ARR__c != null) totalSourced += o.Green_Bucket_ARR_V2__c;
             }
+            List <Partner_Region__c> lpr = [SELECT Id FROM Partner_Region__c WHERE Partner_Company__c =:accountId];
+            if (lpr != null && !lpr.isEmpty()) for (Partner_Region__c pr: lpr) setId.add(pr.Id);
+            if (!setId.isEmpty()) la = [SELECT Id FROM Account WHERE GSI_Partner_Region__c IN :setId AND RecordType.DeveloperName = 'Monday_Account' AND Monday_Account_Status__c = 'Paying Account'];
+            if (la != null && !la.isEmpty()) count = la.size();
         }
         res.put('total', total);
         res.put('count', count);
@@ -66,20 +117,27 @@ public without sharing class Ctrl_DashboardPageApp {
         if (userId == null) userId = UserInfo.getUserId();
         Map <String, Object> res = new Map <String, Object>();
         Id accountId = null;
+        Decimal inboundValue = 0;
+        Decimal outboundValue = 0;
         Decimal green = 0;
         Decimal orange = 0;
         Integer greenCount = 0;
         Integer orangeCount = 0;
+        List <GB_Threshold__c> lgb = [SELECT Name, Min_ARR__c FROM GB_Threshold__c WHERE Is_Active__c = true AND (Name = 'Partners' OR Name = 'Partners - Outbound')];
+        if (lgb != null && !lgb.isEmpty()) for (GB_Threshold__c gb: lgb){
+            if (gb.Name == 'Partners') inboundValue = gb.Min_ARR__c;
+            if (gb.Name == 'Partners - Outbound') outboundValue = gb.Min_ARR__c;
+        }
         List <User> lu = [SELECT Id, AccountId FROM User WHERE Id = :userId];
         if (lu != null && !lu.isEmpty() && lu[0].AccountId != null) accountId = lu[0].AccountId;
         if (Test.isRunningTest()) accountId = [SELECT Id FROM Account LIMIT 1].Id;
         if (accountId != null){
-            List <Account> la = [SELECT Id, Name, ARR__c, Is_GB_Account_Partners__c FROM Account 
+            List <Account> la = [SELECT Id, Name, ARR__c, Account_Source_Type__c FROM Account 
                                  WHERE Channel_Partner__c = :lu[0].AccountId AND RecordType.DeveloperName = 'Monday_Account' AND 
                                        Owner_Is_Partner__c = true AND Monday_Account_Status__c = 'Paying Account'];
             if (la != null && !la.isEmpty()) for (Account a: la){
-                if (a.Is_GB_Account_Partners__c) { green += (a.ARR__c != null ? a.ARR__c : 0); greenCount++; }
-                if (!a.Is_GB_Account_Partners__c) { orange += (a.ARR__c != null ? a.ARR__c : 0); orangeCount++; }
+                if ((a.ARR__c >= inboundValue && a.Account_Source_Type__c == 'Inbound') || (a.ARR__c > outboundValue && a.Account_Source_Type__c == 'Outbound')) { green += (a.ARR__c != null ? a.ARR__c : 0); greenCount++; }
+                if (a.ARR__c < inboundValue && a.Account_Source_Type__c == 'Inbound') { orange += (a.ARR__c != null ? a.ARR__c : 0); orangeCount++; }
             }
         }
         res.put('green_count', greenCount);
@@ -94,9 +152,11 @@ public without sharing class Ctrl_DashboardPageApp {
     public static List <User> getUserChannelTeam(Id userId){
         if (userId == null) userId = UserInfo.getUserId();
         Id Dashboard_SalesTrainerID = Id.valueOf(Label.Dashboard_SalesTrainerID);
-        List <User> lu = [SELECT Id, Name, Title, Email, SmallPhotoUrl, ManagerId, Manager.Name, Manager.Title, Manager.Email, Manager.SmallPhotoUrl, 
-                                 Manager.ManagerId, Manager.Manager.Name, Manager.Manager.Title, Manager.Manager.Email, Manager.Manager.SmallPhotoUrl, 
-                                 AccountId, Account.PSM__c, Account.PSM__r.Name, Account.PSM__r.Title, Account.PSM__r.Email, Account.PSM__r.SmallPhotoUrl 
+        List <User> lu = [SELECT Id, Name, Title, UserRole.Name, Email, SmallPhotoUrl, ManagerId, Manager.Name, Manager.Title, Manager.UserRole.Name, Manager.Email, 
+                                 Manager.SmallPhotoUrl, Manager.ManagerId, Manager.Manager.Name, Manager.Manager.Title, Manager.Manager.UserRole.Name, Manager.Manager.Email, 
+                                 Manager.Manager.SmallPhotoUrl, AccountId, Account.PSM__c, Account.PSM__r.Name, Account.PSM__r.Title, Account.PSM__r.UserRole.Name, 
+                                 Account.PSM__r.Email, Account.PSM__r.SmallPhotoUrl, Account.PS_Consultant__c, Account.PS_Consultant__r.Name, Account.PS_Consultant__r.Title, 
+                                 Account.PS_Consultant__r.UserRole.Name, Account.PS_Consultant__r.Email, Account.PS_Consultant__r.SmallPhotoUrl 
                           FROM User 
                           WHERE Id =:userId OR Id =:Dashboard_SalesTrainerID];
         System.debug('iCloudius - Channel team raw data:\n' + JSON.serializePretty(lu));
@@ -111,8 +171,9 @@ public without sharing class Ctrl_DashboardPageApp {
         Decimal outboundArr = 0;
         Decimal mapp = 0;
         
-        List <User> lu = [SELECT Id, AccountId FROM User WHERE Id = :userId];
+        List <User> lu = [SELECT Id, AccountId, Account.Partner_tier__c FROM User WHERE Id = :userId];
         if (lu != null && !lu.isEmpty() && lu[0].AccountId != null){
+            res.put('partner_tier', lu[0].Account.Partner_tier__c);
             Id AccountId = lu[0].AccountId;
             List <Opportunity> lo = [SELECT Id, Name, Channel_Partner__c, Green_Bucket_ARR_V2__c, Opportunity_Source_Type__c, CloseDate 
                                      FROM Opportunity 
@@ -218,12 +279,13 @@ public without sharing class Ctrl_DashboardPageApp {
         List <User> lu = [SELECT Id, AccountId FROM User WHERE Id = :userId];
         if (lu != null && !lu.isEmpty() && lu[0].AccountId != null) accountId = lu[0].AccountId;
         if (Test.isRunningTest()) accountId = [SELECT Id FROM Account WHERE RecordType.DeveloperName = 'Monday_Account' LIMIT 1].Id;
+        System.debug('iCloudius - getMapp for account: ' + AccountId);
         if (AccountId != null){
             List <Account> la = [SELECT Id, Name, MAPP__c, Plan_Seats__c FROM Account 
                                  WHERE RecordType.DeveloperName = 'Monday_Account' AND Owner_Is_Partner__c = true AND Plan_Period__c != 'Monthly' AND 
                                        IS_GB_Account_Partners__c = true AND Monday_Account_Status__c = 'Paying Account' AND Plan_Seats__c != null AND 
                                        Plan_Seats__c != 0 AND Channel_Partner__c = :AccountId];
-
+            System.debug('iCloudius - Found MAPP Accounts: ' + la);
             if (la != null && !la.isEmpty()){
                 Decimal tMapp = 0;
                 Decimal tSeat = 0;
@@ -232,7 +294,7 @@ public without sharing class Ctrl_DashboardPageApp {
                     tSeat += a.Plan_Seats__c;
                 }
                 if (tSeat > 0) {
-                    mapp = Math.floor(tMapp / tSeat);
+                    mapp = ((tMapp / tSeat) * 100).setScale(2);
                 }
             }
         }

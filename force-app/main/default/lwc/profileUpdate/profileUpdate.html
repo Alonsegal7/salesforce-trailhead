@@ -9,7 +9,12 @@
                         <div class="row"><label>Next Update Required </label><span class="b">{nextUpdate}</span></div>
                     </div>
                     <div class="slds-float_right">
-                        <button class={btnClass} onclick={openModal}>Update</button>
+                        <template if:true={hasError}>
+                            <button class={btnClass} onclick={openModal}>Update</button>
+                        </template>
+                        <template if:false={hasError}>
+                            <a class="slds-button slds-button_brand blue-btn" href={partnerMatricsURL} target="_blank">View</a>
+                        </template>                        
                     </div>
                 </div>
             </template>
