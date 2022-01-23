@@ -136,7 +136,7 @@ public without sharing class Partner_PaymentRequestService {
                 if(monthsWithAvailableReports.contains(String.valueOf(dateVal.toStartOfMonth()))){
                     Map<String,String> newMonthValue = new Map<String,String>();
                     newMonthValue.put('label', dt.format('MMM') + ' ' + dt.year());
-                    newMonthValue.put('value', String.valueOf(Date.newInstance(dt.year(), dt.month(), dt.day())));
+                    newMonthValue.put('value', String.valueOf(Date.newInstance(dt.year(), dt.month(), 1)));
                     monthSelectionPicklistValues.add(newMonthValue);
                 }
                 dt = dt.addMonths(-1);
