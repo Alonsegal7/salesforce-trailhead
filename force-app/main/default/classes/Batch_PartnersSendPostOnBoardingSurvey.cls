@@ -1,7 +1,9 @@
-public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchable<sObject>,Schedulable{
+public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchable<sObject>,Schedulable,Database.Stateful{
 
-    public List<String> emailRecepients = new List<String>{'kseniasm@monday.com','avivc@monday.com'};
-    public Date threeMonthsAgo = Date.today().addDays(-90);
+    private List<String> emailRecepients = new List<String>{'kseniasm@monday.com','avivc@monday.com'};
+    private Date threeMonthsAgo = Date.today().addDays(-90);
+    private map<string,list<string>> res = new map<string,list<string>>();
+    private integer totalCons = 0;
 
     public Batch_PartnersSendPostOnBoardingSurvey(){
     }
@@ -33,9 +35,6 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
         try{
             String query = 'select Id, AccountId, Expected_Plan_Period__c, Expected_Plan_Tier__c, Expected_Plan_Seats__c from Opportunity where Expected_Plan_Period__c != \'Monthly\' and Expected_Plan_Tier__c = \'Enterprise\' and Account.Low_Touch_CS__c = null and StageName = \'Closed Won\' and Expected_Plan_Seats__c >= 20 and Account.CSM__c = null and RecordType.DeveloperName = \'Partner_Opportunity\' and CloseDate =: threeMonthsAgo and Account.Plan_Period__c != \'Monthly\'';
             List<Opportunity> opps = Database.query(query);
-            if(opps == null || opps.isEmpty()){
-                Utilities.sendEmail('Batch_PartnersSendPostOnBoardingSurvey no matching opps in start', 'Batch_PartnersSendPostOnBoardingSurvey no matching opps in start', emailRecepients); 
-            }
             return Database.getQueryLocator(query);
         }catch(Exception e){
             Utilities.sendEmail('Error in Apex Job Batch_PartnersSendPostOnBoardingSurvey start: ', e.getMessage() + '\n' + e.getStackTraceString(), emailRecepients); 
@@ -87,12 +86,11 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
             }
             if(accountIdToOppMap.isEmpty()) {
                 System.debug('Batch_PartnersSendPostOnBoardingSurvey no matching accounts. exiting...');
-                Utilities.sendEmail('Batch_PartnersSendPostOnBoardingSurvey no matching accounts', 'Batch_PartnersSendPostOnBoardingSurvey no matching accounts', emailRecepients); 
                 return;
             }
             System.debug('Batch_PartnersSendPostOnBoardingSurvey matching accounts: ' + accountIdToOppMap.keySet());
             //query contacts related to accounts of map A and put them to map C of contact id to account id
-            List<Contact> contactsList = [select Id, AccountId, Last_Opportunity_For_Survey__c, Of_Post_Onboarding_Surveys__c from Contact where AccountId IN: accountIdToOppMap.keySet()];
+            List<Contact> contactsList = [select Id, AccountId, Account.Name, Name, Last_Opportunity_For_Survey__c, Of_Post_Onboarding_Surveys__c from Contact where AccountId IN: accountIdToOppMap.keySet()];
             List<Contact> contactsToUpdate = new List<Contact>();
             
             //for all of them check if account last opp id from map A is different from contact.Last_Opportunity_For_Survey__c if yes increase Of_Post_Onboarding_Surveys__c by 1
@@ -101,14 +99,15 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
                 if(con.Last_Opportunity_For_Survey__c != idOfCurrentOpp) {
                     Decimal numOfSurveys = con.Of_Post_Onboarding_Surveys__c;
                     contactsToUpdate.add(new Contact(Id = con.Id, Partners_Post_Onboarding_Survey_Date__c = Date.today(), Last_Opportunity_For_Survey__c = idOfCurrentOpp, Of_Post_Onboarding_Surveys__c = numOfSurveys + 1));
+                    if(res.containsKey(con.Account.Name)) res.get(con.Account.Name).add(con.Name);
+                    else res.put(con.Account.Name, new list<string>{con.Name});
                 } else {
                     System.debug('Batch_PartnersSendPostOnBoardingSurvey excluded contact: ' + con.Id);
                 }
             }
             if(!contactsToUpdate.isEmpty()) {
+                totalCons += contactsToUpdate.size();
                 Database.update(contactsToUpdate);
-            }else{
-                Utilities.sendEmail('Batch_PartnersSendPostOnBoardingSurvey execute finished with 0 contacts to send survey', 'Batch_PartnersSendPostOnBoardingSurvey execute finished with 0 contacts to send survey.', emailRecepients); 
             }
         }catch(Exception e){
             Utilities.sendEmail('Error in Apex Job Batch_PartnersSendPostOnBoardingSurvey execute: ', e.getMessage() + '\n' + e.getStackTraceString(), emailRecepients); 
@@ -116,5 +115,19 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
     }
     
     public void finish(Database.BatchableContext BC){
+        if(res.isEmpty()){
+            Utilities.sendEmail('Finished Partners Survey Batch; total accounts: 0; total contacts: 0', 'no matching opps were found today...', emailRecepients); 
+            return;
+        }
+        string emailBody = '';
+        for(string accName: res.keySet()){
+            emailBody += accName;
+            emailBody += '\n' + 'Contacts: ';
+            for(string conName: res.get(accName)){
+                emailBody += conName + '; ';
+            }
+            emailBody += '\n' + 'contacts num: ' + res.get(accName).size() + '\n';
+        }
+        Utilities.sendEmail('Finished Partners Survey Batch; total accounts: ' + res.size() + '; total contacts: '+ totalCons, emailBody, emailRecepients); 
     }
 }
