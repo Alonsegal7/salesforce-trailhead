@@ -255,7 +255,7 @@ public with sharing class DealRegistration_Handler {
         public void execute(QueueableContext ctx) {
             Account_Rollup.collisionState = true;
             List<Opportunity> opportunityToUpdate = new List<Opportunity>();
-            Opportunity convertedOpp = [SELECT Id, Name, CloseDate, Type, StageName, RecordTypeId, Use_Cases_PL__c, DepartmentFunction__c, OwnerId, Deal_Registration__c, Competition_They_re_Evaluating__c, Current_Tool__c, Timeline__c, Pains_PL__c, Main_Point_of_Contacts__c, Company__c, Monday_Account__c, LeadSource, pulse_account_ids__c
+            Opportunity convertedOpp = [SELECT Id, Name, CloseDate, Type, StageName, RecordTypeId, Use_Cases_PL__c, DepartmentFunction__c, OwnerId, Deal_Registration__c, Competition_They_re_Evaluating__c, Current_Tool__c, Timeline__c, Pains_PL__c, Main_Point_of_Contacts__c, Company__c, Monday_Account__c, LeadSource, pulse_account_ids__c, Partner_Marketing_Activity__c
                                         FROM Opportunity WHERE Id =: OpportunityIdFromConvert][0];
                 convertedOpp.Name = newLead.Company + ' - ' + dealRegRecord.Expected_Tier__c + ' - ' + dealRegRecord.Expected_Plan_Seats__c + ' - New Business';
                 convertedOpp.CloseDate = dealRegRecord.Expected_Closed_Date__c;
@@ -279,6 +279,7 @@ public with sharing class DealRegistration_Handler {
                 convertedOpp.Expected_Plan_Seats__c = dealRegRecord.Expected_Plan_Seats__c;
                 convertedOpp.Expected_Plan_Tier__c = dealRegRecord.Expected_Tier__c;
                 convertedOpp.Expected_Plan_Period__c = 'Yearly';
+                convertedOpp.Partner_Marketing_Activity__c = dealRegRecord.Partner_Marketing_Activity__c;
             Database.update(convertedOpp);
             Opportunity oppCheck = [SELECT Id, Owner.Function__c, Owner.Office__c, Account_Source_Type__c FROM Opportunity WHERE Id=:convertedOpp.Id][0];
             system.debug('### oppCheck: ' + oppCheck);

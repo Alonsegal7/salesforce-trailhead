@@ -137,6 +137,12 @@
             
                                     <div class="slds-grid slds-gutters">
                                         <div class="slds-col slds-size_1-of-1">
+                                            <lightning:inputField fieldName="Partner_Marketing_Activity__c" variant="label-stacked"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-1">
                                             <lightning:inputField fieldName="Comments__c" variant="label-stacked"/>
                                         </div>
                                     </div>
