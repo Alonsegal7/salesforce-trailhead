@@ -15,7 +15,7 @@ public with sharing class VatVerificationService {
             HttpRequest request = new HttpRequest();
             string url = ConfigManager.getBillingVatServiceUrl();
             String authenticationToken = whMTD.Key__c;
-            String endpoint = url+'/billing-subscriptions/sales-managed/salesforce/taxes/validate-vat-number/?country='+countryCode[0].Name+'&vatNumber='+vatNumber+'&token='+authenticationToken;
+            String endpoint = url+'/billing-subscriptions/sales-managed/salesforce/taxes/validate-vat-number/?vatNumberType='+GetVatNumberType(countryName,null)+'&country='+countryCode[0].Name+'&vatNumber='+vatNumber+'&token='+authenticationToken;
             request.setEndpoint(endpoint);
             request.setMethod('GET');
             HttpResponse response=null;
@@ -44,6 +44,10 @@ public with sharing class VatVerificationService {
         else {
             return isIrrelevant;    
         }
+    }
+
+    public static string GetVatNumberType(string country, string state){
+        return country=='Australia'?'au_abn':'eu_vat';
     }
 
 
