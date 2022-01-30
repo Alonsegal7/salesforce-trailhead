@@ -25,7 +25,7 @@ public class TargetsService {
         Decimal arrToAdd = 0;
         for(Opportunity opp: newOpps){
             if((((opp.StageName == 'Closed Won' || oldOpps.get(opp.Id).StageName == 'Closed Won') && opp.StageName != oldOpps.get(opp.Id).StageName) 
-                    || (opp.StageName == 'Closed Won' && (opp.Expected_ARR__c != oldOpps.get(opp.Id).Expected_ARR__c || opp.Claimed_ARR__c != oldOpps.get(opp.Id).Claimed_ARR__c || opp.Target__c != oldOpps.get(opp.Id).Target__c || opp.CP_Target__c != oldOpps.get(opp.Id).CP_Target__c || opp.Is_Potential_GB_Opportunity__c != oldOpps.get(opp.Id).Is_Potential_GB_Opportunity__c || opp.Transition_to_GB__c != oldOpps.get(opp.Id).Transition_to_GB__c)))
+                    || (opp.StageName == 'Closed Won' && (opp.Expected_ARR__c != oldOpps.get(opp.Id).Expected_ARR__c || opp.Claimed_ARR__c != oldOpps.get(opp.Id).Claimed_ARR__c || opp.Target__c != oldOpps.get(opp.Id).Target__c || opp.CP_Target__c != oldOpps.get(opp.Id).CP_Target__c || opp.GSI_Target__c != oldOpps.get(opp.Id).GSI_Target__c || opp.Is_Potential_GB_Opportunity__c != oldOpps.get(opp.Id).Is_Potential_GB_Opportunity__c || opp.Transition_to_GB__c != oldOpps.get(opp.Id).Transition_to_GB__c)))
                 && (opp.Transition_to_GB__c || opp.Is_Potential_GB_Opportunity__c || oldOpps.get(opp.Id).Transition_to_GB__c || oldOpps.get(opp.Id).Is_Potential_GB_Opportunity__c)){
                     //update targets
                     if(opp.Target__c != null) targetIds.add(opp.Target__c);
@@ -82,7 +82,7 @@ public class TargetsService {
                         targetIdToAddedArrMap.get(opp.GSI_Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
                         if(opp.Opportunity_Origin__c == 'Sourced'){
                             targetIdToAddedArrMap.get(opp.GSI_Target__c).Actual_ARR_Sourced_LIVE__c += opp.Green_Bucket_ARR_V2__c;
-                        } else if (opp.Opportunity_Origin__c == 'Influenced'){
+                        } else if (opp.Opportunity_Origin__c == 'Enabled'){
                             targetIdToAddedArrMap.get(opp.GSI_Target__c).Actual_ARR_Influenced_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
                         }
                     }
