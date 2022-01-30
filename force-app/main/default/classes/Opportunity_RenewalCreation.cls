@@ -63,7 +63,7 @@ public without sharing class Opportunity_RenewalCreation {
         System.debug('### contractQuery: ' + [SELECT Id FROM Contract WHERE Id =: recordId LIMIT 1]);
 
         Contract cont = [
-            SELECT Id, Name, EndDate, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Manager__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c, CurrencyIsoCode
+            SELECT Id, Name, EndDate, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Manager__c, Renewal_Opp_Created_from_Contract__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c, CurrencyIsoCode
             FROM Contract 
             WHERE Id =: recordId LIMIT 1];
         System.debug('### cont: ' + cont);
@@ -148,6 +148,8 @@ public without sharing class Opportunity_RenewalCreation {
             );
             system.debug('### newOpp: ' + newOpp);
             insert newOpp;
+            cont.Renewal_Opp_Created_from_Contract__c = true;
+            update cont;
             system.debug('### newOpp_v1: ' + newOpp);
             return newOpp;
         }
