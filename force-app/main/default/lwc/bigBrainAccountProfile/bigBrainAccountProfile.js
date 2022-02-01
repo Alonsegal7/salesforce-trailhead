@@ -41,6 +41,7 @@ export default class BigBrainAccountProfile extends LightningElement {
   seatsLeft;
 
   get isError() {
+    if (this.error) { console.log(this.error) }
     return !!this.error;
   }
 
@@ -55,28 +56,31 @@ export default class BigBrainAccountProfile extends LightningElement {
   get hasStatuses() {
     return this.statuses && this.statuses.length > 0;
   }
-  
+
   @wire(getAccountProfile, { pulseAccountId: '$pulseAccountId' })
-  data ({ error, data }) {
+  data({ error, data }) {
     this.error = error;
     this.data = data;
+    console.log("The data:")
+    console.log(data)
+
     if (!data) return;
 
     const parsedData = JSON.parse(data);
 
-    const { 
+    const {
       domain,
       industry,
       created_at,
       last_seen,
-      trial_period, 
-      company_size, 
-      max_team_size, 
-      slug, 
-      plan = {}, 
-      pricing_version, 
-      payment_currency, 
-      collection_usd, 
+      trial_period,
+      company_size,
+      max_team_size,
+      slug,
+      plan = {},
+      pricing_version,
+      payment_currency,
+      collection_usd,
       arr,
       users_breakdown = {},
       account_name,
@@ -86,8 +90,8 @@ export default class BigBrainAccountProfile extends LightningElement {
       xi_time_diff,
       statuses,
       message
-   } = parsedData;
-   
+    } = parsedData;
+
     const { max_user, tier, period, started_at, ended_at } = plan;
     const { total_seats, members, viewers, guests, free_users, seats_left } = users_breakdown;
     const timeDiffText = xi_time_diff ? '' : `(${xi_time_diff})`;
@@ -102,7 +106,7 @@ export default class BigBrainAccountProfile extends LightningElement {
     this.teamSize = max_team_size || UNKNOWN;
     this.slug = `https://${slug}${SLUG_SUFFIX}`;
     this.address = `${xi_city}, ${xi_region}, ${xi_country} ${timeDiffText}`;
-    this.statuses = (statuses || []).map(s => ({label: s}));
+    this.statuses = (statuses || []).map(s => ({ label: s }));
 
     if (tier) {
       this.plan = `${max_user} ${tier} ${period}`;
