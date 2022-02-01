@@ -1,11 +1,32 @@
 public without sharing class Batch_PartnerCommissionModel_TierChanged implements Database.Batchable<sObject>, Database.Stateful {
     
-    private Datetime startingFrom; //this datetime param will be the end date of the existing PCs & PCMs, start date of the new ones will be startingFrom + 1 minute.
-    private set<id> accountsToExclude_set; //set of ids of account we do not want to include in this batch scope, they are excluded from the query in start
+    private Date startFrom; // user input
+    private set<id> accountsToExclude_set; //user optional input - set of ids of account we do not want to include in this batch scope, they are excluded from the query in start
+    private Id partnerAccountId; //user optional input - account to run the script on
+    private Datetime startDT;
+    private Datetime endDT;
+    private string reason = 'Partner New Tier';
 
-    public Batch_PartnerCommissionModel_TierChanged(Datetime startingFromDT, set<id> accountsToExclude) {
-        this.startingFrom = startingFromDT;
+    public Batch_PartnerCommissionModel_TierChanged(Date startFrom) {
+        this.startFrom = startFrom;
+        setStartEndDatetimes();
+    }
+
+    public Batch_PartnerCommissionModel_TierChanged(Date startFrom, set<id> accountsToExclude) {
+        this.startFrom = startFrom;
+        setStartEndDatetimes();
         this.accountsToExclude_set = accountsToExclude_set;
+    }
+
+    public Batch_PartnerCommissionModel_TierChanged(Date startFrom, Id partnerAccountId) {
+        this.startFrom = startFrom;
+        setStartEndDatetimes();
+        this.partnerAccountId = partnerAccountId;
+    }
+
+    private void setStartEndDatetimes(){
+        this.startDT = this.startFrom.toStartOfMonth(); // start datetime of new PCMs and PCs will be the 1st of month of the starting from at 00:00:00
+        this.endDT = this.startDT.addSeconds(-1); // end time of old PCMs and PCs will be the end of prev month at 23:59:59
     }
 
     private static Map<String,Commission_Model__c> commissionModelMap {
@@ -23,14 +44,18 @@ public without sharing class Batch_PartnerCommissionModel_TierChanged implements
 
     public Database.QueryLocator start(Database.BatchableContext BC){
         try{
-            String query = 'select Id, Name, Partner_Tier__c, Partner_Commission_Model__c, Partner_Commission_Model__r.Commission_Model__r.Partner_Tier__c, Partner_Commission_Model__r.End_Date__c';
+            system.debug('Batch_PartnerCommissionModel_TierChanged entered start');
+            system.debug('Batch_PartnerCommissionModel_TierChanged startDT: '+startDT);
+            system.debug('Batch_PartnerCommissionModel_TierChanged endDT: '+endDT);
+
+            String query = 'select Id, Name, Partner_Tier__c, Partner_Commission_Model__c, Partner_Commission_Model__r.Commission_Model__r.Partner_Tier__c, Partner_Commission_Model__r.Start_Date__c, Partner_Commission_Model__r.End_Date__c';
             query += ' from Account where';
             query += ' RecordType.DeveloperName = \'Partner_Company\'';     //partner accounts only
             query += ' and Partner_Tier__c != null';                        //with tier not blank
             query += ' and Partner_Commission_Model__c != null';            //with active PCM
             query += ' and (Partner_Commission_Model__r.End_Date__c = null or Partner_Commission_Model__r.End_Date__c > TODAY)'; 
-            //query += ' and Id = \'0011t00000sKAIcAAO\'';     //test account id
-            if(accountsToExclude_set != null && !accountsToExclude_set.isEmpty()) query += ' and Id not in: accountsToExclude_set';               //excluded accounts from batch input param
+            if(accountsToExclude_set != null && !accountsToExclude_set.isEmpty()) query += ' and Id not in: accountsToExclude_set'; //excluded accounts from batch input param
+            else if(partnerAccountId != null) query += ' and Id =: partnerAccountId'; //target account from batch input param
             system.debug('Batch_PartnerCommissionModel_TierChanged start query: ' + query);
             return Database.getQueryLocator(query);
         }catch(Exception e){
@@ -52,9 +77,24 @@ public without sharing class Batch_PartnerCommissionModel_TierChanged implements
             for(Account acc: scope){
                 if(acc.Partner_Tier__c != acc.Partner_Commission_Model__r.Commission_Model__r.Partner_Tier__c){
                     relevantAccounts_set.add(acc.Id);
-                    pcmsToCloseList.add(new Partner_Commission_Model__c(Id = acc.Partner_Commission_Model__c, End_Date__c = startingFrom));
-                    system.debug('startingFrom: ' + startingFrom);
-                    pcmsToOpenList.add(new Partner_Commission_Model__c(Name = acc.Name + ' - ' + acc.Partner_Tier__c, Partner_Company__c = acc.Id, Commission_Model__c = commissionModelMap.get(acc.Partner_Tier__c).Id, Start_Date__c = startingFrom.addMinutes(1)));
+                    if(acc.Partner_Commission_Model__r.Start_Date__c >= startFrom.toStartOfMonth()){ //pcms created during or after startFrom month
+                        pcmsToOpenList.add(new Partner_Commission_Model__c(
+                            Id = acc.Partner_Commission_Model__c, 
+                            Partner_Company__c = acc.Id, 
+                            Commission_Model__c = commissionModelMap.get(acc.Partner_Tier__c).Id
+                        ));
+                    } else {
+                        pcmsToCloseList.add(new Partner_Commission_Model__c(
+                            Id = acc.Partner_Commission_Model__c, 
+                            End_Date__c = endDT
+                        ));
+                        pcmsToOpenList.add(new Partner_Commission_Model__c(
+                            Name = acc.Name + ' - ' + acc.Partner_Tier__c, 
+                            Partner_Company__c = acc.Id, 
+                            Commission_Model__c = commissionModelMap.get(acc.Partner_Tier__c).Id, 
+                            Start_Date__c = startDT
+                        ));
+                    }
                 }
             }
             if(relevantAccounts_set.isEmpty()) return;
@@ -86,11 +126,14 @@ public without sharing class Batch_PartnerCommissionModel_TierChanged implements
                                                             Account_Source__c, 
                                                             Created_From__c, 
                                                             ARR_Upon_Create__c, 
-                                                            Opportunity__c, 
                                                             Start_Date__c, 
                                                             End_Date__c, 
-                                                            Percentage__c from Partner_Commission__c 
-                                                            where is_Last__c = true and Renewable__c = true and Partner_Company__c IN: relevantAccounts_set];
+                                                            Percentage__c,
+                                                            Trigger_Valid_From__c
+                                                            from Partner_Commission__c 
+                                                            where is_Last__c = true 
+                                                            and Renewable__c = true 
+                                                            and Partner_Company__c IN: relevantAccounts_set]; 
 
             if(existingPcs.isEmpty()) return;
             system.debug('existingPcs: '+ existingPcs);
@@ -98,25 +141,25 @@ public without sharing class Batch_PartnerCommissionModel_TierChanged implements
             List<Partner_Commission__c> pcsToInsert = new List<Partner_Commission__c>();
             List<Partner_Commission__c> pcsToUpdate = new List<Partner_Commission__c>();
             for(Partner_Commission__c pc: existingPcs){
-                Partner_Commission__c newPc = pc.clone(false, true, false, false);
-                newPc.Start_Date__c = startingFrom.addMinutes(1);
-                newPc.End_Date__c = null;
                 Commission_Model__c matchingCm = commissionModelMap.get(pc.Partner_Company__r.Partner_Tier__c);
-                if(matchingCm.Period__c != null) {
-                    newPc.End_Date__c = newPc.Start_Date__c.addMonths(Integer.valueOf(matchingCm.Period__c));
+                if(pc.Trigger_Valid_From__c >= startFrom.toStartOfMonth()){ //PCs valid from the startFrom month (Trigger_Valid_From__c) will not be updated with new end date but only updated with new PCM and percent.
+                    pc = updatePCbyCM(pc, matchingCm);
+                    pc.Partner_Commission_Model__c = partnerAccToPcmMap.get(pc.Partner_Company__c);
+                    pcsToUpdate.add(pc);
+                    continue;
                 }
-                if(newPc.Account_Source__c == 'Inbound'){
-                    newPc.Percentage__c = matchingCm.Inbound_Percent__c;
-                } else if(newPc.Account_Source__c == 'Outbound'){
-                    newPc.Percentage__c = matchingCm.Outbound_Percent__c;
-                }
+                Partner_Commission__c newPc = pc.clone(false, true, false, false);
+                newPc.Trigger_Valid_From__c = null;
+                newPc.Start_Date__c = startDT;
+                newPc.End_Date__c = null;
+                newPc = updatePCbyCM(newPc, matchingCm);
+                newPc.Previous_Partner_Commission__c = pc.Id;
                 newPc.Partner_Commission_Model__c = partnerAccToPcmMap.get(pc.Partner_Company__c);
                 newPc.Created_From__c = 'Code';
-                newPc.Type__c = matchingCm.Commission_Type__c;
-                newPc.Creation_Reason__c = 'Account Tier Changed';
+                newPc.Creation_Reason__c = reason;
                 newPc.Name = pc.Pulse_Account_ID__c + ' - ' + pc.Partner_Company__r.Name + ' - ' + matchingCm.Partner_Tier__c;
                 pcsToInsert.add(newPc);
-                pcsToUpdate.add(new Partner_Commission__c(Id = pc.Id, End_Date__c = startingFrom, Close_Reason__c = 'Account Tier Changed', is_Last__c = false));
+                pcsToUpdate.add(new Partner_Commission__c(Id = pc.Id, End_Date__c = endDT, Close_Reason__c = reason, is_Last__c = false));
             }
 
             if(!pcsToUpdate.isEmpty()) {
@@ -135,5 +178,18 @@ public without sharing class Batch_PartnerCommissionModel_TierChanged implements
 
     public void finish(Database.BatchableContext BC){
 
+    }
+
+    private Partner_Commission__c updatePCbyCM(Partner_Commission__c pc, Commission_Model__c matchingCm){
+        if(matchingCm.Period__c != null) {
+            pc.End_Date__c = pc.Start_Date__c.addMonths(Integer.valueOf(matchingCm.Period__c));
+        }
+        if(pc.Account_Source__c == 'Inbound'){
+            pc.Percentage__c = matchingCm.Inbound_Percent__c;
+        } else if(pc.Account_Source__c == 'Outbound'){
+            pc.Percentage__c = matchingCm.Outbound_Percent__c;
+        }
+        pc.Type__c = matchingCm.Commission_Type__c;
+        return pc;
     }
 }
