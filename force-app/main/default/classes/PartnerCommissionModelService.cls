@@ -17,6 +17,7 @@ public class PartnerCommissionModelService {
                 partnerCompanyIds.add(pcm.Partner_Company__c);
             }
         }
+        if(partnerCompanyIds.isEmpty()) return;
         Map<Id,Account> partnerCompaniesMap = new Map<Id,Account>([select Id, (select Id, Start_Date__c, End_Date__c from Partner_Commission_Models__r) from Account where Id IN: partnerCompanyIds]);
         for(Partner_Commission_Model__c newPcm : newPcmList){
             for(Partner_Commission_Model__c existingPcm: partnerCompaniesMap.get(newPcm.Partner_Company__c).Partner_Commission_Models__r){
