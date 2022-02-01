@@ -27,13 +27,12 @@ public class PartnerCommissionModel_PartnerSigned {
             if(goldFirstYearComModelList.isEmpty()) return;
             Id goldFirstYearComModel = goldFirstYearComModelList.get(0).Id;
             List<Partner_Commission_Model__c> existingPcms = [select Id, Partner_Company__c from Partner_Commission_Model__c where Commission_Model__c =: goldFirstYearComModel and Partner_Company__c IN:  partnerCompanyAccounts.keySet() and (End_Date__c = null or End_Date__c >: Datetime.now())];
-            Set<Id> accountsWithPcms = new Set<Id>();
             for(Partner_Commission_Model__c existingPcm: existingPcms){
-                accountsWithPcms.add(existingPcm.Partner_Company__c);
+                partnerCompanyAccounts.remove(existingPcm.Partner_Company__c);
             }
+            if(partnerCompanyAccounts.isEmpty()) return;
             List<Partner_Commission_Model__c> newPcmList = new List<Partner_Commission_Model__c>();
             for(Id accId: partnerCompanyAccounts.keySet()){
-                if(accountsWithPcms.contains(accId)) continue;
                 newPcmList.add(new Partner_Commission_Model__c(Name = partnerCompanyAccounts.get(accId) + ' - Gold First Year', Partner_Company__c = accId, Commission_Model__c = goldFirstYearComModel, Start_Date__c = Datetime.now()));
             }
             if(!newPcmList.isEmpty()) Database.insert(newPcmList);

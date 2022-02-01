@@ -392,4 +392,3 @@ public with sharing class Lead_StampsServiceTest {
         system.assertEquals(Date.today(), leadQualifiedStatus.Qualified_timestamp__c);
     }
 }
-

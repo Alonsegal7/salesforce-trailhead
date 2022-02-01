@@ -429,9 +429,6 @@ public with sharing class ContractEventHandlerTest {
 
         System.assertEquals(createdCon.Id ,ma11.Active_Contract__c);
         System.assertEquals(null ,ma12.Active_Contract__c);
-
-
-        
     }
 
 }

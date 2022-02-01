@@ -117,7 +117,7 @@ export default class TargetsVsARR extends LightningElement {
                 myChart = new Chart(ctx[i], {
                     type: 'doughnut',
                     data: {
-                        labels: ['Inbound', 'Outbound', 'Gap to Target'],
+                        labels: ['Enabled', 'Sourced', 'Gap to Target'],
                         datasets: [{
                             label: 'Targets Vs. ARR',
                             data: window._sourceTilesArr[i].data,

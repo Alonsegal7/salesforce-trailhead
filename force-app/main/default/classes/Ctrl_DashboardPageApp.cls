@@ -9,6 +9,49 @@ public without sharing class Ctrl_DashboardPageApp {
     }
 
     @AuraEnabled
+    public static Map <String, Object> initSpiff(Id userId){
+        if (userId == null) userId = UserInfo.getUserId();
+        Map <String, Object> res = new Map <String, Object>();
+        Id accountId = null;
+        Decimal target = 0;
+        Decimal actual = 0;
+        Decimal arr = 0;
+        Decimal newBizArr = 0;
+        Decimal spiff = 0;
+        String title = 'Spiff - Q';
+        Date d = Date.today();
+        if (d.month() < 4) title += '1';
+        if (d.month() < 7 && d.month() > 3) title += '2';
+        if (d.month() < 10 && d.month() > 6) title += '3';
+        if (d.month() > 9) title += '4';
+        title += '/' + String.valueOf(d.year()).right(2);
+        List <User> lu = [SELECT Id, AccountId, Account.Partner_Tier__c FROM User WHERE Id = :userId];
+        if (lu != null && !lu.isEmpty() && lu[0].AccountId != null) accountId = lu[0].AccountId;
+        List <Target__c> lt = [SELECT Id, Amount__c, Closed_Won_Arr__c FROM Target__c WHERE Target_Date__c = THIS_QUARTER AND Partner_Company__c = :accountId];
+        if (lt != null && !lt.isEmpty()) for (Target__c t: lt) {
+            if (t.Amount__c != null) target += t.Amount__c;
+            if (t.Closed_Won_Arr__c != null) actual += t.Closed_Won_Arr__c;
+        }
+        if (actual >= target || Test.isRunningTest()){
+            List <Opportunity> lo = [SELECT Id, Name, Green_Bucket_ARR_V2__c, Opportunity_Type__c, Expected_Plan_Tier__c FROM Opportunity 
+                                     WHERE Channel_Partner__c = :accountId AND Is_Potential_GB_Opportunity__c = true AND StageName = 'Closed Won' AND CloseDate = THIS_QUARTER];
+            if (lo != null && !lo.isEmpty()) for (Opportunity o: lo){
+                if (o.Green_Bucket_ARR_V2__c != null) arr += o.Green_Bucket_ARR_V2__c;
+                if (o.Green_Bucket_ARR_V2__c != null && o.Opportunity_Type__c == 'New Business' && o.Expected_Plan_Tier__c != null && o.Expected_Plan_Tier__c.containsIgnoreCase('Enterprise')) newBizArr += o.Green_Bucket_ARR_V2__c;
+            }
+            spiff = Math.floor(((arr * 0.025) + (newBizArr * 0.05)));
+        }
+        
+        res.put('title', title);
+        res.put('target', target);
+        res.put('actual', actual);
+        res.put('spiff', spiff);
+        
+        System.debug('iCloudius - Spiff:\n' + JSON.serializePretty(res));
+        return res;
+    }
+
+    @AuraEnabled
     public static Map <String, Object> getCertifications(Id userId){
         if (userId == null) userId = UserInfo.getUserId();
         Map <String, Object> res = new Map <String, Object>();
@@ -50,7 +93,7 @@ public without sharing class Ctrl_DashboardPageApp {
         res.put('csm_out_of', csmOutOf);
 
         System.debug('iCloudius - Certifications:\n' + JSON.serializePretty(res));
-        return res;        
+        return res;
     }
 
     @AuraEnabled
@@ -203,8 +246,8 @@ public without sharing class Ctrl_DashboardPageApp {
         String inboundField = 'Actual_ARR_Inbound_LIVE__c';
         String outboundField = 'Actual_ARR_Outbound_LIVE__c';
         if (source == 'sourced'){
-            inboundField = 'Actual_ARR_Sourced_LIVE__c';
-            outboundField = 'Actual_ARR_Influenced_LIVE__c';
+            inboundField = 'Actual_ARR_Influenced_LIVE__c';
+            outboundField = 'Actual_ARR_Sourced_LIVE__c';
         }
         msd.put('m_target', 0);
         msd.put('m_inbound', 0);
