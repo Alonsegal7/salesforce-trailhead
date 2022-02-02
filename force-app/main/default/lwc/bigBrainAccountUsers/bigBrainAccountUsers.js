@@ -21,7 +21,7 @@ const columns = [
 const getKind = ({ is_admin, user_kind }) => {
   if (is_admin === 1) {
     return "admin";
-  } else if (user_kind === "viewer_only") {
+  } else if (user_kind === "view_only") {
     return "viewer";
   } else {
     return user_kind;
