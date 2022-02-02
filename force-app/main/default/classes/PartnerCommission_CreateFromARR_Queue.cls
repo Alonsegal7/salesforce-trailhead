@@ -33,7 +33,7 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
                 } else if(!mondayAccount.Outbound_TH_Excluded__c){ //set end datetime to now on pc for accounts that got under TH and have active pc. Outbound_TH_Excluded__c - All the marked accounts should not be part of the logic to close PC b/c of ARR below new TH (3K). Those accounts should stay valid for commission.
                     for(Partner_Commission__c partnerCom: mondayAccIdPartnerCommisionMap.get(mondayAccount.Id)) {
                         if(partnerCom.End_Date__c == null || partnerCom.End_Date__c > mondayAccount.Last_ARR_Update_Timestamp__c){ 
-                            newPartnerCommissionList.add(new Partner_Commission__c(Id = partnerCom.Id, End_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c.addMinutes(-1), ARR_Upon_Close__c = mondayAccount.ARR__c, Close_Reason__c = 'ARR below TH'));
+                            newPartnerCommissionList.add(new Partner_Commission__c(Id = partnerCom.Id, End_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c.addSeconds(-1), ARR_Upon_Close__c = mondayAccount.ARR__c, Close_Reason__c = 'ARR below TH'));
                         }
                     }
                 }

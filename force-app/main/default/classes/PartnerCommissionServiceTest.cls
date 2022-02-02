@@ -104,7 +104,7 @@ public class PartnerCommissionServiceTest {
         System.assertEquals('Closed Won', opp.StageName);
         List<Partner_Commission__c> pcList = [select Id from Partner_Commission__c];
         System.assertEquals(1, pcList.size());
-        pcList.get(0).End_Date__c = Datetime.now().addMinutes(-1);
+        pcList.get(0).End_Date__c = Datetime.now().addSeconds(-1);
         update pcList;
         //update MA ARR above TH
         Account mondayAcc = [select Id from Account where RecordTypeId =: ACC_MA_RT_CONST limit 1];

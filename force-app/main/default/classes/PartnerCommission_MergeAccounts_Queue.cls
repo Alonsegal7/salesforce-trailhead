@@ -38,7 +38,7 @@ public with sharing class PartnerCommission_MergeAccounts_Queue implements Syste
                 for(Id mondayAccId: mondayAccountPartnerIdToCreatePC.keySet()){
                     for(Id partnerId: mondayAccountPartnerIdToCreatePC.get(mondayAccId)){
                         Partner_Commission__c newPartnerCommission = pcService.createPartnerCommissionRecord(mondayAccountsMap.get(mondayAccId), channelPartnersMap.get(partnerId), null, 'Merge Accounts');
-                        newPartnerCommission.Start_Date__c = Datetime.now().addMinutes(1);
+                        newPartnerCommission.Start_Date__c = Datetime.now().addSeconds(1);
                         newPartnerCommissionList.add(newPartnerCommission);
                     }
                 }

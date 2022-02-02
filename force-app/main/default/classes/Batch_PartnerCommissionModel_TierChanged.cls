@@ -73,32 +73,32 @@ public without sharing class Batch_PartnerCommissionModel_TierChanged implements
             Set<Id> relevantAccounts_set = new Set<Id>();
             List<Partner_Commission_Model__c> pcmsToCloseList = new List<Partner_Commission_Model__c>();
             List<Partner_Commission_Model__c> pcmsToOpenList = new List<Partner_Commission_Model__c>();
+            List<Partner_Commission_Model__c> pcmsToDeleteList = new List<Partner_Commission_Model__c>();
 
             for(Account acc: scope){
                 if(acc.Partner_Tier__c != acc.Partner_Commission_Model__r.Commission_Model__r.Partner_Tier__c){
-                    relevantAccounts_set.add(acc.Id);
-                    if(acc.Partner_Commission_Model__r.Start_Date__c >= startFrom.toStartOfMonth()){ //pcms created during or after startFrom month
-                        pcmsToOpenList.add(new Partner_Commission_Model__c(
-                            Id = acc.Partner_Commission_Model__c, 
-                            Partner_Company__c = acc.Id, 
-                            Commission_Model__c = commissionModelMap.get(acc.Partner_Tier__c).Id
+                    if(acc.Partner_Commission_Model__r.Start_Date__c >= startFrom.toStartOfMonth()){ //pcms created during or after startFrom month with wrong tier will be deleted and replaced with new pcms with correct tier
+                        pcmsToDeleteList.add(new Partner_Commission_Model__c(
+                            Id = acc.Partner_Commission_Model__c
                         ));
-                    } else {
+                    } else { //pcms with Start_Date__c before the startFrom date will be canceled and replaced with new pcms with correct tier
                         pcmsToCloseList.add(new Partner_Commission_Model__c(
                             Id = acc.Partner_Commission_Model__c, 
                             End_Date__c = endDT
                         ));
-                        pcmsToOpenList.add(new Partner_Commission_Model__c(
-                            Name = acc.Name + ' - ' + acc.Partner_Tier__c, 
-                            Partner_Company__c = acc.Id, 
-                            Commission_Model__c = commissionModelMap.get(acc.Partner_Tier__c).Id, 
-                            Start_Date__c = startDT
-                        ));
                     }
+                    pcmsToOpenList.add(new Partner_Commission_Model__c( //new pcms with correct tier
+                        Name = acc.Name + ' - ' + acc.Partner_Tier__c, 
+                        Partner_Company__c = acc.Id, 
+                        Commission_Model__c = commissionModelMap.get(acc.Partner_Tier__c).Id, 
+                        Start_Date__c = startDT
+                    ));
+                    relevantAccounts_set.add(acc.Id); // all accounts with tier change are relevant
                 }
             }
             if(relevantAccounts_set.isEmpty()) return;
             PartnerCommissionService service = new PartnerCommissionService();
+            if(!pcmsToDeleteList.isEmpty()) Database.delete(pcmsToDeleteList);
             if(!pcmsToCloseList.isEmpty()) service.upsertPcmInQueue(pcmsToCloseList, 'PartnerCommissionModel_PartnerTierChanged close PCMs');
             if(!pcmsToOpenList.isEmpty()) service.upsertPcmInQueue(pcmsToOpenList, 'PartnerCommissionModel_PartnerTierChanged new PCMs');
 
@@ -133,7 +133,8 @@ public without sharing class Batch_PartnerCommissionModel_TierChanged implements
                                                             from Partner_Commission__c 
                                                             where is_Last__c = true 
                                                             and Renewable__c = true 
-                                                            and Partner_Company__c IN: relevantAccounts_set]; 
+                                                            and Partner_Company__c IN: relevantAccounts_set
+                                                            and (End_Date__c = null or End_Date__c >=: startDT)]; 
 
             if(existingPcs.isEmpty()) return;
             system.debug('existingPcs: '+ existingPcs);
@@ -142,7 +143,7 @@ public without sharing class Batch_PartnerCommissionModel_TierChanged implements
             List<Partner_Commission__c> pcsToUpdate = new List<Partner_Commission__c>();
             for(Partner_Commission__c pc: existingPcs){
                 Commission_Model__c matchingCm = commissionModelMap.get(pc.Partner_Company__r.Partner_Tier__c);
-                if(pc.Trigger_Valid_From__c >= startFrom.toStartOfMonth()){ //PCs valid from the startFrom month (Trigger_Valid_From__c) will not be updated with new end date but only updated with new PCM and percent.
+                if(pc.Trigger_Valid_From__c >= startFrom.toStartOfMonth() || pc.Start_Date__c >= startFrom.toStartOfMonth()){ //PCs valid from the startFrom month (Trigger_Valid_From__c) will not be updated with enddate but only updated with new PCM and percent.
                     pc = updatePCbyCM(pc, matchingCm);
                     pc.Partner_Commission_Model__c = partnerAccToPcmMap.get(pc.Partner_Company__c);
                     pcsToUpdate.add(pc);
