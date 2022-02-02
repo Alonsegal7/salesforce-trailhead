@@ -344,9 +344,10 @@ public class PartnerCommissionService {
                 for(Partner_Commission__c existingPc: pcMap.get(key)){
                     if((newPc.Start_Date__c >= existingPc.Start_Date__c && (existingPc.End_Date__c == null || newPc.Start_Date__c <= existingPc.End_Date__c)) 
                     || (existingPc.Start_Date__c >= newPc.Start_Date__c && (newPc.End_Date__c == null || existingPc.Start_Date__c <= newPc.End_Date__c))){
-                        errorMsg = 'Partner Commission dates overlap detected.';
-                        if(newPc.Id != null) errorMsg +=  'Partner Commission Id: '+newPc.Id+';';
-                        errorMsg += 'partnerId: '+newPc.Partner_Company__c+'; mondayAccountId: '+newPc.Monday_Account__c;
+                        errorMsg = 'PC DATES_OVERLAP; ';
+                        errorMsg += 'Partner_Company__c: '+newPc.Partner_Company__c+'; Monday_Account__c: '+newPc.Monday_Account__c;
+                        errorMsg +=  '; existing pc Id: '+existingPc.Id+'; ';
+                        if(newPc.Id != null) errorMsg +=  'new pc Id: '+newPc.Id+';';
                         throw new partnerCommissionException(errorMsg);
                     }
                 }
