@@ -23,17 +23,17 @@ public class PartnerCommissionModel_PartnerSigned {
         }
 
         public void execute(System.QueueableContext ctx) {
-            List<Commission_Model__c> goldFirstYearComModelList = [select Id from Commission_Model__c where Partner_Tier__c = 'Gold First Year' limit 1];
-            if(goldFirstYearComModelList.isEmpty()) return;
-            Id goldFirstYearComModel = goldFirstYearComModelList.get(0).Id;
-            List<Partner_Commission_Model__c> existingPcms = [select Id, Partner_Company__c from Partner_Commission_Model__c where Commission_Model__c =: goldFirstYearComModel and Partner_Company__c IN:  partnerCompanyAccounts.keySet() and (End_Date__c = null or End_Date__c >: Datetime.now())];
+            List<Commission_Model__c> silverComModelList = [select Id from Commission_Model__c where Partner_Tier__c = 'Silver' limit 1];
+            if(silverComModelList.isEmpty()) return;
+            Id silverComModel = silverComModelList.get(0).Id;
+            List<Partner_Commission_Model__c> existingPcms = [select Id, Partner_Company__c from Partner_Commission_Model__c where Commission_Model__c =: silverComModel and Partner_Company__c IN:  partnerCompanyAccounts.keySet() and (End_Date__c = null or End_Date__c >: Datetime.now())];
             for(Partner_Commission_Model__c existingPcm: existingPcms){
                 partnerCompanyAccounts.remove(existingPcm.Partner_Company__c);
             }
             if(partnerCompanyAccounts.isEmpty()) return;
             List<Partner_Commission_Model__c> newPcmList = new List<Partner_Commission_Model__c>();
             for(Id accId: partnerCompanyAccounts.keySet()){
-                newPcmList.add(new Partner_Commission_Model__c(Name = partnerCompanyAccounts.get(accId) + ' - Gold First Year', Partner_Company__c = accId, Commission_Model__c = goldFirstYearComModel, Start_Date__c = Datetime.now()));
+                newPcmList.add(new Partner_Commission_Model__c(Name = partnerCompanyAccounts.get(accId) + ' - Silver', Partner_Company__c = accId, Commission_Model__c = silverComModel, Start_Date__c = Date.newInstance(Date.today().year(), Date.today().month(), 1)));
             }
             if(!newPcmList.isEmpty()) Database.insert(newPcmList);
         }

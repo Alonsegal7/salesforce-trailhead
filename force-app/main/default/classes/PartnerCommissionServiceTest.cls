@@ -21,6 +21,7 @@ public class PartnerCommissionServiceTest {
         //create commission model
         List<Commission_Model__c> cmList = new List<Commission_Model__c>();
         cmList.add(new Commission_Model__c(Partner_Tier__c = 'Gold First Year', Name = 'test', Outbound_Percent__c = 30, Inbound_Percent__c	= 20, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today()));
+        cmList.add(new Commission_Model__c(Partner_Tier__c = 'Silver', Name = 'test', Outbound_Percent__c = 30, Inbound_Percent__c	= 20, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today()));
         cmList.add(new Commission_Model__c(Partner_Tier__c = 'Platinum', Name = 'test', Outbound_Percent__c = 35, Inbound_Percent__c	= 25, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today()));
         insert cmList;
 
