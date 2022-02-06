@@ -73,6 +73,8 @@ public without sharing class Lead_StampsService {
             lead.Lead_created_date__c=Date.today();
             lead.First_Lead_Source__c = lead.LeadSource;
             lead.First_Sub_source__c = lead.Sub_source__c;
+            lead.Account_Arr_on_Lead_Creation__c = lead.Account_ARR__c;
+            lead.Type__c = lead.Account_ARR__c > 0 ? 'Expansion' : 'New Business';
             lead.Channel__c = lead.Channel_Lead_Source__c == 'None' ? '-' : lead.Channel_Lead_Source__c;
             if (lead.Channel_Lead_Source__c == 'Outbound') lead.Outbound_Lead__c = true;
             lead.Received_timestamp__c = Date.today();
@@ -216,7 +218,7 @@ public without sharing class Lead_StampsService {
                     leadRec.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
                 }
                 //sdr bdr stamps
-                if(currOwner.Function__c == 'SDR' || currOwner.Function__c == 'BDR'){
+                if(currOwner.Function__c == 'SDR' || currOwner.Business_Role__c == 'SDR' || currOwner.Function__c == 'BDR' || currOwner.Business_Role__c == 'BDR'){
                     leadRec.SDR_Name__c = leadRec.OwnerId;
                     leadRec.SDR_Name_for_reports__c = currOwner.Name;
                     leadRec.SDR_Team__c = currOwner.Team__c;

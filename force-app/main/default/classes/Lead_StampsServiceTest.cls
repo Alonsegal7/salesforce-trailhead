@@ -66,7 +66,7 @@ public with sharing class Lead_StampsServiceTest {
         //create leads - one with company assigned and one w/o company
         LeadsToInsert.add(new Lead(LastName = 'test1', Email = 'test1@monday.com', Related_Company__c = comps.get(0).Id, Company = 'test1')); //lead1 w/ related company
         LeadsToInsert.add(new Lead(LastName = 'test2', Email = 'test2@monday.com', Company = 'test2')); //lead2 w/o related company
-        LeadsToInsert.add(new Lead(LastName = 'test3', Email = 'test3@monday.com', LeadSource='Outsource', Company = 'test3')); //Outbound lead
+        LeadsToInsert.add(new Lead(LastName = 'test3', Email = 'test3@monday.com', Account_ARR__c = 500, LeadSource='Outsource', Company = 'test3')); //Outbound lead
         LeadsToInsert.add(new Lead(LastName = 'test4', Email = 'test4@monday.com', Related_Company__c = comps.get(0).Id, Company = 'test4')); //lead w/ related outbound company
         insert LeadsToInsert;
     }
@@ -192,8 +192,8 @@ public with sharing class Lead_StampsServiceTest {
     }
     @istest
     static void checkGetValuesOnCreate(){
-        Lead createdLead = [select id,visitor_id__c,Sub_source__c,LeadSource,Channel_Lead_Source__c,Distributed_to_First__c,OwnerId,First_Visitor_Id__c,Lead_created_date__c,Salesloft_Import_Link__c,First_Sub_source__c,First_Lead_Source__c,Channel__c,Received_timestamp__c, Distributed_w_o_Phone_Number__c,Distributed_with_Phone__c,Enriched_phone__c,Phone from lead where Company='leadWithPhone' limit 1];
-        Lead createdLeadOutboundChannel = [select id,Outbound_Lead__c from lead where Company='test3' limit 1];
+        Lead createdLead = [select id,visitor_id__c,Sub_source__c,LeadSource,Channel_Lead_Source__c,Type__c,Distributed_to_First__c,OwnerId,First_Visitor_Id__c,Account_ARR__c, Account_Arr_on_Lead_Creation__c, Lead_created_date__c,Salesloft_Import_Link__c,First_Sub_source__c,First_Lead_Source__c,Channel__c,Received_timestamp__c, Distributed_w_o_Phone_Number__c,Distributed_with_Phone__c,Enriched_phone__c,Phone from lead where Company='leadWithPhone' limit 1];
+        Lead createdLeadOutboundChannel = [select id,Account_ARR__c, Account_Arr_on_Lead_Creation__c,Type__c,Outbound_Lead__c from lead where Company='test3' limit 1];
 
         system.assertEquals(createdLead.visitor_id__c, createdLead.First_Visitor_Id__c);
         system.assertEquals(Date.today(), createdLead.Lead_created_date__c);
@@ -202,7 +202,11 @@ public with sharing class Lead_StampsServiceTest {
         system.assertEquals(createdLead.Channel_Lead_Source__c, createdLead.Channel__c);
         system.assertEquals(Date.today(), createdLead.Received_timestamp__c);
         system.assertEquals('Test', createdLead.Distributed_to_First__c);
-
+        system.assertEquals(createdLead.Type__c, 'New Business');
+        
+        
+        system.assertEquals(createdLeadOutboundChannel.Account_ARR__c, createdLeadOutboundChannel.Account_Arr_on_Lead_Creation__c);
+        system.assertEquals(createdLeadOutboundChannel.Type__c, 'Expansion');
         system.assertEquals(true, createdLeadOutboundChannel.Outbound_Lead__c);
     }
     @istest
