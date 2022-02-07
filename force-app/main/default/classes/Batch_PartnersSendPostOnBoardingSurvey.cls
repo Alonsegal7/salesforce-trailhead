@@ -41,9 +41,9 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
         //CloseDate is 90 days ago and 
         //Account.Plan_Period__c != Monthly
         try{
-            String query = 'select Id, Name, AccountId, Account.Name, Expected_Plan_Period__c, Expected_Plan_Tier__c, Expected_Plan_Seats__c from Opportunity where Expected_Plan_Period__c != \'Monthly\' and Expected_Plan_Tier__c = \'Enterprise\' and Account.Low_Touch_CS__c = null and StageName = \'Closed Won\' and Expected_Plan_Seats__c >= 20 and Account.CSM__c = null and RecordType.DeveloperName = \'Partner_Opportunity\' and Account.Plan_Period__c != \'Monthly\'';
+            String query = 'select Id, Name, AccountId, Account.Name, Expected_Plan_Period__c, Expected_Plan_Tier__c, Expected_Plan_Seats__c, CloseDate from Opportunity where Expected_Plan_Period__c != \'Monthly\' and Expected_Plan_Tier__c = \'Enterprise\' and Account.Low_Touch_CS__c = null and StageName = \'Closed Won\' and Expected_Plan_Seats__c >= 20 and Account.CSM__c = null and RecordType.DeveloperName = \'Partner_Opportunity\' and Account.Plan_Period__c != \'Monthly\'';
             if(dryRun){
-                query += ' and CloseDate >=: targetDate and CloseDate < LAST_N_DAYS:90';
+                query += ' and CloseDate >=: targetDate and CloseDate < LAST_N_DAYS:89';
             }else {
                 query += ' and CloseDate =: targetDate';
             }
@@ -157,7 +157,12 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
                 if(!dryRun) debugString += '<br/>no contacts found.';
                 return;
             }
-
+            if(dryRun) {
+                for(Contact con: contactsList){
+                    if(res.containsKey(con.AccountId)) res.get(con.AccountId).add(con.Name);
+                    else res.put(con.AccountId, new list<string>{con.Name});
+                }
+            }
             //for all of them check if account last opp id from map A is different from contact.Last_Opportunity_For_Survey__c if yes increase Of_Post_Onboarding_Surveys__c by 1
             for(Contact con: contactsList){
                 String idOfCurrentOpp = String.valueOf(accountIdToOppMap.get(con.AccountId).get(0).Id);
