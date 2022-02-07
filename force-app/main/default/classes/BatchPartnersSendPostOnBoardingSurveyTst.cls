@@ -36,6 +36,13 @@ public class BatchPartnersSendPostOnBoardingSurveyTst {
         System.assertEquals(String.valueOf(opp.Id), con.Last_Opportunity_For_Survey__c);
     }
 
+    static testmethod void testNewBusiness_dryRun(){
+        Date dateForTest = Date.today().addDays(-90);
+        Test.startTest();
+        Database.executeBatch(new Batch_PartnersSendPostOnBoardingSurvey(true, dateForTest));
+        Test.stopTest();
+    }
+
     static testmethod void testExpansionProToEnt(){
         Account mondayAcc = [select Id from Account limit 1];
         Opportunity lastopp = [select Id from Opportunity limit 1];
