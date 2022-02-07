@@ -72,30 +72,6 @@ public class BatchPartnersSendPostOnBoardingSurveyTst {
         System.assertEquals(String.valueOf(lastopp.Id), con.Last_Opportunity_For_Survey__c);
     }
 
-    static testmethod void testExpansionProToEnt_dryRun(){
-        Account mondayAcc = [select Id from Account limit 1];
-        Opportunity lastopp = [select Id from Opportunity limit 1];
-        Opportunity opp = TestObjectCreator.CreateOpp(mondayAcc);
-        opp.RecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
-        opp.Potential_GB_Opp_Override__c = 'Yes';
-        insert opp;
-
-        opp.StageName = 'Closed Won';
-        opp.Transition_to_GB__c = true;
-        opp.Claimed_ARR__c = 10000;
-        update opp;
-
-        opp.CloseDate = Date.today().addDays(-91);
-        opp.Expected_Plan_Period__c = 'Yearly';
-        opp.Expected_Plan_Tier__c = 'Pro';
-        opp.Expected_Plan_Seats__c = 15;
-        update opp;
-
-        Test.startTest();
-        Database.executeBatch(new Batch_PartnersSendPostOnBoardingSurvey(true, Date.today().addDays(-90)));
-        Test.stopTest();
-    }
-
     static testmethod void testExpansionEntToEnt(){
         Account mondayAcc = [select Id from Account limit 1];
         Opportunity opp = TestObjectCreator.CreateOpp(mondayAcc);
@@ -121,29 +97,6 @@ public class BatchPartnersSendPostOnBoardingSurveyTst {
         Contact con = [select Id, Of_Post_Onboarding_Surveys__c, Last_Opportunity_For_Survey__c from Contact limit 1];
         System.assertEquals(0, con.Of_Post_Onboarding_Surveys__c);
         System.assertEquals(null, con.Last_Opportunity_For_Survey__c);
-    }
-
-    static testmethod void testExpansionEntToEnt_dryRun(){
-        Account mondayAcc = [select Id from Account limit 1];
-        Opportunity opp = TestObjectCreator.CreateOpp(mondayAcc);
-        opp.RecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
-        opp.Potential_GB_Opp_Override__c = 'Yes';
-        insert opp;
-
-        opp.StageName = 'Closed Won';
-        opp.Transition_to_GB__c = true;
-        opp.Claimed_ARR__c = 10000;
-        update opp;
-
-        opp.CloseDate = Date.today().addDays(-91);
-        opp.Expected_Plan_Period__c = 'Yearly';
-        opp.Expected_Plan_Tier__c = 'Enterprise';
-        opp.Expected_Plan_Seats__c = 15;
-        update opp;
-
-        Test.startTest();
-        Database.executeBatch(new Batch_PartnersSendPostOnBoardingSurvey(true, Date.today().addDays(-90)));
-        Test.stopTest();
     }
 
     static testmethod void testDateInput(){
