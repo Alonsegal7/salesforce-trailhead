@@ -1,7 +1,7 @@
 public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchable<sObject>,Schedulable,Database.Stateful{
 
     private List<String> emailRecepients = new List<String>{'kseniasm@monday.com','avivc@monday.com'};
-    private Date targetDate = Date.today().addDays(-90);
+    private Date targetDate;
     private map<Id,list<string>> res = new map<Id,list<string>>();
     private integer totalCons = 0;
     private string debugString = '';
@@ -23,7 +23,8 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
     public void execute(SchedulableContext sc) {
         try{
             Utilities.cleanFlexQueue();
-            Database.executeBatch(this, 30);
+            Batch_PartnersSendPostOnBoardingSurvey batch = new Batch_PartnersSendPostOnBoardingSurvey(Date.today().addDays(-90));
+            Database.executeBatch(batch, 30);
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in Batch_PartnersSendPostOnBoardingSurvey ', e, e.getMessage());   
         }
@@ -41,6 +42,9 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
         //CloseDate is 90 days ago and 
         //Account.Plan_Period__c != Monthly
         try{
+            if(targetDate == null){
+                targetDate = Date.today().addDays(-90);
+            }
             String query = 'select Id, Name, AccountId, Account.Name, Expected_Plan_Period__c, Expected_Plan_Tier__c, Expected_Plan_Seats__c, CloseDate from Opportunity where Expected_Plan_Period__c != \'Monthly\' and Expected_Plan_Tier__c = \'Enterprise\' and Account.Low_Touch_CS__c = null and StageName = \'Closed Won\' and Expected_Plan_Seats__c >= 20 and Account.CSM__c = null and RecordType.DeveloperName = \'Partner_Opportunity\' and Account.Plan_Period__c != \'Monthly\'';
             if(dryRun){
                 query += ' and CloseDate >=: targetDate and CloseDate < LAST_N_DAYS:89';
@@ -111,7 +115,7 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
                 if(!dryRun) debugString += '<br/>current opp: <a href="https://monday.lightning.force.com/lightning/r/Opportunity/'+currentOpp.Id+'/view">'+currentOpp.Name+'</a>';
                 if(!dryRun) debugString += '<br/>prev opp: <a href="https://monday.lightning.force.com/lightning/r/Opportunity/'+prevOpp.Id+'/view">'+prevOpp.Name+'</a>';
                 if(!dryRun) debugString += '<br/>delta seats: ' + String.valueOf(deltaSeats);
-                if(deltaSeats < 100){ //check if need to remove this account from survey
+                if(deltaSeats < 50){ //check if need to remove this account from survey
                     if(prevOpp.RecordType.DeveloperName == 'Internal_Opportunity' && deltaSeats == 0){ // potentially co-sell, need to check prev prev opp (if exists)
                         if(!dryRun) debugString += '<br/>potentially co-sell. checking prev prev opp.';
                         if(accountIdToOppMap.get(accountId).size() == 3){ //check if there is another opp before the co-sell opp
@@ -119,10 +123,10 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
                             deltaSeats = currentOpp.Expected_Plan_Seats__c - prevOpp.Expected_Plan_Seats__c;
                             if(!dryRun) debugString += '<br/>prev opp: <a href="https://monday.lightning.force.com/lightning/r/Opportunity/'+prevOpp.Id+'/view">'+prevOpp.Name+'</a>';
                             if(!dryRun) debugString += '<br/>delta seats: ' + String.valueOf(deltaSeats);
-                            if(deltaSeats < 100){ //
+                            if(deltaSeats < 50){ //
                                 accountIdToOppMap.remove(accountId);
                                 System.debug('Batch_PartnersSendPostOnBoardingSurvey remove account: ' + accountId);
-                                if(!dryRun) debugString += '<br/>Result: <b>REMOVED ACCOUNT</b>: found prev prev opp causing delta seats to be less than 100';
+                                if(!dryRun) debugString += '<br/>Result: <b>REMOVED ACCOUNT</b>: found prev prev opp causing delta seats to be less than 50';
                             } else {
                                 if(!dryRun) debugString += '<br/>Result: current opp and prev prev opp match conditions.';
                             }
@@ -132,10 +136,10 @@ public class Batch_PartnersSendPostOnBoardingSurvey implements Database.Batchabl
                     } else {
                         accountIdToOppMap.remove(accountId);
                         System.debug('Batch_PartnersSendPostOnBoardingSurvey remove account: ' + accountId);
-                        if(!dryRun) debugString += '<br/> Result: <b>REMOVED ACCOUNT</b>: found prev opp causing delta seats to be less than 100';
+                        if(!dryRun) debugString += '<br/> Result: <b>REMOVED ACCOUNT</b>: found prev opp causing delta seats to be less than 50';
                     }
                 } else {
-                    if(!dryRun) debugString += '<br/>Result: current opp and prev opp match conditions (delta seats is greater or equal to 100).';
+                    if(!dryRun) debugString += '<br/>Result: current opp and prev opp match conditions (delta seats is greater or equal to 50).';
                 }
             }
             if(accountIdToOppMap.isEmpty()) {
