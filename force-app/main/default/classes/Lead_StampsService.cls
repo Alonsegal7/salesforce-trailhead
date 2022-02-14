@@ -175,7 +175,7 @@ public without sharing class Lead_StampsService {
             return;
         }
         Set<String> ownerFunctionsToExclude = new Set<String>{'Marketing','Product','Bot'};
-        Map<Id,User> ownersMap = new Map<Id,User>([select Id, Function__c, ManagerId, Manager.Team__c, Group__c, Business_Role__c, Segment__c, Seniority__c, Team__c, Office__c, Office_Region__c, Quota_Carrying__c, Name, UserRole.Name from User where Id in :usersIds]);
+        Map<Id,User> ownersMap = new Map<Id,User>([select Id, Function__c, Outbound__c, ManagerId, Manager.Team__c, Group__c, Business_Role__c, Segment__c, Seniority__c, Team__c, Office__c, Office_Region__c, Quota_Carrying__c, Name, UserRole.Name from User where Id in :usersIds]);
         system.debug('ownersMap: '+ ownersMap);
         User currOwner;
         for(Lead leadRec: relevantLeads){
@@ -194,6 +194,8 @@ public without sharing class Lead_StampsService {
                 leadRec.Owner_Segment_Initial__c = currOwner.Segment__c;
                 leadRec.Owner_Seniority_Initial__c = currOwner.Seniority__c;
                 leadRec.Owner_Team_Initial__c = currOwner.Team__c;
+                leadRec.Is_Owner_Outbound_Rep_Initial__c = currOwner.Outbound__c;
+                leadRec.Owner_s_Function_Initial__c = currOwner.Function__c;
             }
             //update live fields
             system.debug('Updating live user stamps');
@@ -206,7 +208,9 @@ public without sharing class Lead_StampsService {
             leadRec.Owner_Segment_Live__c = currOwner.Segment__c;
             leadRec.Owner_Seniority_Live__c = currOwner.Seniority__c;
             leadRec.Owner_Team_Live__c = currOwner.Team__c;
-
+            leadRec.Is_Owner_Outbound_Rep_Live__c = currOwner.Outbound__c;
+            leadRec.Owner_s_Function_Live__c = currOwner.Function__c;
+            
             //updates on owner assignment (actual user owner, not group)
             if(oldLeadsMap == null || leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId){ //on insert or update of OwnerId
                 // owner's manager and owner's manager team
