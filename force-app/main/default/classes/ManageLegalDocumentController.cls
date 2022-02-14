@@ -40,4 +40,14 @@ public with sharing class ManageLegalDocumentController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static Boolean isSandbox(){
+        Boolean isSandbox;
+        try{
+        return isSandbox = [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
+        }catch(Exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }
