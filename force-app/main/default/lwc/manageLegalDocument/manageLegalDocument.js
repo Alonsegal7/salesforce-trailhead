@@ -142,4 +142,3 @@ checkIfLegalDocExist(){
         this.dispatchEvent(new CloseActionScreenEvent());
     }
 }
-
