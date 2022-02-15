@@ -3,7 +3,7 @@ import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import getSalesOrderInfo from '@salesforce/apex/ManageLegalDocumentController.getSalesOrderDetails';
 import checkIfLegalDocExist from '@salesforce/apex/ManageLegalDocumentController.legalDocExistForCompany';
-import isSandbox from '@salesforce/apex/ManageLegalDocumentController.isSandbox';
+import checkInstance from '@salesforce/apex/ManageLegalDocumentController.isSandbox';
 
 const companyLegalDocuments = [
     { label: 'Document type', fieldName: 'Document_type__c', type: 'text' },
@@ -30,6 +30,16 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
     oppCompanyId;
     oppCompanyName;
     isSandbox=false;
+
+    connectedCallback() {
+        checkInstance()
+        .then((data) => {
+            if(data!=undefined){
+                this.isSandbox=data;
+            }
+      }) 
+      .catch((err) => { console.log('error' + err); });
+    }
 
     @wire(getSalesOrderInfo,{oppId:'$recordId'})
         getSalesOrderDetails({data, error}){
@@ -67,6 +77,9 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
 
         }
 
+
+        
+
 checkIfLegalDocExist(){
     checkIfLegalDocExist({oppId: this.recordId, legalDocType: this.salesOrderSelectedAgreementType }).then((response)=>{
         //Found legal document type record by the so agreement type - call list of legal docs table
@@ -103,7 +116,7 @@ checkIfLegalDocExist(){
 //Each clm doc url will have a different url and therefore a different buttons
     InitSaasAgreement(event){
         this.closeAction();
-        if (isSandbox()) {
+        if (this.isSandbox) {
         var thisUrl ="https://uatna11.springcm.com/atlas/doclauncher/eos/Monday SaaS Agreement?aid=25283&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
         window.open(thisUrl,'_blank');
         }
@@ -115,7 +128,7 @@ checkIfLegalDocExist(){
 
     InitDPA(event){
         this.closeAction();
-        if (isSandbox()) {
+        if (this.isSandbox) {
         var thisUrl ="https://uatna11.springcm.com/atlas/doclauncher/eos/DPA?aid=25283&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
         window.open(thisUrl,'_blank');
         }
@@ -127,7 +140,7 @@ checkIfLegalDocExist(){
 
     InitAddendum(event){
         this.closeAction();
-        if (isSandbox()) {
+        if (this.isSandbox) {
             var thisUrl ="https://uatna11.springcm.com/atlas/Forms/UpdateFormDoc.aspx?aid=25283&FormUid=43589d9d-556d-ec11-b821-48df378a7098&oppId="+this.recordId;
             window.open(thisUrl,'_blank');
         }
