@@ -117,6 +117,14 @@ public class TestObjectCreator
         if (persistImmediate) insert p;
 		return p;
     }
+
+    public static Product2 CreateNonRcringProduct(){
+		Product2 p = new Product2(Name = 'Additional Advanced Onboarding Hours', ProductCode='CSG-ADTNL-ADV-ONB-SUPPORT',Project_Item_Type__c='Onboarding- Paid',IsActive = true, IsRecurring__c=false,Contract_Creation_Product__c=false,Contract_Event_Product__c=true,Quantity_Unit_Of_Measure__c='Hours');
+        
+        if (persistImmediate) insert p;
+		return p;
+    }
+
     public static Product2 CreateProductWithCode(string Code){
 		Product2 p = new Product2(Name = 'Test product', IsActive = true,ProductCode=code);
 		return p;
@@ -138,7 +146,9 @@ public class TestObjectCreator
 	}
     
     public static QuoteLineItem CreateQuoteLineItem(Quote quote, string productType, integer quantity, decimal unitPrice) {
-        Product2 product = CreateProduct();
+        Product2 product;
+        if(productType=='License')  product = CreateProduct();
+        if(productType=='Onboarding')  product = CreateNonRcringProduct();
         PricebookEntry pb = CreatePricebookEntry(product, unitPrice);
         
         QuoteLineItem i = new QuoteLineItem(
@@ -218,7 +228,8 @@ public class TestObjectCreator
             OpportunityId = oppportunity.Id,
             Quantity = qli.Quantity,
             PricebookEntryId = qli.PricebookEntryId,
-            TotalPrice = qli.Quantity * qli.UnitPrice
+            TotalPrice = qli.Quantity * qli.UnitPrice,
+            Product_Type__c=qli.Product_Type__c
         );
         
         if (persistImmediate) insert q;
