@@ -1,9 +1,11 @@
 public with sharing class ProjectItemService {
+    public static Boolean firstRun = true;
+
     public static void CreateProjectItem(List<Handover__c> newHands, Map<Id,Handover__c> oldHand) {
         Map<Id, Project__c> newProjects = new Map<Id, Project__c>();
         List<Project_Item__c> projItmsToCreate = new List<Project_Item__c>();
         for (Handover__c handover : newHands) {
-            if (handover.Onboarding_Owner__c!=null && handover.Onboarding_Owner__c!=oldHand.get(handover.Id).Onboarding_Owner__c) {
+            if (handover.Onboarding_Owner__c!=null && handover.Onboarding_Owner__c!=oldHand.get(handover.Id).Onboarding_Owner__c && handover.CreateProjectOBAssignemnt__c) {
                 newProjects.put(handover.Opportunity__c,CreateProject(handover));
             } 
         }
@@ -21,6 +23,7 @@ public with sharing class ProjectItemService {
             }
         }
         if (!projItmsToCreate.isempty()) {
+            firstRun=false;
             insert projItmsToCreate;
         }
     }
