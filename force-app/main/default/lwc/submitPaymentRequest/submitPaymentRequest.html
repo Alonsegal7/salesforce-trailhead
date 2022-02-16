@@ -196,11 +196,11 @@
                                     </lightning-layout-item>
                                     <lightning-layout-item size="4">
                                         <div class="slds-p-right_medium">
-                                            <lightning-input type="text" label="Invoice Number" value={invoiceNumber} onchange={handleInvoiceNumberChange}></lightning-input>
+                                            <lightning-input type="text" label="Invoice Number" value={invoiceNumber} onchange={handleInvoiceNumberChange} required></lightning-input>
                                         </div>
                                     </lightning-layout-item>
                                     <lightning-layout-item size="4">
-                                        <lightning-input type="date" name="invdate" value={invoiceDate} label="Invoice Date" onchange={handleInvoiceDateChange}></lightning-input>
+                                        <lightning-input type="date" value={invoiceDate} label="Invoice Date" onchange={handleInvoiceDateChange} required></lightning-input>
                                     </lightning-layout-item>
                                 </lightning-layout>
                                 <c-file-upload-improved onsendversids={handleSendVersIds} uploadedlabel={invoiceFileUploadLabel} accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>

@@ -350,18 +350,36 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.invoiceNumber = event.detail.value;
     }
 
-    submitPaymentRequestForApproval(event){
-        this.error = undefined;
+    submitInputValidation(event){
         this.customError = undefined;
-        var fileUploadIsValid = true;
+        let fileUploaded = this.checkFilesUploaded(event);
+        let inputValid = this.checkInputValidity(event);
+        return (fileUploaded && inputValid);
+    }
+
+    checkFilesUploaded(event){
+        var fileUploaded = true;
         this.template.querySelectorAll('c-file-upload-improved').forEach(element => { // validate files upload
             var validateFileUpload = element.validate();
             if(!validateFileUpload.isValid){
-                fileUploadIsValid = false;
                 this.customError = validateFileUpload.errorMessage;
+                fileUploaded = false;
             }
         });
-        if(fileUploadIsValid){
+        return fileUploaded;
+    }
+
+    checkInputValidity(event){
+        let inputValid = [...this.template.querySelectorAll('lightning-input')].reduce((val, inp) => {
+            inp.reportValidity();
+            return val && inp.checkValidity();
+        }, true);
+        return inputValid;
+    }
+
+    submitPaymentRequestForApproval(event){
+        this.error = undefined;
+        if(this.submitInputValidation(event)){
             this.isLoading = true;
             console.log('this.uploadedInvoiceId: '+ this.uploadedInvoiceId);
             submitForApproval({
