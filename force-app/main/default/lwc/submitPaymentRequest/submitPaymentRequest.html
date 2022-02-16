@@ -181,14 +181,28 @@
                                 </div>
                             </template>
                             <template if:true={filesScreen}>
-                                <lightning-combobox
-                                    name="currency"
-                                    label="Select invoice currency:"
-                                    value={currencyValue}
-                                    placeholder="Select currency"
-                                    options={currencies}
-                                    onchange={handleCurrencyChange} >
-                                </lightning-combobox>
+                                <lightning-layout>
+                                    <lightning-layout-item size="4">
+                                        <div class="slds-p-right_medium">
+                                            <lightning-combobox
+                                                name="currency"
+                                                label="Invoice Currency"
+                                                value={currencyValue}
+                                                placeholder="Select currency"
+                                                options={currencies}
+                                                onchange={handleCurrencyChange} >
+                                            </lightning-combobox>
+                                        </div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4">
+                                        <div class="slds-p-right_medium">
+                                            <lightning-input type="text" label="Invoice Number" value={invoiceNumber} onchange={handleInvoiceNumberChange}></lightning-input>
+                                        </div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4">
+                                        <lightning-input type="date" name="invdate" value={invoiceDate} label="Invoice Date" onchange={handleInvoiceDateChange}></lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
                                 <c-file-upload-improved onsendversids={handleSendVersIds} uploadedlabel={invoiceFileUploadLabel} accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>
                                 <div class="slds-m-top_x-small slds-border_bottom"></div>
                                 <lightning-layout>

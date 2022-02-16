@@ -10,6 +10,8 @@ import PAYMENT_REQ_STATUS_FIELD from '@salesforce/schema/Payment_Request__c.Stat
 import PAYMENT_REQ_MONTH_FIELD from '@salesforce/schema/Payment_Request__c.Month__c';
 import PAYMENT_REQ_MDF_FIELD from '@salesforce/schema/Payment_Request__c.MDF_Amount__c';
 import PAYMENT_REQ_SPIFF_FIELD from '@salesforce/schema/Payment_Request__c.Spiff_Amount__c';
+import PAYMENT_REQ_INV_DATE from '@salesforce/schema/Payment_Request__c.Invoice_Date__c';
+import PAYMENT_REQ_INV_NUM from '@salesforce/schema/Payment_Request__c.Invoice_Number__c';
 import submittedScreenGif from '@salesforce/resourceUrl/makeItRainGif';
 
 const columns = [
@@ -82,6 +84,8 @@ export default class SubmitPaymentRequest extends LightningElement {
     submittedScreenGifIcon = submittedScreenGif;
     currencyValue = 'USD';
     modalTitle;
+    invoiceNumber;
+    invoiceDate;
     
     //sort & filter variables
     defaultSortDirection = 'asc';
@@ -117,6 +121,8 @@ export default class SubmitPaymentRequest extends LightningElement {
             this.monthValue = this.selectedMonth;
             this.mdfAmount = getFieldValue(result.data, PAYMENT_REQ_MDF_FIELD);
             this.spiffAmount = getFieldValue(result.data, PAYMENT_REQ_SPIFF_FIELD);
+            this.invoiceDate = getFieldValue(result.data, PAYMENT_REQ_INV_DATE);
+            this.invoiceNumber = getFieldValue(result.data, PAYMENT_REQ_INV_NUM);
             this.cardTitle = 'Payment Request Status - ' + statusValue;
             if(statusValue != 'Draft' && statusValue != 'Rejected') {
                 this.allowSubmit = false;
@@ -308,8 +314,10 @@ export default class SubmitPaymentRequest extends LightningElement {
             paymentRequestId: this.newPaymentRequestId,
             mdfAmount: this.mdfAmount,
             spiffAmount: this.spiffAmount,
-            incoiveFileVerId: this.uploadedInvoiceId,
-            invoiceCurrency: this.currencyValue
+            invoiceFileVerId: this.uploadedInvoiceId,
+            invoiceCurrency: this.currencyValue,
+            invoiceNumber: this.invoiceNumber,
+            invoiceDate: this.invoiceDate
         })
         .then(result => {
             this.isLoading = false;
@@ -334,6 +342,14 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.template.querySelector('[data-id="submitmodal"]').classList.remove('slds-modal_large');
     }
 
+    handleInvoiceDateChange(event){
+        this.invoiceDate = event.detail.value;
+    }
+
+    handleInvoiceNumberChange(event){
+        this.invoiceNumber = event.detail.value;
+    }
+
     submitPaymentRequestForApproval(event){
         this.error = undefined;
         this.customError = undefined;
@@ -352,8 +368,10 @@ export default class SubmitPaymentRequest extends LightningElement {
                 paymentRequestId: this.newPaymentRequestId,
                 mdfAmount: this.mdfAmount,
                 spiffAmount: this.spiffAmount,
-                incoiveFileVerId: this.uploadedInvoiceId,
-                invoiceCurrency: this.currencyValue
+                invoiceFileVerId: this.uploadedInvoiceId,
+                invoiceCurrency: this.currencyValue,
+                invoiceNumber: this.invoiceNumber,
+                invoiceDate: this.invoiceDate
             })
             .then(result => {
                 this.isLoading = false;
