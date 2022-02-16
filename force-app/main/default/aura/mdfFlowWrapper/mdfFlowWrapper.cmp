@@ -1,7 +1,7 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="displayModal" type="Boolean" default="false"/>
 
-        <lightning:card iconName="standard:asset_relationship" title="Marketing Activity Request">
+        <lightning:card iconName="standard:asset_relationship" title="Partner Activity Request">
             <aura:set attribute="actions">
                 <lightning:button label="Submit" onclick="{!c.handleClick}" class="slds-m-left_x-small"/>
             </aura:set>
