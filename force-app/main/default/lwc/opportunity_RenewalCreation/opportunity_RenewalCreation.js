@@ -2,7 +2,7 @@ import { LightningElement, track, wire, api } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import insertOpportunity from '@salesforce/apex/Opportunity_RenewalCreation.insertOpportunity';
+import createRenewalOpportunities from '@salesforce/apex/Opportunity_RenewalCreation.createRenewalOpportunities';
 import checkOpenRenewalOpps from '@salesforce/apex/Opportunity_RenewalCreation.checkOpenRenewalOpps';
 import checkOpenExpansionOpps from '@salesforce/apex/Opportunity_RenewalCreation.checkOpenExpansionOpps';
 import checkRelatedMAs from '@salesforce/apex/Opportunity_RenewalCreation.checkRelatedMAs';
@@ -148,9 +148,10 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
     handleClick() {
         console.log('!!!');
         this.showSpinner = true;
-        insertOpportunity( {recordId: this.recordId}).then((response)=>{
+        const conIds = [this.recordId];
+        createRenewalOpportunities({renewalContractIds: conIds}).then((response)=>{
             this.showSpinner = false;
-            this.opportunityId = response.Id;
+            this.opportunityId = response[0].Id;
             console.log('### succcess - this.opportunityId: '+this.opportunityId);
             this.dispatchEvent(
                 new ShowToastEvent({

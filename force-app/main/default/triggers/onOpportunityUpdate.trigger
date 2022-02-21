@@ -31,6 +31,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     }
     if(Trigger.isAfter && Trigger.isInsert){
         Partners_SharingService.createOpportunityShares(trigger.new, trigger.oldMap);
+        Opportunity_RenewalCreation.updateRenewalStatus(Trigger.new, Trigger.oldMap);
     }
     
     if(Trigger.isAfter){

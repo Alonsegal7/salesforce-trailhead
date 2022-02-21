@@ -29,10 +29,12 @@ public class Renewal_Global_Test {
         insert conProd;
         Contract_Event__c conEvent = new Contract_Event__c(isrecurring__c = true, Contract__c = con.Id, Contract_Product__c = conProd.Id, Start_Date__c = System.today(), Quote_Line_Item__c = qli.Id);
         insert conEvent;
+
+        List<Id> contractIdList = new List<Id>{con.Id};
         
         System.runAs(userRecord){
             opportunity_RenewalCreation.checkOpenRenewalOpps(con.Id);
-            opportunity_RenewalCreation.insertOpportunity(con.Id); 
+            opportunity_RenewalCreation.createRenewalOpportunities(contractIdList); 
             opportunity_RenewalCreation.checkOpenExpansionOpps(con.Id);
         }
     }
@@ -63,10 +65,12 @@ public class Renewal_Global_Test {
         insert conProd;
         Contract_Event__c conEvent = new Contract_Event__c(isrecurring__c = true, Contract__c = con.Id, Contract_Product__c = conProd.Id, Start_Date__c = System.today(), Subscription__c = sub.Id);
         insert conEvent;
+
+        List<Id> contractIdList = new List<Id>{con.Id};
         
         System.runAs(userRecord){
             opportunity_RenewalCreation.checkOpenRenewalOpps(con.Id);
-            opportunity_RenewalCreation.insertOpportunity(con.Id); 
+            opportunity_RenewalCreation.createRenewalOpportunities(contractIdList); 
         }
     }
 
