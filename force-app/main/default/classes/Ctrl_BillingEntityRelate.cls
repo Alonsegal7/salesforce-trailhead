@@ -400,7 +400,7 @@ public class Ctrl_BillingEntityRelate  {
 	public static String CallVatService(String countryName, String vatNumber){
 		system.debug('### countryName: ' + countryName);
 		system.debug('### vatNumber: ' + vatNumber);
-		return VatVerificationService.CallVatService(countryName,vatNumber);
+		return VatVerificationService.CallVatService(countryName,vatNumber,null);
 	}
 
 	public class BillingEntityWrap {
@@ -462,7 +462,7 @@ public class Ctrl_BillingEntityRelate  {
 	@AuraEnabled(cacheable=true)
 	public static String getValuesCallVatService(String BEId){
 		List<Billing_Entity__c> beToSearch = [SELECT Id, VAT_Number__c, Shipping_Country_G__c FROM Billing_Entity__c WHERE Id =: BEId];
-		String getVatVerification = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].VAT_Number__c);
+		String getVatVerification = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].VAT_Number__c,null);
 		return getVatVerification;
 	}
 
