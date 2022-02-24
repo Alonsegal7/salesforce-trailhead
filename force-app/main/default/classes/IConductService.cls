@@ -1,13 +1,17 @@
 public class IConductService implements Queueable, Database.AllowsCallouts{
     private final String ProcessId;
     private final String payload;
-    public IConductService(string type, Id Id){
-        if (type == 'BE') {
+    public IConductService(string process, Id Id){
+        if (process == 'BillingEntityERPInsertUpdateSync') {
             this.ProcessId = ConfigManager.getIConductBillingEntitySyncPID();
             this.payload = '{"parameters": [{ "Key":"Billing_Entity_Id", "Value":"' + Id + '" }]}';
         }
-        if (type == 'Quote') {
+        if (process == 'QuoteERPInsertOnlySync') {
             this.ProcessId = ConfigManager.getIConductQuoteSyncPID();
+            this.payload = '{"parameters": [{ "Key":"Quote_Id", "Value":"' + Id + '" }]}';
+        }
+        if (process == 'QuoteCreditSync') {
+            this.ProcessId = ConfigManager.getIConductQuoteCreditSyncPID();
             this.payload = '{"parameters": [{ "Key":"Quote_Id", "Value":"' + Id + '" }]}';
         }
     }
