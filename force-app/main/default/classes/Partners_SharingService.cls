@@ -279,6 +279,28 @@ public without sharing class Partners_SharingService {
         }  
     }
 
+    public static void createAccountShares_ManualTrigger(List<Account> newAccountsList){
+        List<Account> accList = new List<Account>();
+        for(Account acc :newAccountsList){
+            if(acc.Manual_Trigger__c == 'Create Account Shares - Partners'){
+                acc.Manual_Trigger__c = '';
+                accList.add(acc);
+            }
+        }
+        if(!accList.isEmpty()) createAccountShares(accList, null);
+    }
+
+    public static void createOpportunityShares_ManualTrigger(List<Opportunity> newOppsList){
+        List<Opportunity> oppList = new List<Opportunity>();
+        for(Opportunity opp :newOppsList){
+            if(opp.Manual_Trigger__c == 'Create Opportunity Shares - Partners'){
+                opp.Manual_Trigger__c = '';
+                oppList.add(opp);
+            }
+        }
+        if(!oppList.isEmpty()) createOpportunityShares(oppList, null);
+    }
+
     public static void createAccountShares(List<Account> newAccountsList, Map<Id,Account> oldAccountsMap){
         Set<Id> partnerCompsIds = new Set<Id>();
         List<Account> accountsToCreateShares = new List<Account>();

@@ -17,6 +17,7 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
         }
         if(Trigger.isUpdate){ //before update only
             Account_OwnerValidation.companyOwnerValidation(Trigger.new, Trigger.oldMap);
+            Partners_SharingService.createAccountShares_ManualTrigger(Trigger.new);
         }
     }
     if (Trigger.isAfter) {
