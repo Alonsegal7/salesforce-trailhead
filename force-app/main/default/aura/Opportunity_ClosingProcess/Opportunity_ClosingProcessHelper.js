@@ -23,7 +23,7 @@
 			type : "String",
 			value : component.get("v.recordId")}
 		];
-		flow.startFlow("Opportunity_Handover_Screen", inputVariables);
+		flow.startFlow("Opportunity_Handover_Flow_Refactored", inputVariables);
 	},
 
 	getOpportunitySummary : function(component, event, helper){
