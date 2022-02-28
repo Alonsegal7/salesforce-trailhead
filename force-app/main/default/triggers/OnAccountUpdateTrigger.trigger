@@ -13,6 +13,9 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
             Account_SetPartnerCompany.Account_SetPartnerCompany (trigger.new,trigger.oldmap);
             Account_Rollup.Account_Rollup_ValueChange(trigger.new, trigger.oldMap);
         }
+        if (trigger.IsUpdate){
+            Account_OwnerStamps.UpdatePreviousOwner (trigger.new,trigger.oldmap);
+        }
     }
     if (Trigger.isAfter) {
         if (trigger.isInsert||trigger.IsUpdate) {
