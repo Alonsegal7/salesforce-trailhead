@@ -36,6 +36,13 @@ public class BatchPartnersSendPostOnBoardingSurveyTst {
         System.assertEquals(String.valueOf(opp.Id), con.Last_Opportunity_For_Survey__c);
     }
 
+    static testmethod void testNewBusiness_dryRun(){
+        Date dateForTest = Date.today().addDays(-90);
+        Test.startTest();
+        Database.executeBatch(new Batch_PartnersSendPostOnBoardingSurvey(true, dateForTest));
+        Test.stopTest();
+    }
+
     static testmethod void testExpansionProToEnt(){
         Account mondayAcc = [select Id from Account limit 1];
         Opportunity lastopp = [select Id from Opportunity limit 1];
@@ -90,5 +97,21 @@ public class BatchPartnersSendPostOnBoardingSurveyTst {
         Contact con = [select Id, Of_Post_Onboarding_Surveys__c, Last_Opportunity_For_Survey__c from Contact limit 1];
         System.assertEquals(0, con.Of_Post_Onboarding_Surveys__c);
         System.assertEquals(null, con.Last_Opportunity_For_Survey__c);
+    }
+
+    static testmethod void testDateInput(){
+        Date dateForTest = Date.today().addDays(-90);
+        Test.startTest();
+        Database.executeBatch(new Batch_PartnersSendPostOnBoardingSurvey(dateForTest));
+        Test.stopTest();
+    }
+
+    static testmethod void testScheduler(){
+        String cronExpr = '0 0 0 15 3 ? 2022';
+        String jobRunningTime = '2022-03-15 00:00:00';
+        Test.startTest();
+        // Schedule the test job
+        String jobId = System.schedule('myJobTestJobName', cronExpr, new Batch_PartnersSendPostOnBoardingSurvey());
+        Test.stopTest();
     }
 }

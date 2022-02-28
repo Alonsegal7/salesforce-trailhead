@@ -22,7 +22,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         
         //2. Create a renewal quote based on the opportunity "selected company contract" and related billing entity 
         //List of all opportunities that needs a renewal SO
-        List <Opportunity> renewalOpps = [SELECT Name,Selected_Company_Contract__c,Billing_Entity__c,Pricing_Version__c, Payment_Terms__c FROM Opportunity WHERE Id IN :renewalOppIds];
+        List <Opportunity> renewalOpps = [SELECT Name,Selected_Company_Contract__c,Billing_Entity__c,Pricing_Version__c, Payment_Terms__c, USD_exchange_rate__c FROM Opportunity WHERE Id IN :renewalOppIds];
         Id standardPriceBookId = [SELECT Id FROM Pricebook2 WHERE Is_Main__c = true][0].Id;
         System.debug('@@Renewal_Flat_CreateSalesOrder Renewal Pricebook: '+standardPriceBookId);
 
@@ -35,7 +35,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
 
         //Map of all original contracts with their IDs  
-        Map <Id, Contract> relevantContracts = new Map<Id,Contract>([SELECT Id,Tier__c,Contract_ARR__c,CurrencyIsoCode,EndDate FROM Contract WHERE id in: relevantContractIds]);
+        Map <Id, Contract> relevantContracts = new Map<Id,Contract>([SELECT Id,Tier__c,Contract_ARR__c,CurrencyIsoCode,EndDate,ContractNumber FROM Contract WHERE id in: relevantContractIds]);
         //Map of all original contracts with the related opportunity ID  
         Map<Id, Contract> oppsWithContracts = new Map<Id, Contract>();
         for (Opportunity opp : renewalOpps) {
@@ -43,7 +43,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
         
         //Map of all original Billing Entities with their IDs  
-        Map <Id, Billing_Entity__c> relevantBEs = new Map<Id, Billing_Entity__c>([SELECT Id,Name,Priority_Id__c FROM Billing_Entity__c WHERE id in: relevantBEIds]);
+        Map <Id, Billing_Entity__c> relevantBEs = new Map<Id, Billing_Entity__c>([SELECT Id,Shipping_Street__c,Shipping_Zip_Postal_Code__c,Shipping_City__c,Shipping_Country_G__c,Shipping_State__c,Ship_To_Name__c,Name,Priority_Id__c FROM Billing_Entity__c WHERE id in: relevantBEIds]);
         //Map of all original Billing Entities with the related opportunity ID
         Map<Id, Billing_Entity__c> oppsWithBEs = new Map<Id, Billing_Entity__c>();
         for (Opportunity opp : renewalOpps) {
@@ -69,15 +69,18 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                 Duration__c = 12,
                 DH_Period__c = 'Yearly',
                 Manual_Signature_Reason__c = 'Auto Renewal',
-                Name = 'temp - '+ oppsWithBEs.get(opp.Id).Name,
+                Name = 'Flat Renewal For Contract #' + oppsWithContracts.get(opp.Id).ContractNumber,
                 CurrencyIsoCode = oppsWithContracts.get(opp.Id).CurrencyIsoCode,
                 Pricebook2Id = standardPriceBookId,
                 Pricing_Version__c = opp.Pricing_Version__c,
                 Payment_Terms__c = opp.Payment_Terms__c,
-                Priority_Customer_ID_Text__c = oppsWithBEs.get(opp.Id).Priority_Id__c
-                //QuoteToName = renewalBE.Name,
-                //BillingAddress = renewalBE.Billing_Address__c,
-                //BillingName = renewalBE.Name,
+                Priority_Customer_ID_Text__c = oppsWithBEs.get(opp.Id).Priority_Id__c,
+                ShippingStreet=oppsWithBEs.get(opp.Id).Shipping_Street__c,
+                ShippingPostalCode=oppsWithBEs.get(opp.Id).Shipping_Zip_Postal_Code__c,
+                ShippingCity=oppsWithBEs.get(opp.Id).Shipping_City__c,
+                ShippingCountry=oppsWithBEs.get(opp.Id).Shipping_Country_G__c,
+                ShippingState=oppsWithBEs.get(opp.Id).Shipping_State__c,
+                ShippingName=oppsWithBEs.get(opp.Id).Ship_To_Name__c
             ));
         }
         try {
@@ -101,7 +104,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
 
         List<QuoteLineItem> qlisToCreate = new List<QuoteLineItem>();
-        List<Contract_Product__c> relevantContractProducts = ([SELECT Id, Net_Per_Unit__c, Recurring_Product_ARR__c, SKU__c, Product__c, Quantity__c, Contract__c, Contract__r.CurrencyIsoCode FROM Contract_Product__c WHERE Contract__c IN: relevantContractIds]);
+        List<Contract_Product__c> relevantContractProducts = ([SELECT Id, Net_Per_Unit__c, Recurring_Product_ARR__c, SKU__c, Product__c, Quantity__c, Contract__c, Contract__r.CurrencyIsoCode FROM Contract_Product__c WHERE Product__r.IsRecurring__c = true AND Contract__c IN: relevantContractIds]);
         System.debug('@@@ Renewal_Flat_CreateSalesOrder relevantContractProducts: '+relevantContractProducts);
         
         //Map of all Contract Products with their Contract ID
@@ -128,12 +131,13 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
         System.debug('@@ Renewal_Flat_CreateSalesOrder mappedSkuCurrencyToPBE: ' + mappedSkuCurrencyToPBE);
 
+        //Create a map of the Current Account Arr PBE for each currency
+        Map<string, Id> mappedCurrentAccountArrByCurrencyToPBE = new Map<string, Id>();
+        for (PricebookEntry pbe : [SELECT Id, CurrencyIsoCode, ProductCode,Product2.Product_Identifier__c, Pricebook2Id FROM PricebookEntry WHERE Name = 'Current Account ARR' AND Pricebook2Id = :standardPriceBookId]) {
+            mappedCurrentAccountArrByCurrencyToPBE.put(pbe.CurrencyIsoCode,pbe.Id);
+        }
+        System.debug('@@ Renewal_Flat_CreateSalesOrder mappedCurrentAccountArrByCurrencyToPBE: ' + mappedCurrentAccountArrByCurrencyToPBE);
         
-        //Current Account ARR, to be added later as QLI with negative ammount
-        System.debug('@@@Renewal_Flat_CreateSalesOrder standardPriceBookId: '+standardPriceBookId);
-        System.debug('@@@Renewal_Flat_CreateSalesOrder ArrProductIdQuery1: '+[SELECT Id,Name,CurrencyIsoCode,Pricebook2Id,Product2.Name FROM PricebookEntry WHERE Pricebook2Id = :standardPriceBookId]);
-        System.debug('@@@Renewal_Flat_CreateSalesOrder ArrProductIdQuery2: '+[SELECT Id,Name,CurrencyIsoCode,Pricebook2Id,Product2.Name FROM PricebookEntry WHERE Pricebook2Id = :standardPriceBookId]);
-        Id ArrProductId = [SELECT Id FROM PricebookEntry WHERE Name = 'Current Account ARR' AND Pricebook2Id = :standardPriceBookId AND CurrencyIsoCode = 'USD' limit 1][0].Id;
         //Assign Quote and Contract IDs
         Quote currentQuote = new Quote();
         Contract currentContract1 = new Contract();
@@ -149,12 +153,12 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                     qlisToCreate.add(new QuoteLineItem(
                         QuoteId=currentQuote.Id,
                         ServiceDate=oppsWithContracts.get(opp.Id).EndDate.addDays(1),
-                        End_Date__c=oppsWithContracts.get(opp.Id).EndDate.addDays(366),
+                        End_Date__c=oppsWithContracts.get(opp.Id).EndDate.addDays(365),
                         PricebookEntryId=mappedSkuCurrencyToPBE.get(cp.SKU__c+currentContract1.CurrencyIsoCode),
                         UnitPrice=cp.Net_Per_Unit__c,
                         Net_Per_Unit__c=cp.Net_Per_Unit__c,
                         Renewal_Unit_Price__c=cp.Net_Per_Unit__c,
-                        ARR__c=cp.Recurring_Product_ARR__c,
+                        ARR__c=opp.USD_exchange_rate__c * cp.Quantity__c * cp.Net_Per_Unit__c*12,
                         DH_Option_Quote_Type__c='New Contract',
                         Is_Primary__c=true,
                         Tier__c=oppsWithContracts.get(opp.Id).Tier__c,
@@ -169,7 +173,13 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                         Quantity=(cp.Quantity__c)*12));
                 }
                 //add Current Account ARR as QLI with negative ammount - contract arr
-                qlisToCreate.add(new QuoteLineItem(QuoteId=currentQuote.Id,Is_Primary__c=true,PricebookEntryId=ArrProductId,UnitPrice=0,ARR__c=(currentContract1.Contract_ARR__c*(-1)),Quantity=1));
+                qlisToCreate.add(new QuoteLineItem(
+                    QuoteId=currentQuote.Id,
+                    Is_Primary__c=true,
+                    PricebookEntryId=mappedCurrentAccountArrByCurrencyToPBE.get(currentContract1.CurrencyIsoCode),
+                    UnitPrice=0,
+                    ARR__c=(currentContract1.Contract_ARR__c*(-1)),
+                    Quantity=1));
             }
             for (QuoteLineItem qli : qlisToCreate) {
                 System.debug('@@@ Renewal_Flat_CreateSalesOrder PB ID: '+ qli.PricebookEntryId);
@@ -187,7 +197,6 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
         //4. Update the opportunity - sync the new quote and change the Auto Renewal Status to Completed, used for monitoring
         
-        //Update Opportunity - set IsSyncing to True
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
         for (Id oppId : renewalOppIds) {
             oppsToUpdate.add(new Opportunity (Id = oppId, SyncedQuoteId = oppsWithQuotes.get(oppId).Id, Auto_Renewal_Status__c = 'Completed'));

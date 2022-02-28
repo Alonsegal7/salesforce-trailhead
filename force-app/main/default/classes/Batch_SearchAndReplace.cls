@@ -6,6 +6,7 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
     private String textForEmail;
     private Set<Id> idsToQuery;
     private String sobjectName;
+    private Map<String,String> fieldsToValuesMap;
     public List<String> updatedIdsList = new List<String>();
     public List<String> emailRecepients = new List<String>{'kseniasm@monday.com'};
 
@@ -18,6 +19,13 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
        if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
     }
 
+    public Batch_SearchAndReplace(String q, Map<String,String> fieldsToValuesMap, String textForEmail){
+        this.query = q;
+        this.fieldsToValuesMap = fieldsToValuesMap;
+        this.textForEmail = textForEmail;
+        if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
+     }
+
     public Batch_SearchAndReplace(Set<Id> idsToQuery, String sobjectName, String f, String v, String textForEmail){
         this.idsToQuery = idsToQuery;
         this.sobjectName = sobjectName;
@@ -25,7 +33,15 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
         this.value = v;
         this.textForEmail = textForEmail;
         if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
-     }
+    }
+
+    public Batch_SearchAndReplace(Set<Id> idsToQuery, String sobjectName, Map<String,String> fieldsToValuesMap, String textForEmail){
+        this.idsToQuery = idsToQuery;
+        this.sobjectName = sobjectName;
+        this.fieldsToValuesMap = fieldsToValuesMap;
+        this.textForEmail = textForEmail;
+        if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
+    }
   
     public Database.QueryLocator start(Database.BatchableContext BC){
         try{
@@ -40,7 +56,13 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
     public void execute(Database.BatchableContext BC, List<sObject> scope){
         try{
             for(sobject s : scope){
-                s.put(field,value); 
+                if(fieldsToValuesMap != null && !fieldsToValuesMap.isEmpty()){
+                    for(String f: fieldsToValuesMap.keySet()){
+                        s.put(f, fieldsToValuesMap.get(f)); 
+                    }
+                } else if (field != null && value != null){
+                    s.put(field,value); 
+                }
                 updatedIdsList.add(s.Id);
             }
             Database.update(scope);

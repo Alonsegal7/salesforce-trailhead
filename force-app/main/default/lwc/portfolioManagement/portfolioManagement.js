@@ -1,5 +1,7 @@
 import { LightningElement } from 'lwc';
 import init from '@salesforce/apex/Ctrl_DashboardPageApp.initPortfolioManagment';
+import greenURL from '@salesforce/label/c.Dashboard_GreenBucket';
+import orangeURL from '@salesforce/label/c.Dashboard_OrangeBucket';
 
 export default class PortfolioManagement extends LightningElement {
     dataLoaded = false;
@@ -11,8 +13,13 @@ export default class PortfolioManagement extends LightningElement {
     orangeBarTitle = '';
     greenBarStyle = '';
     orangeBarStyle = '';
+    greenBucketURL = '';
+    orangeBucketURL = '';
     
     connectedCallback(){
+        this.greenBucketURL = greenURL;
+        this.orangeBucketURL = orangeURL;
+        
         init()
         .then((data) => {
             if (!this.isEmpty(data)){
@@ -31,7 +38,7 @@ export default class PortfolioManagement extends LightningElement {
                 this.orangeBarStyle = 'width: ' + orangeRate + '%;';
             }
         })
-        .catch((err) => { console.log('Error initializing Portfolio Management: ' + err); });
+        .catch((err) => { console.log('Error initializing Portfolio Management: ' + JSON.stringify(err)); });
     }
 
     /**

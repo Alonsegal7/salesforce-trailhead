@@ -30,6 +30,7 @@ export default class BigBrainAccountProfile extends LightningElement {
   planStartDate;
   planUntilDate;
   collection;
+  paymentMethodLabel;
   arr;
 
   //users breakdown data
@@ -63,7 +64,7 @@ export default class BigBrainAccountProfile extends LightningElement {
     if (!data) return;
 
     const parsedData = JSON.parse(data);
-
+ 
     const { 
       domain,
       industry,
@@ -77,6 +78,7 @@ export default class BigBrainAccountProfile extends LightningElement {
       pricing_version, 
       payment_currency, 
       collection_usd, 
+      payment_method_label,
       arr,
       users_breakdown = {},
       account_name,
@@ -120,6 +122,7 @@ export default class BigBrainAccountProfile extends LightningElement {
     this.pricingVersion = pricing_version;
     this.lastSeen = last_seen;
     this.collection = collection_usd;
+    this.paymentMethodLabel = payment_method_label;
     this.arr = arr;
 
     this.totalSeats = total_seats || 0;

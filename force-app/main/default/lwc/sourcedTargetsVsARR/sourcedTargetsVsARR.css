@@ -24,6 +24,9 @@ li.tile{
     height: 278px;
     position: relative;
 }
+li.tile:hover{
+    box-shadow: 0px 0px 6px 0px #ddd;
+}
 li.tile:last-child, li.tile:first-child{
     margin: 0;
 }
@@ -73,4 +76,10 @@ li.tile .footer .inbound .marker{
 }
 li.tile .footer .outbound .marker{
     background-color: #0fd8f4;
+}
+a{
+    color: #000;
+}
+a:hover{
+    text-decoration: none;
 }

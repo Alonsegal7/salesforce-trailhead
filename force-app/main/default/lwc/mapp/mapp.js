@@ -23,6 +23,7 @@ export default class Mapp extends LightningElement {
                     this.mapsPositionStyle += 'background-position-x: right;'
                 } else {
                     this.mapsPositionStyle = 'left: calc(' + data.mapp + '% - 26px);';
+                    this.mapsPositionStyle += 'background-image: url(' + tierBadges + '/ArrowMarker.png);';
                 }
             }
         })

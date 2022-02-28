@@ -1,0 +1,29 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="displayModal" type="Boolean" default="false"/>
+
+        <lightning:card iconName="standard:asset_relationship" title="Partner Activity Request">
+            <aura:set attribute="actions">
+                <lightning:button label="Submit" onclick="{!c.handleClick}" class="slds-m-left_x-small"/>
+            </aura:set>
+        </lightning:card>
+
+    <aura:if isTrue="{!v.displayModal}">
+        <div>
+            <div role="dialog" tabindex="-1" aria-labelledby="header" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="bk-override">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.handleClick }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                    </header>
+                    <div class="slds-modal__content slds-var-p-left_medium slds-var-p-right_medium slds-var-p-bottom_medium">
+                        <lightning:flow aura:id="flowData" onstatuschange="{!c.statusChange}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+</aura:component>

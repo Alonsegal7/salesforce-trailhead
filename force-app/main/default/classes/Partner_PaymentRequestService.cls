@@ -136,7 +136,7 @@ public without sharing class Partner_PaymentRequestService {
                 if(monthsWithAvailableReports.contains(String.valueOf(dateVal.toStartOfMonth()))){
                     Map<String,String> newMonthValue = new Map<String,String>();
                     newMonthValue.put('label', dt.format('MMM') + ' ' + dt.year());
-                    newMonthValue.put('value', String.valueOf(Date.newInstance(dt.year(), dt.month(), dt.day())));
+                    newMonthValue.put('value', String.valueOf(Date.newInstance(dt.year(), dt.month(), 1)));
                     monthSelectionPicklistValues.add(newMonthValue);
                 }
                 dt = dt.addMonths(-1);
@@ -219,9 +219,17 @@ public without sharing class Partner_PaymentRequestService {
     }
 
     @AuraEnabled
-    public static void updatePaymentRequest(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id incoiveFileVerId, String invoiceCurrency){
+    public static void updatePaymentRequest(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id invoiceFileVerId, String invoiceCurrency, String invoiceNumber, Date invoiceDate){
         try {
-            Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(Id = paymentRequestId, MDF_Amount__c = 0, Spiff_Amount__c = 0, Invoice_Content_Version_Id__c = incoiveFileVerId, Invoice_Currency__c = invoiceCurrency);
+            Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(
+                    Id = paymentRequestId, 
+                    MDF_Amount__c = 0, 
+                    Spiff_Amount__c = 0, 
+                    Invoice_Content_Version_Id__c = invoiceFileVerId, 
+                    Invoice_Currency__c = invoiceCurrency,
+                    Invoice_Date__c = invoiceDate,
+                    Invoice_Number__c = invoiceNumber
+                );
             if(mdfAmount != null && mdfAmount > 0) paymentRequestToUpdate.MDF_Amount__c = mdfAmount;
             if(spiffAmount != null && spiffAmount > 0) paymentRequestToUpdate.Spiff_Amount__c = spiffAmount;
             Database.update(paymentRequestToUpdate);
@@ -231,9 +239,9 @@ public without sharing class Partner_PaymentRequestService {
     }
 
     @AuraEnabled
-    public static resWrapper submitForApproval(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id incoiveFileVerId, String invoiceCurrency){
+    public static resWrapper submitForApproval(Id paymentRequestId, Decimal mdfAmount, Decimal spiffAmount, Id invoiceFileVerId, String invoiceCurrency, String invoiceNumber, Date invoiceDate){
         try {
-            updatePaymentRequest(paymentRequestId, mdfAmount, spiffAmount, incoiveFileVerId, invoiceCurrency);
+            updatePaymentRequest(paymentRequestId, mdfAmount, spiffAmount, invoiceFileVerId, invoiceCurrency, invoiceNumber, invoiceDate);
             Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();          
             req.setObjectId(paymentRequestId);
             req.setProcessDefinitionNameOrId('Payment_Request_Approval_Process');

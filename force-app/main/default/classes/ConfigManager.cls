@@ -22,6 +22,11 @@ public class ConfigManager {
         //return IsSandbox ? 'x23581' : 'x23494';
         return IsSandbox ? label.iConduct_Sync_BE_PID_Sandbox : label.iConduct_Sync_BE_PID;
     }
+
+    public static String getIConductQuoteCreditSyncPID(){
+        //return IsSandbox ? 'x23581' : 'x23494';
+        return IsSandbox ? label.iConduct_Sync_QuoteCredit_PID_Sandbox : label.iConduct_Sync_QuoteCredit_PID;
+    }
     
     public static String get(String key){
         BigBrain_Setting__mdt config = getConfig();

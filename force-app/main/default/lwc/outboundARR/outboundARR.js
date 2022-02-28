@@ -32,6 +32,7 @@ export default class OutboundARR extends LightningElement {
                     this.outboundArrPositionStyle += 'background-position-x: right;'
                 } else {
                     this.outboundArrPositionStyle = 'left: calc(' + outBoundArrLeftPos + '% - 26px);';
+                    this.outboundArrPositionStyle += 'background-image: url(' + tierBadges + '/ArrowMarker.png);';
                 }
             }
         })

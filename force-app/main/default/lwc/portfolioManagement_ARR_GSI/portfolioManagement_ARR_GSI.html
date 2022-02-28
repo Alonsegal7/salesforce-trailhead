@@ -3,44 +3,50 @@
         <h3 class="section-title">Portfolio Management</h3>
         <ul class="target-list clear">
             <li class="tile orange">
-                <div class="title">
-                    <!--<div class="left"><span class="color">Orange</span> Bucket</div>-->
-                </div>
-                <div class="body">
-                    <div class="title">Total ARR</div>
-                    <div class="main">${totalARR}k</div>
-                    <!--<div class="text">Orange bucket <span>Total ARR: ${orangeTotalARR}k</span></div>-->
-                </div>
-                <!--<div class="footer clear">&nbsp;</div>-->
+                <a href={orangeBucketURL} target="_blank">
+                    <div class="title">
+                        <!--<div class="left"><span class="color">Orange</span> Bucket</div>-->
+                    </div>
+                    <div class="body">
+                        <div class="title">Total ARR</div>
+                        <div class="main">${totalARR}</div>
+                        <!--<div class="text">Orange bucket <span>Total ARR: ${orangeTotalARR}k</span></div>-->
+                    </div>
+                    <!--<div class="footer clear">&nbsp;</div>-->
+                </a>
             </li>
 
             <li class="tile green">
-                <div class="title">
-                    <!--<div class="left"><span class="color">Green</span> Bucket</div>-->
-                </div>
-                <div class="body">
-                    <div class="title"># Accounts</div>
-                    <div class="main">{count}</div>
-                    <!--<div class="text">Green bucket <span>Total ARR: ${greenTotalARR}k</span></div>-->
-                </div>
-                <!--<div class="footer clear">&nbsp;</div>-->
+                <a href={greenBucketURL} target="_blank">
+                    <div class="title">
+                        <!--<div class="left"><span class="color">Green</span> Bucket</div>-->
+                    </div>
+                    <div class="body">
+                        <div class="title"># Accounts</div>
+                        <div class="main">{count}</div>
+                        <!--<div class="text">Green bucket <span>Total ARR: ${greenTotalARR}k</span></div>-->
+                    </div>
+                    <!--<div class="footer clear">&nbsp;</div>-->
+                </a>
             </li>
 
             <li class="tile bar">
-                <div class="title">Portfolio ARR</div>
-                <div class="body">
-                    <div class="bar-titles">
-                        <div class="purple">{purpleBarTitle}</div><div class="blue">{blueBarTitle}</div>
+                <a href={portfolioARRURL} target="_blank">
+                    <div class="title">Portfolio ARR</div>
+                    <div class="body">
+                        <div class="bar-titles">
+                            <div class="purple">{purpleBarTitle}</div><div class="blue">{blueBarTitle}</div>
+                        </div>
+                        <div class="bar">
+                            <div class="purple" style={purpleBarStyle}></div>
+                            <div class="blue" style={blueBarStyle}></div>
+                        </div>
                     </div>
-                    <div class="bar">
-                        <div class="purple" style={purpleBarStyle}></div>
-                        <div class="blue" style={blueBarStyle}></div>
+                    <div class="footer clear">
+                        <div class="purple"><span class="marker"></span>Enabled ARR</div>
+                        <div class="blue"><span class="marker"></span>Sourced ARR</div>
                     </div>
-                </div>
-                <div class="footer clear">
-                    <div class="purple"><span class="marker"></span>Influenced ARR</div>
-                    <div class="blue"><span class="marker"></span>Sourced ARR</div>
-                </div>
+                </a>
             </li>
         </ul>
     </div>

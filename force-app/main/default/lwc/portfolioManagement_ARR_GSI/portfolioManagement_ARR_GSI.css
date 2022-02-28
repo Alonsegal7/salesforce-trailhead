@@ -25,8 +25,11 @@ li.tile{
     height: 278px;
     position: relative;
 }
-li.tile:first-child{
-    margin-left: 0;
+li.tile:hover{
+    box-shadow: 0px 0px 6px 0px #ddd;
+}
+li.tile:first-child, li.tile:last-child{
+    margin: 0;
 }
 li.tile .title:before, li.tile .title:after{
     content: '';
@@ -37,6 +40,11 @@ li.tile .title:after{
 }
 li.tile .title{
     height: 18px;
+}
+li.tile a{
+    color: #000;
+    display: block;
+    text-decoration: none;
 }
 li.tile .title .left{
     float: left;

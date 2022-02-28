@@ -12,10 +12,12 @@ public with sharing class Ctrl_DashboardPageApp_TEST {
         insert t;
 
         Ctrl_DashboardPageApp.init(null);
+        Ctrl_DashboardPageApp.getCertifications(null);
         Ctrl_DashboardPageApp.initPortfolioManagment(null);
         Ctrl_DashboardPageApp.initARRGSIPortfolioManagment(null);
         Ctrl_DashboardPageApp.initProfileUpdate(null);
         Ctrl_DashboardPageApp.getTargets(null, null);
         Ctrl_DashboardPageApp.getMapp(null);
+        Ctrl_DashboardPageApp.initSpiff(null);
     }
 }

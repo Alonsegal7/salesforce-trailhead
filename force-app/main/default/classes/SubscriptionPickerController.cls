@@ -2,16 +2,23 @@ public without sharing class SubscriptionPickerController {
     public static boolean IsSandbox = [Select IsSandbox from Organization].IsSandbox;
     @AuraEnabled(cacheable=true)
     public static map<Id,Subscription__c> getSubscriptions(String oppId){
+        Id CSRecordType = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
         try{
-            Opportunity opp=[select id,AccountId from Opportunity where id=:oppId][0];
-            map<Id,Subscription__c> subs=new map<Id,Subscription__c>([select id,name,Seats__c,Product_Code__c,Name_for_CC_Claim__c,
-                                        Claimed_On_Opportunity__r.Co_Sell_Opportunity__c,Is_Claimed__c,ARR_Gain__c,Period__c
-                                        from Subscription__c 
-                                        where Monday_Account__c=:opp.AccountId and 
-                                        (Is_Claimed__c=false
-                                         OR (Claimed_On_Opportunity__r.Co_Sell_Opportunity__c=:Opp.Id AND Claimed_On_Opportunity_Co_Sell__c=NULL)) 
-                                        and Status__c!='DELETED' and (Payment_Method__c LIKE '%BLUESNAP%' or Include_In_CC_Claim__c=true)
-                                        order by Activation_Date__c]);
+            Opportunity opp=[select id,Type,AccountId,RecordTypeId from Opportunity where id=:oppId][0];
+            Id oppAccId=opp.AccountId;
+            Id opptyId=opp.Id;
+            //CS Renewal Opp will only take the renewal subscription for claiming
+            string query='select id,name,Seats__c,ARR__c, Product_Code__c,Name_for_CC_Claim__c, Name_for_CC_Claim_Full_ARR__c,Claimed_On_Opportunity__r.Co_Sell_Opportunity__c,Is_Claimed__c,ARR_Gain__c,Period__c from Subscription__c where Monday_Account__c=:oppAccId';
+            if (opp.RecordTypeId==CSRecordType && opp.Type.contains('Renewal')) {
+                query+=' and Is_Claimed__c=false and Status__c=\'ACTIVE\'' + 'and Payment_Method__c like \'%BLUESNAP%\' order by Activation_Date__c';
+            }
+            else {
+                query+=' and (Is_Claimed__c=false or (Claimed_On_Opportunity__r.Co_Sell_Opportunity__c=:opptyId AND Claimed_On_Opportunity_Co_Sell__c=NULL)) and Status__c!=\'DELETED\'' + 
+                'and (Payment_Method__c like \'%BLUESNAP%\' or Include_In_CC_Claim__c=true) order by Activation_Date__c';
+            }
+            system.debug('query'+query);
+
+                Map<Id, Subscription__c> subs = new Map<Id, Subscription__c>((List<Subscription__c>)Database.query(query));
             system.debug('Raz Ben Ron currentCon from Controller, '+subs);
             return subs;
         }catch(Exception e){
@@ -22,7 +29,7 @@ public without sharing class SubscriptionPickerController {
     public static map<Id,Subscription__c> getClaimed(String oppId){
         try{
             Opportunity opp=[select id,AccountId from Opportunity where id=:oppId][0];
-            map<Id,Subscription__c> subs=new map<Id,Subscription__c>([select id,name,Seats__c,Product_Code__c,Period__c,Name_for_CC_Claim__c,Is_Claimed__c,ARR_Gain__c,Tier__c
+            map<Id,Subscription__c> subs=new map<Id,Subscription__c>([select id,ARR__c, Name_for_CC_Claim_Full_ARR__c,name,Seats__c,Product_Code__c,Period__c,Name_for_CC_Claim__c,Is_Claimed__c,ARR_Gain__c,Tier__c
                                         from Subscription__c 
                                         where Monday_Account__c=:opp.AccountId And
                                         (Claimed_On_Opportunity__c=:oppId OR Claimed_On_Opportunity_Co_Sell__c=:oppId) And
@@ -58,7 +65,7 @@ public without sharing class SubscriptionPickerController {
                                 Is_Primary_SO_Signed__c,Last_Claimed_Subscription__c
                                 from Opportunity where id=:oppId][0];
             List<Opportunitylineitem> olisToInsert= new List<Opportunitylineitem>();
-            List<Subscription__c> subsToClaim = [select id,name,Seats__c,Unit_Price__c,Product_Code__c,ARR_Gain__c,Tier__c,Period__c,
+            List<Subscription__c> subsToClaim = [select id,ARR__c,name,Seats__c,Unit_Price__c,Product_Code__c,ARR_Gain__c,Tier__c,Period__c,
                                                         Paid_Months__c,Discount__c,Free_Months__c,Billing_Ids__c,Activation_Date__c,Is_Claimed__c,
                                                         Claimed_On_Opportunity__c,Claimed_On_Opportunity__r.Co_Sell_Opportunity__c
                                                     from Subscription__c 

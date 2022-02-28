@@ -4,9 +4,7 @@
          icon-name="standard:partners">
         <template if:true={missingRelevantInfo}>
             <lightning-layout-item flexibility="auto" padding="around-medium">
-                <div class="slds-p-around_medium slds-text-align_left">Hey there! Welcome to the CLM Application!
-                    Please note that we only support SaaS agreements 
-                    Also, Make sure that the opportuinty is not cloed and that it includes a Sales order with SaaS agreement or TOS+DPA type and a valid billing entity.</div>
+                <div class="slds-p-around_medium slds-text-align_left">Hi there, Welcome to CLM workflow! Please note that currently, we only support SaaS, TOS+DPA and Addendum (negotiated). Please make sure that the opportunity is not closed and that it includes Sales Order with SaaS or TOS+DPA agreement type and valid billing entity.</div>
             </lightning-layout-item>
         </template>
         <template if:true={showSaaSbutton}>
@@ -19,6 +17,12 @@
             <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of TOS + DPA. Please click on the button to start the CLM Process</div>
             <lightning-layout-item padding="around-medium">
                 <lightning-button variant="Brand" label="Start DPA Process" onclick={InitDPA}></lightning-button>
+            </lightning-layout-item>
+        </template>
+        <template if:true={showAddendum}>
+            <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of Addendum (negotiated). Please click on the button to start the CLM Process</div>
+            <lightning-layout-item padding="around-medium">
+                <lightning-button variant="Brand" label="Addendum (negotiated)" onclick={InitAddendum}></lightning-button>
             </lightning-layout-item>
         </template>
         <template if:true={showCompanyLegalDocTable}>
@@ -36,5 +40,5 @@
         <lightning-button variant="neutral" label="Back" onclick={closeAction}></lightning-button>
     </lightning-card>
     </lightning-quick-action-panel>
-    
+
 </template>

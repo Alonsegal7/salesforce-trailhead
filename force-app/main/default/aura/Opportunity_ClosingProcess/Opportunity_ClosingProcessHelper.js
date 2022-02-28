@@ -18,12 +18,24 @@
 
 		var flow = component.find("handoverFlowData");
 		// In that component, start your flow. Reference the flow's API Name.
-		var inputVariables = [{
-			name : "recordId",
-			type : "String",
-			value : component.get("v.recordId")}
+		var inputVariables = [
+			{
+				name : "recordId",
+				type : "String",
+				value : component.get("v.recordId")
+			},
+			{
+				name : "showAmHandover",
+				type : "Boolean",
+				value : component.get("v.showAmHandover")
+			},
+			{
+				name : "showCsmHandover",
+				type : "Boolean",
+				value : component.get("v.showCSMHandover")
+			},
 		];
-		flow.startFlow("Handover", inputVariables);
+		flow.startFlow("Opportunity_Handover_Flow_Refactored", inputVariables);
 	},
 
 	getOpportunitySummary : function(component, event, helper){
@@ -59,6 +71,7 @@
 			if(component.get('v.oppData.Should_be_handed_over_to_AM__c')
 			|| component.get('v.oppData.Total_PS_Hours__c') > 0 
 			|| component.get('v.oppData.Total_PS_Expended_Hours__c') > 0
+			|| component.get('v.oppData.Onboarding_Hours__c') > 0
 			|| component.get('v.oppData.Total_Training_Hours__c') >= 3 ||
 			(
 			component.get('v.oppData.Expected_Plan_Seats__c') != undefined && component.get('v.oppData.Expected_Plan_Seats__c') >= 100
@@ -67,8 +80,80 @@
 			&&
 			component.get('v.oppData.Account.CSM_Function__c') != undefined && component.get('v.oppData.Account.CSM_Function__c') != 'Enterprise CSM' && component.get('v.oppData.Account.CSM_Function__c') != 'Mid-Market CSM')){
 				component.set('v.showHandover', true);
+				console.log('v.showHandover is true');
 			}
+			else console.log('v.showHandover is false');
 		}
+	},
+
+	checkHandover_InternalOppAM : function(component, event, helper){
+		var oppId = component.get("v.recordId");
+		console.log('entered checkHandover_InternalOppAM. OppId: '+oppId);
+		let actionCheckPassAm = component.get("c.checkIfPassedHandoverThreshold");
+		actionCheckPassAm.setParams({
+			recordId: oppId,
+			thresholdType: "AM"
+		});
+		actionCheckPassAm.setCallback(this, function(response){
+			let state = response.getState();
+			console.log('entered checkifpass AM response');
+			if(state==="SUCCESS"){
+				console.log('entered checkifpass AM: '+response.getReturnValue());					
+				if(response.getReturnValue()) {
+					component.set("v.showHandover", true);
+					component.set("v.showAmHandover", true);
+				}
+			} else {
+				console.log('entered checkifpass error');
+				alert("error");
+			}
+		});
+		$A.enqueueAction(actionCheckPassAm);
+	},
+
+	checkHandover_InternalOppCSM : function(component, event, helper){
+		var oppId = component.get("v.recordId");
+		console.log('entered checkHandover_InternalOppCSM. OppId: '+oppId);
+		let actionCheckPassCSM = component.get("c.checkIfPassedHandoverThreshold");
+		actionCheckPassCSM.setParams({
+			recordId: oppId,
+			thresholdType: "CSM"
+		});
+		actionCheckPassCSM.setCallback(this, function(response){
+			let state = response.getState();
+			console.log('entered checkifpass CSM response');
+			if(state==="SUCCESS"){
+				console.log('entered checkifpass: '+response.getReturnValue());					
+				if(response.getReturnValue()) {
+					component.set("v.showHandover", true);
+					component.set("v.showCSMHandover", true);
+				}
+			} else {
+				console.log('entered checkifpass error');
+				alert("error");
+			}
+		});
+		$A.enqueueAction(actionCheckPassCSM);
+	},
+
+	recalcHandoverThreshold : function(component, event, helper){
+		var oppId = component.get("v.recordId");
+		console.log('entered recalcHandoverThreshold. OppId: '+oppId);
+		let recalcAction = component.get("c.recalcHandoverThreshold");
+		recalcAction.setParams({
+			recordId: oppId
+		});
+		// recalcAction.setCallback(this, function(response){
+		// 	let state = response.getState();
+		// 	console.log('entered checkifpass AM response');
+		// 	if(state==="SUCCESS"){
+		// 		console.log('entered recalcAction and got success ');					
+		// 	} else {
+		// 		console.log('entered checkifpass error');
+		// 		alert("error");
+		// 	}
+		// });
+		$A.enqueueAction(recalcAction);
 	},
 
 	setInnerPicklistPath : function(component, event, helper, innerValue){

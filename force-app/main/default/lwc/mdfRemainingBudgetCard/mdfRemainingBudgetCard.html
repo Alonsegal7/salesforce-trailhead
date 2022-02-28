@@ -1,0 +1,24 @@
+<template>
+	<div class="custom-box slds-box slds-p-around_medium" style="height: 100%;" >
+		<p class="slds-text-heading_small"><lightning-icon  class="slds-m-right_small" icon-name="custom:custom41" alternative-text="Remaining MDF Budget" title="Remaining MDF Budget"></lightning-icon>
+			Remaining MDF Budget
+		</p>
+		<div class="slds-m-top_x-small slds-m-top_x-small slds-border_bottom"></div>
+		<div class="slds-m-top_medium">
+			<lightning-tile>
+				<dl class="slds-dl_horizontal">
+					<dt class="slds-dl_horizontal__label" style="width: 50%;">
+						<p>Amount:</p>
+					</dt>
+					<dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 50%;">
+						<p class="slds-truncate slds-text-align_right">
+							<lightning-formatted-number value={remainingBudget} format-style="currency" currency-code="USD"
+								currency-display-as="code">
+							</lightning-formatted-number>
+						</p>
+					</dd>
+				</dl>
+			</lightning-tile>
+		</div>
+	</div>
+</template>

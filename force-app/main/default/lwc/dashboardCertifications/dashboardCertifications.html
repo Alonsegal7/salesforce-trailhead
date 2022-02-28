@@ -1,0 +1,35 @@
+<template>
+    <div class="wrap-all">
+        <h3 class="card-title">Certifications</h3>
+        <article class="slds-card clear dashboard-card">
+            <div class="card-body">
+                <ul>
+                    <li class="slds-is-relative">
+                        <div class="img-container">
+                            <img src={salesBadge} class="badge" />
+                        </div>
+                        <div class="title-container">
+                            Sales&nbsp;<b>{salesCertCount}</b>/{salesCertOutOf}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="img-container">
+                            <img src={csmBadge} class="badge" />
+                        </div>
+                        <div class="title-container">
+                            CSM&nbsp;<b>{csmCertCount}</b>/{csmCertOutOf}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="img-container">
+                            <img src={amBadge} class="badge" />
+                        </div>
+                        <div class="title-container">
+                            AM&nbsp;<b>{amCertCount}</b>/{amCertOutOf}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </div>
+</template>

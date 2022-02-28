@@ -241,6 +241,35 @@ public class PartnerCommissionService {
         }
     }
 
+    public void upsertPcmInQueue(List<Partner_Commission_Model__c> newPcmList, String queueName){
+        if(newPcmList.isEmpty()) return;
+        Boolean errorOccured = false;
+        List<String> recipientsList;
+        String errorsFound = '';
+        String currErr = '';
+
+        Database.UpsertResult[] lsr = Database.upsert(newPcmList, false); // specify false for second parameter (allOrNone) so that if a record fails, the remainder of the DML operation can still succeed 
+        for (Database.UpsertResult sr : lsr) {
+            if (sr.isSuccess()) {
+                System.debug('Successfully upserted Partner_Commission_Model__c. Partner_Commission_Model__c ID: ' + sr.getId());
+            } else {
+                for(Database.Error err : sr.getErrors()) {
+                    System.debug('The following error has occurred.');                    
+                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                    System.debug('Partner_Commission_Model__c fields that affected this error: ' + err.getFields());
+                    currErr = '';
+                    if(sr.getId() != null) currErr = 'Partner_Commission_Model__c ID: ' + sr.getId() + ' ';
+                    currErr = currErr + err.getStatusCode() + ': ' + err.getMessage();
+                    errorsFound += currErr + ', ';
+                }
+            }
+        }
+        if(errorsFound != ''){
+            recipientsList = [select Value__c from Environment_Variable__mdt where DeveloperName =: CMT_ERROR_EMAIL_CONST limit 1].Value__c.split(';');
+            Utilities.sendEmail('Error in upsert PCMs from ' + queueName, 'Errors found: ' + errorsFound + ' <br/>PCMs List attempted to upsert: ' + JSON.serialize(newPcmList) + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), recipientsList);
+        }
+    }
+
     public void sendErrorEmail(String className, String body){
         List<String> recipientsList = [select Value__c from Environment_Variable__mdt where DeveloperName =:CMT_ERROR_EMAIL_CONST limit 1].Value__c.split(';');
         Utilities.sendEmail('Error in '+ className +': ', body, recipientsList);
@@ -315,9 +344,10 @@ public class PartnerCommissionService {
                 for(Partner_Commission__c existingPc: pcMap.get(key)){
                     if((newPc.Start_Date__c >= existingPc.Start_Date__c && (existingPc.End_Date__c == null || newPc.Start_Date__c <= existingPc.End_Date__c)) 
                     || (existingPc.Start_Date__c >= newPc.Start_Date__c && (newPc.End_Date__c == null || existingPc.Start_Date__c <= newPc.End_Date__c))){
-                        errorMsg = 'Partner Commission dates overlap detected.';
-                        if(newPc.Id != null) errorMsg +=  'Partner Commission Id: '+newPc.Id+';';
-                        errorMsg += 'partnerId: '+newPc.Partner_Company__c+'; mondayAccountId: '+newPc.Monday_Account__c;
+                        errorMsg = 'PC DATES_OVERLAP; ';
+                        errorMsg += 'Partner_Company__c: '+newPc.Partner_Company__c+'; Monday_Account__c: '+newPc.Monday_Account__c;
+                        errorMsg +=  '; existing pc Id: '+existingPc.Id+'; ';
+                        if(newPc.Id != null) errorMsg +=  'new pc Id: '+newPc.Id+';';
                         throw new partnerCommissionException(errorMsg);
                     }
                 }

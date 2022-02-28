@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Threshold Criterias" icon-name="standard:product_required">
+        <lightning-datatable key-field="Id" 
+        data={tableData}
+        columns={columns} 
+        onsave={handleSave}
+        show-row-number-column 
+        row-number-offset={rowOffset}></lightning-datatable>
+    </lightning-card>
+</template>

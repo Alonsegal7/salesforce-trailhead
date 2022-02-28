@@ -1,5 +1,6 @@
 .wrap-all{
     position: relative;
+    max-width: 858px;
 }
 h3{
     font-size: 1.25rem;
@@ -20,13 +21,18 @@ h3{
 .card-inner-wrap{
     text-align: center;
 }
-ul{
-    display: flex;
-    justify-content: space-evenly;
+ul:before, ul:after{
+    content: '';
+    display: table;
+}
+ul:after{
+    clear: both;
 }
 li{
-    flex-grow: 1;
-    margin-right: 32px;
+    width: calc(33% - 4px);
+    float: left;
+    margin-right: 12px;
+    max-width: 278px;
 }
 li:last-child{
     margin-right: 0;
@@ -34,6 +40,7 @@ li:last-child{
 label{
     display: block;
     margin-bottom: 8px;
+    font-size: 12px;
 }
 .a-blue-btn{
     border-radius: 0.25rem;

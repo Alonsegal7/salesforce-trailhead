@@ -5,6 +5,7 @@ public without sharing class Subscription_ConnectToContractEvent {
 
     public static void Subscription_ConnectToContract(List<Subscription__c> newSubs, map<Id, Subscription__c> oldMap) {
         try{
+            
             set<string> subsPulseIds= new set<string>();
             Set<string> subsProductSKUs = new Set<string>();
             Set<string> conProdsKeys = new Set<string>();
@@ -144,6 +145,8 @@ public without sharing class Subscription_ConnectToContractEvent {
         Map<Id, List<Contract_Event__c>> existingContractAndconEventMap = new Map<Id, List<Contract_Event__c>>();
         List <Contract_Event__c> conEventForExisContract = new List<Contract_Event__c>();
         Set<Id> contractIds = new Set<Id>();
+        List<Account> acctsToUpdateActiveCon = new List<Account>();
+        List<Subscription__c> subImportedBySo = new List<Subscription__c>();
 
         //First, Create a set of contract id's from subs to define a map of contract events related to the set(Used later in SameTermEventExist function)
         for (Subscription__c sub : newSubs) {
@@ -181,6 +184,10 @@ public without sharing class Subscription_ConnectToContractEvent {
                             subOrderNumbers.put(sub.order_number__c,sub.id); 
                         }
                     }
+                    //Imported by SO - check if the monday account is different then the activation monday account (activate on different account)
+                    if(sub.Status__c=='ACTIVE'&&sub.Contract__c!=null&&sub.Source_Sales_Order__c!=null&&sub.Activated_via_Import_SO__c==true){
+                        subImportedBySo.add(sub);
+                    }
                 }
             }
              
@@ -212,25 +219,32 @@ public without sharing class Subscription_ConnectToContractEvent {
                             }
                         }
                     }
-
-
                     if (!subsToUpdateContract.isempty()) {
                         multipleSubsUpdated=true;
                         update subsToUpdateContract;
                         //System.enqueueJob(new createContractToSubscriptionsQueueable(subsToUpdateContract));
                     }
+                    if (!subImportedBySo.isempty()) {
+                        List<Account> accts = handleDifferentActivation(subImportedBySo);
+                        if (accts!=null) {
+                            acctsToUpdateActiveCon.addall(accts); 
+                        }
+                    }
                     //Contract event for existing contract
                     if (!multiContractSubsToEvents.isempty()) {
                         conEventForExisContract.addall(ContractEventHandler.DefineContractEvent(multiContractSubsToEvents));
-                    }
-                    
+                    }       
                     if (!conEventForExisContract.isempty()) {
                         System.enqueueJob(new createContractEventsQueueable(conEventForExisContract));
-                    }                    
+                    }   
+                    if (!acctsToUpdateActiveCon.isempty()) {
+                        System.enqueueJob(new updateAccountQueueable(acctsToUpdateActiveCon));
+                    } 
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in SubscriptionToContractEvent ',e,e.getMessage());   
         }
     }
+
     //Function to check if a subscription holds the same start date, and date, and ARR of contract events - to avoid duplication
     public static Boolean SameTermEventExist(Map<Id, List<Contract_Event__c>> conEvnts, Subscription__c sub){
         Boolean evntExist = false;
@@ -255,6 +269,25 @@ public without sharing class Subscription_ConnectToContractEvent {
         update conEvntsToUpdate;
     }
 
+    //This function handle different actiavtion change where the sales order is chosen 
+    public static List<Account> handleDifferentActivation(List<Subscription__c> subImportedBySo){
+        List<Account> acctsToUpdate = new List<Account>();
+        for (Subscription__c sub : [SELECT Id, Contract__c, Source_Sales_Order__r.Opportunity.AccountId, Source_Sales_Order__r.Opportunity.Account.Monday_Account_Status__c, Monday_Account__r.Active_Contract__c FROM Subscription__c WHERE Id=:subImportedBySo]) {
+            if (sub.Monday_Account__c!=sub.Source_Sales_Order__r.Opportunity.AccountId && sub.Contract__c!=sub.Monday_Account__r.Active_Contract__c) {
+                acctsToUpdate.add(new Account (Id=sub.Monday_Account__c,Active_Contract__c=sub.Contract__c));
+                if (sub.Source_Sales_Order__r.Opportunity.Account.Monday_Account_Status__c=='Trial Account') {
+                    acctsToUpdate.add(new Account (Id=sub.Source_Sales_Order__r.Opportunity.AccountId,Active_Contract__c=null));
+                }
+                Utilities.sendEmail('Contract was move on subscription activation', 'Subscription Id: ' + sub.Id + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E') +'From Account: ' + sub.Source_Sales_Order__r.Opportunity.AccountId + 'To Account: '+ sub.Monday_Account__c, new List<String>{'alonse@monday.com'});
+                Utilities.sendSlackMessage('Contract was move on subscription activation ', 'alon-monitoring', null , null, null, '@channel Subscription Id: ' + sub.Id + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E') +'From Account: ' + sub.Source_Sales_Order__r.Opportunity.AccountId + ' To Account: '+ sub.Monday_Account__c, null);
+            }
+        }
+        if (!acctsToUpdate.isEmpty()) {
+            return acctsToUpdate;
+        }
+        return null;
+    }
+
     private class createContractEventsQueueable implements System.Queueable {
         private List<Contract_Event__c> contractEventToCreateList; 
         public createContractEventsQueueable(List<Contract_Event__c> contractEventToCreateList) {
@@ -262,6 +295,16 @@ public without sharing class Subscription_ConnectToContractEvent {
         }
         public void execute(System.QueueableContext ctx) {
             ContractEventHandler.CreateContractEventForExistingContract(contractEventToCreateList);
+        }
+    }
+
+    private class updateAccountQueueable implements System.Queueable {
+        private List<Account> accToUpdate; 
+        public updateAccountQueueable(List<Account> accToUpdate) {
+            this.accToUpdate = accToUpdate;
+        }
+        public void execute(System.QueueableContext ctx) {
+            Database.update(accToUpdate);
         }
     }
 }

@@ -191,7 +191,7 @@ public class DealRegistration_Handler_Test {
         
         Deal_Registration__c reg = [SELECT Id, Expected_Tier__c, Expected_Plan_Seats__c, Expected_Closed_Date__c, Use_Cases__c,
                                     Department__c, OwnerId, Competition_They_re_Evaluating__c, Tools_in_their_Ecosystem__c,
-                                    Current_Tool__c, Timeline_Why__c, Pains__c, Champion_Title__c, Source__c
+                                    Current_Tool__c, Timeline_Why__c, Pains__c, Champion_Title__c, Source__c, Partner_Marketing_Activity__c
                                     FROM Deal_Registration__c WHERE Id =: dealRegRecord.Id LIMIT 1];
         
         newLead = new Lead();
@@ -248,7 +248,7 @@ public class DealRegistration_Handler_Test {
         
         Deal_Registration__c reg = [SELECT Id, Expected_Tier__c, Expected_Plan_Seats__c, Expected_Closed_Date__c, Use_Cases__c,
                                     Department__c, OwnerId, Competition_They_re_Evaluating__c, Tools_in_their_Ecosystem__c,
-                                    Current_Tool__c, Timeline_Why__c, Pains__c, Champion_Title__c, Source__c
+                                    Current_Tool__c, Timeline_Why__c, Pains__c, Champion_Title__c, Source__c, Partner_Marketing_Activity__c
                                     FROM Deal_Registration__c WHERE Id =: dealRegRecord.Id LIMIT 1];
         
         newLead = new Lead();
@@ -305,7 +305,7 @@ public class DealRegistration_Handler_Test {
         Deal_Registration__c reg = [SELECT Id, Expected_Tier__c, Expected_Plan_Seats__c, Expected_Closed_Date__c, Use_Cases__c,
                                     Department__c, OwnerId, Competition_They_re_Evaluating__c, Tools_in_their_Ecosystem__c,
                                     Current_Tool__c, Timeline_Why__c, Pains__c, Champion_Title__c, Source__c, Regional_Company__c, Global_Company__c,
-                                    Company_Location__c, Region__c, Company_Name__c, Company_Website__c
+                                    Company_Location__c, Region__c, Company_Name__c, Company_Website__c, Partner_Marketing_Activity__c
                                     FROM Deal_Registration__c WHERE Id =: dealRegRecord.Id LIMIT 1];
         
         newLead = new Lead();
@@ -359,7 +359,7 @@ public class DealRegistration_Handler_Test {
         lReg.Expected_Closed_Date__c= System.Today();
         lReg.Expected_Tier__c = 'Enterprise';
         lReg.Expected_Plan_Seats__c = 50;
-        lReg.Source__c = 'Webinar ';
+        lReg.Source__c = 'Other';
         lReg.Comments__c = 'Test Comments';
         lReg.Competition_They_re_Evaluating__c = 'Salesforce';
         lReg.Current_Tool__c = 'Asana';

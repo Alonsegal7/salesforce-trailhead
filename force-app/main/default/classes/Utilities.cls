@@ -89,6 +89,7 @@ public without sharing class Utilities {
             oli.Product_Type__c='License';
             oli.ARR__c=sub.ARR_Gain__c;
             oli.Quantity=sub.Paid_Months__c*integer.valueof(sub.Seats__c);
+            oli.CC_Subscription_Full_ARR__c=sub.ARR__c;
         }else{
             oli.Product_Type__c='Free';
             oli.ARR__c=0;

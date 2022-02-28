@@ -181,14 +181,28 @@
                                 </div>
                             </template>
                             <template if:true={filesScreen}>
-                                <lightning-combobox
-                                    name="currency"
-                                    label="Select invoice currency:"
-                                    value={currencyValue}
-                                    placeholder="Select currency"
-                                    options={currencies}
-                                    onchange={handleCurrencyChange} >
-                                </lightning-combobox>
+                                <lightning-layout>
+                                    <lightning-layout-item size="4">
+                                        <div class="slds-p-right_medium">
+                                            <lightning-combobox
+                                                name="currency"
+                                                label="Invoice Currency"
+                                                value={currencyValue}
+                                                placeholder="Select currency"
+                                                options={currencies}
+                                                onchange={handleCurrencyChange} >
+                                            </lightning-combobox>
+                                        </div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4">
+                                        <div class="slds-p-right_medium">
+                                            <lightning-input type="text" label="Invoice Number" value={invoiceNumber} onchange={handleInvoiceNumberChange} required></lightning-input>
+                                        </div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4">
+                                        <lightning-input type="date" value={invoiceDate} label="Invoice Date" onchange={handleInvoiceDateChange} required></lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
                                 <c-file-upload-improved onsendversids={handleSendVersIds} uploadedlabel={invoiceFileUploadLabel} accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>
                                 <div class="slds-m-top_x-small slds-border_bottom"></div>
                                 <lightning-layout>
@@ -202,7 +216,7 @@
                                     </lightning-layout-item>
                                 </lightning-layout>
                                 <template if:true={showUploadMdfFiles}>
-                                    <c-file-upload-improved uploadedlabel={mdfFileUploadLabel} allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={fileKeyMdf} record-id={newPaymentRequestId} required community></c-file-upload-improved>
+                                    <c-file-upload-improved uploadedlabel={mdfFileUploadLabel} allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={fileKeyMdf} record-id={newPaymentRequestId} community></c-file-upload-improved>
                                 </template>                                
                                 <div class="slds-m-top_x-small slds-border_bottom"></div>
                                 <p class="slds-p-top_medium">By Submitting the request you confirm that your commission invoice matches the numbers populated in monday.com’s commission report. Any issues with specific deal not appearing in the report should be reported <a href="https://forms.monday.com/forms/746a664544adda5a98de077b7b99d4bd?r=use1" target="_blank">here</a>.</br>Please note, changes will be reconciled in the following month’s commission report.</br>Our commission payment terms are net 45.</p>                              

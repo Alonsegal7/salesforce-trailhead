@@ -3,15 +3,21 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
     {
         if (trigger.isBefore && trigger.isInsert){
             MondayAccountHelper.setCompanyID(trigger.new);
+
         } else if (trigger.isAfter && trigger.isUpdate){
             MondayAccountHelper.HandleAfter(trigger.new, trigger.oldmap);
         }
     }
     if (Trigger.isBefore) {
-        if (trigger.isInsert||trigger.IsUpdate){
+        if (trigger.isInsert||trigger.IsUpdate){ //before insert & update
             Account_MapRegions.Account_MapRegions (trigger.new,trigger.oldmap);
             Account_SetPartnerCompany.Account_SetPartnerCompany (trigger.new,trigger.oldmap);
             Account_Rollup.Account_Rollup_ValueChange(trigger.new, trigger.oldMap);
+            Opportunity_RenewalCreation.getProFromActiveContract(Trigger.oldMap, Trigger.new);
+        }
+        if(Trigger.isUpdate){ //before update only
+            Account_OwnerValidation.companyOwnerValidation(Trigger.new, Trigger.oldMap);
+            Partners_SharingService.createAccountShares_ManualTrigger(Trigger.new);
         }
         if (trigger.IsUpdate){
             Account_OwnerStamps.UpdatePreviousOwner (trigger.new,trigger.oldmap);

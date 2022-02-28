@@ -19,8 +19,11 @@ public class PartnerCommissionServiceTest {
         insert ths;
 
         //create commission model
-        Commission_Model__c commissionModel = new Commission_Model__c(Partner_Tier__c = 'Gold First Year', Name = 'test', Outbound_Percent__c = 30, Inbound_Percent__c	= 20, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today());
-        insert commissionModel;
+        List<Commission_Model__c> cmList = new List<Commission_Model__c>();
+        cmList.add(new Commission_Model__c(Partner_Tier__c = 'Gold First Year', Name = 'test', Outbound_Percent__c = 30, Inbound_Percent__c	= 20, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today()));
+        cmList.add(new Commission_Model__c(Partner_Tier__c = 'Silver', Name = 'test', Outbound_Percent__c = 30, Inbound_Percent__c	= 20, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today()));
+        cmList.add(new Commission_Model__c(Partner_Tier__c = 'Platinum', Name = 'test', Outbound_Percent__c = 35, Inbound_Percent__c	= 25, Is_Active__c = true, Commission_Type__c = 'One Time', Effective_Start_Date__c = Date.today()));
+        insert cmList;
 
         //create partner company
         List<Account> partnersList = new List<Account>();
@@ -101,7 +104,7 @@ public class PartnerCommissionServiceTest {
         System.assertEquals('Closed Won', opp.StageName);
         List<Partner_Commission__c> pcList = [select Id from Partner_Commission__c];
         System.assertEquals(1, pcList.size());
-        pcList.get(0).End_Date__c = Datetime.now().addMinutes(-1);
+        pcList.get(0).End_Date__c = Datetime.now().addSeconds(-1);
         update pcList;
         //update MA ARR above TH
         Account mondayAcc = [select Id from Account where RecordTypeId =: ACC_MA_RT_CONST limit 1];
@@ -153,5 +156,62 @@ public class PartnerCommissionServiceTest {
         } catch (Exception e){
             
         }
+    }
+
+    static testmethod void testReports(){
+        Commission_Report__c test = new Commission_Report__c();
+        test.name = 'test';
+        test.Big_Brain_Id__c = '12';
+        test.Date__c = Date.today();
+        insert test;
+        test.Big_Brain_Id__c = '13';
+        update test;
+        delete test;
+    }
+
+    static testmethod void testPartnerTierChanged_UpdatePC(){
+        Opportunity opp = [select Channel_Partner__c from Opportunity limit 1];
+        Account acc = new Account(Id = opp.Channel_Partner__c, Partner_Tier__c = 'Platinum');
+        List<Partner_Commission_Model__c> pcmList = [select Id from Partner_Commission_Model__c order by CreatedDate];
+        Integer pcmCount = pcmList.size();
+        Test.startTest();
+        update acc;
+        Batch_PartnerCommissionModel_TierChanged batch = new Batch_PartnerCommissionModel_TierChanged(Date.today().addDays(1), new set<id>());
+        Database.executeBatch(batch, 20);
+        Test.stopTest();
+        pcmList = [select Id, End_Date__c from Partner_Commission_Model__c order by CreatedDate];
+        System.assertEquals(pcmCount, pcmList.size());
+        System.assertEquals(null, pcmList.get(0).End_Date__c);
+        List<Partner_Commission__c> pcList = [select Id, End_Date__c, Partner_Commission_Model__c from Partner_Commission__c];
+        System.assertEquals(1, pcList.size());
+        System.assertEquals(null, pcList.get(0).End_Date__c);
+        System.assertNotEquals(null, pcList.get(0).Partner_Commission_Model__c);
+    }
+
+    static testmethod void testPartnerTierChanged_CreateNewPC(){
+        Opportunity opp = [select Channel_Partner__c from Opportunity limit 1];
+        Account acc = new Account(Id = opp.Channel_Partner__c, Partner_Tier__c = 'Platinum');
+        List<Partner_Commission_Model__c> pcmList = [select Id from Partner_Commission_Model__c order by CreatedDate];
+        Integer pcmCount = pcmList.size() + 1;
+        for(Partner_Commission_Model__c pcm: pcmList){
+            pcm.Start_Date__c = Date.today().addMonths(-1).toStartOfMonth();
+        }
+        update pcmList;
+        Test.startTest();
+        update acc;
+        Batch_PartnerCommissionModel_TierChanged batch = new Batch_PartnerCommissionModel_TierChanged(Date.today().addMonths(1), new set<id>());
+        Database.executeBatch(batch, 20);
+        Test.stopTest();
+        pcmList = [select Id, End_Date__c from Partner_Commission_Model__c order by CreatedDate];
+        System.assertEquals(pcmCount, pcmList.size());
+        System.assertNotEquals(null, pcmList.get(0).End_Date__c);
+        System.assertEquals(null, pcmList.get(1).End_Date__c);
+        List<Partner_Commission__c> pcList = [select Id, End_Date__c, Partner_Commission_Model__c from Partner_Commission__c order by CreatedDate];
+        System.assertEquals(2, pcList.size());
+        System.assertNotEquals(null, pcList.get(0).End_Date__c);
+        System.assertEquals(null, pcList.get(1).End_Date__c);
+        System.assertNotEquals(null, pcList.get(0).Partner_Commission_Model__c);
+        System.assertEquals(pcmList.get(pcmCount - 1).Id, pcList.get(1).Partner_Commission_Model__c);
+        System.assertNotEquals(pcList.get(0).Partner_Commission_Model__c, pcList.get(1).Partner_Commission_Model__c);
     }
 }

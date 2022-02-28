@@ -99,32 +99,52 @@ export default class TierStatus extends LightningElement {
                 /**
                  * Handle Total ARR
                  */
+                if (!this.isEmpty(data.partner_tier)){
+                    if (data.partner_tier == 'Silver'){
+                        this.badgeSrc = tierBadges + '/silver.png';
+                        this.isSilver = true;
+                    }
+                    if (data.partner_tier == 'Gold' || data.partner_tier == 'Gold First Year'){
+                        this.badgeSrc = tierBadges + '/gold.png';
+                        this.isGold = true;
+                    }
+                    if (data.partner_tier == 'Platinum'){
+                        this.badgeSrc = tierBadges + '/platinum.png';
+                        this.isPlatinum = true;
+                    }
+                }
                 if (data.total_arr <= 300000){
                     console.log('Tier gauge - Silver');
-                    this.badgeSrc = tierBadges + '/silver.png';
-                    this.isSilver = true;
+                    //this.badgeSrc = tierBadges + '/silver.png';
+                    //this.isSilver = true;
                     let t = (data.total_arr / 1000 / 2.4 * 33 / 100) - 8.25;
                     this.gaugeArr = t < 0 ? 0 : t;
                 }
                 if (data.total_arr > 300000 && data.total_arr <= 750000){
                     console.log('Tier gauge - Gold');
-                    this.badgeSrc = tierBadges + '/gold.png';
-                    this.isGold = true;
+                    // this.badgeSrc = tierBadges + '/gold.png';
+                    // this.isGold = true;
                     let t = data.total_arr - 300000;
                     t = t * 100 / 450000 * 33 / 100 + 33;
                     this.gaugeArr = t;
                 }
                 if (data.total_arr > 750000){
                     console.log('Tier gauge - Platinum');
-                    this.badgeSrc = tierBadges + '/platinum.png';
-                    this.isPlatinum = true;
+                    // this.badgeSrc = tierBadges + '/platinum.png';
+                    // this.isPlatinum = true;
                     let t = data.total_arr - 750000;
                     t = t * 100 / 350000 * 66 / 100 + 66;
                     this.gaugeArr = t;
                     if (this.gaugeArr > 100) this.gaugeArr = 100;
                 }
                 console.log('Tier gauge - Final point: ' + this.gaugeArr);
-                this.gagueLabel = '$' + Math.round((data.total_arr / 1000)) + 'k ARR';
+                
+                if ((data.total_arr / 1000) !== Math.round((data.total_arr / 1000))){
+                    this.gagueLabel = '$' + this.formatNumber((data.total_arr / 1000).toFixed(1)) + 'k ARR';
+                } else {
+                    this.gagueLabel = '$' + this.formatNumber(Math.round((data.total_arr / 1000))) + 'k ARR';
+                }
+                
                 /**
                  * .Handle Total ARR
                  */
@@ -139,6 +159,28 @@ export default class TierStatus extends LightningElement {
             }
         })
         .catch((err) => { console.log('Error loading tier data #1: ' + err); });
+    }
+
+    /**
+    * @param {Number} num Unformatted number
+    * @return {Number} Formatted number
+    */
+     formatNumber(num){
+        if (this.isEmpty(num)) return num;
+        let decimalPart = '';
+        let numAsString = num.toString();
+        let numProcessed = '';
+        if (numAsString.indexOf('.') > -1){
+            decimalPart = numAsString.split('.')[1];
+            numAsString = numAsString.split('.')[0];
+        }
+        if (numAsString.length < 4)  return num;
+        for (let i = 0; i < numAsString.length; i++){
+            if (i != 0 && (i % 3) == 0) numProcessed = ',' + numProcessed;
+            numProcessed = numAsString.substr((numAsString.length - 1 - i), 1) + numProcessed;
+        }
+        if (decimalPart != '') numProcessed = numProcessed + '.' + decimalPart;
+        return numProcessed;
     }
 
     /**

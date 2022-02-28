@@ -1,5 +1,6 @@
 .wrap-all{
     position: relative;
+    max-width: 858px;
 }
 h3{
     font-size: 1.25rem;
@@ -17,8 +18,8 @@ h3{
     border: none;
     display: block;
     padding: 28px 12px 32px;
-    width: 279px;
-    height: 231px;
+    width: 162px;
+    height: 164px;
 }
 .dashboard-card:hover{
     color: initial;
@@ -36,19 +37,21 @@ ul:after{
     clear: both;
 }
 ul{
-    display: block;
+    display: flex;
+    justify-content: space-evenly;
+    width: 855px;
 }
 li{
-    float: left;
-    margin-left: 13px;
-    margin-bottom: 13px;
+    flex-grow: 0;
+    margin-right: 13px;
 }
-li:first-child, li:nth-child(4){
-    margin-left: 0;
+li:last-child{
+    margin-right: 0;
 }
 li img{
     display: block;
-    margin: 30px auto 0;
+    margin: 0 auto;
+    width: 56px;
 }
 label{
     display: block;

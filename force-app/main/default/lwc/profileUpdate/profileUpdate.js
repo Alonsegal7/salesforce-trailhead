@@ -8,12 +8,12 @@ export default class ProfileUpdate extends NavigationMixin(LightningElement) {
     nextUpdate = 'N/A';
     btnClass = 'slds-button slds-button_brand blue-btn';
     hasError = false;
+    partnerMatrics;
+    partnerMatricsURL;
     accountId;
 
     connectedCallback(){
         this.init();
-
-        console.log('pageRef: ' + pageRef);
     }
 
     init(){
@@ -25,6 +25,10 @@ export default class ProfileUpdate extends NavigationMixin(LightningElement) {
                 this.nextUpdate = data.next_update;
                 this.hasError = data.alert;
                 this.accountId = data.accountId;
+                if (!this.isEmpty(data.partner_matrics)){
+                    this.partnerMatrics = data.partner_matrics;
+                    this.partnerMatricsURL = '/partners/s/detail/' + data.partner_matrics.Id;
+                }
                 if (this.hasError){
                     this.btnClass += ' alert';
                 }
@@ -34,20 +38,26 @@ export default class ProfileUpdate extends NavigationMixin(LightningElement) {
     }
 
 
-    openModal(){
-        let temp = {
-            type: 'standard__objectPage',
-            attributes: {
-                objectApiName: 'Partner_Metrics__c',
-                actionName: 'new'                
-            },
-            state : {
-                nooverride: '1',
-                defaultFieldValues:"Partner__c=" + this.accountId,
-                retUrl: pageRef
-            }
-        };
-        this[NavigationMixin.Navigate](temp);
+    openModal(e){
+        console.log('Update clicked');
+        try{
+            let temp = {
+                type: 'standard__objectPage',
+                attributes: {
+                    objectApiName: 'Partner_Metrics__c',
+                    actionName: 'new'                
+                },
+                state : {
+                    nooverride: '1',
+                    defaultFieldValues:"Partner__c=" + this.accountId
+                }
+            };
+            console.log('New object params: ' + JSON.stringify(temp));
+        
+            this[NavigationMixin.Navigate](temp);
+        } catch(e){
+            console.log('Error openning new Partner Matrix modal: ' + e);
+        }
     }
 
     /**

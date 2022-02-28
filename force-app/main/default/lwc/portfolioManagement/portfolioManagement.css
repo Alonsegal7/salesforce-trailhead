@@ -38,6 +38,11 @@ li.tile .title:after{
 li.tile .title{
     height: 18px;
 }
+li.tile a{
+    color: #000;
+    display: block;
+    text-decoration: none;
+}
 li.tile .title .left{
     float: left;
 }

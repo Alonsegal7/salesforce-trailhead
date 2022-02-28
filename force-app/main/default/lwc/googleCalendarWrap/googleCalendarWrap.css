@@ -1,5 +1,6 @@
 .wrap-all{
     position: relative;
+    max-width: 858px;
 }
 h3{
     font-size: 1.25rem;
