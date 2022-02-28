@@ -5,12 +5,11 @@ public without sharing class Account_MapRegions {
             for(Account acc: newAccounts){
                 string region='';
                 string subRegion='';
-                if (acc.BillingCountryCode != null && 
-                    (oldAccounts==null||//new
+                if(oldAccounts==null||//new
                     (acc.Manual_Trigger__c!=oldAccounts.get(acc.Id).Manual_Trigger__c&&acc.Manual_Trigger__c=='Match Regions')||//manual
                     (oldAccounts!=null&&acc.BillingCountryCode!=oldAccounts.get(acc.Id).BillingCountryCode)||//country change
                     (acc.Region__c==null)&&
-                    acc.BillingCountryCode!=null)){
+                    acc.BillingCountryCode!=null){
                     if(regionsMapping.containskey(acc.BillingCountryCode)){
                         region=regionsMapping.get(acc.BillingCountryCode).Region__c;
                         //subRegion=regionsMapping.get(acc.BillingCountryCode).Sub_Region__c;

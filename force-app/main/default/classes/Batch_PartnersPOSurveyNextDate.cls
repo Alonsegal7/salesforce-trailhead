@@ -43,7 +43,7 @@ public without sharing class Batch_PartnersPOSurveyNextDate implements Database.
     }
     
     public void finish(Database.BatchableContext BC){
-        String emailTitle = 'Finished Setting Partners Post Onboarding Survey Next Date;';
+        String emailTitle = 'Finished Partners Survey Next Date Batch;';
         string emailBody = '';
         if(res.isEmpty()){
             emailTitle += ' total accounts: 0;';

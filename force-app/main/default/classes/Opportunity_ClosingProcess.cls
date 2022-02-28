@@ -104,7 +104,7 @@ public without sharing class Opportunity_ClosingProcess {
         system.debug('### recordId_v3: ' + recordId);
 
         List<Opportunity> opp = [SELECT Id, Manual_Signature_Reason__c, Should_be_handed_over_to_AM__c, Green_Bucket_ARR_V2__c, RecordType.Name, Is_Primary_SO_Signed__c, AccountId, StageName,
-                                        Total_PS_Hours__c, Total_PS_Expended_Hours__c , Onboarding_Hours__c, Expected_Plan_Seats__c, Expected_Plan_Tier__c, Account.CSM_Function__c, Close_Process_Path__c, Total_Training_Hours__c,
+                                        Total_PS_Hours__c, Total_PS_Expended_Hours__c , Expected_Plan_Seats__c, Expected_Plan_Tier__c, Account.CSM_Function__c, Close_Process_Path__c, Total_Training_Hours__c,
                                         SyncedQuoteId, SyncedQuote.DH_Tier__c, SyncedQuote.Total_Seats__c, SyncedQuote.DH_Period__c, Account.Name, SyncedQuote.OwnerId, SyncedQuote.Name, Handed_Over__c,
                                         SyncedQuote.Owner.Name, What_Would_You_Like_To_Claim__c, Is_SO_Signed__c, Close_Process_Sys_Admin__c, RecordType.DeveloperName, Type, Is_Potential_GB_Opportunity__c
                                 FROM Opportunity WHERE Id =: recordId LIMIT 1];
@@ -181,19 +181,4 @@ public without sharing class Opportunity_ClosingProcess {
         System.debug('fields => '+fieldSet.getFields());
         return JSON.serialize(fieldSet.getFields()); 
     }
-
-    @AuraEnabled
-    public static void recalcHandoverThreshold(Id recordId){
-        System.debug('Entered recalcHandoverThreshold');
-        Opportunity updatedOpp = new Opportunity(Id = recordId, Manual_Trigger__c = 'Calculate HO Thresholds');
-        update updatedOpp;
-        // This was implemented with manual trigger so the call to the threshold calculation method will come from the trigger with all the relevant fields, rather than directrly from which will require maintanance of the fields being sent
-    }
-    
-    @AuraEnabled
-    public static Boolean checkIfPassedHandoverThreshold(Id recordId, String thresholdType){
-        System.debug('Entered checkIfPassedHandoverThreshold');
-        return Handover_ThresholdMapping.checkIfOppPassedThreshold(recordId, thresholdType);
-    }
-        
 }

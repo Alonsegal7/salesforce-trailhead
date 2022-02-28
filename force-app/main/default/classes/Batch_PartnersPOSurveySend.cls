@@ -34,7 +34,6 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
                 Decimal numOfSurveys = con.Of_Post_Onboarding_Surveys__c;
                 contactsToUpdate.add(new Contact(
                     Id = con.Id,
-                    Last_Opportunity_For_Survey__c = 
                     Partners_Post_Onboarding_Survey_Date__c = Date.today(), 
                     Of_Post_Onboarding_Surveys__c = numOfSurveys + 1
                 ));

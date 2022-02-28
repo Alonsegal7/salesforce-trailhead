@@ -11,8 +11,8 @@
                     storeResponse = JSON.parse(storeResponse);
 					if (storeResponse.hasOwnProperty('opportunity')){
                         component.set("v.oppData", storeResponse.opportunity);
-                        helper.recalcHandoverThreshold(component, event, helper);
                         helper.checkHandover_InternalOpp(component, event, helper);
+                        // helper.recalcHandoverThreshold(component, event, helper);
                         // helper.checkHandover_InternalOppAM(component, event, helper);
                         // helper.checkHandover_InternalOppCSM(component, event, helper);
                 
