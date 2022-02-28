@@ -1,0 +1,71 @@
+<template>
+    
+    <!-- related leads section - card -->
+    <div class="slds-m-bottom_medium">
+
+        <lightning-icon icon-name="standard:lead" size="x-small" class="slds-m-left_xxx-small"></lightning-icon>
+        <u><lightning-button variant="base" label={leadTitle} onclick={handleRelatedLeadsClick}
+            class="slds-m-horizontal_x-small slds-button"></lightning-button></u>
+            
+        <!-- related opportunities section - card -->
+        <br><lightning-icon icon-name="standard:opportunity" size="x-small" class="slds-m-left_xxx-small"></lightning-icon>
+        <u><lightning-button variant="base" label={oppTitle} onclick={handleRelatedOppsClick}
+            class="slds-m-horizontal_x-small slds-button"></lightning-button></u>
+    </div>
+   
+
+    <!-- related leads section - modal -->
+    <template if:true={showRelatedLeadsModal}>
+        <div class="slds-container_large">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Related Open Leads From The Last 12 Months</h2>
+                    </header>
+                    <template if:true={leadList}>
+                        <lightning-datatable data={leadList} columns={leadColumns} key-field="Id">
+                        </lightning-datatable>
+                    </template>
+                    <template if:true={error}>
+                        {error}
+                    </template>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" name="cancel" label="Cancel" title="Cancel"
+                            onclick={handleCancelClick}></lightning-button>
+                        <a href="https://monday.lightning.force.com/lightning/r/Lead/0015t00000nEy49AAC/related/Leads__r/view" class="slds-button slds-button_brand slds-m-left_xxx-small" target="_blank">All Related Leads</a>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+
+    <!-- related opportunities section - modal -->
+    <template if:true={showRelatedOppsModal}>
+        <div class="slds-container_small">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Related Opportunities From The Last 12 Months</h2>
+                    </header>
+                    <template if:true={oppList}>
+                        <lightning-datatable data={oppList} columns={oppColumns} key-field="Id">
+                        </lightning-datatable>
+                    </template>
+                    <template if:true={error}>
+                        {error}
+                    </template>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" name="cancel" label="Cancel" title="Cancel"
+                            onclick={handleCancelClick}></lightning-button>
+                            <a href="https://monday.lightning.force.com/lightning/r/0015t00000nEy49AAC/related/Opportunities__r/view" class="slds-button slds-button_brand slds-m-left_xxx-small" target="_blank">All Related Opportunities</a>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+
+</template>
