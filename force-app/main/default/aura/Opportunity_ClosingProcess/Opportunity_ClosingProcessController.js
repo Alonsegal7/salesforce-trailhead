@@ -11,7 +11,11 @@
                     storeResponse = JSON.parse(storeResponse);
 					if (storeResponse.hasOwnProperty('opportunity')){
                         component.set("v.oppData", storeResponse.opportunity);
+                        helper.recalcHandoverThreshold(component, event, helper);
                         helper.checkHandover_InternalOpp(component, event, helper);
+                        // helper.checkHandover_InternalOppAM(component, event, helper);
+                        // helper.checkHandover_InternalOppCSM(component, event, helper);
+                
                         if(storeResponse.opportunity.Is_Primary_SO_Signed__c == true){
                             component.set('v.showWhatSigned', true);
                             component.set('v.innerPathValue', 'SO Information');
@@ -32,6 +36,7 @@
 
             else if (state === "ERROR") {
                 var errors = response.getError();
+                console.log('Error init entered');
                 if (errors) {
                     if (errors[0] && errors[0].message) {
                         console.log("Error message in Opportunity_ClosingProcess Controller: " + errors[0].message);

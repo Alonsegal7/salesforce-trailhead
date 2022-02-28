@@ -11,6 +11,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     if(Trigger.isBefore && Trigger.isUpdate){
         Partners_SharingService.createOpportunityShares_ManualTrigger(Trigger.new);
         Opportunity_LockValidation lockedValidationService = new Opportunity_LockValidation();
+        Handover_ThresholdMapping.linkOpportunityToThresholdFromTrigger(Trigger.new, Trigger.oldMap);
         lockedValidationService.runValidation(Trigger.new, Trigger.oldMap);
         OpportunityHelper.beforeUpdate(Trigger.new, Trigger.oldmap);
         Opportunity_Calculate_ARR.Opportunity_Calculate_ARR(Trigger.new, Trigger.oldmap);

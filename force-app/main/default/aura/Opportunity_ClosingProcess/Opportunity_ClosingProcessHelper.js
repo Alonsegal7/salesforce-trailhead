@@ -18,10 +18,22 @@
 
 		var flow = component.find("handoverFlowData");
 		// In that component, start your flow. Reference the flow's API Name.
-		var inputVariables = [{
-			name : "recordId",
-			type : "String",
-			value : component.get("v.recordId")}
+		var inputVariables = [
+			{
+				name : "recordId",
+				type : "String",
+				value : component.get("v.recordId")
+			},
+			{
+				name : "showAmHandover",
+				type : "Boolean",
+				value : component.get("v.showAmHandover")
+			},
+			{
+				name : "showCsmHandover",
+				type : "Boolean",
+				value : component.get("v.showCSMHandover")
+			},
 		];
 		flow.startFlow("Opportunity_Handover_Flow_Refactored", inputVariables);
 	},
@@ -72,6 +84,76 @@
 			}
 			else console.log('v.showHandover is false');
 		}
+	},
+
+	checkHandover_InternalOppAM : function(component, event, helper){
+		var oppId = component.get("v.recordId");
+		console.log('entered checkHandover_InternalOppAM. OppId: '+oppId);
+		let actionCheckPassAm = component.get("c.checkIfPassedHandoverThreshold");
+		actionCheckPassAm.setParams({
+			recordId: oppId,
+			thresholdType: "AM"
+		});
+		actionCheckPassAm.setCallback(this, function(response){
+			let state = response.getState();
+			console.log('entered checkifpass AM response');
+			if(state==="SUCCESS"){
+				console.log('entered checkifpass AM: '+response.getReturnValue());					
+				if(response.getReturnValue()) {
+					component.set("v.showHandover", true);
+					component.set("v.showAmHandover", true);
+				}
+			} else {
+				console.log('entered checkifpass error');
+				alert("error");
+			}
+		});
+		$A.enqueueAction(actionCheckPassAm);
+	},
+
+	checkHandover_InternalOppCSM : function(component, event, helper){
+		var oppId = component.get("v.recordId");
+		console.log('entered checkHandover_InternalOppCSM. OppId: '+oppId);
+		let actionCheckPassCSM = component.get("c.checkIfPassedHandoverThreshold");
+		actionCheckPassCSM.setParams({
+			recordId: oppId,
+			thresholdType: "CSM"
+		});
+		actionCheckPassCSM.setCallback(this, function(response){
+			let state = response.getState();
+			console.log('entered checkifpass CSM response');
+			if(state==="SUCCESS"){
+				console.log('entered checkifpass: '+response.getReturnValue());					
+				if(response.getReturnValue()) {
+					component.set("v.showHandover", true);
+					component.set("v.showCSMHandover", true);
+				}
+			} else {
+				console.log('entered checkifpass error');
+				alert("error");
+			}
+		});
+		$A.enqueueAction(actionCheckPassCSM);
+	},
+
+	recalcHandoverThreshold : function(component, event, helper){
+		var oppId = component.get("v.recordId");
+		console.log('entered recalcHandoverThreshold. OppId: '+oppId);
+		let recalcAction = component.get("c.recalcHandoverThreshold");
+		recalcAction.setParams({
+			recordId: oppId
+		});
+		// recalcAction.setCallback(this, function(response){
+		// 	let state = response.getState();
+		// 	console.log('entered checkifpass AM response');
+		// 	if(state==="SUCCESS"){
+		// 		console.log('entered recalcAction and got success ');					
+		// 	} else {
+		// 		console.log('entered checkifpass error');
+		// 		alert("error");
+		// 	}
+		// });
+		$A.enqueueAction(recalcAction);
 	},
 
 	setInnerPicklistPath : function(component, event, helper, innerValue){

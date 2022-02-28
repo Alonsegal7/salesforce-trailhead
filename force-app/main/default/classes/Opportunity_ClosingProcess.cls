@@ -181,4 +181,19 @@ public without sharing class Opportunity_ClosingProcess {
         System.debug('fields => '+fieldSet.getFields());
         return JSON.serialize(fieldSet.getFields()); 
     }
+
+    @AuraEnabled
+    public static void recalcHandoverThreshold(Id recordId){
+        System.debug('Entered recalcHandoverThreshold');
+        Opportunity updatedOpp = new Opportunity(Id = recordId, Manual_Trigger__c = 'Calculate HO Thresholds');
+        update updatedOpp;
+        // This was implemented with manual trigger so the call to the threshold calculation method will come from the trigger with all the relevant fields, rather than directrly from which will require maintanance of the fields being sent
+    }
+    
+    @AuraEnabled
+    public static Boolean checkIfPassedHandoverThreshold(Id recordId, String thresholdType){
+        System.debug('Entered checkIfPassedHandoverThreshold');
+        return Handover_ThresholdMapping.checkIfOppPassedThreshold(recordId, thresholdType);
+    }
+        
 }
