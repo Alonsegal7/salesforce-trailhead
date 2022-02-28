@@ -1,7 +1,6 @@
 public without sharing class Batch_PartnersPOSurveySend implements Database.Batchable<sObject>,Schedulable,Database.Stateful{
 
     private List<String> emailRecepients = new List<String>{'kseniasm@monday.com','avivc@monday.com'};
-    private Set<Id> res = new Set<Id>();
     private integer totalCons = 0;
     private string debugString = '';
     private Boolean dryRun = false;
@@ -39,7 +38,7 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
                 ));
             }
             if(!contactsToUpdate.isEmpty()) Database.update(contactsToUpdate);
-            totalCons = contactsToUpdate.size();
+            totalCons += contactsToUpdate.size();
         }catch(Exception e){
             Utilities.sendEmail('Error in Apex Job Batch_PartnersPOSurveySend execute: ', e.getMessage() + '\n' + e.getStackTraceString(), emailRecepients); 
         }
@@ -48,7 +47,7 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
     public void finish(Database.BatchableContext BC){
         String emailTitle = 'Finished Sending Partners Post Onboarding Survey;';
         string emailBody = '';
-        if(res.isEmpty()){
+        if(totalCons == 0){
             emailTitle += ' total contacts: 0';
             emailBody += 'No surveys sent today.';
         } else {
