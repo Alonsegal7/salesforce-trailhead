@@ -1,0 +1,32 @@
+<template>
+    <lightning-card if:true={load} title={title}>
+        <div class="slds-m-around_medium">
+            <template if:true={error}>
+                <c-error-panel errors={error}></c-error-panel>
+            </template>
+            <template if:true={customError}>
+                <div class="slds-var-m-vertical_small">
+                    <span class="slds-text-heading_small slds-text-color_destructive">{customError}</span>
+                </div>
+            </template>
+            <template for:each={questions} for:item="q">
+                <lightning-tile key={q.Field_API_Name__c} type="media">
+                        <p>{q.Question_Text__c}</p>
+                        <div class="rate">
+                            <input type="radio" id={q.star5} name={q.Field_API_Name__c} value="5" onchange={rating} />
+                            <label for={q.star5} title="5 stars">5 stars</label>
+                            <input type="radio" id={q.star4} name={q.Field_API_Name__c} value="4" onchange={rating} />
+                            <label for={q.star4} title="4 stars">4 stars</label>
+                            <input type="radio" id={q.star3} name={q.Field_API_Name__c} value="3" onchange={rating} />
+                            <label for={q.star3} title="3 stars">3 stars</label>
+                            <input type="radio" id={q.star2} name={q.Field_API_Name__c} value="2" onchange={rating} />
+                            <label for={q.star2} title="2 stars">2 stars</label>
+                            <input type="radio" id={q.star1} name={q.Field_API_Name__c} value="1" onchange={rating} />
+                            <label for={q.star1} title="1 star">1 star</label>
+                        </div>
+                </lightning-tile>                                       
+            </template>
+        </div>
+        <lightning-button variant="brand" label="Submit" class="slds-m-left_x-small" onclick={saveValues} slot="actions"> </lightning-button>
+    </lightning-card>
+</template>

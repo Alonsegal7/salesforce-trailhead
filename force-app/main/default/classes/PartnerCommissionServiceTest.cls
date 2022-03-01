@@ -176,7 +176,7 @@ public class PartnerCommissionServiceTest {
         Integer pcmCount = pcmList.size();
         Test.startTest();
         update acc;
-        Batch_PartnerCommissionModel_TierChanged batch = new Batch_PartnerCommissionModel_TierChanged(Date.today().addDays(1), new set<id>());
+        Batch_PartnerCommissionModel_TierChanged batch = new Batch_PartnerCommissionModel_TierChanged(Date.today(), new set<id>());
         Database.executeBatch(batch, 20);
         Test.stopTest();
         pcmList = [select Id, End_Date__c from Partner_Commission_Model__c order by CreatedDate];

@@ -231,7 +231,7 @@ public without sharing class Partners_SharingService {
             }
             if(!oppsToDeleteSharesCoSellChanged.isEmpty()){
                 for(Opportunity opp : oppsToDeleteSharesCoSellChanged){
-                    oppIds.add(oldOppsMap.get(opp.Id).co_sell_opportunity__c);
+                    //oppIds.add(oldOppsMap.get(opp.Id).co_sell_opportunity__c);
                     if(!partnerCompToGroupsMap.containsKey(oldOppsMap.get(opp.Id).Channel_Partner__c)) continue;
                     for(Id groupId: partnerCompToGroupsMap.get(oldOppsMap.get(opp.Id).Channel_Partner__c)){
                         groupIdsForDelete.add(groupId);
@@ -270,7 +270,7 @@ public without sharing class Partners_SharingService {
                     newOppShare2.OpportunityId = opp.co_sell_opportunity__c;
                     newOppShare2.OpportunityAccessLevel = 'Read';
                     newOppShare2.UserOrGroupId = groupId;
-                    oppSharesToCreate.add(newOppShare2);
+                    //oppSharesToCreate.add(newOppShare2);
                 }
             }
             if(oppSharesToCreate.isEmpty()) return;
