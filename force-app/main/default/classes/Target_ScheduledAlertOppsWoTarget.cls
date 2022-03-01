@@ -55,31 +55,31 @@ public without sharing class Target_ScheduledAlertOppsWoTarget implements Schedu
                 //get id for partner comp if CP target is missing
                 if(opp.RecordTypeId == oppPartnerCompanyRtId && opp.Owner.AccountId != null && opp.CP_Target__c == null){
                     relevantPartnerCompId = opp.Owner.AccountId;
+                    if(partnerCompsWithTarget.contains(relevantPartnerCompId)) { //opps w/ existing user targets
+                        oppIdsToFixString += String.valueOf(opp.Id) + ',';
+                        if(!oppsToUpdate_map.containsKey(opp.Id)) oppsToUpdate_map.put(opp.Id, new Opportunity(Id = opp.Id, Manual_Trigger__c = 'Link Target')); //triggers the Trget Service to run and link opp to existing target (works for targets of users, partners & GSIs)
+                    } else { //opps w/o existing CP targets
+                        missingTargets += String.valueOf(relevantPartnerCompId)+ ',';
+                        oppIdsWoMatchTargetStr += String.valueOf(opp.Id) + ',';
+                        partnerCompsWoTargetThisMonth.add(relevantPartnerCompId);
+                    }
                 } else {
                     relevantPartnerCompId = null;
                 }
-                if(partnerCompsWithTarget.contains(relevantPartnerCompId)) { //opps w/ existing user targets
-                    oppIdsToFixString += String.valueOf(opp.Id) + ',';
-                    if(!oppsToUpdate_map.containsKey(opp.Id)) oppsToUpdate_map.put(opp.Id, new Opportunity(Id = opp.Id, Manual_Trigger__c = 'Link Target')); //triggers the Trget Service to run and link opp to existing target (works for targets of users, partners & GSIs)
-                } else { //opps w/o existing CP targets
-                    missingTargets += String.valueOf(relevantPartnerCompId)+ ',';
-                    oppIdsWoMatchTargetStr += String.valueOf(opp.Id) + ',';
-                    partnerCompsWoTargetThisMonth.add(relevantPartnerCompId);
-                }
-
+                
                 //get id for partner comp if GSI target is missing
                 if(opp.GSI__c != null && opp.GSI_Target__c == null){
                     relevantGsiId = opp.GSI__c;
+                    if(partnerCompsWithTarget.contains(relevantGsiId)) { //opps w/ existing user targets
+                        oppIdsToFixString += String.valueOf(opp.Id) + ',';
+                        if(!oppsToUpdate_map.containsKey(opp.Id)) oppsToUpdate_map.put(opp.Id, new Opportunity(Id = opp.Id, Manual_Trigger__c = 'Link Target')); //triggers the Trget Service to run and link opp to existing target (works for targets of users, partners & GSIs)
+                    } else { //opps w/o existing GSI targets
+                        missingTargets += String.valueOf(relevantGsiId)+ ',';
+                        oppIdsWoMatchTargetStr += String.valueOf(opp.Id) + ',';
+                        gsiWoTargetThisMonth.add(relevantGsiId);
+                    }
                 } else {
                     relevantGsiId = null;
-                }
-                if(partnerCompsWithTarget.contains(relevantGsiId)) { //opps w/ existing user targets
-                    oppIdsToFixString += String.valueOf(opp.Id) + ',';
-                    if(!oppsToUpdate_map.containsKey(opp.Id)) oppsToUpdate_map.put(opp.Id, new Opportunity(Id = opp.Id, Manual_Trigger__c = 'Link Target')); //triggers the Trget Service to run and link opp to existing target (works for targets of users, partners & GSIs)
-                } else { //opps w/o existing GSI targets
-                    missingTargets += String.valueOf(relevantGsiId)+ ',';
-                    oppIdsWoMatchTargetStr += String.valueOf(opp.Id) + ',';
-                    gsiWoTargetThisMonth.add(relevantGsiId);
                 }
             }
             Database.update(oppsToUpdate_map.values());
@@ -87,7 +87,7 @@ public without sharing class Target_ScheduledAlertOppsWoTarget implements Schedu
             //CREATE MISSING TARGETS
             Set<Id> successIds = new Set<Id>();
             List<Target__c> newTargets = new List<Target__c>();
-            if(Date.today().day() > Date.today().addDays(1).day()){ //today is last day of month - we create new user targets only at end of month
+            if(Test.isRunningTest() || Date.today().day() > Date.today().addDays(1).day()){ //today is last day of month - we create new user targets only at end of month
                 //USER TARGETS
                 for(Id userId: usersWoTargetThisMonth){
                     Target__c newUserTarget = new Target__c();
