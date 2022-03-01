@@ -1,15 +1,34 @@
 public without sharing class Opportunity_LockValidation {
 
+
     private static Set<Id> unlockedOpps_set = new Set<Id>();
     private static List<Opportunity_Lock_Validation_Control__mdt> validationCmtList;
     private static String myProfile;
     private static Boolean firstRun = true;
     private static String errorMsg = 'This opp is closed and locked for editing.';
     
+    //runs in before update
+    public void cosellLockValidation(List<Opportunity> newOpps, Map<Id,Opportunity> oldOppsMap){ //prevent secondary opps from being updated
+        Map<Id,Opportunity> potentialOpps_map = new Map<Id,Opportunity>();
+        for(Opportunity opp: newOpps){ //should we prevent the update only for cmt fields or all fields???
+            if(Opportunity_CoSellSyncService.isSecondaryCoSellOpp(opp) && !Opportunity_CoSellSyncService.checkIfSecondaryOppsUpdateAllowed()){
+                potentialOpps_map.put(opp.Id, opp);
+            }
+        }
+        if(potentialOpps_map.isEmpty()) return;
+        for(Co_Sell_Request__c cosellReq: [select Id, Secondary_Opportunity__c from Co_Sell_Request__c where Secondary_Opportunity__c in: potentialOpps_map.keySet()]){
+            potentialOpps_map.get(cosellReq.Secondary_Opportunity__c).addError('Secondary Co Sell Opportunities can not be updated');
+        }
+    }
+
+    //runs in before update
     public void runValidation(List<Opportunity> newOpps, Map<Id,Opportunity> oldOppsMap){
         List<Opportunity> lockedOpps = new List<Opportunity>();
         for(Opportunity opp: newOpps){
-            if(oldOppsMap.get(opp.Id).Is_Locked__c){ //opp was locked
+            if(oldOppsMap.get(opp.Id).Is_Locked__c && !Opportunity_CoSellSyncService.isSecondaryCoSellOpp(opp)){ 
+                //opp was locked and it is not a secondary co sell opp 
+                //secondary co sell opps have a separate validation - cosellLockValidation 
+                //which allows update only by Opportunity_CoSellSyncService.syncMainOppsToSec , regardless of Is_Locked__c
                 lockedOpps.add(opp);
             } else if(opp.Unlock_Opportunity__c) {
                 opp.Unlock_Opportunity__c = false;

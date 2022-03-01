@@ -2,6 +2,11 @@ public without sharing class Opportunity_Calculate_ARR {
     public static Id csRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
     public static void Opportunity_Calculate_ARR(List<Opportunity> opps, Map<Id, Opportunity> oldOpps){
         for (Opportunity opp : opps) {
+            if(!opp.Main_Co_Sell_Opportunity__c && //secondary opp
+                opp.Co_Sell_Request__c != null && 
+                opp.Co_Sell_Opportunity__c != null){
+                continue; //we do not calculate ARR on secondary co-sell opps that are related to a co-sell request b/c the ARR is copied from the main co-sell opp.
+            }
             //Controlled from Quotes
             if(isManagedByDealhub(opp)){
                 system.debug('OCA Raz Ben Ron is managed by dealhub');

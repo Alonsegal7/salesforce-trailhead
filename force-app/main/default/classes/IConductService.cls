@@ -14,6 +14,7 @@ public class IConductService implements Queueable, Database.AllowsCallouts{
             this.ProcessId = ConfigManager.getIConductQuoteCreditSyncPID();
             this.payload = '{"parameters": [{ "Key":"Quote_Id", "Value":"' + Id + '" }]}';
         }
+
     }
     public void execute(QueueableContext qc){
         Http http = new Http();

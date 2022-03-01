@@ -1,0 +1,208 @@
+<template>
+    <div class="wrap-all">
+        <!-- modal -->
+        <lightning-quick-action-panel header="Submit Co-Sell Request">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+            </template>
+            <!-- 1. main screen -->
+            <template if:true={mainScreen}>
+                <div class="slds-p-bottom_medium slds-p-left_small">
+                    <lightning-radio-group name="radioGroup"
+                    class="validate"
+                    label="What do you wish to do?"
+                    options={options}
+                    value={value}
+                    required
+                    type="button"
+                    onchange={handleMainRadioChange}></lightning-radio-group>
+                </div>   
+                <!-- 1.1 new opp screen -->
+                <template if:true={newCoSellScreen}>
+                    <div class="slds-p-left_small">
+                        <lightning-record-edit-form object-api-name="Co_Sell_Request__c" >
+                            <template for:each={newCosellInputFields} for:item="cosellReqFieldName">
+                                <lightning-input-field key={cosellReqFieldName} data-id={cosellReqFieldName} field-name={cosellReqFieldName} required onchange={updateCosellRequest}></lightning-input-field>    
+                            </template>
+                            <template if:true={displayPsFields}>
+                                <template for:each={psFields} for:item="psField">
+                                    <lightning-input-field key={psField} data-id={psField} field-name={psField} required onchange={updateCosellRequest}></lightning-input-field>    
+                                </template>
+                            </template>
+                        </lightning-record-edit-form>
+                        <p class="slds-p-top_medium"><b>{beforeSaveMsg}</b></p>
+                    </div>
+                </template>
+                <!-- 1.2 associate existing opp screen -->
+                <template if:true={associateScreen}>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="8" padding="around-small">
+                            <lightning-combobox
+                                name="associateOppsOptions"
+                                class="validate"
+                                label="Please choose the opportunity you wish to associate"
+                                value={associatedOppId}
+                                placeholder="Select opportunity"
+                                options={associateOppsOptions}
+                                onchange={handleAssociateOppSelected}
+                                required ></lightning-combobox>
+                            <template if:true={associatedOppId}>
+                                <lightning-layout multiple-rows>
+                                    <lightning-layout-item size="12">
+                                        <div class="slds-p-top_medium"></div>
+                                        <div class="slds-box slds-p-around_medium">
+                                            <lightning-record-view-form object-api-name="Opportunity" record-id={mainOppId}>
+                                                <lightning-layout multiple-rows>
+                                                    <lightning-layout-item size="6">
+                                                        <lightning-output-field field-name="Name" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="6">
+                                                        <lightning-badge label="Main Opportunity" class="main-badge slds-float_right slds-m-left_xx-small"> </lightning-badge>
+                                                        <template if:true={soBadgeControl.main_signed}>
+                                                            <lightning-badge label="Signed SO" class="so-badge slds-float_right"> </lightning-badge>
+                                                        </template>
+                                                        <template if:false={soBadgeControl.main_signed}>
+                                                            <template if:true={soBadgeControl.main_published}>
+                                                                <lightning-badge label="Published SO" class="so-badge slds-float_right"> </lightning-badge>
+                                                            </template>
+                                                        </template>
+                                                    </lightning-layout-item>
+                                                </lightning-layout>
+                                                <div class="slds-m-top_xx-small slds-m-bottom_x-small slds-border_bottom"></div>
+                                                <lightning-layout multiple-rows>
+                                                    <lightning-layout-item size="3">
+                                                        <label for="ownerid" class="slds-form-element__label slds-no-flex">Opportunity Owner</label>
+                                                        <lightning-output-field id="ownerid" field-name="OwnerId" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="3">
+                                                        <label for="closedate" class="slds-form-element__label slds-no-flex">Close Date</label>
+                                                        <lightning-output-field id="closedate" field-name="CloseDate" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="3">
+                                                        <label for="arr" class="slds-form-element__label slds-no-flex">ARR</label>
+                                                        <lightning-output-field id="arr" field-name="Green_Bucket_ARR_V2__c" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="3">
+                                                        <label for="expplanname" class="slds-form-element__label slds-no-flex">Expected Plan Name</label>
+                                                        <lightning-output-field id="expplanname" field-name="Expected_Plan_Name__c" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                </lightning-layout>
+                                            </lightning-record-view-form>
+                                        </div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12">
+                                        <div class="slds-p-top_medium"></div>
+                                        <div class="slds-box slds-p-around_medium">
+                                            <lightning-record-view-form object-api-name="Opportunity" record-id={secondaryOppId}>
+                                                <lightning-layout multiple-rows>
+                                                    <lightning-layout-item size="6">
+                                                        <lightning-output-field field-name="Name" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="6">
+                                                        <lightning-badge label="Secondary Opportunity" class="slds-float_right slds-m-left_xx-small"> </lightning-badge>
+                                                        <template if:true={soBadgeControl.sec_published}>
+                                                            <lightning-badge label="Published SO" class="so-badge slds-float_right"> </lightning-badge>
+                                                        </template>
+                                                    </lightning-layout-item>
+                                                </lightning-layout>
+                                                <div class="slds-m-top_x-small slds-m-top_x-small slds-border_bottom"></div>
+                                                <lightning-layout multiple-rows>
+                                                    <lightning-layout-item size="3">
+                                                        <label for="ownerid2" class="slds-form-element__label slds-no-flex">Opportunity Owner</label>
+                                                        <lightning-output-field id="ownerid2" field-name="OwnerId" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="3">
+                                                        <label for="closedate2" class="slds-form-element__label slds-no-flex">Close Date</label>
+                                                        <lightning-output-field id="closedate2" field-name="CloseDate" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="3">
+                                                        <label for="arr2" class="slds-form-element__label slds-no-flex">ARR</label>
+                                                        <lightning-output-field id="arr2" field-name="Green_Bucket_ARR_V2__c" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="3">
+                                                        <label for="expplanname2" class="slds-form-element__label slds-no-flex">Expected Plan Name</label>
+                                                        <lightning-output-field id="expplanname2" field-name="Expected_Plan_Name__c" variant="label-hidden"> </lightning-output-field>
+                                                    </lightning-layout-item>
+                                                </lightning-layout>
+                                            </lightning-record-view-form>
+                                        </div>
+                                        <template if:true={allowSwitchMainSec}>
+                                            <lightning-button variant="base" label="Switch Main 🔁 Secondary" onclick={handleSwitchMainSecondary} class="slds-m-left_x-small"></lightning-button>
+                                        </template>
+                                        <template if:false={allowSwitchMainSec}>
+                                            <p class="slds-p-top_small slds-text-color_weak slds-text-body_small">Switch Main 🔁 Secondary is disabled.
+                                                <lightning-helptext content="Main opportunity is auto selected according to an existing SO that is published or signed. In case both opportunities have a published SO we choosed the latest SO."></lightning-helptext>
+                                            </p>
+                                        </template>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-small">
+                            <!-- Co-Sell Reason fields -->
+                            <lightning-record-edit-form object-api-name="Co_Sell_Request__c" >
+                                <lightning-layout multiple-rows>
+                                    <template for:each={existingCosellInputFields} for:item="cosellReqFieldName">
+                                        <lightning-layout-item size="12" key={cosellReqFieldName}>
+                                            <lightning-input-field key={cosellReqFieldName} data-id={cosellReqFieldName} field-name={cosellReqFieldName} required onchange={updateCosellRequest}></lightning-input-field>    
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+                                <!-- PS fields - displayed only if reason is "Delivery - PS" -->
+                                <template if:true={displayPsFields}>
+                                    <lightning-layout multiple-rows>
+                                        <template for:each={psFields} for:item="psField">
+                                            <lightning-layout-item size="12" key={psField}>
+                                                <lightning-input-field key={psField} data-id={psField} field-name={psField} required onchange={updateCosellRequest}></lightning-input-field>    
+                                            </lightning-layout-item>
+                                        </template>
+                                    </lightning-layout>
+                                </template>
+                            </lightning-record-edit-form>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <p class="slds-p-top_medium slds-p-left_small"><b>{beforeSaveMsg}</b></p>
+                </template>
+            </template>
+            <!-- 2. submitted screen -->
+            <template if:true={submittedScreen}>
+                <p class="slds-text-color_success slds-text-heading_small slds-align_absolute-center slds-p-bottom_medium">You've Opened a Co-Sell Opportunity, Happy Closing!</p>
+                <div class="slds-text-color_weak ">
+                    <p>{submittedTextManager}</p>
+                    <p>You will get notified by email regarding the response</p>
+                    </br>
+                    <p class="slds-p-bottom_small">Top 5 things you need to know about co-sell:</p>
+                    <ol class="slds-list_ordered">
+                        <li>When co-selling (except for edge cases) all IC / CSM hours will be provided by the partner only. ~8 hours per $10K USD ENT yearly payment (Payment, not ARR) can be expected from the partner</li>
+                        <li>Co-selling is when both partners and sales provide substantial value to a deal, whether new business or expansion and both sides get FULL ARR recognition for that respective added ARR</li>
+                        <li>As a company we want to make sure our co-sell is impactful and justified.=, and that the reasons for involving either sales/ partners in a co-sell are well justified according to our guidelines</li>
+                        <li>A non co-sell account could become a co-sell account and vice versa in case mutual value is present or not present any longer</li>
+                        <li>Constant and ongoing communication between both partner and sales is key for success</li>
+                    </ol>
+                    <p class="slds-p-top_small">If you want to find out more, please review our <a href="https://docs.google.com/presentation/d/1K8mz9gIFsidlaDxe3e-CKp14ynkux49wNS5fTi0yW0A/edit#slide=id.gfa0b8f7f54_0_16" target="_blank">co-sell guidelines</a></p>
+                </div>
+            </template>
+            <template if:true={customError}>
+                <div class="slds-var-m-vertical_small">
+                    <span class="slds-text-color_destructive slds-p-left_small">{customError}</span>
+                </div>
+            </template>
+            <!-- 3. errors section -->
+            <template if:true={error}>
+                <c-error-panel errors={error}></c-error-panel>
+            </template>
+            <!-- 3. footer -->
+            <div slot="footer">
+                <template if:true={mainScreen}>
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeQuickAction} class="slds-m-left_x-small"></lightning-button>
+                    <template if:false={customError}>
+                        <lightning-button variant="brand" type="submit" label="Save" onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                </template>
+                <template if:true={submittedScreen}>
+                    <lightning-button variant="neutral" label="Finish" onclick={closeQuickAction} class="slds-m-left_x-small"></lightning-button>
+                </template>
+            </div>
+        </lightning-quick-action-panel>
+    </div>
+</template>

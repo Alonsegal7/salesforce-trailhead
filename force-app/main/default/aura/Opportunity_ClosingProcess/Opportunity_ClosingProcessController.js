@@ -11,8 +11,9 @@
                     storeResponse = JSON.parse(storeResponse);
 					if (storeResponse.hasOwnProperty('opportunity')){
                         component.set("v.oppData", storeResponse.opportunity);
-                        helper.recalcHandoverThreshold(component, event, helper);
+                        console.log('init opp data: '+JSON.stringify(storeResponse.opportunity));
                         helper.checkHandover_InternalOpp(component, event, helper);
+                        // helper.recalcHandoverThreshold(component, event, helper);
                         // helper.checkHandover_InternalOppAM(component, event, helper);
                         // helper.checkHandover_InternalOppCSM(component, event, helper);
                 
@@ -162,166 +163,23 @@
     },
 
     handleSelect : function (component, event, helper) {
+        console.log('handleSelect');
         var stepName = event.getParam("detail").value;
-
-        if(stepName != 'Closed Lost' && stepName != 'Closed Won'){
+        if(stepName == 'Closed Won'){
+            //check for co-sell 2.0 survey
+            if(component.get('v.oppData.Co_Sell_Opportunity__c') != null && component.get('v.oppData.Co_Sell_Opportunity__c') != ''
+                && component.get('v.oppData.Main_Co_Sell_Opportunity__c') == true 
+                && component.get('v.oppData.Co_Sell_Request__c') != null && component.get('v.oppData.Co_Sell_Request__c') != ''
+                && component.get('v.oppData.Co_Sell_Request__r.Impact_Survey_Filled__c') == false){
+                    helper.coSellSurvey(component, event, helper);
+            } else {
+                helper.handleClosedWon(component, event, helper);
+            } 
+        } else if(stepName === 'Closed Lost'){
+            helper.handleClosedLost(component, event, helper);
+        } else { //not closed won and not closed lost
             component.set('v.hideUpdateButton', false);
             component.set('v.hideUpdateButton_ClosedProcess', false)
-        }
-
-        if(stepName === 'Closed Lost'){
-            component.set('v.isModalOpen', true);
-            component.set('v.isClosedLost', true);
-            component.set('v.innerPathValue', 'LostInfo');
-            component.set('v.lostStage', 'Closed Lost');
-
-            var fieldSetReferance;
-            var isRetreiveFieldSet = false;
-            if(component.get('v.oppData.StageName') != 'Qualified'){
-                if(component.get('v.oppData.Type') != 'Expansion'){
-                    if(component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity' && component.get('v.oppData.Is_Potential_GB_Opportunity__c')){
-                        fieldSetReferance = "InternalOpportunity_Lost_NotExpansion";
-                        isRetreiveFieldSet = true;
-                    }
-    
-                    else if(component.get('v.oppData.RecordType.DeveloperName') == 'Partner_Opportunity'){
-                        fieldSetReferance = "PartnerOpportunity_WonLost_NotExpansion";
-                        isRetreiveFieldSet = true;
-                    }
-
-                    if(isRetreiveFieldSet == true){
-                        let action1 = component.get("c.getFieldsFromFieldSet");
-                        action1.setParams({
-                            objectName: "Opportunity",
-                            fieldSetName: fieldSetReferance
-                        });
-                        action1.setCallback(this, function(response){
-                            let state = response.getState();
-                            if(state==="SUCCESS"){
-                                let fieldsStr = response.getReturnValue();
-                                let fields = JSON.parse(fieldsStr);
-                                component.set("v.fields", fields);
-                            } else {
-                                alert("error");
-                            }
-                        });
-                        $A.enqueueAction(action1);
-                    }
-
-                    else if(isRetreiveFieldSet == false){
-                        component.set('v.showValidation', false);
-                    }
-                }
-
-                else{
-                    component.set('v.showValidation', false);
-                }
-            }
-
-            else{
-                component.set('v.showValidation', false);
-            }
-        }
-        
-        else if(stepName === 'Closed Won'){
-            var fieldSetReferance;
-            var isRetreiveFieldSet;
-            if(component.get('v.oppData.Type') != 'Expansion'){
-                if(component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity' && component.get('v.oppData.Is_Potential_GB_Opportunity__c')){
-                    fieldSetReferance = "InternalOpportunity_Won_NotExpansion";
-                    isRetreiveFieldSet = true;
-                }
-
-                else if(component.get('v.oppData.RecordType.DeveloperName') == 'Partner_Opportunity'){
-                    fieldSetReferance = "PartnerOpportunity_WonLost_NotExpansion";
-                    isRetreiveFieldSet = true;
-                }
-            }
-    
-            else if(component.get('v.oppData.Type') == 'Expansion' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'){
-                fieldSetReferance = "InternalOpportunity_Won_Expansion";
-                isRetreiveFieldSet = true;
-            }
-
-            if(isRetreiveFieldSet == true){
-                let action1 = component.get("c.getFieldsFromFieldSet");
-                action1.setParams({
-                    objectName: "Opportunity",
-                    fieldSetName: fieldSetReferance
-                });
-                action1.setCallback(this, function(response){
-                    let state = response.getState();
-                    if(state==="SUCCESS"){
-                        let fieldsStr = response.getReturnValue();
-                        let fields = JSON.parse(fieldsStr);
-                        component.set("v.fields", fields);
-                    } else {
-                        alert("error");
-                    }
-                });
-                $A.enqueueAction(action1);
-            }
-
-            else{
-                component.set('v.showValidation', false);
-            }
-
-            component.set('v.isModalOpen', true);
-            component.set('v.isClosedWon', true);
-            
-            if(component.get('v.showWhatSigned')){ //if Is_Primary_SO_Signed__c = true -> don't show manual signed fields
-                component.set('v.innerPathValue', 'SOInfo');
-                var innerValue = 'SO Information';
-                if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                    helper.setInnerPicklistPath(component, event, helper, innerValue);
-                }
-            }
-    
-            else{ //if Is_Primary_SO_Signed__c = false -> show manual signed fields
-                if(component.get('v.innerPathValue') == 'Claim'){
-                    var innerValue = component.get('v.innerPathValue');
-                    if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
-                        helper.setInnerPicklistPath(component, event, helper, innerValue);
-                    }
-                }
-
-                if(component.get('v.oppData.Close_Process_Path__c') == 'Claim'){
-                    component.set('v.innerPathValue', 'Claim');
-                }
-                
-                else if(component.get('v.oppData.Close_Process_Path__c') == 'SO Information'){
-                    component.set('v.innerPathValue', 'SOInfo');
-                }
-
-                else if(component.get('v.oppData.Close_Process_Path__c') == 'Lost Information'){
-                    component.set('v.innerPathValue', 'LostInfo');
-                }
-        
-                if(component.get('v.oppData.Close_Process_Path__c') != 'Claim' && component.get('v.oppData.Close_Process_Path__c') != 'SO Information' && component.get('v.oppData.Close_Process_Path__c') != 'Lost Information'){
-                    component.set('v.showValidation', false);
-                    if(component.get('v.oppData.Close_Process_Path__c') == 'Manual Signature'){
-                        component.set('v.innerPathValue', 'ManualSignature');
-                    }
-            
-                    else if(component.get('v.oppData.Close_Process_Path__c') == 'BigBrain Pickers'){
-                        component.set('v.innerPathValue', 'BBPickers');
-                    }
-            
-                    else if(component.get('v.oppData.Close_Process_Path__c') == 'CC Claim'){
-                        component.set('v.innerPathValue', 'CCClaim');
-                    }
-            
-                    else if(component.get('v.oppData.Close_Process_Path__c') == 'Handover'){
-                        component.set('v.innerPathValue', 'Handover');
-                        helper.getHandover(component, event, helper);
-                    }
-            
-                    else if(component.get('v.oppData.Close_Process_Path__c') == 'Opportunity Summary'){
-                        component.set('v.innerPathValue', 'OppSummary');
-                        helper.getOpportunitySummary(component, event, helper);
-                    }
-                }
-            }
         }
     },
 

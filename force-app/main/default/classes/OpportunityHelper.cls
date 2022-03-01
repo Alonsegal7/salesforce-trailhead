@@ -1,8 +1,9 @@
 public class OpportunityHelper {
-    //public static Id csRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
+
     public static Id internalRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
     public static Id partnerRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
-  public static void beforeUpdate(List<Opportunity> opportunities, map <Id, Opportunity> oldMap){
+
+    public static void beforeUpdate(List<Opportunity> opportunities, map <Id, Opportunity> oldMap){
         try{
             list<Opportunity> oppsWithMAChange= new list<Opportunity>();
             list<Opportunity> oppsWithOwnerChange= new list<Opportunity>();
@@ -14,47 +15,11 @@ public class OpportunityHelper {
                 if (oldOpp != null && oldOpp.AccountId != opp.AccountId && opp.AccountId!=null) { 
                     oppsWithMAChange.add(opp);
                     maIds.add(opp.AccountId);
-                    //handleAccountIdChange(opp); 
                 }
                 if (oldOpp != null && (oldOpp.CurrencyIsoCode != opp.CurrencyIsoCode || opp.USD_exchange_rate__c == null)) { 
                     ExchangeRateService.apply(opp); 
                 }
-                ////// moved to Opportunity_Calculate_ARR class /////
-                /*if(isManagedByDealhub(opp)){
-                    opp.Expected_ARR__c = opp.Quote_ARR__c;
-
-                    if(opp.Is_Primary_SO_Signed__c) {
-                        opp.Claimed_ARR__c = opp.Product_ARR__c; 
-                    } 
-                    else if(opp.Co_Sell_Opportunity__c!=null&&opp.Main_Co_Sell_Opportunity__c==false){//secondary co-sell opp
-                        opp.Expected_ARR__c = opp.Product_ARR__c;
-                        opp.Claimed_ARR__c = opp.Product_ARR__c; 
-
-                    }
-                }
-
-                if(opp.Claimed_ARR_Override__c!=null)
-                    opp.Claimed_ARR__c =opp.Claimed_ARR_Override__c;
                 
-                try{
-                    if(opp.Type!=null&&opp.Type.contains('Renewal')||opp.RecordTypeId==csRecordTypeId){
-                        decimal totalDealARR=null;
-                        decimal contractaRR=opp.Original_Contract_ARR__c==null?0:opp.Original_Contract_ARR__c;
-                        if(opp.SyncedQuoteId==null){
-                            totalDealARR=contractaRR+opp.Green_Bucket_ARR_V2__c;
-                            
-                        }else{
-                            totalDealARR=opp.Total_License_ARR__c;
-                        }
-                        decimal retentionRate=contractaRR==0?0:totalDealARR/contractaRR;
-                        opp.Total_Renewal_ARR__c=totalDealARR;
-                        opp.Net_ARR_Retention__c=retentionRate*100;
-                        opp.Gross_ARR_Retention__c=math.min(retentionRate,1)*100;
-                    }
-                }catch(exception e){
-                    Utilities.sendDebugEmail('Error in OpportunityHelper: Renewal Metrics ',e,e.getMessage());   
-                }
-                */
                 if(opp.RecordTypeId==partnerRecordTypeId&&
                     (oldMap==null||opp.OwnerId!=oldMap.get(opp.Id).OwnerId)){
                         userIds.add(opp.OwnerId);
@@ -121,31 +86,30 @@ public class OpportunityHelper {
     
     public static void afterUpdate(List<Opportunity> opps,map <Id, Opportunity> oldMap){
         try{
-        Set<Id> SignedQuotes = new Set<Id>();
-        list<Opportunity> masterCosellOpps= new list<Opportunity>();
-        for(Opportunity opp : opps){ 
-            if (opp.Is_SO_Signed__c&&opp.Manual_Signature_Reason__c!='Priority SO') { 
-                SignedQuotes.add(opp.SyncedQuoteId); 
-            } 
-            if(opp.Main_Co_Sell_Opportunity__c&&opp.StageName=='Closed Won'&&
-                (opp.StageName!=oldMap.get(opp.Id).StageName||
-                opp.Co_Sell_Opportunity__c!=oldMap.get(opp.Id).Co_Sell_Opportunity__c||
-                opp.Main_Co_Sell_Opportunity__c!=oldMap.get(opp.Id).Main_Co_Sell_Opportunity__c)){
-                masterCosellOpps.add(opp);
+            Set<Id> SignedQuotes = new Set<Id>();
+            list<Opportunity> masterCosellOpps= new list<Opportunity>();
+            for(Opportunity opp : opps){ 
+                if (opp.Is_SO_Signed__c&&opp.Manual_Signature_Reason__c!='Priority SO') { 
+                    SignedQuotes.add(opp.SyncedQuoteId); 
+                } 
+                if(opp.Main_Co_Sell_Opportunity__c
+                    &&opp.StageName=='Closed Won'
+                    &&opp.Co_Sell_Request__c==null //prevent cloning the olis for co-sell opps with Co_Sell_Request__c (co-sell 2.0)
+                    && (opp.StageName!=oldMap.get(opp.Id).StageName
+                        ||opp.Co_Sell_Opportunity__c!=oldMap.get(opp.Id).Co_Sell_Opportunity__c
+                        ||opp.Main_Co_Sell_Opportunity__c!=oldMap.get(opp.Id).Main_Co_Sell_Opportunity__c)){
+                    masterCosellOpps.add(opp);
+                }
             }
-        }
-        if(!SignedQuotes.isEmpty())
-            MarkQuotesSigned(SignedQuotes);
-        if(!masterCosellOpps.isEmpty())
-            cloneOlisForCoSell(masterCosellOpps);
+            if(!SignedQuotes.isEmpty())
+                MarkQuotesSigned(SignedQuotes);
+            if(!masterCosellOpps.isEmpty()){
+                if(!masterCosellOpps.isEmpty()) cloneOlisForCoSell(masterCosellOpps);
+            }
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in OpportunityHelper ',e,e.getMessage());   
         }
     }
-
-    /*public static boolean isManagedByDealhub(Opportunity opp){
-        return (opp.Quote_Count__c != null && opp.Quote_Count__c != 0) || (opp.Product_Count__c != null && opp.Product_Count__c != 0);
-    }*/
 
     public static void cloneOlisForCoSell(list<Opportunity> masterCosellOpps){
         try{
@@ -229,18 +193,6 @@ public class OpportunityHelper {
                 opp.Monday_Account__c = acc.Id;
             }
         }
-    /*if (opportunity.AccountId == null) { return; } 
-                
-        Account account = [SELECT Id, RecordTypeId, Company__c FROM Account WHERE Id=:opportunity.AccountId LIMIT 1];
-        String recordTypeDevName = RecordTypeHelper.devName(account.recordTypeID);
-        
-        if (recordTypeDevName == 'Company') {
-      opportunity.Company__c = account.Id;
-      opportunity.Monday_Account__c = null;
-        } else if (recordTypeDevName == 'Monday_Account') {
-          opportunity.Company__c = account.Company__c;
-            opportunity.Monday_Account__c = account.Id;
-        }*/
     }
     public static void setPartnerCompany(list<Opportunity> relevantOpps, set<Id> relevantUsers){
         try{

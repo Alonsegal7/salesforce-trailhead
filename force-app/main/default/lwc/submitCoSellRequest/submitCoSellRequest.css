@@ -1,0 +1,9 @@
+.wrap-all{
+    position: relative;
+}
+.main-badge {
+    --sds-c-badge-color-background: orange;
+}
+.so-badge {
+    --sds-c-badge-color-background: #00CA72;
+}

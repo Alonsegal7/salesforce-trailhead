@@ -9,10 +9,10 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     }
     
     if(Trigger.isBefore && Trigger.isUpdate){
-        Partners_SharingService.createOpportunityShares_ManualTrigger(Trigger.new);
         Opportunity_LockValidation lockedValidationService = new Opportunity_LockValidation();
-        Handover_ThresholdMapping.linkOpportunityToThresholdFromTrigger(Trigger.new, Trigger.oldMap);
+        lockedValidationService.cosellLockValidation(Trigger.new, Trigger.oldMap);
         lockedValidationService.runValidation(Trigger.new, Trigger.oldMap);
+        Handover_ThresholdMapping.linkOpportunityToThresholdFromTrigger(Trigger.new, Trigger.oldMap);
         OpportunityHelper.beforeUpdate(Trigger.new, Trigger.oldmap);
         Opportunity_Calculate_ARR.Opportunity_Calculate_ARR(Trigger.new, Trigger.oldmap);
         TargetsService targetServiceHelper = new TargetsService();
@@ -30,6 +30,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
             PartnerCommissionService partnerCommission = new PartnerCommissionService();
             partnerCommission.partnerCommissionFromGbOpp(Trigger.new, Trigger.oldMap);
         }
+        Opportunity_CoSellSyncService.syncCoSellOppsClosedWon(Trigger.new, Trigger.oldMap);
     }
     if(Trigger.isAfter && Trigger.isInsert){
         Partners_SharingService.createOpportunityShares(trigger.new, trigger.oldMap);

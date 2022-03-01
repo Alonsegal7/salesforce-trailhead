@@ -1,0 +1,12 @@
+<template>
+    <template if:true={load}>
+        <c-star-rating title="🤝 Co-Sell Impact Survey" 
+                        target-rec-id={targetId} 
+                        object-api-name="Co_Sell_Request__c" 
+                        survey-name="Partners_Impact_Survey_Cosell" 
+                        survey-filled-field-api-name="Impact_Survey_Filled__c"
+                        show-success-toast
+                        onsurveyfilled={handleSurveyFilledEvent}>
+        </c-star-rating>
+    </template>
+</template>
