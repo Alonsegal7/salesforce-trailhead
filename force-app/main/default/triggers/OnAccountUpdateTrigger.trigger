@@ -19,8 +19,8 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
             Account_OwnerValidation.companyOwnerValidation(Trigger.new, Trigger.oldMap);
             Partners_SharingService.createAccountShares_ManualTrigger(Trigger.new);
         }
-        if (trigger.IsUpdate){
-            Account_OwnerStamps.UpdatePreviousOwner (trigger.new,trigger.oldmap);
+        if (Trigger.isUpdate){
+            Account_OwnerStamps.UpdatePreviousOwner(Trigger.new,Trigger.oldMap);
         }
     }
     if (Trigger.isAfter) {
