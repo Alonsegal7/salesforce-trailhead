@@ -7,6 +7,7 @@ import OPP_ACCOUNTID from "@salesforce/schema/Opportunity.AccountId";
 import OPP_STAGE from "@salesforce/schema/Opportunity.StageName";
 import OPP_OWNER_MANAGER_NAME from "@salesforce/schema/Opportunity.Owner.Manager.Name";
 import OPP_OWNER_MANAGER_ID from "@salesforce/schema/Opportunity.Owner.ManagerId";
+import OPP_OWNER_ID from "@salesforce/schema/Opportunity.OwnerId";
 import OPP_RT_DEV_NAME from "@salesforce/schema/Opportunity.RecordType.DeveloperName";
 import OPP_OWNER_ACCOUNTID from "@salesforce/schema/Opportunity.Owner.AccountId";
 import SYNCED_QUOTE from "@salesforce/schema/Opportunity.SyncedQuoteId";
@@ -26,6 +27,7 @@ export default class SubmitCoSellRequest extends LightningElement {
     submittedTextManager;
     beforeSaveMsg;
     partnerCompanyId;
+    oppOwnerId;
     isLoading = true;
     mainScreen = false;
     showSpinner = true;
@@ -64,7 +66,7 @@ export default class SubmitCoSellRequest extends LightningElement {
         return ['PS_Deal_Type__c','PS_Type__c','PS_Type_Details__c','PS_Use_Case_Description__c'];
     }
 
-    @wire(getRecord, { recordId: '$recordId', fields: [OPP_ACCOUNTID, OPP_STAGE, OPP_OWNER_MANAGER_NAME, OPP_OWNER_MANAGER_ID, OPP_RT_DEV_NAME, OPP_OWNER_ACCOUNTID, SYNCED_QUOTE, SYNCED_QUOTE_STATUS, SYNCED_QUOTE_PUBLISH, SYNCED_QUOTE_DATE] })
+    @wire(getRecord, { recordId: '$recordId', fields: [OPP_ACCOUNTID, OPP_STAGE, OPP_OWNER_MANAGER_NAME, OPP_OWNER_MANAGER_ID, OPP_OWNER_ID, OPP_RT_DEV_NAME, OPP_OWNER_ACCOUNTID, SYNCED_QUOTE, SYNCED_QUOTE_STATUS, SYNCED_QUOTE_PUBLISH, SYNCED_QUOTE_DATE] })
     wiredRecord({ error, data }) {
         if (error) { this.error = error; }
         if (data) {
@@ -74,6 +76,7 @@ export default class SubmitCoSellRequest extends LightningElement {
             this.managerId = getFieldValue(data, OPP_OWNER_MANAGER_ID);
             this.currentOppRT = getFieldValue(data, OPP_RT_DEV_NAME);
             this.partnerCompanyId = getFieldValue(data, OPP_OWNER_ACCOUNTID);
+            this.oppOwnerId = getFieldValue(data, OPP_OWNER_ID);
             let syncedQuoteId = getFieldValue(data, SYNCED_QUOTE);
             if(syncedQuoteId){
                 let qt = {};
@@ -98,6 +101,7 @@ export default class SubmitCoSellRequest extends LightningElement {
         this.cosellRequest.Monday_Account__c = this.accountId;
         this.cosellRequest.Assigned_Approver__c = this.managerId;
         this.cosellRequest.Partner_Company__c = this.partnerCompanyId;
+        if(this.partnerCompanyId) this.cosellRequest.Partner_User__c = this.oppOwnerId;
         if(this.radioValue == 'newopp'){
             this.cosellRequest.Type__c = 'Create';
             this.cosellRequest.Main_Opportunity__c = this.recordId;
