@@ -17,6 +17,15 @@ public with sharing class Handover_ThresholdMapping {
         }
     }
 
+    public static void recalcHandoverThresholdFromAfterTrigger(List<Opportunity> opps){
+        System.debug('Entered recalcHandoverThresholdFromAfterTrigger');
+        List<Opportunity> updatedOpps = new List<Opportunity>();
+        for (Opportunity opp : opps) {
+            updatedOpps.add(new Opportunity(Id = opp.Id, Manual_Trigger__c = 'Calculate HO Thresholds'));
+        }
+        update updatedOpps;
+    }
+
     /*
     Method that starts threshold link calculations from all threshold types
     Can be called from: 
@@ -69,7 +78,7 @@ public with sharing class Handover_ThresholdMapping {
         Id oppInternalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
         Map<Id,Opportunity> relevantOppsMap = new Map<Id,Opportunity>();
         for (Opportunity opp : opps) {
-            if (opp.CSM_Package__c != null && opp.RecordTypeId == oppInternalOppRtId) { //internal opp with the relevant fields
+            if (opp.RecordTypeId == oppInternalOppRtId) { //internal opp with the relevant fields
                 relevantOppsMap.put(opp.Id, opp);
             }
         }
@@ -146,16 +155,17 @@ public with sharing class Handover_ThresholdMapping {
                 System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - comparing threshold: '+ thId + ' to opp: ' + oppId);
                 isMatch = true;
                 for (HO_Threshold_Criteria__c thCr : thresholdsWithCriteriasMap.get(thId)) {
-                    // System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - comparing criteria: '+ thCr + ' to values on opp: ' + relevantOppsMap.get(oppId));
                     String thCrFieldValue = string.valueof(thCr.Value__c);
                     String oppFieldValue = string.valueof(relevantOppsMap.get(oppId).get(thCr.Target_Field_API_Name__c));
                     System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - value of opp: '+ oppId + ' for target field: ' + thCr.Target_Field_API_Name__c + ' is: ' + oppFieldValue);
                     System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - value of threshold: '+ thId + ' for target field: ' + thCr.Criteria_Name__c + ' is: ' + thCrFieldValue);
                     System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - value of the operator is: '+ thCr.Operator__c);
                     if (thCrFieldValue == null || oppFieldValue == null) {
-                        if (thCr.Operator__c == 'equal' && thCrFieldValue == null && oppFieldValue == null) {
-                            System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - Null value detected, skipping criteria');
-                            continue;
+                        if (thCr.Operator__c == 'equal' && (thCrFieldValue == null)) {
+                            if(oppFieldValue == null || oppFieldValue == ' ' || oppFieldValue == '') {
+                                System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - Null value detected, skipping criteria');
+                                continue;
+                            }
                         }
                         else {
                             System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - Null value detected, failing criteria');
@@ -210,6 +220,7 @@ public with sharing class Handover_ThresholdMapping {
         if (onDemandCalculation) {
             update relevantOppsMap.values();
         }
+        System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - pass result is: '+isMatch);
         return isMatch;
     }
     
@@ -261,14 +272,17 @@ public with sharing class Handover_ThresholdMapping {
         Opportunity relevantOppRaw = [SELECT Id, HO_Threshold_AM__c, HO_Threshold_CSM__c, HO_Threshold_Onboarding__c FROM Opportunity WHERE Id = :inputOppId];
         Id oppTh;
         //determine which type of thresold is checked
-        if (thresholdType == 'AM') {
+        if (thresholdType == 'AM' && relevantOppRaw.HO_Threshold_AM__c != null) {
             oppTh = relevantOppRaw.HO_Threshold_AM__c;
         }
-        if (thresholdType == 'CSM') {
+        if (thresholdType == 'CSM' && relevantOppRaw.HO_Threshold_CSM__c != null) {
             oppTh = relevantOppRaw.HO_Threshold_CSM__c;
         }
-        if (thresholdType == 'Onboarding') {
+        if (thresholdType == 'Onboarding' && relevantOppRaw.HO_Threshold_Onboarding__c != null) {
             oppTh = relevantOppRaw.HO_Threshold_Onboarding__c;
+        }
+        if (oppTh == null) {
+            return false;
         }
         //check first if the threshold is marked with 'Always Pass' 
         HO_Threshold__c currentTh = [SELECT Id, Always_Pass__c FROM HO_Threshold__c WHERE Id = :oppTh];

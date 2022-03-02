@@ -7,7 +7,7 @@
     <aura:attribute name="disabled" type="Boolean" default="true" />
     <aura:attribute name="recordId" type="Id" />
     <!--File upload attributes-->
-
+    
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <aura:attribute name="isClosedLost" type="Boolean" default="false"/>
     <aura:attribute name="isClosedWon" type="Boolean" default="false"/>
@@ -31,6 +31,7 @@
     <aura:attribute name="checkARR" type="boolean" default="false"/>
     <aura:attribute name="showAmHandover" type="boolean" default="false"/>
     <aura:attribute name="showCSMHandover" type="boolean" default="false"/>
+    <aura:attribute name="showOBHandover" type="boolean" default="false"/>
     <aura:attribute name="greenBucketData" type="Opportunity" default=""/>
 
     <!--Field Sets attributes-->
@@ -406,10 +407,10 @@
                                                 <div class="slds-grid slds-gutters">
                                                     <div class="slds-col slds-size_1-of-1">
                                                         <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}"/>
-                                                        
                                                     </div>
                                                 </div>
                                             </aura:iteration>
+                                            <lightning:inputField aura:id="companySize" rendered="" variant="label-stacked" fieldName="Company_Size__c" value="{!v.oppData.Company_Employees__c}" required="true"/>
                                             <div class="slds-align_absolute-center">
                                                 <lightning:button variant="brand" label="Submit" type="submit"/>
                                             </div>
@@ -455,10 +456,10 @@
                                                 <div class="slds-grid slds-gutters">
                                                     <div class="slds-col slds-size_1-of-1">
                                                         <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}"/>
-                                                        
                                                     </div>
                                                 </div>
                                             </aura:iteration>
+                                            <lightning:inputField aura:id="companySize" rendered="" variant="label-stacked" fieldName="Company_Size__c" value="{!v.oppData.Company_Employees__c}" required="true"/>
                                             <div class="slds-align_absolute-center">
                                                 <lightning:button variant="brand" label="Submit" type="submit"/>
                                             </div>

@@ -13,9 +13,6 @@
                         component.set("v.oppData", storeResponse.opportunity);
                         console.log('init opp data: '+JSON.stringify(storeResponse.opportunity));
                         helper.checkHandover_InternalOpp(component, event, helper);
-                        // helper.recalcHandoverThreshold(component, event, helper);
-                        // helper.checkHandover_InternalOppAM(component, event, helper);
-                        // helper.checkHandover_InternalOppCSM(component, event, helper);
                 
                         if(storeResponse.opportunity.Is_Primary_SO_Signed__c == true){
                             component.set('v.showWhatSigned', true);
@@ -65,6 +62,7 @@
 
     handleSuccessFieldSets : function(component, event, helper){
         component.set('v.showValidation', false);
+        helper.updateCompanySize(component, event, helper);
     },
 
     //Start - Save Field Sets to prevent validation
