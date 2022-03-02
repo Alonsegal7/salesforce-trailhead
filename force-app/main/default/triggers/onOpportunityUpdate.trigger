@@ -19,6 +19,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         targetServiceHelper.TargetsServiceOnOpps(trigger.new,trigger.oldmap);
         OpportunityHelper.updateOppType(trigger.new,trigger.oldmap);
         Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(trigger.new,trigger.oldmap);
+        Partners_SharingService.createOpportunityShares_ManualTrigger(trigger.new);
     }
     
     if(Trigger.isAfter && Trigger.isUpdate){
@@ -35,6 +36,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     if(Trigger.isAfter && Trigger.isInsert){
         Partners_SharingService.createOpportunityShares(trigger.new, trigger.oldMap);
         Opportunity_RenewalCreation.updateRenewalStatus(Trigger.new, Trigger.oldMap);
+        Handover_ThresholdMapping.recalcHandoverThresholdFromAfterTrigger(Trigger.new);
     }
     
     if(Trigger.isAfter){

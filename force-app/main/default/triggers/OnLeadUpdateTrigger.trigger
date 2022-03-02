@@ -8,10 +8,17 @@ trigger OnLeadUpdateTrigger on Lead (after insert, after update, after delete, b
             Lead_StampsService.run(trigger.new,trigger.oldmap);
             //Lead_ComapnyCreation.Lead_ComapnyCreation(trigger.new,trigger.oldmap);
         }
+        if(Trigger.isUpdate){
+            Partners_SharingService.createLeadShares_ManualTrigger(Trigger.new);
+        }
     }
 
     if (Trigger.isAfter && Trigger.isUpdate) {
         handlerLeadWithoutSharing.afterInsert(Trigger.oldMap, Trigger.newMap);
+    }
+
+    if (Trigger.isAfter && (Trigger.isUpdate || Trigger.isInsert)) {
+        Partners_SharingService.createLeadShares(trigger.new, trigger.oldMap);
     }
 	
     if(Trigger.isAfter){

@@ -15,6 +15,15 @@ public class TestObjectCreator
         return a;
     }
 
+    public static Lead createLead(){
+        Lead l = new Lead();
+        l.LastName = 'test';
+        l.email = 'test@monday.com';
+        l.Company = 'test';
+        if (persistImmediate) insert l;
+        return l;
+    }
+
 	/*public static Contact CreateContact (Account a) {
         Contact c = new Contact();
 		c.FirstName = 'Elfo';

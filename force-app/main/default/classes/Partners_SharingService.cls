@@ -1,6 +1,8 @@
 public without sharing class Partners_SharingService {
     
     public static Id partnerOppRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
+    public static Id partnerLeadRT = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Partner_Lead').getRecordTypeId();
+
     public static Boolean stopAddToEligibleCommissionGroup = false;
     public static Id allEligibleGroupId;
 
@@ -167,21 +169,17 @@ public without sharing class Partners_SharingService {
     public static void createOpportunityShares(List<Opportunity> newOppsList, Map<Id,Opportunity> oldOppsMap){
         Set<Id> partnerCompsIds = new Set<Id>();
         List<Opportunity> oppsToCreateSharesCPChanged = new List<Opportunity>();
-        List<Opportunity> oppsToCreateSharesCoSellChanged = new List<Opportunity>();
         List<Opportunity> oppsToDeleteSharesCPChanged = new List<Opportunity>();
-        List<Opportunity> oppsToDeleteSharesCoSellChanged = new List<Opportunity>();
         //1
         //go over partner opps only (record type = partner), and collect opps that need to create shares for and opps that their shares need to be deleted
         //by Channel_Partner__c like in accounts
-        //and by co_sell_opportunity__c - if co-sell opp is connected or disconnected we need to create/delete share to the co-sell opp
         for(Opportunity opp :newOppsList){
             if((opp.RecordTypeId == partnerOppRT || (oldOppsMap != null && oldOppsMap.get(opp.Id).RecordTypeId == partnerOppRT)) && 
-                (oldOppsMap == null || opp.Channel_Partner__c != oldOppsMap.get(opp.Id).Channel_Partner__c || opp.co_sell_opportunity__c != oldOppsMap.get(opp.Id).co_sell_opportunity__c)){
+                (oldOppsMap == null || opp.Channel_Partner__c != oldOppsMap.get(opp.Id).Channel_Partner__c)){
                 if(oldOppsMap == null){ //new opp
                     if(opp.Channel_Partner__c != null) { //channel partner is assigned
                         oppsToCreateSharesCPChanged.add(opp);
                         partnerCompsIds.add(opp.Channel_Partner__c);
-                        if(opp.co_sell_opportunity__c != null) oppsToCreateSharesCoSellChanged.add(opp); //co sell opp is assigned
                     }
                 } else { //opp updated
                     if(opp.Channel_Partner__c != oldOppsMap.get(opp.Id).Channel_Partner__c){ //channel partner changed
@@ -191,16 +189,6 @@ public without sharing class Partners_SharingService {
                         }
                         if(oldOppsMap.get(opp.Id).Channel_Partner__c != null) { //old channel unassigned 
                             oppsToDeleteSharesCPChanged.add(opp);
-                            partnerCompsIds.add(oldOppsMap.get(opp.Id).Channel_Partner__c);
-                        }
-                    }
-                    if(opp.co_sell_opportunity__c != oldOppsMap.get(opp.Id).co_sell_opportunity__c){ //co sell opp change - need to check if channel partner is assigned or was assigned
-                        if(opp.co_sell_opportunity__c != null && opp.Channel_Partner__c != null){
-                            oppsToCreateSharesCoSellChanged.add(opp);
-                            partnerCompsIds.add(opp.Channel_Partner__c);
-                        }
-                        if(oldOppsMap.get(opp.Id).co_sell_opportunity__c != null && oldOppsMap.get(opp.Id).Channel_Partner__c != null){
-                            oppsToDeleteSharesCoSellChanged.add(opp);
                             partnerCompsIds.add(oldOppsMap.get(opp.Id).Channel_Partner__c);
                         }
                     }
@@ -214,24 +202,14 @@ public without sharing class Partners_SharingService {
         Map<Id,List<Id>> partnerCompToGroupsMap = getPartnerCompToGroupsMap(partnerCompsIds);
 
         //3
-        //delete opp shares due to channel partner change or co-sell change with channel partner involved
-        if(!oppsToDeleteSharesCPChanged.isEmpty() || !oppsToDeleteSharesCoSellChanged.isEmpty()){
+        //delete opp shares due to channel partner change
+        if(!oppsToDeleteSharesCPChanged.isEmpty()){
             system.debug('oppsToDeleteSharesCPChanged: '+oppsToDeleteSharesCPChanged);
-            system.debug('oppsToDeleteSharesCoSellChanged: '+oppsToDeleteSharesCoSellChanged);
             Set<Id> groupIdsForDelete = new Set<Id>();
             Set<Id> oppIds = new Set<Id>();
             if(!oppsToDeleteSharesCPChanged.isEmpty()){
                 oppIds.addAll((new Map<Id,Opportunity>(oppsToDeleteSharesCPChanged)).keySet());
                 for(Opportunity opp : oppsToDeleteSharesCPChanged){
-                    if(!partnerCompToGroupsMap.containsKey(oldOppsMap.get(opp.Id).Channel_Partner__c)) continue;
-                    for(Id groupId: partnerCompToGroupsMap.get(oldOppsMap.get(opp.Id).Channel_Partner__c)){
-                        groupIdsForDelete.add(groupId);
-                    }
-                }
-            }
-            if(!oppsToDeleteSharesCoSellChanged.isEmpty()){
-                for(Opportunity opp : oppsToDeleteSharesCoSellChanged){
-                    //oppIds.add(oldOppsMap.get(opp.Id).co_sell_opportunity__c);
                     if(!partnerCompToGroupsMap.containsKey(oldOppsMap.get(opp.Id).Channel_Partner__c)) continue;
                     for(Id groupId: partnerCompToGroupsMap.get(oldOppsMap.get(opp.Id).Channel_Partner__c)){
                         groupIdsForDelete.add(groupId);
@@ -248,9 +226,8 @@ public without sharing class Partners_SharingService {
 
         //4
         //create opp shares
-        if(!oppsToCreateSharesCPChanged.isEmpty() || !oppsToCreateSharesCoSellChanged.isEmpty()){
+        if(!oppsToCreateSharesCPChanged.isEmpty()){
             system.debug('oppsToCreateSharesCPChanged: '+oppsToCreateSharesCPChanged);
-            system.debug('oppsToCreateSharesCoSellChanged: '+oppsToCreateSharesCoSellChanged);
 
             List<OpportunityShare> oppSharesToCreate = new List<OpportunityShare>();
             for(Opportunity opp : oppsToCreateSharesCPChanged){
@@ -263,20 +240,22 @@ public without sharing class Partners_SharingService {
                     oppSharesToCreate.add(newOppShare);
                 }
             }
-            for(Opportunity opp : oppsToCreateSharesCoSellChanged){
-                if(!partnerCompToGroupsMap.containsKey(opp.Channel_Partner__c)) continue;
-                for(Id groupId: partnerCompToGroupsMap.get(opp.Channel_Partner__c)){
-                    OpportunityShare newOppShare2 = new OpportunityShare();
-                    newOppShare2.OpportunityId = opp.co_sell_opportunity__c;
-                    newOppShare2.OpportunityAccessLevel = 'Read';
-                    newOppShare2.UserOrGroupId = groupId;
-                    //oppSharesToCreate.add(newOppShare2);
-                }
-            }
+            
             if(oppSharesToCreate.isEmpty()) return;
             createShares(oppSharesToCreate,'OpportunityShare');
             system.debug('oppSharesToCreate: '+oppSharesToCreate);
         }  
+    }
+
+    public static void createLeadShares_ManualTrigger(List<Lead> newLeadsList){
+        List<Lead> leadList = new List<Lead>();
+        for(Lead lead :newLeadsList){
+            if(lead.Manual_Trigger__c == 'Create Lead Shares - Partners'){
+                lead.Manual_Trigger__c = '';
+                leadList.add(lead);
+            }
+        }
+        if(!leadList.isEmpty()) createLeadShares(leadList, null);
     }
 
     public static void createAccountShares_ManualTrigger(List<Account> newAccountsList){
@@ -474,5 +453,86 @@ public without sharing class Partners_SharingService {
         if(errorsFound != ''){
             Utilities.sendEmail('Partners_SharingService - Error in creating '+entityName+'', 'Errors found: ' + errorsFound + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), new List<String>{'kseniasm@monday.com'});
         }
+    }
+
+    public static void createLeadShares(List<Lead> newLeadsList, Map<Id,Lead> oldLeadsMap){
+        Set<Id> partnerCompsIds = new Set<Id>();
+        List<Lead> leadsToCreateSharesCPChanged = new List<Lead>();
+        List<Lead> leadsToDeleteSharesCPChanged = new List<Lead>();
+        //1
+        //go over partner leads only (record type = partner), and collect leads that need to create shares for and leads that their shares need to be deleted
+        //by Partner_Company__c like in accounts
+        for(Lead lead :newLeadsList){
+            if((lead.RecordTypeId == partnerLeadRT || (oldLeadsMap != null && oldLeadsMap.get(lead.Id).RecordTypeId == partnerLeadRT)) && 
+                (oldLeadsMap == null || lead.Partner_Company__c != oldLeadsMap.get(lead.Id).Partner_Company__c)){
+                if(oldLeadsMap == null){ //new lead
+                    if(lead.Partner_Company__c != null) { //channel partner is assigned
+                        leadsToCreateSharesCPChanged.add(lead);
+                        partnerCompsIds.add(lead.Partner_Company__c);
+                    }
+                } else { //lead updated
+                    if(lead.Partner_Company__c != oldLeadsMap.get(lead.Id).Partner_Company__c){ //channel partner changed
+                        if(lead.Partner_Company__c != null) { //new channel partner is assigned
+                            leadsToCreateSharesCPChanged.add(lead);
+                            partnerCompsIds.add(lead.Partner_Company__c);
+                        }
+                        if(oldLeadsMap.get(lead.Id).Partner_Company__c != null) { //old channel unassigned 
+                            leadsToDeleteSharesCPChanged.add(lead);
+                            partnerCompsIds.add(oldLeadsMap.get(lead.Id).Partner_Company__c);
+                        }
+                    }
+                }
+            }
+        }
+        //2
+        //get the groups of the partner companies
+        if(partnerCompsIds.isEmpty()) return;
+        system.debug('partnerCompsIds: '+partnerCompsIds);
+        Map<Id,List<Id>> partnerCompToGroupsMap = getPartnerCompToGroupsMap(partnerCompsIds);
+
+        //3
+        //delete lead shares due to channel partner change
+        if(!leadsToDeleteSharesCPChanged.isEmpty()){
+            system.debug('leadsToDeleteSharesCPChanged: '+leadsToDeleteSharesCPChanged);
+            Set<Id> groupIdsForDelete = new Set<Id>();
+            Set<Id> leadIds = new Set<Id>();
+            if(!leadsToDeleteSharesCPChanged.isEmpty()){
+                leadIds.addAll((new Map<Id,Lead>(leadsToDeleteSharesCPChanged)).keySet());
+                for(Lead lead : leadsToDeleteSharesCPChanged){
+                    if(!partnerCompToGroupsMap.containsKey(oldLeadsMap.get(lead.Id).Partner_Company__c)) continue;
+                    for(Id groupId: partnerCompToGroupsMap.get(oldLeadsMap.get(lead.Id).Partner_Company__c)){
+                        groupIdsForDelete.add(groupId);
+                    }
+                }
+            }
+            system.debug('groupIdsForDelete: '+groupIdsForDelete);
+            system.debug('leadIds: '+leadIds);
+
+            List<LeadShare> leadSharesToDelete = [select Id, LeadId, UserOrGroupId from LeadShare where LeadId in: leadIds and UserOrGroupId in: groupIdsForDelete and RowCause = 'Manual'];
+            if(!leadSharesToDelete.isEmpty()) deleteShares(leadSharesToDelete, 'LeadShare');
+            system.debug('leadSharesToDelete: '+leadSharesToDelete);
+        }
+
+        //4
+        //create lead shares
+        if(!leadsToCreateSharesCPChanged.isEmpty()){
+            system.debug('leadsToCreateSharesCPChanged: '+leadsToCreateSharesCPChanged);
+
+            List<LeadShare> leadSharesToCreate = new List<LeadShare>();
+            for(Lead lead : leadsToCreateSharesCPChanged){
+                if(!partnerCompToGroupsMap.containsKey(lead.Partner_Company__c)) continue;
+                for(Id groupId: partnerCompToGroupsMap.get(lead.Partner_Company__c)){
+                    LeadShare newLeadShare = new LeadShare();
+                    newLeadShare.LeadId = lead.Id;
+                    newLeadShare.LeadAccessLevel = 'Edit';
+                    newLeadShare.UserOrGroupId = groupId;
+                    leadSharesToCreate.add(newLeadShare);
+                }
+            }
+            
+            if(leadSharesToCreate.isEmpty()) return;
+            createShares(leadSharesToCreate,'LeadShare');
+            system.debug('leadSharesToCreate: '+leadSharesToCreate);
+        }  
     }
 }

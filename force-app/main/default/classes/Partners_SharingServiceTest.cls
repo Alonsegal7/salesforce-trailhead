@@ -2,6 +2,8 @@
 public with sharing class Partners_SharingServiceTest {
 
     public static Id partnerOppRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
+    public static Id partnerLeadRT = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Partner_Lead').getRecordTypeId();
+
     @TestSetup
     static void makeData(){
         User partnerUser = TestObjectCreator.createValidPartnerUser();
@@ -17,6 +19,11 @@ public with sharing class Partners_SharingServiceTest {
         insert opp;
         opp.OwnerId = partnerUser.Id;
         update opp;
+        Lead l = TestObjectCreator.createLead();
+        l.RecordTypeId = partnerLeadRT;
+        insert l;
+        l.OwnerId = partnerUser.Id;
+        update l;
     }
     static testmethod void test1(){
         Id userId = [select OwnerId from Opportunity limit 1].OwnerId;
@@ -43,6 +50,12 @@ public with sharing class Partners_SharingServiceTest {
             insert opp;
         }
         System.assertNotEquals(0, accList.size());
+    }
+
+    static testmethod void checkLeadOwnerBecamePartner(){
+        Lead l = [select Id, OwnerId from Lead where RecordTypeId =: partnerLeadRT limit 1];
+        l.OwnerId = UserInfo.getUserId();
+        update l;
     }
 
     static testmethod void checkAccountOwnerIsNotPartner(){
