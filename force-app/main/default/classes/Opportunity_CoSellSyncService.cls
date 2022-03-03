@@ -58,6 +58,7 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
                 }
             }
             if(!oppsToSync_map.isEmpty()) syncMainOppsToSec(oppsToSync_map);
+            CoSellRequestService.updateSubscriptions(scope);
         } catch (Exception e) {
             Utilities.sendEmail('Error in Opportunity_CoSellSyncService execute: ',e.getMessage()+ ' ' + e.getStackTraceString(), new list<string>{'kseniasm@monday.com'});   
         }

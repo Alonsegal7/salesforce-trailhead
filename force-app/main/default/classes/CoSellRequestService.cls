@@ -57,8 +57,10 @@ public without sharing class CoSellRequestService {
     private static void getPartnerCompanyId(Co_Sell_Request__c newCoSellReq){
         if(newCoSellReq.Partner_Company__c == null){ //client finds the partner id for current opp only
             if(newCoSellReq.Type__c == 'Create' && newCoSellReq.Secondary_Opportunity_Owner__c != null){
-                newCoSellReq.Partner_Company__c = [select AccountId from User where Id =: newCoSellReq.Secondary_Opportunity_Owner__c].AccountId;
-                newCoSellReq.Partner_User__c = newCoSellReq.Secondary_Opportunity_Owner__c;
+                User partnerUser = [select Id, AccountId, ManagerId from User where Id =: newCoSellReq.Secondary_Opportunity_Owner__c];
+                newCoSellReq.Partner_Company__c = partnerUser.AccountId;
+                newCoSellReq.Partner_User__c = partnerUser.Id;
+                newCoSellReq.CPM__c = partnerUser.ManagerId;
             } else if(newCoSellReq.Type__c == 'Associate' && newCoSellReq.Secondary_Opportunity__c != null){
                 try{
                     Opportunity opp = [select OwnerId, Owner.AccountId from Opportunity where Owner.AccountId != null and (Id =: newCoSellReq.Secondary_Opportunity__c or Id =: newCoSellReq.Main_Opportunity__c) limit 1];
@@ -126,12 +128,16 @@ public without sharing class CoSellRequestService {
                 Opportunity tempOpp = new Opportunity(
                     Id = secOpp.Co_Sell_Opportunity__c,
                     Co_Sell_Opportunity__c = secOpp.Id,
-                    Main_Co_Sell_Opportunity__c = true
+                    Main_Co_Sell_Opportunity__c = true,
+                    Co_Sell_Reason__c = currReq.Reason__c
                 );
-                //cmt mapping from co-sell request to main opp
-                for(Co_sell_Request_to_Main_Opp_Mapping__mdt requestToMainOppCmt: requestToMainOppMapping_cmt){
-                    tempOpp.put(requestToMainOppCmt.Opp_Field_API_Name__c, currReq.get(requestToMainOppCmt.Req_Field_API_Name__c));
-                }
+
+                if(currReq.Reason__c == 'Professional Services Sales Expertise'){
+                    //cmt mapping from co-sell request to main opp
+                    for(Co_sell_Request_to_Main_Opp_Mapping__mdt requestToMainOppCmt: requestToMainOppMapping_cmt){
+                        tempOpp.put(requestToMainOppCmt.Opp_Field_API_Name__c, currReq.get(requestToMainOppCmt.Req_Field_API_Name__c));
+                    }
+                } 
                 oppsToUpdate.add(tempOpp);
                 // update co-sell req with secondary lookup
                 currReq.Secondary_Opportunity__c = secOpp.Id;
@@ -154,15 +160,19 @@ public without sharing class CoSellRequestService {
                 for(Co_sell_Main_to_Secondary_Opp_Mapping__mdt mainToSecCmt: Opportunity_CoSellSyncService.mainToSecOppMapping_cmt){
                     currSecOpp.put(mainToSecCmt.Field_API_Name__c, currMainOpp.get(mainToSecCmt.Field_API_Name__c));
                 }
-                //cmt mapping from co-sell request to main opp
-                for(Co_sell_Request_to_Main_Opp_Mapping__mdt requestToMainOppCmt: requestToMainOppMapping_cmt){
-                    currMainOpp.put(requestToMainOppCmt.Opp_Field_API_Name__c, associateReq.get(requestToMainOppCmt.Req_Field_API_Name__c));
+                if(associateReq.Reason__c == 'Professional Services Sales Expertise'){
+                    //cmt mapping from co-sell request to main opp
+                    for(Co_sell_Request_to_Main_Opp_Mapping__mdt requestToMainOppCmt: requestToMainOppMapping_cmt){
+                        currMainOpp.put(requestToMainOppCmt.Opp_Field_API_Name__c, associateReq.get(requestToMainOppCmt.Req_Field_API_Name__c));
+                    }
                 }
                 //co-sell fields on opp
                 currMainOpp.Co_Sell_Opportunity__c = currSecOpp.Id;
                 currMainOpp.Main_Co_Sell_Opportunity__c = true;
+                currMainOpp.Co_Sell_Reason__c = associateReq.Reason__c;
                 currSecOpp.Co_Sell_Opportunity__c = currMainOpp.Id;
                 currSecOpp.Main_Co_Sell_Opportunity__c = false;
+                currSecOpp.Co_Sell_Reason__c = associateReq.Reason__c;
                 oppsToUpdate.add(currMainOpp);
                 oppsToUpdate.add(currSecOpp);
                 secOppsIds.add(currSecOpp.Id);

@@ -65,6 +65,11 @@
                                                             <template if:true={soBadgeControl.main_published}>
                                                                 <lightning-badge label="Published SO" class="so-badge slds-float_right"> </lightning-badge>
                                                             </template>
+                                                            <template if:false={soBadgeControl.main_published}>
+                                                                <template if:true={soBadgeControl.main_approved}>
+                                                                    <lightning-badge label="Approved SO" class="so-badge slds-float_right"> </lightning-badge>
+                                                                </template>                                                            
+                                                            </template>
                                                         </template>
                                                     </lightning-layout-item>
                                                 </lightning-layout>
@@ -102,6 +107,11 @@
                                                         <lightning-badge label="Secondary Opportunity" class="slds-float_right slds-m-left_xx-small"> </lightning-badge>
                                                         <template if:true={soBadgeControl.sec_published}>
                                                             <lightning-badge label="Published SO" class="so-badge slds-float_right"> </lightning-badge>
+                                                        </template>
+                                                        <template if:false={soBadgeControl.sec_published}>
+                                                            <template if:true={soBadgeControl.sec_approved}>
+                                                                <lightning-badge label="Approved SO" class="so-badge slds-float_right"> </lightning-badge>
+                                                            </template>                                                        
                                                         </template>
                                                     </lightning-layout-item>
                                                 </lightning-layout>
@@ -148,7 +158,7 @@
                                         </lightning-layout-item>
                                     </template>
                                 </lightning-layout>
-                                <!-- PS fields - displayed only if reason is "Delivery - PS" -->
+                                <!-- PS fields - displayed only if reason is "Professional Services Sales Expertise" -->
                                 <template if:true={displayPsFields}>
                                     <lightning-layout multiple-rows>
                                         <template for:each={psFields} for:item="psField">
@@ -196,7 +206,7 @@
                 <template if:true={mainScreen}>
                     <lightning-button variant="neutral" label="Cancel" onclick={closeQuickAction} class="slds-m-left_x-small"></lightning-button>
                     <template if:false={customError}>
-                        <lightning-button variant="brand" type="submit" label="Save" onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Next" onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
                     </template>
                 </template>
                 <template if:true={submittedScreen}>

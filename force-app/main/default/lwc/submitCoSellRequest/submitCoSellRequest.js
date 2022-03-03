@@ -49,8 +49,8 @@ export default class SubmitCoSellRequest extends LightningElement {
 
     get options() {
         return [
-            { label: 'Create a co-sell opp opportunity', value: 'newopp' },
-            { label: 'Associate an existing opportinity as co-sell', value: 'existingopp' },
+            { label: 'Create a new Opportunity as Co-Sell', value: 'newopp' },
+            { label: 'Link an existing Opportunity as Co-Sell', value: 'existingopp' },
         ];
     }
 
@@ -82,9 +82,9 @@ export default class SubmitCoSellRequest extends LightningElement {
                 let qt = {};
                 qt.Id = syncedQuoteId;
                 qt.Is_Published__c = getFieldValue(data, SYNCED_QUOTE_PUBLISH);
-                qt.Status__c = getFieldValue(data, SYNCED_QUOTE_STATUS);
+                qt.DH_Quote_Status__c = getFieldValue(data, SYNCED_QUOTE_STATUS);
                 qt.CreatedDate = getFieldValue(data, SYNCED_QUOTE_DATE);;
-                if(qt.Status == 'Won') qt.isWon = true;
+                if(qt.DH_Quote_Status__c == 'Won' || qt.DH_Quote_Status__c == 'Approved') qt.isWon = true;
                 this.oppsSyncedQts_map[this.recordId] = qt;
                 console.log('wiredRecord qt: ' + JSON.stringify(qt));
                 console.log('wiredRecord allowSwitchMainSec: ' + this.allowSwitchMainSec);
@@ -101,7 +101,12 @@ export default class SubmitCoSellRequest extends LightningElement {
         this.cosellRequest.Monday_Account__c = this.accountId;
         this.cosellRequest.Assigned_Approver__c = this.managerId;
         this.cosellRequest.Partner_Company__c = this.partnerCompanyId;
-        if(this.partnerCompanyId) this.cosellRequest.Partner_User__c = this.oppOwnerId;
+        if(this.partnerCompanyId) {
+            this.cosellRequest.Partner_User__c = this.oppOwnerId;
+            this.cosellRequest.CPM__c = this.managerId;
+        } else {
+            this.cosellRequest.Sales_User__c = this.oppOwnerId;
+        }
         if(this.radioValue == 'newopp'){
             this.cosellRequest.Type__c = 'Create';
             this.cosellRequest.Main_Opportunity__c = this.recordId;
@@ -149,7 +154,7 @@ export default class SubmitCoSellRequest extends LightningElement {
         let fieldName = e.target.dataset.id;
         this.cosellRequest[fieldName] = fieldVal;
         if(fieldName == 'Reason__c'){ 
-            if(fieldVal == 'Delivery - PS') this.displayPsFields = true;
+            if(fieldVal == 'Professional Services Sales Expertise') this.displayPsFields = true;
             else this.displayPsFields = false;
         }
     }
@@ -219,11 +224,13 @@ export default class SubmitCoSellRequest extends LightningElement {
         let mainOppQt = this.oppsSyncedQts_map[this.mainOppId];
         let secOppQt = this.oppsSyncedQts_map[this.secondaryOppId];
         if(mainOppQt){
-            if(mainOppQt.Status__c == 'Won') this.soBadgeControl.main_signed = true;
+            if(mainOppQt.DH_Quote_Status__c == 'Won') this.soBadgeControl.main_signed = true;
             if(mainOppQt.Is_Published__c) this.soBadgeControl.main_published = true;
+            if(mainOppQt.DH_Quote_Status__c == 'Approved') this.soBadgeControl.main_approved = true;
         }
         if(secOppQt){
             if(secOppQt.Is_Published__c) this.soBadgeControl.sec_published = true;
+            if(secOppQt.DH_Quote_Status__c == 'Approved') this.soBadgeControl.sec_approved = true;
         }
         console.log('updateSoBadgeControl this.soBadgeControl : '+JSON.stringify(this.soBadgeControl));
     }
@@ -237,7 +244,7 @@ export default class SubmitCoSellRequest extends LightningElement {
             console.log('current opp does not have a won quote');
             if(selectedQt){ // if selected opp has a synced quote
                 console.log('selected opp has a synced quote');
-                if(selectedQt.DH_Quote_Status__c == 'Won') { // if selected opp has a won quote - switch forbidden. main should be the associated opp
+                if(selectedQt.DH_Quote_Status__c == 'Won' || selectedQt.DH_Quote_Status__c == 'Approved') { // if selected opp has a won quote - switch forbidden. main should be the associated opp
                     console.log('selected opp has a won quote - switch forbidden. main should be the associated opp');
                     this.allowSwitchMainSec = false;
                     this.mainOppId = selectedOppId;
@@ -300,6 +307,7 @@ export default class SubmitCoSellRequest extends LightningElement {
         let tempId = this.secondaryOppId;
         this.secondaryOppId = this.mainOppId;
         this.mainOppId = tempId;
+        this.updateSoBadgeControl();
         console.log('Switch Main Secondary this.mainOppId : '+this.mainOppId);
         console.log('Switch Main Secondary this.secondaryOppId : '+this.secondaryOppId);
     }
