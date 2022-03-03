@@ -36,8 +36,10 @@ public without sharing class CoSellRequestService {
     public static Map<String,Object> createNewCoSellRequest(Co_Sell_Request__c newCoSellReq){
         Map<String,Object> res = new Map<String,Object>();
         try {
-            getPartnerCompanyId(newCoSellReq);
-            getSecondaryOwnerIdAssociate(newCoSellReq);
+            Map<Id,Opportunity> oppsMap = new Map<Id,Opportunity>([select Id, OwnerId, RecordType.DeveloperName, Owner.Group__c, Owner.AccountId, Owner.ManagerId from Opportunity where Id =: newCoSellReq.Secondary_Opportunity__c or Id =: newCoSellReq.Main_Opportunity__c]);
+            getPartnerCompanyId(newCoSellReq,oppsMap);
+            getSecondaryOwnerIdAssociate(newCoSellReq,oppsMap);
+            getSalesUserId(newCoSellReq,oppsMap);
             Database.insert(newCoSellReq);
             updateOppsCoSellReq(newCoSellReq);
             submitCoSellReqForApproval(newCoSellReq.Id);
@@ -48,13 +50,19 @@ public without sharing class CoSellRequestService {
         }
     }
 
-    private static void getSecondaryOwnerIdAssociate(Co_Sell_Request__c newCoSellReq){
-        if(newCoSellReq.Type__c == 'Associate'){
-            newCoSellReq.Secondary_Opportunity_Owner__c = [select OwnerId from Opportunity where Id =: newCoSellReq.Secondary_Opportunity__c].OwnerId;
+    private static void getSalesUserId(Co_Sell_Request__c newCoSellReq, Map<Id,Opportunity> oppsMap){
+        if(newCoSellReq.Sales_User__c == null) {
+            newCoSellReq.Sales_User__c = oppsMap.get(newCoSellReq.Main_Opportunity__c).RecordType.DeveloperName == 'Internal_Opportunity' ? oppsMap.get(newCoSellReq.Main_Opportunity__c).OwnerId : newCoSellReq.Secondary_Opportunity_Owner__c;
         }
     }
 
-    private static void getPartnerCompanyId(Co_Sell_Request__c newCoSellReq){
+    private static void getSecondaryOwnerIdAssociate(Co_Sell_Request__c newCoSellReq, Map<Id,Opportunity> oppsMap){
+        if(newCoSellReq.Type__c == 'Associate'){
+            newCoSellReq.Secondary_Opportunity_Owner__c = oppsMap.get(newCoSellReq.Secondary_Opportunity__c).OwnerId;
+        }
+    }
+
+    private static void getPartnerCompanyId(Co_Sell_Request__c newCoSellReq, Map<Id,Opportunity> oppsMap){
         if(newCoSellReq.Partner_Company__c == null){ //client finds the partner id for current opp only
             if(newCoSellReq.Type__c == 'Create' && newCoSellReq.Secondary_Opportunity_Owner__c != null){
                 User partnerUser = [select Id, AccountId, ManagerId from User where Id =: newCoSellReq.Secondary_Opportunity_Owner__c];
@@ -63,9 +71,10 @@ public without sharing class CoSellRequestService {
                 newCoSellReq.CPM__c = partnerUser.ManagerId;
             } else if(newCoSellReq.Type__c == 'Associate' && newCoSellReq.Secondary_Opportunity__c != null){
                 try{
-                    Opportunity opp = [select OwnerId, Owner.AccountId from Opportunity where Owner.AccountId != null and (Id =: newCoSellReq.Secondary_Opportunity__c or Id =: newCoSellReq.Main_Opportunity__c) limit 1];
+                    Opportunity opp = oppsMap.get(newCoSellReq.Secondary_Opportunity__c);
                     newCoSellReq.Partner_Company__c = opp.Owner.AccountId;
                     newCoSellReq.Partner_User__c = opp.OwnerId;
+                    newCoSellReq.CPM__c = opp.Owner.ManagerId;
                 } catch (Exception e) {
                     throw new AuraHandledException('Partner Company not found.');
                 }
