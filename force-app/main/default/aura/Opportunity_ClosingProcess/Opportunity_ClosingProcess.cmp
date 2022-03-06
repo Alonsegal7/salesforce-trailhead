@@ -29,9 +29,6 @@
     <aura:attribute name="selectCheckbox" type="Boolean" default="false"/>
     <aura:attribute name="wonCompletedSuccess" type="Boolean" default="false"/>
     <aura:attribute name="checkARR" type="boolean" default="false"/>
-    <aura:attribute name="showAmHandover" type="boolean" default="false"/>
-    <aura:attribute name="showCSMHandover" type="boolean" default="false"/>
-    <aura:attribute name="showOBHandover" type="boolean" default="false"/>
     <aura:attribute name="greenBucketData" type="Opportunity" default=""/>
 
     <!--Field Sets attributes-->

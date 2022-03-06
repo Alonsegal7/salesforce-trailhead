@@ -202,12 +202,6 @@ public without sharing class Opportunity_ClosingProcess {
     }
 
     @AuraEnabled
-    public static Boolean checkIfPassedHandoverThreshold(Id recordId, String thresholdType){
-        System.debug('Entered checkIfPassedHandoverThreshold');
-        return Handover_ThresholdMapping.checkIfOppPassedThreshold(recordId, thresholdType);
-    }
-
-    @AuraEnabled
     public static void updateCompanySize(Id recordId){
         System.debug('Entered updateCompanySize');
         Opportunity oppRecord = [SELECT Id, Company__c, Company_Employees__c, Company_Size__c FROM Opportunity WHERE Id =:recordId];

@@ -24,21 +24,6 @@
 				type : "String",
 				value : component.get("v.recordId")
 			},
-			{
-				name : "showAmHandover",
-				type : "Boolean",
-				value : component.get("v.showAmHandover")
-			},
-			{
-				name : "showCsmHandover",
-				type : "Boolean",
-				value : component.get("v.showCSMHandover")
-			},
-			{
-				name : "showObHandover",
-				type : "Boolean",
-				value : component.get("v.showOBHandover")
-			},
 		];
 		flow.startFlow("Opportunity_Handover_Flow_Refactored", inputVariables);
 	},
@@ -91,84 +76,6 @@
 		}
 	},
 
-	checkHandover_InternalOppAM : function(component, event, helper){
-		var oppId = component.get("v.recordId");
-		console.log('entered checkHandover_InternalOppAM. OppId: '+oppId);
-		let actionCheckPassAm = component.get("c.checkIfPassedHandoverThreshold");
-		actionCheckPassAm.setParams({
-			recordId: oppId,
-			thresholdType: "AM"
-		});
-		actionCheckPassAm.setCallback(this, function(response){
-			let state = response.getState();
-			console.log('entered checkifpass AM response');
-			if(state==="SUCCESS"){
-				console.log('entered checkifpass AM: '+response.getReturnValue());					
-				if(response.getReturnValue()) {
-					component.set("v.showHandover", true);
-					component.set("v.showAmHandover", true);
-					console.log('entered set showHandover and showAmHandover to true');
-				}
-			} else {
-				console.log('entered checkifpass error');
-				alert("error");
-			}
-		});
-		$A.enqueueAction(actionCheckPassAm);
-	},
-
-	checkHandover_InternalOppCSM : function(component, event, helper){
-		var oppId = component.get("v.recordId");
-		console.log('entered checkHandover_InternalOppCSM. OppId: '+oppId);
-		let actionCheckPassCSM = component.get("c.checkIfPassedHandoverThreshold");
-		actionCheckPassCSM.setParams({
-			recordId: oppId,
-			thresholdType: "CSM"
-		});
-		actionCheckPassCSM.setCallback(this, function(response){
-			let state = response.getState();
-			console.log('entered checkifpass CSM response');
-			if(state==="SUCCESS"){
-				console.log('entered checkifpass: '+response.getReturnValue());					
-				if(response.getReturnValue()) {
-					component.set("v.showHandover", true);
-					component.set("v.showCSMHandover", true);
-					console.log('entered set showHandover and showCSMHandover to true');
-				}
-			} else {
-				console.log('entered checkifpass error');
-				alert("error");
-			}
-		});
-		$A.enqueueAction(actionCheckPassCSM);
-	},
-
-	checkHandover_InternalOppOB : function(component, event, helper){
-		var oppId = component.get("v.recordId");
-		console.log('entered checkHandover_InternalOppOB. OppId: '+oppId);
-		let actionCheckPassOB = component.get("c.checkIfPassedHandoverThreshold");
-		actionCheckPassOB.setParams({
-			recordId: oppId,
-			thresholdType: "Onboarding"
-		});
-		actionCheckPassOB.setCallback(this, function(response){
-			let state = response.getState();
-			console.log('entered checkifpass OB response');
-			if(state==="SUCCESS"){
-				console.log('entered checkifpass: '+response.getReturnValue());					
-				if(response.getReturnValue()) {
-					component.set("v.showHandover", true);
-					component.set("v.showOBHandover", true);
-					console.log('entered set showHandover and showOBHandover to true');					
-				}
-			} else {
-				console.log('entered checkifpass error');
-				alert("error");
-			}
-		});
-		$A.enqueueAction(actionCheckPassOB);
-	},
-
 	recalcHandoverThreshold : function(component, event, helper){
 		var oppId = component.get("v.recordId");
 		console.log('entered recalcHandoverThreshold. OppId: '+oppId);
@@ -180,12 +87,9 @@
 			let state = response.getState();
 			console.log('entered checkifpass AM response');
 			if(state==="SUCCESS"){
-				console.log('entered recalcAction and got success ');
-				// helper.checkHandover_InternalOppAM(component, event, helper);
-				// helper.checkHandover_InternalOppCSM(component, event, helper);					
-				// helper.checkHandover_InternalOppOB(component, event, helper);					
+				console.log('entered recalcAction and got success ');				
 			} else {
-				console.log('entered checkifpass error');
+				console.log('entered recalcAction error');
 				alert("error");
 			}
 		});
@@ -196,7 +100,6 @@
 	Order of actions, each action is called after a response is recieved from the last action: 
 	1. [updateCompanySize] company size alignment between oppty and company (in case the size was changes)
 	2. [recalcHandoverThreshold] will check again which handover threshold match this oppty
-	3. [checkHandover_InternalOppAM] will check if the oppty passed th AM threshold, same will run for CSM and Onboarding threshold
 	*/
 	updateCompanySize : function(component, event, helper){
 		var oppId = component.get("v.recordId");

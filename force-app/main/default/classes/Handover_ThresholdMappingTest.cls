@@ -186,13 +186,13 @@ public with sharing class Handover_ThresholdMappingTest {
         opp.StageName = 'Buying process';
         update opp;
         
-        opp = [SELECT Id, StageName, HO_Threshold_AM__c, HO_Threshold_CSM__c, HO_Threshold_Onboarding__c FROM Opportunity WHERE Name = 'test1' LIMIT 1];
+        opp = [SELECT Id, StageName, Passed_AM_Threshold__c, Passed_CSM_Threshold__c, Passed_Onboarding_Threshold__c FROM Opportunity WHERE Name = 'test1' LIMIT 1];
         
         Test.startTest();
         
-        Boolean hasPassedAM = Handover_ThresholdMapping.checkIfOppPassedThreshold(opp.Id, 'AM');
-        Boolean hasPassedCSM = Handover_ThresholdMapping.checkIfOppPassedThreshold(opp.Id, 'CSM');
-        Boolean hasPassedOB = Handover_ThresholdMapping.checkIfOppPassedThreshold(opp.Id, 'Onboarding');
+        Boolean hasPassedAM = opp.Passed_AM_Threshold__c;
+        Boolean hasPassedCSM = opp.Passed_CSM_Threshold__c;
+        Boolean hasPassedOB = opp.Passed_Onboarding_Threshold__c;
         
         Test.stopTest();
 
