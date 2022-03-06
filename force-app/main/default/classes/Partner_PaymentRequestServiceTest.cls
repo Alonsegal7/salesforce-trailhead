@@ -115,10 +115,11 @@ public without sharing class Partner_PaymentRequestServiceTest {
             insert prList;
             Partner_PaymentRequestService.getAllPaymentRequests();
             Partner_PaymentRequestService.getMonthsPicklist();
-            Partner_PaymentRequestService.getData(Date.today().addMonths(1).toStartOfMonth(), null);
+            User u = Partner_PaymentRequestService.getCurrUser();
+            Partner_PaymentRequestService.getData(Date.today().addMonths(1).toStartOfMonth(), null, u);
             Partner_PaymentRequestService.deleteOldFiles(prList.get(0).Id);
-            Partner_PaymentRequestService.updatePaymentRequest(prList.get(0).Id, 300, 200, null, 'USD', '1000', Date.today());
-            Partner_PaymentRequestService.submitForApproval(prList.get(0).Id, 300, 200, null, 'USD', '1000', Date.today());
+            Partner_PaymentRequestService.updatePaymentRequest(prList.get(0).Id, 300, null, 200, null, 'USD', '1000', Date.today());
+            Partner_PaymentRequestService.submitForApproval(prList.get(0).Id, 300, null, 200, null, 'USD', '1000', Date.today());
             Test.stopTest();
         }
     }

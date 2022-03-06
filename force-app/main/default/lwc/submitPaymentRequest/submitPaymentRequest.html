@@ -1,4 +1,5 @@
 <template>
+    <!-- CARD WITH BUTTONS-->
     <lightning-card if:true={cardTitle} title={cardTitle} icon-name={headerIconName}>
         <template if:true={allowSubmit}>
             <lightning-button label={submitButtonLabel} onclick={openModal} slot="actions" class="slds-m-left_x-small"></lightning-button>
@@ -15,13 +16,17 @@
         <div class="slds-container_small">
             <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" data-id="submitmodal">
                 <div class="slds-modal__container">
+                    <!-- MODAL - HEADER TITLE -->
                     <header class="slds-modal__header">
                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{modalTitle}</h2>
                     </header>
+                    <!-- MODAL - CONTENT -->
                     <div class="slds-modal__content slds-p-around_large modalBody" id="modal-content-id-1">
+                        <!-- MODAL - SPINNER -->
                         <template if:true={isLoading}>
                             <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
                         </template>
+                        <!-- MODAL - MONTHS SCREEN -->
                         <template if:true={monthScreen}>
                             <template if:true={monthsList}>
                                 <div style="height: 300px">
@@ -36,7 +41,8 @@
                                 </div>
                             </template>
                         </template>
-                        <template if:true={data}>
+                        <template if:true={displayedCollections}>
+                            <!-- MODAL - COMMISSION DATA SCREEN -->
                             <template if:true={dataScreen}>
                                 <div class="slds-m-bottom_medium">
                                     <div class="c-container">
@@ -57,7 +63,7 @@
                                                                     </dt>
                                                                     <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                                                         <p class="slds-truncate">
-                                                                            <lightning-formatted-number value={monthlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                                                            <lightning-formatted-number value={commissionData.monthlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
                                                                         </p>
                                                                     </dd>
                                                                     <dt class="slds-dl_horizontal__label" style="width: 70%;">
@@ -65,7 +71,7 @@
                                                                     </dt>
                                                                     <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                                                         <p class="slds-truncate">
-                                                                            <lightning-formatted-number value={yearlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                                                            <lightning-formatted-number value={commissionData.yearlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
                                                                         </p>
                                                                     </dd>
                                                                     <dt class="slds-dl_horizontal__label" style="width: 70%;">
@@ -73,7 +79,7 @@
                                                                     </dt>
                                                                     <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                                                         <p class="slds-truncate">
-                                                                            <lightning-formatted-number value={twoYearlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                                                            <lightning-formatted-number value={commissionData.twoYearlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
                                                                         </p>
                                                                     </dd>
                                                                 </dl>
@@ -86,7 +92,7 @@
                                                                         </dt>
                                                                         <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                                                             <p class="slds-truncate slds-text-title_bold">
-                                                                                <lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                                                                <lightning-formatted-number value={commissionData.totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
                                                                             </p>
                                                                         </dd>
                                                                     </dl>
@@ -110,7 +116,7 @@
                                                                 </dt>
                                                                 <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                                                     <p class="slds-truncate">
-                                                                        <lightning-formatted-number value={inboundPercent} format-style="percent"></lightning-formatted-number>
+                                                                        <lightning-formatted-number value={commissionData.inboundPercent} format-style="percent"></lightning-formatted-number>
                                                                     </p>
                                                                 </dd>
                                                                 <dt class="slds-dl_horizontal__label" style="width: 70%;">
@@ -118,7 +124,7 @@
                                                                 </dt>
                                                                 <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                                                     <p class="slds-truncate">
-                                                                        <lightning-formatted-number value={outboundPercent} format-style="percent"></lightning-formatted-number>
+                                                                        <lightning-formatted-number value={commissionData.outboundPercent} format-style="percent"></lightning-formatted-number>
                                                                     </p>
                                                                 </dd>
                                                             </dl>
@@ -153,7 +159,7 @@
                                     </lightning-layout>
                                     <div class="slds-m-top_x-small slds-m-top_x-small slds-border_bottom"></div>
                                     <lightning-datatable
-                                        data={data}
+                                        data={displayedCollections}
                                         columns={columns}
                                         hide-checkbox-column
                                         key-field="Id"
@@ -180,6 +186,7 @@
                                     </lightning-layout>
                                 </div>
                             </template>
+                            <!-- MODAL - MDF SPIFF AND FILES SCREEN -->
                             <template if:true={filesScreen}>
                                 <lightning-layout>
                                     <lightning-layout-item size="4">
@@ -203,12 +210,29 @@
                                         <lightning-input type="date" value={invoiceDate} label="Invoice Date" onchange={handleInvoiceDateChange} required></lightning-input>
                                     </lightning-layout-item>
                                 </lightning-layout>
-                                <c-file-upload-improved onsendversids={handleSendVersIds} uploadedlabel={invoiceFileUploadLabel} accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={newPaymentRequestId} record-id={newPaymentRequestId} required community></c-file-upload-improved>
+                                <c-file-upload-improved onsendversids={handleSendVersIds} uploadedlabel={invoiceFileUploadLabel} accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={commissionData.paymentReqId} record-id={commissionData.paymentReqId} required-message="Commission invoice file is missing." prevent-session-storage required community></c-file-upload-improved>                                
+                                <!-- MODAL - CUSTOM INVOICE MISSING ERROR -->
+                                <template if:true={customInvoiceFilesError}>
+                                    <div class="slds-var-m-vertical_small">
+                                        <span class="slds-text-heading_small slds-text-color_destructive">{customInvoiceFilesError}</span>
+                                    </div>
+                                </template>
                                 <div class="slds-m-top_x-small slds-border_bottom"></div>
+                                <template if:true={mdfFound}>
+                                    <lightning-dual-listbox name="mdfoptions"
+                                    label="Select Marketing Activities"
+                                    source-label="Available"
+                                    selected-label="Selected"
+                                    field-level-help="Select Marketing Activities"
+                                    options={mdfOptions}
+                                    value={selectedMDFs}
+                                    onchange={handleMDFChange}
+                                    disable-reordering ></lightning-dual-listbox>
+                                </template>
                                 <lightning-layout>
                                     <lightning-layout-item size="6">
                                         <div class="slds-p-right_medium">
-                                            <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={mdfAmount} step="0.01" onchange={handleMdfAmountChange}></lightning-input>
+                                            <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={mdfAmount} step="0.01" disabled></lightning-input>
                                         </div>
                                     </lightning-layout-item>
                                     <lightning-layout-item size="6">
@@ -216,12 +240,19 @@
                                     </lightning-layout-item>
                                 </lightning-layout>
                                 <template if:true={showUploadMdfFiles}>
-                                    <c-file-upload-improved uploadedlabel={mdfFileUploadLabel} allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={fileKeyMdf} record-id={newPaymentRequestId} community></c-file-upload-improved>
+                                    <c-file-upload-improved uploadedlabel={mdfFileUploadLabel} allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={fileKeyMdf} record-id={commissionData.paymentReqId} min-required={mdfNumRequiredFiles} required-message="You didn't upload a file for each selected Marketing Activity. # of uploaded MDF relevant files must be equal to # of selected Marketing Activities. " prevent-session-storage community required></c-file-upload-improved>
+                                    <!-- MODAL - CUSTOM MDF MISSING ERROR -->
+                                    <template if:true={customMdfFilesError}>
+                                        <div class="slds-var-m-vertical_small">
+                                            <span class="slds-text-heading_small slds-text-color_destructive">{customMdfFilesError}</span>
+                                        </div>
+                                    </template>
                                 </template>                                
                                 <div class="slds-m-top_x-small slds-border_bottom"></div>
                                 <p class="slds-p-top_medium">By Submitting the request you confirm that your commission invoice matches the numbers populated in monday.com’s commission report. Any issues with specific deal not appearing in the report should be reported <a href="https://forms.monday.com/forms/746a664544adda5a98de077b7b99d4bd?r=use1" target="_blank">here</a>.</br>Please note, changes will be reconciled in the following month’s commission report.</br>Our commission payment terms are net 45.</p>                              
                                 <p class="slds-p-top_medium">If you don't have the invoice prepared yet, please click on Save As Draft and come back later to upload the invoice and submit.</p>
                             </template>
+                            <!-- MODAL - SUBMITTED SCREEN -->
                             <template if:true={submittedScreen}>
                                 <p class="slds-text-color_success slds-align_absolute-center">{submittedScreenTitle}</p>
                                 <template if:false={recordId}>
@@ -236,6 +267,7 @@
                                 </template>
                             </template>
                         </template>
+                        <!-- MODAL - CUSTOM ERROR -->
                         <template if:true={customError}>
                             <div class="slds-var-m-vertical_small">
                                 <span class="slds-text-heading_small slds-text-color_destructive">{customError}</span>
@@ -248,6 +280,7 @@
                         </template>
                         
                     </div>
+                    <!-- MODAL - FOTTER BUTTONS & ERROR -->
                     <footer class="slds-modal__footer">
                         <template if:true={error}>
                             <c-error-panel errors={error}></c-error-panel>

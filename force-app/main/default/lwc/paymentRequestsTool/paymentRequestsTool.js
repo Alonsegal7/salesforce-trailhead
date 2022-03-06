@@ -17,36 +17,36 @@ export default class PaymentRequestsTool extends LightningElement {
         this.wiredPaymentRequestsResult = result;
         if (result.data) {
             console.log('wiredPaymentRequests: '+JSON.stringify(result.data));
-            console.log('result.data.isPartnerUser_lwc: '+result.data.isPartnerUser_lwc);
-            if(result.data.isPartnerUser_lwc){
+            console.log('result.data.isPartnerUser: '+result.data.isPartnerUser);
+            if(result.data.isPartnerUser){
                 this.urlPrefix = '/partners/s/';
                 this.urlSuffix = '';
             } else {
                 this.urlPrefix = '/lightning/r/';
                 this.urlSuffix = '/view';
             }
-            if(result.data.draftPaymentReqList_lwc.length > 0){
-                this.draftPaymentReqs = result.data.draftPaymentReqList_lwc.map((item) => ({
+            if(result.data.draftPaymentReqList.length > 0){
+                this.draftPaymentReqs = result.data.draftPaymentReqList.map((item) => ({
                     ...item,
                     PaymentRequestLink: this.urlPrefix + 'detail/' + item.Id + this.urlSuffix,
                     CreatedDateFormatted: this.getShortDate(item.CreatedDate)
                 }));
             }
-            if(result.data.rejectedPaymentReqList_lwc.length > 0){
-                this.rejectedPaymentReqs = result.data.rejectedPaymentReqList_lwc.map((item) => ({
+            if(result.data.rejectedPaymentReqList.length > 0){
+                this.rejectedPaymentReqs = result.data.rejectedPaymentReqList.map((item) => ({
                     ...item,
                     PaymentRequestLink: this.urlPrefix + 'detail/' + item.Id + this.urlSuffix
                 }));
             }
-            if(result.data.submittedPaymentReqList_lwc.length > 0){
-                this.submittedPaymentReqs = result.data.submittedPaymentReqList_lwc.map((item) => ({
+            if(result.data.submittedPaymentReqList.length > 0){
+                this.submittedPaymentReqs = result.data.submittedPaymentReqList.map((item) => ({
                     ...item,
                     PaymentRequestLink: this.urlPrefix + 'detail/' + item.Id + this.urlSuffix,
                     SubmittedDateFormatted: this.getShortDate(item.Pending_CPM_Review_Timestamp__c)
                 }));
             }
-            if(result.data.paidPaymentReqList_lwc.length > 0){
-                this.paidPaymentReqs = result.data.paidPaymentReqList_lwc.map((item) => ({
+            if(result.data.paidPaymentReqList.length > 0){
+                this.paidPaymentReqs = result.data.paidPaymentReqList.map((item) => ({
                     ...item,
                     PaymentRequestLink: this.urlPrefix + 'detail/' + item.Id + this.urlSuffix
                 }));

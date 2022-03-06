@@ -17,11 +17,13 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
     @api label;
     @api recordId;
     @api required;
+    @api minRequired = 1;
     @api requiredMessage;
     @api sessionKey;
     @api uploadedFileNames;
     @api uploadedlabel;
     @api uploadedLabel; // deprecated
+    @api preventSessionStorage = false;
     
     @track docIds =[];
     @track fileNames = [];
@@ -44,18 +46,20 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
     @wire(encrypt,{recordId: '$recordId', encodedKey: '$key.data'}) value;
 
     connectedCallback(){
-        let cachedSelection = sessionStorage.getItem(this.sessionKey);
-        if(cachedSelection){
-            this.objFiles = JSON.parse(cachedSelection);
-
-            this.objFiles.forEach((file) => {
-                this.docIds.push(file.id);
-                this.versIds.push(file.versid);
-                this.fileNames.push(file.name);
-            });
-            
-            this.communicateEvent(this.docIds,this.versIds,this.fileNames,this.objFiles);
-        }
+        //if(!this.preventSessionStorage){
+            let cachedSelection = sessionStorage.getItem(this.sessionKey);
+            if(cachedSelection){
+                this.objFiles = JSON.parse(cachedSelection);
+    
+                this.objFiles.forEach((file) => {
+                    this.docIds.push(file.id);
+                    this.versIds.push(file.versid);
+                    this.fileNames.push(file.name);
+                });
+                
+                this.communicateEvent(this.docIds,this.versIds,this.fileNames,this.objFiles);
+            }
+        //}
     }
     
     handleUploadFinished(event) {
@@ -169,7 +173,7 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
 
     @api
     validate(){
-        if(this.docIds.length === 0 && this.required === true){ 
+        if(this.docIds.length < this.minRequired && this.required === true){ 
             var errorMessage;
             if(this.requiredMessage == null){
                 errorMessage = 'Upload at least one file.';
@@ -185,5 +189,15 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
         else {
             return { isValid: true };
         }
+    }
+
+    @api
+    clearSessionStorage(){
+        sessionStorage.clear();
+    }
+
+    @api
+    getLabel(){
+        return this.uploadedlabel;
     }
 }
