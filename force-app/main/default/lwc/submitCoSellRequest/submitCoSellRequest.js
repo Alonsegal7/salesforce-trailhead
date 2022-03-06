@@ -307,7 +307,7 @@ export default class SubmitCoSellRequest extends LightningElement {
         let tempId = this.secondaryOppId;
         this.secondaryOppId = this.mainOppId;
         this.mainOppId = tempId;
-        //this.updateSoBadgeControl();
+        this.updateSoBadgeControl();
         console.log('Switch Main Secondary this.mainOppId : '+this.mainOppId);
         console.log('Switch Main Secondary this.secondaryOppId : '+this.secondaryOppId);
     }
