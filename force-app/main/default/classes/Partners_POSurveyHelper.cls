@@ -56,12 +56,8 @@ public without sharing class Partners_POSurveyHelper {
             debugString += '<br/><br/> account: <a href="https://monday.lightning.force.com/lightning/r/Account/'+acc.Id+'/view">'+acc.Name+'</a>';
             if(acc.Opportunities.size() == 1){ //no prev opp - new business - always send survey
                 currOpp = acc.Opportunities[0];
-                accountsToUpdate.add(new Account(
-                    Id = acc.Id,
-                    Last_PO_Survey_Opportunity__c = String.valueOf(currOpp.Id),
-                    Next_PO_Survey_Date__c = currOpp.CloseDate.addDays(90)
-                ));
-                debugString += '<br/> Result: account has no relevant prev opps for comparison - good for survey!';
+                addAccountForUpdate(accountsToUpdate, currOpp, acc.Id);
+                debugString += '<br/> Result: account has one opp only - good for survey!';
                 continue;
             }
             //start from oldest opp looking for opps that participate in scope list
@@ -73,30 +69,36 @@ public without sharing class Partners_POSurveyHelper {
                 if(i>0) {
                     prevOpp = acc.Opportunities[i-1];
                 } else {
+                    addAccountForUpdate(accountsToUpdate, currOpp, acc.Id);
                     debugString += '<br/> Result: account has no relevant prev opps for comparison - good for survey!';
-                    continue;
+                    break;
                 }
                 //prevprev opp
                 if(i>1) prev2Opp = acc.Opportunities[i-2];
                 //compare to prev opps
                 if(comparePrevOpps(currOpp, prevOpp, prev2Opp)){
-                    accountsToUpdate.add(new Account(
-                        Id = acc.Id,
-                        Last_PO_Survey_Opportunity__c = String.valueOf(currOpp.Id),
-                        Next_PO_Survey_Date__c = currOpp.CloseDate.addDays(90)
-                    ));
+                    addAccountForUpdate(accountsToUpdate, currOpp, acc.Id);
                     break;
                 }
             }
         }
+        system.debug('accountsToUpdate: ' + accountsToUpdate);
         if(accountsToUpdate.isEmpty()) {
             debugString += '<br/> <b>NO MATCHING ACCOUNTS LEFT. exiting...</b>';
-        } else if(!dryRun){
+        } else if(!dryRun){ 
             Database.update(accountsToUpdate);
             Map<Id,Account> accMap = new Map<Id,Account>(accountsToUpdate);
             res.addAll(accMap.keySet());
         }
         return debugString;
+    }
+
+    private void addAccountForUpdate(List<Account> accountsToUpdate, Opportunity currOpp, Id accId){
+        accountsToUpdate.add(new Account(
+            Id = accId,
+            Last_PO_Survey_Opportunity__c = String.valueOf(currOpp.Id),
+            Next_PO_Survey_Date__c = currOpp.CloseDate.addDays(90)
+        ));
     }
 
     private void debugOppsPassEntry(){
