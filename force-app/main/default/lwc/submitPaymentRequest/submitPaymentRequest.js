@@ -242,19 +242,9 @@ export default class SubmitPaymentRequest extends LightningElement {
             if(result.status == 'success'){
                 this.paymentRequestLink = this.urlPrefix + 'detail/' + result.paymentReqId + this.urlSuffix;
                 console.log('Payment Request Id: ' + this.commissionData.paymentReqId);
-                //datatable setup
-                this._allData = result.collectionsList.map((item) => ({
-                    ...item,
-                    MondayAccountName: item.Monday_Account__r.Name,
-                    MondayAccountURL: this.urlPrefix + 'account/' + item.Monday_Account__r.Id + this.urlSuffix,
-                    PartnerCompanyName: item.Partner_Company__r.Name,
-                    PartnerCompanyURL: this.urlPrefix + item.Partner_Company__r.Id + this.urlSuffix
-                }));
-                this.totalRecountCount = this._allData.length; 
-                this.totalPage = Math.ceil(this.totalRecountCount / this.pageSize); 
-                this.filteredData = this._allData;
-                this.displayedCollections = this._allData.slice(0,this.pageSize); 
-                this.endingRecord = this.pageSize;
+                if(this.commissionData.collectionsList.length > 0){
+                    this.datatableSetup();
+                }
                 if(!this.viewBreakdownMode){
                     this.showCancelButton = false;
                     this.monthScreen = false;
@@ -273,6 +263,21 @@ export default class SubmitPaymentRequest extends LightningElement {
             this.error = error;
             this.isLoading = false;
         });
+    }
+
+    datatableSetup(){
+        this._allData = this.commissionData.collectionsList.map((item) => ({
+            ...item,
+            MondayAccountName: item.Monday_Account__r.Name,
+            MondayAccountURL: this.urlPrefix + 'account/' + item.Monday_Account__r.Id + this.urlSuffix,
+            PartnerCompanyName: item.Partner_Company__r.Name,
+            PartnerCompanyURL: this.urlPrefix + item.Partner_Company__r.Id + this.urlSuffix
+        }));
+        this.totalRecountCount = this._allData.length; 
+        this.totalPage = Math.ceil(this.totalRecountCount / this.pageSize); 
+        this.filteredData = this._allData;
+        this.displayedCollections = this._allData.slice(0,this.pageSize); 
+        this.endingRecord = this.pageSize;
     }
 
     handleMDFChange(e){
@@ -298,7 +303,7 @@ export default class SubmitPaymentRequest extends LightningElement {
     loadFilesScreen(){
         this.error = undefined;
         this.customError = undefined;
-        this.invoiceFileUploadLabel = 'In order to get the payment for ' + this.selectedMonth + ' commission, please update your invoice here:';
+        this.invoiceFileUploadLabel = 'In order to get the payment for ' + this.selectedMonth + ' please upload your invoice here:';
         this.isLoading = true;
         getMdfOptions({
             partnerCompanyId: this.currUserObj['AccountId'],
@@ -332,7 +337,7 @@ export default class SubmitPaymentRequest extends LightningElement {
             } else { //running from first time submitting the payment request 
                 if(this.runningFromHomepage && this.filesScreenFirstRun) {
                     this.filesScreenFirstRun = false;
-                    //this.mdfAmount = 0;
+                    if(this.selectedMDFs == undefined || this.selectedMDFs.length == 0) this.mdfAmount = 0;
                     this.spiffAmount = 0;
                 }
                 this.dataScreen = false;
@@ -546,6 +551,8 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.submittedScreen = false;
         this.cancelBtnLabel = 'Cancel';
         this.mdfAmount = 0;
+        this.mdfFound = false;
+        this.showUploadMdfFiles = false;
         this.spiffAmount = 0;
         localStorage.clear();
         if(this.viewBreakdownMode || this.monthScreen){

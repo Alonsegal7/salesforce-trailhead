@@ -110,6 +110,15 @@ public without sharing class Partner_PaymentRequestServiceTest {
         prList.add(pr2);
         prList.add(pr3);
         prList.add(pr4);
+        Partner_Marketing_Activity__c pma = new Partner_Marketing_Activity__c(
+            Name = 'Test',
+            Channel_Partner__c = partnerUser.Contact.AccountId,
+            Activity_Date__c = Date.today().addMonths(-1),
+            MDF_Requested_Amount__c = 1000
+        );
+        insert pma;
+        pma.CPM_Approval_Status__c = 'Approved';
+        update pma;
         system.runAs(partnerUser){
             Test.startTest();
             insert prList;
@@ -120,6 +129,7 @@ public without sharing class Partner_PaymentRequestServiceTest {
             Partner_PaymentRequestService.deleteOldFiles(prList.get(0).Id);
             Partner_PaymentRequestService.updatePaymentRequest(prList.get(0).Id, 300, null, 200, null, 'USD', '1000', Date.today());
             Partner_PaymentRequestService.submitForApproval(prList.get(0).Id, 300, null, 200, null, 'USD', '1000', Date.today());
+            Partner_PaymentRequestService.getMdfOptions(partnerUser.Contact.AccountId, prList.get(0).Id, Date.today());
             Test.stopTest();
         }
     }

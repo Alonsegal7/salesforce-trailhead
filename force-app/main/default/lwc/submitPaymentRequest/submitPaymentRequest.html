@@ -41,101 +41,101 @@
                                 </div>
                             </template>
                         </template>
-                        <template if:true={displayedCollections}>
-                            <!-- MODAL - COMMISSION DATA SCREEN -->
-                            <template if:true={dataScreen}>
-                                <div class="slds-m-bottom_medium">
-                                    <div class="c-container">
-                                        <lightning-layout>
-                                            <lightning-layout-item size="7">
-                                                <div class="slds-p-right_medium">
-                                                    <div class="custom-box slds-box slds-p-around_medium">
-                                                        <p class="slds-text-heading_small">
-                                                            <lightning-icon class="slds-m-right_small" icon-name="custom:custom17" alternative-text="Your Commission Details" title="Your Commission Details"></lightning-icon>
-                                                            Your Commission Details for {selectedMonth}
-                                                        </p>
-                                                        <div class="slds-m-top_x-small slds-m-top_x-small slds-border_bottom"></div>
-                                                        <div class="slds-m-top_medium">
-                                                            <lightning-tile>
-                                                                <dl class="slds-dl_horizontal">
-                                                                    <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                                                        <p class="slds-truncate">Commission Amount for Monthly Deals:</p>
-                                                                    </dt>
-                                                                    <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
-                                                                        <p class="slds-truncate">
-                                                                            <lightning-formatted-number value={commissionData.monthlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
-                                                                        </p>
-                                                                    </dd>
-                                                                    <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                                                        <p class="slds-truncate">Commission Amount for Yearly Deals:</p>
-                                                                    </dt>
-                                                                    <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
-                                                                        <p class="slds-truncate">
-                                                                            <lightning-formatted-number value={commissionData.yearlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
-                                                                        </p>
-                                                                    </dd>
-                                                                    <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                                                        <p class="slds-truncate">Commission Amount for Two Yearly Deals:</p>
-                                                                    </dt>
-                                                                    <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
-                                                                        <p class="slds-truncate">
-                                                                            <lightning-formatted-number value={commissionData.twoYearlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
-                                                                        </p>
-                                                                    </dd>
-                                                                </dl>
-                                                            </lightning-tile>
-                                                            <div class="slds-m-top_medium ">
-                                                                <lightning-tile>
-                                                                    <dl class="slds-dl_horizontal">
-                                                                        <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                                                            <p class="slds-truncate slds-text-title_bold">Total Commission Amount:</p>
-                                                                        </dt>
-                                                                        <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
-                                                                            <p class="slds-truncate slds-text-title_bold">
-                                                                                <lightning-formatted-number value={commissionData.totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
-                                                                            </p>
-                                                                        </dd>
-                                                                    </dl>
-                                                                </lightning-tile>
-                                                            </div> 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </lightning-layout-item>
-                                            <lightning-layout-item size="5">
-                                                <div class="custom-box slds-box slds-p-around_medium" style="height: 100%;" >
-                                                    <p class="slds-text-heading_small"><lightning-icon  class="slds-m-right_small" icon-name="standard:promotions" alternative-text="Your Commission Model" title="Your Commission Model"></lightning-icon>
-                                                        Your Commission Model
+                        <!-- MODAL - COMMISSION DATA SCREEN -->
+                        <template if:true={dataScreen}>
+                            <div class="slds-m-bottom_medium">
+                                <div class="c-container">
+                                    <lightning-layout>
+                                        <lightning-layout-item size="7">
+                                            <div class="slds-p-right_medium">
+                                                <div class="custom-box slds-box slds-p-around_medium">
+                                                    <p class="slds-text-heading_small">
+                                                        <lightning-icon class="slds-m-right_small" icon-name="custom:custom17" alternative-text="Your Commission Details" title="Your Commission Details"></lightning-icon>
+                                                        Your Commission Details for {selectedMonth}
                                                     </p>
                                                     <div class="slds-m-top_x-small slds-m-top_x-small slds-border_bottom"></div>
                                                     <div class="slds-m-top_medium">
                                                         <lightning-tile>
                                                             <dl class="slds-dl_horizontal">
                                                                 <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                                                    <p>Inbound:</p>
+                                                                    <p class="slds-truncate">Commission Amount for Monthly Deals:</p>
                                                                 </dt>
                                                                 <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                                                     <p class="slds-truncate">
-                                                                        <lightning-formatted-number value={commissionData.inboundPercent} format-style="percent"></lightning-formatted-number>
+                                                                        <lightning-formatted-number value={commissionData.monthlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
                                                                     </p>
                                                                 </dd>
                                                                 <dt class="slds-dl_horizontal__label" style="width: 70%;">
-                                                                    <p>Outbound:</p>
+                                                                    <p class="slds-truncate">Commission Amount for Yearly Deals:</p>
                                                                 </dt>
                                                                 <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
                                                                     <p class="slds-truncate">
-                                                                        <lightning-formatted-number value={commissionData.outboundPercent} format-style="percent"></lightning-formatted-number>
+                                                                        <lightning-formatted-number value={commissionData.yearlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                                                    </p>
+                                                                </dd>
+                                                                <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                                                    <p class="slds-truncate">Commission Amount for Two Yearly Deals:</p>
+                                                                </dt>
+                                                                <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                                                    <p class="slds-truncate">
+                                                                        <lightning-formatted-number value={commissionData.twoYearlyAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
                                                                     </p>
                                                                 </dd>
                                                             </dl>
                                                         </lightning-tile>
+                                                        <div class="slds-m-top_medium ">
+                                                            <lightning-tile>
+                                                                <dl class="slds-dl_horizontal">
+                                                                    <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                                                        <p class="slds-truncate slds-text-title_bold">Total Commission Amount:</p>
+                                                                    </dt>
+                                                                    <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                                                        <p class="slds-truncate slds-text-title_bold">
+                                                                            <lightning-formatted-number value={commissionData.totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                                                                        </p>
+                                                                    </dd>
+                                                                </dl>
+                                                            </lightning-tile>
+                                                        </div> 
                                                     </div>
                                                 </div>
-                                                
-                                            </lightning-layout-item>
-                                        </lightning-layout>
-                                    </div>
+                                            </div>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="5">
+                                            <div class="custom-box slds-box slds-p-around_medium" style="height: 100%;" >
+                                                <p class="slds-text-heading_small"><lightning-icon  class="slds-m-right_small" icon-name="standard:promotions" alternative-text="Your Commission Model" title="Your Commission Model"></lightning-icon>
+                                                    Your Commission Model
+                                                </p>
+                                                <div class="slds-m-top_x-small slds-m-top_x-small slds-border_bottom"></div>
+                                                <div class="slds-m-top_medium">
+                                                    <lightning-tile>
+                                                        <dl class="slds-dl_horizontal">
+                                                            <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                                                <p>Inbound:</p>
+                                                            </dt>
+                                                            <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                                                <p class="slds-truncate">
+                                                                    <lightning-formatted-number value={commissionData.inboundPercent} format-style="percent"></lightning-formatted-number>
+                                                                </p>
+                                                            </dd>
+                                                            <dt class="slds-dl_horizontal__label" style="width: 70%;">
+                                                                <p>Outbound:</p>
+                                                            </dt>
+                                                            <dd class="slds-dl_horizontal__detail slds-tile__meta" style="width: 30%;">
+                                                                <p class="slds-truncate">
+                                                                    <lightning-formatted-number value={commissionData.outboundPercent} format-style="percent"></lightning-formatted-number>
+                                                                </p>
+                                                            </dd>
+                                                        </dl>
+                                                    </lightning-tile>
+                                                </div>
+                                            </div>
+                                            
+                                        </lightning-layout-item>
+                                    </lightning-layout>
                                 </div>
+                            </div>
+                            <template if:true={displayedCollections}>
                                 <div class="custom-box slds-box slds-p-around_medium">
                                     <lightning-layout>
                                         <lightning-layout-item size="5">
@@ -186,85 +186,87 @@
                                     </lightning-layout>
                                 </div>
                             </template>
-                            <!-- MODAL - MDF SPIFF AND FILES SCREEN -->
-                            <template if:true={filesScreen}>
-                                <lightning-layout>
-                                    <lightning-layout-item size="4">
-                                        <div class="slds-p-right_medium">
-                                            <lightning-combobox
-                                                name="currency"
-                                                label="Invoice Currency"
-                                                value={currencyValue}
-                                                placeholder="Select currency"
-                                                options={currencies}
-                                                onchange={handleCurrencyChange} >
-                                            </lightning-combobox>
-                                        </div>
-                                    </lightning-layout-item>
-                                    <lightning-layout-item size="4">
-                                        <div class="slds-p-right_medium">
-                                            <lightning-input type="text" label="Invoice Number" value={invoiceNumber} onchange={handleInvoiceNumberChange} required></lightning-input>
-                                        </div>
-                                    </lightning-layout-item>
-                                    <lightning-layout-item size="4">
-                                        <lightning-input type="date" value={invoiceDate} label="Invoice Date" onchange={handleInvoiceDateChange} required></lightning-input>
-                                    </lightning-layout-item>
-                                </lightning-layout>
-                                <c-file-upload-improved onsendversids={handleSendVersIds} uploadedlabel={invoiceFileUploadLabel} accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={commissionData.paymentReqId} record-id={commissionData.paymentReqId} required-message="Commission invoice file is missing." prevent-session-storage required community></c-file-upload-improved>                                
-                                <!-- MODAL - CUSTOM INVOICE MISSING ERROR -->
-                                <template if:true={customInvoiceFilesError}>
-                                    <div class="slds-var-m-vertical_small">
-                                        <span class="slds-text-heading_small slds-text-color_destructive">{customInvoiceFilesError}</span>
+                        </template>
+                        <!-- MODAL - MDF SPIFF AND FILES SCREEN -->
+                        <template if:true={filesScreen}>
+                            <lightning-layout>
+                                <lightning-layout-item size="4">
+                                    <div class="slds-p-right_medium">
+                                        <lightning-combobox
+                                            name="currency"
+                                            label="Invoice Currency"
+                                            value={currencyValue}
+                                            placeholder="Select currency"
+                                            options={currencies}
+                                            onchange={handleCurrencyChange} >
+                                        </lightning-combobox>
                                     </div>
-                                </template>
-                                <div class="slds-m-top_x-small slds-border_bottom"></div>
-                                <template if:true={mdfFound}>
-                                    <lightning-dual-listbox name="mdfoptions"
-                                    label="Select Marketing Activities"
-                                    source-label="Available"
-                                    selected-label="Selected"
-                                    field-level-help="Select Marketing Activities"
-                                    options={mdfOptions}
-                                    value={selectedMDFs}
-                                    onchange={handleMDFChange}
-                                    disable-reordering ></lightning-dual-listbox>
-                                </template>
-                                <lightning-layout>
-                                    <lightning-layout-item size="6">
-                                        <div class="slds-p-right_medium">
-                                            <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={mdfAmount} step="0.01" disabled></lightning-input>
-                                        </div>
-                                    </lightning-layout-item>
-                                    <lightning-layout-item size="6">
-                                        <lightning-input type="number" name="spiff" label="Spiff Amount $" formatter="currency" value={spiffAmount} step="0.01" onchange={handleSpiffAmountChange}></lightning-input>
-                                    </lightning-layout-item>
-                                </lightning-layout>
-                                <template if:true={showUploadMdfFiles}>
-                                    <c-file-upload-improved uploadedlabel={mdfFileUploadLabel} allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={fileKeyMdf} record-id={commissionData.paymentReqId} min-required={mdfNumRequiredFiles} required-message="You didn't upload a file for each selected Marketing Activity. # of uploaded MDF relevant files must be equal to # of selected Marketing Activities. " prevent-session-storage community required></c-file-upload-improved>
-                                    <!-- MODAL - CUSTOM MDF MISSING ERROR -->
-                                    <template if:true={customMdfFilesError}>
-                                        <div class="slds-var-m-vertical_small">
-                                            <span class="slds-text-heading_small slds-text-color_destructive">{customMdfFilesError}</span>
-                                        </div>
-                                    </template>
-                                </template>                                
-                                <div class="slds-m-top_x-small slds-border_bottom"></div>
-                                <p class="slds-p-top_medium">By Submitting the request you confirm that your commission invoice matches the numbers populated in monday.com’s commission report. Any issues with specific deal not appearing in the report should be reported <a href="https://forms.monday.com/forms/746a664544adda5a98de077b7b99d4bd?r=use1" target="_blank">here</a>.</br>Please note, changes will be reconciled in the following month’s commission report.</br>Our commission payment terms are net 45.</p>                              
-                                <p class="slds-p-top_medium">If you don't have the invoice prepared yet, please click on Save As Draft and come back later to upload the invoice and submit.</p>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="4">
+                                    <div class="slds-p-right_medium">
+                                        <lightning-input type="text" label="Invoice Number" value={invoiceNumber} onchange={handleInvoiceNumberChange} required></lightning-input>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="4">
+                                    <lightning-input type="date" value={invoiceDate} label="Invoice Date" onchange={handleInvoiceDateChange} required></lightning-input>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <c-file-upload-improved onsendversids={handleSendVersIds} uploadedlabel={invoiceFileUploadLabel} accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={commissionData.paymentReqId} record-id={commissionData.paymentReqId} required-message="Invoice file is missing." prevent-session-storage required community></c-file-upload-improved>                                
+                            <!-- MODAL - CUSTOM INVOICE MISSING ERROR -->
+                            <template if:true={customInvoiceFilesError}>
+                                <div class="slds-var-m-vertical_small">
+                                    <span class="slds-text-heading_small slds-text-color_destructive">{customInvoiceFilesError}</span>
+                                </div>
                             </template>
-                            <!-- MODAL - SUBMITTED SCREEN -->
-                            <template if:true={submittedScreen}>
-                                <p class="slds-text-color_success slds-align_absolute-center">{submittedScreenTitle}</p>
-                                <template if:false={recordId}>
-                                    <a class="slds-align_absolute-center" href={paymentRequestLink} target="_blank">Link to Payment Request</a>
-                                </template>
-                                <p class="slds-align_absolute-center">{submittedScreenText}</p>
-                                </br>
-                                <template if:true={submittedForApproval}>
-                                    <div class="slds-align_absolute-center">
-                                        <p><img src={submittedScreenGifIcon}></p>
+                            <div class="slds-m-top_x-small slds-border_bottom"></div>
+                            <template if:true={mdfFound}>
+                                <lightning-dual-listbox name="mdfoptions"
+                                label="Select Marketing Activities"
+                                source-label="Available"
+                                selected-label="Selected"
+                                field-level-help="Select Marketing Activities"
+                                options={mdfOptions}
+                                value={selectedMDFs}
+                                onchange={handleMDFChange}
+                                disable-reordering ></lightning-dual-listbox>
+                            </template>
+                            <lightning-layout>
+                                <lightning-layout-item size="6">
+                                    <div class="slds-p-right_medium">
+                                        <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={mdfAmount} step="0.01" disabled></lightning-input>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input type="number" name="spiff" label="Spiff Amount $" formatter="currency" value={spiffAmount} step="0.01" onchange={handleSpiffAmountChange}></lightning-input>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <template if:true={showUploadMdfFiles}>
+                                <c-file-upload-improved uploadedlabel={mdfFileUploadLabel} allow-multiple accepted-formats=".pdf,.docx,.png,.jpeg,.jpg" session-key={fileKeyMdf} record-id={commissionData.paymentReqId} min-required={mdfNumRequiredFiles} required-message="You didn't upload a file for each selected Marketing Activity. # of uploaded MDF relevant files must be equal to # of selected Marketing Activities. " prevent-session-storage community required></c-file-upload-improved>
+                                <!-- MODAL - CUSTOM MDF MISSING ERROR -->
+                                <template if:true={customMdfFilesError}>
+                                    <div class="slds-var-m-vertical_small">
+                                        <span class="slds-text-heading_small slds-text-color_destructive">{customMdfFilesError}</span>
                                     </div>
                                 </template>
+                            </template>                                
+                            <div class="slds-m-top_x-small slds-border_bottom"></div>
+                            <template if:true={commissionData.totalAmount}>
+                                <p class="slds-p-top_medium">By Submitting the request you confirm that your commission invoice matches the numbers populated in monday.com’s commission report. Any issues with specific deal not appearing in the report should be reported <a href="https://forms.monday.com/forms/746a664544adda5a98de077b7b99d4bd?r=use1" target="_blank">here</a>.</br>Please note, changes will be reconciled in the following month’s commission report.</br>Our commission payment terms are net 45.</p>                              
+                            </template>
+                            <p class="slds-p-top_medium">If you don't have the invoice prepared yet, please click on Save As Draft and come back later to upload the invoice and submit.</p>
+                        </template>
+                        <!-- MODAL - SUBMITTED SCREEN -->
+                        <template if:true={submittedScreen}>
+                            <p class="slds-text-color_success slds-align_absolute-center">{submittedScreenTitle}</p>
+                            <template if:false={recordId}>
+                                <a class="slds-align_absolute-center" href={paymentRequestLink} target="_blank">Link to Payment Request</a>
+                            </template>
+                            <p class="slds-align_absolute-center">{submittedScreenText}</p>
+                            </br>
+                            <template if:true={submittedForApproval}>
+                                <div class="slds-align_absolute-center">
+                                    <p><img src={submittedScreenGifIcon}></p>
+                                </div>
                             </template>
                         </template>
                         <!-- MODAL - CUSTOM ERROR -->

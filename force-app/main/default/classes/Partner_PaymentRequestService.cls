@@ -160,19 +160,16 @@ public without sharing class Partner_PaymentRequestService {
             for(Commission_Collection__c collection: collectionsMap.values()){
                 if(!collection.Is_Hidden__c) collectionsList.add(collection);
             }
-            if(collectionsList.isEmpty()) {
-                Datetime dt = monthForQuery;
-                res.put('status', 'no_commission_data');
-                res.put('errorMsg','No collections for ' + dt.format('MMM') + ' ' + dt.year());
-                return res;
-            }
+            
             //calculate amounts
             Decimal monthlyAmount = 0, yearlyAmount = 0, twoYearlyAmount = 0;
-            for(Commission_Collection__c collection: collectionsList){
-                if(collection.Plan_Period__c.containsIgnoreCase('monthly')) monthlyAmount += collection.Commission_Amount_USD__c;
-                if(collection.Plan_Period__c.containsIgnoreCase('yearly')) {
-                    if(collection.Plan_Period__c.containsIgnoreCase('two_yearly')) twoYearlyAmount += collection.Commission_Amount_USD__c;
-                    else yearlyAmount += collection.Commission_Amount_USD__c;
+            if(!collectionsList.isEmpty()) {
+                for(Commission_Collection__c collection: collectionsList){
+                    if(collection.Plan_Period__c.containsIgnoreCase('monthly')) monthlyAmount += collection.Commission_Amount_USD__c;
+                    if(collection.Plan_Period__c.containsIgnoreCase('yearly')) {
+                        if(collection.Plan_Period__c.containsIgnoreCase('two_yearly')) twoYearlyAmount += collection.Commission_Amount_USD__c;
+                        else yearlyAmount += collection.Commission_Amount_USD__c;
+                    }
                 }
             }
             if(paymentRequestId == null){
