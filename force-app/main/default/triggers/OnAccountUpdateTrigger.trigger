@@ -24,6 +24,7 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
         }
     }
     if (Trigger.isAfter) {
+        Account_RegionalCompanyService.findOrCreateRegionalCompany(trigger.new, trigger.oldMap);
         if (trigger.isInsert||trigger.IsUpdate) {
             Account_Rollup.Account_Rollup_ParentChange(trigger.new, trigger.oldMap);
             Partners_SharingService.createAccountShares(trigger.new, trigger.oldMap);
