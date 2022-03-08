@@ -89,7 +89,7 @@ export default class SubmitCoSellRequest extends LightningElement {
                 console.log('wiredRecord qt: ' + JSON.stringify(qt));
                 console.log('wiredRecord allowSwitchMainSec: ' + this.allowSwitchMainSec);
             }
-            this.beforeSaveMsg = 'Once clicking Save, your request will be submitted for approval to ' + this.managerName + '.';
+            this.beforeSaveMsg = 'Once clicking Next, your request will be submitted for approval to ' + this.managerName + '.';
             this.mainScreen = true;
         }
         this.isLoading = false;
