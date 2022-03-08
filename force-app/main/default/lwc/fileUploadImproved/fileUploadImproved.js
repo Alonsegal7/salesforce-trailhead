@@ -18,6 +18,7 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
     @api recordId;
     @api required;
     @api minRequired = 1;
+    @api maxAllowed;
     @api requiredMessage;
     @api sessionKey;
     @api uploadedFileNames;
@@ -25,7 +26,7 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
     @api uploadedLabel; // deprecated
     @api preventSessionStorage = false;
     
-    @track docIds =[];
+    @track docIds =[]; // docIds = ['id1', 'id2'] ; docIds.length = 2
     @track fileNames = [];
     @track objFiles = [];
     @track versIds = [];
@@ -172,19 +173,34 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
     }
 
     @api
-    validate(){
-        if(this.docIds.length < this.minRequired && this.required === true){ 
+    validate(){ //validation on save files
+        if(this.required === true){ // files are mandatory
+            //(this.docIds.length < this.minRequired || (this.maxAllowed))
+            //){ // check if files are mandatory and minimum files are uploaded (default min files is 1)
+                // TBD - add condition to check max file allowed
+                // when relevant? only when required is true
+                // logic - number of uploaded files needs to be equal or less than maxAllowed
             var errorMessage;
-            if(this.requiredMessage == null){
-                errorMessage = 'Upload at least one file.';
+            // 1. check if minimum
+            if(this.docIds.length < this.minRequired){
+                if(this.requiredMessage == null){
+                    errorMessage = 'Upload at least ' + this.minRequired + ' file.'; //TBD - set message to be dynamic by the minRequired
+                } else {
+                    errorMessage = this.requiredMessage;
+                }
             }
-            else{
-                errorMessage = this.requiredMessage;
+            // 2. check if maximum
+            if(this.maxAllowed != null && this.docIds.length > this.maxAllowed){
+                if(this.requiredMessage == null){
+                    errorMessage = 'You uploaded too many files. Max files allowed is ' + this.maxAllowed; //TBD - set message to be dynamic by the minRequired
+                } else {
+                    errorMessage = this.requiredMessage;
+                }
             }
             return { 
                 isValid: false,
                 errorMessage: errorMessage
-             }; 
+            }; 
         } 
         else {
             return { isValid: true };
