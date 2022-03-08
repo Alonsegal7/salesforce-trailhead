@@ -10,21 +10,20 @@ public without sharing class Account_RegionalCompanyService {
         
         //create the scope
         List<Account> relevantMAs = new List<Account>(); 
-        for (Account acc : [SELECT Id, Name, recordTypeId, ParentId, Parent.Account_Territory__c, Company__c, Region__c, Manual_Trigger__c FROM Account WHERE Id IN: newAccounts]) {
+        for (Account acc : newAccounts) {
             if (acc.recordTypeId == MARecordTypeId && acc.ParentId != null && acc.Company__c != null && acc.Region__c != null && //prerequisites
-            (acc.Parent.Account_Territory__c != 'Regional' || //parent that's not a regional company
-            acc.Manual_Trigger__c == 'Aggregate Territory Accounts' || //manual trigger
-            (oldAccounts!=null && oldAccounts.get(acc.Id).Region__c!=null && acc.Region__c != oldAccounts.get(acc.Id).Region__c))) { //region change 
+            (oldAccounts == null || //new account
+            acc.Parent_Regional_Company_Region__c == null || //parent that's not a regional company
+            (acc.Manual_Trigger__c == 'Aggregate Territory Accounts' && (oldAccounts.get(acc.Id).Manual_Trigger__c == null || acc.Manual_Trigger__c != oldAccounts.get(acc.Id).Manual_Trigger__c)) || //manual trigger
+            (oldAccounts.get(acc.Id).Region__c == null || acc.Region__c != oldAccounts.get(acc.Id).Region__c))) { //region change 
                 System.debug('Account_RegionalCompanyService building scope found match');
-                if(acc.Manual_Trigger__c == 'Aggregate Territory Accounts') acc.Manual_Trigger__c = '';
                 relevantMAs.add(acc);
                 globalCompanysIds.add(acc.Company__c);
             }
         }
-        if (relevantMAs.size() == 0) return;
+        if (relevantMAs.isEmpty()) return;
         
         //from the entire scope, find which MAs already has a regional company in the hirarchy and link those first to the existing regional companies
-        
         List<Account> updatedMAs = linkMAsToExistingRegionalCompanies(relevantMAs);
         List<Account> remainingMAs = new List<Account>([SELECT Id, Company__c, Region__c, Parent.Name FROM Account WHERE ID IN: relevantMAs AND ID NOT IN: updatedMAs]);
         
@@ -47,10 +46,15 @@ public without sharing class Account_RegionalCompanyService {
         }
         
         //link the remaining MAs to the new regional companies that were created
-        
         updatedMAs.addall(linkMAsToExistingRegionalCompanies(relevantMAs));
+
+        //remove duplicates, in case the same account entered the trigger twice
+        Set<Account> updateMAsDedupSet = new Set<Account>();
+        updateMAsDedupSet.addAll(updatedMAs);
+        List<Account> updatedMAsDedup = new List<Account>();
+        updatedMAsDedup.addAll(updateMAsDedupSet);
         try {
-            update updatedMAs;
+            update updatedMAsDedup;
         } catch (Exception e) {
             System.debug('Account_RegionalCompanyService failed to upadte updatedMAs: ' + e.getMessage());
         }

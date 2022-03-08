@@ -36,6 +36,7 @@ public without sharing class Account_RegionalCompanyServiceTest {
             BillingCountryCode = 'CA',
             BillingCountry = 'Canada',
             Region__c = 'NAM',
+            ParentId = comp.Id,
             Company__c = comp.Id);
             insert mondayAcc;
             
@@ -75,12 +76,12 @@ public without sharing class Account_RegionalCompanyServiceTest {
             BillingCountryCode = 'IL',
             BillingCountry = 'Israel',
             Region__c = 'EMEA',
+            ParentId = comp.Id,
             Company__c = comp.Id);
             insert mondayAcc2;
             
         Test.stopTest();
 
-        comp = [SELECT Id, ParentId, Company__c, Account_Territory__c FROM Account WHERE Name = 'testco1'];
         comp = [SELECT Id, ParentId, Company__c, Account_Territory__c FROM Account WHERE Name = 'testco1'];
         mondayAcc2 = [SELECT Id, Region__c, ParentId, Company__c FROM Account WHERE Name = 'testMA2'];
         Account regionalCompany2 = [SELECT Id, Name, Account_Territory__c, Region__c, Company__c, ParentId FROM Account WHERE Id = :mondayAcc2.ParentId];
