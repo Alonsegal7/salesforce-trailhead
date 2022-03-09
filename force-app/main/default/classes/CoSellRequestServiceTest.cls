@@ -39,8 +39,25 @@ public with sharing class CoSellRequestServiceTest {
     }
 
     static testmethod void test1(){
-        Co_Sell_Request__c csr = [select Id from Co_Sell_Request__c limit 1];
+        Co_Sell_Request__c csr = [select Id, Main_Opportunity__c from Co_Sell_Request__c limit 1];
         csr.Status__c = 'Approved';
         update csr;
+        Opportunity opp1 = new Opportunity(
+            Id = csr.Main_Opportunity__c,
+            Expected_Plan_Seats__c = 30
+        );
+        update opp1;
+        test.startTest();
+        Opportunity_CoSellSyncService b = new Opportunity_CoSellSyncService();
+        Database.executeBatch(b);
+        test.stopTest();
+    }
+
+    static testmethod void test2(){
+        test.startTest();
+        Opportunity_CoSellSyncService b = new Opportunity_CoSellSyncService();
+        String sch = '0 0 8 13 2 ?';
+        system.schedule('One Time Pro', sch, b);
+        test.stopTest();
     }
 }

@@ -41,7 +41,7 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
             //select all main co-sell opps where last mondified is in the last week
             String query = 'select Id, Main_Opportunity__c, Main_Opportunity__r.LastModifiedDate, Secondary_Opportunity__c, Secondary_Opportunity__r.LastModifiedDate'; 
             query += ' from Co_Sell_Request__c';
-            query += ' where Status__c = \'Approved\' and Main_Opportunity__r.LastModifiedDate = LAST_WEEK';
+            query += ' where Status__c = \'Approved\' and Main_Opportunity__r.LastModifiedDate >= LAST_N_DAYS:7';
             return Database.getQueryLocator(query);
         } catch(Exception e){
             Utilities.sendEmail('Error in Opportunity_CoSellSyncService start: ',e.getMessage()+ ' ' + e.getStackTraceString(), new list<string>{'kseniasm@monday.com'});   
