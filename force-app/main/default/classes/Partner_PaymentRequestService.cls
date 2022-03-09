@@ -185,6 +185,7 @@ public without sharing class Partner_PaymentRequestService {
             res.put('monthlyAmount',monthlyAmount);
             res.put('yearlyAmount',yearlyAmount);
             res.put('twoYearlyAmount',twoYearlyAmount);
+            res.put('totalAmount', monthlyAmount + yearlyAmount + twoYearlyAmount);
             res.put('inboundPercent',inboundPercent);
             res.put('outboundPercent',outboundPercent);
             res.put('status', 'success');
