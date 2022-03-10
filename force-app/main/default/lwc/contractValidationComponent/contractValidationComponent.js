@@ -145,7 +145,8 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
                 //this.originalBBId==data.Account.primary_pulse_account_id__c;
                 this.maBBId=data.Account.primary_pulse_account_id__c;
                 this.oppId=data.Id;
-                if (data.Account.Pricing_Version__c>data.Pricing_Version__c) {
+                
+                if (parseInt(data.Account.Pricing_Version__c)>parseInt(data.Pricing_Version__c)) {
                     this.disableButton=true;
                     this.monAccPvAboveOppPv=true;
                     console.log('monAccPvAboveOppPv'+this.monAccPvAboveOppPv);
