@@ -117,7 +117,7 @@ public without sharing class Opportunity_ClosingProcess {
                                         Total_PS_Hours__c, Total_PS_Expended_Hours__c , Expected_Plan_Seats__c, Expected_Plan_Tier__c, Account.CSM_Function__c, Close_Process_Path__c, Total_Training_Hours__c,
                                         SyncedQuoteId, SyncedQuote.DH_Tier__c, SyncedQuote.Total_Seats__c, SyncedQuote.DH_Period__c, Account.Name, SyncedQuote.OwnerId, SyncedQuote.Name, Handed_Over__c,
                                         SyncedQuote.Owner.Name, What_Would_You_Like_To_Claim__c, Is_SO_Signed__c, Close_Process_Sys_Admin__c, RecordType.DeveloperName, Type, Is_Potential_GB_Opportunity__c,
-                                        Co_Sell_Opportunity__c, Main_Co_Sell_Opportunity__c, Co_Sell_Request__c, Co_Sell_Request__r.Status__c, Co_Sell_Request__r.Impact_Survey_Filled__c
+                                        Account.Co_Sell_Leader__c, Co_Sell_Opportunity__c, Main_Co_Sell_Opportunity__c, Co_Sell_Request__c, Co_Sell_Request__r.Status__c, Co_Sell_Request__r.Impact_Survey_Filled__c
                                 FROM Opportunity WHERE Id =: recordId LIMIT 1];
         system.debug('### opp:_v2 ' + opp);
         
