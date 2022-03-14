@@ -50,15 +50,19 @@ public without sharing class Handover_ThresholdMapping {
         for (Opportunity opp : relevantOpps) {
             isMatch = isPass = false;
             opp.HO_Threshold_AM__c = opp.HO_Threshold_CSM__c = opp.HO_Threshold_Onboarding__c = null;
+            opp.Passed_AM_Threshold__c = opp.Passed_CSM_Threshold__c = opp.Passed_Onboarding_Threshold__c = false;
             for (HO_Threshold__c th : thresholdsMap.values()) {
                 isMatch = checkMatch(opp, th, thresholdsWithCriterias.get(th.Id), 'isLink');
                 if (isMatch) {
                     thresholdFieldName = th.Type__c == 'AM' ? 'HO_Threshold_AM__c' : th.Type__c == 'CSM' ? 'HO_Threshold_CSM__c' : th.Type__c == 'Onboarding' ? 'HO_Threshold_Onboarding__c' : null;
                     opp.put(thresholdFieldName, th.Id);
                     //once matched, check if passed the threshold
+                    thresholdPassFieldName = th.Type__c == 'AM' ? 'Passed_AM_Threshold__c' : th.Type__c == 'CSM' ? 'Passed_CSM_Threshold__c' : th.Type__c == 'Onboarding' ? 'Passed_Onboarding_Threshold__c' : null;
                     if(th.Always_Pass__c || checkMatch(opp, th, thresholdsWithCriterias.get(th.Id), 'isPass')) {
-                        thresholdPassFieldName = th.Type__c == 'AM' ? 'Passed_AM_Threshold__c' : th.Type__c == 'CSM' ? 'Passed_CSM_Threshold__c' : th.Type__c == 'Onboarding' ? 'Passed_Onboarding_Threshold__c' : null;
                         opp.put(thresholdPassFieldName, true);    
+                    }
+                    else {
+                        opp.put(thresholdPassFieldName, false);
                     }
                 }
             }

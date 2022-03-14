@@ -57,22 +57,13 @@
 	},
 
 	checkHandover_InternalOpp : function (component, event, helper){
-		if(component.get('v.oppData.RecordType.Name') == 'Internal Opportunity'){
-			if(component.get('v.oppData.Should_be_handed_over_to_AM__c')
-			|| component.get('v.oppData.Total_PS_Hours__c') > 0 
-			|| component.get('v.oppData.Total_PS_Expended_Hours__c') > 0
-			|| component.get('v.oppData.Onboarding_Hours__c') > 0
-			|| component.get('v.oppData.Total_Training_Hours__c') >= 3 ||
-			(
-			component.get('v.oppData.Expected_Plan_Seats__c') != undefined && component.get('v.oppData.Expected_Plan_Seats__c') >= 100
-			&&
-			(component.get('v.oppData.Expected_Plan_Tier__c') != undefined && (component.get('v.oppData.Expected_Plan_Tier__c') == 'enterprise' || component.get('v.oppData.Expected_Plan_Tier__c') == 'Enterprise'))
-			&&
-			component.get('v.oppData.Account.CSM_Function__c') != undefined && component.get('v.oppData.Account.CSM_Function__c') != 'Enterprise CSM' && component.get('v.oppData.Account.CSM_Function__c') != 'Mid-Market CSM')){
-				component.set('v.showHandover', true);
-				console.log('v.showHandover is true');
-			}
-			else console.log('v.showHandover is false');
+		if (component.get('v.oppData.Passed_AM_Threshold__c') || component.get('v.oppData.Passed_CSM_Threshold__c') || component.get('v.oppData.Passed_Onboarding_Threshold__c')) {
+			component.set('v.showHandover', true);
+			console.log('#checkHandover_InternalOpp v.showHandover is true - thresholds logic');
+		}
+		else {
+			component.set('v.showHandover', false);
+			console.log('#checkHandover_InternalOpp v.showHandover is false - thresholds logic');
 		}
 	},
 
@@ -87,9 +78,10 @@
 			let state = response.getState();
 			console.log('entered checkifpass AM response');
 			if(state==="SUCCESS"){
-				console.log('entered recalcAction and got success ');				
+				console.log('#entered recalcAction and got success, running refreshOppData');
+				helper.refreshOppData(component, event, helper);			
 			} else {
-				console.log('entered recalcAction error');
+				console.log('#entered recalcAction error');
 				alert("error");
 			}
 		});
@@ -112,10 +104,10 @@
 			let state = response.getState();
 			console.log('entered updateCompanySize response');
 			if(state==="SUCCESS"){
-				console.log('entered updateCompanySize and got success ');
+				console.log('#entered updateCompanySize and got success ');
 				helper.recalcHandoverThreshold(component, event, helper);
 			} else {
-				console.log('entered updateCompanySize error');
+				console.log('#entered updateCompanySize error');
 				alert("error");
 			}
 		});
@@ -311,6 +303,28 @@
 					} else {
 						helper.handleClosedWon(component, event, helper);
 					}
+				}
+			}
+		});
+		$A.enqueueAction(action);
+	},
+
+	refreshOppData : function (component, event, helper){
+		console.log('refreshOppData');
+		var oppId = component.get('v.recordId');
+		var action = component.get("c.getOpportunityData");
+		action.setParams({ "recordId" : oppId });
+		action.setCallback(this, function(response) {
+			var state = response.getState();
+			if (state === "SUCCESS") {
+				console.log('getOpportunityData SUCCESS');
+				var storeResponse = response.getReturnValue();
+				console.log('response.getReturnValue: '+JSON.stringify(response.getReturnValue()));
+				if (storeResponse != null){
+					component.set("v.oppData", storeResponse);
+					console.log('init opp data: '+JSON.stringify(storeResponse));
+					console.log('# refreshOppData ran, running checkHandover_InternalOpp');
+					helper.checkHandover_InternalOpp(component, event, helper);	
 				}
 			}
 		});
