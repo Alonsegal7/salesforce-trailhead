@@ -8,6 +8,7 @@ export default class StarRating extends LightningElement {
     @api objectApiName;             //target object api name 
     @api surveyName;                //survey name to query from CMT Star_Rating_Question__mdt
     @api title;                     //card title
+    @api subtitle;                  //subtitle displayed under title in grey color 
     @api surveyFilledFieldApiName;  //Optional - checkbox field api name on the target object to mark that the survey was filled
     @api showSuccessToast = false;  //flag to display success toast when survey is submitted
     load = false;
@@ -50,7 +51,7 @@ export default class StarRating extends LightningElement {
         if(validAnswers){
             this.updateTargetRecord();
         } else {
-            this.customError = 'Please fill all the questions.';
+            this.customError = 'Please fill all the questions';
         }
     }
 

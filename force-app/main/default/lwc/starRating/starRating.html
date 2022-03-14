@@ -1,17 +1,18 @@
 <template>
     <lightning-card if:true={load} title={title}>
-        <div class="slds-m-around_medium">
-            <template if:true={error}>
-                <c-error-panel errors={error}></c-error-panel>
-            </template>
-            <template if:true={customError}>
-                <div class="slds-var-m-vertical_small">
-                    <span class="slds-text-heading_small slds-text-color_destructive">{customError}</span>
-                </div>
-            </template>
-            <template for:each={questions} for:item="q">
-                <lightning-tile key={q.Field_API_Name__c} type="media">
-                        <p>{q.Question_Text__c}</p>
+        <lightning-button variant="brand" label="Submit" class="slds-m-left_x-small" onclick={saveValues} slot="actions"> </lightning-button>
+        <template if:true={subtitle}>  <!--subtitle is optional-->
+            <p class="slds-p-horizontal_small slds-p-bottom_small slds-text-color_success slds-text-body_small"><i>{subtitle}</i></p>
+        </template>
+        <template for:each={questions} for:item="q"> <!--questions are taken from CMT called Star_Rating_Question__mdt -->
+            <lightning-tile key={q.Field_API_Name__c} type="media">
+                <lightning-layout>
+                    <lightning-layout-item size="7">
+                        <div class="slds-p-right_medium">
+                            <p>{q.Question_Text__c}</p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="5">
                         <div class="rate">
                             <input type="radio" id={q.star5} name={q.Field_API_Name__c} value="5" onchange={rating} />
                             <label for={q.star5} title="5 stars">5 stars</label>
@@ -24,9 +25,15 @@
                             <input type="radio" id={q.star1} name={q.Field_API_Name__c} value="1" onchange={rating} />
                             <label for={q.star1} title="1 star">1 star</label>
                         </div>
-                </lightning-tile>                                       
-            </template>
-        </div>
-        <lightning-button variant="brand" label="Submit" class="slds-m-left_x-small" onclick={saveValues} slot="actions"> </lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-tile>                                       
+        </template>
+        <template if:true={error}>
+            <c-error-panel errors={error}></c-error-panel>
+        </template>
+        <template if:true={customError}>
+            <p class="slds-p-horizontal_small slds-text-body_small slds-text-color_destructive"><b>{customError}</b></p>
+        </template>
     </lightning-card>
 </template>
