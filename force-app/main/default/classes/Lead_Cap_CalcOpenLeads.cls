@@ -1,6 +1,7 @@
 public without sharing class Lead_Cap_CalcOpenLeads implements Database.Batchable<Id>, Database.Stateful{
     public list<string> closedLeadsStatuses=new list<string>{'Qualified','Unqualified','Nurturing'};
     public list<string> partnerLeadsChannels=new list<string>{'Signup','Contact Sales'};
+    public list<string> excludedLeadsChannels=new list<string>{'Outbound'};
     public Integer updatedLCs=0;
 
     private String ownerField;
@@ -37,7 +38,7 @@ public without sharing class Lead_Cap_CalcOpenLeads implements Database.Batchabl
         map<Id,Leads_Cap__c> updateList= new map<Id,Leads_Cap__c>();
         List<Id> ownersList =  idsScope;
 
-        string queryString='select '+key+' , COUNT(Id) leadCount from Lead where status NOT IN: closedLeadsStatuses and ';
+        string queryString='select '+key+' , COUNT(Id) leadCount from Lead where status NOT IN: closedLeadsStatuses and Channel_Lead_Source__c NOT IN: excludedLeadsChannels and';
         queryString+='(RecordType.DeveloperName != \'Partner_Lead\' or Channel_Lead_Source__c IN: partnerLeadsChannels) and '; //for partners leads (by RT) the channel must be Contact Sales or Signup
         queryString+='recordTypeId =\''+recordTypeId +'\' and ';
         queryString+='(OwnerId in: ownersList or Partner_Company__c in: ownersList) ';
