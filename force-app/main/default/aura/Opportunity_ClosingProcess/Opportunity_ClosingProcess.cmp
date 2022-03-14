@@ -483,13 +483,22 @@
                                     <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Signer_Name_c__c" value="{!v.closedFields.DH_Signer_Name_c__c}" required="true"/>
                                     <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Signer_Title__c" value="{!v.closedFields.DH_Signer_Title__c}" required="true"/>
                                     <lightning:inputField aura:id="newOpportunityField" fieldName="Manual_Signature_Reason__c" value="{!v.closedFields.Manual_Signature_Reason__c}" required="true" onchange="{!c.prioritySO}"/>
-                    
-                                    <lightning:fileUpload label="Attachment"
+                                    <c:fileUploadImproved
+                                        label="Attachment"
+                                        acceptedFormats="{!v.filetype}"
+                                        allowMultiple="false"
+                                        sessionKey="{!v.recordId}"
+                                        recordId="{!v.recordId}"
+                                        required="true"
+                                        maxAllowed="1"
+                                        multiple="false"
+                                    />
+                                    <!--<lightning:fileUpload label="Attachment"
                                         name="fileUploader"
                                         multiple="true"
                                         accept="{!v.filetype}"
                                         recordId="{!v.recordId}"
-                                        onuploadfinished="{!c.handleUploadFinished}" />
+                                        onuploadfinished="{!c.handleUploadFinished}" /> -->
                                 </lightning:recordEditForm>
                             </lightning:card>
                             </aura:if>
