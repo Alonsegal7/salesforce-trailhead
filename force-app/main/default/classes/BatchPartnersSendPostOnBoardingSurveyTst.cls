@@ -107,8 +107,7 @@ public class BatchPartnersSendPostOnBoardingSurveyTst {
     }
 
     static testmethod void testScheduler(){
-        String cronExpr = '0 0 0 15 3 ? 2022';
-        String jobRunningTime = '2022-03-15 00:00:00';
+        String cronExpr = '0 0 23 * * ?';
         Test.startTest();
         // Schedule the test job
         String jobId = System.schedule('myJobTestJobName', cronExpr, new Batch_PartnersSendPostOnBoardingSurvey());
