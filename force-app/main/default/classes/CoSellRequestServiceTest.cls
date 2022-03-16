@@ -60,4 +60,9 @@ public with sharing class CoSellRequestServiceTest {
         system.schedule('One Time Pro', sch, b);
         test.stopTest();
     }
+
+    static testmethod void test3(){
+        Id accId = [select Id from Account limit 1].Id;
+        CoSellRequestService.getAssociatePotentialOpps(accId, 'Internal_Opportunity');
+    }
 }

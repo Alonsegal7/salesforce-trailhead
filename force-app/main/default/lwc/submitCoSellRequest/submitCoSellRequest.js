@@ -1,6 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import { CloseActionScreenEvent } from 'lightning/actions';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { getRecord, updateRecord, getFieldValue } from 'lightning/uiRecordApi';
 import createNewCoSellRequest from '@salesforce/apex/CoSellRequestService.createNewCoSellRequest';
 import getAssociatePotentialOpps from '@salesforce/apex/CoSellRequestService.getAssociatePotentialOpps';
 import OPP_ACCOUNTID from "@salesforce/schema/Opportunity.AccountId";
@@ -14,6 +14,7 @@ import SYNCED_QUOTE from "@salesforce/schema/Opportunity.SyncedQuoteId";
 import SYNCED_QUOTE_STATUS from "@salesforce/schema/Opportunity.SyncedQuote.DH_Quote_Status__c";
 import SYNCED_QUOTE_PUBLISH from "@salesforce/schema/Opportunity.SyncedQuote.Is_Published__c";
 import SYNCED_QUOTE_DATE from "@salesforce/schema/Opportunity.SyncedQuote.CreatedDate";
+import COSELL_LEADER from "@salesforce/schema/Opportunity.Account.Co_Sell_Leader__c";
 
 export default class SubmitCoSellRequest extends LightningElement {
     @api recordId;
@@ -28,16 +29,17 @@ export default class SubmitCoSellRequest extends LightningElement {
     beforeSaveMsg;
     partnerCompanyId;
     oppOwnerId;
+    cosellLeader;
     isLoading = true;
     mainScreen = false;
-    showSpinner = true;
+    chooseLeaderScreen = false;
     newCoSellScreen = false;
     associateScreen = false;
     submittedScreen = false;
     displayPsFields = false;
     allowSwitchMainSec = false;
     currentOppMustBeMain = false;
-    radioValue = '';
+    whatYouWishValue = '';
     cosellRequest = {};
     associateOppsOptions = [];
     associateOppsMap = {};
@@ -46,8 +48,18 @@ export default class SubmitCoSellRequest extends LightningElement {
     secondaryOppId;
     soBadgeControl = {};
     oppsSyncedQts_map = {};
+    coSellLeaderValue = '';
 
-    get options() {
+    // used to choose co-sell leader when Co_Sell_Leader__c is blank on monday account
+    get coSellLeaderOptions() {
+        return [
+            { label: 'Sales joining to Partners', value: 'Partners' },
+            { label: 'Partner joining to Sales', value: 'Sales' },
+        ];
+    }
+
+    // used to choose new or associate co-sell
+    get whatYouWishOptions() {
         return [
             { label: 'Create a new Opportunity as Co-Sell', value: 'newopp' },
             { label: 'Link an existing Opportunity as Co-Sell', value: 'existingopp' },
@@ -66,7 +78,10 @@ export default class SubmitCoSellRequest extends LightningElement {
         return ['PS_Deal_Type__c','PS_Type__c','PS_Type_Details__c','PS_Use_Case_Description__c'];
     }
 
-    @wire(getRecord, { recordId: '$recordId', fields: [OPP_ACCOUNTID, OPP_STAGE, OPP_OWNER_MANAGER_NAME, OPP_OWNER_MANAGER_ID, OPP_OWNER_ID, OPP_RT_DEV_NAME, OPP_OWNER_ACCOUNTID, SYNCED_QUOTE, SYNCED_QUOTE_STATUS, SYNCED_QUOTE_PUBLISH, SYNCED_QUOTE_DATE] })
+    @wire(getRecord, { recordId: '$recordId', 
+                        fields: [OPP_ACCOUNTID, OPP_STAGE, OPP_OWNER_MANAGER_NAME, OPP_OWNER_MANAGER_ID, OPP_OWNER_ID, 
+                                OPP_RT_DEV_NAME, OPP_OWNER_ACCOUNTID, SYNCED_QUOTE, SYNCED_QUOTE_STATUS, SYNCED_QUOTE_PUBLISH, 
+                                SYNCED_QUOTE_DATE,COSELL_LEADER] })
     wiredRecord({ error, data }) {
         if (error) { this.error = error; }
         if (data) {
@@ -77,6 +92,7 @@ export default class SubmitCoSellRequest extends LightningElement {
             this.currentOppRT = getFieldValue(data, OPP_RT_DEV_NAME);
             this.partnerCompanyId = getFieldValue(data, OPP_OWNER_ACCOUNTID);
             this.oppOwnerId = getFieldValue(data, OPP_OWNER_ID);
+            this.cosellLeader = getFieldValue(data, COSELL_LEADER);
             let syncedQuoteId = getFieldValue(data, SYNCED_QUOTE);
             if(syncedQuoteId){
                 let qt = {};
@@ -89,10 +105,36 @@ export default class SubmitCoSellRequest extends LightningElement {
                 console.log('wiredRecord qt: ' + JSON.stringify(qt));
                 console.log('wiredRecord allowSwitchMainSec: ' + this.allowSwitchMainSec);
             }
-            this.beforeSaveMsg = 'Once clicking Next, your request will be submitted for approval to ' + this.managerName + '.';
-            this.mainScreen = true;
+            //this.beforeSaveMsg = 'Once clicking Next, your request will be submitted for approval to ' + this.managerName + '.';
+            if(this.cosellLeader == null || this.cosellLeader == undefined){
+                this.chooseLeaderScreen = true;
+            } else {
+                this.mainScreen = true;
+            }
         }
         this.isLoading = false;
+    }
+
+    handleNextLeaderScreen(event){
+        this.coSellLeaderValue = event.detail.value;
+        const fields = {};
+        fields['Id'] = this.accountId;
+        fields['Co_Sell_Leader__c'] = this.coSellLeaderValue;
+        console.log('fields: ' + JSON.stringify(fields));
+        const recordInput = { fields };
+        console.log('recordInput: ' + JSON.stringify(recordInput));
+        this.isLoading = true;
+        updateRecord(recordInput)
+        .then(() => {
+            this.isLoading = false;
+            this.chooseLeaderScreen = false;
+            this.mainScreen = true;
+        })
+        .catch(error => {
+            this.isLoading = false;
+            this.error = error;
+            console.log('error: ' + JSON.stringify(this.error));
+        });
     }
 
     handleSave(event){
@@ -107,12 +149,12 @@ export default class SubmitCoSellRequest extends LightningElement {
         } else {
             this.cosellRequest.Sales_User__c = this.oppOwnerId;
         }
-        if(this.radioValue == 'newopp'){
+        if(this.whatYouWishValue == 'newopp'){
             this.cosellRequest.Type__c = 'Create';
             this.cosellRequest.Main_Opportunity__c = this.recordId;
             this.cosellRequest.Secondary_Opportunity_Owner__c = this.cosellRequest.Secondary_Opportunity_Owner__c[0];
             this.cosellRequest.Main_Opportunity_Stage__c = this.oppStage;
-        } else if (this.radioValue == 'existingopp'){
+        } else if (this.whatYouWishValue == 'existingopp'){
             this.cosellRequest.Type__c = 'Associate';
             this.cosellRequest.Main_Opportunity__c = this.mainOppId;
             this.cosellRequest.Secondary_Opportunity__c = this.secondaryOppId;
@@ -136,7 +178,7 @@ export default class SubmitCoSellRequest extends LightningElement {
             console.log('handleSave createNewCoSellRequest result: ' + JSON.stringify(result));
             if(result.newCoSellReqId != null){
                 console.log('handleSave createNewCoSellRequest result new rec id: ' + result.newCoSellReqId);
-                this.submittedTextManager = 'Your Co-sell Request was submitted for the approval of ' + this.managerName;
+                this.submittedTextManager = 'Your Co-sell Request was submitted for the approval of ' + result.managerName;
                 this.mainScreen = false;
                 this.submittedScreen = true;
             }
@@ -160,13 +202,13 @@ export default class SubmitCoSellRequest extends LightningElement {
     }
 
     handleMainRadioChange(e) {
-        this.radioValue = e.detail.value;
+        this.whatYouWishValue = e.detail.value;
         this.displayPsFields = false;
         this.customError = '';
-        if(this.radioValue == 'newopp'){ // Create a co-sell opp opportunity
+        if(this.whatYouWishValue == 'newopp'){ // Create a co-sell opp opportunity
             this.associateScreen = false;
             this.newCoSellScreen = true;
-        } else if(this.radioValue == 'existingopp'){ // Associate an existing opportinity as co-sell
+        } else if(this.whatYouWishValue == 'existingopp'){ // Associate an existing opportinity as co-sell
             this.newCoSellScreen = false;
 
             if(this.associateOppsOptions.length == 0){

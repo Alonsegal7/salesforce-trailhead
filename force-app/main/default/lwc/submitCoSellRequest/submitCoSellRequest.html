@@ -5,14 +5,23 @@
             <template if:true={isLoading}>
                 <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
             </template>
+            <!-- 0. choose co-sell leader screen -->
+            <template if:true={chooseLeaderScreen}>
+                <lightning-radio-group name="radioGroup"
+                    label="Are you joining an existing partner account/opportunity or the other way round?"
+                    options={coSellLeaderOptions}
+                    value={coSellLeaderValue}
+                    type="radio"
+                    onchange={handleNextLeaderScreen}></lightning-radio-group>
+            </template>
             <!-- 1. main screen -->
             <template if:true={mainScreen}>
                 <div class="slds-p-bottom_medium slds-p-left_small">
                     <lightning-radio-group name="radioGroup"
                     class="validate"
                     label="What do you wish to do?"
-                    options={options}
-                    value={value}
+                    options={whatYouWishOptions}
+                    value={whatYouWishValue}
                     required
                     type="button"
                     onchange={handleMainRadioChange}></lightning-radio-group>
@@ -30,7 +39,7 @@
                                 </template>
                             </template>
                         </lightning-record-edit-form>
-                        <p class="slds-p-top_medium"><b>{beforeSaveMsg}</b></p>
+                        
                     </div>
                 </template>
                 <!-- 1.2 associate existing opp screen -->
@@ -171,14 +180,13 @@
                             </lightning-record-edit-form>
                         </lightning-layout-item>
                     </lightning-layout>
-                    <p class="slds-p-top_medium slds-p-left_small"><b>{beforeSaveMsg}</b></p>
                 </template>
             </template>
             <!-- 2. submitted screen -->
             <template if:true={submittedScreen}>
                 <p class="slds-text-color_success slds-text-heading_small slds-align_absolute-center slds-p-bottom_medium">You've Opened a Co-Sell Opportunity, Happy Closing!</p>
                 <div class="slds-text-color_weak ">
-                    <p>{submittedTextManager}</p>
+                    <p><b>{submittedTextManager}</b></p>
                     <p>You will get notified by email regarding the response</p>
                     </br>
                     <p class="slds-p-bottom_small">Top 5 things you need to know about co-sell:</p>
@@ -203,6 +211,10 @@
             </template>
             <!-- 3. footer -->
             <div slot="footer">
+                <template if:true={chooseLeaderScreen}>
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeQuickAction} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="brand" label="Next" onclick={handleNextLeaderScreen} class="slds-m-left_x-small"></lightning-button>
+                </template>
                 <template if:true={mainScreen}>
                     <lightning-button variant="neutral" label="Cancel" onclick={closeQuickAction} class="slds-m-left_x-small"></lightning-button>
                     <template if:false={customError}>
