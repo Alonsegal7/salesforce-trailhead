@@ -53,8 +53,8 @@ export default class SubmitCoSellRequest extends LightningElement {
     // used to choose co-sell leader when Co_Sell_Leader__c is blank on monday account
     get coSellLeaderOptions() {
         return [
-            { label: 'Sales joining to Partners', value: 'Partners' },
-            { label: 'Partner joining to Sales', value: 'Sales' },
+            { label: 'Sales joining to Partners co sell', value: 'Partners' },
+            { label: 'Partner joining to Sales co sell', value: 'Sales' },
         ];
     }
 
