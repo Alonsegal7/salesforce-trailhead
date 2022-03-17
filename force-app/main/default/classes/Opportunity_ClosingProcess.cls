@@ -174,9 +174,8 @@ public without sharing class Opportunity_ClosingProcess {
             stageMap.put(oStage.MasterLabel, oStage.DefaultProbability);
         }
         
-        Opportunity opp = [SELECT Name, StageName, Probability FROM Opportunity WHERE Id =: recordId];
-                                        
-        opp.Probability = stageMap.get(opp.StageName);
+        Opportunity opp = new Opportunity(Id = recordId);                           
+        opp.Probability = stageMap.get(oppStageName);
         update opp;
         return opp;
     }

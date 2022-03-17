@@ -184,6 +184,7 @@
 				action.setCallback(this, function(response) {
 					var state = response.getState();
 					if (state === "SUCCESS") {
+						helper.updateProbability(component, event, helper);
 						var storeResponse = response.getReturnValue();
 						if (storeResponse != null){
 							storeResponse = JSON.parse(storeResponse);
@@ -191,35 +192,25 @@
 								component.set('v.greenBucketData', storeResponse.opportunityARR);
 								if(storeResponse.opportunityARR.Green_Bucket_ARR_V2__c >= 10000){
 									component.set('v.innerPathValue', 'continueToSummary');
-								}
-		
-								else{
+								}else{
 									component.set('v.isModalOpen', false);
 								}
 							}
 						}
-					}
-		
-					else if (state === "ERROR") {
+					}else if (state === "ERROR") {
 						var errors = response.getError();
 						if (errors) {
 							if (errors[0] && errors[0].message) {
 								console.log("Error message in Opportunity_ClosingProcess Helper: " + errors[0].message);
 							}
-						}
-						
-						else {
+						}else {
 							console.log("Unknown error in Opportunity_ClosingProcess Helper:");
 						}
 					}
 				});
 				$A.enqueueAction(action)
-            }
-
-            else if (saveResult.state == "INCOMPLETE") {
-			}
-
-			else if(saveResult.state == "ERROR") {
+            }else if (saveResult.state == "INCOMPLETE") {
+			}else if(saveResult.state == "ERROR") {
 				for (var i = 0; i < saveResult.error.length; i++) {
 					errMsg += saveResult.error[i].message + "\n";
 				}

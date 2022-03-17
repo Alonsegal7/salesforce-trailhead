@@ -231,7 +231,6 @@
                     component.set('v.closedFields.Close_Process_Path__c', 'Done');
                     component.set('v.closedFields.StageName', 'Closed Won');
                     helper.savefields(component, event, helper);
-                    helper.updateProbability(component, event, helper);
                     if(component.get('v.wonCompletedSuccess') == true){
                         if(component.get('v.checkARR') == true){
                             var oppId = component.get('v.recordId');
@@ -433,7 +432,6 @@
                             component.set('v.closedFields.Close_Process_Path__c', 'Done');
                             component.set('v.closedFields.StageName', 'Closed Won');
                             helper.savefields(component, event, helper);
-                            helper.updateProbability(component, event, helper);
                             if(component.get('v.wonCompletedSuccess') == true){
                                 if(component.get('v.checkARR') == true){
                                     var oppId = component.get('v.recordId');
