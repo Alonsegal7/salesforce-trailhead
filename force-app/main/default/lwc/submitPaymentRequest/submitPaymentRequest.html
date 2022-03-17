@@ -224,13 +224,17 @@
                                 label="Select Marketing Activities"
                                 source-label="Available"
                                 selected-label="Selected"
-                                field-level-help="Select Marketing Activities"
+                                field-level-help="Marketing Activities of a certain month become avaiable for payment request on the following month only. Headcount Marketing Activities are paid in portions. For example if a Headcount Marketing Activity begins from Jan 2022 till June 2022 (6 months) then starting from Feb 2022, each month, a monthly portion will get avaiable for payment request."
                                 options={mdfOptions}
                                 value={selectedMDFs}
                                 onchange={handleMDFChange}
                                 disable-reordering ></lightning-dual-listbox>
+                                
                             </template>
                             <lightning-layout>
+                                <!--<lightning-layout-item size="1">
+                                    <lightning-helptext content="MDF amount is calculated based on Partner Marketing Activities. If no avaiable Marketing Activities or non selected then MDF amount will be 0. Marketing Activities of a certain month become avaiable for payment request on the following month only. Headcount Marketing Activities are paid in portions. For example if a Headcount Marketing Activity begins from Jan 2022 till June 2022 (6 months) then starting from Feb 2022, each month, a monthly portion will get avaiable for payment request."></lightning-helptext>
+                                </lightning-layout-item> -->
                                 <lightning-layout-item size="6">
                                     <div class="slds-p-right_medium">
                                         <lightning-input type="number" name="mdf" label="MDF Amount $" formatter="currency" value={mdfAmount} step="0.01" disabled></lightning-input>
@@ -248,7 +252,18 @@
                                         <span class="slds-text-heading_small slds-text-color_destructive">{customMdfFilesError}</span>
                                     </div>
                                 </template>
-                            </template>                                
+                            </template>   
+                            <template if:true={mdfFound}>
+                                <p class="slds-p-top_medium slds-text-color_weak">Confused about MDF? 🧐 Read this ⬇️ </p>
+                                <p class="slds-text-color_weak">Marketing activities of a certain month become available for payment request on the following month only. Headcount marketing activities become available in monthly portions.</p>
+                                <p class="slds-text-color_weak">Due to the fact that MDF amount is calculated based on selected marketing activities, if no marketing activities selected then the MDF amount for this payment request will be 0.</p>
+                            </template>
+                            <template if:false={mdfFound}>
+                                <p class="slds-p-top_medium slds-text-color_weak">Confused about MDF? 🧐 Read this ⬇️ </p>
+                                <p class="slds-text-color_weak">No available marketing activities found.</p>
+                                <p class="slds-text-color_weak">Marketing activities of a certain month become available for payment request on the following month only. Headcount marketing activities become available in monthly portions.</p>
+                                <p class="slds-text-color_weak">Due to the fact that MDF amount is calculated based on marketing activities, the MDF amount for this payment request will be 0.</p>
+                            </template>                             
                             <div class="slds-m-top_x-small slds-border_bottom"></div>
                             <template if:true={commissionData.totalAmount}>
                                 <p class="slds-p-top_medium">By Submitting the request you confirm that your commission invoice matches the numbers populated in monday.com’s commission report. Any issues with specific deal not appearing in the report should be reported <a href="https://forms.monday.com/forms/746a664544adda5a98de077b7b99d4bd?r=use1" target="_blank">here</a>.</br>Please note, changes will be reconciled in the following month’s commission report.</br>Our commission payment terms are net 45.</p>                              
