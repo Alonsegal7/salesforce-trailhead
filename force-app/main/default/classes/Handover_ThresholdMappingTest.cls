@@ -102,7 +102,7 @@ public with sharing class Handover_ThresholdMappingTest {
     @isTest
     static void shouldLinkThresholdToNewOpp() { 
 
-        Account mondayAcc = [SELECT Id FROM Account WHERE Name = 'testMOnday'];
+        Account mondayAcc = [SELECT Id FROM Account WHERE primary_pulse_account_id__c = '12345'];
         Account comp2 = [SELECT Id, NumberOfEmployees FROM Account WHERE Name = 'testco2' LIMIT 1];
         HO_Threshold__c amTh = [SELECT Id FROM HO_Threshold__c WHERE Type__c = 'AM' and Name = 'AM test2' LIMIT 1];
         

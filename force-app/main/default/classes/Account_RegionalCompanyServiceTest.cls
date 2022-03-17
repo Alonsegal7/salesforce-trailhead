@@ -43,7 +43,7 @@ public without sharing class Account_RegionalCompanyServiceTest {
         Test.stopTest();
 
         comp = [SELECT Id, ParentId, Company__c, Account_Territory__c FROM Account WHERE Name = 'testco1'];
-        mondayAcc = [SELECT Id, Region__c, ParentId, Company__c FROM Account WHERE Name = 'testMA1'];
+        mondayAcc = [SELECT Id, Region__c, ParentId, Company__c FROM Account WHERE primary_pulse_account_id__c = '12345'];
         Account regionalCompany1 = [SELECT Id, Name, Account_Territory__c, Region__c, Company__c, ParentId FROM Account WHERE Id = :mondayAcc.ParentId];
 
         System.debug('regionalCompany1 name: '+ regionalCompany1.Name + 'Territory: ' + regionalCompany1.Account_Territory__c);

@@ -1,11 +1,12 @@
 public with sharing class Account_LeadsCapForPartnerCompany {
+    public static Lead_Cap_Settings__mdt leadsCapSettings;
     public static void Account_LeadsCapForPartnerCompany(List<Account> newAccs, Map<Id,Account> oldAccMap){
         try{
             Id partnerCompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();
             list<Account> relevantAccs= new list<Account>();
             set<Id> relevantAccsIds= new set<Id>();
             system.debug('Raz Ben Ron in trigger relevantAccsIds ');
-            Lead_Cap_Settings__mdt leadsCapSettings = [select id,Max_Open_Leads__c from Lead_Cap_Settings__mdt where DeveloperName='Partners'][0];
+            if(leadsCapSettings == null) leadsCapSettings = [select id,Max_Open_Leads__c from Lead_Cap_Settings__mdt where DeveloperName='Partners'][0];
             for(Account acc: newAccs){
                 if(acc.RecordTypeid==partnerCompanyRecordTypeId&&
                 (newAccs==null&&acc.Partner_Company_Status__c=='Signed')||

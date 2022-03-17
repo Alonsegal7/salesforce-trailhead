@@ -20,12 +20,12 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
             Partners_SharingService.createAccountShares_ManualTrigger(Trigger.new);
         }
         if (Trigger.isUpdate){
-            Account_OwnerStamps.UpdatePreviousOwner(Trigger.new,Trigger.oldMap);
+            Account_OwnerStamps.UpdateOwnerStamps(Trigger.new,Trigger.oldMap);
         }
     }
     if (Trigger.isAfter) {
-        Account_RegionalCompanyService.findOrCreateRegionalCompany(trigger.new, trigger.oldMap);
         if (trigger.isInsert||trigger.IsUpdate) {
+            Account_RegionalCompanyService.findOrCreateRegionalCompany(trigger.new, trigger.oldMap);
             Account_Rollup.Account_Rollup_ParentChange(trigger.new, trigger.oldMap);
             Partners_SharingService.createAccountShares(trigger.new, trigger.oldMap);
             Partners_SharingService.createAccountSharesOwnerChange(trigger.new, trigger.oldMap);
