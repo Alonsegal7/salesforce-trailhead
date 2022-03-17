@@ -27,7 +27,6 @@ public without sharing class Account_OwnerStamps {
                 String ownerBusinessRole = ownersMap.get(acc.OwnerId).Business_Role__c;
                 acc.AM__c = ownerBusinessRole == 'AM' ? acc.OwnerId : null;
                 acc.AE__c = ownerBusinessRole == 'AE' ? acc.OwnerId : null;
-                acc.CSM__c = ownerBusinessRole.contains('CSM') ? acc.OwnerId : null;
             }
         }
     }

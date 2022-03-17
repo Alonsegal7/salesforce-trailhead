@@ -41,14 +41,14 @@ export default class LightningDatatableLWCExample extends LightningElement {
         },
         {
             label: 'Owner',
-            fieldName: 'Owner_Name_Live__c',
+            fieldName: 'Owner_Name_Text__c',
             wrapText: true,
             type: 'text',
             sortable: true
         },
         {
             label: 'Owners Group',
-            fieldName: 'Owner_Group_Live__c',
+            fieldName: 'Owner_s_Group__c',
             wrapText: true,
             type: 'text',
             sortable: true
@@ -61,7 +61,7 @@ export default class LightningDatatableLWCExample extends LightningElement {
         },
         {
             label: 'Last Activity Date',
-            fieldName: 'LastActivityDate',
+            fieldName: 'Last_Touch_Date__c',
             type: 'date',
             typeAttributes: {month: "2-digit", day: "2-digit", year: "numeric"},
             sortable: true
@@ -103,7 +103,7 @@ export default class LightningDatatableLWCExample extends LightningElement {
         },
         {
             label: 'Last Activity Date',
-            fieldName: 'LastActivityDate',
+            fieldName: 'Last_Touch_Date__c',
             type: 'date',
             typeAttributes: {month: "2-digit", day: "2-digit", year: "numeric"},
             sortable: true
@@ -126,8 +126,8 @@ export default class LightningDatatableLWCExample extends LightningElement {
                 recordUrl: '/lightning/r/Lead/' +item.Id +'/view'
             }));
             tempLeadList.forEach(item => {
-                if (item.Owner_Group_Live__c == 'Partners') {
-                    item.Owner_Group_Live__c = item.Owner_Group_Live__c + ' (CPM: ' + item.Owner_s_Manager__r.Name + ')';
+                if (item.Owner_s_Group__c == 'Partners') {
+                    item.Owner_s_Group__c = item.Owner_s_Group__c + ' (CPM: ' + item.Owner_s_Manager__r.Name + ')';
                 }
             });
             console.log('##temp data: '+JSON.stringify(tempLeadList));

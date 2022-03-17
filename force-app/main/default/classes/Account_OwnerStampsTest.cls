@@ -35,11 +35,11 @@ public with sharing class Account_OwnerStampsTest {
     static testMethod void CheckBusinessRolesStamps(){
         User user1 = [select Id from User Where LastName = 'Test1' limit 1];
         User user2 = [select Id from User Where LastName = 'Test2' limit 1];
-        Account acc = [select Id, CSM__c, AE__c from Account limit 1];
-        system.assertEquals(user1.Id, acc.AE__c);
+        Account acc = [select Id, AE__c from Account limit 1];
+        system.assertEquals(acc.AE__c, user1.Id);
         acc.OwnerId = user2.Id;
         Update acc; 
-        acc = [select Id, CSM__c, AE__c from Account limit 1];
-        system.assertEquals(user2.Id, acc.CSM__c);
+        acc = [select Id, AE__c from Account limit 1];
+        system.assertEquals(acc.AE__c, null);
     }
 }
