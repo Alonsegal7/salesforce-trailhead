@@ -42,7 +42,8 @@ public class MondayAccountHelper {
         Set<Id> accToUpdateRelatedObjs = new Set<Id>();
         for(Account acc: accList){
             if (oldAccMap != null 
-                && (acc.primary_pulse_account_id__c != oldAccMap.get(acc.Id).primary_pulse_account_id__c || acc.ParentId != oldAccMap.get(acc.Id).ParentId)
+                && (acc.primary_pulse_account_id__c != oldAccMap.get(acc.Id).primary_pulse_account_id__c || acc.Company__c != oldAccMap.get(acc.Id).Company__c || //pulse account id change or company change
+                (acc.Manual_Trigger__c == 'Recalculate Related Objects' && (oldAccMap.get(acc.Id).Manual_Trigger__c == null || acc.Manual_Trigger__c != oldAccMap.get(acc.Id).Manual_Trigger__c))) //manual trigger 
                 && acc.RecordTypeId == MondayAccId){
                     accToUpdateRelatedObjs.add(acc.Id);
             }
@@ -50,7 +51,7 @@ public class MondayAccountHelper {
         if(accToUpdateRelatedObjs.isEmpty()) return;
 
         list <Account> accountsList = [
-            select id,name,parentid, RecordTypeId, primary_pulse_account_id__c,
+            select id,name, Company__c, parentid, RecordTypeId, primary_pulse_account_id__c, Manual_Trigger__c,
             (select id,stagename,AccountId from Opportunities),
             (select id,monday_Account__c from Sale1__r),
             (select id,monday_Account__c from Contacts1__r)
@@ -58,8 +59,9 @@ public class MondayAccountHelper {
         ];
 
         Id accountCompanyId;
+        List<Account> accToClear = new List<Account>();
         for(Account acc: accountsList){
-            accountCompanyId = acc.RecordTypeId == companyRecordTypeId ? acc.Id : acc.ParentId;
+            accountCompanyId = acc.RecordTypeId == companyRecordTypeId ? acc.Id : acc.Company__c;
             
             for(Sale__c sale : acc.Sale1__r) {
                 sale.Company__c = accountCompanyId;
@@ -77,6 +79,14 @@ public class MondayAccountHelper {
                 con.Company__c = accountCompanyId;
                 SObject4Update.put(con.id, con);
             }
+
+            if (acc.Manual_Trigger__c == 'Recalculate Related Objects') {
+                acc.Manual_Trigger__c = '';
+                accToClear.add(acc);
+            }
+        }
+        if (!accToClear.isEmpty()) {
+            update accToClear;
         }
     }
 

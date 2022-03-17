@@ -18,7 +18,7 @@ public class MondayAccountHelperTest {
         Opportunity opp = new Opportunity(Company__c=companyA.Id, Name='opp123', StageName='Qualified', CloseDate=system.today(), Expected_Plan_Name__c='100 users', Monday_Account__c=mondayAccount.Id, AccountId=mondayAccount.Id);
         insert opp;
         
-        mondayAccount.ParentId = companyB.Id;
+        mondayAccount.Company__c = companyB.Id;
         update mondayAccount;
         
         sale = [select Id, Company__c from Sale__c where Id=:sale.Id limit 1];
