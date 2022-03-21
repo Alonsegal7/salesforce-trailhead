@@ -174,7 +174,11 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
 
     @api
     validate(){ //validation on save files
-        if(this.required === true){ // files are mandatory
+        console.log('LWC file upload improved validate required: '+ this.required);
+        console.log('LWC file upload improved validate minRequired: '+ this.minRequired);
+        console.log('LWC file upload improved validate maxAllowed: '+ this.maxAllowed);
+        console.log('LWC file upload improved validate num of files uploaded: '+ this.docIds.length);
+        if(this.required == true || this.required == 'true'){ // files are mandatory
             var errorMessage;
             if(this.docIds.length < this.minRequired){ // not enough files uploaded 
                 if(this.requiredMessage == null){

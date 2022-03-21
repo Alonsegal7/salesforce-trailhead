@@ -8,6 +8,7 @@
     <aura:attribute name="recordId" type="Id" />
     <!--File upload attributes-->
     
+    <aura:attribute name="errMsg" type="String" default="" />
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <aura:attribute name="isClosedLost" type="Boolean" default="false"/>
     <aura:attribute name="isClosedWon" type="Boolean" default="false"/>
@@ -18,15 +19,14 @@
     <aura:attribute name="closedFields" type="Object"/>
     <aura:attribute name="variant" type="String" default="non-linear"/>
     <aura:attribute name="hideUpdateButton" type="Boolean" default="false"/>
-    <aura:attribute name="hideUpdateButton_ClosedProcess" type="Boolean" default="false"/>
+    <aura:attribute name="hideStagePathUpdateBtn" type="Boolean" default="false"/>
     <aura:attribute name="innerPathValue" type="String"/>
     <aura:attribute name="showWhatSigned" type="Boolean" default="false"/>
     <aura:attribute name="showHandover" type="boolean" default="false"/>
     <aura:attribute name="record" type="Object"/>
-    <aura:attribute name="lostStage" type="String"/>
     <aura:attribute name="recordSaveError" type="String"/>
     <aura:attribute name="showValidation" type="Boolean" default="true"/>
-    <aura:attribute name="selectCheckbox" type="Boolean" default="false"/>
+    <aura:attribute name="isSoManuallySigned" type="Boolean" default="false"/>
     <aura:attribute name="wonCompletedSuccess" type="Boolean" default="false"/>
     <aura:attribute name="checkARR" type="boolean" default="false"/>
     <aura:attribute name="greenBucketData" type="Opportunity" default=""/>
@@ -51,19 +51,22 @@
         targetFields="{!v.closedFields}"
         recordUpdated="{!c.recordUpdated}"
         mode="EDIT"/>
-        
-    <aura:if isTrue="{!and(!v.hideUpdateButton_ClosedProcess, v.oppData.StageName != 'Closed Won')}">
-        <aura:if isTrue="{!v.oppData.StageName != 'Closed Lost'}">
-            <lightning:path aura:id="path" recordId="{!v.recordId}" variant="linear" hideUpdateButton="{!v.hideUpdateButton}" onselect="{!c.handleSelect_TestPath}"/>
-        </aura:if>
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
     </aura:if>
 
-    <aura:if isTrue="{!v.hideUpdateButton_ClosedProcess}">
-        <lightning:picklistPath aura:id="picklistPath"  recordId="{!v.recordId}" variant="linear" picklistFieldApiName="StageName" onselect="{!c.handleSelect}"/>
-    </aura:if>
-
-    <aura:if isTrue="{!and(!v.hideUpdateButton_ClosedProcess, or(v.oppData.StageName == 'Closed Won', v.oppData.StageName == 'Closed Lost'))}">
-        <lightning:path aura:id="path" recordId="{!v.recordId}" variant="linear" hideUpdateButton="{!v.hideUpdateButton}" onselect="{!c.handleSelect_TestPath}"/>
+    <!-- If the Stage is already Closed or an open stage was selected - we display the path with update button
+        else we display the picklis path without update button to select closed won/lost-->
+    <aura:if isTrue="{!!v.hideStagePathUpdateBtn}"> <!-- hideStagePathUpdateBtn = FALSE -->
+        <lightning:path aura:id="path" recordId="{!v.recordId}" variant="linear" hideUpdateButton="{!v.hideStagePathUpdateBtn}" onselect="{!c.handleStageSelected}"/>
+        <aura:set attribute="else"> <!-- hideStagePathUpdateBtn = TRUE -->
+            <lightning:picklistPath aura:id="picklistPath" recordId="{!v.recordId}" variant="linear" picklistFieldApiName="StageName" onselect="{!c.handleClosedStageSelected}"/>
+        </aura:set>
     </aura:if>
 
     <aura:if isTrue="{!v.isModalOpen}">
@@ -94,26 +97,23 @@
                                         recordId="{!v.recordId}"
                                         objectApiName="Opportunity"
                                         aura:id="closedLostFields">
-                                        <lightning:messages aura:id="lostMessage"/>
-
-                                        <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" required="true" value="{!v.lostStage}"/>
+                                        <lightning:messages aura:id="lostMessage"/>                                        
+                                        <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" required="true" value="Closed Lost" disabled="true"/>
                                         <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Lost_Reason__c" value="{!v.closedFields.Lost_Reason__c}" required="true"/>
                                         <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_competitor__c" value="{!v.closedFields.Which_competitor__c}" required="true"/>
                                         <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_features_were_missing__c" value="{!v.closedFields.Which_features_were_missing__c}" required="true"/>
                                     </lightning:recordEditForm>
                                 </aura:if>
                                 <aura:if isTrue="{!v.showValidation}">
+                                    <div class="slds-text-heading_small ">Please fill the following fields in order to Close Lost this opportunity</div>
                                     <lightning:recordEditForm
-                                        onsubmit="{!handleSubmitValidation_Lost}"
-                                        onsuccess="{!c.handleSuccessFieldSets}"
-                                        recordId="{!v.recordId}"
-                                        objectApiName="Opportunity"
-                                        aura:id="validationLostFields">
-                                        <lightning:messages/>
-
-                                        <ui:message title="Key Information:" severity="info">
-                                            Please make sure you populate all the following fields before closing the Opp.<br/>
-                                        </ui:message>
+                                            onsubmit="{!handleSubmitValidation_Lost}"
+                                            onsuccess="{!c.handleSuccessFieldSets}"
+                                            onerror="{!c.turnOffSpinner}"
+                                            recordId="{!v.recordId}"
+                                            objectApiName="Opportunity"
+                                            aura:id="validationLostFields">
+                                        <lightning:messages/>                                        
                                         <aura:iteration items="{!v.fields}" var="field" indexVar="i">
                                             <div class="slds-grid slds-gutters">
                                                 <div class="slds-col slds-size_1-of-1">
@@ -132,9 +132,6 @@
                             <lightning:flow aura:id="closedOppSumFlowData" onstatuschange="{!c.handleStatusChange_OpportunityCloseSummary}"/>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'continueToSummary'}">
-                            <aura:if isTrue="{!v.showSpinner}">
-                                <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" style="margin-top: 400px; margin-bottom: 400px;"/>
-                            </aura:if>
                             <lightning:card>
                                 <div style="text-align: center">
                                     <ui:message title="You've finished the Closed Lost Process" severity="confirm" closable="true">
@@ -178,8 +175,7 @@
                                     <lightning:progressStep label="Opportunity Summary" value="OppSummary"/>
                                 </aura:if>
                             </lightning:progressIndicator>
-                        </aura:if>
-
+                        </aura:if>                        
                         <aura:if isTrue="{!v.innerPathValue != 'continueToSummary'}">
                             <lightning:card>
                                 <lightning:accordion allowMultipleSectionsOpen="true">
@@ -371,9 +367,6 @@
                             </lightning:card>
                         </aura:if>
                         <aura:if isTrue="{!and(v.oppData.Is_Primary_SO_Signed__c, v.innerPathValue == 'SOInfo')}">
-                            <aura:if isTrue="{!v.showSpinner}">
-                                <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" style="margin-top: 400px; margin-bottom: 400px;"/>
-                            </aura:if>
                             <aura:if isTrue="{!!v.showSpinner}">
                                 <lightning:card>
                                     <aura:if isTrue="{!!v.showValidation}">
@@ -393,6 +386,7 @@
                                         <lightning:recordEditForm
                                             onsubmit="{!c.handleSubmitValidation_SOWon}"
                                             onsuccess="{!c.handleSuccessFieldSets}"
+                                            onerror="{!c.turnOffSpinner}"
                                             recordId="{!v.recordId}"
                                             aura:id="validationSOFields"
                                             objectApiName="Opportunity">
@@ -417,9 +411,7 @@
                             </aura:if>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'Claim'}">
-                            <aura:if isTrue="{!v.showSpinner}">
-                                <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" style="margin-top: 400px; margin-bottom: 400px;"/>
-                            </aura:if>
+                            
                             <aura:if isTrue="{!!v.showSpinner}">
                                 <lightning:card>
                                     <aura:if isTrue="{!!v.showValidation}">
@@ -433,7 +425,7 @@
                                                 aura:id="closedWonFields">
                                                 <lightning:messages aura:id="claimMessage"/>
         
-                                                <lightning:inputField aura:id="newOpportunityClaimField" fieldName="What_Would_You_Like_To_Claim__c" value="{!v.closedFields.What_Would_You_Like_To_Claim__c}" onchange="{!c.setClaim}" required="true"/>
+                                                <lightning:inputField aura:id="newOpportunityClaimField" fieldName="What_Would_You_Like_To_Claim__c" value="{!v.closedFields.What_Would_You_Like_To_Claim__c}" onchange="{!c.setWhatWouldYouLikeToClaim}" required="true"/>
                                             </lightning:recordEditForm>
                                         </div>
                                     </aura:if>
@@ -441,6 +433,7 @@
                                         <lightning:recordEditForm
                                             onsubmit="{!c.handleSubmitValidation_ClaimWon}"
                                             onsuccess="{!c.handleSuccessFieldSets}"
+                                            onerror="{!c.turnOffSpinner}"
                                             recordId="{!v.recordId}"
                                             objectApiName="Opportunity"
                                             aura:id="validationClaimFields">
@@ -466,9 +459,6 @@
                             </aura:if>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'ManualSignature'}">
-                            <aura:if isTrue="{!v.showSpinner}">
-                                <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" style="margin-top: 400px; margin-bottom: 400px;"/>
-                            </aura:if>
                             <aura:if isTrue="{!!v.showSpinner}">
                                 <lightning:card>
                                 <lightning:recordEditForm
@@ -476,14 +466,13 @@
                                         recordId="{!v.recordId}"
                                         objectApiName="Opportunity"
                                         aura:id="closedFields">
-                                    <lightning:messages aura:id="oppMessage"/>
-
-                                    <lightning:input aura:id="newOpportunityField" type="checkbox" label="Is SO Manually Signed?" checked="{!v.closedFields.Is_SO_Signed__c}" value="{!v.closedFields.Is_SO_Signed__c}" required="true" onchange="{!c.checkboxSelect}"/>
-                                    <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Date_of_Signature__c" value="{!v.closedFields.DH_Date_of_Signature__c}" required="true" />
-                                    <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Signer_Name_c__c" value="{!v.closedFields.DH_Signer_Name_c__c}" required="true"/>
-                                    <lightning:inputField aura:id="newOpportunityField" fieldName="DH_Signer_Title__c" value="{!v.closedFields.DH_Signer_Title__c}" required="true"/>
-                                    <lightning:inputField aura:id="newOpportunityField" fieldName="Manual_Signature_Reason__c" value="{!v.closedFields.Manual_Signature_Reason__c}" required="true" onchange="{!c.prioritySO}"/>
-                                    <c:fileUploadImproved
+                                    <lightning:messages aura:id="oppMessage"/>                                    
+                                    <lightning:input aura:id="manuallySignedFields" type="checkbox" label="Is SO Manually Signed?" checked="{!v.closedFields.Is_SO_Signed__c}" value="{!v.closedFields.Is_SO_Signed__c}" required="true" onchange="{!c.isSOManuallySignedClicked}"/>
+                                    <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Date_of_Signature__c" value="{!v.closedFields.DH_Date_of_Signature__c}" required="true" />
+                                    <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Signer_Name_c__c" value="{!v.closedFields.DH_Signer_Name_c__c}" required="true"/>
+                                    <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Signer_Title__c" value="{!v.closedFields.DH_Signer_Title__c}" required="true"/>
+                                    <lightning:inputField aura:id="manuallySignedFields" fieldName="Manual_Signature_Reason__c" value="{!v.closedFields.Manual_Signature_Reason__c}" required="true" onchange="{!c.prioritySO}"/>
+                                    <c:fileUploadImproved aura:id="fileUploadImp"
                                         label="Attachment"
                                         acceptedFormats="{!v.filetype}"
                                         allowMultiple="false"
@@ -492,21 +481,13 @@
                                         required="true"
                                         maxAllowed="1"
                                         multiple="false"
-                                    />
-                                    <!--<lightning:fileUpload label="Attachment"
-                                        name="fileUploader"
-                                        multiple="true"
-                                        accept="{!v.filetype}"
-                                        recordId="{!v.recordId}"
-                                        onuploadfinished="{!c.handleUploadFinished}" /> -->
+                                    ></c:fileUploadImproved>
                                 </lightning:recordEditForm>
                             </lightning:card>
                             </aura:if>
                         </aura:if>
                         <aura:if isTrue="{!and(v.innerPathValue == 'BBPickers', or(v.isPrioritySO == 'Priority SO', v.closedFields.Manual_Signature_Reason__c == 'Priority SO'))}">
-                            <aura:if isTrue="{!v.showSpinner}">
-                                <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" style="margin-top: 400px; margin-bottom: 400px;"/>
-                            </aura:if>
+                            
                             <aura:if isTrue="{!!v.showSpinner}">
                                 <lightning:card>
                                 <ui:message title="BigBrain - Account Activation" severity="warning">
@@ -525,9 +506,7 @@
                             </aura:if>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'CCClaim'}">
-                            <aura:if isTrue="{!v.showSpinner}">
-                                <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" style="margin-top: 400px; margin-bottom: 400px;"/>
-                            </aura:if>
+                            
                             <aura:if isTrue="{!!v.showSpinner}">
                                 <lightning:card>
                                     <c:subscriptionPickersComponent recordId="{!v.recordId}"/>
@@ -535,9 +514,7 @@
                             </aura:if>
                         </aura:if>
                         <aura:if isTrue="{!v.innerPathValue == 'continueToSummary'}">
-                            <aura:if isTrue="{!v.showSpinner}">
-                                <lightning:spinner aura:id="Spinner" alternativeText="Loading" size="medium" variant="brand" style="margin-top: 400px; margin-bottom: 400px;"/>
-                            </aura:if>
+                            
                             <aura:if isTrue="{!greaterthanorequal(v.greenBucketData.Green_Bucket_ARR_V2__c, 10000)}">
                                 <lightning:card>
                                     <div style="text-align: center">
@@ -570,8 +547,11 @@
                             <lightning:flow aura:id="closedOppSumFlowData" onstatuschange="{!c.handleStatusChange_OpportunityCloseSummary}"/>
                         </aura:if>
                     </aura:if>
+
+                    <aura:if isTrue="{!not(v.errMsg=='')}">
+                        <div class="slds-text-heading_small slds-text-align_center slds-text-color_error">{!v.errMsg}</div>
+                    </aura:if>
                 </div>
-                
                 <aura:if isTrue="{!and(v.innerPathValue != 'continueToSummary', !v.showValidation)}">
                     <aura:if isTrue="{!and(v.innerPathValue != 'OppSummary', v.innerPathValue != 'Handover')}">
                         <footer class="slds-modal__footer">
@@ -579,26 +559,16 @@
                                               label="Cancel"
                                               title="Cancel"
                                               onclick="{! c.closeModal }"/>
-                            <lightning:button variant="neutral"
-                                              label="Previous"
-                                              title="Previous"
-                                              onclick="{!c.previousStep}"/>
+                            <aura:if isTrue="{!v.innerPathValue != 'LostInfo'}">
+                                <lightning:button variant="neutral"
+                                label="Previous"
+                                title="Previous"
+                                onclick="{!c.previousStep}"/>
+                            </aura:if>
                             <lightning:button variant="brand"
                                                 label="Next Step"
                                                 title="Next Step"
                                                 onclick="{!c.submitDetails}"/>
-                        </footer>
-                    </aura:if>
-                    <aura:if isTrue="{!v.innerPathValue == 'Handover'}">
-                        <footer class="slds-modal__footer">
-                            <lightning:button variant="brand"
-                                              label="Cancel"
-                                              title="Cancel"
-                                              onclick="{! c.closeModal }"/>
-                            <lightning:button variant="neutral"
-                                              label="Previous Step"
-                                              title="Previous Step"
-                                              onclick="{!c.previousStep}"/>
                         </footer>
                     </aura:if>
                     <aura:if isTrue="{!v.innerPathValue == 'OppSummary'}">
@@ -616,7 +586,7 @@
                             <lightning:button variant="brand"
                                               label="Finish"
                                               title="Finish"
-                                              onclick="{! c.finishModal }"/>
+                                              onclick="{! c.closeModal }"/>
                             <lightning:button variant="neutral"
                                               label="Next Step"
                                               title="Next Step"
@@ -628,7 +598,7 @@
                             <lightning:button variant="brand"
                                               label="Finish"
                                               title="Finish"
-                                              onclick="{! c.finishModal }"/>
+                                              onclick="{! c.closeModal }"/>
                         </footer>
                     </aura:if>
                 </aura:if>
