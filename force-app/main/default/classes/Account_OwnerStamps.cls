@@ -14,20 +14,22 @@ public without sharing class Account_OwnerStamps {
         if (relevantAccounts.isEmpty() || relevantOwners.isEmpty()) return;
         if (ownersMap == null) {
             ownersMap = new Map<Id,User>();
-            for (User u : [SELECT Id, Business_Role__c FROM USER WHERE Id IN: relevantOwners]) {
+            for (User u : [SELECT Id, Business_Role__c, Manager.Team__c FROM USER WHERE Id IN: relevantOwners]) {
                 ownersMap.put(u.Id, u);
             }
         }
         for (Account acc : relevantAccounts) {
+            User currOwner = ownersMap.get(acc.OwnerId);
             if (oldAccounts.get(acc.Id).OwnerId != null) {
                 acc.PreviousOwner__c = oldAccounts.get(acc.Id).OwnerId;
             }
-            System.debug('Account_OwnerStamps ownersMap.get(acc.OwnerId): '+ ownersMap.get(acc.OwnerId));
-            if (ownersMap.get(acc.OwnerId).Business_Role__c != null) {
-                String ownerBusinessRole = ownersMap.get(acc.OwnerId).Business_Role__c;
+            System.debug('Account_OwnerStamps currOwner: '+ currOwner);
+            if (currOwner.Business_Role__c != null) {
+                String ownerBusinessRole = currOwner.Business_Role__c;
                 acc.AM__c = ownerBusinessRole == 'AM' ? acc.OwnerId : null;
                 acc.AE__c = ownerBusinessRole == 'AE' ? acc.OwnerId : null;
             }
+            acc.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
         }
     }
 }
