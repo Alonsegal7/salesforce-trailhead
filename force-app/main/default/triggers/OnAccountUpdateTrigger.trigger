@@ -18,13 +18,11 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
         if(Trigger.isUpdate){ //before update only
             Account_OwnerValidation.companyOwnerValidation(Trigger.new, Trigger.oldMap);
             Partners_SharingService.createAccountShares_ManualTrigger(Trigger.new);
-        }
-        if (Trigger.isUpdate){
             Account_OwnerStamps.UpdateOwnerStamps(Trigger.new,Trigger.oldMap);
         }
     }
     if (Trigger.isAfter) {
-        if (trigger.isInsert||trigger.IsUpdate) {
+        if (Trigger.isInsert || Trigger.isUpdate) { 
             Account_RegionalCompanyService.findOrCreateRegionalCompany(trigger.new, trigger.oldMap);
             Account_Rollup.Account_Rollup_ParentChange(trigger.new, trigger.oldMap);
             Partners_SharingService.createAccountShares(trigger.new, trigger.oldMap);
@@ -52,6 +50,7 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
                 TargetsService targetsServ = new TargetsService();
                 targetsServ.updateTargetOnAccSourceTypeChange(Trigger.new, Trigger.oldMap);
             } 
+            Account_SourceTypeOnOpps.updateSourceTypeOnOpps(Trigger.new, Trigger.oldMap);
         }
         if(trigger.isInsert||trigger.IsUpdate){
             Account_SetCompanyDomains.Account_SetCompanyDomains(trigger.new,trigger.oldmap);
