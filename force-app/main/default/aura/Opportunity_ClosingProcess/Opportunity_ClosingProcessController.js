@@ -43,7 +43,7 @@
             } else {
                 helper.handleClosedWonStageSelected(component, event, helper);
             } 
-        } else if(stepName === 'Closed Lost'){
+        } else if(stepName == 'Closed Lost'){
             helper.handleClosedLostStageSelected(component, event, helper);
         } else { //not closed won and not closed lost
             component.set('v.hideUpdateButton', false);
@@ -123,24 +123,16 @@
     
     //Next Step button
     submitDetails : function(component, event, helper) {
+        console.log('opp close proc: entered submitDetails');
+        console.log('opp close proc: submitDetails isClosedWon '+component.get('v.isClosedWon'));
+        console.log('opp close proc: submitDetails isClosedLost '+component.get('v.isClosedLost'));
         component.set("v.errMsg", "");
         event.preventDefault();
         if(component.get('v.isClosedWon')){
+            console.log('opp close proc: entered close won condition');
             helper.submit_closedWon(component, event, helper);
         } else if(component.get('v.isClosedLost')){
-            var allValid = true;
-            component.find('ClosedLostFieldCheck').forEach(function (field) {
-                if (!field.get("v.value")) {
-                    allValid = false;
-                }
-                field.reportValidity();
-            });
-            if(allValid){
-                console.log('submitDetails valid input');
-                helper.submit_closedLost(component, event, helper);
-            } else {
-                console.log('submitDetails not valid input');
-            }
+            helper.submit_closedLost(component, event, helper);
         }
     },
 })

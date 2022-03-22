@@ -350,13 +350,45 @@
 	},
 
 	submit_closedLost : function(component, event, helper){
-		if(component.get('v.innerPathValue') == 'continueToSummary'){
-			component.set('v.innerPathValue', 'OppSummary');
-			helper.callFlow_getOpportunitySummary(component, event, helper);
+		console.log('opp close proc: entered submit_closedLost');
+		component.set('v.showSpinner', true);
+		component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
+			if (saveResult.state == "SUCCESS" || saveResult.state == "DRAFT") {
+				console.log('opp close proc: saveRecord result SUCCESS');
+				if(component.get('v.innerPathValue') == 'continueToSummary'){
+					component.set('v.innerPathValue', 'OppSummary');
+					helper.callFlow_getOpportunitySummary(component, event, helper);
+				} else {
+					component.set('v.innerPathValue', 'continueToSummary');
+					helper.callback_closeOpp(component, event, helper, "Closed Lost");
+				}
+			} else if(saveResult.state == "ERROR") {
+				console.log('opp close proc: saveRecord result ERROR');
+				console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
+				component.set("v.errMsg", JSON.stringify(saveResult.error));
+			}
+			component.set('v.showSpinner', false);
+		}));
+		/*
+		var closeLostInputValid = true;
+		component.find("ClosedLostFieldCheck").forEach(function (field) {
+			if (!field.get("v.value")) {
+				closeLostInputValid = false;
+			}
+			//field.reportValidity();
+		});
+		if(closeLostInputValid){
+			console.log('submitDetails valid input');
+			if(component.get('v.innerPathValue') == 'continueToSummary'){
+				component.set('v.innerPathValue', 'OppSummary');
+				helper.callFlow_getOpportunitySummary(component, event, helper);
+			} else {
+				component.set('v.innerPathValue', 'continueToSummary');
+				helper.callback_closeOpp(component, event, helper, "Closed Lost");
+			}
 		} else {
-			component.set('v.innerPathValue', 'continueToSummary');
-			helper.callback_closeOpp(component, event, helper, "Closed Lost");
-		}
+			console.log('submitDetails not valid input');
+		}*/
 	},
 
 	handleClosedWonStageSelected : function (component, event, helper){
