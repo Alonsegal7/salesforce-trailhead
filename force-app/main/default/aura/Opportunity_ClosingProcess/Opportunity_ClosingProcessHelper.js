@@ -391,11 +391,21 @@
 		}*/
 	},
 
+	getOpportunityType : function (component, event, helper){
+		var oppType = '';
+		if(component.get('v.oppData.Type') == 'Renewal') oppType = component.get('v.oppData.Type');
+		else oppType = component.get('v.oppData.Opportunity_Type__c');
+		console.log('opp close proc: getOpportunityType oppType: ' + oppType)
+		return oppType;
+	},
+
 	handleClosedWonStageSelected : function (component, event, helper){
 		console.log('opp close proc: handleClosedWonStageSelected');
 		var fieldSetReferance;
 		var isRetreiveFieldSet;
-		if(component.get('v.oppData.Opportunity_Type__c') != 'Expansion'){
+		var oppType = helper.getOpportunityType(component, event, helper);
+		
+		if(oppType != 'Expansion'){
 			if(component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity' && component.get('v.oppData.Is_Potential_GB_Opportunity__c')){
 				fieldSetReferance = "InternalOpportunity_Won_NotExpansion";
 				isRetreiveFieldSet = true;
@@ -403,7 +413,7 @@
 				fieldSetReferance = "PartnerOpportunity_WonLost_NotExpansion";
 				isRetreiveFieldSet = true;
 			}
-		}else if(component.get('v.oppData.Opportunity_Type__c') == 'Expansion' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'){
+		}else if(oppType == 'Expansion' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'){
 			fieldSetReferance = "InternalOpportunity_Won_Expansion";
 			isRetreiveFieldSet = true;
 		}
@@ -461,8 +471,9 @@
 		// check if need to get fields from field set
 		var fieldSetReferance;
 		var isRetreiveFieldSet = false;
+		var oppType = helper.getOpportunityType(component, event, helper);
 		if(component.get('v.oppData.StageName') != 'Qualified'){
-			if(component.get('v.oppData.Opportunity_Type__c') != 'Expansion'){
+			if(oppType != 'Expansion'){
 				if(component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity' && component.get('v.oppData.Is_Potential_GB_Opportunity__c')){
 					fieldSetReferance = "InternalOpportunity_Lost_NotExpansion";
 					isRetreiveFieldSet = true;
@@ -512,9 +523,10 @@
 	// end of refactored call flow methods
 
 	setPreviousStep : function (component, event, helper){
+		var oppType = helper.getOpportunityType(component, event, helper);
 		if(component.get('v.innerPathValue') == 'SOInfo' || component.get('v.innerPathValue') == 'Claim'){
 			component.set('v.showValidation', true);
-			if(component.get('v.oppData.Opportunity_Type__c') != 'Expansion'){
+			if(oppType != 'Expansion'){
 				if(component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity' && component.get('v.oppData.Is_Potential_GB_Opportunity__c')){
 					fieldSetReferance = "InternalOpportunity_Won_NotExpansion";
 					isRetreiveFieldSet = true;
@@ -522,7 +534,7 @@
 					fieldSetReferance = "PartnerOpportunity_WonLost_NotExpansion";
 					isRetreiveFieldSet = true;
 				}
-			}else if(component.get('v.oppData.Opportunity_Type__c') == 'Expansion' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'){
+			}else if(oppType == 'Expansion' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'){
 				fieldSetReferance = "InternalOpportunity_Won_Expansion";
 				isRetreiveFieldSet = true;
 			}
