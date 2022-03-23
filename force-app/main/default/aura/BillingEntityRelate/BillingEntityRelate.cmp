@@ -99,7 +99,7 @@
 					</div>
 					<div class="part-body">
 						<div class="lookup-container">
-							<c:Lookup objectName="Billing_Entity__c" singleChoose="true" field_API_text="Name" field_API_val="Id" limit="50" field_API_search="Name" lookupIcon="custom:custom16" 
+							<c:LookupSearch objectName="Billing_Entity__c" singleChoose="true" field_API_text="Name" field_API_val="Id" limit="50" field_API_search="Name" lookupIcon="custom:custom16" 
 										  selItem="{! v.latest_be }" /><!--statusField="Status__c"-->
 						</div>
 						<div class="lookup-relate-btn-container to-left pad-left">
@@ -165,7 +165,7 @@
 				</div>
 				<div class="part-body">
 					<div class="lookup-container">
-						<c:Lookup objectName="Billing_Entity__c" singleChoose="false" field_API_text="Name" field_API_val="Id" limit="50" field_API_search="Name" lookupIcon="custom:custom16" 
+						<c:LookupSearch objectName="Billing_Entity__c" singleChoose="false" field_API_text="Name" field_API_val="Id" limit="50" field_API_search="Name" lookupIcon="custom:custom16" 
 									  selItem="{! v.selected_be }" /><!--statusField="Status__c"-->
 					</div>
 					<div class="lookup-relate-btn-container">
