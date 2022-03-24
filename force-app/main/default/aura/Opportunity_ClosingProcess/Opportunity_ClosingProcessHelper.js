@@ -255,13 +255,25 @@
 	
 	callbackErrorHander : function(component, event, helper, respErr){
 		let err = respErr;
+		console.log('callbackErrorHander error: '+JSON.stringify(err));
 		let errMsg = '';
 		console.log()
 		if (err && Array.isArray(err)) {
-			errMsg = 'Error: ' + err[0].message;
+			errMsg = err[0].message;
+			if(errMsg.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION, ') != -1){
+				var index1 = errMsg.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION, ');
+				errMsg = errMsg.replace('FIELD_CUSTOM_VALIDATION_EXCEPTION, ','');
+				errMsg = errMsg.replace(': []','');
+				errMsg = errMsg.substring(index1);
+			}
 		} else {
-			errMsg = 'Unknown error occured.';
+			errMsg = 'Unknown error occured. Please contact Biz Ops team.';
 		}
+		component.find('notifLib').showToast({
+			"variant": "error",
+			"mode" : "sticky",
+			"title": errMsg         
+		});
 		component.set("v.errMsg", errMsg);
 	},
 
