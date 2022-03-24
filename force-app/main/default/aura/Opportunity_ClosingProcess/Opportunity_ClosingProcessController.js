@@ -120,19 +120,36 @@
         helper.setPreviousStep(component, event, helper);
     },
 
+
     
     //Next Step button
-    submitDetails : function(component, event, helper) {
-        console.log('opp close proc: entered submitDetails');
-        console.log('opp close proc: submitDetails isClosedWon '+component.get('v.isClosedWon'));
-        console.log('opp close proc: submitDetails isClosedLost '+component.get('v.isClosedLost'));
+    handleNextStepClicked : function(component, event, helper) {
+        console.log('opp close proc: entered handleNextStepClicked');
+        console.log('opp close proc: handleNextStepClicked isClosedWon '+component.get('v.isClosedWon'));
+        console.log('opp close proc: handleNextStepClicked isClosedLost '+component.get('v.isClosedLost'));
         component.set("v.errMsg", "");
-        event.preventDefault();
-        if(component.get('v.isClosedWon')){
-            console.log('opp close proc: entered close won condition');
-            helper.submit_closedWon(component, event, helper);
-        } else if(component.get('v.isClosedLost')){
-            helper.submit_closedLost(component, event, helper);
+        event.preventDefault(); //tbd check if needed
+        console.log('opp close proc: requiredInputField list: '+JSON.stringify(component.find('requiredInputField')));
+        if(component.find('requiredInputField') == undefined || component.find('requiredInputField') == null){ //is there a general form to submit
+            if(component.get('v.isClosedWon')){
+                console.log('opp close proc: entered close won condition');
+                helper.nextStep_closeWon(component, event, helper);
+            } else if(component.get('v.isClosedLost')){
+                helper.nextStep_closedLost(component, event, helper);
+            }
+        } else {
+            if(helper.isFormValid(component, event, helper, "requiredInputField")){ //form is valid - proceed to submit
+                component.find("generalRequiredForm").submit();
+            }
         }
     },
+
+    onSuccess_generalRequiredForm : function (component, event, helper) {
+		if(component.get('v.isClosedWon')){
+            console.log('opp close proc: entered close won condition');
+            helper.nextStep_closeWon(component, event, helper);
+        } else if(component.get('v.isClosedLost')){
+            helper.nextStep_closedLost(component, event, helper);
+        }
+	}
 })

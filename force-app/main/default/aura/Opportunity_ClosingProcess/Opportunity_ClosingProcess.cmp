@@ -420,12 +420,12 @@
                                         </div>
                                         <div>
                                             <lightning:recordEditForm
+                                                onsuccess="{!c.onSuccess_generalRequiredForm}"
                                                 recordId="{!v.recordId}"
                                                 objectApiName="Opportunity"
-                                                aura:id="closedWonFields">
+                                                aura:id="generalRequiredForm">
                                                 <lightning:messages aura:id="claimMessage"/>
-        
-                                                <lightning:inputField aura:id="newOpportunityClaimField" fieldName="What_Would_You_Like_To_Claim__c" value="{!v.closedFields.What_Would_You_Like_To_Claim__c}" onchange="{!c.setWhatWouldYouLikeToClaim}" required="true"/>
+                                                <lightning:inputField aura:id="requiredInputField" fieldName="What_Would_You_Like_To_Claim__c" value="{!v.closedFields.What_Would_You_Like_To_Claim__c}" onchange="{!c.setWhatWouldYouLikeToClaim}" required="true"/>
                                             </lightning:recordEditForm>
                                         </div>
                                     </aura:if>
@@ -462,7 +462,7 @@
                             <aura:if isTrue="{!!v.showSpinner}">
                                 <lightning:card>
                                 <lightning:recordEditForm
-                                        onsubmit="{!v.submitDetails}"
+                                        onsubmit="{!v.handleNextStepClicked}"
                                         recordId="{!v.recordId}"
                                         objectApiName="Opportunity"
                                         aura:id="closedFields">
@@ -569,7 +569,7 @@
                             <lightning:button variant="brand"
                                                 label="Next Step"
                                                 title="Next Step"
-                                                onclick="{!c.submitDetails}"/>
+                                                onclick="{!c.handleNextStepClicked}"/>
                         </footer>
                     </aura:if>
                     <aura:if isTrue="{!v.innerPathValue == 'OppSummary'}">
@@ -591,7 +591,7 @@
                             <lightning:button variant="neutral"
                                               label="Next Step"
                                               title="Next Step"
-                                              onclick="{!c.submitDetails}"/>
+                                              onclick="{!c.handleNextStepClicked}"/>
                         </footer>
                     </aura:if>
                     <aura:if isTrue="{!and(lessthan(v.greenBucketData.Green_Bucket_ARR_V2__c, 10000), v.closedFields.StageName == 'Closed Won')}">
