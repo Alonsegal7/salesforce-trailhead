@@ -18,6 +18,7 @@
             <property description="The Version Ids of the uploaded files. Store this value in a text collection variable." type="String[]" name="contentVersionIds" role="outputOnly" label='Content Version Ids'/>
             <property description="The Id of the record to associate the files with." type="String" name="recordId" label='Related Record Id'/>
             <property description="The names of the uploaded files. Store this value in a text collection variable." type="String[]" name="uploadedFileNames" role="outputOnly" label='Uploaded File Names'/>
+            <property description="Optional suffix to append to the uploaded files names." type="String" name="filenameSuffix" role="inputOnly" label='Files Names Suffix (Optional)'/>
             <property description="Require the user to upload at least one file." type="Boolean" name="required" role="inputOnly" label='Required'/>
             <property description="Minimum files required. Relevant only if files upload is mandatory (required is true). Default is 1." type="Integer" name="minRequired" role="inputOnly" label='Minimum files required (Optional)'/>
             <property description="Maximum files allowed. Relevant only if files upload is mandatory (required is true). Default is null." type="Integer" name="maxAllowed" role="inputOnly" label='Maximum files Allowed (Optional)'/>

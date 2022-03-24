@@ -16,7 +16,8 @@ public without sharing class FileUploadImprovedHelper{
     }
     
     @AuraEnabled
-    public static void createContentDocLink(List<String> versIds, String encodedKey){
+    public static void createContentDocLink(List<String> versIds, String encodedKey, String nameSuffix, List<String> docIds){
+        if(nameSuffix != null && nameSuffix != '') updateFilesNames(nameSuffix, docIds);
         List<ContentVersion> versions = [SELECT Id, ContentDocumentId, Guest_Record_fileupload__c
                                    		 FROM ContentVersion
                                    		 WHERE Id IN :versIds];
@@ -36,6 +37,16 @@ public without sharing class FileUploadImprovedHelper{
         ContentVersion cv = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :versId LIMIT 1];
         ContentDocument cd = new ContentDocument(Id=cv.ContentDocumentId);
         delete cd;
+    }
+
+    private static void updateFilesNames(String nameSuffix, List<String> docIds){
+        List<ContentDocument> docs = [SELECT Id, Title
+                                        FROM ContentDocument
+                                        WHERE Id IN :docIds];
+        for(ContentDocument doc: docs){
+            doc.Title = doc.Title + nameSuffix;
+        }
+        update docs;
     }
     
     private static String decrypt(String encodedValue, String encodedKey){

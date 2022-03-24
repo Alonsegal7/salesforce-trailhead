@@ -10,7 +10,7 @@ import deleteContentDoc from '@salesforce/apex/FileUploadImprovedHelper.deleteCo
 export default class FileUpload extends NavigationMixin(LightningElement) {
     @api acceptedFormats;
     @api allowMultiple;
-    @api community;
+    @api community; //deprecated
     @api contentDocumentIds;
     @api contentVersionIds;
     @api icon;
@@ -25,6 +25,7 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
     @api uploadedlabel;
     @api uploadedLabel; // deprecated
     @api preventSessionStorage = false;
+    @api filenameSuffix; //Optional - this adds a suffix to the uploaded filenames
     
     @track docIds =[]; // docIds = ['id1', 'id2'] ; docIds.length = 2
     @track fileNames = [];
@@ -91,8 +92,9 @@ export default class FileUpload extends NavigationMixin(LightningElement) {
         this.dispatchEvent(sendVersIdsEvent);
 
         this.communicateEvent(this.docIds,this.versIds,this.fileNames,this.objFiles);
-        if(this.community === true && this.value.data != ''){
-            createContentDocLink({versIds: this.versIds, encodedKey: this.key.data});
+        if(this.value.data != ''){
+            console.log('LWC file upload improved docIds: '+ this.docIds);
+            createContentDocLink({versIds: this.versIds, encodedKey: this.key.data, nameSuffix: this.filenameSuffix, docIds: this.docIds});
         }
         
         function getIconSpecs(docType){

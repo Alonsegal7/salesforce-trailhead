@@ -26,7 +26,7 @@ public class FileUploadImproved_Test {
         update cv;
         
         test.startTest();
-            FileUploadImprovedHelper.createContentDocLink(new List<String>{cv.Id},key);
+            FileUploadImprovedHelper.createContentDocLink(new List<String>{cv.Id},key,null,null);
         test.stopTest();
 
 
