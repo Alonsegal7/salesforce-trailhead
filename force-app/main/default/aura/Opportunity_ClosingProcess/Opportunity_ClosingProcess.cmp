@@ -481,6 +481,7 @@
                                         required="true"
                                         maxAllowed="1"
                                         multiple="false"
+                                        filenameSuffix="-signed"
                                     ></c:fileUploadImproved>
                                 </lightning:recordEditForm>
                             </lightning:card>
