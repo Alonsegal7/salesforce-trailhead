@@ -314,8 +314,8 @@
         return fileUploaded;
     },
 
-	nextStep_closeWon : function(component, event, helper){
-		console.log('opp close proc: nextStep_closeWon path value: '+component.get('v.innerPathValue'));
+	submit_closedWon : function(component, event, helper){
+		console.log('opp close proc: submit_closedWon path value: '+component.get('v.innerPathValue'));
 		if(component.get('v.innerPathValue') == 'Claim'){
 			if(component.get('v.closedFields.What_Would_You_Like_To_Claim__c') == 'CC Payments'){
 				component.set('v.innerPathValue', 'CCClaim');
@@ -325,8 +325,8 @@
 				helper.callback_saveInnerPicklistPath(component, event, helper, 'Manual Signature');
 			}
 		} else if(component.get('v.innerPathValue') == 'ManualSignature'){ // manualy signed
-			console.log('opp close proc: nextStep_closeWon isSoManuallySigned: '+component.get('v.isSoManuallySigned'));
-			console.log('opp close proc: nextStep_closeWon entered manually signed input validation');
+			console.log('opp close proc: submit_closedWon isSoManuallySigned: '+component.get('v.isSoManuallySigned'));
+			console.log('opp close proc: submit_closedWon entered manually signed input validation');
 			var manualSignatureInputValid = true;
 			component.find('manuallySignedFields').forEach(function (field) {
 				if (!field.get("v.value") || component.get('v.isSoManuallySigned') == false) {
@@ -334,13 +334,13 @@
 				}
 				field.reportValidity();
 			});
-			console.log('opp close proc: nextStep_closeWon checkFilesUploaded result: ' + helper.checkFilesUploaded(component, event, helper));
+			console.log('opp close proc: submit_closedWon checkFilesUploaded result: ' + helper.checkFilesUploaded(component, event, helper));
 			var filesUploaded = helper.checkFilesUploaded(component, event, helper);
 			if(manualSignatureInputValid && filesUploaded){
-				console.log('opp close proc: nextStep_closeWon Manual Signature valid input');
+				console.log('opp close proc: submit_closedWon Manual Signature valid input');
 				helper.callback_saveManualFields(component, event, helper);
 			} else {
-				console.log('opp close proc: nextStep_closeWon Manual Signature not valid input');
+				console.log('opp close proc: submit_closedWon Manual Signature not valid input');
 			}
 		}else if(component.get('v.innerPathValue') == 'BBPickers'){ // manualy signed
 			component.set('v.innerPathValue', 'CCClaim');
@@ -361,8 +361,8 @@
 		}
 	},
 
-	nextStep_closedLost : function(component, event, helper){
-		console.log('opp close proc: entered nextStep_closedLost');
+	submit_closedLost : function(component, event, helper){
+		console.log('opp close proc: entered submit_closedLost');
 		component.set('v.showSpinner', true);
 		component.find("recordEditor").saveRecord($A.getCallback(function(saveResult) {
 			if (saveResult.state == "SUCCESS" || saveResult.state == "DRAFT") {
@@ -381,6 +381,26 @@
 			}
 			component.set('v.showSpinner', false);
 		}));
+		/*
+		var closeLostInputValid = true;
+		component.find("ClosedLostFieldCheck").forEach(function (field) {
+			if (!field.get("v.value")) {
+				closeLostInputValid = false;
+			}
+			//field.reportValidity();
+		});
+		if(closeLostInputValid){
+			console.log('submitDetails valid input');
+			if(component.get('v.innerPathValue') == 'continueToSummary'){
+				component.set('v.innerPathValue', 'OppSummary');
+				helper.callFlow_getOpportunitySummary(component, event, helper);
+			} else {
+				component.set('v.innerPathValue', 'continueToSummary');
+				helper.callback_closeOpp(component, event, helper, "Closed Lost");
+			}
+		} else {
+			console.log('submitDetails not valid input');
+		}*/
 	},
 
 	getOpportunityType : function (component, event, helper){
@@ -565,18 +585,5 @@
                 }
             }
         }
-	},
-
-	isFormValid: function (component, event, helper, requiredFieldsName) {
-		console.log('opp close proc: entered isFormValid');
-		var isValid = true;
-		component.find(requiredFieldsName).forEach(function (field) {
-			if (!field.get("v.value")){
-				isValid = false;
-			}
-			field.reportValidity();
-		});
-		console.log('opp close proc: isFormValid: '+isValid);
-		return isValid;
 	},
 })
