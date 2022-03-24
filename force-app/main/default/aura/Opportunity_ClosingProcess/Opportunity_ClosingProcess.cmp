@@ -556,7 +556,7 @@
                 <aura:if isTrue="{!and(v.innerPathValue != 'continueToSummary', !v.showValidation)}">
                     <aura:if isTrue="{!and(v.innerPathValue != 'OppSummary', v.innerPathValue != 'Handover')}">
                         <footer class="slds-modal__footer">
-                            <lightning:button variant="brand"
+                            <lightning:button variant="neutral"
                                               label="Cancel"
                                               title="Cancel"
                                               onclick="{! c.closeModal }"/>
@@ -574,7 +574,7 @@
                     </aura:if>
                     <aura:if isTrue="{!v.innerPathValue == 'OppSummary'}">
                         <footer class="slds-modal__footer">
-                            <lightning:button variant="brand"
+                            <lightning:button variant="neutral"
                                               label="Cancel"
                                               title="Cancel"
                                               onclick="{! c.closeModal }"/>
