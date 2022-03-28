@@ -103,6 +103,7 @@ public without sharing class Account_RegionalCompanyService {
     
     public static void updateRegionalCompanyOnRelatedObjects(List<Account> newAccounts, map<Id,Account> oldAccounts){
         Map<Id,List<Account>> regionalCompaniesByGlobalCompanyId = new Map<Id,List<Account>>();
+        System.debug('Account_RegionalCompanyService updateRegionalCompanyOnRelatedObjects entered');
         for (Account acc : newAccounts) {
             if (acc.Account_Territory__c == 'Regional' && (oldAccounts == null || acc.Region__c != oldAccounts.get(acc.Id).Region__c)) { //new regional company or a region change
                 if (regionalCompaniesByGlobalCompanyId.containsKey(acc.Company__c)) {
