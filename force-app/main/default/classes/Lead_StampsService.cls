@@ -126,8 +126,11 @@ public without sharing class Lead_StampsService {
     }
 
     public static void handleStatusTimestamps(List<Lead> newLeads, Map<Id,Lead> oldLeads){
+        //only statuses in the following list are timestamped.
+        Set<String> supportedStatuses = new Set<String>{'Unqualified','Nurturing','Received','Attempting','Contacted','Meeting Scheduled','Qualified'};
         StatusMetaDataList listOfMetaData = new StatusMetaDataList();
         for (Lead lead : newLeads) {
+            if(!supportedStatuses.contains(lead.Status)) continue; //fix for leads with status baunced being stamped as qualified
             if (oldLeads==null || (oldLeads.get(lead.Id)!=null && lead.Status!=oldLeads.get(lead.Id).Status)) {
                 //resubmittion statuses clear - if lead status changed from Unqualified to Recieved we clean all status timestamps
                 if(oldLeads != null && lead.Status == 'Received' && oldLeads.get(lead.Id).Status == 'Unqualified'){
@@ -179,10 +182,13 @@ public without sharing class Lead_StampsService {
         system.debug('ownersMap: '+ ownersMap);
         User currOwner;
         for(Lead leadRec: relevantLeads){
-            if(ownersMap.get(leadRec.OwnerId).Group__c == 'Integration User') continue;
+            if(ownersMap.get(leadRec.OwnerId).Group__c == 'Integration User') continue; // we do not stamp owners that have group = integration user
             currOwner = ownersMap.get(leadRec.OwnerId);
             //if lead is new or (lead is existing and first user assignment)
-            if(oldLeadsMap == null || !String.valueOf(oldLeadsMap.get(leadRec.Id).OwnerId).startsWith('005') || ownersMap.get(oldLeadsMap.get(leadRec.Id).OwnerId).Group__c == 'Integration User'){
+            if(oldLeadsMap == null 
+                || leadRec.Owner_Name_Initial__c == null // no initial owner
+                || !String.valueOf(oldLeadsMap.get(leadRec.Id).OwnerId).startsWith('005') //prev owner was queue
+                || ownersMap.get(oldLeadsMap.get(leadRec.Id).OwnerId).Group__c == 'Integration User'){ //prev owner was user with group = integration user
                 system.debug('Updating initial user stamps');
                 //stamp initial fields
                 leadRec.Owner_Business_Role_Initial__c = currOwner.Business_Role__c;
