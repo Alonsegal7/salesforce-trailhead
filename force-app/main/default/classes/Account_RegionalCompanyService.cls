@@ -99,5 +99,77 @@ public without sharing class Account_RegionalCompanyService {
             }
         }
         return outputMAs;
-    } 
+    }
+    
+    public static void updateRegionalCompanyOnRelatedObjects(List<Account> newAccounts, map<Id,Account> oldAccounts){
+        Map<Id,List<Account>> regionalCompaniesByGlobalCompanyId = new Map<Id,List<Account>>();
+        for (Account acc : newAccounts) {
+            if (acc.Account_Territory__c == 'Regional' && (oldAccounts == null || acc.Region__c != oldAccounts.get(acc.Id).Region__c)) { //new regional company or a region change
+                if (regionalCompaniesByGlobalCompanyId.containsKey(acc.Company__c)) {
+                    regionalCompaniesByGlobalCompanyId.get(acc.Company__c).add(acc);
+                }
+                else {
+                    regionalCompaniesByGlobalCompanyId.put(acc.Company__c,new List<Account>{acc});
+                } 
+            }
+        }
+        if (regionalCompaniesByGlobalCompanyId.keySet().isEmpty()) return;
+        
+        //check if any of the leads under the global company is on the same region and if so mark the new regional company as their Parent Company
+        List<Lead> relatedLeads = new List<Lead>([SELECT Id, Region__c, Related_Company__c, Parent_Company__c FROM Lead WHERE Related_Company__c IN: regionalCompaniesByGlobalCompanyId.keySet()]);
+        if (relatedLeads.isEmpty()) return;
+        for (Lead lead : relatedLeads) {
+            for (Account regCompany : regionalCompaniesByGlobalCompanyId.get(lead.Related_Company__c)) {
+                if (lead.Region__c == regCompany.Region__c) {
+                    lead.Parent_Company__c = regCompany.Id;
+                }    
+            }
+        }
+        try {
+            update relatedLeads;
+        } catch (Exception e) {
+            System.debug('Account_RegionalCompanyService updateRegionalCompanyOnRelatedObjects error updating relatedLeads: '+ e.getMessage());
+        }
+    }
+
+    public static void linkLeadsToExistingRegionalCompanies(List<Lead> newLeads, map<Id,Lead> oldLeads) {
+        //create the scope
+        List<Lead> inputLeads = new List<Lead>(); 
+        Set<Id> companyIDs = new Set<Id>();
+        for (Lead lead : newLeads) {
+            if (lead.Related_Company__c != null && lead.Region__c != null && //prerequisites
+            (oldLeads == null || //new lead 
+            (oldLeads.get(lead.Id).Region__c == null || lead.Region__c != oldLeads.get(lead.Id).Region__c) || //region change 
+            (lead.Manual_Trigger__c == 'Match Parent' && (oldLeads.get(lead.Id).Manual_Trigger__c == null || lead.Manual_Trigger__c != oldLeads.get(lead.Id).Manual_Trigger__c)) || //manual trigger
+            (lead.Status == 'Received' && oldLeads.get(lead.Id).Status != null && oldLeads.get(lead.Id).Status == 'Unqualified') || //resubmit
+            (oldLeads.get(lead.Id).Related_Company__c == null || lead.Related_Company__c != oldLeads.get(lead.Id).Related_Company__c))) { //company change 
+                System.debug('Account_RegionalCompanyService linkLeadsToExistingRegionalCompanies building scope found match');
+                inputLeads.add(lead);
+                companyIDs.add(lead.Related_Company__c);
+                if (lead.Manual_Trigger__c == 'Match Parent') lead.Manual_Trigger__c = '';
+            }
+        }
+        if (inputLeads.isEmpty()) return;
+        //map the global companies to their regional companies
+        List<Account> existingRegionalCompaniesList = new List<Account>([SELECT Id, Account_Territory__c, Region__c, Company__c, ParentId FROM Account WHERE ParentId IN: companyIDs AND Account_Territory__c = 'Regional']);
+        Map<Id,List<Account>> companiesWithChildRegionalCompanies = new Map<Id,List<Account>>();
+        for (Account acc : existingRegionalCompaniesList) {
+            if (companiesWithChildRegionalCompanies.containsKey(acc.ParentId)) {
+                companiesWithChildRegionalCompanies.get(acc.ParentId).add(acc);
+            }
+            else {
+                companiesWithChildRegionalCompanies.put(acc.ParentId,new List<Account>{acc});
+            }   
+        }
+        //find the matching regional company for each lead 
+        for (Lead lead : inputLeads) {
+            if (companiesWithChildRegionalCompanies.containsKey(lead.Related_Company__c)) { //the global company has regional companies
+                for(Account regAcc : companiesWithChildRegionalCompanies.get(lead.Related_Company__c)) { //search the Lead's region in the regional companies
+                    if (regAcc.Region__c == lead.Region__c) {
+                        lead.Parent_Company__c = regAcc.Id;
+                    }
+                }
+            }
+        }
+    }
 }

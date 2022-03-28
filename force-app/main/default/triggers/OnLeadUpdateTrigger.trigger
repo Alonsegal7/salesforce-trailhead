@@ -4,6 +4,7 @@ trigger OnLeadUpdateTrigger on Lead (after insert, after update, after delete, b
     if(Trigger.isBefore){
         if (trigger.isInsert||trigger.IsUpdate){
             Lead_MapRegions.Lead_MapRegions(trigger.new,trigger.oldmap);
+            Account_RegionalCompanyService.linkLeadsToExistingRegionalCompanies(trigger.new,trigger.oldmap);
             Lead_SetPartnerCompany.Lead_SetPartnerCompany(trigger.new,trigger.oldmap);
             Lead_StampsService.run(trigger.new,trigger.oldmap);
             //Lead_ComapnyCreation.Lead_ComapnyCreation(trigger.new,trigger.oldmap);
