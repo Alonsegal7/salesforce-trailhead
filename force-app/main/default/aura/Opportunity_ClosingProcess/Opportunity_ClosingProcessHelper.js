@@ -355,9 +355,14 @@
 		}else if(component.get('v.innerPathValue') == 'continueToSummary'){
 			component.set('v.innerPathValue', 'OppSummary');
 			helper.callFlow_getOpportunitySummary(component, event, helper);
-		}else if(component.get('v.innerPathValue') == 'SOInfo'){ // manualy signed
-			component.set('v.innerPathValue', 'CCClaim');
-			helper.callback_saveInnerPicklistPath(component, event, helper, "CC Claim");
+		}else if(component.get('v.innerPathValue') == 'SOInfo'){ 
+			if(component.get('v.isSoManuallySigned') == true){
+				component.set('v.innerPathValue', 'ManualSignature');
+				helper.callback_saveInnerPicklistPath(component, event, helper, 'Manual Signature');
+			} else {
+				component.set('v.innerPathValue', 'CCClaim');
+				helper.callback_saveInnerPicklistPath(component, event, helper, "CC Claim");
+			}
 		}
 	},
 
