@@ -179,6 +179,7 @@ public with sharing class DealRegistration_Handler {
         l.Company_Size__c = lRegRec.Company_Size__c;
         l.Email = lRegRec.Registered_Email__c;
         l.LeadSource = lRegRec.Source__c;
+        l.Lead_Source_Type__c = 'Outbound';
         l.RecordTypeId = leadPartnerRecordTypeId; // create partner lead
         l.Related_Company__c = localAccName.Id; //local
         l.Title = lRegRec.Title__c;
