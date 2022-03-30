@@ -6,9 +6,15 @@ public with sharing class CoSellRequestServiceTest {
         Id internalOppRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
 
         Account a = TestObjectCreator.CreateAccount();
+        a.Co_Sell_Leader__c = 'Sales';
         insert a;
+
+        List<Opportunity> oppsList = new List<Opportunity>();
         Opportunity opp1 = TestObjectCreator.CreateOpp(a);
-        insert opp1;
+        Opportunity opp2 = TestObjectCreator.CreateOpp(a);
+        Opportunity opp3 = TestObjectCreator.CreateOpp(a);
+        insert new List<Opportunity>{opp1,opp2,opp3};
+
         opp1.Expected_Plan_Seats__c = 40;
         opp1.Expected_Plan_Tier__c = 'Enterprise';
         opp1.Expected_Plan_Period__c = 'Yearly';
@@ -16,10 +22,6 @@ public with sharing class CoSellRequestServiceTest {
         opp1.StageName = 'Closed Won';
         opp1.Transition_to_GB__c = true;
         opp1.Claimed_ARR__c = 10000;
-        update opp1;
-
-        Opportunity opp2 = TestObjectCreator.CreateOpp(a);
-        insert opp2;
         opp2.Expected_Plan_Seats__c = 40;
         opp2.Expected_Plan_Tier__c = 'Enterprise';
         opp2.Expected_Plan_Period__c = 'Yearly';
@@ -27,23 +29,41 @@ public with sharing class CoSellRequestServiceTest {
         opp2.StageName = 'Closed Won';
         opp2.Transition_to_GB__c = true;
         opp2.Claimed_ARR__c = 10000;
-        update opp2;
-        
+        opp3.Expected_Plan_Seats__c = 40;
+        opp3.Expected_Plan_Tier__c = 'Enterprise';
+        opp3.Expected_Plan_Period__c = 'Yearly';
+        opp3.RecordTypeId = internalOppRT;
+        opp3.StageName = 'Closed Won';
+        opp3.Transition_to_GB__c = true;
+        opp3.Claimed_ARR__c = 10000;
+        update new List<Opportunity>{opp1,opp2,opp3};
+
         Co_Sell_Request__c csr = new Co_Sell_Request__c(
             Main_Opportunity__c = opp1.Id,
             Secondary_Opportunity__c = opp2.Id,
             Type__c = 'Associate',
             Monday_Account__c = a.Id
         );
-        insert csr;
+        Co_Sell_Request__c csr2 = new Co_Sell_Request__c(
+            Main_Opportunity__c = opp3.Id,
+            Secondary_Opportunity_Owner__c = UserInfo.getUserId(),
+            Type__c = 'Create',
+            Monday_Account__c = a.Id
+        );
+        CoSellRequestService.createNewCoSellRequest(csr);
+        CoSellRequestService.createNewCoSellRequest(csr2);
     }
 
     static testmethod void test1(){
-        Co_Sell_Request__c csr = [select Id, Main_Opportunity__c from Co_Sell_Request__c limit 1];
-        csr.Status__c = 'Approved';
-        update csr;
+        list<Co_Sell_Request__c> csrList = [select Id, Main_Opportunity__c, Type__c from Co_Sell_Request__c];
+        Id oppToUpdate;
+        for(Co_Sell_Request__c csr: csrList){
+            csr.Status__c = 'Approved';
+            if(csr.Type__c == 'Associate') oppToUpdate = csr.Main_Opportunity__c;
+        }
+        update csrList;
         Opportunity opp1 = new Opportunity(
-            Id = csr.Main_Opportunity__c,
+            Id = oppToUpdate,
             Expected_Plan_Seats__c = 30
         );
         update opp1;
@@ -53,7 +73,7 @@ public with sharing class CoSellRequestServiceTest {
         test.stopTest();
     }
 
-    static testmethod void test2(){
+    static testmethod void test_Opportunity_CoSellSyncService(){
         test.startTest();
         Opportunity_CoSellSyncService b = new Opportunity_CoSellSyncService();
         String sch = '0 0 8 13 2 ?';
@@ -64,5 +84,16 @@ public with sharing class CoSellRequestServiceTest {
     static testmethod void test3(){
         Id accId = [select Id from Account limit 1].Id;
         CoSellRequestService.getAssociatePotentialOpps(accId, 'Internal_Opportunity');
+    }
+
+    static testmethod void test_CoSellRequest_SurveyReminderSch(){
+        Co_Sell_Request__c csr = [select Id, Main_Opportunity__c from Co_Sell_Request__c limit 1];
+        csr.Status__c = 'Approved';
+        update csr;
+        test.startTest();
+        CoSellRequest_SurveyReminderSch b = new CoSellRequest_SurveyReminderSch();
+        String sch = '0 0 8 13 2 ?';
+        system.schedule('One Time Pro', sch, b);
+        test.stopTest();
     }
 }

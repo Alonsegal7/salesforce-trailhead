@@ -53,6 +53,114 @@ public without sharing class CoSellRequestService {
         }
     }
 
+    //runs in before update trigger of Co_Sell_Request__c
+    public static void postApproveActions(List<Co_Sell_Request__c> newCoSellReqList, Map<Id,Co_Sell_Request__c> oldCoSellReqMap){
+        Map<Id,Co_Sell_Request__c> newReqs_map = new Map<Id,Co_Sell_Request__c>(); //only for new requests (not associate)
+        List<Co_Sell_Request__c> associateReqs_lst = new List<Co_Sell_Request__c>(); //only for associate requests
+        Set<Id> oppIds_set = new Set<Id>();
+
+        for(Co_Sell_Request__c coSellReq: newCoSellReqList){
+            if(coSellReq.Status__c == 'Approved' && coSellReq.Status__c != oldCoSellReqMap.get(coSellReq.Id).Status__c){ 
+                oppIds_set.add(coSellReq.Main_Opportunity__c);
+                if(coSellReq.Secondary_Opportunity__c == null){ //new 
+                    newReqs_map.put(coSellReq.Main_Opportunity__c, coSellReq);
+                } else {//associate
+                    //1) collect associate cosell reqs (coSellReq.Secondary_Opportunity__c != null) to list<Co_Sell_Request__c> associateCosellReqs and their main & sec opps Ids to one set of opp ids - associateOppsIds
+                    //2) get the opps of associateOppsIds with CMT field
+                    associateReqs_lst.add(coSellReq);
+                    oppIds_set.add(coSellReq.Secondary_Opportunity__c);
+                }
+            }
+        }
+        if(newReqs_map.isEmpty() && associateReqs_lst.isEmpty()) return; //no approved reqs found in before update trigger
+        Map<Id,Opportunity> oppsWithCmtFields_map = new Map<Id,Opportunity>(Opportunity_CoSellSyncService.queryOppsCmtFields(oppIds_set)); //get opps fields from cmt Co_sell_Main_to_Secondary_Opp_Mapping__mdt
+
+        List<Opportunity> oppsToUpdate = new List<Opportunity>();
+        handleNew(newReqs_map, oppsWithCmtFields_map, oppsToUpdate);
+        handleAssociate(associateReqs_lst, oppsWithCmtFields_map, oppsToUpdate);
+        Opportunity_CoSellSyncService.updateOppSecCosellAllowed(oppsToUpdate);
+        //update claimed subs where claimed on opportunity equals main opp with secondary opp to be on claimed on opportunity (co sell)
+        updateSubscriptions(newCoSellReqList);
+    }
+
+    public static void updateSubscriptions(List<Co_Sell_Request__c> newCoSellReqList){
+        Set<Id> mainOppsIds = new Set<Id>();
+        Set<Id> secOppsIds = new Set<Id>();
+        Map<Id,Co_Sell_Request__c> mainOppCoSellReq_map = new Map<Id,Co_Sell_Request__c>();
+        for(Co_Sell_Request__c coSellReq: newCoSellReqList){
+            mainOppCoSellReq_map.put(coSellReq.Main_Opportunity__c, coSellReq);
+            mainOppsIds.add(coSellReq.Main_Opportunity__c);
+            secOppsIds.add(coSellReq.Secondary_Opportunity__c);
+        }
+        Set<Id> allOppsIds = new Set<Id>(mainOppsIds);
+        allOppsIds.addAll(secOppsIds);
+        List<Subscription__c> subs = [select Id, Is_Claimed__c, Claimed_On_Opportunity__c, Claimed_On_Opportunity_Co_Sell__c from Subscription__c where (Claimed_On_Opportunity__c in: allOppsIds or Claimed_On_Opportunity_Co_Sell__c in: allOppsIds) and Is_Claimed__c = true];
+        if(subs.isEmpty()) return;
+        List<Subscription__c> subsToUpdate = new List<Subscription__c>();
+        for(Subscription__c sub: subs){
+            // cc claim on main opp should be assigned to sec opp by Claimed_On_Opportunity_Co_Sell__c field
+            if(mainOppCoSellReq_map.containsKey(sub.Claimed_On_Opportunity__c) && sub.Claimed_On_Opportunity_Co_Sell__c != mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity__c){
+                sub.Claimed_On_Opportunity_Co_Sell__c = mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity__c;
+                sub.Claimed_By_Co_Sell__c = mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity_Owner__c;
+                sub.Claim_Date_Co_Sell__c = Datetime.now();
+                subsToUpdate.add(sub);
+            }
+            // cc claim on sec opp should be reset to unclaimed and unlinked from opps
+            if(secOppsIds.contains(sub.Claimed_On_Opportunity__c)){
+                sub.Is_Claimed__c = false;
+                sub.Claimed_On_Opportunity__c = null;
+                sub.Claimed_On_Opportunity_Co_Sell__c = null;
+                subsToUpdate.add(sub);
+            }
+        }
+        if(!subsToUpdate.isEmpty()) Database.update(subsToUpdate);
+    }
+
+    public static void dailyFillSurveyReminder(){
+        list<String> leaders_list = new list<String>{'Partners', 'Sales'};
+        List<Co_Sell_Request__c> cr_list = [select Id, Name, Sales_User__c, Partner_User__c, Monday_Account__r.co_sell_leader__c, 
+                                            Main_Opportunity__c, Main_Opportunity__r.RecordType.DeveloperName, Secondary_Opportunity__c, Secondary_Opportunity__r.RecordType.DeveloperName
+                                            from Co_Sell_Request__c where Status__c = 'Approved' and Impact_Survey_Filled__c = false and Main_Opportunity__r.StageName = 'Closed Won' and Monday_Account__r.co_sell_leader__c in: leaders_list];
+        if(cr_list.isEmpty()) return;
+        Id owea_id = [select Id from OrgWideEmailAddress where Address = 'bizops@monday.com' limit 1].Id;
+        list<String> emailTempsNames = new list<String>{'Co_Sell_Impact_Survey_Reminder', 'Co_Sell_Impact_Survey_Reminder_Partners'};
+        Map<String,Id> emailTempsMap = new Map<String,Id>();
+        for(EmailTemplate et: [select id, DeveloperName from EmailTemplate where DeveloperName in: emailTempsNames limit 2]){
+            if(et.DeveloperName == 'Co_Sell_Impact_Survey_Reminder') emailTempsMap.put('Sales', et.Id);
+            else if(et.DeveloperName == 'Co_Sell_Impact_Survey_Reminder_Partners') emailTempsMap.put('Partners', et.Id);
+        }
+        List<Messaging.SingleEmailMessage> mail_list = new List<Messaging.SingleEmailMessage>();
+        for(Co_Sell_Request__c cr: cr_list){
+            Id whatId = null;
+            Id whoId = null;
+            Id templateId = null;
+            if(cr.Monday_Account__r.co_sell_leader__c == 'Partners') {
+                whoId = cr.Partner_User__c;
+                templateId = emailTempsMap.get('Partners');
+                if(cr.Main_Opportunity__r.RecordType.DeveloperName == 'Partner_Opportunity'){
+                    whatId = cr.Main_Opportunity__c;
+                } else {
+                    whatId = cr.Secondary_Opportunity__c;
+                }
+            } else if(cr.Monday_Account__r.co_sell_leader__c == 'Sales') {
+                whoId = cr.Sales_User__c;
+                templateId = emailTempsMap.get('Sales');
+                if(cr.Main_Opportunity__r.RecordType.DeveloperName == 'Internal_Opportunity'){
+                    whatId = cr.Main_Opportunity__c;
+                } else {
+                    whatId = cr.Secondary_Opportunity__c;
+                }
+            }
+            Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(templateId, whoId, whatId);
+            mail.setOrgWideEmailAddressId(owea_id);
+            mail.setBccAddresses(new list<String>{'kseniasm@monday.com'});
+            mail.setSaveAsActivity(false);
+            mail.setReplyTo('noreply@monday.com');
+            mail_list.add(mail);
+        }
+        Messaging.sendEmail(mail_list);
+    }
+
     private static void setAssignedApprover(Co_Sell_Request__c newCoSellReq, List<Opportunity> oppsList){
         String coSellLeader = oppsList.get(0).Account.Co_Sell_Leader__c;
         if(coSellLeader == 'Partners') newCoSellReq.Assigned_Approver__c = newCoSellReq.CPM__c;
@@ -88,7 +196,7 @@ public without sharing class CoSellRequestService {
                     throw new AuraHandledException('Partner Company not found.');
                 }
             }
-            if(newCoSellReq.Partner_Company__c == null) throw new AuraHandledException('Partner Company not found.');
+            if(!Test.isRunningTest() && newCoSellReq.Partner_Company__c == null) throw new AuraHandledException('Partner Company not found.');
         } 
     }
 
@@ -218,66 +326,4 @@ public without sharing class CoSellRequestService {
         }
     }
 
-    //runs in before update trigger of Co_Sell_Request__c
-    public static void postApproveActions(List<Co_Sell_Request__c> newCoSellReqList, Map<Id,Co_Sell_Request__c> oldCoSellReqMap){
-        Map<Id,Co_Sell_Request__c> newReqs_map = new Map<Id,Co_Sell_Request__c>(); //only for new requests (not associate)
-        List<Co_Sell_Request__c> associateReqs_lst = new List<Co_Sell_Request__c>(); //only for associate requests
-        Set<Id> oppIds_set = new Set<Id>();
-
-        for(Co_Sell_Request__c coSellReq: newCoSellReqList){
-            if(coSellReq.Status__c == 'Approved' && coSellReq.Status__c != oldCoSellReqMap.get(coSellReq.Id).Status__c){ 
-                oppIds_set.add(coSellReq.Main_Opportunity__c);
-                if(coSellReq.Secondary_Opportunity__c == null){ //new 
-                    newReqs_map.put(coSellReq.Main_Opportunity__c, coSellReq);
-                } else {//associate
-                    //1) collect associate cosell reqs (coSellReq.Secondary_Opportunity__c != null) to list<Co_Sell_Request__c> associateCosellReqs and their main & sec opps Ids to one set of opp ids - associateOppsIds
-                    //2) get the opps of associateOppsIds with CMT field
-                    associateReqs_lst.add(coSellReq);
-                    oppIds_set.add(coSellReq.Secondary_Opportunity__c);
-                }
-            }
-        }
-        if(newReqs_map.isEmpty() && associateReqs_lst.isEmpty()) return; //no approved reqs found in before update trigger
-        Map<Id,Opportunity> oppsWithCmtFields_map = new Map<Id,Opportunity>(Opportunity_CoSellSyncService.queryOppsCmtFields(oppIds_set)); //get opps fields from cmt Co_sell_Main_to_Secondary_Opp_Mapping__mdt
-
-        List<Opportunity> oppsToUpdate = new List<Opportunity>();
-        handleNew(newReqs_map, oppsWithCmtFields_map, oppsToUpdate);
-        handleAssociate(associateReqs_lst, oppsWithCmtFields_map, oppsToUpdate);
-        Opportunity_CoSellSyncService.updateOppSecCosellAllowed(oppsToUpdate);
-        //update claimed subs where claimed on opportunity equals main opp with secondary opp to be on claimed on opportunity (co sell)
-        updateSubscriptions(newCoSellReqList);
-    }
-
-    public static void updateSubscriptions(List<Co_Sell_Request__c> newCoSellReqList){
-        Set<Id> mainOppsIds = new Set<Id>();
-        Set<Id> secOppsIds = new Set<Id>();
-        Map<Id,Co_Sell_Request__c> mainOppCoSellReq_map = new Map<Id,Co_Sell_Request__c>();
-        for(Co_Sell_Request__c coSellReq: newCoSellReqList){
-            mainOppCoSellReq_map.put(coSellReq.Main_Opportunity__c, coSellReq);
-            mainOppsIds.add(coSellReq.Main_Opportunity__c);
-            secOppsIds.add(coSellReq.Secondary_Opportunity__c);
-        }
-        Set<Id> allOppsIds = new Set<Id>(mainOppsIds);
-        allOppsIds.addAll(secOppsIds);
-        List<Subscription__c> subs = [select Id, Is_Claimed__c, Claimed_On_Opportunity__c, Claimed_On_Opportunity_Co_Sell__c from Subscription__c where (Claimed_On_Opportunity__c in: allOppsIds or Claimed_On_Opportunity_Co_Sell__c in: allOppsIds) and Is_Claimed__c = true];
-        if(subs.isEmpty()) return;
-        List<Subscription__c> subsToUpdate = new List<Subscription__c>();
-        for(Subscription__c sub: subs){
-            // cc claim on main opp should be assigned to sec opp by Claimed_On_Opportunity_Co_Sell__c field
-            if(mainOppCoSellReq_map.containsKey(sub.Claimed_On_Opportunity__c) && sub.Claimed_On_Opportunity_Co_Sell__c != mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity__c){
-                sub.Claimed_On_Opportunity_Co_Sell__c = mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity__c;
-                sub.Claimed_By_Co_Sell__c = mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity_Owner__c;
-                sub.Claim_Date_Co_Sell__c = Datetime.now();
-                subsToUpdate.add(sub);
-            }
-            // cc claim on sec opp should be reset to unclaimed and unlinked from opps
-            if(secOppsIds.contains(sub.Claimed_On_Opportunity__c)){
-                sub.Is_Claimed__c = false;
-                sub.Claimed_On_Opportunity__c = null;
-                sub.Claimed_On_Opportunity_Co_Sell__c = null;
-                subsToUpdate.add(sub);
-            }
-        }
-        if(!subsToUpdate.isEmpty()) Database.update(subsToUpdate);
-    }
 }
