@@ -158,7 +158,17 @@ public class CreatePartnerUserCtrl {
 				}
 			} else if(e.getMessage().containsIgnoreCase('LICENSE_LIMIT_EXCEEDED')){
 				throw new CreatePartnerUserCtrlException('Oops! License Limit Exceeded. We reached the limit of active partner users. Please reach out to Biz Ops.');
-			} else {
+			} else if (e.getMessage().containsIgnoreCase('DUPLICATE_COMM_NICKNAME')){
+				for(User userRec: newUsersList){
+					userRec.CommunityNickname = userRec.CommunityNickname + '1';
+				}
+				try {
+					Database.insert(newUsersList);
+					return newUsersList;
+				} catch (Exception secondEx) {
+					throw new CreatePartnerUserCtrlException(secondEx.getMessage() + '\n' + secondEx.getStackTraceString());
+				}
+			} else{
 				throw new CreatePartnerUserCtrlException(e.getMessage() + '\n' + e.getStackTraceString());
 			}
 		}

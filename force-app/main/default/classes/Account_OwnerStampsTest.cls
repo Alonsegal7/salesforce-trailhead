@@ -15,14 +15,16 @@ public with sharing class Account_OwnerStampsTest {
         userRecord2.Business_Role__c='Scale CSM';
         userRecord2.Group__c = 'CSG';
         insert userRecord1;
+        userRecord2.ManagerId = userRecord1.Id;
         insert userRecord2;
-        Account accountRecord = TestObjectCreator.CreateAccount(); //new Account (Name = 'AccTest', OwnerId = userRecord1.Id);
+        Account accountRecord = TestObjectCreator.CreateAccount();
         insert accountRecord;
         accountRecord.OwnerId = userRecord1.Id;
         update accountRecord; 
     }
 
-    static testMethod void CheckPreviousOwnerUpdate(){
+    @isTest
+    static void CheckPreviousOwnerUpdate(){
         User user1 = [select Id from User Where LastName = 'Test1' limit 1];
         User user2 = [select Id from User Where LastName = 'Test2' limit 1];
         Account acc = [select Id from Account limit 1];
@@ -32,7 +34,8 @@ public with sharing class Account_OwnerStampsTest {
         system.assertEquals(user1.Id, acc.PreviousOwner__c);
     }
 
-    static testMethod void CheckBusinessRolesStamps(){
+    @isTest
+    static void CheckBusinessRolesStamps(){
         User user1 = [select Id from User Where LastName = 'Test1' limit 1];
         User user2 = [select Id from User Where LastName = 'Test2' limit 1];
         Account acc = [select Id, AE__c from Account limit 1];
@@ -41,5 +44,36 @@ public with sharing class Account_OwnerStampsTest {
         Update acc; 
         acc = [select Id, AE__c from Account limit 1];
         system.assertEquals(acc.AE__c, null);
+    }
+
+    @isTest
+    static void checkCSMstampAdd(){
+        User user2 = [select Id, ManagerId from User Where LastName = 'Test2' limit 1];
+        Account acc = [select Id, CSM_Manager__c from Account limit 1];
+        system.assertEquals(acc.CSM_Manager__c, null);
+        
+        Test.startTest();
+        acc.CSM__c = user2.Id;
+        update acc;
+        Test.stopTest();
+
+        acc = [select Id, CSM_Manager__c from Account limit 1];
+        system.assertEquals(acc.CSM_Manager__c, user2.ManagerId);
+    }
+
+    @isTest
+    static void checkCSMstampRemoval(){
+        User user2 = [select Id, ManagerId from User Where LastName = 'Test2' limit 1];
+        Account acc = [select Id, CSM_Manager__c from Account limit 1];
+        acc.CSM__c = user2.Id;
+        update acc;
+        
+        Test.startTest();
+        acc.CSM__c = null;
+        update acc;
+        Test.stopTest();
+
+        acc = [select Id, CSM_Manager__c from Account limit 1];
+        system.assertEquals(acc.CSM_Manager__c, null);
     }
 }
