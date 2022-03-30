@@ -10,10 +10,10 @@ import contractEndDate from '@salesforce/schema/Opportunity.Selected_Company_Con
 import oppCurrencyCode from '@salesforce/schema/Opportunity.CurrencyIsoCode';
 import contractTier from '@salesforce/schema/Opportunity.Selected_Company_Contract__r.Tier__c';
 import contractPeriod from '@salesforce/schema/Opportunity.Selected_Company_Contract__r.Period__c';
-import contractUnitPrice from '@salesforce/schema/Opportunity.Selected_Company_Contract__r.Weighted_Average_Net_Per_Unit__c';
+import contractRenewalUnitPrice from '@salesforce/schema/Opportunity.Selected_Company_Contract__r.Weighted_Ave_Renewal_Unit_Price_CORE__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-const fields = [oppCurrencyCode,originalContract,billingEntity,contractSeats,paymentTerms,contractEndDate,contractTier,contractPeriod,contractUnitPrice];                    
+const fields = [oppCurrencyCode,originalContract,billingEntity,contractSeats,paymentTerms,contractEndDate,contractTier,contractPeriod,contractRenewalUnitPrice];                    
 
 export default class Quote_renewalCreation extends LightningElement{
     @track opportunityId;
@@ -33,8 +33,8 @@ export default class Quote_renewalCreation extends LightningElement{
     contractEndDate;
     contractTier;
     contractPeriod;
-    contractUnitPrice;
-    contractUnitPriceWithCurrencyText;
+    contractRenewalUnitPrice;
+    contractRenewalUnitPriceWithCurrencyText;
     oppCurrencyCode;
     missingBe = false;
     missingContract = false;
@@ -43,7 +43,7 @@ export default class Quote_renewalCreation extends LightningElement{
     loadingModal=true;
     StartDate;
     total=0;
-    formFields= [oppCurrencyCode,originalContract,billingEntity,contractSeats,paymentTerms,contractEndDate,contractTier,contractPeriod,contractUnitPrice]; 
+    formFields= [oppCurrencyCode,originalContract,billingEntity,contractSeats,paymentTerms,contractEndDate,contractTier,contractPeriod,contractRenewalUnitPrice]; 
 
     @wire(getRecord, { recordId: '$recordId', fields })
     opp({data, error}){
@@ -57,13 +57,13 @@ export default class Quote_renewalCreation extends LightningElement{
             this.contractEndDate=getFieldValue(this.oppDetails, contractEndDate);
             this.contractTier=getFieldValue(this.oppDetails, contractTier);
             this.contractPeriod=getFieldValue(this.oppDetails, contractPeriod);
-            this.contractUnitPrice=getFieldValue(this.oppDetails, contractUnitPrice);
-            this.contractUnitPriceWithCurrencyText = this.contractUnitPrice +' '+ this.oppCurrencyCode;
-            console.log('contractUnitPriceText '+this.contractUnitPriceWithCurrencyText);
+            this.contractRenewalUnitPrice=getFieldValue(this.oppDetails, contractRenewalUnitPrice);
+            this.contractRenewalUnitPriceWithCurrencyText = this.contractRenewalUnitPrice +' '+ this.oppCurrencyCode;
+            console.log('contractRenewalUnitPriceText '+this.contractRenewalUnitPriceWithCurrencyText);
             console.log('Payment Terms- '+this.paymentTerms);
             console.log('BE- '+this.billingEntity);
             console.log('Contract- '+this.originalContract);
-            var calcTotal = this.contractSeats*this.contractUnitPrice*12;
+            var calcTotal = this.contractSeats*this.contractRenewalUnitPrice*12;
             this.total=calcTotal +' ' + this.oppCurrencyCode;            
 
             if(this.originalContract == null) {

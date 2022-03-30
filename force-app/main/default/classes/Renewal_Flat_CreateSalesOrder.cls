@@ -70,6 +70,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                 DH_Period__c = 'Yearly',
                 Manual_Signature_Reason__c = 'Auto Renewal',
                 Name = 'Flat Renewal For Contract #' + oppsWithContracts.get(opp.Id).ContractNumber,
+                USD_Exchange_Rate__c=opp.USD_exchange_rate__c,
                 CurrencyIsoCode = oppsWithContracts.get(opp.Id).CurrencyIsoCode,
                 Pricebook2Id = standardPriceBookId,
                 Pricing_Version__c = opp.Pricing_Version__c,
@@ -104,7 +105,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
         }
 
         List<QuoteLineItem> qlisToCreate = new List<QuoteLineItem>();
-        List<Contract_Product__c> relevantContractProducts = ([SELECT Id, Net_Per_Unit__c, Recurring_Product_ARR__c, SKU__c, Product__c, Quantity__c, Contract__c, Contract__r.CurrencyIsoCode FROM Contract_Product__c WHERE Product__r.IsRecurring__c = true AND Contract__c IN: relevantContractIds]);
+        List<Contract_Product__c> relevantContractProducts = ([SELECT Id, Renewal_Unit_Price__c,Net_Per_Unit__c, Recurring_Product_ARR__c, SKU__c, Product__c, Quantity__c, Contract__c, Contract__r.CurrencyIsoCode FROM Contract_Product__c WHERE Product__r.IsRecurring__c = true AND Contract__c IN: relevantContractIds]);
         System.debug('@@@ Renewal_Flat_CreateSalesOrder relevantContractProducts: '+relevantContractProducts);
         
         //Map of all Contract Products with their Contract ID
@@ -155,10 +156,10 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                         ServiceDate=oppsWithContracts.get(opp.Id).EndDate.addDays(1),
                         End_Date__c=oppsWithContracts.get(opp.Id).EndDate.addDays(365),
                         PricebookEntryId=mappedSkuCurrencyToPBE.get(cp.SKU__c+currentContract1.CurrencyIsoCode),
-                        UnitPrice=cp.Net_Per_Unit__c,
-                        Net_Per_Unit__c=cp.Net_Per_Unit__c,
-                        Renewal_Unit_Price__c=cp.Net_Per_Unit__c,
-                        ARR__c=opp.USD_exchange_rate__c * cp.Quantity__c * cp.Net_Per_Unit__c*12,
+                        UnitPrice=cp.Renewal_Unit_Price__c,
+                        Net_Per_Unit__c=cp.Renewal_Unit_Price__c,
+                        Renewal_Unit_Price__c=cp.Renewal_Unit_Price__c,
+                        ARR__c=opp.USD_exchange_rate__c * cp.Quantity__c * cp.Renewal_Unit_Price__c*12,
                         DH_Option_Quote_Type__c='New Contract',
                         Is_Primary__c=true,
                         Tier__c=oppsWithContracts.get(opp.Id).Tier__c,
@@ -166,10 +167,10 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                         Duration__c=12.0,
                         Discount=0,
                         Product_Type__c='License',
-                        List_Price__c=cp.Net_Per_Unit__c,
+                        List_Price__c=cp.Renewal_Unit_Price__c,
                         Seats__c=cp.Quantity__c,
-                        Subtotal__c=(cp.Quantity__c)*12*(cp.Net_Per_Unit__c),
-                        DealHub_Net_Price__c=(cp.Quantity__c)*12*(cp.Net_Per_Unit__c),
+                        Subtotal__c=(cp.Quantity__c)*12*(cp.Renewal_Unit_Price__c),
+                        DealHub_Net_Price__c=(cp.Quantity__c)*12*(cp.Renewal_Unit_Price__c),
                         Quantity=(cp.Quantity__c)*12));
                 }
                 //add Current Account ARR as QLI with negative ammount - contract arr
