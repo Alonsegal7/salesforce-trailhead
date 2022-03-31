@@ -6,7 +6,7 @@ public without sharing class Project_ProjectStamps {
         }
         Map<Id,Account> relatedAccountMap = new Map<Id,Account>([SELECT Id,Health_Score__c FROM Account WHERE Id IN: accountIdsList]);
         for (Project__c p : projectList) {
-            if (relatedAccountMap.get(p.monday_Account__c).Health_Score__c != null) {
+            if (p.monday_Account__c != null && relatedAccountMap.get(p.monday_Account__c).Health_Score__c != null) {
                 p.Health_Score_30_Days_Stamp__c =relatedAccountMap.get(p.monday_Account__c).Health_Score__c;     
             }
         }
