@@ -5,6 +5,7 @@ public without sharing class Batch_UpdateProjectHealthScoreStamp implements Sche
     }
     public Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id,monday_Account__c FROM Project__c WHERE Project_Status__c = \'Closed\' AND Project_Closed_Date__c  = N_DAYS_AGO:30';
+        system.debug('query result-Batch_UpdateProjectHealthScoreStamp '+ Database.getQueryLocator(query));
         return Database.getQueryLocator(query);
     }
     public void execute(Database.BatchableContext BC, List<Project__c> scope){
