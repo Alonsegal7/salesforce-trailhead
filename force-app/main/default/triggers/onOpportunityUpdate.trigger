@@ -38,10 +38,17 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         Opportunity_RenewalCreation.updateRenewalStatus(Trigger.new, Trigger.oldMap);
         Handover_ThresholdMapping.recalcHandoverThresholdFromAfterTrigger(Trigger.new);
     }
-    
+
+    // old callouts to BB - will leave only delete to be fired from trigger 
     if(Trigger.isAfter){
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
-        if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);
-        if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
+        //if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);           // moved to BigBrain_CalloutService
+        //if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap); // moved to BigBrain_CalloutService
+    }
+
+    // new callouts to BB - we update Need_Sync_to_BB__c checkbox to true (if it was false)
+    // a scheduled job collects the sobjects with Need_Sync_to_BB__c=true and sends callout to BB (async)
+    if(Trigger.isInsert || Trigger.isUpdate) {
+        BigBrain_CalloutService.markRecordsToSync(Trigger.new, Trigger.oldMap, Trigger.isAfter);
     }
 }
