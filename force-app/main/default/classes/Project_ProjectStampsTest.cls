@@ -16,7 +16,7 @@ public with sharing class Project_ProjectStampsTest {
         insert prj;
     } 
 
-    static testMethod void testScheduledLogic() {
+    static testMethod void testBatch() {
         Account acc= [select Id,Health_Score__c,WAPP__c,members__c from Account where Health_Score__c = 10 limit 1];
         Project__c prj=[select Id,name,Health_Score_30_Days_Stamp__c,monday_Account__c from Project__c];
         prj.Project_Status__c='Closed';
@@ -24,14 +24,18 @@ public with sharing class Project_ProjectStampsTest {
         prj.Project_Closed_Date__c=Date.today().addDays(-30);
         update prj;
         Test.startTest();
-        Batch_UpdateProjectHealthScoreStamp p = new Batch_UpdateProjectHealthScoreStamp();
-        String sch = '0 0 * * * ?';
-        String jobId = system.schedule('TestHealthScoreStamp', sch, p);
+        Batch_UpdateProjectHealthScoreStamp batch = new Batch_UpdateProjectHealthScoreStamp();
+        Database.executeBatch(batch, 30);
         Test.stopTest();
-        CronTrigger cronTrigger = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE Id = :jobId];	
-        // Assert that the Cron job has run once
-        System.assertEquals(cronTrigger.TimesTriggered, 1);
         prj=[select Health_Score_30_Days_Stamp__c from Project__c limit 1];
-        system.assertEquals(prj.Health_Score_30_Days_Stamp__c, acc.Health_Score__c);
+        system.assertEquals(acc.Health_Score__c, prj.Health_Score_30_Days_Stamp__c);
+    }
+
+    static testMethod void testSchedule() {
+        Test.startTest();
+        Batch_UpdateProjectHealthScoreStamp p = new Batch_UpdateProjectHealthScoreStamp();
+        String sch = '0 35 11 * * ?';
+        System.schedule('TestHealthScoreStamp', sch, p);
+        Test.stopTest();
     }
 }    
