@@ -6,6 +6,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         targetServiceHelper.TargetsServiceOnOpps(trigger.new,trigger.oldmap);
         Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(trigger.new,trigger.oldmap);
         Partners_SharingService.newPartnerOppsSharingValidation(trigger.new);
+        Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(trigger.new,trigger.oldmap);
     }
     
     if(Trigger.isBefore && Trigger.isUpdate){
@@ -20,6 +21,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         OpportunityHelper.updateOppType(trigger.new,trigger.oldmap);
         Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(trigger.new,trigger.oldmap);
         Partners_SharingService.createOpportunityShares_ManualTrigger(trigger.new);
+        Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(trigger.new,trigger.oldmap);
     }
     
     if(Trigger.isAfter && Trigger.isUpdate){

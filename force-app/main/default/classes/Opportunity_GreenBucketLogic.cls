@@ -46,7 +46,7 @@ public without sharing class Opportunity_GreenBucketLogic {
                 
                 opp.Is_Potential_GB_Opportunity__c=isGB;
                 opp.Transition_to_GB__c=isTransition;
-                if(opp.Manual_Trigger__c!=null)
+                if(opp.Manual_Trigger__c=='Recalculate GB')
                     opp.Manual_Trigger__c='';
                 //opp.Green_Bucket_Override_Reason__c=string.valueof(datetime.now());
             }

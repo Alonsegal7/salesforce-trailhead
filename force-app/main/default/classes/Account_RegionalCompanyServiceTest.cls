@@ -32,7 +32,7 @@ public without sharing class Account_RegionalCompanyServiceTest {
         regCompEmea.Region__c = 'EMEA';
         regCompEmea.ParentId = comp.Id;
         regCompEmea.Company__c = comp.Id;
-        insert regCompEmea;
+        insert regCompEmea; 
     }
     
     @isTest
@@ -158,4 +158,34 @@ public without sharing class Account_RegionalCompanyServiceTest {
         leadUnqualified = [SELECT Id, Related_Company__c, Parent_Company__c FROM Lead WHERE LastName = 'test3'];
         System.assertEquals(leadUnqualified.Parent_Company__c, regCoEmea.Id);
     }
+    
+    @isTest
+    static void shouldLinkNewOppToExistingRegioalCompany() {
+        
+        Account regCoEmea = [SELECT Id FROM Account WHERE Name = 'testco1 - EMEA'];
+        Account comp = [SELECT Id FROM Account WHERE Name = 'testco1'];
+        
+        
+        Account mondayAcc = new Account(
+            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId(), 
+            Name = 'testMA2', 
+            primary_pulse_account_id__c = '123451',
+            BillingCountryCode = 'IL',
+            BillingCountry = 'Israel',
+            Region__c = 'EMEA',
+            ParentId = comp.Id,
+            Company__c = comp.Id);
+        insert mondayAcc;
+            
+        Test.startTest();
+        Opportunity opportunity = TestObjectCreator.CreateOpp(mondayAcc);
+        insert opportunity;
+        // System.assertEquals(opportunity.Parent_Company__c, null);
+
+        Test.stopTest();
+        
+        opportunity = [SELECT Id, Company__c, Parent_Company__c FROM Opportunity LIMIT 1];
+        System.assertEquals(opportunity.Parent_Company__c, regCoEmea.Id);
+    }
+
 }
