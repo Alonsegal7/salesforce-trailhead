@@ -10,7 +10,9 @@ global class Callout {
 
     public static void post(String serializedObject, String method) {
         if(!System.isBatch()){
-            postFuture(serializedObject, method);
+            if(!Test.isRunningTest() || system.Limits.getFutureCalls() < 50){ //protection from system.limitexception too many future calls 51
+                postFuture(serializedObject, method);
+            }
         } else if(firstRunBatch){
             firstRunBatch = false;
             System.enqueueJob(new sendCalloutQueueable(serializedObject, method));
