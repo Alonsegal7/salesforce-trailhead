@@ -11,7 +11,9 @@ public without sharing class Project_ProjectStamps {
             }
         }
         try {
-            update projectList ;
+            if (!projectList.isempty()) {
+                update projectList;
+            }
         } catch (Exception e) {
             System.debug('Project_ProjectStamps failed to update Project_HealthscoreStamp '+e.getMessage());
             
