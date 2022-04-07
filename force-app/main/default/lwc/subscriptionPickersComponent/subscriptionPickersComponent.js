@@ -10,6 +10,7 @@ import updateMA from '@salesforce/apex/SubscriptionPickerController.updateMonday
 import getMASubs from '@salesforce/apex/SubscriptionPickerController.getMASubs';
 import getLatestPlan from '@salesforce/apex/SubscriptionPickerController.getLatestPlan';
 import updateOppPlan from '@salesforce/apex/SubscriptionPickerController.updateOppPlan';
+import sendOppToBB from '@salesforce/apex/SubscriptionPickerController.sendOppToBB';
 import isclosed from '@salesforce/schema/Opportunity.IsClosed';
 import closeDateThisMonth from '@salesforce/schema/Opportunity.Close_Date_This_Month__c';
 import oppRecordTypeName from '@salesforce/schema/Opportunity.RecordType.DeveloperName';
@@ -212,6 +213,20 @@ export default class subscriptionPickersComponent extends LightningElement {
         this.subsFinal.push.apply(this.subsFinal,this.newClaims);
     }
 
+    syncOppToBB(e){
+        sendOppToBB({oppId: this.recordId}).then((resultSubs)=>{
+            console.log('opp sent to BB');
+        }).catch(error => {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error syncing opp to bb',
+                    message: error.body.message,
+                    variant: 'error',
+                }),
+            );
+        });
+    }
+
     handleSave(e){
         this.loadingSave=true;
         if(this.planChecked==true){
@@ -226,6 +241,7 @@ export default class subscriptionPickersComponent extends LightningElement {
                         variant: 'success',
                     }),
                 );
+                this.syncOppToBB(e);
                 this.loadingSave=false;
             refreshApex(this.recordId);
             }).catch(error => {
@@ -330,6 +346,7 @@ export default class subscriptionPickersComponent extends LightningElement {
             this.subsFinal = items;
             console.log('Raz Ben subPick this.subsMap[this.itemToRemoveIndex]'+JSON.stringify(this.subsMap[this.itemToRemoveIndex]));
             this.claimedARR-=this.arrToRemove;
+            this.syncOppToBB(event);
             refreshApex(this.recordId);
         }).catch(error => {
             this.dispatchEvent(

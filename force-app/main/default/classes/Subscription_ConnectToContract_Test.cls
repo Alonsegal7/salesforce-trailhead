@@ -10,6 +10,10 @@ public class Subscription_ConnectToContract_Test {
         Subscription__c sub = TestObjectCreator.CreateSubscription();
         insert sub;
         sub=[select id,Product_Code__c from Subscription__c where id=:sub.id];
+        sub.Monday_Account__c = mondayAccount.Id;
+        sub.Include_In_CC_Claim__c = true;
+        sub.Period__c = 'yearly';
+        update sub;
         Opportunity opp = TestObjectCreator.CreateOpp(mondayAccount);
         insert opp;
         Product2 prod = TestObjectCreator.CreateProductWithCode('MON-V6-PRO');
@@ -45,7 +49,11 @@ public class Subscription_ConnectToContract_Test {
         map<Id,Subscription__c> removed =SubscriptionPickerController.uncliamSubscriptions(new list<String>{string.valueof(sub.Id)},string.valueof(opp.Id));
         Account maOnUpdate= SubscriptionPickerController.updateMondayAccount(string.valueof(mondayAccount.Id));
         user=SubscriptionPickerController.getUserDetails(string.valueof(user.id));
-
+        Subscription__c s = subs.values().get(0);
+        SubscriptionPickerController.updateOppPlan(s,opp.Id);
+        Subscription__c s2 = SubscriptionPickerController.getLatestPlan(new list<string>{s.Id}, opp.Id);
+        List<Subscription__c> s3 = SubscriptionPickerController.getMASubs(opp.Id);
+        SubscriptionPickerController.sendOppToBB(opp.Id);
     }
 
 }

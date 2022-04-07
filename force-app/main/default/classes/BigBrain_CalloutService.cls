@@ -71,6 +71,15 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     public void finish(Database.BatchableContext BC){}
     //end of batch
 
+    public static void sendCalloutSingleObj(Id objId, String objName){
+        List<String> fields = new List<String>(Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().keySet());
+        String query = 'SELECT ' + String.join(fields, ',') + ' FROM ' + objName + ' where Id = \'' + objId + '\'';
+        System.debug('BigBrain_CalloutService sendCalloutSingleObj query: ' + query);
+        List<SObject> obj_list = database.query(query);
+        System.debug('BigBrain_CalloutService sendCalloutSingleObj obj_list: ' + obj_list);
+        if(!obj_list.isEmpty()) sendUpdateCalloutToBB(obj_list);
+    }
+
     //method to send the callout to BB - called by the batch 
     public static void sendUpdateCalloutToBB(List<sObject> objects) {
         Http http = new Http();

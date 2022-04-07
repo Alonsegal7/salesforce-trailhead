@@ -8,7 +8,7 @@ public without sharing class SubscriptionPickerController {
             Id oppAccId=opp.AccountId;
             Id opptyId=opp.Id;
             //CS Renewal Opp will only take the renewal subscription for claiming
-            string query='select id,name,Seats__c,ARR__c, Product_Code__c,Name_for_CC_Claim__c, Name_for_CC_Claim_Full_ARR__c,Claimed_On_Opportunity__r.Co_Sell_Opportunity__c,Is_Claimed__c,ARR_Gain__c,Period__c from Subscription__c where Monday_Account__c=:oppAccId';
+            string query='select id,name,Seats__c,Tier__c,ARR__c, Product_Code__c,Name_for_CC_Claim__c, Name_for_CC_Claim_Full_ARR__c,Claimed_On_Opportunity__r.Co_Sell_Opportunity__c,Is_Claimed__c,ARR_Gain__c,Period__c from Subscription__c where Monday_Account__c=:oppAccId';
             if (opp.RecordTypeId==CSRecordType && opp.Type.contains('Renewal')) {
                 query+=' and Is_Claimed__c=false and Status__c=\'ACTIVE\'' + 'and Payment_Method__c like \'%BLUESNAP%\' order by Activation_Date__c';
             }
@@ -301,6 +301,15 @@ public without sharing class SubscriptionPickerController {
                                                         Plan_Updated_From_Subscription__c=sub.id);
             update opp;
         }catch(Exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static void sendOppToBB(Id oppId){
+        try {
+            BigBrain_CalloutService.sendCalloutSingleObj(oppId, 'Opportunity');
+        } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
