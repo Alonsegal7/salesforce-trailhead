@@ -150,10 +150,6 @@ public without sharing class Partner_PaymentRequestService {
                 partnerCompanyId = currPaymentReq.Channel_Partner__c;
             }
             
-            //get inbound outbound percent
-            Partner_Commission_Model__c pcm = [select Id, Commission_Model__r.Inbound_Percent__c, Commission_Model__r.Outbound_Percent__c from Partner_Commission_Model__c where Partner_Company__c =: partnerCompanyId and Start_Date__c <=: monthForQuery and (End_Date__c = null or End_Date__c >=: monthForQuery) limit 1];
-            Decimal inboundPercent = pcm.Commission_Model__r.Inbound_Percent__c / 100;
-            Decimal outboundPercent = pcm.Commission_Model__r.Outbound_Percent__c / 100;
             //query all relevant data of collections and remove fix collections - should be hidden for same report
             Map<Id,Commission_Collection__c> collectionsMap = new Map<Id,Commission_Collection__c>([select Pulse_Account_Id__c, Is_Hidden__c, Is_Fix__c, Monday_Account__c, Monday_Account__r.Name, Account_Source_Type__c, Partner_Company__c, Partner_Company__r.Name, Partner_Tier__c, Plan_Name__c, Plan_Period__c, Plan_Tier__c, Account_Slug__c, Collection_Amount_USD__c, Commission_Amount_USD__c, Collection_Happened_At__c, Event_Type__c, Payment_Type__c, Commission_Report__r.Date__c, Commission_Report__r.Id, Commission_Report__r.Is_Available_For_Payment_Request__c from Commission_Collection__c where Partner_Company__c =: partnerCompanyId and Commission_Report__r.Is_Available_For_Payment_Request__c = true and CALENDAR_MONTH(Commission_Report__r.Date__c) =: monthForQuery.month() and CALENDAR_YEAR(Commission_Report__r.Date__c) =: monthForQuery.year()]);
             List<Commission_Collection__c> collectionsList = new List<Commission_Collection__c>();
@@ -162,8 +158,13 @@ public without sharing class Partner_PaymentRequestService {
             }
             
             //calculate amounts
-            Decimal monthlyAmount = 0, yearlyAmount = 0, twoYearlyAmount = 0;
+            Decimal monthlyAmount = 0, yearlyAmount = 0, twoYearlyAmount = 0, inboundPercent = 0, outboundPercent = 0;
             if(!collectionsList.isEmpty()) {
+                //get inbound outbound percent
+                Partner_Commission_Model__c pcm = [select Id, Commission_Model__r.Inbound_Percent__c, Commission_Model__r.Outbound_Percent__c from Partner_Commission_Model__c where Partner_Company__c =: partnerCompanyId and Start_Date__c <=: monthForQuery and (End_Date__c = null or End_Date__c >=: monthForQuery) limit 1];
+                inboundPercent = pcm.Commission_Model__r.Inbound_Percent__c / 100;
+                outboundPercent = pcm.Commission_Model__r.Outbound_Percent__c / 100;
+                //sum amounts by plan
                 for(Commission_Collection__c collection: collectionsList){
                     if(collection.Plan_Period__c.containsIgnoreCase('monthly')) monthlyAmount += collection.Commission_Amount_USD__c;
                     if(collection.Plan_Period__c.containsIgnoreCase('yearly')) {
