@@ -21,5 +21,3 @@ public without sharing class Project_ProjectStamps {
         return projectList ;
     } 
 }
-
-

@@ -38,4 +38,4 @@ public with sharing class Project_ProjectStampsTest {
         System.schedule('TestHealthScoreStamp', sch, p);
         Test.stopTest();
     }
-}    
+}

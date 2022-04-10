@@ -118,7 +118,7 @@ public without sharing class Account_RegionalCompanyService {
         if (regionalCompaniesByGlobalCompanyId.keySet().isEmpty()) return;
         
         //check if any of the leads under the global company is on the same region and if so mark the new regional company as their Parent Company
-        List<Lead> relatedLeads = new List<Lead>([SELECT Id, Region__c, Related_Company__c, Parent_Company__c FROM Lead WHERE Parent_Company__c = null AND Related_Company__c IN: regionalCompaniesByGlobalCompanyId.keySet()]);
+        List<Lead> relatedLeads = new List<Lead>([SELECT Id, Region__c, Related_Company__c, Parent_Company__c FROM Lead WHERE Status != 'Unqualified' AND Parent_Company__c = null AND Related_Company__c IN: regionalCompaniesByGlobalCompanyId.keySet()]);
         if (!relatedLeads.isEmpty()) {
             for (Lead lead : relatedLeads) {
                 for (Account regCompany : regionalCompaniesByGlobalCompanyId.get(lead.Related_Company__c)) {
