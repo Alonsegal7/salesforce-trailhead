@@ -15,13 +15,13 @@ public without sharing class Lead_MapRegions {
                     if(regionsMapping.containskey(lead.CountryCode)){
                         system.debug('Raz Ben Ron regionsMapping.get(lead.CountryCode): '+regionsMapping.get(lead.CountryCode));
                         region=regionsMapping.get(lead.CountryCode).Region__c;
-                        //subRegion=regionsMapping.get(lead.CountryCode).Sub_Region__c;
+                        subRegion=regionsMapping.get(lead.CountryCode).Sub_Region__c;
                     }else{
                         region='';
                         subRegion='';
                     }
                     lead.Region__c=region;
-                    //lead.Sub_Region__c=subRegion;
+                    lead.Sub_Region__c=subRegion;
                     if(lead.Manual_Trigger__c=='Match Regions')lead.Manual_Trigger__c='';
                 }
              }
