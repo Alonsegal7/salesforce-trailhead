@@ -31,9 +31,9 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
         }
         if(Trigger.isUpdate){
             // Partner Commission - start 
-            if(PartnerCommissionService.firstRunAccARR || PartnerCommissionService.firstRunAccTrans || PartnerCommissionService.firstRunAccSource || PartnerCommissionService.firstRunAccMerge) {
+            if(PartnerCommissionService.firstRunAcc || PartnerCommissionService.firstRunAccTrans || PartnerCommissionService.firstRunAccSource || PartnerCommissionService.firstRunAccMerge) {
                 PartnerCommissionService commissionHelper = new PartnerCommissionService();
-                if(PartnerCommissionService.firstRunAccARR) commissionHelper.partnerCommissionFromARR(Trigger.new, Trigger.oldMap);
+                if(PartnerCommissionService.firstRunAcc) commissionHelper.partnerCommissionFromAccount(Trigger.new, Trigger.oldMap);
                 if(PartnerCommissionService.firstRunAccTrans) commissionHelper.partnerCommissionFromPartnerTransfer(Trigger.new, Trigger.oldMap);
                 if(PartnerCommissionService.firstRunAccSource) commissionHelper.updatePcOnAccountSourceChange(Trigger.new, Trigger.oldMap);
                 if(PartnerCommissionService.firstRunAccMerge) commissionHelper.updatePcOnAccountMerge(Trigger.new, Trigger.oldMap);

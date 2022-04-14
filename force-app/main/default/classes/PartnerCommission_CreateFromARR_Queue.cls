@@ -18,22 +18,29 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
             Map<Id,Set<Id>> mondayAccountPartnerIdToCreatePC = new Map<Id,Set<Id>>();
             for(Account mondayAccount: mondayAccountsList){
                 if(!mondayAccIdPartnerCommisionMap.containsKey(mondayAccount.Id)) continue; //monday account has no pcs
+                //ARR above TH
                 if(mondayAccount.ARR__c >= gbThresholdsMap.get(mondayAccount.Account_Source_Type__c).Min_ARR__c) { //add pc for accounts that reached TH and have no active pc
-                    for(Partner_Commission__c partnerCom: mondayAccIdPartnerCommisionMap.get(mondayAccount.Id)) {
-                        if(partnerCom.End_Date__c != null && partnerCom.End_Date__c <= mondayAccount.Last_ARR_Update_Timestamp__c){ //create pc
-                            channelPartnersIds.add(partnerCom.Partner_Company__c);
-                            newPartnerCommissionList.add(new Partner_Commission__c(Id = partnerCom.Id, is_Last__c = false));
+                    for(Partner_Commission__c pc: mondayAccIdPartnerCommisionMap.get(mondayAccount.Id)) {
+                        if(pc.End_Date__c != null && pc.End_Date__c <= mondayAccount.Last_ARR_Update_Timestamp__c){ //create pc
+                            channelPartnersIds.add(pc.Partner_Company__c);
+                            newPartnerCommissionList.add(new Partner_Commission__c(Id = pc.Id, is_Last__c = false));
                             if(mondayAccountPartnerIdToCreatePC.containsKey(mondayAccount.Id)){
-                                mondayAccountPartnerIdToCreatePC.get(mondayAccount.Id).add(partnerCom.Partner_Company__c);
+                                mondayAccountPartnerIdToCreatePC.get(mondayAccount.Id).add(pc.Partner_Company__c);
                             } else {
-                                mondayAccountPartnerIdToCreatePC.put(mondayAccount.Id, new Set<Id>{partnerCom.Partner_Company__c});
+                                mondayAccountPartnerIdToCreatePC.put(mondayAccount.Id, new Set<Id>{pc.Partner_Company__c});
                             }
                         }
                     }     
-                } else if(!mondayAccount.Outbound_TH_Excluded__c){ //set end datetime to now on pc for accounts that got under TH and have active pc. Outbound_TH_Excluded__c - All the marked accounts should not be part of the logic to close PC b/c of ARR below new TH (3K). Those accounts should stay valid for commission.
-                    for(Partner_Commission__c partnerCom: mondayAccIdPartnerCommisionMap.get(mondayAccount.Id)) {
-                        if(partnerCom.End_Date__c == null || partnerCom.End_Date__c > mondayAccount.Last_ARR_Update_Timestamp__c){ 
-                            newPartnerCommissionList.add(new Partner_Commission__c(Id = partnerCom.Id, End_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c.addSeconds(-1), ARR_Upon_Close__c = mondayAccount.ARR__c, Close_Reason__c = 'ARR below TH'));
+                } //ARR below TH
+                else if(!mondayAccount.Outbound_TH_Excluded__c){ // we exclude account that were marked with Outbound_TH_Excluded__c=true. This was done because we had outbound TH = 0, then it changed to 3K. SO we wanted to keep all pcs created by the old th open.
+                    //set end datetime to Last_ARR_Update_Timestamp__c on pc for accounts that got under TH and have active pc. Outbound_TH_Excluded__c - All the marked accounts should not be part of the logic to close PC b/c of ARR below new TH (3K). Those accounts should stay valid for commission.
+                    for(Partner_Commission__c pc: mondayAccIdPartnerCommisionMap.get(mondayAccount.Id)) {
+                        if(pc.End_Date__c == null || pc.End_Date__c > mondayAccount.Last_ARR_Update_Timestamp__c){ 
+                            if(pc.Is_Future_Payment__c){ //when arr drops to zero on a monthly plan we set percentage to 0
+                                if(mondayAccount.ARR__c == 0) newPartnerCommissionList.add(new Partner_Commission__c(Id = pc.Id, Percentage__c = 0));
+                            } else {
+                                newPartnerCommissionList.add(new Partner_Commission__c(Id = pc.Id, End_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c.addSeconds(-1), ARR_Upon_Close__c = mondayAccount.ARR__c, Close_Reason__c = 'ARR below TH'));
+                            }
                         }
                     }
                 }
