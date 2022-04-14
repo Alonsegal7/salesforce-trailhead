@@ -32,6 +32,10 @@ public with sharing class PartnerCommission_MergeAccounts_Queue implements Syste
                     }
                 }     
             }
+            if(!newPartnerCommissionList.isEmpty()) {
+                pcService.upsertPartnerCommissionInQueue(newPartnerCommissionList, CLASS_NAME_CONST);
+                newPartnerCommissionList.clear();
+            }
 
             if(!mondayAccountPartnerIdToCreatePC.isEmpty()){
                 Map<Id,Account> channelPartnersMap = pcService.getChannelPartnersMap(channelPartnersIds);

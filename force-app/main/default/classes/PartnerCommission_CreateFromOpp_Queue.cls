@@ -49,7 +49,17 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
             accountIds.add(opp.Channel_Partner__c);
             accountIds.add(opp.AccountId);
         }
-        return new Map<Id, Account>([select Id, ARR__c, Name, Partner_Tier__c, Sign_Up_Date__c, Last_ARR_Update_Timestamp__c, Account_Source_Type__c, Partner_Type__c, primary_pulse_account_id__c, Partner_Commission_Model__c, Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c, Partner_Commission_Model__r.Commission_Model__r.Period__c, Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c, Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c from Account where Id IN: accountIds and ((RecordTypeId =: mondayRecordTypeId and primary_pulse_account_id__c != null) or (RecordTypeId =: partnerRecordTypeId and Partner_Commission_Model__c != null))]);
+        return new Map<Id, Account>([select Id, ARR__c, Name, Partner_Tier__c, Sign_Up_Date__c, Last_ARR_Update_Timestamp__c, Account_Source_Type__c, 
+                                        Active_Contract__r.StartDate, Active_Contract__r.Period__c, Plan_Period__c, 
+                                        Partner_Type__c, primary_pulse_account_id__c, Partner_Commission_Model__c, 
+                                        Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c, 
+                                        Partner_Commission_Model__r.Commission_Model__r.Period__c, 
+                                        Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c, 
+                                        Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c 
+                                        from Account 
+                                        where Id IN: accountIds 
+                                        and ((RecordTypeId =: mondayRecordTypeId and primary_pulse_account_id__c != null) 
+                                            or (RecordTypeId =: partnerRecordTypeId and Partner_Commission_Model__c != null))]);
     }
 
     private void handleCosellOpps(Map<Id,Opportunity> partnerCoSellOppsMap, Set<Id> internalCoSellOpps, List<Partner_Commission__c> newPartnerCommissionList, Map<Id, Account> accountsMap, PartnerCommissionService pcService){

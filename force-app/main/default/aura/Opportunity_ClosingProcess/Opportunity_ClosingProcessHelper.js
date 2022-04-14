@@ -278,12 +278,28 @@
 	},
 
 	checkHandover_InternalOpp : function (component, event, helper){
-		if (component.get('v.oppData.Passed_AM_Threshold__c') || component.get('v.oppData.Passed_CSM_Threshold__c') || component.get('v.oppData.Passed_Onboarding_Threshold__c')) {
-			component.set('v.showHandover', true);
-			console.log('opp close proc: #checkHandover_InternalOpp v.showHandover is true - thresholds logic');
-		}else {
-			component.set('v.showHandover', false);
-			console.log('opp close proc: #checkHandover_InternalOpp v.showHandover is false - thresholds logic');
+		console.log('opp close proc: entered #checkHandover_InternalOpp');
+		// if (component.get('v.oppData.Passed_AM_Threshold__c') || component.get('v.oppData.Passed_CSM_Threshold__c') || component.get('v.oppData.Passed_Onboarding_Threshold__c')) {
+		// 	component.set('v.showHandover', true);
+		// 	console.log('opp close proc: #checkHandover_InternalOpp v.showHandover is true - thresholds logic');
+		// }else {
+		// 	component.set('v.showHandover', false);
+		// 	console.log('opp close proc: #checkHandover_InternalOpp v.showHandover is false - thresholds logic');
+		// }
+		if(component.get('v.oppData.RecordType.Name') == 'Internal Opportunity'){
+			if(component.get('v.oppData.Should_be_handed_over_to_AM__c') || 
+			component.get('v.oppData.Total_PS_Hours__c') > 0 || 
+			component.get('v.oppData.Total_PS_Expended_Hours__c') > 0 || 
+			component.get('v.oppData.Onboarding_Hours__c') > 0 || 
+			component.get('v.oppData.Total_Training_Hours__c') >= 3 ||
+			((component.get('v.oppData.Expected_Plan_Tier__c') != undefined && (component.get('v.oppData.Expected_Plan_Tier__c') == 'enterprise' || component.get('v.oppData.Expected_Plan_Tier__c') == 'Enterprise')) && component.get('v.oppData.Account.CSM__c') == null)){
+				component.set('v.showHandover', true);
+				console.log('opp close proc: #checkHandover_InternalOpp v.showHandover is true - old logic');
+			}
+			else {
+				component.set('v.showHandover', false);
+				console.log('opp close proc: #checkHandover_InternalOpp v.showHandover is false - old logic');
+			}
 		}
 	},
 

@@ -46,7 +46,7 @@ public class PartnerCommissionServiceTest {
 		insert user;
 
         //create monday account
-        Account mondayAcc = new Account(OwnerId = user.Id, Name = 'testMOnday', RecordTypeId = ACC_MA_RT_CONST, primary_pulse_account_id__c = '12345', Account_Source_Type__c = 'Inbound', Sign_Up_Date__c = Date.today());
+        Account mondayAcc = new Account(OwnerId = user.Id, Name = 'testMOnday', RecordTypeId = ACC_MA_RT_CONST, primary_pulse_account_id__c = '12345', Account_Source_Type__c = 'Inbound', Sign_Up_Date__c = Date.today().addMonths(-7), Plan_Period__c = 'yearly');
         insert mondayAcc;
 
         //create opportunity with opp.Potential_GB_Opp_Override__c=='Yes'
@@ -64,14 +64,26 @@ public class PartnerCommissionServiceTest {
         update opp;
     }
 
+    static testmethod void test_PartnerCommission_renewMonthlyPCs(){
+        List<Partner_Commission__c> pcList = [select Id from Partner_Commission__c];
+        pcList.get(0).Is_Future_Payment__c = true;
+        pcList.get(0).End_Date__c = date.today();
+        update pcList;
+        String sch = '0 35 11 * * ?';
+        Test.startTest();
+        String jobId = System.schedule('myJobTestJobName', sch, new PartnerCommission_renewMonthlyPCs());
+        Database.executeBatch(new PartnerCommission_renewMonthlyPCs());
+        Test.stopTest();
+    }
+
     static testmethod void testFirstPartnerCommissionCreation(){
         Opportunity opp = [select Id, Channel_Partner__c, Transition_to_GB__c, StageName, RecordTypeId from Opportunity where RecordTypeId=:OPP_PARTNER_RT_CONST limit 1];
         System.assertNotEquals(null, opp.Channel_Partner__c);
         System.assertEquals(true, opp.Transition_to_GB__c);
         System.assertEquals('Closed Won', opp.StageName);
-        List<Partner_Commission__c> pcList = [select Id from Partner_Commission__c];
+        List<Partner_Commission__c> pcList = [select Id, Start_Date__c from Partner_Commission__c];
         System.assertEquals(1, pcList.size());
-
+        System.assertEquals(Date.today().addMonths(-6), pcList.get(0).Start_Date__c);
         //update MA ARR below TH
         Account mondayAcc = [select Id, Is_GB_Account_Partners__c from Account where RecordTypeId =: ACC_MA_RT_CONST limit 1];
         System.assertEquals(true, mondayAcc.Is_GB_Account_Partners__c);
