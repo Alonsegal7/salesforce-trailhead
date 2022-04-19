@@ -32,11 +32,21 @@ public class Renewal_Global_Test {
 
         List<Id> contractIdList = new List<Id>{con.Id};
         
+        Test.startTest();
+
         System.runAs(userRecord){
             opportunity_RenewalCreation.checkOpenRenewalOpps(con.Id);
             opportunity_RenewalCreation.createRenewalOpportunities(contractIdList); 
             opportunity_RenewalCreation.checkOpenExpansionOpps(con.Id);
         }
+        Test.stopTest();
+
+        con = [SELECT Id, Renewal_Opportunity__c, Renewal_Opportunity_Creation_Status__c FROM Contact WHERE Id =: con.Id LIMIT 1];
+        opportunity = [SELECT Id FROM Opportunity WHERE Selected_Company_Contract__c =: con.Id LIMIT 1];
+        
+        //add assert to contract and oppty indications
+        System.assertEquals(con.Renewal_Opportunity__c, opportunity.Id);
+        System.assertEquals(con.Renewal_Opportunity_Creation_Status__c, 'Completed');
     }
     
     public static testmethod void createOpportunityWithSubs() {

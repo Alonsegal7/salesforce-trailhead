@@ -83,6 +83,7 @@ public without sharing class Opportunity_RenewalCreation {
                 Manual_Renewal_Creation__c = true
             ));
             c.Renewal_Opportunity_Creation_Status__c = 'Initiated';
+            c.Renewal_Opp_Created_from_Contract__c = true;
             contractsWithIds.put(c.Id,c);            
         }
         
@@ -109,18 +110,20 @@ public without sharing class Opportunity_RenewalCreation {
     */
     public static void updateRenewalStatus(List<Opportunity> newOpps, Map<Id, Opportunity> oldOpps) {
         Set<Id> relevantContractIds = new Set<Id>();
+        Map<Id,Opportunity> renewalOppsToContractsMap = new Map<Id,Opportunity>();
         if (oldOpps == null) {
             for (Opportunity opp : newOpps) {
-                if (opp.Type == 'Flat Renewal' && opp.Selected_Company_Contract__c != null) {
-                    relevantContractIds.add(opp.Selected_Company_Contract__c);
+                if (opp.Selected_Company_Contract__c != null) {
+                    renewalOppsToContractsMap.put(opp.Selected_Company_Contract__c, opp);
                 }
             }
             System.debug('relevantContractIds: '+ relevantContractIds);
-            if (relevantContractIds != null) {
-                List<Contract> contractsToUpdate = new List<Contract>([SELECT Id, Renewal_Opportunity_Creation_Status__c FROM Contract WHERE Renewal_Opportunity_Creation_Status__c = 'Initiated' AND Id IN: relevantContractIds]);
+            if (renewalOppsToContractsMap != null) {
+                List<Contract> contractsToUpdate = new List<Contract>([SELECT Id, Renewal_Opportunity_Creation_Status__c FROM Contract WHERE Id IN: renewalOppsToContractsMap.keySet()]);
                 System.debug('contractsToUpdate: '+ contractsToUpdate);
                 for (Contract c : contractsToUpdate) {
-                    c.Renewal_Opportunity_Creation_Status__c = 'Completed';
+                    c.Renewal_Opportunity__c = renewalOppsToContractsMap.get(c.Id).Id;
+                    if (c.Renewal_Opportunity_Creation_Status__c == 'Initiated') c.Renewal_Opportunity_Creation_Status__c = 'Completed';
                 }
                 try {
                     System.debug('contractsToUpdate: '+ contractsToUpdate);
