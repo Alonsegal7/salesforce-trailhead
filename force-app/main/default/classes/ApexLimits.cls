@@ -7,6 +7,9 @@ public without sharing class ApexLimits {
         returnedLimit.put('UsageValue',orgLimit.getValue());
         returnedLimit.put('MaximumLimit' ,orgLimit.getLimit() );
         return returnedLimit;
+    }
 
-        }
+    public static Boolean queueableLimitReached(){
+        return Limits.getQueueableJobs() == Limits.getLimitQueueableJobs();
+    }
 }

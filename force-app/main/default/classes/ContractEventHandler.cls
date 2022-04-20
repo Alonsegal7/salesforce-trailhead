@@ -103,10 +103,16 @@ public with sharing class ContractEventHandler {
                     }
                     //Updates related records for for pro-rated deals
                     if (!oppsToUpdate.isEmpty()) {
-                        System.enqueueJob(new updateOppQueueable(oppsToUpdate));
+                        //if we run from a batch or queueable limit is reached already -> we do the update in real-time
+                        //else we call a queueable for the update
+                        if(!System.isBatch() && !ApexLimits.queueableLimitReached()) System.enqueueJob(new updateOppQueueable(oppsToUpdate));
+                        else update oppsToUpdate;
                     }
                     if (!proRatedQuotesToUpdate.isempty()) {
-                        System.enqueueJob(new updateQuoteQueueable(proRatedQuotesToUpdate));
+                        //if we run from a batch or queueable limit is reached already -> we do the update in real-time
+                        //else we call a queueable for the update
+                        if(!System.isBatch() && !ApexLimits.queueableLimitReached()) System.enqueueJob(new updateQuoteQueueable(proRatedQuotesToUpdate));
+                        else update proRatedQuotesToUpdate;
                     }
                     if (!conEventForExisContract.isempty()) {
                         CreateContractEventForExistingContract(conEventForExisContract);
