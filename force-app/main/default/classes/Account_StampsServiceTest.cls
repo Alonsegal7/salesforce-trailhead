@@ -1,5 +1,5 @@
 @isTest
-public with sharing class Account_OwnerStampsTest {
+public with sharing class Account_StampsServiceTest {
     @TestSetup
     static void makeData(){
         Profile profileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
@@ -21,6 +21,10 @@ public with sharing class Account_OwnerStampsTest {
         insert accountRecord;
         accountRecord.OwnerId = userRecord1.Id;
         update accountRecord; 
+        Account comp1 = TestObjectCreator.CreateCompany();
+        comp1.Named_Account__c = true;
+        comp1.Name = 'comp1';
+        insert comp1;
     }
 
     @isTest
@@ -75,5 +79,25 @@ public with sharing class Account_OwnerStampsTest {
 
         acc = [select Id, CSM_Manager__c from Account limit 1];
         system.assertEquals(acc.CSM_Manager__c, null);
+    }
+
+    @isTest
+    static void shouldStampNamedAccountStartDate(){
+        Account comp = [SELECT Id, Named_Account_Start_Date__c FROM Account WHERE Name = 'comp1'];
+        system.assertEquals(comp.Named_Account_Start_Date__c, Date.today());
+    }
+
+    @isTest
+    static void shouldStampNamedAccountEndDate(){
+
+        Account comp = [SELECT Id, Named_Account__c	FROM Account WHERE Name = 'comp1'];
+        comp.Named_Account__c = false;
+        update comp;
+
+        Test.startTest();
+        comp = [SELECT Id, Named_Account_End_Date__c FROM Account WHERE Name = 'comp1'];
+        Test.stopTest();
+
+        system.assertEquals(comp.Named_Account_End_Date__c, Date.today());
     }
 }

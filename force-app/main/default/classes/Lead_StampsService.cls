@@ -35,7 +35,7 @@ public without sharing class Lead_StampsService {
             return;
         }
         Map<Id,Account> relatedCompsWithArr = new Map<Id,Account>([select Id from Account where ARR__c > 0 and Name != 'gmail.com' and Id in: relatedCompsIds]);
-        Map<Id,Account> relatedOutboundComps = new Map<Id,Account>([select Id from Account where Outbound_Company__c = true and Name != 'gmail.com' and Id in: relatedCompsIds]);
+        Map<Id,Account> relatedOutboundComps = new Map<Id,Account>([select Id from Account where Named_Account__c = true and Name != 'gmail.com' and Id in: relatedCompsIds]);
         if(relatedCompsWithArr.isEmpty() && relatedOutboundComps.isEmpty()) {
             System.debug('all related companies had ARR <= 0 and are non-outbound, exiting markCompanyRelatedStampsUponCreaion');
             return;
@@ -45,7 +45,7 @@ public without sharing class Lead_StampsService {
                 lead.Company_paying_on_lead_creation__c = true;
             }
             if(relatedOutboundComps.containsKey(lead.Related_Company__c)){
-                lead.Outbound_Lead__c = true;
+                lead.Named_Account_on_Creation__c = true;
             }
         }
     }
@@ -76,7 +76,6 @@ public without sharing class Lead_StampsService {
             lead.Account_Arr_on_Lead_Creation__c = lead.Account_ARR__c;
             lead.Type__c = lead.Account_ARR__c > 0 ? 'Expansion' : 'New Business';
             lead.Channel__c = lead.Channel_Lead_Source__c == 'None' ? '-' : lead.Channel_Lead_Source__c;
-            if (lead.Channel_Lead_Source__c == 'Outbound') lead.Outbound_Lead__c = true;
             lead.Received_timestamp__c = Date.today();
             if(String.valueOf(lead.OwnerId).startsWith('005')) {
                 leadsForDistFirst.add(lead);

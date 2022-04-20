@@ -29,6 +29,7 @@ public without sharing class Account_RegionalCompanyServiceTest {
         regCompEmea.OwnerId = user.Id;
         regCompEmea.Name = 'testco1 - EMEA';
         regCompEmea.Account_Territory__c = 'Regional';
+        regCompEmea.Named_Account__c = true;
         regCompEmea.Region__c = 'EMEA';
         regCompEmea.ParentId = comp.Id;
         regCompEmea.Company__c = comp.Id;
@@ -56,7 +57,7 @@ public without sharing class Account_RegionalCompanyServiceTest {
         Test.stopTest();
 
         comp = [SELECT Id, ParentId, Company__c, Account_Territory__c FROM Account WHERE Name = 'testco1'];
-        mondayAcc = [SELECT Id, Region__c, ParentId, Company__c FROM Account WHERE primary_pulse_account_id__c = '12345'];
+        mondayAcc = [SELECT Id, Region__c, ParentId, Company__c, Named_Account_on_Creation__c FROM Account WHERE primary_pulse_account_id__c = '12345'];
         Account regionalCompany1 = [SELECT Id, Name, Account_Territory__c, Region__c, Company__c, ParentId FROM Account WHERE Id = :mondayAcc.ParentId];
 
         System.debug('regionalCompany1 name: '+ regionalCompany1.Name + 'Territory: ' + regionalCompany1.Account_Territory__c);
@@ -64,6 +65,7 @@ public without sharing class Account_RegionalCompanyServiceTest {
         System.assertEquals(mondayAcc.Region__c, 'NAM');
         System.assertEquals(mondayAcc.Company__c, comp.Id);
         System.assertEquals(mondayAcc.ParentId, regionalCompany1.Id);
+        System.assertEquals(mondayAcc.Named_Account_on_Creation__c, false);
         
         System.assertEquals(regionalCompany1.Region__c, 'NAM');
         System.assertEquals(regionalCompany1.Account_Territory__c, 'Regional');
@@ -97,11 +99,12 @@ public without sharing class Account_RegionalCompanyServiceTest {
         Test.stopTest();
 
         comp = [SELECT Id, ParentId, Company__c, Account_Territory__c FROM Account WHERE Name = 'testco1'];
-        mondayAcc2 = [SELECT Id, Region__c, ParentId, Company__c FROM Account WHERE primary_pulse_account_id__c = '12345'];
+        mondayAcc2 = [SELECT Id, Region__c, ParentId, Company__c, Named_Account_on_Creation__c FROM Account WHERE primary_pulse_account_id__c = '12345'];
         Account regionalCompany2 = [SELECT Id, Name, Account_Territory__c, Region__c, Company__c, ParentId FROM Account WHERE Id = :mondayAcc2.ParentId];
         
         System.assertEquals(mondayAcc2.Company__c, comp.Id);
         System.assertEquals(mondayAcc2.ParentId, regionalCompany2.Id);
+        System.assertEquals(mondayAcc2.Named_Account_on_Creation__c, true);
         
         System.assertEquals(regionalCompany2.Id, regCoEmea.Id);
         System.assertEquals(regionalCompany2.Region__c, 'EMEA');
@@ -138,8 +141,9 @@ public without sharing class Account_RegionalCompanyServiceTest {
 
         Test.stopTest();
         
-        lead2 = [SELECT Id, Related_Company__c, Parent_Company__c FROM Lead WHERE LastName = 'test2'];
+        lead2 = [SELECT Id, Related_Company__c, Parent_Company__c, Named_Account_on_Creation__c FROM Lead WHERE LastName = 'test2'];
         System.assertEquals(lead2.Parent_Company__c, regCoEmea.Id);
+        System.assertEquals(lead2.Named_Account_on_Creation__c, true);
     }
 
     @isTest
@@ -180,12 +184,12 @@ public without sharing class Account_RegionalCompanyServiceTest {
         Test.startTest();
         Opportunity opportunity = TestObjectCreator.CreateOpp(mondayAcc);
         insert opportunity;
-        // System.assertEquals(opportunity.Parent_Company__c, null);
 
         Test.stopTest();
         
-        opportunity = [SELECT Id, Company__c, Parent_Company__c FROM Opportunity LIMIT 1];
+        opportunity = [SELECT Id, Company__c, Parent_Company__c, Named_Account_on_Creation__c FROM Opportunity LIMIT 1];
         System.assertEquals(opportunity.Parent_Company__c, regCoEmea.Id);
+        System.assertEquals(opportunity.Named_Account_on_Creation__c, true);
     }
 
 }

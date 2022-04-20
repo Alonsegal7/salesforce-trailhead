@@ -12,7 +12,7 @@ public with sharing class Lead_StampsServiceTest {
         comps.add(TestObjectCreator.CreateCompany());
         comps.get(0).ARR__c = 1000;
         comps.get(0).Name = 'test1';
-        comps.get(0).Outbound_Company__c = true;
+        comps.get(0).Named_Account__c = true;
         comps.add(TestObjectCreator.CreateCompany());
         comps.get(1).ARR__c = 0;
         comps.get(1).Name = 'test2';
@@ -72,9 +72,9 @@ public with sharing class Lead_StampsServiceTest {
     }
 
     static testMethod void markCompanyStampsOnCreation_createdWithCompanyARR() { 
-        Lead lead1 = [select Company_paying_on_lead_creation__c, Outbound_Lead__c from Lead where LastName = 'test1' limit 1];
+        Lead lead1 = [select Company_paying_on_lead_creation__c, Named_Account_on_Creation__c from Lead where LastName = 'test1' limit 1];
         system.assertEquals(true, lead1.Company_paying_on_lead_creation__c);
-        system.assertEquals(true, lead1.Outbound_Lead__c);
+        system.assertEquals(true, lead1.Named_Account_on_Creation__c);
     }
     
     static testMethod void markCompanyStampsOnCreation_createdWoRelCompany() { // test create w/o related company and assign related company
@@ -83,9 +83,9 @@ public with sharing class Lead_StampsServiceTest {
         Account company1 = [select Id from Account where Name = 'test1' limit 1];
         lead2.Related_Company__c = company1.Id;
         update lead2;
-        lead2 = [select Company_paying_on_lead_creation__c, Outbound_Lead__c from Lead where Id =: lead2.Id];
+        lead2 = [select Company_paying_on_lead_creation__c, Named_Account_on_Creation__c from Lead where Id =: lead2.Id];
         system.assertEquals(true, lead2.Company_paying_on_lead_creation__c);
-        system.assertEquals(true, lead2.Outbound_Lead__c);
+        system.assertEquals(true, lead2.Named_Account_on_Creation__c);
     }
     static testMethod void markCompanyStampsOnCreation_ArrZero() { // test create w/o related company and assign related company
         Lead lead2 = [select Company_paying_on_lead_creation__c from Lead where LastName = 'test2' limit 1];
@@ -193,7 +193,7 @@ public with sharing class Lead_StampsServiceTest {
     @istest
     static void checkGetValuesOnCreate(){
         Lead createdLead = [select id,visitor_id__c,Sub_source__c,LeadSource,Channel_Lead_Source__c,Type__c,Distributed_to_First__c,OwnerId,First_Visitor_Id__c,Account_ARR__c, Account_Arr_on_Lead_Creation__c, Lead_created_date__c,Salesloft_Import_Link__c,First_Sub_source__c,First_Lead_Source__c,Channel__c,Received_timestamp__c, Distributed_w_o_Phone_Number__c,Distributed_with_Phone__c,Enriched_phone__c,Phone from lead where Company='leadWithPhone' limit 1];
-        Lead createdLeadOutboundChannel = [select id,Account_ARR__c, Account_Arr_on_Lead_Creation__c,Type__c,Outbound_Lead__c from lead where Company='test3' limit 1];
+        Lead createdLeadOutboundChannel = [select id,Account_ARR__c, Account_Arr_on_Lead_Creation__c,Type__c from lead where Company='test3' limit 1];
 
         system.assertEquals(createdLead.visitor_id__c, createdLead.First_Visitor_Id__c);
         system.assertEquals(Date.today(), createdLead.Lead_created_date__c);
@@ -207,7 +207,6 @@ public with sharing class Lead_StampsServiceTest {
         
         system.assertEquals(createdLeadOutboundChannel.Account_ARR__c, createdLeadOutboundChannel.Account_Arr_on_Lead_Creation__c);
         system.assertEquals(createdLeadOutboundChannel.Type__c, 'Expansion');
-        system.assertEquals(true, createdLeadOutboundChannel.Outbound_Lead__c);
     }
     @istest
     static void handleOngoingUpdates(){

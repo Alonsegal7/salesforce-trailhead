@@ -79,7 +79,7 @@ public without sharing class Account_RegionalCompanyService {
         for (Account acc : inputMAs) {
             companyIDs.add(acc.Company__c);
         }
-        List<Account> existingRegionalCompaniesList = new List<Account>([SELECT Id, Account_Territory__c, Region__c, Company__c, ParentId FROM Account WHERE ParentId IN: companyIDs AND Account_Territory__c = 'Regional']);
+        List<Account> existingRegionalCompaniesList = new List<Account>([SELECT Id, Account_Territory__c, Region__c, Company__c, ParentId, Named_Account__c FROM Account WHERE ParentId IN: companyIDs AND Account_Territory__c = 'Regional']);
         Map<Id,List<Account>> companiesWithChildRegionalCompanies = new Map<Id,List<Account>>();
         for (Account acc : existingRegionalCompaniesList) {
             if (companiesWithChildRegionalCompanies.containsKey(acc.ParentId)) {
@@ -89,11 +89,13 @@ public without sharing class Account_RegionalCompanyService {
                 companiesWithChildRegionalCompanies.put(acc.ParentId,new List<Account>{acc});
             }   
         }
+        Boolean isNamedOnCreate = false;
         for (Account acc : inputMAs) {
             if (companiesWithChildRegionalCompanies.containsKey(acc.Company__c)) { //the global company has regional companies
                 for(Account regAcc : companiesWithChildRegionalCompanies.get(acc.Company__c)) { //search the MA's region in the regional companies
-                    if (regAcc.Region__c == acc.Region__c) {
-                        outputMAs.add(new Account(Id = acc.Id, ParentId = regAcc.Id, Manual_Trigger__c = ''));
+                if (regAcc.Region__c == acc.Region__c) {
+                        isNamedOnCreate = (acc.CreatedDate.addHours(24) >= Datetime.now() && regAcc.Named_Account__c); //monday account created today and it's regional company is a named company, used to mark the account as named on creation in the next line
+                        outputMAs.add(new Account(Id = acc.Id, ParentId = regAcc.Id, Manual_Trigger__c = '', Named_Account_on_Creation__c = isNamedOnCreate));
                     }
                 }
             }
@@ -106,7 +108,7 @@ public without sharing class Account_RegionalCompanyService {
         Map<Id,List<Account>> regionalCompaniesByGlobalCompanyId = new Map<Id,List<Account>>();
         System.debug('Account_RegionalCompanyService updateRegionalCompanyOnRelatedObjects entered');
         for (Account acc : newAccounts) {
-            if (acc.Account_Territory__c == 'Regional' && (oldAccounts == null || acc.Region__c != oldAccounts.get(acc.Id).Region__c)) { //new regional company or a region change
+            if (acc.Account_Territory__c == 'Regional' && acc.Company__c != null && acc.ParentId != null && (oldAccounts == null || acc.Region__c != oldAccounts.get(acc.Id).Region__c)) { //new regional company or a region change
                 if (regionalCompaniesByGlobalCompanyId.containsKey(acc.Company__c)) {
                     regionalCompaniesByGlobalCompanyId.get(acc.Company__c).add(acc);
                 }
@@ -179,6 +181,7 @@ public without sharing class Account_RegionalCompanyService {
                 for(Account regAcc : companiesWithChildRegionalCompanies.get(lead.Related_Company__c)) { //search the Lead's region in the regional companies
                     if (regAcc.Region__c == lead.Region__c) {
                         lead.Parent_Company__c = regAcc.Id;
+                        if ((oldLeads == null || lead.CreatedDate.addHours(24) >= Datetime.now()) && regAcc.Named_Account__c) lead.Named_Account_on_Creation__c = true;
                     }
                 }
             }
@@ -192,7 +195,7 @@ public without sharing class Account_RegionalCompanyService {
         Set<Id> companyIDs = new Set<Id>();
         for (Opportunity opp : newOpps) {
             if (opp.Company__c != null && opp.Account_Region__c != null && //prerequisites
-            (oldOpps == null || //new opp 
+            (oldOpps == null || //new opp
             (oldOpps.get(opp.Id).Account_Region__c == null || opp.Account_Region__c != oldOpps.get(opp.Id).Account_Region__c) || //region change 
             (opp.Manual_Trigger__c == 'Match Parent' && (oldOpps.get(opp.Id).Manual_Trigger__c == null || opp.Manual_Trigger__c != oldOpps.get(opp.Id).Manual_Trigger__c)) || //manual trigger
             (oldOpps.get(opp.Id).Company__c == null || opp.Company__c != oldOpps.get(opp.Id).Company__c))) { //company change 
@@ -211,6 +214,7 @@ public without sharing class Account_RegionalCompanyService {
                 for(Account regAcc : companiesWithChildRegionalCompanies.get(opp.Company__c)) { //search the Opportunity's region in the regional companies
                     if (regAcc.Region__c == opp.Account_Region__c) {
                         opp.Parent_Company__c = regAcc.Id;
+                        if ((oldOpps == null || opp.CreatedDate.addHours(24) >= Datetime.now()) && regAcc.Named_Account__c) opp.Named_Account_on_Creation__c = true;
                     }
                 }
             }
@@ -219,7 +223,7 @@ public without sharing class Account_RegionalCompanyService {
 
     //map the global companies to their regional companies
     public static Map<Id,List<Account>> getMapCompanyToRegionals(Set<Id> companyIDs) {
-        List<Account> existingRegionalCompaniesList = new List<Account>([SELECT Id, Account_Territory__c, Region__c, Company__c, ParentId FROM Account WHERE ParentId IN: companyIDs AND Account_Territory__c = 'Regional']);
+        List<Account> existingRegionalCompaniesList = new List<Account>([SELECT Id, Account_Territory__c, Region__c, Company__c, ParentId, Named_Account__c FROM Account WHERE ParentId IN: companyIDs AND Account_Territory__c = 'Regional']);
         Map<Id,List<Account>> companiesWithChildRegionalCompanies = new Map<Id,List<Account>>();
         for (Account acc : existingRegionalCompaniesList) {
             if (companiesWithChildRegionalCompanies.containsKey(acc.ParentId)) {

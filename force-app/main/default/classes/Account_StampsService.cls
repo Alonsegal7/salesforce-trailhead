@@ -1,5 +1,15 @@
-public without sharing class Account_OwnerStamps {
+public with sharing class Account_StampsService {
     
+    public static void run(List<Account> newAccounts, map<Id,Account> oldAccounts){
+        try {
+            // if(oldAccounts == null) getValuesOnCreate(newAccounts);
+            UpdateOwnerStamps(newAccounts,oldAccounts);
+            handleOngoingUpdates(newAccounts,oldAccounts);
+        } catch(Exception e) {
+            Utilities.sendDebugEmail('Error in Account_StampsService',e,e.getMessage());
+        }
+    }
+
     public static Map<Id,User> usersMap;
 
     public static void UpdateOwnerStamps(List<Account> newAccounts, map<Id,Account> oldAccounts) {
@@ -36,19 +46,35 @@ public without sharing class Account_OwnerStamps {
                 acc.PreviousOwner__c = oldAccounts.get(acc.Id).OwnerId;
             }
             System.debug('Account_OwnerStamps currOwner: '+ currOwner);
-            if (currOwner.Business_Role__c != null) {
-                String ownerBusinessRole = currOwner.Business_Role__c;
-                acc.AM__c = ownerBusinessRole == 'AM' ? acc.OwnerId : null;
-                acc.AE__c = ownerBusinessRole == 'AE' ? acc.OwnerId : null;
+            if (currOwner != null) {
+                if (currOwner.Business_Role__c != null) {
+                    String ownerBusinessRole = currOwner.Business_Role__c;
+                    acc.AM__c = ownerBusinessRole == 'AM' ? acc.OwnerId : null;
+                    acc.AE__c = ownerBusinessRole == 'AE' ? acc.OwnerId : null;
+                }
+                acc.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
+                acc.Owner_s_Manager__c = currOwner.ManagerId;
             }
-            acc.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
-            acc.Owner_s_Manager__c = currOwner.ManagerId;
         }
 
         //update CSM stamps on the relevant accounts
         for (Account acc : relevantAccountsCSMChange) {
             User currCSM = usersMap.get(acc.CSM__c);
             acc.CSM_Manager__c = currCSM.ManagerId;
+        }
+    }
+
+    public static void handleOngoingUpdates(List<Account> newAccounts, map<Id,Account> oldAccounts){ 
+
+        for(Account acc: newAccounts){
+
+            if(acc.Named_Account__c && (oldAccounts == null || (oldAccounts != null && !oldAccounts.get(acc.Id).Named_Account__c))) { //Account marked as named account
+                acc.Named_Account_Start_Date__c = Date.today();
+            }
+            
+            if (oldAccounts != null && oldAccounts.get(acc.Id).Named_Account__c && !acc.Named_Account__c) { //Account unmarked as named account
+                acc.Named_Account_End_Date__c = Date.today();
+            }
         }
     }
 }

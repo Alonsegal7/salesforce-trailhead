@@ -14,11 +14,11 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
             Account_SetPartnerCompany.Account_SetPartnerCompany (trigger.new,trigger.oldmap);
             Account_Rollup.Account_Rollup_ValueChange(trigger.new, trigger.oldMap);
             Opportunity_RenewalCreation.getProFromActiveContract(Trigger.oldMap, Trigger.new);
+            Account_StampsService.run(Trigger.new,Trigger.oldMap);
         }
         if(Trigger.isUpdate){ //before update only
             Account_OwnerValidation.companyOwnerValidation(Trigger.new, Trigger.oldMap);
             Partners_SharingService.createAccountShares_ManualTrigger(Trigger.new);
-            Account_OwnerStamps.UpdateOwnerStamps(Trigger.new,Trigger.oldMap);
         }
     }
     if (Trigger.isAfter) {
