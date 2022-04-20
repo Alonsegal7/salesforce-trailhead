@@ -1,4 +1,6 @@
 trigger onOpportunityUpdate on Opportunity (after insert, after update, after delete, before update, before insert) {
+
+    //BEFORE INSERT
     if(Trigger.isBefore && Trigger.isInsert){
         OpportunityHelper.beforeInsert(trigger.new,trigger.oldmap);
         OpportunityHelper.updateOppType(trigger.new,trigger.oldmap);
@@ -9,6 +11,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(trigger.new,trigger.oldmap);
     }
     
+    //BEFORE UPDATE
     if(Trigger.isBefore && Trigger.isUpdate){
         Opportunity_LockValidation lockedValidationService = new Opportunity_LockValidation();
         lockedValidationService.cosellLockValidation(Trigger.new, Trigger.oldMap);
@@ -24,8 +27,10 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(trigger.new,trigger.oldmap);
     }
     
+    //AFTER UPDATE
     if(Trigger.isAfter && Trigger.isUpdate){
-        OpportunityHelper.afterUpdate(Trigger.new,Trigger.oldmap);
+        OpportunityHelper.markQuotesSigned(Trigger.new,Trigger.oldMap);
+        OpportunityHelper.cloneOlisForCoSell(Trigger.new,Trigger.oldMap);
         Partners_SharingService.createOpportunityShares(trigger.new, trigger.oldMap);
         TargetsService targetServiceHelper = new TargetsService();
         targetServiceHelper.updateTargetOnClosedWonOppChange(Trigger.new, Trigger.oldMap);
@@ -35,12 +40,15 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         }
         Opportunity_CoSellSyncService.syncCoSellOppsClosedWon(Trigger.new, Trigger.oldMap);
     }
+
+    //AFTER INSERT
     if(Trigger.isAfter && Trigger.isInsert){
         Partners_SharingService.createOpportunityShares(trigger.new, trigger.oldMap);
         Opportunity_RenewalCreation.updateRenewalStatus(Trigger.new, Trigger.oldMap);
         Handover_ThresholdMapping.recalcHandoverThresholdFromAfterTrigger(Trigger.new);
     }
 
+    //CALLOUT TO BB
     // old callouts to BB - will leave only delete to be fired from trigger 
     if(Trigger.isAfter){
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
