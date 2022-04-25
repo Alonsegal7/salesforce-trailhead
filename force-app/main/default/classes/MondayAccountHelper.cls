@@ -28,6 +28,7 @@ public class MondayAccountHelper {
             List<SObject>sortedSobjectsToUpdate = sobject4Update.values();
             system.debug('List before: '+sortedSobjectsToUpdate);
             sortedSobjectsToUpdate.sort();
+
             update sortedSobjectsToUpdate; 
             sobject4Update.clear();
             }
@@ -52,7 +53,7 @@ public class MondayAccountHelper {
 
         list <Account> accountsList = [
             select id,name, Company__c, parentid, RecordTypeId, primary_pulse_account_id__c, Manual_Trigger__c,
-            (select id,stagename,AccountId from Opportunities),
+            (select id,stagename,AccountId from Opportunities where Co_Sell_V2__c = false or Main_Co_Sell_Opportunity__c = true),
             (select id,monday_Account__c from Sale1__r),
             (select id,monday_Account__c from Contacts1__r)
             from Account where id IN: accToUpdateRelatedObjs
