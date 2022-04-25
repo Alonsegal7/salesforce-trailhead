@@ -8,7 +8,13 @@ public with sharing class VatVerificationService {
         List<Country_Region_Mapping__c> countryCode = [SELECT Name, Country_Name__c, Region__c, Sub_Region__c FROM Country_Region_Mapping__c WHERE Vat_Number_Verification_Required__c = true AND Country_Name__c =: countryName];
         //Country code that are marked on the custom setting as required
         if (!countryCode.isempty() && vatNumber != null && vatNumber != '') {
-            vatNumber = vatNumber.replaceAll('[^a-zA-Z0-9]', '');
+            if(countryCode[0].Name=='CL'){//for chile, we need to set a dash before the 9th digit
+                vatNumber = vatNumber.replaceAll('[^a-zA-Z0-9]', '');
+                vatNumber = vatNumber.right(8) + '-' + vatNumber.left(1);
+            }
+            else{
+                vatNumber = vatNumber.replaceAll('[^a-zA-Z0-9]', '');
+            }
             Map<String, Object> responseMap = new Map<String, Object>();
             Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='BillingEntityVatService'][0];
             Http http = new Http();
