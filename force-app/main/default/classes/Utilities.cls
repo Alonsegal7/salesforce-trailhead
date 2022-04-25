@@ -129,4 +129,14 @@ public without sharing class Utilities {
         return  setFirstLetterUpper(tier)+' -- Up to '+seats+' users ('+setFirstLetterUpper(period)+')';
 
     }
+
+    public class updatesObjectsQueueable implements System.Queueable {
+        private List<sObject> sobjectsToUpdate; 
+        public updatesObjectsQueueable(List<sObject> sobjectsToUpdate) {
+            this.sobjectsToUpdate = sobjectsToUpdate;
+        }
+        public void execute(System.QueueableContext ctx) {
+            Database.update(sobjectsToUpdate);
+        }
+    }
 }
