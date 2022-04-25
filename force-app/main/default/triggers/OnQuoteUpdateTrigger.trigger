@@ -16,5 +16,6 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, before update
         }
             ContractEventHandler.SalesOrderContractEvent(Trigger.new,Trigger.oldMap);
             Quote_CreateQuoteHistory.CreateQuoteHistory(Trigger.new,Trigger.oldMap);
+            Quote_CloseCorrectionOpp.Quote_CloseCorrectionOpp(Trigger.new, Trigger.oldMap);
     }   
 }
