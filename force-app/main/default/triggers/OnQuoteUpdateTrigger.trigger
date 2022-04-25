@@ -1,4 +1,4 @@
-trigger OnQuoteUpdateTrigger on Quote (after insert, after update, before update, before insert) {
+trigger OnQuoteUpdateTrigger on Quote (after insert, after update, after delete, before update, before insert) {
     if(Trigger.isBefore && Trigger.isUpdate) {
         for(Quote newQuote : Trigger.new){   
             Quote oldQuote = Trigger.oldMap.get(newQuote.Id);
@@ -18,4 +18,9 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, before update
             Quote_CreateQuoteHistory.CreateQuoteHistory(Trigger.new,Trigger.oldMap);
             Quote_CloseCorrectionOpp.Quote_CloseCorrectionOpp(Trigger.new, Trigger.oldMap);
     }   
+    if(Trigger.isAfter){
+        if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
+        if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);
+        if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
+    }
 }
