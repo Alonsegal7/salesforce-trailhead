@@ -1,4 +1,4 @@
-trigger OnQuoteUpdateTrigger on Quote (after insert, after update, after delete, before update, before insert) {
+trigger OnQuoteUpdateTrigger on Quote (after insert, after update, after delete, before update) {
     if(Trigger.isBefore && Trigger.isUpdate) {
         for(Quote newQuote : Trigger.new){   
             Quote oldQuote = Trigger.oldMap.get(newQuote.Id);
