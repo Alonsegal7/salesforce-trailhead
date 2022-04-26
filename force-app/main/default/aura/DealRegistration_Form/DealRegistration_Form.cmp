@@ -116,6 +116,20 @@
                                         </div>
                                     </aura:iteration>
 
+                                    <!-- new custom lookup for marketing activities -->
+                                    <aura:if isTrue="{!v.customLookup_isDisplayed}">
+                                        <c:searchComponent aura:id="customLookup"
+                                            objName="Partner_Marketing_Activity__c"
+                                            iconName="custom:custom25"
+                                            labelName="Partner Marketing Activity"
+                                            placeholder="Search" 
+                                            showLabel="true"
+                                            displayFields="{!v.customLookup_displayFields}"
+                                            whereCondition="{!v.customLookup_whereCondition}"
+                                            onlookup="{!c.handleLookup}">
+                                        </c:searchComponent>
+                                    </aura:if>
+
                                     <aura:if isTrue="{!v.eventOrWebinarSelected}">
                                         <aura:iteration items="{!v.eventDetailsFieldSet}" var="field" indexVar="i">
                                             <div class="slds-grid slds-gutters">
@@ -140,21 +154,6 @@
                                             </div>
                                         </div>
                                     </aura:iteration>
-            
-                                    <!-- new custom lookup for marketing activities -->
-                                    <aura:if isTrue="{!v.customLookup_isDisplayed}">
-                                        <c:searchComponent aura:id="customLookup"
-                                            objName="Partner_Marketing_Activity__c"
-                                            iconName="custom:custom25"
-                                            labelName="Partner Marketing Activity"
-                                            placeholder="Search" 
-                                            showLabel="true"
-                                            displayFields="{!v.customLookup_displayFields}"
-                                            whereCondition="{!v.customLookup_whereCondition}"
-                                            onlookup="{!c.handleLookup}">
-                                        </c:searchComponent>
-                                    </aura:if>
-                                    
 
                                     <div class="slds-grid slds-gutters">
                                         <div class="slds-col slds-size_1-of-1">
