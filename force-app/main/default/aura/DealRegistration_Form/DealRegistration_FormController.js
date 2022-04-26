@@ -1,100 +1,107 @@
 ({
     init : function(component, event, helper) {
-		console.log('### in init');
-		var action = component.get("c.getInitialParameters");
-        action.setCallback(this, function(response) {
-			var state = response.getState();
-			console.log('### state: ' + state);
-			
-            if (state === "SUCCESS") {
+		try{
+			console.log('### in init');
+			var action = component.get("c.getInitialParameters");
+			action.setCallback(this, function(response) {
+				var state = response.getState();
 				console.log('### state: ' + state);
-				var storeResponse = response.getReturnValue();
-				console.log('### storeResponse: ' + storeResponse);
-				console.log('### this: ' + this);
-                if (storeResponse != null){
-					storeResponse = JSON.parse(storeResponse);
-					console.log('### storeResponse_v1: ' + storeResponse);
-					console.log('### hasOwnProperty: ' + storeResponse.hasOwnProperty('companyDetailsFieldSet'));
-					if (storeResponse.hasOwnProperty('companyDetailsFieldSet') && storeResponse.companyDetailsFieldSet.length > 0) {
-						var fieldSetFields = new Array();
-						console.log('### theLeadFields_v1: ' + fieldSetFields);
-						for (var i = 0; i < storeResponse.companyDetailsFieldSet.length; i++){
-							var f = {};
-							f.name = storeResponse.companyDetailsFieldSet[i].name;
-							f.req = storeResponse.companyDetailsFieldSet[i].required;
-							fieldSetFields.push(JSON.parse(JSON.stringify(f)));
-							console.log('### fieldSetFields: ' + fieldSetFields);
+				
+				if (state === "SUCCESS") {
+					console.log('### state: ' + state);
+					var storeResponse = response.getReturnValue();
+					console.log('### storeResponse: ' + storeResponse);
+					console.log('### this: ' + this);
+					if (storeResponse != null){
+						storeResponse = JSON.parse(storeResponse);
+						console.log('### storeResponse_v1: ' + storeResponse);
+						console.log('### hasOwnProperty: ' + storeResponse.hasOwnProperty('companyDetailsFieldSet'));
+						if (storeResponse.hasOwnProperty('companyDetailsFieldSet') && storeResponse.companyDetailsFieldSet.length > 0) {
+							var fieldSetFields = new Array();
+							console.log('### theLeadFields_v1: ' + fieldSetFields);
+							for (var i = 0; i < storeResponse.companyDetailsFieldSet.length; i++){
+								var f = {};
+								f.name = storeResponse.companyDetailsFieldSet[i].name;
+								f.req = storeResponse.companyDetailsFieldSet[i].required;
+								fieldSetFields.push(JSON.parse(JSON.stringify(f)));
+								console.log('### fieldSetFields: ' + fieldSetFields);
+							}
+							component.set('v.companyDetailsFieldSet', fieldSetFields);
+							console.log('### companyDetailsFieldSet: ' + component.get('v.companyDetailsFieldSet'));
 						}
-						component.set('v.companyDetailsFieldSet', fieldSetFields);
-						console.log('### companyDetailsFieldSet: ' + component.get('v.companyDetailsFieldSet'));
-					}
-
-					if (storeResponse.hasOwnProperty('contactDetailsFieldSet') && storeResponse.contactDetailsFieldSet.length > 0) {
-						var fieldSetFields = new Array();
-						console.log('### fieldSetFields_v1: ' + fieldSetFields);
-						for (var i = 0; i < storeResponse.contactDetailsFieldSet.length; i++){
-							var f = {};
-							f.name = storeResponse.contactDetailsFieldSet[i].name;
-							f.req = storeResponse.contactDetailsFieldSet[i].required;
-							fieldSetFields.push(JSON.parse(JSON.stringify(f)));
-							console.log('### fieldSetFields: ' + fieldSetFields);
+	
+						if (storeResponse.hasOwnProperty('contactDetailsFieldSet') && storeResponse.contactDetailsFieldSet.length > 0) {
+							var fieldSetFields = new Array();
+							console.log('### fieldSetFields_v1: ' + fieldSetFields);
+							for (var i = 0; i < storeResponse.contactDetailsFieldSet.length; i++){
+								var f = {};
+								f.name = storeResponse.contactDetailsFieldSet[i].name;
+								f.req = storeResponse.contactDetailsFieldSet[i].required;
+								fieldSetFields.push(JSON.parse(JSON.stringify(f)));
+								console.log('### fieldSetFields: ' + fieldSetFields);
+							}
+							component.set('v.contactDetailsFieldSet', fieldSetFields);
+							console.log('### contactDetailsFieldSet: ' + component.get('v.contactDetailsFieldSet'));
 						}
-						component.set('v.contactDetailsFieldSet', fieldSetFields);
-						console.log('### contactDetailsFieldSet: ' + component.get('v.contactDetailsFieldSet'));
-					}
-					
-					if (storeResponse.hasOwnProperty('opportunityInformationFieldSet') && storeResponse.opportunityInformationFieldSet.length > 0) {
-						var fieldSetFields = new Array();
-						console.log('### fieldSetFields_v1: ' + fieldSetFields);
-						for (var i = 0; i < storeResponse.opportunityInformationFieldSet.length; i++){
-							var f = {};
-							f.name = storeResponse.opportunityInformationFieldSet[i].name;
-							f.req = storeResponse.opportunityInformationFieldSet[i].required;
-							fieldSetFields.push(JSON.parse(JSON.stringify(f)));
-							console.log('### fieldSetFields: ' + fieldSetFields);
+						
+						if (storeResponse.hasOwnProperty('opportunityInformationFieldSet') && storeResponse.opportunityInformationFieldSet.length > 0) {
+							var fieldSetFields = new Array();
+							console.log('### fieldSetFields_v1: ' + fieldSetFields);
+							for (var i = 0; i < storeResponse.opportunityInformationFieldSet.length; i++){
+								var f = {};
+								f.name = storeResponse.opportunityInformationFieldSet[i].name;
+								f.req = storeResponse.opportunityInformationFieldSet[i].required;
+								fieldSetFields.push(JSON.parse(JSON.stringify(f)));
+								console.log('### fieldSetFields: ' + fieldSetFields);
+							}
+							component.set('v.opportunityInformationFieldSet', fieldSetFields);
+							console.log('### opportunityInformationFieldSet: ' + component.get('v.opportunityInformationFieldSet'));
 						}
-						component.set('v.opportunityInformationFieldSet', fieldSetFields);
-						console.log('### opportunityInformationFieldSet: ' + component.get('v.opportunityInformationFieldSet'));
-					}
-
-					if (storeResponse.hasOwnProperty('opportunityQualificationFieldSet') && storeResponse.opportunityQualificationFieldSet.length > 0) {
-						var fieldSetFields = new Array();
-						for (var i = 0; i < storeResponse.opportunityQualificationFieldSet.length; i++){
-							var f = {};
-							f.name = storeResponse.opportunityQualificationFieldSet[i].name;
-							f.req = storeResponse.opportunityQualificationFieldSet[i].required;
-							fieldSetFields.push(JSON.parse(JSON.stringify(f)));
-							console.log('### fieldSetFields: ' + fieldSetFields);
+	
+						if (storeResponse.hasOwnProperty('opportunityQualificationFieldSet') && storeResponse.opportunityQualificationFieldSet.length > 0) {
+							var fieldSetFields = new Array();
+							for (var i = 0; i < storeResponse.opportunityQualificationFieldSet.length; i++){
+								var f = {};
+								f.name = storeResponse.opportunityQualificationFieldSet[i].name;
+								f.req = storeResponse.opportunityQualificationFieldSet[i].required;
+								fieldSetFields.push(JSON.parse(JSON.stringify(f)));
+								console.log('### fieldSetFields: ' + fieldSetFields);
+							}
+							component.set('v.opportunityQualificationFieldSet', fieldSetFields);
+							console.log('### opportunityQualificationFieldSet: ' + component.get('v.opportunityQualificationFieldSet'));
 						}
-						component.set('v.opportunityQualificationFieldSet', fieldSetFields);
-						console.log('### opportunityQualificationFieldSet: ' + component.get('v.opportunityQualificationFieldSet'));
-					}
-
-					if (storeResponse.hasOwnProperty('hasPermissionToForm')) {
-						console.log('### hasPermissionToForm:' + storeResponse.hasPermissionToForm);
-						component.set('v.hasPermission', storeResponse.hasPermissionToForm);
-					}
-
-					if (storeResponse.hasOwnProperty('eventDetailsFieldSet') && storeResponse.eventDetailsFieldSet.length > 0) {
-						var fieldSetFields = new Array();
-						for (var i = 0; i < storeResponse.eventDetailsFieldSet.length; i++){
-							var f = {};
-							f.name = storeResponse.eventDetailsFieldSet[i].name;
-							f.req = storeResponse.eventDetailsFieldSet[i].required;
-							fieldSetFields.push(JSON.parse(JSON.stringify(f)));
-							console.log('### fieldSetFields: ' + fieldSetFields);
+	
+						if (storeResponse.hasOwnProperty('hasPermissionToForm')) {
+							console.log('### hasPermissionToForm:' + storeResponse.hasPermissionToForm);
+							component.set('v.hasPermission', storeResponse.hasPermissionToForm);
 						}
-						component.set('v.eventDetailsFieldSet', fieldSetFields);
-						console.log('### eventDetailsFieldSet: ' + component.get('v.eventDetailsFieldSet'));
+	
+						if (storeResponse.hasOwnProperty('eventDetailsFieldSet') && storeResponse.eventDetailsFieldSet.length > 0) {
+							var fieldSetFields = new Array();
+							for (var i = 0; i < storeResponse.eventDetailsFieldSet.length; i++){
+								var f = {};
+								f.name = storeResponse.eventDetailsFieldSet[i].name;
+								f.req = storeResponse.eventDetailsFieldSet[i].required;
+								fieldSetFields.push(JSON.parse(JSON.stringify(f)));
+								console.log('### fieldSetFields: ' + fieldSetFields);
+							}
+							component.set('v.eventDetailsFieldSet', fieldSetFields);
+							console.log('### eventDetailsFieldSet: ' + component.get('v.eventDetailsFieldSet'));
+						}
 					}
+				} else {
+					console.log('### response.getError(): ' + response.getError());
+					var errors = response.getError();
+					console.log('### error messsge: ' + errors[0].message);
 				}
-			} else {
-				console.log('### response.getError(): ' + response.getError());
-				var errors = response.getError();
-				console.log('### error messsge: ' + errors[0].message);
-			}
-        });
-		$A.enqueueAction(action);
+			});
+			$A.enqueueAction(action);
+		}catch(e){
+			console.error(e);
+			console.error('e.name => ' + e.name );
+			console.error('e.message => ' + e.message );
+			console.error('e.stack => ' + e.stack );
+		}
 	},
 
 	closeModal : function(component, event, helper) {
@@ -109,15 +116,29 @@
 	},
 
 	handleSubmit : function(component, event, helper) {
-		var spinner = component.find("cmspinner");
-        $A.util.removeClass(spinner, "slds-hide");
-		console.log('### in submit: ');
-		console.log('### openModal: ' + component.get("v.openModal"));
-		event.preventDefault();
-		var fields = event.getParam();
-		console.log('### fields: ');
-		component.find('recordEditForm').submit(fields);
-		console.log('### fields_v2: ');
+		console.log('### in handle submit: ');
+		try{
+			event.preventDefault();
+			var pmaId = component.get('v.customLookup_selectedRecId');
+			if(pmaId == '' || pmaId == null || pmaId == undefined){
+				console.log('### Partner Marketing Activity not selected');
+				component.set('v.customLookup_error','Please choose a Partner Marketing Activity');
+			} else {
+				component.set('v.customLookup_error','');
+				var spinner = component.find("cmspinner");
+				$A.util.removeClass(spinner, "slds-hide");
+				var fields = event.getParam('fields');
+				fields.Partner_Marketing_Activity__c = pmaId;
+				console.log('### Partner Marketing Activity Id: '+pmaId);
+				console.log('### going to submit form...');
+				component.find('recordEditForm').submit(fields);
+			}
+		}catch(e){
+			console.error(e);
+			console.error('e.name => ' + e.name );
+			console.error('e.message => ' + e.message );
+			console.error('e.stack => ' + e.stack );
+		}
 	},
 
 	handleError: function(component, event) {
@@ -211,14 +232,55 @@
 	},
 
 	handleContactDetailsFieldChange : function(component, event){
-		var fieldName = event.getSource().get("v.fieldName");
-        var fieldValue = event.getSource().get("v.value");
-		if(fieldName == 'Source__c'){
-			if(fieldValue == 'Event' || fieldValue == 'Webinar'){
-				component.set("v.eventOrWebinarSelected", true);  
-			} else {
-				component.set("v.eventOrWebinarSelected", false);  
+		try{
+			var fieldName = event.getSource().get("v.fieldName");
+			var fieldValue = event.getSource().get("v.value");
+			if(fieldName == 'Source__c'){
+				var isCustomLookupDisplayed = component.get('v.customLookup_isDisplayed');
+				if(isCustomLookupDisplayed){
+					var customLookupLWC = component.find("customLookup");
+					customLookupLWC.handleClose();
+					component.set('v.customLookup_selectedRecId', '');
+				}
+				if(fieldValue == 'Event' || fieldValue == 'Webinar'){
+					component.set("v.eventOrWebinarSelected", true);  
+				} else {
+					component.set("v.eventOrWebinarSelected", false);  
+				}
+				var pmaCondition = '';
+				var displayPmaLookup = false;
+				if(fieldValue != '' && fieldValue != 'None'){
+					displayPmaLookup = true;
+					if(fieldValue == 'Email Campaign' || fieldValue == 'LinkedIn Campaign' || fieldValue == 'Google Campaign'){
+						pmaCondition = "Activity_Type__c = 'Online Campaign'";
+					} else if(fieldValue == 'Webinar'){
+						pmaCondition = "Activity_Type__c = 'Event - Online'";
+					} else if(fieldValue == 'Event'){
+						pmaCondition = "Activity_Type__c = 'Event - In Person'";
+					} else {
+						pmaCondition = "Activity_Type__c != 'Online Campaign' and Activity_Type__c != 'Event - Online' and Activity_Type__c != 'Event - In Person' and Activity_Type__c != 'Headcount'";
+					}
+				} else {
+					displayPmaLookup = false;
+				}
+				//console.log('handleContactDetailsFieldChange pmaCondition:' + pmaCondition);
+				//console.log('handleContactDetailsFieldChange displayPmaLookup:' + displayPmaLookup);
+				component.set('v.customLookup_isDisplayed', displayPmaLookup);
+				component.set('v.customLookup_whereCondition', pmaCondition);
 			}
+		} catch(e){
+			console.error(e);
+			console.error('e.name => ' + e.name );
+			console.error('e.message => ' + e.message );
+			console.error('e.stack => ' + e.stack );
 		}
-	}
+	},
+
+	//custom lookup of marketing activities
+	handleLookup: function(component, event){
+		console.log('entered handleLookup');
+        console.log( JSON.stringify ( event.getParam('data')) );
+		var selectedRecordId = event.getParam('data').recordId;
+		component.set('v.customLookup_selectedRecId', selectedRecordId);
+    }
 })

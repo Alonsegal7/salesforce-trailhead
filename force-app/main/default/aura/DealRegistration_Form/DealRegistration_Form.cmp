@@ -28,6 +28,12 @@
     <aura:attribute name="relatedDealRegLink" type="String" default=""/>
     <aura:attribute name="dealRegStatus" type="String" default=""/>
     <aura:attribute name="eventOrWebinarSelected" type="Boolean" default="false"/>
+    <aura:attribute name="customLookup_fields" type="List" default="['Name']"/>
+    <aura:attribute name="customLookup_displayFields" type="String" default="Name, Activity_Type__c"/>
+    <aura:attribute name="customLookup_whereCondition" type="String" default=""/>
+    <aura:attribute name="customLookup_isDisplayed" type="Boolean" default="false"/>
+    <aura:attribute name="customLookup_selectedRecId" type="String" default=""/>
+    <aura:attribute name="customLookup_error" type="String" default=""/>
 
     <lightning:navigation aura:id="navService"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
@@ -135,11 +141,20 @@
                                         </div>
                                     </aura:iteration>
             
-                                    <!--<div class="slds-grid slds-gutters">
-                                        <div class="slds-col slds-size_1-of-1">
-                                            <lightning:inputField fieldName="Partner_Marketing_Activity__c" variant="label-stacked"/>
-                                        </div>
-                                    </div> -->
+                                    <!-- new custom lookup for marketing activities -->
+                                    <aura:if isTrue="{!v.customLookup_isDisplayed}">
+                                        <c:searchComponent aura:id="customLookup"
+                                            objName="Partner_Marketing_Activity__c"
+                                            iconName="custom:custom25"
+                                            labelName="Partner Marketing Activity"
+                                            placeholder="Search" 
+                                            showLabel="true"
+                                            displayFields="{!v.customLookup_displayFields}"
+                                            whereCondition="{!v.customLookup_whereCondition}"
+                                            onlookup="{!c.handleLookup}">
+                                        </c:searchComponent>
+                                    </aura:if>
+                                    
 
                                     <div class="slds-grid slds-gutters">
                                         <div class="slds-col slds-size_1-of-1">
@@ -147,6 +162,7 @@
                                         </div>
                                     </div>
             
+                                    <div class="slds-align_absolute-center"><p class="slds-text-color_destructive">{!v.customLookup_error}</p></div>
                                     <div class="slds-align_absolute-center">
                                         <lightning:button variant="brand" label="Submit" type="submit"/>
                                     </div>
