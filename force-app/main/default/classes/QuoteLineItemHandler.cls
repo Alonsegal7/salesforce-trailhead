@@ -39,7 +39,7 @@ public class QuoteLineItemHandler {
             }
             update lstOppotunityToUpdate;
         }catch(Exception e){
-            Utilities.sendEmail('Error in QuoteLineItemHandler syncQuotes ',e.getMessage(),new list<String>{label.SystemNotificationsDL});   
+            Utilities.sendDebugEmail('Error in QuoteLineItemHandler syncQuotes',e,e.getMessage());
         }
     }
     
