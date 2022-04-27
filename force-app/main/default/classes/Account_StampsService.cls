@@ -34,7 +34,7 @@ public with sharing class Account_StampsService {
         
         if (usersMap == null) {
             usersMap = new Map<Id,User>();
-            for (User u : [SELECT Id, Business_Role__c, Manager.Team__c, ManagerId FROM USER WHERE Id IN: relevantUsers]) {
+            for (User u : [SELECT Id, Business_Role__c, Manager.Team__c, ManagerId, Email FROM USER WHERE Id IN: relevantUsers]) {
                 usersMap.put(u.Id, u);
             }
         }
