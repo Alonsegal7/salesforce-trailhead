@@ -98,12 +98,12 @@ public with sharing class DealRegistration_Handler {
         
         if(newAccount != null && updateAccount == true){
             Database.update(newAccount);
-            localAccountForLead = [SELECT Id, Name FROM Account WHERE Id IN: newAccount LIMIT 1];
+            localAccountForLead = [SELECT Id, Company__c, Name FROM Account WHERE Id IN: newAccount LIMIT 1];
         }
 
         else if(newAccount != null && updateAccount == false){
             Database.insert(newAccount);
-            localAccountForLead = [SELECT Id, Name FROM Account WHERE Id IN: newAccount LIMIT 1];
+            localAccountForLead = [SELECT Id, Company__c, Name FROM Account WHERE Id IN: newAccount LIMIT 1];
         }
 
         for(Deal_Registration__c lRegRec : newLeadRegs){
@@ -181,7 +181,8 @@ public with sharing class DealRegistration_Handler {
         l.LeadSource = lRegRec.Source__c;
         l.Lead_Source_Type__c = 'Outbound';
         l.RecordTypeId = leadPartnerRecordTypeId; // create partner lead
-        l.Related_Company__c = localAccName.Id; //local
+        l.Parent_Company__c = localAccName.Id; //local
+        l.Related_Company__c = localAccName.Company__c; //global
         l.Title = lRegRec.Title__c;
         l.Country = lRegRec.Company_Location__c;
         l.Use_Cases__c = lRegRec.Use_Cases__c;
@@ -395,6 +396,8 @@ public with sharing class DealRegistration_Handler {
             acc.RecordTypeId = companyRecordTypeId; //Company RT
             acc.Account_Territory__c = 'Regional';
             acc.ParentId = globalCompanyId;
+            acc.Company__c = globalCompanyId;
+            acc.Region__c = dealRegRecord.Region__c;
             acc.BillingCountry = dealRegRecord.Company_Location__c;
             acc.OwnerId = dealRegRecord.OwnerId;
 

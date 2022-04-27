@@ -21,7 +21,9 @@ public class Account_Rollup_Test {
         regionalCom.WAPP__c=200;
         regionalCom.Members__c=900;
         regionalCom.Account_Territory__c = 'Regional';
+        regionalCom.Region__c = 'EMEA';
         regionalCom.ParentId = globalCom.Id;
+        regionalCom.Company__c = globalCom.Id;
         insert regionalCom;
 
         Account testMA = new Account(
@@ -75,6 +77,8 @@ public class Account_Rollup_Test {
         regionalCom.Members__c=900;
         regionalCom.Account_Territory__c = 'Regional';
         regionalCom.ParentId = globalCom.Id;
+        regionalCom.Company__c = globalCom.Id;
+        regionalCom.Region__c = 'EMEA';
         insert regionalCom;
 
         Account testMA = new Account(
