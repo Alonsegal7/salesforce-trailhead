@@ -162,25 +162,40 @@ public without sharing class Ctrl_DashboardPageApp {
         Id accountId = null;
         Decimal inboundValue = 0;
         Decimal outboundValue = 0;
+        Decimal outboundValueV2 = 0;
         Decimal green = 0;
         Decimal orange = 0;
         Integer greenCount = 0;
         Integer orangeCount = 0;
-        List <GB_Threshold__c> lgb = [SELECT Name, Min_ARR__c FROM GB_Threshold__c WHERE Is_Active__c = true AND (Name = 'Partners' OR Name = 'Partners - Outbound')];
+        List <GB_Threshold__c> lgb = [SELECT Name, Min_ARR__c FROM GB_Threshold__c WHERE Is_Active__c = true AND (Name = 'Partners' OR Name = 'Partners - Outbound' OR Name = 'Partners - Outbound v2')];
         if (lgb != null && !lgb.isEmpty()) for (GB_Threshold__c gb: lgb){
             if (gb.Name == 'Partners') inboundValue = gb.Min_ARR__c;
             if (gb.Name == 'Partners - Outbound') outboundValue = gb.Min_ARR__c;
+            if (gb.Name == 'Partners - Outbound v2') outboundValueV2 = gb.Min_ARR__c;
         }
         List <User> lu = [SELECT Id, AccountId FROM User WHERE Id = :userId];
         if (lu != null && !lu.isEmpty() && lu[0].AccountId != null) accountId = lu[0].AccountId;
         if (Test.isRunningTest()) accountId = [SELECT Id FROM Account LIMIT 1].Id;
         if (accountId != null){
-            List <Account> la = [SELECT Id, Name, ARR__c, Account_Source_Type__c FROM Account 
+            List <Account> la = [SELECT Id, Name, ARR__c, Account_Source_Type__c, Outbound_TH_Excluded__c FROM Account 
                                  WHERE Channel_Partner__c = :lu[0].AccountId AND RecordType.DeveloperName = 'Monday_Account' AND 
                                        Owner_Is_Partner__c = true AND Monday_Account_Status__c = 'Paying Account'];
+
+            if (Test.isRunningTest()) la = [SELECT Id, Name, ARR__c, Account_Source_Type__c, Outbound_TH_Excluded__c FROM Account 
+                                            WHERE RecordType.DeveloperName = 'Monday_Account'];
+
             if (la != null && !la.isEmpty()) for (Account a: la){
-                if ((a.ARR__c >= inboundValue && a.Account_Source_Type__c == 'Inbound') || (a.ARR__c > outboundValue && a.Account_Source_Type__c == 'Outbound')) { green += (a.ARR__c != null ? a.ARR__c : 0); greenCount++; }
-                if (a.ARR__c < inboundValue && a.Account_Source_Type__c == 'Inbound') { orange += (a.ARR__c != null ? a.ARR__c : 0); orangeCount++; }
+                if ((a.ARR__c >= inboundValue && a.Account_Source_Type__c == 'Inbound') || 
+                        (
+                            (a.Outbound_TH_Excluded__c && a.Account_Source_Type__c == 'Outbound' && a.ARR__c > outboundValue) || 
+                            (!a.Outbound_TH_Excluded__c && a.Account_Source_Type__c == 'Outbound' && a.ARR__c >= outboundValueV2)
+                        )
+                    ) { green += (a.ARR__c != null ? a.ARR__c : 0); greenCount++; }
+
+                if ((a.ARR__c < inboundValue && a.Account_Source_Type__c == 'Inbound') || 
+                        (a.Outbound_TH_Excluded__c && a.Account_Source_Type__c == 'Outbound' && a.ARR__c < outboundValue) || 
+                        (!a.Outbound_TH_Excluded__c && a.Account_Source_Type__c == 'Outbound' && a.ARR__c < outboundValueV2)
+                    ) { orange += (a.ARR__c != null ? a.ARR__c : 0); orangeCount++; }
             }
         }
         res.put('green_count', greenCount);
