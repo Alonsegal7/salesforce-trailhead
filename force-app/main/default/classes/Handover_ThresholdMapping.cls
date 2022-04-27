@@ -1,17 +1,21 @@
 public without sharing class Handover_ThresholdMapping {
 
     public static void linkOpportunityToThresholdFromTrigger(List<Opportunity> opps, Map<Id, Opportunity> oldOpps) {
-        List<Opportunity> relevantOpps = new List<Opportunity>();
-        Id oppInternalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
-        for (Opportunity opp : opps) {
-            if (opp.RecordTypeId == oppInternalOppRtId && (opp.Manual_Trigger__c == 'Calculate HO Thresholds' || opp.StageName != oldOpps.get(opp.Id).StageName || oldOpps == null)) { //new oppty or stage changed or manual trigger
-                relevantOpps.add(opp);
-                if(opp.Manual_Trigger__c == 'Calculate HO Thresholds') opp.Manual_Trigger__c = '';
+        try {
+            List<Opportunity> relevantOpps = new List<Opportunity>();
+            Id oppInternalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
+            for (Opportunity opp : opps) {
+                if (opp.RecordTypeId == oppInternalOppRtId && (opp.Manual_Trigger__c == 'Calculate HO Thresholds' || opp.StageName != oldOpps.get(opp.Id).StageName || oldOpps == null)) { //new oppty or stage changed or manual trigger
+                    relevantOpps.add(opp);
+                    if(opp.Manual_Trigger__c == 'Calculate HO Thresholds') opp.Manual_Trigger__c = '';
+                }
             }
-        }
-        if (!relevantOpps.isEmpty()){
-            Map<Id,List<HO_Threshold_Criteria__c>> thresholdsWithCriterias = getThresholdsWithThresholdCriterias();
-            linkOppsToThresholds(relevantOpps, thresholdsWithCriterias);
+            if (!relevantOpps.isEmpty()){
+                Map<Id,List<HO_Threshold_Criteria__c>> thresholdsWithCriterias = getThresholdsWithThresholdCriterias();
+                linkOppsToThresholds(relevantOpps, thresholdsWithCriterias);
+            }
+        } catch(Exception e){
+            Utilities.sendDebugEmail('Error in Handover_ThresholdMapping ',e,e.getMessage());    
         }
     }
 
@@ -28,7 +32,7 @@ public without sharing class Handover_ThresholdMapping {
         System.debug('Handover_ThresholdMapping getRelevantThresholdsWithThresholdCriterias entered.');
         Map<Id,List<HO_Threshold_Criteria__c>> thresholdsWithCriterias = new Map<Id,List<HO_Threshold_Criteria__c>>();
         List<HO_Threshold_Criteria__c> relevantThCriterias = new List<HO_Threshold_Criteria__c>();
-        relevantThCriterias = [SELECT Id, HO_Threshold__c, Criteria_Name__c, Target_Field_API_Name__c, Value__c, Operator__c, Relevant_for_Pass__c, Relevant_for_Link__c FROM HO_Threshold_Criteria__c WHERE Is_Active__c = TRUE];
+        relevantThCriterias = [SELECT Id, HO_Threshold__c, Criteria_Name__c, Target_Field_API_Name__c, Value__c, Operator__c, Relevant_for_Pass__c, Relevant_for_Link__c FROM HO_Threshold_Criteria__c WHERE Is_Active__c = TRUE AND HO_Threshold__r.Active__c = TRUE];
         if (relevantThCriterias != null) {
             for (HO_Threshold_Criteria__c thCr : relevantThCriterias) {
                 if (thresholdsWithCriterias.containsKey(thCr.HO_Threshold__c)) {
@@ -44,7 +48,7 @@ public without sharing class Handover_ThresholdMapping {
     }
 
     public static void linkOppsToThresholds(List<Opportunity> relevantOpps, Map<Id,List<HO_Threshold_Criteria__c>> thresholdsWithCriterias) {
-        Map<Id, HO_Threshold__c> thresholdsMap = new Map<Id, HO_Threshold__c>([SELECT Id, Type__c, Always_Pass__c FROM HO_Threshold__c WHERE Id IN: thresholdsWithCriterias.keySet()]);
+        Map<Id, HO_Threshold__c> thresholdsMap = new Map<Id, HO_Threshold__c>([SELECT Id, Type__c, Always_Pass__c FROM HO_Threshold__c WHERE Id IN: thresholdsWithCriterias.keySet() AND Active__c = TRUE]);
         Boolean isMatch, isPass;
         String thresholdFieldName, thresholdPassFieldName;
         for (Opportunity opp : relevantOpps) {
