@@ -41,7 +41,7 @@ public class QuoteLineItemHandler {
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in QuoteLineItemHandler syncQuotes',e,e.getMessage());
         }
-    }
+    }        
     
     private static Map<ID,ID> returnDefaultLinking(Set<ID> poIds){
         Map<Id,Id> mapSortOrder= new Map<Id,Id>();

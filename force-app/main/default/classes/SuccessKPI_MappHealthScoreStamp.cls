@@ -24,4 +24,3 @@ public without sharing class SuccessKPI_MappHealthScoreStamp {
     return TargetsList ;
 }
 }
-
