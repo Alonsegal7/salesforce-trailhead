@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="Set field level security - Tech tool 🔦 ">
+        <template if:true={showSpinner}><lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner></template>
+        <lightning-input type="text" label="Enter sObject API Name" name="objField" class="slds-p-around_small"></lightning-input>
+            <lightning-button label="Get Fields" onclick={handleObjChange} slot="actions" class="slds-p-around_small"> </lightning-button>
+            <template if:true={showFields}>
+                <div class="slds-p-left_small">
+                    <lightning-dual-listbox name="Fields"
+                        label="Select Fields"
+                        source-label="Available"
+                        selected-label="Selected"
+                        field-level-help="Choose the fields to enable visibility for (community profiles are automatically excluded)"
+                        options={selectFields}
+                        value={fieldsValue}
+                        onchange={handleSelectFields}>
+                    </lightning-dual-listbox>
+                </div>
+                <lightning-button variant="brand" label="Submit" onclick={handleClick} slot="actions"></lightning-button>
+            </template>
+    </lightning-card>
+</template>
