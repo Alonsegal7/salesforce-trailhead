@@ -11,6 +11,7 @@ export default class StarRating extends LightningElement {
     @api subtitle;                  //subtitle displayed under title in grey color 
     @api surveyFilledFieldApiName;  //Optional - checkbox field api name on the target object to mark that the survey was filled
     @api showSuccessToast = false;  //flag to display success toast when survey is submitted
+    @api showLegend = false;        //Optional - display under the question a legend 1 star - do not agree 5 start - extremely agree
     load = false;
     questions = [];
     error;

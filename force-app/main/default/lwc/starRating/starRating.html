@@ -29,6 +29,9 @@
                 </lightning-layout>
             </lightning-tile>                                       
         </template>
+        <template if:true={showLegend}>  <!--subtitle is optional-->
+            <p class="slds-p-horizontal_small slds-p-bottom_small slds-text-body_small"><i><b>1 Star</b> - Do not agree <b>5 Star</b> - Extremely agree</i></p>
+        </template>
         <template if:true={error}>
             <c-error-panel errors={error}></c-error-panel>
         </template>
