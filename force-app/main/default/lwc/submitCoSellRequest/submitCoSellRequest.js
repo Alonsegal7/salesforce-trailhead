@@ -5,6 +5,7 @@ import createNewCoSellRequest from '@salesforce/apex/CoSellRequestService.create
 import getAssociatePotentialOpps from '@salesforce/apex/CoSellRequestService.getAssociatePotentialOpps';
 import OPP_ACCOUNTID from "@salesforce/schema/Opportunity.AccountId";
 import OPP_STAGE from "@salesforce/schema/Opportunity.StageName";
+import OPP_ARR from "@salesforce/schema/Opportunity.Green_Bucket_ARR_V2__c";
 import OPP_OWNER_MANAGER_NAME from "@salesforce/schema/Opportunity.Owner.Manager.Name";
 import OPP_OWNER_MANAGER_ID from "@salesforce/schema/Opportunity.Owner.ManagerId";
 import OPP_OWNER_ID from "@salesforce/schema/Opportunity.OwnerId";
@@ -15,6 +16,8 @@ import SYNCED_QUOTE_STATUS from "@salesforce/schema/Opportunity.SyncedQuote.DH_Q
 import SYNCED_QUOTE_PUBLISH from "@salesforce/schema/Opportunity.SyncedQuote.Is_Published__c";
 import SYNCED_QUOTE_DATE from "@salesforce/schema/Opportunity.SyncedQuote.CreatedDate";
 import COSELL_LEADER from "@salesforce/schema/Opportunity.Account.Co_Sell_Leader__c";
+import ACC_ARR from "@salesforce/schema/Opportunity.Account.ARR__c";
+
 
 export default class SubmitCoSellRequest extends LightningElement {
     @api recordId;
@@ -49,6 +52,7 @@ export default class SubmitCoSellRequest extends LightningElement {
     soBadgeControl = {};
     oppsSyncedQts_map = {};
     coSellLeaderValue = '';
+    arrIsUnder10k = false;
 
     // used to choose co-sell leader when Co_Sell_Leader__c is blank on monday account
     get coSellLeaderOptions() {
@@ -81,7 +85,7 @@ export default class SubmitCoSellRequest extends LightningElement {
     @wire(getRecord, { recordId: '$recordId', 
                         fields: [OPP_ACCOUNTID, OPP_STAGE, OPP_OWNER_MANAGER_NAME, OPP_OWNER_MANAGER_ID, OPP_OWNER_ID, 
                                 OPP_RT_DEV_NAME, OPP_OWNER_ACCOUNTID, SYNCED_QUOTE, SYNCED_QUOTE_STATUS, SYNCED_QUOTE_PUBLISH, 
-                                SYNCED_QUOTE_DATE,COSELL_LEADER] })
+                                SYNCED_QUOTE_DATE,COSELL_LEADER, OPP_ARR, ACC_ARR] })
     wiredRecord({ error, data }) {
         if (error) { this.error = error; }
         if (data) {
@@ -94,22 +98,33 @@ export default class SubmitCoSellRequest extends LightningElement {
             this.oppOwnerId = getFieldValue(data, OPP_OWNER_ID);
             this.cosellLeader = getFieldValue(data, COSELL_LEADER);
             let syncedQuoteId = getFieldValue(data, SYNCED_QUOTE);
-            if(syncedQuoteId){
-                let qt = {};
-                qt.Id = syncedQuoteId;
-                qt.Is_Published__c = getFieldValue(data, SYNCED_QUOTE_PUBLISH);
-                qt.DH_Quote_Status__c = getFieldValue(data, SYNCED_QUOTE_STATUS);
-                qt.CreatedDate = getFieldValue(data, SYNCED_QUOTE_DATE);;
-                if(qt.DH_Quote_Status__c == 'Won' || qt.DH_Quote_Status__c == 'Approved') qt.isWon = true;
-                this.oppsSyncedQts_map[this.recordId] = qt;
-                console.log('wiredRecord qt: ' + JSON.stringify(qt));
-                console.log('wiredRecord allowSwitchMainSec: ' + this.allowSwitchMainSec);
-            }
-            //this.beforeSaveMsg = 'Once clicking Next, your request will be submitted for approval to ' + this.managerName + '.';
-            if(this.cosellLeader == null || this.cosellLeader == undefined){
-                this.chooseLeaderScreen = true;
+            var oppArr = getFieldValue(data, OPP_ARR);
+            var accArr = getFieldValue(data, ACC_ARR);
+            var totalArr = oppArr + accArr;
+            if(totalArr >= 10000){
+                this.customError = '';
+                this.arrIsUnder10k = false;
+                if(syncedQuoteId){
+                    let qt = {};
+                    qt.Id = syncedQuoteId;
+                    qt.Is_Published__c = getFieldValue(data, SYNCED_QUOTE_PUBLISH);
+                    qt.DH_Quote_Status__c = getFieldValue(data, SYNCED_QUOTE_STATUS);
+                    qt.CreatedDate = getFieldValue(data, SYNCED_QUOTE_DATE);;
+                    if(qt.DH_Quote_Status__c == 'Won' || qt.DH_Quote_Status__c == 'Approved') qt.isWon = true;
+                    this.oppsSyncedQts_map[this.recordId] = qt;
+                    console.log('wiredRecord qt: ' + JSON.stringify(qt));
+                    console.log('wiredRecord allowSwitchMainSec: ' + this.allowSwitchMainSec);
+                }
+                if(this.cosellLeader == null || this.cosellLeader == undefined){
+                    this.chooseLeaderScreen = true;
+                } else {
+                    this.mainScreen = true;
+                }
             } else {
-                this.mainScreen = true;
+                var err10K = 'Submit Co-Sell Request is available only for accounts that reached 10K ARR (including current opp ARR).';
+                err10K += ' This account ARR is ' + accArr + ' and this opportunity ARR is ' + oppArr + ' so total ARR is ' + totalArr;
+                this.customError = err10K;
+                this.arrIsUnder10k = true;
             }
         }
         this.isLoading = false;
