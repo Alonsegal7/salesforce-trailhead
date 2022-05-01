@@ -110,7 +110,7 @@ export default class SubmitCoSellRequest extends LightningElement {
                     qt.Is_Published__c = getFieldValue(data, SYNCED_QUOTE_PUBLISH);
                     qt.DH_Quote_Status__c = getFieldValue(data, SYNCED_QUOTE_STATUS);
                     qt.CreatedDate = getFieldValue(data, SYNCED_QUOTE_DATE);;
-                    if(qt.DH_Quote_Status__c == 'Won' || qt.DH_Quote_Status__c == 'Approved') qt.isWon = true;
+                    if(qt.DH_Quote_Status__c == 'Won' || qt.DH_Quote_Status__c == 'Approved') qt.isWonOrApproved = true;
                     this.oppsSyncedQts_map[this.recordId] = qt;
                     console.log('wiredRecord qt: ' + JSON.stringify(qt));
                     console.log('wiredRecord allowSwitchMainSec: ' + this.allowSwitchMainSec);
@@ -297,12 +297,12 @@ export default class SubmitCoSellRequest extends LightningElement {
         let selectedOppId = event.detail.value;
         let selectedQt = this.associateOppsMap[selectedOppId].SyncedQuote;
         let currQt = this.oppsSyncedQts_map[this.recordId];
-        if(currQt == null || currQt == undefined || !currQt.isWon){ //if current opp does not have quote at all or does not have a won quote
-            console.log('current opp does not have a won quote');
+        if(currQt == null || currQt == undefined || !currQt.isWonOrApproved){ //if current opp does not have quote at all or does not have a won or approved quote
+            console.log('current opp does not have a won or approved quote');
             if(selectedQt){ // if selected opp has a synced quote
                 console.log('selected opp has a synced quote');
-                if(selectedQt.DH_Quote_Status__c == 'Won' || selectedQt.DH_Quote_Status__c == 'Approved') { // if selected opp has a won quote - switch forbidden. main should be the associated opp
-                    console.log('selected opp has a won quote - switch forbidden. main should be the associated opp');
+                if(selectedQt.DH_Quote_Status__c == 'Won' || selectedQt.DH_Quote_Status__c == 'Approved') { // if selected opp has a won or approved quote - switch forbidden. main should be the associated opp
+                    console.log('selected opp has a won or approved quote - switch forbidden. main should be the associated opp');
                     this.allowSwitchMainSec = false;
                     this.mainOppId = selectedOppId;
                     this.secondaryOppId = this.recordId;
@@ -338,15 +338,15 @@ export default class SubmitCoSellRequest extends LightningElement {
                 if(currQt && currQt.Is_Published__c){ //if main opp has a quote at all or a published quote then switch will be forbidden
                     console.log('main opp has a published quote then switch will be forbidden');
                     this.allowSwitchMainSec = false;
-                } else { // main opp has no published/won quote and selected opp has no quote - switch allowed
-                    console.log('main opp has no published/won quote and selected opp has no quote - switch allowed');
+                } else { // main opp has no published/won or approved quote and selected opp has no quote - switch allowed
+                    console.log('main opp has no published/won or approved quote and selected opp has no quote - switch allowed');
                     this.allowSwitchMainSec = true;
                 }
                 this.mainOppId = this.recordId;
                 this.secondaryOppId = selectedOppId;
             }
-        } else { //current opp has a won quote - switch is forbidden (in wire). main should be the record Id
-            console.log('current opp has a won quote - switch is forbidden (in wire). main should be the record Id');
+        } else { //current opp has a won or approved quote - switch is forbidden (in wire). main should be the record Id
+            console.log('current opp has a won or approved quote - switch is forbidden (in wire). main should be the record Id');
             this.allowSwitchMainSec = false;
             this.mainOppId = this.recordId;
             this.secondaryOppId = selectedOppId;
