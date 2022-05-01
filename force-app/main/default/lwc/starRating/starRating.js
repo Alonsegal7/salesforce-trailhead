@@ -20,20 +20,27 @@ export default class StarRating extends LightningElement {
     customError;
     hiUserFirstName;
 
-    @wire(getSurveyInitData, { surveyName: '$surveyName' }) 
+    @wire(getSurveyInitData, { surveyName: '$surveyName', getCurrUserData: '$showHiUsername' }) 
     wiredSurveyInitData({ error, data }) {
         if (data) {
-            this.questions = data.questions.map((item) => ({
-                ...item,
-                star1: item.Field_API_Name__c + '_1',
-                star2: item.Field_API_Name__c + '_2',
-                star3: item.Field_API_Name__c + '_3',
-                star4: item.Field_API_Name__c + '_4',
-                star5: item.Field_API_Name__c + '_5'
-            }));
-            if(data.currUserFirstName) this.userFirstName = 'Hi ' + data.currUserFirstName + ' 👋 ';
-            this.error = undefined;
-            this.load = true;
+            try{
+                this.questions = data.questions.map((item) => ({
+                    ...item,
+                    star1: item.Field_API_Name__c + '_1',
+                    star2: item.Field_API_Name__c + '_2',
+                    star3: item.Field_API_Name__c + '_3',
+                    star4: item.Field_API_Name__c + '_4',
+                    star5: item.Field_API_Name__c + '_5'
+                }));
+                if(data.currUserFirstName) this.hiUserFirstName = 'Hi ' + data.currUserFirstName + '!';
+                this.error = undefined;
+                this.load = true;
+            } catch(e){
+                console.error(e);
+                console.error('e.name => ' + e.name );
+                console.error('e.message => ' + e.message );
+                console.error('e.stack => ' + e.stack );
+            }
         } else if (error) {
             this.error = error;
             this.questions = undefined;
