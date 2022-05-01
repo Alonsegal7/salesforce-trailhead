@@ -1,5 +1,5 @@
 import { LightningElement, wire, api } from 'lwc';
-import getQuestionsList from '@salesforce/apex/starRatingController.getQuestionsList';
+import getSurveyInitData from '@salesforce/apex/starRatingController.getSurveyInitData';
 import updateValues from '@salesforce/apex/starRatingController.updateValues';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
@@ -12,16 +12,18 @@ export default class StarRating extends LightningElement {
     @api surveyFilledFieldApiName;  //Optional - checkbox field api name on the target object to mark that the survey was filled
     @api showSuccessToast = false;  //flag to display success toast when survey is submitted
     @api showLegend = false;        //Optional - display under the question a legend 1 star - do not agree 5 start - extremely agree
+    @api showHiUsername = false;    //Optional - show a Hi, FirstName to the user at the top of the survey
     load = false;
     questions = [];
     error;
     valuesMap = {};
     customError;
+    hiUserFirstName;
 
-    @wire(getQuestionsList, { surveyName: '$surveyName' }) 
-    wiredQuestions({ error, data }) {
+    @wire(getSurveyInitData, { surveyName: '$surveyName' }) 
+    wiredSurveyInitData({ error, data }) {
         if (data) {
-            this.questions = data.map((item) => ({
+            this.questions = data.questions.map((item) => ({
                 ...item,
                 star1: item.Field_API_Name__c + '_1',
                 star2: item.Field_API_Name__c + '_2',
@@ -29,6 +31,7 @@ export default class StarRating extends LightningElement {
                 star4: item.Field_API_Name__c + '_4',
                 star5: item.Field_API_Name__c + '_5'
             }));
+            if(data.currUserFirstName) this.userFirstName = 'Hi ' + data.currUserFirstName + ' 👋 ';
             this.error = undefined;
             this.load = true;
         } else if (error) {
