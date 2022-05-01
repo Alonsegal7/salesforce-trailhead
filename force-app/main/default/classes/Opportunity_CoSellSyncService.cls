@@ -39,7 +39,7 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
     public Database.QueryLocator start(Database.BatchableContext BC){
         try {
             //select all main co-sell opps where last mondified is in the last week
-            String query = 'select Id, Main_Opportunity__c, Main_Opportunity__r.LastModifiedDate, Secondary_Opportunity__c, Secondary_Opportunity__r.LastModifiedDate'; 
+            String query = 'select Id, Main_Opportunity__c, Main_Opportunity__r.LastModifiedDate, Secondary_Opportunity__c, Secondary_Opportunity__r.LastModifiedDate, Secondary_Opportunity_Owner__c'; 
             query += ' from Co_Sell_Request__c';
             query += ' where Status__c = \'Approved\' and Main_Opportunity__r.LastModifiedDate >= LAST_N_DAYS:7';
             return Database.getQueryLocator(query);
