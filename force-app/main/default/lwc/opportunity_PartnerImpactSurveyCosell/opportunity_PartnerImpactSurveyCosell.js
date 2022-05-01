@@ -2,9 +2,12 @@ import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue, updateRecord } from 'lightning/uiRecordApi';
 import Id from '@salesforce/user/Id';
 import COSELL_REQUEST_ID from '@salesforce/schema/Opportunity.Co_Sell_Request__c';
+import COSELL_REQUEST_STATUS from '@salesforce/schema/Opportunity.Co_Sell_Request__r.Status__c';
 import COSELL_REQUEST_SURVEY_FILLED from '@salesforce/schema/Opportunity.Co_Sell_Request__r.Impact_Survey_Filled__c';
 import ACCOUNT_COSELL_LEADER from '@salesforce/schema/Opportunity.Account.Co_Sell_Leader__c';
 import OPP_RECORD_TYPE from '@salesforce/schema/Opportunity.RecordType.DeveloperName';
+import OPP_OWNERID from '@salesforce/schema/Opportunity.OwnerId';
+import OPP_OWNER_MANAGERID from '@salesforce/schema/Opportunity.Owner.ManagerId';
 
 export default class Opportunity_PartnerImpactSurveyCosell extends LightningElement {
     @api recordId;
@@ -12,22 +15,34 @@ export default class Opportunity_PartnerImpactSurveyCosell extends LightningElem
     load = false;
     userId = Id;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [COSELL_REQUEST_ID, COSELL_REQUEST_SURVEY_FILLED, ACCOUNT_COSELL_LEADER, OPP_RECORD_TYPE]})
+    @wire(getRecord, { 
+        recordId: '$recordId', 
+        fields: [COSELL_REQUEST_ID, 
+                    COSELL_REQUEST_STATUS,
+                    COSELL_REQUEST_SURVEY_FILLED, 
+                    ACCOUNT_COSELL_LEADER, 
+                    OPP_RECORD_TYPE, 
+                    OPP_OWNERID,
+                    OPP_OWNER_MANAGERID
+                ]})
     wiredRecord({ error, data }) {
         if (data) {
             console.log('loading co-sell impact survey...');
             this.coSellReqId = getFieldValue(data, COSELL_REQUEST_ID);
+            var coSellReqStatus = getFieldValue(data, COSELL_REQUEST_STATUS);
             var recordType = getFieldValue(data, OPP_RECORD_TYPE);
             var surveyFilled = getFieldValue(data, COSELL_REQUEST_SURVEY_FILLED);
             var accountCosellLeader = getFieldValue(data, ACCOUNT_COSELL_LEADER);
+            var oppOwnerId = getFieldValue(data, OPP_OWNERID);
+            var oppOwnerManagerId = getFieldValue(data, OPP_OWNER_MANAGERID);
             console.log('co-sell request id: '+ this.coSellReqId);
             console.log('opp record type: '+ recordType);
             console.log('survey filled: '+ surveyFilled); //PROBLEM - RETURNS NULL B/C SHARING RULES
             console.log('account Cosell Leader: '+ accountCosellLeader);
-            if(this.coSellReqId != null && this.coSellReqId != undefined 
-                && surveyFilled == false
-                && ((recordType == 'Partner_Opportunity' && accountCosellLeader == 'Partners')
-                    || (recordType == 'Internal_Opportunity' && accountCosellLeader == 'Sales'))){
+            if(this.coSellReqId != null && this.coSellReqId != undefined && coSellReqStatus == 'Approved' // only for opps with approved co-sell req
+                && surveyFilled == false //survey was not filled yet
+                && (this.userId == oppOwnerId || this.userId == oppOwnerManagerId) //survey open only for opp owner / owner's manager
+                && ((recordType == 'Partner_Opportunity' && accountCosellLeader == 'Partners') || (recordType == 'Internal_Opportunity' && accountCosellLeader == 'Sales'))){ //survey is open by leader (partner opps for partners leader and internal opps for sales leader)
                 this.load = true; //load survey
                 console.log('loading co-sell impact survey now!');
             } else {

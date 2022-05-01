@@ -34,10 +34,12 @@
         var stepName = event.getParam("detail").value;
         if(stepName == 'Closed Won'){
             //check for co-sell 2.0 survey
-            if(component.get('v.oppData.Co_Sell_Opportunity__c') != null && component.get('v.oppData.Co_Sell_Opportunity__c') != ''
-                && ((component.get('v.oppData.Account.Co_Sell_Leader__c') == 'Partners' && component.get('v.oppData.RecordType.DeveloperName') == 'Partner_Opportunity')
-                    || (component.get('v.oppData.Account.Co_Sell_Leader__c') == 'Sales' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'))
-                && component.get('v.oppData.Co_Sell_Request__c') != null && component.get('v.oppData.Co_Sell_Request__c') != ''
+            if(component.get('v.oppData.Co_Sell_Opportunity__c') != null 
+                && component.get('v.oppData.Co_Sell_Opportunity__c') != ''
+                && component.get('v.oppData.Account.Co_Sell_Leader__c') != ''
+                && component.get('v.oppData.Co_Sell_Request__c') != null 
+                && component.get('v.oppData.Co_Sell_Request__c') != '' 
+                && component.get('v.oppData.Co_Sell_Request__r.Status__c') == 'Approved'
                 && component.get('v.oppData.Co_Sell_Request__r.Impact_Survey_Filled__c') == false){
                     helper.callback_coSellSurvey(component, event, helper);
             } else {

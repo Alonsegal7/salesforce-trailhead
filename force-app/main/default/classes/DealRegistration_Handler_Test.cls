@@ -79,7 +79,9 @@ public class DealRegistration_Handler_Test {
         regionalAcc = TestObjectCreator.CreateCompany();
         regionalAcc.Account_Territory__c = 'Regional';
         regionalAcc.ParentId = globAcc.Id;
+        regionalAcc.Company__c = globAcc.Id;
         regionalAcc.BillingCountry = 'Australia';
+        regionalAcc.Region__c = 'ANZ';
         insert regionalAcc;
         
         String approvedCompanySize = '50-99';
@@ -100,6 +102,8 @@ public class DealRegistration_Handler_Test {
         regionalAcc = TestObjectCreator.CreateCompany();
         regionalAcc.Account_Territory__c = 'Regional';
         regionalAcc.ParentId = globAcc.Id;
+        regionalAcc.Company__c = globAcc.Id;
+        regionalAcc.Region__c = 'ANZ';
         regionalAcc.BillingCountry = 'Australia';
         insert regionalAcc;
         
@@ -136,6 +140,7 @@ public class DealRegistration_Handler_Test {
         localAcc = TestObjectCreator.CreateCompany();
         localAcc.Account_Territory__c = 'Local';
         localAcc.ParentId = globAcc.Id;
+        localAcc.Company__c = globAcc.Id;
         localAcc.BillingCountry = 'Australia';
         insert localAcc;
         
@@ -159,7 +164,8 @@ public class DealRegistration_Handler_Test {
         newLead.Email = dealRegRecord.Registered_Email__c;
         newLead.LeadSource = dealRegRecord.Source__c;
         newLead.RecordTypeId = partnerLead; // create partner lead
-        newLead.Related_Company__c = localAcc.Id; //local
+        newLead.Related_Company__c = localAcc.Company__c; //global
+        newLead.Parent_Company__c = localAcc.Id; //local
         newLead.Title = dealRegRecord.Title__c;
         newLead.Country = dealRegRecord.Company_Location__c;
         newLead.Use_Cases__c = dealRegRecord.Use_Cases__c;
@@ -179,7 +185,7 @@ public class DealRegistration_Handler_Test {
         
         Account globAcc = [SELECT Id, Website FROM Account WHERE Account_Territory__c = 'Global' LIMIT 1];
         
-        Account localAcc = [SELECT Id, Name FROM Account WHERE Account_Territory__c = 'Local' LIMIT 1];
+        Account localAcc = [SELECT Id, Company__c, Name FROM Account WHERE Account_Territory__c = 'Local' LIMIT 1];
         
         String approvedCompanySize = '50-99';
         String existingDomain = globalAcc.Website;
@@ -203,7 +209,8 @@ public class DealRegistration_Handler_Test {
         newLead.Email = dealRegRecord.Registered_Email__c;
         newLead.LeadSource = dealRegRecord.Source__c;
         newLead.RecordTypeId = partnerLead; // create partner lead
-        newLead.Related_Company__c = localAcc.Id; //local
+        newLead.Related_Company__c = localAcc.Company__c; //global
+        newLead.Parent_Company__c = localAcc.Id; //local
         newLead.Title = dealRegRecord.Title__c;
         newLead.Country = dealRegRecord.Company_Location__c;
         newLead.Use_Cases__c = dealRegRecord.Use_Cases__c;
@@ -236,7 +243,7 @@ public class DealRegistration_Handler_Test {
         
         Account globAcc = [SELECT Id, Website FROM Account WHERE Account_Territory__c = 'Global' LIMIT 1];
         
-        Account localAcc = [SELECT Id, Name FROM Account WHERE Account_Territory__c = 'Local' LIMIT 1];
+        Account localAcc = [SELECT Id, Name, Company__c FROM Account WHERE Account_Territory__c = 'Local' LIMIT 1];
         
         String approvedCompanySize = '50-99';
         String existingDomain = globalAcc.Website;
@@ -260,7 +267,8 @@ public class DealRegistration_Handler_Test {
         newLead.Email = dealRegRecord.Registered_Email__c;
         newLead.LeadSource = dealRegRecord.Source__c;
         newLead.RecordTypeId = partnerLead; // create partner lead
-        newLead.Related_Company__c = localAcc.Id; //local
+        newLead.Related_Company__c = localAcc.Company__c; //global
+        newLead.Parent_Company__c = localAcc.Id; //local
         newLead.Title = dealRegRecord.Title__c;
         newLead.Country = dealRegRecord.Company_Location__c;
         newLead.Use_Cases__c = dealRegRecord.Use_Cases__c;
@@ -317,7 +325,8 @@ public class DealRegistration_Handler_Test {
         newLead.Email = dealRegRecord.Registered_Email__c;
         newLead.LeadSource = dealRegRecord.Source__c;
         newLead.RecordTypeId = partnerLead; // create partner lead
-        newLead.Related_Company__c = localAcc.Id; //local
+        newLead.Related_Company__c = localAcc.Company__c; //global
+        newLead.Parent_Company__c = localAcc.Id; //local
         newLead.Title = dealRegRecord.Title__c;
         newLead.Country = dealRegRecord.Company_Location__c;
         newLead.Use_Cases__c = dealRegRecord.Use_Cases__c;
@@ -365,6 +374,7 @@ public class DealRegistration_Handler_Test {
         lReg.Current_Tool__c = 'Asana';
         lReg.Pains__c = 'Ease of use;Unhappy with current tool';
         lReg.Tools_in_their_Ecosystem__c = 'Salesforce;Asana';
+        lReg.Region__c = 'EMEA';
         return lReg;
     }
 }

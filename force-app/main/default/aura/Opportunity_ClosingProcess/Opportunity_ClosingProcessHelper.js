@@ -112,11 +112,17 @@
 					console.log('opp close proc: init opp data: '+JSON.stringify(storeResponse));
 					console.log('opp close proc: survey filled: '+component.get('v.oppData.Co_Sell_Request__r.Impact_Survey_Filled__c'));
 					if(component.get('v.oppData.Co_Sell_Request__r.Impact_Survey_Filled__c') == false){
+						var cosellErrMsg = '';
+						if(component.get('v.oppData.Account.Co_Sell_Leader__c') == 'Sales' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'){
+							cosellErrMsg = 'You must fill the Co-Sell Impact Survey before closing the Co-Sell opportunity.';
+						} else if(component.get('v.oppData.Account.Co_Sell_Leader__c') == 'Partners' && component.get('v.oppData.RecordType.DeveloperName') == 'Internal_Opportunity'){
+							cosellErrMsg = 'You can not close won this opportunity before Co-Sell Impact Survey is filled by the Partner. Please ask the CPM/Partner to answer the survey on their opportunity to allow you to close won the deal.';
+						}
 						component.set('v.hideUpdateButton', false);
 						component.set('v.hideStagePathUpdateBtn', false);
 						component.find('notifLib').showToast({
 							"variant": "error",
-							"title": "You must fill the Co-Sell Impact Survey before closing the opportunity."                      
+							"title": cosellErrMsg                      
 						});
 					} else {
 						helper.handleClosedWonStageSelected(component, event, helper);

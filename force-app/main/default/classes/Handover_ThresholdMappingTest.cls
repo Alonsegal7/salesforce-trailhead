@@ -43,10 +43,10 @@ public with sharing class Handover_ThresholdMappingTest {
         update oli;
 
         List<HO_Threshold__c> thresholds = new List<HO_Threshold__c>();
-        thresholds.add(new HO_Threshold__c(Name = 'AM test1', Type__c = 'AM'));
-        thresholds.add(new HO_Threshold__c(Name = 'CSM test1', Type__c = 'CSM', Always_Pass__c = true));
-        thresholds.add(new HO_Threshold__c(Name = 'OB test1', Type__c = 'Onboarding'));
-        thresholds.add(new HO_Threshold__c(Name = 'AM test2', Type__c = 'AM'));
+        thresholds.add(new HO_Threshold__c(Name = 'AM test1', Type__c = 'AM', Active__c = true));
+        thresholds.add(new HO_Threshold__c(Name = 'CSM test1', Type__c = 'CSM', Always_Pass__c = true, Active__c = true));
+        thresholds.add(new HO_Threshold__c(Name = 'OB test1', Type__c = 'Onboarding', Active__c = true));
+        thresholds.add(new HO_Threshold__c(Name = 'AM test2', Type__c = 'AM', Active__c = true));
         insert thresholds;
 
         List<HO_Threshold_Criteria__c> thCrs = new List<HO_Threshold_Criteria__c>();
