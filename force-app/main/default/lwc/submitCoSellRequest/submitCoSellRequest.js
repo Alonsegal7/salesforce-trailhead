@@ -10,6 +10,7 @@ import OPP_OWNER_MANAGER_NAME from "@salesforce/schema/Opportunity.Owner.Manager
 import OPP_OWNER_MANAGER_ID from "@salesforce/schema/Opportunity.Owner.ManagerId";
 import OPP_OWNERS_MANAGER_TEAM from "@salesforce/schema/Opportunity.Owner_s_Manager_Team__c";
 import OPP_OWNERS_OFFICE from "@salesforce/schema/Opportunity.Owner_Office_Live__c";
+import OPP_OWNER_SEGMENT from "@salesforce/schema/Opportunity.Owner_Segment_Live__c";
 import OPP_OWNER_ID from "@salesforce/schema/Opportunity.OwnerId";
 import OPP_RT_DEV_NAME from "@salesforce/schema/Opportunity.RecordType.DeveloperName";
 import OPP_OWNER_ACCOUNTID from "@salesforce/schema/Opportunity.Owner.AccountId";
@@ -87,7 +88,7 @@ export default class SubmitCoSellRequest extends LightningElement {
     @wire(getRecord, { recordId: '$recordId', 
                         fields: [OPP_ACCOUNTID, OPP_STAGE, OPP_OWNER_MANAGER_NAME, OPP_OWNER_MANAGER_ID, OPP_OWNER_ID, 
                                 OPP_RT_DEV_NAME, OPP_OWNER_ACCOUNTID, SYNCED_QUOTE, SYNCED_QUOTE_STATUS, SYNCED_QUOTE_PUBLISH, 
-                                SYNCED_QUOTE_DATE,COSELL_LEADER, OPP_ARR, ACC_ARR, OPP_OWNERS_MANAGER_TEAM, OPP_OWNERS_OFFICE] })
+                                SYNCED_QUOTE_DATE,COSELL_LEADER, OPP_ARR, ACC_ARR, OPP_OWNERS_MANAGER_TEAM, OPP_OWNERS_OFFICE, OPP_OWNER_SEGMENT] })
     wiredRecord({ error, data }) {
         if (error) { this.error = error; }
         if (data) {
@@ -104,10 +105,13 @@ export default class SubmitCoSellRequest extends LightningElement {
             var accArr = getFieldValue(data, ACC_ARR);
             var totalArr = oppArr + accArr;
             var isAnzTeam = false; //ANZ team is excluded from 10K TH validation
+            var isSmb = false; //SMB is excluded from 10K TH validation (Sales)
             var ownersManagerTeam = getFieldValue(data, OPP_OWNERS_MANAGER_TEAM); //for partners
             var ownersOffice = getFieldValue(data, OPP_OWNERS_OFFICE); //for sales
+            var ownerSegment = getFieldValue(data, OPP_OWNER_SEGMENT); //for sales
             if((this.currentOppRT == 'Partner_Opportunity' && ownersManagerTeam == 'CP - ANZ Team') || (this.currentOppRT == 'Internal_Opportunity' && ownersOffice == 'Sydney Office')) isAnzTeam = true;
-            if(isAnzTeam || totalArr >= 10000){
+            else if(this.currentOppRT == 'Internal_Opportunity' && ownerSegment == 'SMB') isSmb = true;
+            if(isSmb || isAnzTeam || totalArr >= 10000){
                 this.customError = '';
                 this.arrIsUnder10k = false;
                 if(syncedQuoteId){
