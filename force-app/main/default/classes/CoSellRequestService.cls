@@ -1,6 +1,7 @@
 public without sharing class CoSellRequestService {
-    
-   public static List<Co_sell_Request_to_Main_Opp_Mapping__mdt> requestToMainOppMapping_cmt {
+
+    public static Boolean insertFromCode = false;
+    public static List<Co_sell_Request_to_Main_Opp_Mapping__mdt> requestToMainOppMapping_cmt {
         get {
             if (requestToMainOppMapping_cmt == null) {
                 requestToMainOppMapping_cmt = [
@@ -34,6 +35,7 @@ public without sharing class CoSellRequestService {
 
     @AuraEnabled
     public static Map<String,Object> createNewCoSellRequest(Co_Sell_Request__c newCoSellReq){
+        insertFromCode = true;
         Map<String,Object> res = new Map<String,Object>();
         try {
             Map<Id,Opportunity> oppsMap = new Map<Id,Opportunity>([select Id, OwnerId, RecordType.DeveloperName, Owner.Group__c, Owner.AccountId, Owner.ManagerId, Account.Co_Sell_Leader__c from Opportunity where Id =: newCoSellReq.Secondary_Opportunity__c or Id =: newCoSellReq.Main_Opportunity__c]);

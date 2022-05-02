@@ -2,6 +2,7 @@
 public with sharing class CoSellRequestServiceTest {
     @TestSetup
     static void makeData(){
+        List<Co_sell_Request_to_Main_Opp_Mapping__mdt> testMap = CoSellRequestService.requestToMainOppMapping_cmt;
         Id partnerOppRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
         Id internalOppRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
 
