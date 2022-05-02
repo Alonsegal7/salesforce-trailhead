@@ -55,6 +55,24 @@ public with sharing class CoSellRequestServiceTest {
         CoSellRequestService.createNewCoSellRequest(csr2);
     }
 
+    static testmethod void test_manualCreateError(){
+        User cp = [select Id from User where Profile.Name = 'Channel Managers' and IsActive = true limit 1];
+        Opportunity opp = [select Id, AccountId from Opportunity limit 1];
+        Co_Sell_Request__c csr = new Co_Sell_Request__c(
+            Main_Opportunity__c = opp.Id,
+            Secondary_Opportunity_Owner__c = UserInfo.getUserId(),
+            Type__c = 'Create',
+            Monday_Account__c = opp.AccountId
+        );
+        system.runAs(cp){
+            try{
+                insert csr;
+            } catch (Exception e){
+
+            }
+        }
+    }
+
     static testmethod void test1(){
         list<Co_Sell_Request__c> csrList = [select Id, Main_Opportunity__c, Type__c from Co_Sell_Request__c];
         Id oppToUpdate;
