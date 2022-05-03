@@ -4,7 +4,13 @@
     <isExposed>true</isExposed>
     <masterLabel>Calc End Date</masterLabel>
     <targets>
-        <target>lightning__AppPage</target>
-        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="StartDateValue" type="date"/>
+            <property name="DurationValue" type="Integer"/>
+            <property name="EndDateValue" type="date"/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

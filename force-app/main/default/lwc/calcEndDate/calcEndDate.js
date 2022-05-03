@@ -1,33 +1,38 @@
-import {LightningElement,track} from "lwc";
+import {api, LightningElement,track} from "lwc";
 
 export default class calcEndDate extends LightningElement {
+    @api Duration; 
+    @api StartDate;
+    @api EndDate; 
     @track StartDate;
     @track Duration;
     @track EndDate;
 
     addDuration(dt, dur){
-        var temp = new Date(dt);
-        console.log('addDuration dt: '+ temp);
-        console.log('addDuration dur: '+ dur);
-        console.log('addDuration getMonth: '+ temp.getMonth());
-        console.log('addDuration total months to add: '+ parseInt(temp.getMonth()) + parseInt(dur));
-        temp.setMonth(parseInt(temp.getMonth()) + parseInt(dur));
-        //date.setDate(date.getDate() + 1)
-        console.log('addDuration post set: '+ temp);
-        return temp;
+        var date = new Date(dt);
+        date.setMonth(parseInt(date.getMonth()) + parseInt(dur));
+        console.log('addDuration post set: '+ date);
+        return date;
     }
     deductDays(dt,days){
-        var temp = new Date(dt);
-        temp = dt.getDate() - days;
-        dt.setDate(temp);
-        console.log(temp);
-        return temp;
-
+        var date = new Date(dt);
+        date.setDate(date.getDate() - days);
+        console.log('Date after change '+ date);
+        return date;
     }
     calcExpr() {
         try{
-            this.EndDate = this.addDuration(this.StartDate, this.Duration);
-            this.EndDate=this.deductDays(this.EndDate,1);
+            var tempDate = new Date();
+            tempDate = this.addDuration(this.StartDate, this.Duration);
+            console.log('tempDate addDuration: '+tempDate);
+            tempDate = this.deductDays(tempDate , 1);
+            console.log('tempDate deductDays: '+tempDate);
+            this.EndDate = new Date(tempDate);
+            var DD = tempDate.getDate();
+            var MM = tempDate.getMonth()+1;
+            var YYYY = tempDate.getFullYear();
+            this.EndDate = YYYY + '-' + MM + '-' + DD;
+            console.log('End date final '+this.EndDate);
         } catch(e){
             console.error(e);
             console.error('e.name => ' + e.name );
@@ -39,9 +44,11 @@ export default class calcEndDate extends LightningElement {
         this.StartDate = evt.target.value;
         if (this.StartDate != null && this.Duration != null){
             this.calcExpr();
+        if (this.StartDate =null && this.Duration !=null){
+            this.EndDate=''
+        }
         }
     }
-
     handleChangeDuration(evt) { 
         this.Duration = evt.target.value;
         if (this.StartDate != null && this.Duration != null){
