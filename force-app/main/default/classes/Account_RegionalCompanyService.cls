@@ -1,26 +1,41 @@
 public without sharing class Account_RegionalCompanyService {
 
+    public static Id companyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
+    public static Id MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+    public static Id accountsPoolUserId = '0053X00000Bo8ZZQAZ';
+
     public static void findOrCreateRegionalCompany(List<Account> newAccounts, map<Id,Account> oldAccounts) {
 
         System.debug('Entered Account_RegionalCompanyService findOrCreateRegionalCompany');
-        Id companyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
-        Id MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
-        Id accountsPoolUserId = '0053X00000Bo8ZZQAZ';
         Set<Id> globalCompanysIds = new Set<Id>();
-        
+        Set<Id> companiesThatBecameRegionallyManaged = new Set<Id>();
+        Map<Id,Account> newGloballyManagedMAs = new Map<Id,Account>();
+
         //create the scope
         List<Account> relevantMAs = new List<Account>(); 
         for (Account acc : newAccounts) {
-            if (acc.recordTypeId == MARecordTypeId && acc.ParentId != null && acc.Company__c != null && acc.Region__c != null && //prerequisites
+            if (acc.recordTypeId == MARecordTypeId && acc.ParentId != null && acc.Company__c != null && acc.Region__c != null && !acc.Is_Globally_Managed__c && //prerequisites
             (oldAccounts == null || //new account
             acc.Parent_Regional_Company_Region__c == null || //parent that's not a regional company
+            (!acc.Is_Globally_Managed__c && oldAccounts.get(acc.Id).Is_Globally_Managed__c) || //global company stopped being globally managed
             (acc.Manual_Trigger__c == 'Aggregate Territory Accounts' && (oldAccounts.get(acc.Id).Manual_Trigger__c == null || acc.Manual_Trigger__c != oldAccounts.get(acc.Id).Manual_Trigger__c)) || //manual trigger
             (oldAccounts.get(acc.Id).Region__c == null || acc.Region__c != oldAccounts.get(acc.Id).Region__c))) { //region change 
                 System.debug('Account_RegionalCompanyService building scope found match');
                 relevantMAs.add(acc);
                 globalCompanysIds.add(acc.Company__c);
             }
+            else if (acc.recordTypeId == companyRecordTypeId && oldAccounts != null && !acc.Is_Globally_Managed__c && oldAccounts.get(acc.Id).Is_Globally_Managed__c && acc.Account_Territory__c != 'Regional') { //global company that became regionally managed
+                companiesThatBecameRegionallyManaged.add(acc.Id);
+            }
+            else if (acc.recordTypeId == MARecordTypeId && oldAccounts == null && acc.ParentId != null && acc.Company__c != null && acc.Is_Globally_Managed__c) { //new globally managed account
+                newGloballyManagedMAs.put(acc.Id, acc);
+            }
         }
+        //for all companies that were globally managed and became regionally managed
+        if (!companiesThatBecameRegionallyManaged.isEmpty()) recalcParentAccountOnChildMAs(companiesThatBecameRegionallyManaged);
+        //logic to check if the parent is Named Account and mark is_named_on_creation for monday account
+        if (!newGloballyManagedMAs.isEmpty()) markOnCreationStamps(newGloballyManagedMAs);
+        //the main logic- running on MAs and finding/creating their parent
         if (relevantMAs.isEmpty()) return;
         
         //from the entire scope, find which MAs already has a regional company in the hirarchy and link those first to the existing regional companies
@@ -120,7 +135,7 @@ public without sharing class Account_RegionalCompanyService {
         if (regionalCompaniesByGlobalCompanyId.keySet().isEmpty()) return;
         
         //check if any of the leads under the global company is on the same region and if so mark the new regional company as their Parent Company
-        List<Lead> relatedLeads = new List<Lead>([SELECT Id, Region__c, Related_Company__c, Parent_Company__c FROM Lead WHERE Status != 'Unqualified' AND Parent_Company__c = null AND Related_Company__c IN: regionalCompaniesByGlobalCompanyId.keySet()]);
+        List<Lead> relatedLeads = new List<Lead>([SELECT Id, Region__c, Related_Company__c, Parent_Company__c FROM Lead WHERE Status != 'Unqualified' AND Related_Company__c IN: regionalCompaniesByGlobalCompanyId.keySet()]);
         if (!relatedLeads.isEmpty()) {
             for (Lead lead : relatedLeads) {
                 for (Account regCompany : regionalCompaniesByGlobalCompanyId.get(lead.Related_Company__c)) {
@@ -137,7 +152,7 @@ public without sharing class Account_RegionalCompanyService {
         }
         
         //check if any of the opportunities under the global company is on the same region and if so mark the new regional company as their Parent Company
-        List<Opportunity> relatedOpps = new List<Opportunity>([SELECT Id, Account_Region__c, Company__c, Parent_Company__c FROM Opportunity WHERE Parent_Company__c = null AND Company__c IN: regionalCompaniesByGlobalCompanyId.keySet()]);
+        List<Opportunity> relatedOpps = new List<Opportunity>([SELECT Id, Account_Region__c, Company__c, Parent_Company__c FROM Opportunity WHERE Company__c IN: regionalCompaniesByGlobalCompanyId.keySet()]);
         if (!relatedOpps.isEmpty()){
             for (Opportunity opp : relatedOpps) {
                 for (Account regCompany : regionalCompaniesByGlobalCompanyId.get(opp.Company__c)) {
@@ -160,7 +175,7 @@ public without sharing class Account_RegionalCompanyService {
         List<Lead> inputLeads = new List<Lead>(); 
         Set<Id> companyIDs = new Set<Id>();
         for (Lead lead : newLeads) {
-            if (lead.Related_Company__c != null && lead.Region__c != null && //prerequisites
+            if (lead.Related_Company__c != null && //prerequisites
             (oldLeads == null || //new lead 
             (oldLeads.get(lead.Id).Region__c == null || lead.Region__c != oldLeads.get(lead.Id).Region__c) || //region change 
             (lead.Manual_Trigger__c == 'Match Parent' && (oldLeads.get(lead.Id).Manual_Trigger__c == null || lead.Manual_Trigger__c != oldLeads.get(lead.Id).Manual_Trigger__c)) || //manual trigger
@@ -174,16 +189,22 @@ public without sharing class Account_RegionalCompanyService {
         }
         if (inputLeads.isEmpty()) return;
         Map<Id,List<Account>> companiesWithChildRegionalCompanies = getMapCompanyToRegionals(companyIDs);
+        Map<Id,Account> leadsWithRelatedCompanyDetails = new Map<Id,Account>([SELECT Id, Named_Account__c FROM Account WHERE Id IN: companyIDs]);
 
-        //find the matching regional company for each lead 
+        //find the matching regional company for each lead, if not found- put the global company as parent 
         for (Lead lead : inputLeads) {
             if (companiesWithChildRegionalCompanies.containsKey(lead.Related_Company__c)) { //the global company has regional companies
                 for(Account regAcc : companiesWithChildRegionalCompanies.get(lead.Related_Company__c)) { //search the Lead's region in the regional companies
-                    if (regAcc.Region__c == lead.Region__c) {
+                    if (lead.Region__c != null && regAcc.Region__c == lead.Region__c) {
                         lead.Parent_Company__c = regAcc.Id;
                         if ((oldLeads == null || lead.CreatedDate.addHours(24) >= Datetime.now()) && regAcc.Named_Account__c) lead.Named_Account_on_Creation__c = true;
                     }
                 }
+            }
+            if (lead.Parent_Company__c == null) {
+                lead.Parent_Company__c = lead.Related_Company__c;
+                Boolean isRelatedCompanyNamed = leadsWithRelatedCompanyDetails.get(lead.Related_Company__c).Named_Account__c;
+                if ((oldLeads == null || lead.CreatedDate.addHours(24) >= Datetime.now()) && isRelatedCompanyNamed) lead.Named_Account_on_Creation__c = true;
             }
         }
     }
@@ -194,9 +215,10 @@ public without sharing class Account_RegionalCompanyService {
         List<Opportunity> inputOpps = new List<Opportunity>(); 
         Set<Id> companyIDs = new Set<Id>();
         for (Opportunity opp : newOpps) {
-            if (opp.Company__c != null && opp.Account_Region__c != null && //prerequisites
+            if (opp.Company__c != null && //prerequisites
             (oldOpps == null || //new opp
-            (oldOpps.get(opp.Id).Account_Region__c == null || opp.Account_Region__c != oldOpps.get(opp.Id).Account_Region__c) || //region change 
+            (opp.Parent_Company__c == null && oldOpps.get(opp.Id).Parent_Company__c != null) || //parent removal, recalculate
+            (opp.Account_Region__c != null && (oldOpps.get(opp.Id).Account_Region__c == null || opp.Account_Region__c != oldOpps.get(opp.Id).Account_Region__c)) || //region change 
             (opp.Manual_Trigger__c == 'Match Parent' && (oldOpps.get(opp.Id).Manual_Trigger__c == null || opp.Manual_Trigger__c != oldOpps.get(opp.Id).Manual_Trigger__c)) || //manual trigger
             (oldOpps.get(opp.Id).Company__c == null || opp.Company__c != oldOpps.get(opp.Id).Company__c))) { //company change 
                 inputOpps.add(opp);
@@ -207,16 +229,22 @@ public without sharing class Account_RegionalCompanyService {
         if (inputOpps.isEmpty()) return;
 
         Map<Id,List<Account>> companiesWithChildRegionalCompanies = getMapCompanyToRegionals(companyIDs);
+        Map<Id,Account> oppsWithRelatedCompanyDetails = new Map<Id,Account>([SELECT Id, Named_Account__c FROM Account WHERE Id IN: companyIDs]);
 
-        //find the matching regional company for each opp 
+        //find the matching regional company for each opp, if not found- put the global company as parent
         for (Opportunity opp : inputOpps) {
             if (companiesWithChildRegionalCompanies.containsKey(opp.Company__c)) { //the global company has regional companies
                 for(Account regAcc : companiesWithChildRegionalCompanies.get(opp.Company__c)) { //search the Opportunity's region in the regional companies
-                    if (regAcc.Region__c == opp.Account_Region__c) {
+                    if (opp.Account_Region__c != null && regAcc.Region__c == opp.Account_Region__c) {
                         opp.Parent_Company__c = regAcc.Id;
                         if ((oldOpps == null || opp.CreatedDate.addHours(24) >= Datetime.now()) && regAcc.Named_Account__c) opp.Named_Account_on_Creation__c = true;
                     }
                 }
+            }
+            if (opp.Parent_Company__c == null) {
+                opp.Parent_Company__c = opp.Company__c;
+                Boolean isRelatedCompanyNamed = oppsWithRelatedCompanyDetails.get(opp.Company__c).Named_Account__c;
+                if ((oldOpps == null || opp.CreatedDate.addHours(24) >= Datetime.now()) && isRelatedCompanyNamed) opp.Named_Account_on_Creation__c = true;
             }
         }
     }
@@ -234,5 +262,37 @@ public without sharing class Account_RegionalCompanyService {
             }   
         }
         return companiesWithChildRegionalCompanies;
+    }
+
+    public static void recalcParentAccountOnChildMAs(Set<Id> companyIDs) {
+        List<Account> childMAs = new List<Account>([SELECT Id FROM Account WHERE recordTypeId =: MARecordTypeId AND ParentId IN: companyIDs]);
+        if (childMAs.isEmpty()) return;
+        for (Account ma : childMAs) {
+            ma.Manual_Trigger__c = 'Aggregate Territory Accounts';
+        }
+        try {
+            update childMAs;
+        } catch (Exception e) {
+            System.debug('Account_RegionalCompanyService failed to update recalcParentAccountOnChildMAs: ' + e.getMessage());
+        }
+    }
+
+    public static void markOnCreationStamps(Map<Id,Account> MAs) {
+        List<Account> updatedMAs = new List<Account>();
+        Set<Id> companyIds = new Set<Id>();
+        for (Account acc : MAs.values()) {
+            companyIds.add(acc.Company__c);
+        }
+        Map<Id,Account> companiesWithCompanyDetails = new Map<Id,Account>([SELECT Id, Named_Account__c FROM Account WHERE Id IN: companyIDs]);
+        for (Account acc : MAs.values()) {
+            if (companiesWithCompanyDetails.get(acc.Company__c).Named_Account__c) {
+                updatedMAs.add(new Account(Id = acc.Id, Manual_Trigger__c = '', Named_Account_on_Creation__c = true));
+            }
+        }
+        try {
+            update updatedMAs;
+        } catch (Exception e) {
+            System.debug('Account_RegionalCompanyService failed to update markOnCreationStamps: ' + e.getMessage());
+        }
     }
 }
