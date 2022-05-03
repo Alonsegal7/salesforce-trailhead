@@ -83,7 +83,33 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
     public static void updateOppSecCosellAllowed(List<Opportunity> opps){
         if(opps == null || opps.isEmpty()) return;
         allowSecondaryOppsUpdate = true;
-        Database.update(opps);
+        Database.update(opps, false);
+        String errorsFound = '', currErr = '';
+        Set<Id> successIds = new Set<Id>();
+        Database.SaveResult[] lsr = Database.update(opps, false); // specify false for second parameter (allOrNone) so that if a record fails, the remainder of the DML operation can still succeed 
+        for (Database.SaveResult sr : lsr) {
+            if (sr.isSuccess()) {
+                successIds.add(sr.getId());
+            } else {
+                for(Database.Error err : sr.getErrors()) {
+                    currErr = err.getStatusCode() + ': ' + err.getMessage();
+                    if(sr.getId() != null) currErr = 'Opp ID: ' + sr.getId() + ' ' + currErr;
+                    errorsFound += currErr + ', ';
+                    system.debug('Opportunity_CoSellSyncService error in opps update: ' + errorsFound);
+                }
+            }
+        }
+        if(!successIds.isEmpty()){
+            String emailBody = 'Synced Co-Sell Opps:';
+            list<opportunity> updatedOpps = [select Id,Name from Opportunity where Id in: successIds];
+            for(Opportunity opp: updatedOpps){
+                emailBody += '<br/><br/><a href="https://monday.lightning.force.com/lightning/r/Opportunity/'+opp.Id+'/view">'+opp.Name+'</a>';
+            }
+            Utilities.sendEmail('Successfully synced co-sell opps!', emailBody, new List<String>{'kseniasm@monday.com'});
+        }
+        if(errorsFound != ''){
+            Utilities.sendEmail('Error in syncing co-sell opps', errorsFound, new List<String>{'kseniasm@monday.com'});
+        }
         allowSecondaryOppsUpdate = false;
     }
 
