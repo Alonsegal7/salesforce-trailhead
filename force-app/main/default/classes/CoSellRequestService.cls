@@ -63,6 +63,7 @@ public without sharing class CoSellRequestService {
 
         for(Co_Sell_Request__c coSellReq: newCoSellReqList){
             if(coSellReq.Status__c == 'Approved' && coSellReq.Status__c != oldCoSellReqMap.get(coSellReq.Id).Status__c){ 
+                coSellReq.Last_Sync_from_Main_to_Secondary__c = Datetime.now();
                 oppIds_set.add(coSellReq.Main_Opportunity__c);
                 if(coSellReq.Secondary_Opportunity__c == null){ //new 
                     newReqs_map.put(coSellReq.Main_Opportunity__c, coSellReq);

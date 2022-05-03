@@ -39,9 +39,9 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
     public Database.QueryLocator start(Database.BatchableContext BC){
         try {
             //select all main co-sell opps where last mondified is in the last week
-            String query = 'select Id, Main_Opportunity__c, Main_Opportunity__r.LastModifiedDate, Secondary_Opportunity__c, Secondary_Opportunity__r.LastModifiedDate, Secondary_Opportunity_Owner__c'; 
+            String query = 'select Id, Main_Opportunity__c, Main_Opportunity__r.LastModifiedDate, Secondary_Opportunity__c, Last_Sync_from_Main_to_Secondary__c, Secondary_Opportunity_Owner__c'; 
             query += ' from Co_Sell_Request__c';
-            query += ' where Status__c = \'Approved\' and Main_Opportunity__r.LastModifiedDate >= LAST_N_DAYS:7';
+            query += ' where Status__c = \'Approved\'';//and Main_Opportunity__r.LastModifiedDate >= LAST_N_DAYS:7';
             return Database.getQueryLocator(query);
         } catch(Exception e){
             Utilities.sendEmail('Error in Opportunity_CoSellSyncService start: ',e.getMessage()+ ' ' + e.getStackTraceString(), new list<string>{'kseniasm@monday.com'});   
@@ -51,14 +51,18 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
 
     public void execute(Database.BatchableContext BC, list<Co_Sell_Request__c> scope){
         try {
+            List<Co_Sell_Request__c> coSellReqsToUpdate = new List<Co_Sell_Request__c>();
             Map<Id,Id> oppsToSync_map = new Map<Id,Id>(); 
             for(Co_Sell_Request__c cosellReq: scope){
-                if(cosellReq.Main_Opportunity__r.LastModifiedDate > cosellReq.Secondary_Opportunity__r.LastModifiedDate){ // main co sell opp was updated since last sync to sec opp
+                if(cosellReq.Last_Sync_from_Main_to_Secondary__c == null || cosellReq.Main_Opportunity__r.LastModifiedDate > cosellReq.Last_Sync_from_Main_to_Secondary__c){ // main co sell opp was updated since last sync to sec opp
                     oppsToSync_map.put(cosellReq.Main_Opportunity__c, cosellReq.Secondary_Opportunity__c);
+                    coSellReqsToUpdate.add(new Co_Sell_Request__c(Id = cosellReq.Id, Last_Sync_from_Main_to_Secondary__c = Datetime.now()));
                 }
             }
-            if(!oppsToSync_map.isEmpty()) syncMainOppsToSec(oppsToSync_map);
+            if(oppsToSync_map.isEmpty()) return;
+            syncMainOppsToSec(oppsToSync_map);
             CoSellRequestService.updateSubscriptions(scope);
+            Database.update(coSellReqsToUpdate);
         } catch (Exception e) {
             Utilities.sendEmail('Error in Opportunity_CoSellSyncService execute: ',e.getMessage()+ ' ' + e.getStackTraceString(), new list<string>{'kseniasm@monday.com'});   
         }
@@ -92,10 +96,8 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
                 successIds.add(sr.getId());
             } else {
                 for(Database.Error err : sr.getErrors()) {
-                    currErr = err.getStatusCode() + ': ' + err.getMessage();
-                    if(sr.getId() != null) currErr = 'Opp ID: ' + sr.getId() + ' ' + currErr;
-                    errorsFound += currErr + ', ';
-                    system.debug('Opportunity_CoSellSyncService error in opps update: ' + errorsFound);
+                    currErr = 'Opp ID: ' + sr.getId() + ' ' + err.getStatusCode() + ': ' + err.getMessage();
+                    errorsFound += currErr + '<br/>';
                 }
             }
         }
