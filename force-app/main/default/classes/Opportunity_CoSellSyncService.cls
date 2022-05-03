@@ -41,7 +41,7 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
             //select all main co-sell opps where last mondified is in the last week
             String query = 'select Id, Main_Opportunity__c, Main_Opportunity__r.LastModifiedDate, Secondary_Opportunity__c, Last_Sync_from_Main_to_Secondary__c, Secondary_Opportunity_Owner__c'; 
             query += ' from Co_Sell_Request__c';
-            query += ' where Status__c = \'Approved\'';//and Main_Opportunity__r.LastModifiedDate >= LAST_N_DAYS:7';
+            query += ' where Status__c = \'Approved\' and Main_Opportunity__r.LastModifiedDate >= LAST_N_DAYS:7';
             return Database.getQueryLocator(query);
         } catch(Exception e){
             Utilities.sendEmail('Error in Opportunity_CoSellSyncService start: ',e.getMessage()+ ' ' + e.getStackTraceString(), new list<string>{'kseniasm@monday.com'});   
@@ -107,10 +107,10 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
             for(Opportunity opp: updatedOpps){
                 emailBody += '<br/><br/><a href="https://monday.lightning.force.com/lightning/r/Opportunity/'+opp.Id+'/view">'+opp.Name+'</a>';
             }
-            Utilities.sendEmail('Successfully synced co-sell opps!', emailBody, new List<String>{'kseniasm@monday.com'});
+            Utilities.sendEmail('Successfully synced co-sell opps (Opportunity_CoSellSyncService)', emailBody, new List<String>{'kseniasm@monday.com'});
         }
         if(errorsFound != ''){
-            Utilities.sendEmail('Error in syncing co-sell opps', errorsFound, new List<String>{'kseniasm@monday.com'});
+            Utilities.sendEmail('Error in syncing co-sell opps (Opportunity_CoSellSyncService)', errorsFound, new List<String>{'kseniasm@monday.com'});
         }
         allowSecondaryOppsUpdate = false;
     }
