@@ -80,14 +80,13 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
             secOppsToUpdate_list.add(secOpp);
         }
         if(!secOppsToUpdate_list.isEmpty()) {
-            updateOppSecCosellAllowed(secOppsToUpdate_list);
+            updateOppSecCosellAllowed(secOppsToUpdate_list, 'Sync Main to Sec Co-Sell');
         }
     }
 
-    public static void updateOppSecCosellAllowed(List<Opportunity> opps){
+    public static void updateOppSecCosellAllowed(List<Opportunity> opps, String emailTitle){
         if(opps == null || opps.isEmpty()) return;
         allowSecondaryOppsUpdate = true;
-        Database.update(opps, false);
         String errorsFound = '', currErr = '';
         Set<Id> successIds = new Set<Id>();
         Database.SaveResult[] lsr = Database.update(opps, false); // specify false for second parameter (allOrNone) so that if a record fails, the remainder of the DML operation can still succeed 
@@ -102,15 +101,15 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
             }
         }
         if(!successIds.isEmpty()){
-            String emailBody = 'Synced Co-Sell Opps:';
-            list<opportunity> updatedOpps = [select Id,Name from Opportunity where Id in: successIds];
+            String emailBody = '';
+            list<opportunity> updatedOpps = [select Id, Name from Opportunity where Id in: successIds];
             for(Opportunity opp: updatedOpps){
                 emailBody += '<br/><br/><a href="https://monday.lightning.force.com/lightning/r/Opportunity/'+opp.Id+'/view">'+opp.Name+'</a>';
             }
-            Utilities.sendEmail('Successfully synced co-sell opps (Opportunity_CoSellSyncService)', emailBody, new List<String>{'kseniasm@monday.com'});
+            Utilities.sendEmail('Success ' + emailTitle, emailBody, new List<String>{'kseniasm@monday.com'});
         }
         if(errorsFound != ''){
-            Utilities.sendEmail('Error in syncing co-sell opps (Opportunity_CoSellSyncService)', errorsFound, new List<String>{'kseniasm@monday.com'});
+            Utilities.sendEmail('Error ' + emailTitle, errorsFound, new List<String>{'kseniasm@monday.com'});
         }
         allowSecondaryOppsUpdate = false;
     }

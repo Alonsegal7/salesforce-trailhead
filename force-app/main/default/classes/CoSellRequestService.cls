@@ -81,7 +81,7 @@ public without sharing class CoSellRequestService {
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
         handleNew(newReqs_map, oppsWithCmtFields_map, oppsToUpdate);
         handleAssociate(associateReqs_lst, oppsWithCmtFields_map, oppsToUpdate);
-        Opportunity_CoSellSyncService.updateOppSecCosellAllowed(oppsToUpdate);
+        Opportunity_CoSellSyncService.updateOppSecCosellAllowed(oppsToUpdate, 'Update Co-Sell Opps Post Approval');
         //update claimed subs where claimed on opportunity equals main opp with secondary opp to be on claimed on opportunity (co sell)
         updateSubscriptions(newCoSellReqList);
     }
@@ -325,7 +325,7 @@ public without sharing class CoSellRequestService {
             for(Opportunity opp: oppsToUpdate){
                 opp.SyncedQuoteId = null;
             }
-            Opportunity_CoSellSyncService.updateOppSecCosellAllowed(oppsToUpdate);
+            Opportunity_CoSellSyncService.updateOppSecCosellAllowed(oppsToUpdate, 'Co-Sell Unsync Quote from Sec Opps Post Approval');
         }
     }
 
