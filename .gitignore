@@ -42,3 +42,5 @@ salto.config/
 quickstart-integrations/
 *.code-workspace
 .sf/
+force-app/main/default/classes/RHX_*
+force-app/main/default/triggers/RHX_*
