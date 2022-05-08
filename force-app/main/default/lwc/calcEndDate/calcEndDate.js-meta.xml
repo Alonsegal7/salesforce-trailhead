@@ -4,13 +4,17 @@
     <isExposed>true</isExposed>
     <masterLabel>Calc End Date</masterLabel>
     <targets>
-        <target>lightning__FlowScreen</target>
+        <target> lightning__RecordPage</target>
+        <target> lightning__AppPage</target>
+        <target> lightning__HomePage</target>
+        <target> lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="StartDateValue" type="date"/>
-            <property name="DurationValue" type="Integer"/>
-            <property name="EndDateValue" type="date"/>
+            <property name="StartDate" type="date"/>
+            <property name="Duration" type="Integer"/>
+            <property name="EndDate" type="date"/>
+            <property name="required" type="Boolean" description="Set as True is both Start Date and Duration should be mandatory"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
