@@ -2,13 +2,14 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
 
     //BEFORE INSERT
     if(Trigger.isBefore && Trigger.isInsert){
-        OpportunityHelper.beforeInsert(trigger.new,trigger.oldmap);
-        OpportunityHelper.updateOppType(trigger.new,trigger.oldmap);
+        Opportunity_StampsService.run(Trigger.new, Trigger.oldMap);
+        OpportunityHelper.beforeInsert(Trigger.new, Trigger.oldMap);
+        OpportunityHelper.updateOppType(Trigger.new, Trigger.oldMap);
         TargetsService targetServiceHelper = new TargetsService();
-        targetServiceHelper.TargetsServiceOnOpps(trigger.new,trigger.oldmap);
-        Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(trigger.new,trigger.oldmap);
-        Partners_SharingService.newPartnerOppsSharingValidation(trigger.new);
-        Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(trigger.new,trigger.oldmap);
+        targetServiceHelper.TargetsServiceOnOpps(Trigger.new, Trigger.oldMap);
+        Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(Trigger.new, Trigger.oldMap);
+        Partners_SharingService.newPartnerOppsSharingValidation(Trigger.new);
+        Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(Trigger.new, Trigger.oldMap);
     }
     
     //BEFORE UPDATE
@@ -16,22 +17,23 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         Opportunity_LockValidation lockedValidationService = new Opportunity_LockValidation();
         lockedValidationService.cosellLockValidation(Trigger.new, Trigger.oldMap);
         lockedValidationService.runValidation(Trigger.new, Trigger.oldMap);
+        Opportunity_StampsService.run(Trigger.new, Trigger.oldMap);
         Handover_ThresholdMapping.linkOpportunityToThresholdFromTrigger(Trigger.new, Trigger.oldMap);
-        OpportunityHelper.beforeUpdate(Trigger.new, Trigger.oldmap);
-        Opportunity_Calculate_ARR.Opportunity_Calculate_ARR(Trigger.new, Trigger.oldmap);
+        OpportunityHelper.beforeUpdate(Trigger.new, Trigger.oldMap);
+        Opportunity_Calculate_ARR.Opportunity_Calculate_ARR(Trigger.new, Trigger.oldMap);
         TargetsService targetServiceHelper = new TargetsService();
-        targetServiceHelper.TargetsServiceOnOpps(trigger.new,trigger.oldmap);
-        OpportunityHelper.updateOppType(trigger.new,trigger.oldmap);
-        Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(trigger.new,trigger.oldmap);
-        Partners_SharingService.createOpportunityShares_ManualTrigger(trigger.new);
-        Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(trigger.new,trigger.oldmap);
+        targetServiceHelper.TargetsServiceOnOpps(Trigger.new, Trigger.oldMap);
+        OpportunityHelper.updateOppType(Trigger.new, Trigger.oldMap);
+        Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(Trigger.new, Trigger.oldMap);
+        Partners_SharingService.createOpportunityShares_ManualTrigger(Trigger.new);
+        Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(Trigger.new, Trigger.oldMap);
     }
     
     //AFTER UPDATE
     if(Trigger.isAfter && Trigger.isUpdate){
-        OpportunityHelper.markQuotesSigned(Trigger.new,Trigger.oldMap);
-        OpportunityHelper.cloneOlisForCoSell(Trigger.new,Trigger.oldMap);
-        Partners_SharingService.createOpportunityShares(trigger.new, trigger.oldMap);
+        OpportunityHelper.markQuotesSigned(Trigger.new, Trigger.oldMap);
+        OpportunityHelper.cloneOlisForCoSell(Trigger.new, Trigger.oldMap);
+        Partners_SharingService.createOpportunityShares(Trigger.new, Trigger.oldMap);
         TargetsService targetServiceHelper = new TargetsService();
         targetServiceHelper.updateTargetOnClosedWonOppChange(Trigger.new, Trigger.oldMap);
         if(PartnerCommissionService.firstRunOpp){
@@ -43,7 +45,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
 
     //AFTER INSERT
     if(Trigger.isAfter && Trigger.isInsert){
-        Partners_SharingService.createOpportunityShares(trigger.new, trigger.oldMap);
+        Partners_SharingService.createOpportunityShares(Trigger.new, Trigger.oldMap);
         Opportunity_RenewalCreation.updateRenewalStatus(Trigger.new, Trigger.oldMap);
         Handover_ThresholdMapping.recalcHandoverThresholdFromAfterTrigger(Trigger.new);
     }
@@ -51,9 +53,9 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     //CALLOUT TO BB
     // old callouts to BB - will leave only delete to be fired from trigger 
     if(Trigger.isAfter){
-        if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
-        //if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);           // moved to BigBrain_CalloutService
-        //if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap); // moved to BigBrain_CalloutService
+        if (Trigger.isDelete) CalloutHandler.HandleCallout (Trigger.old,'Delete',null);
+        //if (trigger.isInsert) CalloutHandler.HandleCallout (Trigger.new,'Insert',null);           // moved to BigBrain_CalloutService
+        //if (trigger.IsUpdate) CalloutHandler.HandleCallout (Trigger.new,'Update',trigger.oldmap); // moved to BigBrain_CalloutService
     }
 
     // new callouts to BB - we update Need_Sync_to_BB__c checkbox to true (if it was false)
