@@ -52,22 +52,28 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
     public void execute(Database.BatchableContext BC, list<Co_Sell_Request__c> scope){
         try {
             Map<Id,Id> oppsToSync_map = new Map<Id,Id>(); 
-            Map<Id,Id> secOppToCoSellReq_map = new Map<Id,Id>(); 
+            Map<Id,Co_Sell_Request__c> secOppToCoSellReq_map = new Map<Id,Co_Sell_Request__c>(); 
             for(Co_Sell_Request__c cosellReq: scope){
                 oppsToSync_map.put(cosellReq.Main_Opportunity__c, cosellReq.Secondary_Opportunity__c);
-                secOppToCoSellReq_map.put(cosellReq.Secondary_Opportunity__c, cosellReq.Id);
+                secOppToCoSellReq_map.put(cosellReq.Secondary_Opportunity__c, cosellReq);
             }
             if(oppsToSync_map.isEmpty()) return;
             Set<Id> successIds = syncMainOppsToSec(oppsToSync_map);
             if(successIds.isEmpty()) return;
             list<Co_Sell_Request__c> coSellReqsToUpdate = new list<Co_Sell_Request__c>();
+            list<opportunity> oppsToUpdate = new list<opportunity>();
             for(Id secOppId: successIds){
                 coSellReqsToUpdate.add(new Co_Sell_Request__c(
-                    Id = secOppToCoSellReq_map.get(secOppId),
+                    Id = secOppToCoSellReq_map.get(secOppId).Id,
                     Last_Sync_from_Main_to_Secondary__c = Datetime.now()
+                ));
+                oppsToUpdate.add(new Opportunity(
+                    Id = secOppToCoSellReq_map.get(secOppId).Main_Opportunity__c,
+                    Need_Sync_Co_Sell__c = false
                 ));
             }
             Database.update(coSellReqsToUpdate);
+            Database.update(oppsToUpdate);
         } catch (Exception e) {
             Utilities.sendEmail('Error in Opportunity_CoSellSyncService execute: ',e.getMessage()+ ' ' + e.getStackTraceString(), new list<string>{'kseniasm@monday.com'});   
         }
