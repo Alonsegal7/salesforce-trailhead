@@ -5,20 +5,21 @@
             <lightning-layout pull-to-boundary="medium">
                 <lightning-layout-item flexibility="auto" padding="horizontal-medium">
                     <lightning-record-edit-form object-api-name="User">
-                        <label for="olduserfield">From User</label>
-                        <lightning-input-field id="olduserfield" field-name="ManagerId" value={fromUserId} variant="label-hidden" onchange={handleFromUserChange} ></lightning-input-field>    
+                        <label for="newuserfield">From User</label>
+                        <c-search-component id="customLookup1" obj-name="User" icon-name="standard:user" placeholder="Search" onlookup={handleLookupFromUser} display-fields = "Name, Full_Name__c" ></c-search-component> 
                     </lightning-record-edit-form>
                 </lightning-layout-item>
                 <lightning-layout-item flexibility="auto" padding="horizontal-medium">
                     <lightning-record-edit-form object-api-name="User">
-                        <label for="newuserid">To User</label>
-                        <lightning-input-field id="newuserid" field-name="ManagerId" value={toUserId} variant="label-hidden" onchange={handleToUserChange}></lightning-input-field>            
+                        <label for="newuserfield">To User</label>
+                        <c-search-component id="customLookup2" obj-name="User" icon-name="standard:user" placeholder="Search" onlookup={handleLookupToUser} display-fields = "Name, Full_Name__c" ></c-search-component>            
                     </lightning-record-edit-form>
                 </lightning-layout-item>
             </lightning-layout>
             <lightning-helptext content="Please note, when clicking Run Transfer we are going to update the following: Open Leads - Leads with status Recived, Attempting and Contacted; Accounts - By Owner/Partner; Open Opps - Opps with stage Qualified, Evaluation, Validation and Buying Process"></lightning-helptext>
             <template if:true={badInput}>
                 <div class="slds-var-m-vertical_small">
+
                     <span class="slds-text-color_destructive">{customError}</span>
                 </div>
             </template>
@@ -31,3 +32,4 @@
         <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
     </template>
 </template>
+

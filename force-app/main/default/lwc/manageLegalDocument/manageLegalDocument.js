@@ -114,14 +114,14 @@ checkIfLegalDocExist(){
     });
 }
 //Each clm doc url will have a different url and therefore a different buttons
-    InitSaasAgreement(event){
+    InitSaasAgreement(event){        
         this.closeAction();
         if (this.isSandbox) {
-        var thisUrl ="https://uatna11.springcm.com/atlas/Forms/UpdateFormDoc.aspx?aid=25283&FormUid=43589d9d-556d-ec11-b821-48df378a7098&oppId="+this.recordId+"&type=monday.com%20SaaS"
+        var thisUrl ="https://uatna11.springcm.com/atlas/doclauncher/eos/Monday SaaS Agreement?aid=25283&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
         window.open(thisUrl,'_blank');
         }
         else{
-        var thisUrl ="https://na11.springcm.com/atlas/Forms/UpdateFormDoc.aspx?aid=22364&FormUid=b4feae6a-e772-ec11-9c46-d89d6716196d&oppId="+this.recordId+"&type=monday.com%SaaS";
+        var thisUrl ="https://na11.springcm.com/atlas/doclauncher/eos/Monday SaaS Agreement?aid=22364&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
         window.open(thisUrl,'_blank');
         }
     }
@@ -129,11 +129,11 @@ checkIfLegalDocExist(){
     InitDPA(event){
         this.closeAction();
         if (this.isSandbox) {
-        var thisUrl ="https://uatna11.springcm.com/atlas/Forms/UpdateFormDoc.aspx?aid=25283&FormUid=43589d9d-556d-ec11-b821-48df378a7098&oppId="+this.recordId+"&type=DPA";
+        var thisUrl ="https://uatna11.springcm.com/atlas/doclauncher/eos/DPA?aid=25283&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
         window.open(thisUrl,'_blank');
         }
         else{
-        var thisUrl = "https://na11.springcm.com/atlas/Forms/UpdateFormDoc.aspx?aid=22364&FormUid=b4feae6a-e772-ec11-9c46-d89d6716196d&oppId="+this.recordId+"&type=DPA";
+        var thisUrl ="https://na11.springcm.com/atlas/doclauncher/eos/DPA?aid=22364&eos[0].Id="+this.recordId+"&eos[0].System=Salesforce&eos[0].Type=Opportunity&eos[0].Name="+this.oppName+"&eos[0].ScmPath=/Salesforce/Companies/"+this.oppCompanyName+"/Opportunities/";
         window.open(thisUrl,'_blank');
         }
     } 
@@ -141,11 +141,11 @@ checkIfLegalDocExist(){
     InitAddendum(event){
         this.closeAction();
         if (this.isSandbox) {
-            var thisUrl ="https://uatna11.springcm.com/atlas/Forms/UpdateFormDoc.aspx?aid=25283&FormUid=43589d9d-556d-ec11-b821-48df378a7098&oppId="+this.recordId+"&type=Addendum";
+            var thisUrl ="https://uatna11.springcm.com/atlas/Forms/UpdateFormDoc.aspx?aid=25283&FormUid=43589d9d-556d-ec11-b821-48df378a7098&oppId="+this.recordId;
             window.open(thisUrl,'_blank');
         }
         else{
-            var thisUrl ="https://na11.springcm.com/atlas/Forms/UpdateFormDoc.aspx?aid=22364&FormUid=b4feae6a-e772-ec11-9c46-d89d6716196d&oppId="+this.recordId+"&type=Addendum";
+            var thisUrl ="https://na11.springcm.com/atlas/Forms/UpdateFormDoc.aspx?aid=22364&FormUid=b4feae6a-e772-ec11-9c46-d89d6716196d&oppId="+this.recordId;
             window.open(thisUrl,'_blank');
         }
         {!Opportunity.Id}
