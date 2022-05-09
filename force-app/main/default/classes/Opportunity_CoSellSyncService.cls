@@ -63,9 +63,9 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
             Set<Id> successIds = syncMainOppsToSec(oppsToSync_map);
             if(successIds.isEmpty()) return;
             list<Co_Sell_Request__c> coSellReqsToUpdate = new list<Co_Sell_Request__c>();
-            for(Id mainOppId: successIds){
+            for(Id secOppId: successIds){
                 coSellReqsToUpdate.add(new Co_Sell_Request__c(
-                    Id = secOppToCoSellReq_map.get(mainOppId),
+                    Id = secOppToCoSellReq_map.get(secOppId),
                     Last_Sync_from_Main_to_Secondary__c = Datetime.now()
                 ));
             }
