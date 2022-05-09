@@ -15,7 +15,6 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     //BEFORE UPDATE
     if(Trigger.isBefore && Trigger.isUpdate){
         Opportunity_LockValidation lockedValidationService = new Opportunity_LockValidation();
-        lockedValidationService.cosellLockValidation(Trigger.new, Trigger.oldMap);
         lockedValidationService.runValidation(Trigger.new, Trigger.oldMap);
         Opportunity_StampsService.run(Trigger.new, Trigger.oldMap);
         Handover_ThresholdMapping.linkOpportunityToThresholdFromTrigger(Trigger.new, Trigger.oldMap);
@@ -27,6 +26,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(Trigger.new, Trigger.oldMap);
         Partners_SharingService.createOpportunityShares_ManualTrigger(Trigger.new);
         Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(Trigger.new, Trigger.oldMap);
+        if(!Opportunity_CoSellSyncService.checkIfSecondaryOppsUpdateAllowed()) lockedValidationService.cosellLockValidation(Trigger.new, Trigger.oldMap);
     }
     
     //AFTER UPDATE
