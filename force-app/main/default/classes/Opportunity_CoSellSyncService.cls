@@ -52,11 +52,11 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
     public void execute(Database.BatchableContext BC, list<Co_Sell_Request__c> scope){
         try {
             Map<Id,Id> oppsToSync_map = new Map<Id,Id>(); 
-            Map<Id,Id> mainOppToCoSellReq_map = new Map<Id,Id>(); 
+            Map<Id,Id> secOppToCoSellReq_map = new Map<Id,Id>(); 
             for(Co_Sell_Request__c cosellReq: scope){
                 if(cosellReq.Last_Sync_from_Main_to_Secondary__c == null || cosellReq.Main_Opportunity__r.LastModifiedDate > cosellReq.Last_Sync_from_Main_to_Secondary__c){ // main co sell opp was updated since last sync to sec opp
                     oppsToSync_map.put(cosellReq.Main_Opportunity__c, cosellReq.Secondary_Opportunity__c);
-                    mainOppToCoSellReq_map.put(cosellReq.Main_Opportunity__c, cosellReq.Id);
+                    secOppToCoSellReq_map.put(cosellReq.Secondary_Opportunity__c, cosellReq.Id);
                 }
             }
             if(oppsToSync_map.isEmpty()) return;
@@ -65,7 +65,7 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
             list<Co_Sell_Request__c> coSellReqsToUpdate = new list<Co_Sell_Request__c>();
             for(Id mainOppId: successIds){
                 coSellReqsToUpdate.add(new Co_Sell_Request__c(
-                    Id = mainOppToCoSellReq_map.get(mainOppId),
+                    Id = secOppToCoSellReq_map.get(mainOppId),
                     Last_Sync_from_Main_to_Secondary__c = Datetime.now()
                 ));
             }
