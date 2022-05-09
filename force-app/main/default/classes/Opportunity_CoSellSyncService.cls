@@ -51,24 +51,32 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
 
     public void execute(Database.BatchableContext BC, list<Co_Sell_Request__c> scope){
         try {
-            List<Co_Sell_Request__c> coSellReqsToUpdate = new List<Co_Sell_Request__c>();
             Map<Id,Id> oppsToSync_map = new Map<Id,Id>(); 
+            Map<Id,Id> mainOppToCoSellReq_map = new Map<Id,Id>(); 
             for(Co_Sell_Request__c cosellReq: scope){
                 if(cosellReq.Last_Sync_from_Main_to_Secondary__c == null || cosellReq.Main_Opportunity__r.LastModifiedDate > cosellReq.Last_Sync_from_Main_to_Secondary__c){ // main co sell opp was updated since last sync to sec opp
                     oppsToSync_map.put(cosellReq.Main_Opportunity__c, cosellReq.Secondary_Opportunity__c);
-                    coSellReqsToUpdate.add(new Co_Sell_Request__c(Id = cosellReq.Id, Last_Sync_from_Main_to_Secondary__c = Datetime.now()));
+                    mainOppToCoSellReq_map.put(cosellReq.Main_Opportunity__c, cosellReq.Id);
                 }
             }
             if(oppsToSync_map.isEmpty()) return;
-            syncMainOppsToSec(oppsToSync_map);
-            CoSellRequestService.updateSubscriptions(scope);
+            Set<Id> successIds = syncMainOppsToSec(oppsToSync_map);
+            if(successIds.isEmpty()) return;
+            list<Co_Sell_Request__c> coSellReqsToUpdate = new list<Co_Sell_Request__c>();
+            for(Id mainOppId: successIds){
+                coSellReqsToUpdate.add(new Co_Sell_Request__c(
+                    Id = mainOppToCoSellReq_map.get(mainOppId),
+                    Last_Sync_from_Main_to_Secondary__c = Datetime.now()
+                ));
+            }
             Database.update(coSellReqsToUpdate);
         } catch (Exception e) {
             Utilities.sendEmail('Error in Opportunity_CoSellSyncService execute: ',e.getMessage()+ ' ' + e.getStackTraceString(), new list<string>{'kseniasm@monday.com'});   
         }
     }
 
-    public static void syncMainOppsToSec(Map<Id,Id> oppsToSync_map){
+    public static Set<Id> syncMainOppsToSec(Map<Id,Id> oppsToSync_map){
+        Set<Id> res = new Set<Id>();
         Map<Id,Opportunity> mainOppsWithCmtFields_map = new Map<Id,Opportunity>(queryOppsCmtFields(oppsToSync_map.keySet()));
         List<Opportunity> secOppsToUpdate_list = new List<Opportunity>();
         for(Id mainOppId: oppsToSync_map.keySet()){
@@ -80,16 +88,18 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
             secOppsToUpdate_list.add(secOpp);
         }
         if(!secOppsToUpdate_list.isEmpty()) {
-            updateOppSecCosellAllowed(secOppsToUpdate_list, 'Sync Main to Sec Co-Sell');
+            res = updateOppSecCosellAllowed(secOppsToUpdate_list, 'Sync Main to Sec Co-Sell');
         }
+        return res;
     }
 
-    public static void updateOppSecCosellAllowed(List<Opportunity> opps, String emailTitle){
-        if(opps == null || opps.isEmpty()) return;
-        allowSecondaryOppsUpdate = true;
+    public static Set<Id> updateOppSecCosellAllowed(List<Opportunity> opps, String emailTitle){
         String errorsFound = '', currErr = '';
         Set<Id> successIds = new Set<Id>();
-        Database.SaveResult[] lsr = Database.update(opps, false); // specify false for second parameter (allOrNone) so that if a record fails, the remainder of the DML operation can still succeed 
+        if(opps == null || opps.isEmpty()) return successIds;
+        allowSecondaryOppsUpdate = true;
+        Database.SaveResult[] lsr = Database.update(opps, false);
+        allowSecondaryOppsUpdate = false;
         for (Database.SaveResult sr : lsr) {
             if (sr.isSuccess()) {
                 successIds.add(sr.getId());
@@ -111,7 +121,7 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
         if(errorsFound != ''){
             Utilities.sendEmail('Error ' + emailTitle, errorsFound, new List<String>{'kseniasm@monday.com'});
         }
-        allowSecondaryOppsUpdate = false;
+        return successIds;
     }
 
     public static void syncCoSellOppsClosedWon(List<Opportunity> newOpps, Map<Id,Opportunity> oldOppsMap){
