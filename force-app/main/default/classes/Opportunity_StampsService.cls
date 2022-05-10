@@ -43,7 +43,7 @@ public without sharing class Opportunity_StampsService {
             User currOwner = usersMap.get(opp.OwnerId);
             if (currOwner != null) {
                 opp.Channel_Partner__c = currOwner.AccountId;
-                if(currOwner.AccountId != null){ //Owner is CPM
+                if(currOwner.Profile.Name == 'Channel Managers'){ //Owner is CPM
                     opp.CPM_Manager2__c = currOwner.ManagerId;
                     opp.Owner_s_Manager__c = currOwner.Id;
                     opp.Owner_s_Manager_Team__c = currOwner.Team__c;
