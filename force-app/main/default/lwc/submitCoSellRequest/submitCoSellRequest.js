@@ -43,6 +43,7 @@ export default class SubmitCoSellRequest extends LightningElement {
     associateScreen = false;
     submittedScreen = false;
     displayPsFields = false;
+    psTypeDetailsRequired = true;
     allowSwitchMainSec = false;
     currentOppMustBeMain = false;
     whatYouWishValue = '';
@@ -223,6 +224,9 @@ export default class SubmitCoSellRequest extends LightningElement {
         if(fieldName == 'Reason__c'){ 
             if(fieldVal == 'Professional Services Sales Expertise') this.displayPsFields = true;
             else this.displayPsFields = false;
+        } else if(fieldName == 'PS_Type__c'){
+            if(fieldVal == 'Onboarding') this.psTypeDetailsRequired = false;
+            else this.psTypeDetailsRequired = true;
         }
     }
 
@@ -396,9 +400,10 @@ export default class SubmitCoSellRequest extends LightningElement {
 
         let cosellReqFieldValid = true;
         // note: checkValidity is not avaiable for lightning-input-field!!!
+        let ignorePsDetails = false;
         this.template.querySelectorAll('lightning-input-field').forEach(element => {
             if (!element.value) {
-                cosellReqFieldValid = false;
+                if(element.fieldName != 'PS_Type_Details__c' || this.psTypeDetailsRequired) cosellReqFieldValid = false;
             }
             element.reportValidity();
         });
