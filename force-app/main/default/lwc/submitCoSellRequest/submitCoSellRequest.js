@@ -35,7 +35,6 @@ export default class SubmitCoSellRequest extends LightningElement {
     beforeSaveMsg;
     partnerCompanyId;
     oppOwnerId;
-    cosellLeader;
     isLoading = true;
     mainScreen = false;
     chooseLeaderScreen = false;
@@ -46,6 +45,7 @@ export default class SubmitCoSellRequest extends LightningElement {
     psTypeDetailsRequired = true;
     allowSwitchMainSec = false;
     currentOppMustBeMain = false;
+    showBackBtn = false;
     whatYouWishValue = '';
     cosellRequest = {};
     associateOppsOptions = [];
@@ -57,12 +57,13 @@ export default class SubmitCoSellRequest extends LightningElement {
     oppsSyncedQts_map = {};
     coSellLeaderValue = '';
     arrIsUnder10k = false;
+    modalHeader = '';
 
     // used to choose co-sell leader when Co_Sell_Leader__c is blank on monday account
     get coSellLeaderOptions() {
         return [
-            { label: 'Sales joining to Partners co sell', value: 'Partners' },
-            { label: 'Partner joining to Sales co sell', value: 'Sales' },
+            { label: 'Sales joining to Partners', value: 'Partners' },
+            { label: 'Partners joining to Sales', value: 'Sales' },
         ];
     }
 
@@ -91,7 +92,7 @@ export default class SubmitCoSellRequest extends LightningElement {
                                 OPP_RT_DEV_NAME, OPP_OWNER_ACCOUNTID, SYNCED_QUOTE, SYNCED_QUOTE_STATUS, SYNCED_QUOTE_PUBLISH, 
                                 SYNCED_QUOTE_DATE,COSELL_LEADER, OPP_ARR, ACC_ARR, OPP_OWNERS_MANAGER_TEAM, OPP_OWNERS_OFFICE, OPP_OWNER_SEGMENT] })
     wiredRecord({ error, data }) {
-        if (error) { this.error = error; }
+        if (error) { this.modalHeader = 'Submit Co-Sell Request'; this.error = error; }
         if (data) {
             this.oppStage = getFieldValue(data, OPP_STAGE);
             this.accountId = getFieldValue(data, OPP_ACCOUNTID);
@@ -100,7 +101,7 @@ export default class SubmitCoSellRequest extends LightningElement {
             this.currentOppRT = getFieldValue(data, OPP_RT_DEV_NAME);
             this.partnerCompanyId = getFieldValue(data, OPP_OWNER_ACCOUNTID);
             this.oppOwnerId = getFieldValue(data, OPP_OWNER_ID);
-            this.cosellLeader = getFieldValue(data, COSELL_LEADER);
+            let cosellLeader = getFieldValue(data, COSELL_LEADER);
             let syncedQuoteId = getFieldValue(data, SYNCED_QUOTE);
             var oppArr = getFieldValue(data, OPP_ARR);
             var accArr = getFieldValue(data, ACC_ARR);
@@ -126,12 +127,15 @@ export default class SubmitCoSellRequest extends LightningElement {
                     console.log('wiredRecord qt: ' + JSON.stringify(qt));
                     console.log('wiredRecord allowSwitchMainSec: ' + this.allowSwitchMainSec);
                 }
-                if(this.cosellLeader == null || this.cosellLeader == undefined){
+                if(cosellLeader == null || cosellLeader == undefined){
+                    this.modalHeader = 'Choose the Co-Sell Leader for this Monday Account';
                     this.chooseLeaderScreen = true;
                 } else {
+                    this.modalHeader = 'Submit Co-Sell Request';
                     this.mainScreen = true;
                 }
             } else {
+                this.modalHeader = 'Submit Co-Sell Request';
                 var err10K = 'Submit Co-Sell Request is available only for accounts that reached 10K ARR (including current opp ARR).';
                 err10K += ' This account ARR is ' + accArr + ' and this opportunity ARR is ' + oppArr + ' so total ARR is ' + totalArr;
                 this.customError = err10K;
@@ -141,26 +145,40 @@ export default class SubmitCoSellRequest extends LightningElement {
         this.isLoading = false;
     }
 
-    handleNextLeaderScreen(event){
+    handleBackToCoSellLeader(event){
+        this.mainScreen = false;
+        this.modalHeader = 'Choose the Co-Sell Leader for this Monday Account';
+        this.chooseLeaderScreen = true;
+    }
+
+    handleCoSellLeaderSelection(event){
         this.coSellLeaderValue = event.detail.value;
-        const fields = {};
-        fields['Id'] = this.accountId;
-        fields['Co_Sell_Leader__c'] = this.coSellLeaderValue;
-        console.log('fields: ' + JSON.stringify(fields));
-        const recordInput = { fields };
-        console.log('recordInput: ' + JSON.stringify(recordInput));
-        this.isLoading = true;
-        updateRecord(recordInput)
-        .then(() => {
-            this.isLoading = false;
-            this.chooseLeaderScreen = false;
-            this.mainScreen = true;
-        })
-        .catch(error => {
-            this.isLoading = false;
-            this.error = error;
-            console.log('error: ' + JSON.stringify(this.error));
-        });
+    }
+
+    handleNextLeaderScreen(event){
+        if(this.coSellLeaderValue == '') this.customError = 'Please choose an option for the co-sell leader.';
+        else {
+            this.customError = '';
+            const fields = {};
+            fields['Id'] = this.accountId;
+            fields['Co_Sell_Leader__c'] = this.coSellLeaderValue;
+            console.log('fields: ' + JSON.stringify(fields));
+            const recordInput = { fields };
+            console.log('recordInput: ' + JSON.stringify(recordInput));
+            this.isLoading = true;
+            updateRecord(recordInput)
+            .then(() => {
+                this.isLoading = false;
+                this.chooseLeaderScreen = false;
+                this.modalHeader = 'Submit Co-Sell Request';
+                this.mainScreen = true;
+            })
+            .catch(error => {
+                this.isLoading = false;
+                this.error = error;
+                console.log('error: ' + JSON.stringify(this.error));
+            });
+        }
     }
 
     handleSave(event){
