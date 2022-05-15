@@ -93,26 +93,36 @@ public without sharing class CoSellRequestService {
         for(Co_Sell_Request__c coSellReq: newCoSellReqList){
             mainOppCoSellReq_map.put(coSellReq.Main_Opportunity__c, coSellReq);
             mainOppsIds.add(coSellReq.Main_Opportunity__c);
-            secOppsIds.add(coSellReq.Secondary_Opportunity__c);
+            if(coSellReq.Secondary_Opportunity__c != null) secOppsIds.add(coSellReq.Secondary_Opportunity__c);
         }
         Set<Id> allOppsIds = new Set<Id>(mainOppsIds);
         allOppsIds.addAll(secOppsIds);
-        List<Subscription__c> subs = [select Id, Is_Claimed__c, Claimed_On_Opportunity__c, Claimed_On_Opportunity_Co_Sell__c from Subscription__c where (Claimed_On_Opportunity__c in: allOppsIds or Claimed_On_Opportunity_Co_Sell__c in: allOppsIds) and Is_Claimed__c = true];
-        if(subs.isEmpty()) return;
+        List<Subscription__c> claimedSubs = [select Id, Is_Claimed__c, Claimed_On_Opportunity__c, Claimed_On_Opportunity_Co_Sell__c 
+                                                from Subscription__c 
+                                                where (Claimed_On_Opportunity__c in: allOppsIds or Claimed_On_Opportunity_Co_Sell__c in: allOppsIds) 
+                                                and Is_Claimed__c = true];
+        if(claimedSubs.isEmpty()) return;
         List<Subscription__c> subsToUpdate = new List<Subscription__c>();
-        for(Subscription__c sub: subs){
-            // cc claim on main opp should be assigned to sec opp by Claimed_On_Opportunity_Co_Sell__c field
-            if(mainOppCoSellReq_map.containsKey(sub.Claimed_On_Opportunity__c) && sub.Claimed_On_Opportunity_Co_Sell__c != mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity__c){
-                sub.Claimed_On_Opportunity_Co_Sell__c = mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity__c;
-                sub.Claimed_By_Co_Sell__c = mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity_Owner__c;
-                sub.Claim_Date_Co_Sell__c = Datetime.now();
-                subsToUpdate.add(sub);
-            }
-            // cc claim on sec opp should be reset to unclaimed and unlinked from opps
-            if(secOppsIds.contains(sub.Claimed_On_Opportunity__c)){
+        for(Subscription__c sub: claimedSubs){
+            if(sub.Claimed_On_Opportunity__c != null && mainOppCoSellReq_map.containsKey(sub.Claimed_On_Opportunity__c)){ //Claimed_On_Opportunity__c matches main opp
+                if(sub.Claimed_On_Opportunity_Co_Sell__c == null //claimed on co-sell is empty
+                    || sub.Claimed_On_Opportunity_Co_Sell__c != mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity__c){ //claimed on co-sell does not match sec opp
+                        //put sec opp in claimed on opp co-sell on sub
+                        sub.Claimed_On_Opportunity_Co_Sell__c = mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity__c;
+                        sub.Claimed_By_Co_Sell__c = mainOppCoSellReq_map.get(sub.Claimed_On_Opportunity__c).Secondary_Opportunity_Owner__c;
+                        sub.Claim_Date_Co_Sell__c = Datetime.now();
+                        subsToUpdate.add(sub);
+                } else {
+                    continue; //main & sec opps are referenced correctly on sub -> continue to next sub
+                }           
+            } else { // main opp is not referenced or referenced incorrectly on sub -> unclaim sub
                 sub.Is_Claimed__c = false;
                 sub.Claimed_On_Opportunity__c = null;
                 sub.Claimed_On_Opportunity_Co_Sell__c = null;
+                sub.Claimed_By_Co_Sell__c = null;
+                sub.Claim_Date_Co_Sell__c = null;
+                sub.Claimed_By_Main__c = null;
+                sub.Claim_Date_Main__c = null;
                 subsToUpdate.add(sub);
             }
         }
