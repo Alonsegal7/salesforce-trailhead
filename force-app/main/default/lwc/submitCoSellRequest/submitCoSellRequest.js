@@ -111,7 +111,7 @@ export default class SubmitCoSellRequest extends LightningElement {
             var ownersManagerTeam = getFieldValue(data, OPP_OWNERS_MANAGER_TEAM); //for partners
             var ownersOffice = getFieldValue(data, OPP_OWNERS_OFFICE); //for sales
             var ownerSegment = getFieldValue(data, OPP_OWNER_SEGMENT); //for sales
-            if((this.currentOppRT == 'Partner_Opportunity' && ownersManagerTeam == 'CP - ANZ Team') || (this.currentOppRT == 'Internal_Opportunity' && ownersOffice == 'Sydney Office')) isAnzTeam = true;
+            if(ownersManagerTeam == 'CP - ANZ Team' || ownersOffice == 'Sydney Office') isAnzTeam = true;
             else if(this.currentOppRT == 'Internal_Opportunity' && ownerSegment == 'SMB') isSmb = true;
             if(isSmb || isAnzTeam || totalArr >= 10000){
                 this.customError = '';
