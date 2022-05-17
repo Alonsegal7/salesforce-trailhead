@@ -113,7 +113,7 @@ export default class SubmitCoSellRequest extends LightningElement {
             var ownerSegment = getFieldValue(data, OPP_OWNER_SEGMENT); //for sales
             if(ownersManagerTeam == 'CP - ANZ Team' || ownersOffice == 'Sydney Office') isAnzTeam = true;
             else if(this.currentOppRT == 'Internal_Opportunity' && ownerSegment == 'SMB') isSmb = true;
-            if(isSmb || isAnzTeam || totalArr >= 10000){
+            //if(isSmb || isAnzTeam || totalArr >= 10000){
                 this.customError = '';
                 this.arrIsUnder10k = false;
                 if(syncedQuoteId){
@@ -134,13 +134,13 @@ export default class SubmitCoSellRequest extends LightningElement {
                     this.modalHeader = 'Submit Co-Sell Request';
                     this.mainScreen = true;
                 }
-            } else {
+            /*} else {
                 this.modalHeader = 'Submit Co-Sell Request';
                 var err10K = 'Submit Co-Sell Request is available only for accounts that reached 10K ARR (including current opp ARR).';
                 err10K += ' This account ARR is ' + accArr + ' and this opportunity ARR is ' + oppArr + ' so total ARR is ' + totalArr;
                 this.customError = err10K;
                 this.arrIsUnder10k = true;
-            }
+            }*/
         }
         this.isLoading = false;
     }
