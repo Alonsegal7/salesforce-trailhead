@@ -17,7 +17,6 @@ public without sharing class Account_RegionalCompanyService {
             if (acc.recordTypeId == MARecordTypeId && acc.ParentId != null && acc.Company__c != null && acc.Region__c != null && !acc.Is_Globally_Managed__c && //prerequisites
             (oldAccounts == null || //new account
             acc.Parent_Regional_Company_Region__c == null || //parent that's not a regional company
-            (!acc.Is_Globally_Managed__c && oldAccounts.get(acc.Id).Is_Globally_Managed__c) || //global company stopped being globally managed
             (acc.Manual_Trigger__c == 'Aggregate Territory Accounts' && (oldAccounts.get(acc.Id).Manual_Trigger__c == null || acc.Manual_Trigger__c != oldAccounts.get(acc.Id).Manual_Trigger__c)) || //manual trigger
             (oldAccounts.get(acc.Id).Region__c == null || acc.Region__c != oldAccounts.get(acc.Id).Region__c))) { //region change 
                 System.debug('Account_RegionalCompanyService building scope found match');
@@ -44,15 +43,19 @@ public without sharing class Account_RegionalCompanyService {
         
         //create regional companies for the rest
         List<Account> regionalCompaniesToCreate = new List<Account>();
+        Set<String> uniqueRegCompSet = new Set<String>();
         for (Account acc : remainingMAs) {
-            regionalCompaniesToCreate.add(new Account(
-                Name = acc.Parent.Name + ' - ' + acc.Region__c,
-                Account_Territory__c = 'Regional',
-                Region__c = acc.Region__c,
-                OwnerId = accountsPoolUserId,
-                ParentId = acc.Company__c,
-                Company__c = acc.Company__c,
-                RecordTypeId = companyRecordTypeId));
+            if (!uniqueRegCompSet.contains(acc.ParentId+acc.Region__c)) {
+                regionalCompaniesToCreate.add(new Account(
+                    Name = acc.Parent.Name + ' - ' + acc.Region__c,
+                    Account_Territory__c = 'Regional',
+                    Region__c = acc.Region__c,
+                    OwnerId = accountsPoolUserId,
+                    ParentId = acc.Company__c,
+                    Company__c = acc.Company__c,
+                    RecordTypeId = companyRecordTypeId));
+                uniqueRegCompSet.add(acc.ParentId+acc.Region__c);
+            }
         }
         try {
             insert regionalCompaniesToCreate;
