@@ -19,5 +19,6 @@ public with sharing class Ctrl_DashboardPageApp_TEST {
         Ctrl_DashboardPageApp.getTargets(null, null);
         Ctrl_DashboardPageApp.getMapp(null);
         Ctrl_DashboardPageApp.initSpiff(null);
+        Ctrl_DashboardPageApp.initSpiffVsLockedARR(null);
     }
 }

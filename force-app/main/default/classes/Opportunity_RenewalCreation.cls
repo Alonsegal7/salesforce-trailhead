@@ -101,6 +101,7 @@ public without sharing class Opportunity_RenewalCreation {
             System.debug('Message: ' + e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
+
         return renewalOppsToCreate;
     }
     
