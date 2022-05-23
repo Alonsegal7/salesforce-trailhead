@@ -139,4 +139,34 @@ public without sharing class Utilities {
             Database.update(sobjectsToUpdate);
         }
     }
+
+    public static Id MARecordTypeId {  
+        get {  
+            if (MARecordTypeId == null) {  
+                MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();  
+            }
+            return MARecordTypeId;  
+        }  
+        set;  
+    }
+
+    public static Id CompanyRecordTypeId {  
+        get {  
+            if (CompanyRecordTypeId == null) {  
+                CompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();  
+            }
+            return CompanyRecordTypeId;  
+        }  
+        set;  
+    }
+
+    public static Id AccountsPoolUserId {  
+        get {  
+            if (AccountsPoolUserId == null) {  
+                AccountsPoolUserId = '0053X00000Bo8ZZQAZ';  
+            }
+            return AccountsPoolUserId;  
+        }  
+        set;  
+    }
 }
