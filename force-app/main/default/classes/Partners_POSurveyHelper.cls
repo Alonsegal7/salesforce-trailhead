@@ -48,7 +48,7 @@ public without sharing class Partners_POSurveyHelper {
                                             from Account 
                                             where Id IN: accountIds];
         Opportunity currOpp, prevOpp, prev2Opp;
-        List<Account> accountsToUpdate = new List<Account>();
+        List<Survey__c> surveysToCreate = new List<Survey__c>();
         for(Account acc: accountsToExamine){
             currOpp = null;
             prevOpp = null;
@@ -56,7 +56,7 @@ public without sharing class Partners_POSurveyHelper {
             debugString += '<br/><br/> account: <a href="https://monday.lightning.force.com/lightning/r/Account/'+acc.Id+'/view">'+acc.Name+'</a>';
             if(acc.Opportunities.size() == 1){ //no prev opp - new business - always send survey
                 currOpp = acc.Opportunities[0];
-                addAccountForUpdate(accountsToUpdate, currOpp, acc.Id);
+                addSurvey(surveysToCreate, currOpp, acc.Id);
                 debugString += '<br/> Result: account has one opp only - good for survey!';
                 continue;
             }
@@ -69,7 +69,7 @@ public without sharing class Partners_POSurveyHelper {
                 if(i>0) {
                     prevOpp = acc.Opportunities[i-1];
                 } else {
-                    addAccountForUpdate(accountsToUpdate, currOpp, acc.Id);
+                    addSurvey(surveysToCreate, currOpp, acc.Id);
                     debugString += '<br/> Result: account has no relevant prev opps for comparison - good for survey!';
                     break;
                 }
@@ -77,18 +77,19 @@ public without sharing class Partners_POSurveyHelper {
                 if(i>1) prev2Opp = acc.Opportunities[i-2];
                 //compare to prev opps
                 if(comparePrevOpps(currOpp, prevOpp, prev2Opp)){
-                    addAccountForUpdate(accountsToUpdate, currOpp, acc.Id);
+                    addSurvey(surveysToCreate, currOpp, acc.Id);
                     break;
                 }
             }
         }
-        system.debug('accountsToUpdate: ' + accountsToUpdate);
-        if(accountsToUpdate.isEmpty()) {
+        system.debug('surveysToCreate: ' + surveysToCreate);
+        if(surveysToCreate.isEmpty()) {
             debugString += '<br/> <b>NO MATCHING ACCOUNTS LEFT. exiting...</b>';
         } else if(!dryRun){ 
-            Database.update(accountsToUpdate);
-            Map<Id,Account> accMap = new Map<Id,Account>(accountsToUpdate);
-            res.addAll(accMap.keySet());
+            Database.insert(surveysToCreate);
+            for(Survey__c s: surveysToCreate){
+                res.add(s.Account__c);
+            }
         }
         return debugString;
     }
@@ -98,6 +99,14 @@ public without sharing class Partners_POSurveyHelper {
             Id = accId,
             Last_PO_Survey_Opportunity__c = String.valueOf(currOpp.Id),
             Next_PO_Survey_Date__c = currOpp.CloseDate.addDays(90)
+        ));
+    }
+
+    private void addSurvey(List<Survey__c> surveysToCreate, Opportunity currOpp, Id accId){
+        surveysToCreate.add(new Survey__c(
+            Account__c = accId,
+            Partner_PO_Survey_Opportunity__c = String.valueOf(currOpp.Id),
+            Survey_Sent_Date__c = currOpp.CloseDate.addDays(90)
         ));
     }
 
