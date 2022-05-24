@@ -36,7 +36,8 @@
             //check for co-sell 2.0 survey
             if(component.get('v.oppData.Co_Sell_Opportunity__c') != null 
                 && component.get('v.oppData.Co_Sell_Opportunity__c') != ''
-                && component.get('v.oppData.Account.Co_Sell_Leader__c') != ''
+                && component.get('v.oppData.Account.Co_Sell_Leader__c') != '' 
+                && component.get('v.oppData.Account.Co_Sell_Leader__c') != null
                 && component.get('v.oppData.Co_Sell_Request__c') != null 
                 && component.get('v.oppData.Co_Sell_Request__c') != '' 
                 && component.get('v.oppData.Co_Sell_Request__r.Status__c') == 'Approved'

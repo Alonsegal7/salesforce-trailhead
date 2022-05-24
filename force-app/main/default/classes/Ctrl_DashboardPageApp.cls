@@ -9,6 +9,59 @@ public without sharing class Ctrl_DashboardPageApp {
     }
 
     @AuraEnabled
+    public static Map <String, Object> initSpiffVsLockedARR(Id userId){
+        if (userId == null) userId = UserInfo.getUserId();
+        Map <String, Object> res = new Map <String, Object>();
+        Id accountId = null;
+        Decimal target = 0;
+        Decimal actual = 0;
+        Decimal arr = 0;
+        Decimal newBizArr = 0;
+        Decimal spiff = 0;
+        String title = 'Spiff - Q';
+        Date d = Date.today();
+        if (d.month() < 4) title += '1';
+        if (d.month() < 7 && d.month() > 3) title += '2';
+        if (d.month() < 10 && d.month() > 6) title += '3';
+        if (d.month() > 9) title += '4';
+        title += '/' + String.valueOf(d.year()).right(2);
+        List <User> lu = [SELECT Id, AccountId, Account.Partner_Tier__c FROM User WHERE Id = :userId];
+        if (lu != null && !lu.isEmpty() && lu[0].AccountId != null) accountId = lu[0].AccountId;
+
+        List <Target__c> lt = [SELECT Id, Amount__c, Actual_ARR_Locked__c, Closed_Won_Arr__c FROM Target__c WHERE Target_Date__c = THIS_QUARTER AND Partner_Company__c = :accountId];
+        if (lt != null && !lt.isEmpty()) for (Target__c t: lt) {
+            if (t.Amount__c != null) target += t.Amount__c;
+            if (t.Actual_ARR_Locked__c != null) actual += t.Actual_ARR_Locked__c;
+        }
+        if (lt!=null && lt.size()>0){ system.debug('Targets are: '); system.debug(json.serializePretty (lt));}
+        
+        system.debug('Target is '+target);
+        system.debug('Actual is '+actual);
+
+        if (actual >= target || Test.isRunningTest()){
+            List <Opportunity> lo = [SELECT Id, Name, Green_Bucket_ARR_V2__c, Opportunity_Type__c, Expected_Plan_Tier__c FROM Opportunity 
+                                     WHERE Channel_Partner__c = :accountId AND Is_Potential_GB_Opportunity__c = true AND StageName = 'Closed Won' AND CloseDate = THIS_QUARTER];
+                                     
+            if (lo.size()>0) system.debug(json.serializepretty (lo));
+                                     
+            if (lo != null && !lo.isEmpty()) for (Opportunity o: lo){
+                //if (o.Green_Bucket_ARR_V2__c != null) arr += o.Green_Bucket_ARR_V2__c;
+                if (o.Green_Bucket_ARR_V2__c != null && o.Opportunity_Type__c == 'New Business' && o.Expected_Plan_Tier__c != null && o.Expected_Plan_Tier__c.containsIgnoreCase('Enterprise')) newBizArr += o.Green_Bucket_ARR_V2__c;
+            }
+            //spiff = Math.floor(((arr * 0.025) + (newBizArr * 0.05)));
+            spiff = Math.floor((newBizArr * 0.03));
+        }
+        
+        res.put('title', title);
+        res.put('target', target);
+        res.put('actual', actual);
+        res.put('spiff', spiff);
+        
+        System.debug('iCloudius - Spiff:\n' + JSON.serializePretty(res));
+        return res;
+    }
+
+    @AuraEnabled
     public static Map <String, Object> initSpiff(Id userId){
         if (userId == null) userId = UserInfo.getUserId();
         Map <String, Object> res = new Map <String, Object>();
@@ -136,7 +189,7 @@ public without sharing class Ctrl_DashboardPageApp {
         if (lu != null && !lu.isEmpty() && lu[0].AccountId != null) accountId = lu[0].AccountId;
         if (Test.isRunningTest()) accountId = [SELECT Id FROM Account LIMIT 1].Id;
         if (accountId != null){
-            List <Opportunity> lo = [SELECT Id, Green_Bucket_ARR__c, Green_Bucket_ARR_V2__c, Opportunity_Origin__c FROM Opportunity WHERE IsWon = true AND GSI__c =:accountId];
+            List <Opportunity> lo = [SELECT Id, Green_Bucket_ARR__c, Green_Bucket_ARR_V2__c, Opportunity_Origin__c FROM Opportunity WHERE IsWon = true AND GSI__c =:accountId AND Commission_Entitlement__c = true];
             if (lo != null && !lo.isEmpty()) for (Opportunity o: lo){
                 total += o.Green_Bucket_ARR_V2__c != null ? o.Green_Bucket_ARR_V2__c : 0;
                 if (o.Opportunity_Origin__c == 'Enabled' && o.Green_Bucket_ARR__c != null) totalInfluenced += o.Green_Bucket_ARR_V2__c;
@@ -228,6 +281,17 @@ public without sharing class Ctrl_DashboardPageApp {
         Decimal totalArr = 0;
         Decimal outboundArr = 0;
         Decimal mapp = 0;
+        Date today = Date.today();
+        Date sDate = null;
+        Date eDate = null;
+        if (today >= Date.newInstance(today.year(), 1, 1) && today < Date.newInstance(today.year(), 7, 1)){
+            sDate = Date.newInstance((today.year() - 1), 7, 1);
+            eDate = today;
+        }
+        if (today >= Date.newInstance(today.year(), 7, 1) && today < Date.newInstance((today.year() + 1), 1, 1)){
+            sDate = Date.newInstance(today.year(), 1, 1);
+            eDate = today;
+        }
         
         List <User> lu = [SELECT Id, AccountId, Account.Partner_tier__c FROM User WHERE Id = :userId];
         if (lu != null && !lu.isEmpty() && lu[0].AccountId != null){
@@ -236,7 +300,7 @@ public without sharing class Ctrl_DashboardPageApp {
             List <Opportunity> lo = [SELECT Id, Name, Channel_Partner__c, Green_Bucket_ARR_V2__c, Opportunity_Source_Type__c, CloseDate 
                                      FROM Opportunity 
                                      WHERE Channel_Partner__c = :AccountId AND IsWon = true AND Is_Potential_GB_Opportunity__c = true AND 
-                                           Green_Bucket_ARR_V2__c != null AND RecordType.DeveloperName = 'Partner_Opportunity' AND CloseDate = THIS_FISCAL_YEAR];
+                                           Green_Bucket_ARR_V2__c != null AND RecordType.DeveloperName = 'Partner_Opportunity' AND CloseDate >= :sDate AND CloseDate <= :eDate];
             
             if (lo != null && !lo.isEmpty()){
                 for (Opportunity o: lo){

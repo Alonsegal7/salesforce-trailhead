@@ -162,11 +162,6 @@
                                         <lightning:progressStep label="Manual Signature" value="ManualSignature"/>
                                     </aura:if>
                                 </aura:if>
-                                <aura:if isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, or(and(v.oppData.Manual_Signature_Reason__c == 'Priority SO', v.isPrioritySO == 'null'), v.isPrioritySO == 'Priority SO'))}">
-                                    <aura:if isTrue="{!v.closedFields.What_Would_You_Like_To_Claim__c != 'CC Payments'}">
-                                        <lightning:progressStep label="BigBrain Pickers" value="BBPickers"/>
-                                    </aura:if>
-                                </aura:if>
                                 <lightning:progressStep label="CC Claim" value="CCClaim"/>
                                 <aura:if isTrue="{!and(v.oppData.RecordType.Name == 'Internal Opportunity', v.showHandover == true)}">
                                     <lightning:progressStep label="Handover" value="Handover"/>
@@ -484,25 +479,6 @@
                                         filenameSuffix="-signed"
                                     ></c:fileUploadImproved>
                                 </lightning:recordEditForm>
-                            </lightning:card>
-                            </aura:if>
-                        </aura:if>
-                        <aura:if isTrue="{!and(v.innerPathValue == 'BBPickers', or(v.isPrioritySO == 'Priority SO', v.closedFields.Manual_Signature_Reason__c == 'Priority SO'))}">
-                            
-                            <aura:if isTrue="{!!v.showSpinner}">
-                                <lightning:card>
-                                <ui:message title="BigBrain - Account Activation" severity="warning">
-                                    Please make sure you activated the Account in BigBrain <br/>
-                                    Your ARR will be <b>0</b> until the activation occurs.
-                                </ui:message>
-                                <c:BigBrainPicker recordId="{!v.recordId}"
-                                    iframeUrl="https://new.bigbrain.me/crm/salesforce/opportunity-pickers"
-                                    width="100%"
-                                    height="500px"
-                                    style="border: none; overflow: scroll;"
-                                    scrolling="auto"
-                                    frameBorder="0"
-                                    sandbox="allow-same-origin allow-scripts allow-forms"/>
                             </lightning:card>
                             </aura:if>
                         </aura:if>

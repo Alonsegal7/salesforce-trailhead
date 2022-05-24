@@ -6,7 +6,6 @@ public class OpportunityHelper {
     public static void beforeUpdate(List<Opportunity> opportunities, map <Id, Opportunity> oldMap){
         try{
             list<Opportunity> oppsWithMAChange= new list<Opportunity>();
-            list<Opportunity> oppsWithOwnerChange= new list<Opportunity>();
             set<Id> maIds= new set<Id>();
             set<Id> userIds= new set<Id>();
             for(Opportunity opp : opportunities){
@@ -19,41 +18,22 @@ public class OpportunityHelper {
                 if (oldOpp != null && (oldOpp.CurrencyIsoCode != opp.CurrencyIsoCode || opp.USD_exchange_rate__c == null)) { 
                     ExchangeRateService.apply(opp); 
                 }
-                
-                if(opp.RecordTypeId==partnerRecordTypeId&&
-                    (oldMap==null||opp.OwnerId!=oldMap.get(opp.Id).OwnerId)){
-                        userIds.add(opp.OwnerId);
-                        oppsWithOwnerChange.add(opp);
-                }
             }
             if(!oppsWithMAChange.isEmpty())
                 handleAccountIdChange(oppsWithMAChange,maIds);
-            if(!oppsWithOwnerChange.isEmpty())
-                setPartnerCompany(oppsWithOwnerChange,userIds);
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in OpportunityHelper ',e,e.getMessage());   
         }
-
-
     }
 
     public static void beforeInsert(List<Opportunity> opportunities,Map<Id,Opportunity> oldOpps) {
-        list<Opportunity> oppsWithOwnerChange= new list<Opportunity>();
         set<Id> userIds= new set<Id>();
         for(Opportunity opp : opportunities) { 
             ExchangeRateService.apply(opp); 
-            if(opp.RecordTypeId==partnerRecordTypeId){
-                userIds.add(opp.OwnerId);
-                oppsWithOwnerChange.add(opp);
-            }
             if(Opp.Close_Date_from_Lead__c!=null){
                 opp.Closedate=Opp.Close_Date_from_Lead__c;
             }
         }
-        if(!oppsWithOwnerChange.isEmpty()){
-            setPartnerCompany(oppsWithOwnerChange,userIds);
-        }
-
     }
 
     public static void updateOppType(List<Opportunity> opportunities, Map<Id,Opportunity> oldOpps){
@@ -173,7 +153,7 @@ public class OpportunityHelper {
     }
     
     //public static void handleAccountIdChange(Opportunity opportunity){
-    public static void handleAccountIdChange(list<Opportunity> opportunities,Set<Id> maIds){
+    public static void handleAccountIdChange(list<Opportunity> opportunities,Set<Id> maIds){ //can be deleted
         map<Id,Account> accountDetails= new map<Id,Account>([select id,RecordTypeId,Company__c
                                                                 from Account where id in: maIds]);
         for(Opportunity opp: opportunities){
@@ -188,20 +168,6 @@ public class OpportunityHelper {
                 opp.Company__c = acc.Company__c;
                 opp.Monday_Account__c = acc.Id;
             }
-        }
-    }
-    public static void setPartnerCompany(list<Opportunity> relevantOpps, set<Id> relevantUsers){
-        try{
-            map<Id,User> usersWithDetails= new map<Id,User>([select id,Contact.AccountId from User where id in:relevantUsers]);
-            for(Opportunity opp: relevantOpps){
-                if(usersWithDetails.containskey(opp.OwnerId)&&usersWithDetails.get(opp.OwnerId).Contact.AccountId!=null)
-                    opp.Channel_Partner__c=usersWithDetails.get(opp.OwnerId).Contact.AccountId;
-                else{
-                    opp.Channel_Partner__c=null;
-                }
-            }
-        }catch(Exception e){
-            Utilities.sendDebugEmail('Error in OpportunityHelper: setPartnerCompany ',e,e.getMessage());   
         }
     }
 }

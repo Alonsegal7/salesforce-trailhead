@@ -10,12 +10,12 @@ public without sharing class Opportunity_LockValidation {
     //runs in before update
     public void cosellLockValidation(List<Opportunity> newOpps, Map<Id,Opportunity> oldOppsMap){ //prevent secondary opps from being updated
         Map<Id,Opportunity> potentialOpps_map = new Map<Id,Opportunity>();
-        for(Opportunity opp: newOpps){ //we prevent the update only for cmt fields
-            for(Co_sell_Main_to_Secondary_Opp_Mapping__mdt cmt: Opportunity_CoSellSyncService.mainToSecOppMapping_cmt){
-                if(Opportunity_CoSellSyncService.isSecondaryCoSellOpp(opp) // secondary co-sell 2.0 opp
-                    && !Opportunity_CoSellSyncService.checkIfSecondaryOppsUpdateAllowed() // not running from scheduled sync job
-                    && opp.get(cmt.Field_API_Name__c) != oldOppsMap.get(opp.Id).get(cmt.Field_API_Name__c)){ //field from cmt was updated
-                        potentialOpps_map.put(opp.Id, opp);
+        for(Opportunity opp: newOpps){ 
+            if(opp.Co_Sell_Opportunity__c == null || opp.Need_Sync_Co_Sell__c) continue; //not co-sell or already marked as need to be synced
+            for(Co_sell_Main_to_Secondary_Opp_Mapping__mdt cmt: Opportunity_CoSellSyncService.mainToSecOppMapping_cmt){ //we prevent the update only for cmt fields
+                if(opp.get(cmt.Field_API_Name__c) != oldOppsMap.get(opp.Id).get(cmt.Field_API_Name__c)){ //field from cmt was updated
+                    if(Opportunity_CoSellSyncService.isSecondaryCoSellOpp(opp)) potentialOpps_map.put(opp.Id, opp);
+                    else if(Opportunity_CoSellSyncService.isMainCoSellOpp(opp)) opp.Need_Sync_Co_Sell__c = true;
                 }
             }
         }

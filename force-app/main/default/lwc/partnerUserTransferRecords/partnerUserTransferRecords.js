@@ -22,7 +22,7 @@ export default class QuotaAttainmentTool extends LightningElement {
             runTransfer({ oldOwnerId: this.fromUserId, newOwnerId: this.toUserId })
             .then(result => {
                 this.showSpinner = false;
-                if(result == 'running'){
+                if(result == 'running'){ 
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success!',
@@ -30,8 +30,9 @@ export default class QuotaAttainmentTool extends LightningElement {
                             variant: 'success',
                         }),
                     );
-                    this.fromUserId = '';
-                    this.toUserId = '';
+                    this.template.querySelectorAll('c-search-component').forEach(element => { 
+                        element.handleClose();
+                    });
                 } else {
                     this.badInput = true;
                     this.customError = 'No records to update.';
@@ -43,12 +44,10 @@ export default class QuotaAttainmentTool extends LightningElement {
             });
         }
     }
-
-    handleFromUserChange(event) {
-        this.fromUserId = (event.detail.value)[0];
+	handleLookupFromUser (event){
+		this.fromUserId = event.detail.data.recordId;
     }
-
-    handleToUserChange(event) {
-        this.toUserId = (event.detail.value)[0];
+    handleLookupToUser(event) {
+        this.toUserId = event.detail.data.recordId;
     }
 }

@@ -70,12 +70,6 @@
 							component.set('v.opportunityQualificationFieldSet', fieldSetFields);
 							console.log('### opportunityQualificationFieldSet: ' + component.get('v.opportunityQualificationFieldSet'));
 						}
-	
-						if (storeResponse.hasOwnProperty('hasPermissionToForm')) {
-							console.log('### hasPermissionToForm:' + storeResponse.hasPermissionToForm);
-							component.set('v.hasPermission', storeResponse.hasPermissionToForm);
-						}
-	
 						if (storeResponse.hasOwnProperty('eventDetailsFieldSet') && storeResponse.eventDetailsFieldSet.length > 0) {
 							var fieldSetFields = new Array();
 							for (var i = 0; i < storeResponse.eventDetailsFieldSet.length; i++){
@@ -120,9 +114,10 @@
 		try{
 			event.preventDefault();
 			var pmaId = component.get('v.customLookup_selectedRecId');
-			if(pmaId == '' || pmaId == null || pmaId == undefined){
+			var pmaIsRequired = component.get('v.customLookup_isRequired');
+			if(pmaIsRequired && (pmaId == '' || pmaId == null || pmaId == undefined)){
 				console.log('### Partner Marketing Activity not selected');
-				component.set('v.customLookup_error','Please choose a Partner Marketing Activity');
+				component.set('v.customLookup_error','Please select the relevant Marketing Activity. This is mandatory based on the source you chose for this deal.');
 			} else {
 				component.set('v.customLookup_error','');
 				var spinner = component.find("cmspinner");
@@ -249,6 +244,7 @@
 				}
 				var pmaCondition = '';
 				var displayPmaLookup = false;
+				var pmaMandatory = false; //if source is Other - the marketing activity selection is not mandatory
 				if(fieldValue != '' && fieldValue != 'None'){
 					displayPmaLookup = true;
 					if(fieldValue == 'Email Campaign' || fieldValue == 'LinkedIn Campaign' || fieldValue == 'Google Campaign'){
@@ -260,13 +256,20 @@
 					} else {
 						pmaCondition = "Activity_Type__c != 'Online Campaign' and Activity_Type__c != 'Event - Online' and Activity_Type__c != 'Event - In Person' and Activity_Type__c != 'Headcount'";
 					}
+					if(fieldValue == 'Other'){
+						pmaMandatory = false;
+					} else {
+						pmaMandatory = true;
+					}
 				} else {
 					displayPmaLookup = false;
 				}
 				//console.log('handleContactDetailsFieldChange pmaCondition:' + pmaCondition);
 				//console.log('handleContactDetailsFieldChange displayPmaLookup:' + displayPmaLookup);
-				component.set('v.customLookup_isDisplayed', displayPmaLookup);
+				console.log('handleContactDetailsFieldChange pmaMandatory:' + pmaMandatory);
+				component.set('v.customLookup_isRequired', pmaMandatory);
 				component.set('v.customLookup_whereCondition', pmaCondition);
+				component.set('v.customLookup_isDisplayed', displayPmaLookup);
 			}
 		} catch(e){
 			console.error(e);

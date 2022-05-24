@@ -45,7 +45,7 @@ public without sharing class Opportunity_LockValidationTest {
         opp2.CloseDate = Date.today().addDays(-90);
         opp2.Co_Sell_Opportunity__c = opp1.Id;
         List<Opportunity> opps = new List<Opportunity>{opp1,opp2};
-        Opportunity_CoSellSyncService.updateOppSecCosellAllowed(opps);
+        Opportunity_CoSellSyncService.updateOppSecCosellAllowed(opps, 'Test');
     }
 
     static testmethod void testCoSellValidation(){

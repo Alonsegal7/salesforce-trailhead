@@ -12,7 +12,7 @@ public without sharing class Account_Rollup {
         
         //Create a subset for which the ARR is changed
         for(Account acc: newAccs){
-            if((oldAccs!=null&&oldAccs.get(acc.Id).ParentId!=null&&acc.ParentId!=oldAccs.get(acc.Id).ParentId)||(acc.recordTypeId == MARecordTypeId)) {
+            if(acc.ParentId!=null&&((oldAccs!=null&&oldAccs.get(acc.Id).ParentId!=null&&acc.ParentId!=oldAccs.get(acc.Id).ParentId)||(acc.recordTypeId == MARecordTypeId))) {
                 if((oldAccs==null||//new account
                 acc.ARR__c!=oldAccs.get(acc.Id).ARR__c||//arr changed
                 acc.Plan_Seats__c!=oldAccs.get(acc.Id).Plan_Seats__c||//seats changed

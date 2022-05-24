@@ -55,9 +55,9 @@ public with sharing class ContractEventToContract {
                     oppsToUpdate.add(new Opportunity(Id=(Id)obj.get('OpportunityId'),ContractId=createdContsMap.get(obj.Id).Id));
                     quoteToUpdate.add(new Quote(Id=obj.Id,ContractId=createdContsMap.get(obj.Id).Id));
                 if (obj.get('Manual_Trigger__c')=='Create Active Contract') {
-                    if (obj.get('ContractId')!=null) {
-                        prevContractToUpdate.add(new Contract(Id=(Id)obj.get('ContractId'), Status__c='Deactivated', Continuation_Contract__c=createdContsMap.get(obj.Id).Id));
-                        createdContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=(Id)obj.get('ContractId')));
+                    if (obj.get('Selected_Company_Contract__c')!=null) {
+                        prevContractToUpdate.add(new Contract(Id=(Id)obj.get('Selected_Company_Contract__c'), Status__c='Deactivated', Continuation_Contract__c=createdContsMap.get(obj.Id).Id));
+                        createdContractsToUpdate.add(new Contract(Id=createdContsMap.get(obj.Id).Id,Prior_Contract__c=(Id)obj.get('Selected_Company_Contract__c')));
                     }
                 }
                 else {

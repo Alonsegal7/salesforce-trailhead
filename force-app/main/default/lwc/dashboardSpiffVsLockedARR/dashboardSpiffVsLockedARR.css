@@ -1,0 +1,42 @@
+.wrap-all{
+    position: relative;
+}
+h3{
+    font-size: 1.25rem;
+    display: block;
+    margin-bottom: 8px;
+}
+.clear:before, .clear:after, .inner:before, .inner:after{
+    display: table;
+    content: '';
+}
+.clear:after, inner:after{
+    clear: both;
+}
+.dashboard-card{
+    border: none;
+    padding: 10px 16px 16px;
+}
+.card-title {
+    font-size: 1.25rem;
+}
+.card-title.inner{
+    text-align: center;
+}
+.inner {
+    width: max-content;
+    margin: 0 auto;
+}
+.spiff {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    float: left;
+    padding: 24px 16px 0;
+}
+.image-container {
+    margin: 20px auto 0;
+    text-align: center;
+    float: left;
+    width: 68px;
+}
