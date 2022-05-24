@@ -1,5 +1,9 @@
 <template>
-    <lightning-card if:true={load} title={title}>
+    <lightning-card if:true={load}>
+        <template if:true={showHiUsername}>  <!--hi user first name is optional-->
+            <h1 slot="title">{hiUserFirstName}</h1>
+        </template>   
+        <h1 slot="title">{title}</h1>
         <lightning-button variant="brand" label="Submit" class="slds-m-left_x-small" onclick={saveValues} slot="actions"> </lightning-button>
         <template if:true={subtitle}>  <!--subtitle is optional-->
             <p class="slds-p-horizontal_small slds-p-bottom_small slds-text-color_success slds-text-body_small"><i>{subtitle}</i></p>
@@ -28,6 +32,9 @@
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-tile>                                       
+        </template>
+        <template if:true={showLegend}>  <!--subtitle is optional-->
+            <p class="slds-p-horizontal_small slds-p-top_small slds-text-body_small"><i><b>1 Star</b> - Do not agree <b>5 Star</b> - Extremely agree</i></p>
         </template>
         <template if:true={error}>
             <c-error-panel errors={error}></c-error-panel>

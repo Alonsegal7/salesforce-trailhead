@@ -10,13 +10,12 @@ public with sharing class Account_StampsService {
         }
     }
 
-    public static Map<Id,User> usersMap;
-
     public static void UpdateOwnerStamps(List<Account> newAccounts, map<Id,Account> oldAccounts) {
         
         List<Account> relevantAccountsOwnerChange = new List<Account>();
         List<Account> relevantAccountsCSMChange = new List<Account>();
         Set<Id> relevantUsers = new Set<Id>();
+        
         for(Account acc: newAccounts){
             if(oldAccounts == null || acc.OwnerId != oldAccounts.get(acc.Id).OwnerId){
                 relevantAccountsOwnerChange.add(acc);
@@ -32,13 +31,9 @@ public with sharing class Account_StampsService {
         }
         if (relevantAccountsOwnerChange.isEmpty() && relevantAccountsCSMChange.isEmpty()) return;
         
-        if (usersMap == null) {
-            usersMap = new Map<Id,User>();
-            for (User u : [SELECT Id, Business_Role__c, Manager.Team__c, ManagerId, Email FROM USER WHERE Id IN: relevantUsers]) {
-                usersMap.put(u.Id, u);
-            }
-        }
         
+        Map<Id,User> usersMap = new Map<Id,User>([SELECT Id, Business_Role__c, Manager.Team__c, ManagerId,Email FROM USER WHERE Id IN: relevantUsers]);
+
         //update owner stamps on the relevant accounts
         for (Account acc : relevantAccountsOwnerChange) {
             User currOwner = usersMap.get(acc.OwnerId);

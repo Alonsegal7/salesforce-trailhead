@@ -1,11 +1,14 @@
 public without sharing class starRatingController {
     @AuraEnabled(cacheable=true)
-    public static List<Star_Rating_Question__mdt> getQuestionsList(String surveyName) {
-        return [
+    public static Map<String, Object> getSurveyInitData(String surveyName, Boolean getCurrUserData) {
+        Map<String, Object> res = new Map<String, Object>();
+        res.put('questions', [
             SELECT Field_API_Name__c, Question_Text__c
             FROM Star_Rating_Question__mdt
             WHERE Is_Active__c = true and Survey_Name__c =: surveyName
-        ];
+        ]);
+        if(getCurrUserData) res.put('currUserFirstName', UserInfo.getFirstName());
+        return res;
     }
 
     @AuraEnabled

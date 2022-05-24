@@ -17,7 +17,7 @@ public class TargetsService {
         }
         if(cpTargetsIds.isEmpty()) return;
         firstRunUpdateTargetsFromAcc = false;
-        System.enqueueJob(new updateTargetsArrSum(cpTargetsIds));
+        System.enqueueJob(new updateTargetsArrSumQueue(cpTargetsIds));
     }
 
     public void updateTargetOnClosedWonOppChange(List<Opportunity> newOpps, Map<Id, Opportunity> oldOpps){
@@ -44,63 +44,69 @@ public class TargetsService {
             }
         }
         if(targetIds.isEmpty()) return;
-        System.enqueueJob(new updateTargetsArrSum(targetIds));
+        if(!ApexLimits.queueableLimitReached()) System.enqueueJob(new updateTargetsArrSumQueue(targetIds));
+        else updateTargetsArrSum(targetIds); //if we reached the queueable limit f.e running from batch and limit is 1 -> try to run it from same transaction (real-time)
     }
 
-    public class updateTargetsArrSum implements Queueable{
+    public void updateTargetsArrSum(Set<Id> targetIds){
+        Map<Id,Target__c> targetIdToAddedArrMap = new Map<Id,Target__c>();
+        for(Id targetId: targetIds){
+            targetIdToAddedArrMap.put(targetId, new Target__c(Id = targetId,Closed_Won_Arr__c = 0, Actual_ARR_Inbound_LIVE__c = 0, Actual_ARR_Outbound_LIVE__c = 0, Actual_ARR_Sourced_LIVE__c = 0, Actual_ARR_Influenced_LIVE__c = 0));
+        }
+        // query all GB closed won opps
+        List<Opportunity> oppsList = [select Target__c, CP_Target__c, CP_Target__r.Partner_Company__c, GSI_Target__c, Opportunity_Origin__c, Channel_Partner__c, Green_Bucket_ARR_V2__c, Account.Account_Source_Type__c from Opportunity where (Target__c IN: targetIds or CP_Target__c IN: targetIds or GSI_Target__c IN: targetIds) and StageName = 'Closed Won' and Green_Bucket_ARR_V2__c != null and (Transition_to_GB__c = true or Is_Potential_GB_Opportunity__c=true)];
+        if(!oppsList.isEmpty()) {
+            for(Opportunity opp: oppsList){
+                if(opp.Target__c != null && targetIdToAddedArrMap.containsKey(opp.Target__c)){
+                    targetIdToAddedArrMap.get(opp.Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
+                    if(opp.Account.Account_Source_Type__c == 'Inbound'){
+                        targetIdToAddedArrMap.get(opp.Target__c).Actual_ARR_Inbound_LIVE__c += opp.Green_Bucket_ARR_V2__c;
+                    } else if (opp.Account.Account_Source_Type__c == 'Outbound'){
+                        targetIdToAddedArrMap.get(opp.Target__c).Actual_ARR_Outbound_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
+                    }
+                }
+                if(opp.CP_Target__c != null && targetIdToAddedArrMap.containsKey(opp.CP_Target__c) && opp.CP_Target__r.Partner_Company__c == opp.Channel_Partner__c){
+                    targetIdToAddedArrMap.get(opp.CP_Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
+                    if(opp.Account.Account_Source_Type__c == 'Inbound'){
+                        targetIdToAddedArrMap.get(opp.CP_Target__c).Actual_ARR_Inbound_LIVE__c += opp.Green_Bucket_ARR_V2__c;
+                    } else if (opp.Account.Account_Source_Type__c == 'Outbound'){
+                        targetIdToAddedArrMap.get(opp.CP_Target__c).Actual_ARR_Outbound_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
+                    }
+                }
+                if(opp.GSI_Target__c != null && targetIdToAddedArrMap.containsKey(opp.GSI_Target__c)){
+                    targetIdToAddedArrMap.get(opp.GSI_Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
+                    if(opp.Opportunity_Origin__c == 'Sourced'){
+                        targetIdToAddedArrMap.get(opp.GSI_Target__c).Actual_ARR_Sourced_LIVE__c += opp.Green_Bucket_ARR_V2__c;
+                    } else if (opp.Opportunity_Origin__c == 'Enabled'){
+                        targetIdToAddedArrMap.get(opp.GSI_Target__c).Actual_ARR_Influenced_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
+                    }
+                }
+            }
+        }
+        //get targtes to ignore for locked arr sum
+        Datetime nowTime = Datetime.now();
+        Datetime startOfMonth10UTC = Date.today().toStartOfMonth();
+        startOfMonth10UTC = startOfMonth10UTC.addHours(10);
+        Date startOfMonth = Date.today().toStartOfMonth();
+        if(nowTime < startOfMonth10UTC) startOfMonth = startOfMonth.addMonths(-1);
+        Map<Id,Target__c> targetsValidForLockedArrSum = new Map<Id,Target__c>([select Id from Target__c where Id IN: targetIds and Target_Date__c >=: startOfMonth]);
+        for(Id targetId: targetIds){
+            if(targetsValidForLockedArrSum.containsKey(targetId)){
+                targetIdToAddedArrMap.get(targetId).Actual_ARR_Locked__c = targetIdToAddedArrMap.get(targetId).Closed_Won_Arr__c;
+            }
+        }
+        Database.update(targetIdToAddedArrMap.values());
+    }
+
+    public class updateTargetsArrSumQueue implements Queueable{
         private Set<Id> targetIds;
     
-        public updateTargetsArrSum(Set<Id> targetIds){
+        public updateTargetsArrSumQueue(Set<Id> targetIds){
             this.targetIds = targetIds;
         }
         public void execute(System.QueueableContext ctx) {
-            Map<Id,Target__c> targetIdToAddedArrMap = new Map<Id,Target__c>();
-            for(Id targetId: targetIds){
-                targetIdToAddedArrMap.put(targetId, new Target__c(Id = targetId,Closed_Won_Arr__c = 0, Actual_ARR_Inbound_LIVE__c = 0, Actual_ARR_Outbound_LIVE__c = 0, Actual_ARR_Sourced_LIVE__c = 0, Actual_ARR_Influenced_LIVE__c = 0));
-            }
-            // query all GB closed won opps
-            List<Opportunity> oppsList = [select Target__c, CP_Target__c, CP_Target__r.Partner_Company__c, GSI_Target__c, Opportunity_Origin__c, Channel_Partner__c, Green_Bucket_ARR_V2__c, Account.Account_Source_Type__c from Opportunity where (Target__c IN: targetIds or CP_Target__c IN: targetIds or GSI_Target__c IN: targetIds) and StageName = 'Closed Won' and Green_Bucket_ARR_V2__c != null and (Transition_to_GB__c = true or Is_Potential_GB_Opportunity__c=true)];
-            if(!oppsList.isEmpty()) {
-                for(Opportunity opp: oppsList){
-                    if(opp.Target__c != null && targetIdToAddedArrMap.containsKey(opp.Target__c)){
-                        targetIdToAddedArrMap.get(opp.Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
-                        if(opp.Account.Account_Source_Type__c == 'Inbound'){
-                            targetIdToAddedArrMap.get(opp.Target__c).Actual_ARR_Inbound_LIVE__c += opp.Green_Bucket_ARR_V2__c;
-                        } else if (opp.Account.Account_Source_Type__c == 'Outbound'){
-                            targetIdToAddedArrMap.get(opp.Target__c).Actual_ARR_Outbound_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
-                        }
-                    }
-                    if(opp.CP_Target__c != null && targetIdToAddedArrMap.containsKey(opp.CP_Target__c) && opp.CP_Target__r.Partner_Company__c == opp.Channel_Partner__c){
-                        targetIdToAddedArrMap.get(opp.CP_Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
-                        if(opp.Account.Account_Source_Type__c == 'Inbound'){
-                            targetIdToAddedArrMap.get(opp.CP_Target__c).Actual_ARR_Inbound_LIVE__c += opp.Green_Bucket_ARR_V2__c;
-                        } else if (opp.Account.Account_Source_Type__c == 'Outbound'){
-                            targetIdToAddedArrMap.get(opp.CP_Target__c).Actual_ARR_Outbound_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
-                        }
-                    }
-                    if(opp.GSI_Target__c != null && targetIdToAddedArrMap.containsKey(opp.GSI_Target__c)){
-                        targetIdToAddedArrMap.get(opp.GSI_Target__c).Closed_Won_Arr__c += opp.Green_Bucket_ARR_V2__c;
-                        if(opp.Opportunity_Origin__c == 'Sourced'){
-                            targetIdToAddedArrMap.get(opp.GSI_Target__c).Actual_ARR_Sourced_LIVE__c += opp.Green_Bucket_ARR_V2__c;
-                        } else if (opp.Opportunity_Origin__c == 'Enabled'){
-                            targetIdToAddedArrMap.get(opp.GSI_Target__c).Actual_ARR_Influenced_LIVE__c += opp.Green_Bucket_ARR_V2__c; 
-                        }
-                    }
-                }
-            }
-            //get targtes to ignore for locked arr sum
-            Datetime nowTime = Datetime.now();
-            Datetime startOfMonth10UTC = Date.today().toStartOfMonth();
-            startOfMonth10UTC = startOfMonth10UTC.addHours(10);
-            Date startOfMonth = Date.today().toStartOfMonth();
-            if(nowTime < startOfMonth10UTC) startOfMonth = startOfMonth.addMonths(-1);
-            Map<Id,Target__c> targetsValidForLockedArrSum = new Map<Id,Target__c>([select Id from Target__c where Id IN: targetIds and Target_Date__c >=: startOfMonth]);
-            for(Id targetId: targetIds){
-                if(targetsValidForLockedArrSum.containsKey(targetId)){
-                    targetIdToAddedArrMap.get(targetId).Actual_ARR_Locked__c = targetIdToAddedArrMap.get(targetId).Closed_Won_Arr__c;
-                }
-            }
-            Database.update(targetIdToAddedArrMap.values());
+            TargetsService targetsServ = new TargetsService();
+            targetsServ.updateTargetsArrSum(targetIds);
         }
     }
 

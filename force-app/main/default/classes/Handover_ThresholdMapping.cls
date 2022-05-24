@@ -77,15 +77,15 @@ public without sharing class Handover_ThresholdMapping {
     public static Boolean checkMatch(Opportunity opp, HO_Threshold__c th, List<HO_Threshold_Criteria__c> criteriaList, String typeOfMatch) {
         System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - comparing threshold: '+ th.Id + ' to opp: ' + opp.Id);
         List<HO_Threshold_Criteria__c> filteredScope = new List<HO_Threshold_Criteria__c>();
-        if (typeOfMatch == 'isLink') {
-            filteredScope = [SELECT Id, Name, HO_Threshold__c, Criteria_Name__c, Target_Field_API_Name__c, Value__c, Operator__c FROM HO_Threshold_Criteria__c WHERE Is_Active__c = TRUE AND Relevant_for_Link__c = true AND Id IN: criteriaList];
+        for (HO_Threshold_Criteria__c thCr : criteriaList) {
+            if (typeOfMatch == 'isLink' && thCr.Relevant_for_Link__c) {
+                filteredScope.add(thCr);
+            }
+            else if (typeOfMatch == 'isPass' && thCr.Relevant_for_Pass__c) {
+                filteredScope.add(thCr);
+            }
         }
-        else if (typeOfMatch == 'isPass') {
-            filteredScope = [SELECT Id, Name, HO_Threshold__c, Criteria_Name__c, Target_Field_API_Name__c, Value__c, Operator__c FROM HO_Threshold_Criteria__c WHERE Is_Active__c = TRUE AND Relevant_for_Pass__c = true AND Id IN: criteriaList];
-        }
-        if (filteredScope.isempty()) {
-            return false;
-        }
+        if (filteredScope.isempty()) return false;
         Boolean isMatch = true;
         for (HO_Threshold_Criteria__c thCr : filteredScope) {
             String thCrFieldValue = string.valueof(thCr.Value__c);

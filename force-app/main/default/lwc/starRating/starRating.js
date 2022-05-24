@@ -1,5 +1,5 @@
 import { LightningElement, wire, api } from 'lwc';
-import getQuestionsList from '@salesforce/apex/starRatingController.getQuestionsList';
+import getSurveyInitData from '@salesforce/apex/starRatingController.getSurveyInitData';
 import updateValues from '@salesforce/apex/starRatingController.updateValues';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
@@ -11,25 +11,36 @@ export default class StarRating extends LightningElement {
     @api subtitle;                  //subtitle displayed under title in grey color 
     @api surveyFilledFieldApiName;  //Optional - checkbox field api name on the target object to mark that the survey was filled
     @api showSuccessToast = false;  //flag to display success toast when survey is submitted
+    @api showLegend = false;        //Optional - display under the question a legend 1 star - do not agree 5 start - extremely agree
+    @api showHiUsername = false;    //Optional - show a Hi, FirstName to the user at the top of the survey
     load = false;
     questions = [];
     error;
     valuesMap = {};
     customError;
+    hiUserFirstName;
 
-    @wire(getQuestionsList, { surveyName: '$surveyName' }) 
-    wiredQuestions({ error, data }) {
+    @wire(getSurveyInitData, { surveyName: '$surveyName', getCurrUserData: '$showHiUsername' }) 
+    wiredSurveyInitData({ error, data }) {
         if (data) {
-            this.questions = data.map((item) => ({
-                ...item,
-                star1: item.Field_API_Name__c + '_1',
-                star2: item.Field_API_Name__c + '_2',
-                star3: item.Field_API_Name__c + '_3',
-                star4: item.Field_API_Name__c + '_4',
-                star5: item.Field_API_Name__c + '_5'
-            }));
-            this.error = undefined;
-            this.load = true;
+            try{
+                this.questions = data.questions.map((item) => ({
+                    ...item,
+                    star1: item.Field_API_Name__c + '_1',
+                    star2: item.Field_API_Name__c + '_2',
+                    star3: item.Field_API_Name__c + '_3',
+                    star4: item.Field_API_Name__c + '_4',
+                    star5: item.Field_API_Name__c + '_5'
+                }));
+                if(data.currUserFirstName) this.hiUserFirstName = 'Hi ' + data.currUserFirstName + '!';
+                this.error = undefined;
+                this.load = true;
+            } catch(e){
+                console.error(e);
+                console.error('e.name => ' + e.name );
+                console.error('e.message => ' + e.message );
+                console.error('e.stack => ' + e.stack );
+            }
         } else if (error) {
             this.error = error;
             this.questions = undefined;

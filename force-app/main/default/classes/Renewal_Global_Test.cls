@@ -40,11 +40,10 @@ public class Renewal_Global_Test {
             opportunity_RenewalCreation.checkOpenExpansionOpps(con.Id);
         }
         Test.stopTest();
-
-        con = [SELECT Id, Renewal_Opportunity__c, Renewal_Opportunity_Creation_Status__c FROM Contact WHERE Id =: con.Id LIMIT 1];
+        
+        con = [SELECT Id, Renewal_Opportunity__c, Renewal_Opportunity_Creation_Status__c FROM Contract WHERE Id =: con.Id LIMIT 1];
         opportunity = [SELECT Id FROM Opportunity WHERE Selected_Company_Contract__c =: con.Id LIMIT 1];
         
-        //add assert to contract and oppty indications
         System.assertEquals(con.Renewal_Opportunity__c, opportunity.Id);
         System.assertEquals(con.Renewal_Opportunity_Creation_Status__c, 'Completed');
     }

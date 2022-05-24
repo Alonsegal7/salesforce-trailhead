@@ -2,6 +2,7 @@
 public with sharing class CoSellRequestServiceTest {
     @TestSetup
     static void makeData(){
+        List<Co_sell_Request_to_Main_Opp_Mapping__mdt> testMap = CoSellRequestService.requestToMainOppMapping_cmt;
         Id partnerOppRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
         Id internalOppRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
 
@@ -52,6 +53,24 @@ public with sharing class CoSellRequestServiceTest {
         );
         CoSellRequestService.createNewCoSellRequest(csr);
         CoSellRequestService.createNewCoSellRequest(csr2);
+    }
+
+    static testmethod void test_manualCreateError(){
+        User cp = [select Id from User where Profile.Name = 'Channel Managers' and IsActive = true limit 1];
+        Opportunity opp = [select Id, AccountId from Opportunity limit 1];
+        Co_Sell_Request__c csr = new Co_Sell_Request__c(
+            Main_Opportunity__c = opp.Id,
+            Secondary_Opportunity_Owner__c = UserInfo.getUserId(),
+            Type__c = 'Create',
+            Monday_Account__c = opp.AccountId
+        );
+        system.runAs(cp){
+            try{
+                insert csr;
+            } catch (Exception e){
+
+            }
+        }
     }
 
     static testmethod void test1(){
