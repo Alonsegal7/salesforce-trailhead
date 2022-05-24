@@ -1,9 +1,9 @@
 <template>
     <lightning-layout-item padding="around-medium">
-        <div class="slds-p-around_medium lgc-bg">
+        <div class="slds-align_absolute-center" align="center">
             <lightning-tile type="media">
-                <lightning-icon slot="media" icon-name="action:lead_convert" size="x-small"></lightning-icon>
-                <lightning-button class="slds-p-top_x-large" variant="brand-outline" label="Create Quote On DealHub" onclick={goToDealHub} ></lightning-button>
+                <lightning-icon  id="inverse" slot="media" icon-name="action:lead_convert" size="small"></lightning-icon>
+                <lightning-button class="slds-align_absolute-center" variant="brand-outline" label="Create Quote On DealHub" onclick={handleClick} ></lightning-button>
             </lightning-tile>
         </div>
     </lightning-layout-item>
