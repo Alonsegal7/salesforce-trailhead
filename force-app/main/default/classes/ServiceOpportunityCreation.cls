@@ -19,7 +19,7 @@ public without sharing class ServiceOpportunityCreation {
             Map<Id,Account> accountsWithIds = new Map<Id,Account>();
             for (Account a : relevantAccounts) {
                 serviceOppsToCreate.add(new Opportunity(
-                    Name = a.Name + ' - ' + 'Service Opportnity' ,
+                    Name = a.Name + ' - ' + ' Service Opportnity' ,
                     Company__c = a.Company__c,
                     AccountId = a.Id,
                     CloseDate = system.today(),

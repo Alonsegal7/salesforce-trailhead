@@ -2,10 +2,16 @@
     <lightning-layout-item padding="around-medium">
         <div class="slds-align_absolute-center" align="center">
             <lightning-tile type="media">
-                <lightning-icon  id="inverse" slot="media" icon-name="action:lead_convert" size="small"></lightning-icon>
+                <template if:true={loadingModal}><lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner></template>
                 <lightning-button class="slds-align_absolute-center" variant="brand-outline" label="Create Quote On DealHub" onclick={handleClick} ></lightning-button>
             </lightning-tile>
         </div>
+        <template if:true={showSpinner}>
+            <c-spinner-with-text help-text="Redirect to Dealhub URL..." size="small" variant="brand" show-spinner></c-spinner-with-text>
+        </template>
+        <template if:true={error}>
+            <c-error-panel errors={error}></c-error-panel>
+        </template>
     </lightning-layout-item>
     
 </template>
