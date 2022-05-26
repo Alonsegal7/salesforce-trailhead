@@ -79,7 +79,20 @@ public class NextActivityHelper {
             }
         }
         if(recordsToUpdate.size() > 0){
-            update recordsToUpdate;
+            try {
+                update recordsToUpdate;
+            } catch (Exception ex) {
+                if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')) {
+                    try {
+                        update recordsToUpdate;
+                    } catch (Exception e) {
+                        Utilities.sendDebugEmail('Error in NextActivityHelper ', e, e.getMessage());
+                    }
+                }
+                else {
+                    Utilities.sendDebugEmail('Error in NextActivityHelper ', ex, ex.getMessage());
+                }
+            }
         }
     }
     

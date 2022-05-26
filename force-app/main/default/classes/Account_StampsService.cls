@@ -10,17 +10,16 @@ public with sharing class Account_StampsService {
         }
     }
 
-    public static Map<Id,User> usersMap;
-
     public static void UpdateOwnerStamps(List<Account> newAccounts, map<Id,Account> oldAccounts) {
         
         List<Account> relevantAccountsOwnerChange = new List<Account>();
         List<Account> relevantAccountsCSMChange = new List<Account>();
         Set<Id> relevantUsers = new Set<Id>();
+        
         for(Account acc: newAccounts){
             if(oldAccounts == null || acc.OwnerId != oldAccounts.get(acc.Id).OwnerId){
                 relevantAccountsOwnerChange.add(acc);
-                relevantUsers.add(acc.OwnerId);
+                relevantUsers.add(acc.OwnerId); 
             }
             if (oldAccounts != null && acc.CSM__c == null && oldAccounts.get(acc.Id).CSM__c != null) { //CSM Removed
                 acc.CSM_Manager__c = null;
@@ -32,12 +31,8 @@ public with sharing class Account_StampsService {
         }
         if (relevantAccountsOwnerChange.isEmpty() && relevantAccountsCSMChange.isEmpty()) return;
         
-        if (usersMap == null) {
-            usersMap = new Map<Id,User>();
-            for (User u : [SELECT Id, Business_Role__c, Manager.Team__c, ManagerId FROM USER WHERE Id IN: relevantUsers]) {
-                usersMap.put(u.Id, u);
-            }
-        }
+        
+        Map<Id,User> usersMap = new Map<Id,User>([SELECT Id, Business_Role__c, Manager.Team__c, ManagerId,Email FROM USER WHERE Id IN: relevantUsers]);
 
         //update owner stamps on the relevant accounts
         for (Account acc : relevantAccountsOwnerChange) {
@@ -54,20 +49,22 @@ public with sharing class Account_StampsService {
                 }
                 acc.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
                 acc.Owner_s_Manager__c = currOwner.ManagerId;
+                acc.Owner_s_Email__c = currOwner.Email;
+                
             }
         }
-
+        
         //update CSM stamps on the relevant accounts
         for (Account acc : relevantAccountsCSMChange) {
             User currCSM = usersMap.get(acc.CSM__c);
             acc.CSM_Manager__c = currCSM.ManagerId;
         }
     }
-
+    
     public static void handleOngoingUpdates(List<Account> newAccounts, map<Id,Account> oldAccounts){ 
-
+        
         for(Account acc: newAccounts){
-
+            
             if(acc.Named_Account__c && (oldAccounts == null || (oldAccounts != null && !oldAccounts.get(acc.Id).Named_Account__c))) { //Account marked as named account
                 acc.Named_Account_Start_Date__c = Date.today();
             }

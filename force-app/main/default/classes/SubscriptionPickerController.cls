@@ -62,7 +62,8 @@ public without sharing class SubscriptionPickerController {
         try{
             system.debug('Raz Ben Ron oppId from Controller, '+oppId);
             Opportunity opp=[select id,Pricebook2Id,Billing_Ids__c,CurrencyIsoCode,Expected_Plan_Tier__c,Expected_Plan_Period__c,Expected_Plan_Seats__c,
-                                Is_Primary_SO_Signed__c,Last_Claimed_Subscription__c
+                                Is_Primary_SO_Signed__c,Last_Claimed_Subscription__c,
+                                Co_Sell_Opportunity__c,Co_Sell_V2__c,Main_Co_Sell_Opportunity__c,Co_Sell_Opportunity__r.OwnerId
                                 from Opportunity where id=:oppId][0];
             List<Opportunitylineitem> olisToInsert= new List<Opportunitylineitem>();
             List<Subscription__c> subsToClaim = [select id,ARR__c,name,Seats__c,Unit_Price__c,Product_Code__c,ARR_Gain__c,Tier__c,Period__c,
@@ -136,6 +137,12 @@ public without sharing class SubscriptionPickerController {
                         sub.Claimed_On_Opportunity__c=oppId;
                         sub.Claimed_By_Main__c=UserInfo.getUserId();
                         sub.Claim_Date_Main__c=datetime.now();
+                        //if sub is claimed from co-sell 2.0 main opp we auto fill the claimed on co-sell fields to point to the secondary opp
+                        if(opp.co_sell_v2__c && opp.Main_Co_Sell_Opportunity__c){ 
+                            sub.Claimed_On_Opportunity_Co_Sell__c=opp.Co_Sell_Opportunity__c;
+                            sub.Claimed_By_Co_Sell__c=opp.Co_Sell_Opportunity__r.OwnerId;
+                            sub.Claim_Date_Co_Sell__c=datetime.now();
+                        }
                     }
                     if(opp.Billing_Ids__c==null)
                         opp.Billing_Ids__c=sub.Billing_Ids__c;

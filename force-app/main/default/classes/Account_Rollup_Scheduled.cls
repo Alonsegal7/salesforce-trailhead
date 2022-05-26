@@ -11,7 +11,7 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
     }
     
     public Database.QueryLocator start(Database.BatchableContext BC){
-        String query = 'SELECT Id,ParentId FROM Account WHERE Pending_Rollup__c = true LIMIT 10000';
+        String query = 'SELECT Id, ParentId FROM Account WHERE Pending_Rollup__c = true AND ParentId != null LIMIT 10000';
         try {
             return Database.getQueryLocator(query);
         }
@@ -45,7 +45,7 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
         public void execute(System.QueueableContext ctx) {
             
             //From the input accounts, create a set of all the parent accounts that requires rollup- will contain 1. inputCompanies and 2. the parents of the inputMAs
-            List<Account> inputAccountsList=new List<Account>([SELECT Id,RecordTypeId,ParentId,Pending_Rollup__c FROM Account WHERE Id IN: inputAccounts]);
+            List<Account> inputAccountsList=new List<Account>([SELECT Id,RecordTypeId,ParentId,Pending_Rollup__c FROM Account WHERE Id IN: inputAccounts LIMIT 10000]);
             Set<Id> companiesToRollup = new Set<Id>();
             Id CompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
             Id MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
@@ -53,11 +53,13 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
                 if (acc.recordTypeId == CompanyRecordTypeId) {
                     companiesToRollup.add(acc.Id);
                 }
-                if (acc.recordTypeId == MARecordTypeId) {
+                if (acc.recordTypeId == MARecordTypeId && acc.ParentId != null) {
                     companiesToRollup.add(acc.ParentId);
                 }
                 acc.Pending_Rollup__c = false;
             }
+            if(companiesToRollup.isempty()){return;}
+
             System.debug('Michael - updateAccountsRollupQueueable - Entered queueable');
             System.debug('Michael - updateAccountsRollupQueueable - '+ inputAccounts.size() + ' input accounts entered. ' + companiesToRollup.size() + ' companies sent to Rollup calculation (input companies + parent companies of input MAs).');
             
@@ -153,7 +155,7 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
             }
             
             //check which companies from the list has parents and update the parents as well
-            List<Account>listCompaniesToRollup = new List<Account>([SELECT Id,ParentId FROM Account WHERE Id IN:companiesToRollup]);
+            List<Account>listCompaniesToRollup = new List<Account>([SELECT Id,ParentId FROM Account WHERE Id IN:companiesToRollup LIMIT 10000]);
             Set<Id> relevantParents = new Set<Id>();
             for (Account comp : listCompaniesToRollup) {
                 if(comp.ParentId!=null){

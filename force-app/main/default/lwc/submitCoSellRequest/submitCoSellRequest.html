@@ -1,18 +1,21 @@
 <template>
     <div class="wrap-all">
         <!-- modal -->
-        <lightning-quick-action-panel header="Submit Co-Sell Request">
+        <!--Monday Account Co-Sell Leader-->
+        <lightning-quick-action-panel header={modalHeader}>
             <template if:true={isLoading}>
                 <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
             </template>
             <!-- 0. choose co-sell leader screen -->
             <template if:true={chooseLeaderScreen}>
+                <p class="slds-p-top_small slds-text-color_weak slds-text-body_small">We noticed that it was not defined yet who is the Co-Sell leader for this monday account (Sales/Partners) 🤔</p>
+                <p class="slds-text-color_weak slds-text-body_small">Is Sales joining an existing Partners account or the other way round?</p>
                 <lightning-radio-group name="radioGroup"
-                    label="Are you joining an existing partner account/opportunity or the other way round?"
                     options={coSellLeaderOptions}
                     value={coSellLeaderValue}
                     type="radio"
-                    onchange={handleNextLeaderScreen}></lightning-radio-group>
+                    onchange={handleCoSellLeaderSelection}></lightning-radio-group>
+                    <p class="slds-p-top_small slds-text-color_weak slds-text-body_small">Your selection will be stored on the monday account level and will be used in all the next co-sell requests for this account</p>
             </template>
             <!-- 1. main screen -->
             <template if:true={mainScreen}>
@@ -216,10 +219,13 @@
                 </template>
                 <template if:true={chooseLeaderScreen}>
                     <lightning-button variant="neutral" label="Cancel" onclick={closeQuickAction} class="slds-m-left_x-small"></lightning-button>
-                    <lightning-button variant="brand" label="Next" onclick={handleNextLeaderScreen} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="brand" label="Continue to Submit Co-Sell Request" onclick={handleNextLeaderScreen} class="slds-m-left_x-small"></lightning-button>
                 </template>
                 <template if:true={mainScreen}>
                     <lightning-button variant="neutral" label="Cancel" onclick={closeQuickAction} class="slds-m-left_x-small"></lightning-button>
+                    <template if:true={coSellLeaderValue}>
+                        <lightning-button variant="neutral" label="Back to Co-Sell Leader Selection" onclick={handleBackToCoSellLeader} class="slds-m-left_x-small"></lightning-button>
+                    </template>
                     <template if:false={customError}>
                         <lightning-button variant="brand" label="Next" onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
                     </template>

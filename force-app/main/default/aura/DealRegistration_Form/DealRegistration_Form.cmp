@@ -20,7 +20,6 @@
     <aura:attribute name="formScreen" type="Boolean" default="true"/>
     <aura:attribute name="userProfile" type="String"/>
     <aura:attribute name="isSandbox" type="Boolean"/>
-    <aura:attribute name="hasPermission" type="Boolean" default="false"/>
     <aura:attribute name="showNotice" type="Boolean" default="false"/>
     <aura:attribute name="opportunityId" type="Id"/>
     <aura:attribute name="dealRegId" type="Id"/>
@@ -34,14 +33,14 @@
     <aura:attribute name="customLookup_isDisplayed" type="Boolean" default="false"/>
     <aura:attribute name="customLookup_selectedRecId" type="String" default=""/>
     <aura:attribute name="customLookup_error" type="String" default=""/>
+    <aura:attribute name="customLookup_isRequired" type="Boolean" default="false"/>
+
 
     <lightning:navigation aura:id="navService"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
     
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    <aura:if isTrue="{!and(!v.openModal, v.hasPermission == true)}">
-        <lightning:button class="slds-button_stretch" label="Register a Deal" variant="brand" onclick="{!c.openDealRegForm}" />
-    </aura:if>
+    <lightning:button class="slds-button_stretch" label="Register a Deal" variant="brand" onclick="{!c.openDealRegForm}" />
     
     <aura:if isTrue="{!v.openModal}">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_xx_small slds-fade-in-open">
@@ -128,6 +127,9 @@
                                             whereCondition="{!v.customLookup_whereCondition}"
                                             onlookup="{!c.handleLookup}">
                                         </c:searchComponent>
+                                        <div class="slds-text-color_weak slds-text-body_small slds-p-top_small">
+                                            <p>The activity should be created through the process from your homepage, please see full explanation <a href="https://mondaycom.page.link/sAhsYTxZU9jTG3Jz5" target="_blank">here</a></p>
+                                        </div>
                                     </aura:if>
 
                                     <aura:if isTrue="{!v.eventOrWebinarSelected}">

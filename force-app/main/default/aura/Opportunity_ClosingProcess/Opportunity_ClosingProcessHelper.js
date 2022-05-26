@@ -166,8 +166,7 @@
                     }
 				} else if(saveResult.state == "ERROR") {
 					console.log('opp close proc: callback_saveManualFields state=ERROR');
-					console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
-					component.set("v.errMsg", JSON.stringify(saveResult.error));
+					helper.callbackErrorHander(component, event, helper, saveResult.error);
 				}
 				component.set('v.showSpinner', false);
 			}));
@@ -263,9 +262,9 @@
 		let err = respErr;
 		console.log('callbackErrorHander error: '+JSON.stringify(err));
 		let errMsg = '';
-		console.log()
 		if (err && Array.isArray(err)) {
-			errMsg = err[0].message;
+			let errObj = JSON.parse(JSON.stringify(err));
+			errMsg = errObj[0].message;
 			if(errMsg.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION, ') != -1){
 				var index1 = errMsg.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION, ');
 				errMsg = errMsg.replace('FIELD_CUSTOM_VALIDATION_EXCEPTION, ','');
@@ -403,8 +402,7 @@
 				}
 			} else if(saveResult.state == "ERROR") {
 				console.log('opp close proc: saveRecord result ERROR');
-				console.log('Problem saving record, error: ' + JSON.stringify(saveResult.error));
-				component.set("v.errMsg", JSON.stringify(saveResult.error));
+				helper.callbackErrorHander(component, event, helper, saveResult.error);
 			}
 			component.set('v.showSpinner', false);
 		}));

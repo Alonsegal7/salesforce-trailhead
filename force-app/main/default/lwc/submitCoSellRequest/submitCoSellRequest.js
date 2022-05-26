@@ -10,6 +10,7 @@ import OPP_OWNER_MANAGER_NAME from "@salesforce/schema/Opportunity.Owner.Manager
 import OPP_OWNER_MANAGER_ID from "@salesforce/schema/Opportunity.Owner.ManagerId";
 import OPP_OWNERS_MANAGER_TEAM from "@salesforce/schema/Opportunity.Owner_s_Manager_Team__c";
 import OPP_OWNERS_OFFICE from "@salesforce/schema/Opportunity.Owner_Office_Live__c";
+import OPP_OWNER_SEGMENT from "@salesforce/schema/Opportunity.Owner_Segment_Live__c";
 import OPP_OWNER_ID from "@salesforce/schema/Opportunity.OwnerId";
 import OPP_RT_DEV_NAME from "@salesforce/schema/Opportunity.RecordType.DeveloperName";
 import OPP_OWNER_ACCOUNTID from "@salesforce/schema/Opportunity.Owner.AccountId";
@@ -34,7 +35,6 @@ export default class SubmitCoSellRequest extends LightningElement {
     beforeSaveMsg;
     partnerCompanyId;
     oppOwnerId;
-    cosellLeader;
     isLoading = true;
     mainScreen = false;
     chooseLeaderScreen = false;
@@ -42,8 +42,10 @@ export default class SubmitCoSellRequest extends LightningElement {
     associateScreen = false;
     submittedScreen = false;
     displayPsFields = false;
+    psTypeDetailsRequired = true;
     allowSwitchMainSec = false;
     currentOppMustBeMain = false;
+    showBackBtn = false;
     whatYouWishValue = '';
     cosellRequest = {};
     associateOppsOptions = [];
@@ -55,12 +57,13 @@ export default class SubmitCoSellRequest extends LightningElement {
     oppsSyncedQts_map = {};
     coSellLeaderValue = '';
     arrIsUnder10k = false;
+    modalHeader = '';
 
     // used to choose co-sell leader when Co_Sell_Leader__c is blank on monday account
     get coSellLeaderOptions() {
         return [
-            { label: 'Sales joining to Partners co sell', value: 'Partners' },
-            { label: 'Partner joining to Sales co sell', value: 'Sales' },
+            { label: 'Sales joining to Partners', value: 'Partners' },
+            { label: 'Partners joining to Sales', value: 'Sales' },
         ];
     }
 
@@ -87,9 +90,9 @@ export default class SubmitCoSellRequest extends LightningElement {
     @wire(getRecord, { recordId: '$recordId', 
                         fields: [OPP_ACCOUNTID, OPP_STAGE, OPP_OWNER_MANAGER_NAME, OPP_OWNER_MANAGER_ID, OPP_OWNER_ID, 
                                 OPP_RT_DEV_NAME, OPP_OWNER_ACCOUNTID, SYNCED_QUOTE, SYNCED_QUOTE_STATUS, SYNCED_QUOTE_PUBLISH, 
-                                SYNCED_QUOTE_DATE,COSELL_LEADER, OPP_ARR, ACC_ARR, OPP_OWNERS_MANAGER_TEAM, OPP_OWNERS_OFFICE] })
+                                SYNCED_QUOTE_DATE,COSELL_LEADER, OPP_ARR, ACC_ARR, OPP_OWNERS_MANAGER_TEAM, OPP_OWNERS_OFFICE, OPP_OWNER_SEGMENT] })
     wiredRecord({ error, data }) {
-        if (error) { this.error = error; }
+        if (error) { this.modalHeader = 'Submit Co-Sell Request'; this.error = error; }
         if (data) {
             this.oppStage = getFieldValue(data, OPP_STAGE);
             this.accountId = getFieldValue(data, OPP_ACCOUNTID);
@@ -98,16 +101,19 @@ export default class SubmitCoSellRequest extends LightningElement {
             this.currentOppRT = getFieldValue(data, OPP_RT_DEV_NAME);
             this.partnerCompanyId = getFieldValue(data, OPP_OWNER_ACCOUNTID);
             this.oppOwnerId = getFieldValue(data, OPP_OWNER_ID);
-            this.cosellLeader = getFieldValue(data, COSELL_LEADER);
+            let cosellLeader = getFieldValue(data, COSELL_LEADER);
             let syncedQuoteId = getFieldValue(data, SYNCED_QUOTE);
             var oppArr = getFieldValue(data, OPP_ARR);
             var accArr = getFieldValue(data, ACC_ARR);
             var totalArr = oppArr + accArr;
             var isAnzTeam = false; //ANZ team is excluded from 10K TH validation
+            var isSmb = false; //SMB is excluded from 10K TH validation (Sales)
             var ownersManagerTeam = getFieldValue(data, OPP_OWNERS_MANAGER_TEAM); //for partners
             var ownersOffice = getFieldValue(data, OPP_OWNERS_OFFICE); //for sales
-            if((this.currentOppRT == 'Partner_Opportunity' && ownersManagerTeam == 'CP - ANZ Team') || (this.currentOppRT == 'Internal_Opportunity' && ownersOffice == 'Sydney Office')) isAnzTeam = true;
-            if(isAnzTeam || totalArr >= 10000){
+            var ownerSegment = getFieldValue(data, OPP_OWNER_SEGMENT); //for sales
+            if(ownersManagerTeam == 'CP - ANZ Team' || ownersOffice == 'Sydney Office') isAnzTeam = true;
+            else if(this.currentOppRT == 'Internal_Opportunity' && ownerSegment == 'SMB') isSmb = true;
+            //if(isSmb || isAnzTeam || totalArr >= 10000){
                 this.customError = '';
                 this.arrIsUnder10k = false;
                 if(syncedQuoteId){
@@ -121,41 +127,58 @@ export default class SubmitCoSellRequest extends LightningElement {
                     console.log('wiredRecord qt: ' + JSON.stringify(qt));
                     console.log('wiredRecord allowSwitchMainSec: ' + this.allowSwitchMainSec);
                 }
-                if(this.cosellLeader == null || this.cosellLeader == undefined){
+                if(cosellLeader == null || cosellLeader == undefined){
+                    this.modalHeader = 'Choose the Co-Sell Leader for this Monday Account';
                     this.chooseLeaderScreen = true;
                 } else {
+                    this.modalHeader = 'Submit Co-Sell Request';
                     this.mainScreen = true;
                 }
-            } else {
+            /*} else {
+                this.modalHeader = 'Submit Co-Sell Request';
                 var err10K = 'Submit Co-Sell Request is available only for accounts that reached 10K ARR (including current opp ARR).';
                 err10K += ' This account ARR is ' + accArr + ' and this opportunity ARR is ' + oppArr + ' so total ARR is ' + totalArr;
                 this.customError = err10K;
                 this.arrIsUnder10k = true;
-            }
+            }*/
         }
         this.isLoading = false;
     }
 
-    handleNextLeaderScreen(event){
+    handleBackToCoSellLeader(event){
+        this.mainScreen = false;
+        this.modalHeader = 'Choose the Co-Sell Leader for this Monday Account';
+        this.chooseLeaderScreen = true;
+    }
+
+    handleCoSellLeaderSelection(event){
         this.coSellLeaderValue = event.detail.value;
-        const fields = {};
-        fields['Id'] = this.accountId;
-        fields['Co_Sell_Leader__c'] = this.coSellLeaderValue;
-        console.log('fields: ' + JSON.stringify(fields));
-        const recordInput = { fields };
-        console.log('recordInput: ' + JSON.stringify(recordInput));
-        this.isLoading = true;
-        updateRecord(recordInput)
-        .then(() => {
-            this.isLoading = false;
-            this.chooseLeaderScreen = false;
-            this.mainScreen = true;
-        })
-        .catch(error => {
-            this.isLoading = false;
-            this.error = error;
-            console.log('error: ' + JSON.stringify(this.error));
-        });
+    }
+
+    handleNextLeaderScreen(event){
+        if(this.coSellLeaderValue == '') this.customError = 'Please choose an option for the co-sell leader.';
+        else {
+            this.customError = '';
+            const fields = {};
+            fields['Id'] = this.accountId;
+            fields['Co_Sell_Leader__c'] = this.coSellLeaderValue;
+            console.log('fields: ' + JSON.stringify(fields));
+            const recordInput = { fields };
+            console.log('recordInput: ' + JSON.stringify(recordInput));
+            this.isLoading = true;
+            updateRecord(recordInput)
+            .then(() => {
+                this.isLoading = false;
+                this.chooseLeaderScreen = false;
+                this.modalHeader = 'Submit Co-Sell Request';
+                this.mainScreen = true;
+            })
+            .catch(error => {
+                this.isLoading = false;
+                this.error = error;
+                console.log('error: ' + JSON.stringify(this.error));
+            });
+        }
     }
 
     handleSave(event){
@@ -219,6 +242,9 @@ export default class SubmitCoSellRequest extends LightningElement {
         if(fieldName == 'Reason__c'){ 
             if(fieldVal == 'Professional Services Sales Expertise') this.displayPsFields = true;
             else this.displayPsFields = false;
+        } else if(fieldName == 'PS_Type__c'){
+            if(fieldVal == 'Onboarding') this.psTypeDetailsRequired = false;
+            else this.psTypeDetailsRequired = true;
         }
     }
 
@@ -392,9 +418,10 @@ export default class SubmitCoSellRequest extends LightningElement {
 
         let cosellReqFieldValid = true;
         // note: checkValidity is not avaiable for lightning-input-field!!!
+        let ignorePsDetails = false;
         this.template.querySelectorAll('lightning-input-field').forEach(element => {
             if (!element.value) {
-                cosellReqFieldValid = false;
+                if(element.fieldName != 'PS_Type_Details__c' || this.psTypeDetailsRequired) cosellReqFieldValid = false;
             }
             element.reportValidity();
         });

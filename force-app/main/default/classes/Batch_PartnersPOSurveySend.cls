@@ -16,7 +16,10 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
     }
 
     public Database.QueryLocator start(Database.BatchableContext BC){
-        String query = 'select Id, Name, AccountId, Account.Name, Of_Post_Onboarding_Surveys__c from Contact where Account.Next_PO_Survey_Date__c = TODAY';
+        List<String> types = new List<String>{'Partners - Post Onboarding', 'Partners - Ongoing'};
+        String query = 'select Id, Survey_Type__c, Account__c, Contact__c, Partner_PO_Survey_Opportunity__c, Survey_Sent_Date__c, Account__r.Plan_Tier__c, Account__r.Plan_Seats__c, Account__r.Monday_Account_Status__c, Account__r.Channel_Partner__c from Survey__c';
+        query += ' where Survey_Sent_Date__c = TODAY AND Survey_Type__c in: types';
+        if(!Test.isRunningTest()) query += ' AND Account__r.Plan_Tier__c = \'Enterprise\' AND Account__r.Plan_Seats__c >= 100 Account__r.Monday_Account_Status__c = \'Paying Account\' AND Account__r.Channel_Partner__c != null';
         try{
             return Database.getQueryLocator(query);
         }catch(Exception e){
@@ -25,20 +28,64 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
         }
      }
 
-    public void execute(Database.BatchableContext BC, list<Contact> scope){
+    public void execute(Database.BatchableContext BC, list<Survey__c> scope){
         try{
-            List<Contact> contactsToUpdate = new List<Contact>();
-            for(Contact con: scope){
-                debugString += '<br/><a href="https://monday.lightning.force.com/lightning/r/Contact/'+con.Id+'/view">'+con.Name+'</a> ('+con.account.name+') will recieve survey.';
-                Decimal numOfSurveys = con.Of_Post_Onboarding_Surveys__c;
-                contactsToUpdate.add(new Contact(
-                    Id = con.Id,
-                    Partners_Post_Onboarding_Survey_Date__c = Date.today(), 
-                    Of_Post_Onboarding_Surveys__c = numOfSurveys + 1
+            List<Survey__c> surveysToUpdate = new List<Survey__c>();
+            List<Survey__c> surveysToCreate = new List<Survey__c>();
+            Map<Id,Survey__c> accountToSurvey_map = new Map<Id,Survey__c>();
+            Integer monthsToAdd;
+            for(Survey__c s: scope){
+                accountToSurvey_map.put(s.Account__c, s);
+                //generate next surveys and add them to surveys to create
+                if(s.Survey_Type__c == 'Partners - Post Onboarding') monthsToAdd = 3;
+                else if(s.Survey_Type__c == 'Partners - Ongoing') monthsToAdd = 6;
+                else continue;
+                surveysToCreate.add(new Survey__c(
+                    Account__c = s.Account__c,
+                    Survey_Type__c = 'Partners - Ongoing',
+                    Survey_Sent_Date__c = s.Survey_Sent_Date__c.addMonths(monthsToAdd)
                 ));
             }
-            if(!contactsToUpdate.isEmpty()) Database.update(contactsToUpdate);
-            totalCons += contactsToUpdate.size();
+            //get all Account Contact Relationships
+            List<AccountContactRelation> acr_list = [select Id, 
+                                                    AccountId, Account.Name, 
+                                                    ContactId, Contact.Name, Contact.CSM_Champion__c
+                                                    from AccountContactRelation 
+                                                    where AccountId in: accountToSurvey_map.keySet()];
+            if(acr_list.isEmpty()) return;
+            //mark accounts with champions contacts - for those accounts only champions will recieve surveys, otherwise all contacts will recieve
+            Set<Id> accountsWithChampions = new Set<Id>();
+            for(AccountContactRelation acr: acr_list){
+                if(acr.Contact.CSM_Champion__c) accountsWithChampions.add(acr.AccountId);
+            }
+            //generate surveys
+            for(AccountContactRelation acr: acr_list){
+                if(accountsWithChampions.contains(acr.AccountId) && !acr.Contact.CSM_Champion__c) continue; //accounts with champions contacts - for those accounts only champions will recieve surveys, otherwise all contacts will recieve
+                Survey__c existingSurvey = accountToSurvey_map.get(acr.AccountId);
+                if(existingSurvey.Contact__c == null){ // existing survey not assigned yet
+                    existingSurvey.Contact__c = acr.ContactId;
+                    surveysToUpdate.add(existingSurvey);
+                } else { // existing survey is assigned already to first contact - create new surveys for the rest of the contacts
+                    surveysToCreate.add(new Survey__c(
+                        Account__c = acr.AccountId,
+                        Contact__c = acr.ContactId,
+                        Partner_PO_Survey_Opportunity__c = existingSurvey.Partner_PO_Survey_Opportunity__c,
+                        Survey_Sent_Date__c = existingSurvey.Survey_Sent_Date__c
+                    ));
+                }
+                debugString += '<br/><a href="https://monday.lightning.force.com/lightning/r/Contact/'+acr.ContactId+'/view">'+acr.Contact.Name+'</a> ('+acr.account.name+') will recieve survey.';
+            }
+            //update & insert the surveys
+            if(!surveysToUpdate.isEmpty()) Database.update(surveysToUpdate);
+            if(!surveysToCreate.isEmpty()) Database.insert(surveysToCreate);
+            //set qualtrix trigger
+            List<Survey__c> allTodaySurveys = new List<Survey__c>(surveysToUpdate);
+            allTodaySurveys.addAll(surveysToCreate);
+            for(Survey__c s: allTodaySurveys){
+                s.Trigger_Outbound_Message_to_Qualtrix__c = true;
+            }
+            Database.update(allTodaySurveys);
+            totalCons += allTodaySurveys.size();
         }catch(Exception e){
             Utilities.sendEmail('Error in Apex Job Batch_PartnersPOSurveySend execute: ', e.getMessage() + '\n' + e.getStackTraceString(), emailRecepients); 
         }

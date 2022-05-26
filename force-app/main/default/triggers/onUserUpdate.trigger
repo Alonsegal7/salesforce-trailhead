@@ -1,8 +1,9 @@
-trigger onUserUpdate on User (after insert, after update, after delete, before insert, before update, before delete) {
+trigger onUserUpdate on User (after insert, after update, after delete) {
 
     if(Trigger.isAfter){
         if(Trigger.isInsert || Trigger.isUpdate){
             Partners_SharingService.handleEligibleUsersUserRole(Trigger.new, Trigger.oldMap);
+            User_CommunityPublicGroupService.addRemoved_PartnerCommunityUsersPG(Trigger.new, Trigger.oldMap);
         }
         if (Trigger.isDelete) {
             CalloutHandler.HandleCallout (trigger.old,'Delete',null);
@@ -23,5 +24,4 @@ trigger onUserUpdate on User (after insert, after update, after delete, before i
             }
         }
     }
-    
 }
