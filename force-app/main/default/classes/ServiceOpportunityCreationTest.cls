@@ -1,5 +1,5 @@
 @isTest
-public with sharing class ServiceOpportunityCreationTest {
+public without sharing class ServiceOpportunityCreationTest {
     @TestSetup
     static void makeData(){
         Profile profileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
@@ -30,10 +30,11 @@ public with sharing class ServiceOpportunityCreationTest {
             accountsforserviceIds.add(accountforserviceId.Id);
             ServiceOpportunityCreation.createServiceOpportunities(accountsforserviceIds);   
             test.stopTest();
+            opportunity opp = [SELECT Id FROM Opportunity LIMIT 1];
+            system.assertNotEquals(opp.Id,null); 
         }
-        opportunity opp = [SELECT Id FROM Opportunity];
         //query of the opp that has been created 
-        system.assertNotEquals(opp.Id,null); // check if the opp created 
+        // check if the opp created 
         //system.assertEquals(user2.Email, acc.Owner_s_Email__c); //check if the type correct 
         //system.assertEquals(user2.Email, acc.Owner_s_Email__c);// check if the active contract is the same as the account active contract 
     }
