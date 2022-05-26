@@ -7,6 +7,7 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, after delete,
         }
     }    
     if (Trigger.isAfter && Trigger.isUpdate) {
+        Quote_CreateQuoteHistory.CreateQuoteHistory(Trigger.new,Trigger.oldMap);
         if(Quote_Utils.firstRunAfterUpdate){
             Quote_Utils.firstRunAfterUpdate=false;
             QuoteTriggerHandler.handleQuoteArchived(Trigger.new, Trigger.oldMap);
@@ -14,9 +15,8 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, after delete,
         if (Quote_CallQuoteSync.firstRun) {
             Quote_CallQuoteSync.Quote_CallQuoteSync(Trigger.new,Trigger.oldMap);
         }
-            ContractEventHandler.SalesOrderContractEvent(Trigger.new,Trigger.oldMap);
-            Quote_CreateQuoteHistory.CreateQuoteHistory(Trigger.new,Trigger.oldMap);
-            Quote_CloseCorrectionOpp.Quote_CloseCorrectionOpp(Trigger.new, Trigger.oldMap);
+        ContractEventHandler.SalesOrderContractEvent(Trigger.new,Trigger.oldMap);
+        Quote_CloseCorrectionOpp.Quote_CloseCorrectionOpp(Trigger.new, Trigger.oldMap);
     }   
     if(Trigger.isAfter){
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
