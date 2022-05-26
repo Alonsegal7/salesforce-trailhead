@@ -23,20 +23,18 @@ public without sharing class ServiceOpportunityCreationTest {
     @isTest
     static void Checkopportunitycreation(){
         Account accountforserviceId = [SELECT Id,Active_Contract__c FROM Account limit 1];
+        Id serviceOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Service_Opportunity').getRecordTypeId();
         Test.startTest();
         User userRecord1 = [SELECT Id FROM User LIMIT 1][0];
-        System.runAs(userRecord1){
-            List<Id>accountsforserviceIds = new List<Id>();
-            accountsforserviceIds.add(accountforserviceId.Id);
-            ServiceOpportunityCreation.createServiceOpportunities(accountsforserviceIds);   
-            test.stopTest();
-            opportunity opp = [SELECT Id FROM Opportunity LIMIT 1];
-            system.assertNotEquals(opp.Id,null); 
-        }
-        //query of the opp that has been created 
-        // check if the opp created 
-        //system.assertEquals(user2.Email, acc.Owner_s_Email__c); //check if the type correct 
-        //system.assertEquals(user2.Email, acc.Owner_s_Email__c);// check if the active contract is the same as the account active contract 
+        List<Id>accountsforserviceIds = new List<Id>();
+        accountsforserviceIds.add(accountforserviceId.Id);
+        ServiceOpportunityCreation.createServiceOpportunities(accountsforserviceIds);   
+        test.stopTest();
+        opportunity opp = [SELECT Id,Selected_Company_Contract__c,RecordTypeId FROM Opportunity LIMIT 1];
+
+        system.assertNotEquals(opp.Id,null); 
+        system.assertEquals(serviceOppRtId,opp.RecordTypeId);
+        system.assertEquals(accountforserviceId.Active_Contract__c,opp.Selected_Company_Contract__c);
     }
 }
     
