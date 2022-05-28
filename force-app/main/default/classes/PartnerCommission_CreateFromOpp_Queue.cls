@@ -9,7 +9,7 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
     }
     
     public void execute(System.QueueableContext ctx) {
-        List<Partner_Commission__c> newPartnerCommissionList = new List<Partner_Commission__c>();
+        List<Partner_Commission__c> newPcList = new List<Partner_Commission__c>();
         PartnerCommissionService pcService = new PartnerCommissionService();
         try {
             Map<Id, Account> accountsMap = getAccountsMap(oppsList);
@@ -24,15 +24,15 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
                     continue;
                 }
                 if(!accountsMap.containsKey(opp.AccountId) || !accountsMap.containsKey(opp.Channel_Partner__c)) continue;
-                Partner_Commission__c newPartnerCommission = pcService.createPartnerCommissionRecord(accountsMap.get(opp.AccountId), accountsMap.get(opp.Channel_Partner__c), opp, createReason);
-                if(isRunningFromScript) newPartnerCommission.Trigger_Valid_From__c = opp.CloseDate.toStartOfMonth();
-                newPartnerCommissionList.add(newPartnerCommission);
+                Partner_Commission__c newPc = pcService.createPartnerCommissionRecord(accountsMap.get(opp.AccountId), accountsMap.get(opp.Channel_Partner__c), opp, createReason);
+                if(isRunningFromScript) newPc.Trigger_Valid_From__c = opp.CloseDate.toStartOfMonth();
+                newPcList.add(newPc);
             }
             if(!partnerCoSellOppsMap.isEmpty()) {
                 createReason += ' - Co Sell';
-                handleCosellOpps(partnerCoSellOppsMap, internalCoSellOpps, newPartnerCommissionList, accountsMap, pcService);
+                handleCosellOpps(partnerCoSellOppsMap, internalCoSellOpps, newPcList, accountsMap, pcService);
             }
-            pcService.upsertPartnerCommissionInQueue(newPartnerCommissionList, CLASS_NAME_CONST);
+            pcService.upsertPartnerCommissionInQueue(newPcList, CLASS_NAME_CONST);
         } catch (Exception ex){
             pcService.sendErrorEmail(CLASS_NAME_CONST, ex.getMessage());
             throw ex;
@@ -62,43 +62,44 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
                                             or (RecordTypeId =: partnerRecordTypeId and Partner_Commission_Model__c != null))]);
     }
 
-    private void handleCosellOpps(Map<Id,Opportunity> partnerCoSellOppsMap, Set<Id> internalCoSellOpps, List<Partner_Commission__c> newPartnerCommissionList, Map<Id, Account> accountsMap, PartnerCommissionService pcService){
-        Map<Id, List<Subscription__c>> oppIdToSubsMap = new Map<Id, List<Subscription__c>>();
+    private void handleCosellOpps(Map<Id,Opportunity> partnerCoSellOppsMap, Set<Id> internalCoSellOpps, List<Partner_Commission__c> newPcList, Map<Id, Account> accountsMap, PartnerCommissionService pcService){
+        Map<Id, Subscription__c> oppIdToSubsMap = new Map<Id, Subscription__c>();
         for(Subscription__c sub: [select Id, Activation_Date__c, Claimed_On_Opportunity__c, Claimed_On_Opportunity_Co_Sell__c from Subscription__c where Claimed_On_Opportunity__c IN: partnerCoSellOppsMap.keySet() or Claimed_On_Opportunity_Co_Sell__c IN: partnerCoSellOppsMap.keySet() order by Activation_Date__c ASC]){
-            if(sub.Claimed_On_Opportunity__c != null){
-                if(oppIdToSubsMap.containsKey(sub.Claimed_On_Opportunity__c)){
-                    oppIdToSubsMap.get(sub.Claimed_On_Opportunity__c).add(sub);
-                } else {
-                    oppIdToSubsMap.put(sub.Claimed_On_Opportunity__c, new List<Subscription__c>{sub});
-                }
+            //build a map of opp id and claimed subs sorted by activation date DESC
+            if(sub.Claimed_On_Opportunity__c != null && !oppIdToSubsMap.containsKey(sub.Claimed_On_Opportunity__c)){
+                oppIdToSubsMap.put(sub.Claimed_On_Opportunity__c, sub);
             }
-            if(sub.Claimed_On_Opportunity_Co_Sell__c != null){
-                if(oppIdToSubsMap.containsKey(sub.Claimed_On_Opportunity_Co_Sell__c)){
-                    oppIdToSubsMap.get(sub.Claimed_On_Opportunity_Co_Sell__c).add(sub);
-                } else {
-                    oppIdToSubsMap.put(sub.Claimed_On_Opportunity_Co_Sell__c, new List<Subscription__c>{sub});
-                }
+            if(sub.Claimed_On_Opportunity_Co_Sell__c != null && !oppIdToSubsMap.containsKey(sub.Claimed_On_Opportunity_Co_Sell__c)){
+                oppIdToSubsMap.put(sub.Claimed_On_Opportunity_Co_Sell__c, sub);
             }
         }
         Map<Id, Quote> oppIdToQuoteMap = new Map<Id, Quote>();
-        for(Quote quote: [select Id, OpportunityId, Contract.StartDate from Quote where (OpportunityId IN: partnerCoSellOppsMap.keySet() or OpportunityId IN: internalCoSellOpps) and IsSyncing = true and DH_Quote_Status__c = 'Won']){
+        for(Quote quote: [select Id, OpportunityId, Subscription_Start_date__c from Quote where (OpportunityId IN: partnerCoSellOppsMap.keySet() or OpportunityId IN: internalCoSellOpps) and IsSyncing = true and DH_Quote_Status__c = 'Won']){
             oppIdToQuoteMap.put(quote.OpportunityId, quote);
         }
         Date startDateForCoSell;
+        Id subId, quoteId;
         for(Opportunity opp: partnerCoSellOppsMap.values()){
             startDateForCoSell = null;
-            if(oppIdToSubsMap.containsKey(opp.Id)){ //check if sub exists
-                startDateForCoSell = oppIdToSubsMap.get(opp.Id).get(0).Activation_Date__c;
-            } else if(oppIdToQuoteMap.containsKey(opp.Id)){
-                startDateForCoSell = oppIdToQuoteMap.get(opp.Id).Contract.StartDate;
+            subId = null;
+	        quoteId = null;
+            if(oppIdToSubsMap.containsKey(opp.Id)){ //check if claimed sub exists -> take the activation date
+                startDateForCoSell = oppIdToSubsMap.get(opp.Id).Activation_Date__c;
+                subId = oppIdToSubsMap.get(opp.Id).Id;
+            } else if(oppIdToQuoteMap.containsKey(opp.Id)){ //else check for quote
+                startDateForCoSell = oppIdToQuoteMap.get(opp.Id).Subscription_Start_date__c;
+                quoteId = oppIdToQuoteMap.get(opp.Id).Id;
             } else if(oppIdToQuoteMap.containsKey(opp.co_sell_opportunity__c)){
-                startDateForCoSell = oppIdToQuoteMap.get(opp.co_sell_opportunity__c).Contract.StartDate;
+                startDateForCoSell = oppIdToQuoteMap.get(opp.co_sell_opportunity__c).Subscription_Start_date__c;
+                quoteId = oppIdToQuoteMap.get(opp.co_sell_opportunity__c).Id;
             }
             if(startDateForCoSell != null && accountsMap.containsKey(opp.AccountId) && accountsMap.containsKey(opp.Channel_Partner__c)){ //create PCs for co-sell opps
-                Partner_Commission__c newPartnerCommission = pcService.createPartnerCommissionRecord(accountsMap.get(opp.AccountId), accountsMap.get(opp.Channel_Partner__c), opp, createReason);
-                newPartnerCommission.Start_Date__c = startDateForCoSell;
-                if(isRunningFromScript) newPartnerCommission.Trigger_Valid_From__c = opp.CloseDate.toStartOfMonth();
-                newPartnerCommissionList.add(newPartnerCommission);
+                Partner_Commission__c newPc = pcService.createPartnerCommissionRecord(accountsMap.get(opp.AccountId), accountsMap.get(opp.Channel_Partner__c), opp, createReason);
+                newPc.Start_Date__c = startDateForCoSell;
+                newPc.subscription_for_start_date__c = subId;
+                newPc.quote_for_start_date__c = quoteId;
+                if(isRunningFromScript) newPc.Trigger_Valid_From__c = opp.CloseDate.toStartOfMonth();
+                newPcList.add(newPc);
             }
         }
     }
