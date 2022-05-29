@@ -1,0 +1,5 @@
+<template>
+    <lightning-input type="date" label="Start Date" name="StartDate" onchange={handleChangeDate} required="=true"></lightning-input>
+    <lightning-input label="Duration (in Months)" name="Duration" type="number" onchange={handleChangeDuration} required="true" min="1" max="60"></lightning-input>
+    <lightning-input type="date" label="End Date" name="EndDate" read-only="true" value={EndDate}></lightning-input>
+  </template>
