@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="jsonSkusData" type="String" label="dealhu API JSON" 
+                        description="the JSON file returned from dealhub via APIb"/>
+                        <property name="duration" type="Integer" label="Duration" 
+                        description="The deal total duration"/>
+                        <property name="pricingVersion" type="String" label="Pricing Version" 
+                        description="The Pricing Version"/>
+                        <property name="crrncyIso" type="String" label="Currency Code" 
+                        description="The deal currency"/>
+                        <property name="parentRecId" type="String" label="ParentId" 
+                        description="The parent id of the record which the products will be created on"/>
+                        <property name="context" type="String" label="Process (SOR or Forecast)" 
+                        description="The context of this component - if it is SOR, it will create SOR records if it is Forecast, it will create quote and line items. make sure to send the parent id (SOR or Opportuinty) at the ParentId input field"/>
+                        <propertyType name="T" extends="SObject" label="Product Table" description="Plesae make sure to add only the Product list from the product get records" />
+                        <property label="Products List" name="Products" role="inputOnly" type="{T[]}" />
+        </targetConfig>
+
+        
+    </targetConfigs>
+    
+</LightningComponentBundle>
