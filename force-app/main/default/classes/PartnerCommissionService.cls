@@ -186,86 +186,87 @@ public class PartnerCommissionService {
         checkDups(newPcList, existingPcList);
     }
 
-    // this method is the core for PC creation, all partner commission logic creates PCs by this method
-    public Partner_Commission__c createPartnerCommissionRecord(Account mondayAccount, Account partnerAccount, Opportunity opp, String creationReson){
-        //get accounts
+    public void limitPcStartDate(List<Partner_Commission__c> newPcList){
+        for(Partner_Commission__c newPC: newPcList){
+            Date sixMonthsAgo = Date.today().addMonths(-6);
+            if(sixMonthsAgo > newPC.Start_Date__c){ //if pc start date is earlier then 6 months ago, we set the start date of the pc to 6 months ago exactly
+                newPC.Start_Date__c = sixMonthsAgo;
+            }
+        }
+    }
+
+    public Map<Id, Account> getAccountsMap(Set<Id> accountIds){
+        //get accounts for pc creation
         //add all fields you need here >>
-        Map<Id,Account> accountsMap = new Map<Id,Account>(
-            [
-                select Id, Name, primary_pulse_account_id__c, Partner_Tier__c, Account_Source_Type__c, ARR__c, Plan_Period__c,
-                Active_Contract__r.Period__c, Active_Contract__r.StartDate, Sign_Up_Date__c, Last_ARR_Update_Timestamp__c,
-                Partner_Commission_Model__c, Partner_Type__c, Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c,
-                Partner_Commission_Model__r.Commission_Model__r.Period__c, Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c, 
-                Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c
-                from Account 
-                where Id =: mondayAccount.Id or Id =: partnerAccount.Id]
-        );
-        Account monday_acc = accountsMap.get(mondayAccount.Id);
-        Account partner_comp = accountsMap.get(partnerAccount.Id);
-        //get opp if exists
+        Map<String, Schema.RecordTypeInfo> accountRecordTypesMap = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName();
+        Id partnerRecordTypeId = accountRecordTypesMap.get('Partner_Company').getRecordTypeId();
+        Id mondayRecordTypeId = accountRecordTypesMap.get('Monday_Account').getRecordTypeId();
+        return new Map<Id, Account>([select Id, ARR__c, Name, Plan_Tier__c, Partner_Tier__c, Sign_Up_Date__c, Last_ARR_Update_Timestamp__c, Account_Source_Type__c, 
+                                    Active_Contract__r.StartDate, Active_Contract__r.Period__c, Plan_Period__c, 
+                                    Partner_Type__c, primary_pulse_account_id__c, Partner_Commission_Model__c, 
+                                    Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c, 
+                                    Partner_Commission_Model__r.Commission_Model__r.Period__c, 
+                                    Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c, 
+                                    Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c 
+                                    from Account 
+                                    where Id IN: accountIds 
+                                    and ((RecordTypeId =: mondayRecordTypeId and primary_pulse_account_id__c != null) 
+                                        or (RecordTypeId =: partnerRecordTypeId and Partner_Commission_Model__c != null))]);
+    }
+
+    // this method is the core for PC creation, all partner commission logic creates PCs by this method
+    public Partner_Commission__c createNewPc(Account mondayAccount, Account partnerAccount, Opportunity opp, String creationReson){
         Partner_Commission__c newPC = new Partner_Commission__c();
         newPC.Creation_Reason__c = creationReson;
-        newPC.Name = monday_acc.primary_pulse_account_id__c + ' - ' + partner_comp.Name + ' - ' + partner_comp.Partner_Tier__c;
-        newPC.Partner_Commission_Model__c = partner_comp.Partner_Commission_Model__c;
-        newPC.Partner_Company__c = partner_comp.Id;
-        newPC.Partner_ID__c = partner_comp.Id;
-        newPC.Partner_Type__c = partner_comp.Partner_Type__c;
-        newPC.Type__c = partner_comp.Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c;
-        newPC.Monday_Account__c = monday_acc.Id;
-        newPC.Pulse_Account_ID__c = monday_acc.primary_pulse_account_id__c;
-        newPC.Account_Source__c = monday_acc.Account_Source_Type__c;
+        newPC.Name = mondayAccount.primary_pulse_account_id__c + ' - ' + partnerAccount.Name + ' - ' + partnerAccount.Partner_Tier__c;
+        newPC.Partner_Commission_Model__c = partnerAccount.Partner_Commission_Model__c;
+        newPC.Partner_Company__c = partnerAccount.Id;
+        newPC.Partner_ID__c = partnerAccount.Id;
+        newPC.Partner_Type__c = partnerAccount.Partner_Type__c;
+        newPC.Type__c = partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c;
+        newPC.Monday_Account__c = mondayAccount.Id;
+        newPC.Pulse_Account_ID__c = mondayAccount.primary_pulse_account_id__c;
+        newPC.Account_Source__c = mondayAccount.Account_Source_Type__c;
         newPC.Created_From__c = 'Code';
-        newPC.ARR_Upon_Create__c = monday_acc.ARR__c;
+        newPC.ARR_Upon_Create__c = mondayAccount.ARR__c;
+        newPc.Monday_Account_Tier__c = mondayAccount.Plan_Tier__c;
+        newPc.Partner_Company_Tier__c = partnerAccount.Partner_Tier__c;
 
         //start date (and end date for monthly plans) logic
         if(opp != null) { //First PC created from close won a GB opp
-            Opportunity closed_opp = [
-                select Id, Is_Migrated_Commission__c
-                from Opportunity where Id =: opp.Id
-            ];
-            newPC.Opportunity__c = closed_opp.Id;
-            if(closed_opp.Is_Migrated_Commission__c) newPC.Start_Date__c = Datetime.now().addDays(-5); //if opp is marked Is_Migrated_Commission__c we always set start date to be now - 5 days
-            else if(monday_acc.Plan_Period__c != null && //monthly plans
-                    monday_acc.Active_Contract__r.Period__c != null &&
-                    monday_acc.Plan_Period__c.containsIgnoreCase('monthly') && 
-                    monday_acc.Active_Contract__r.Period__c.containsIgnoreCase('monthly')){ 
-                newPC.Start_Date__c = monday_acc.Active_Contract__r.StartDate;
+            newPC.Opportunity__c = opp.Id;
+            if(opp.Is_Migrated_Commission__c) newPC.Start_Date__c = Datetime.now().addDays(-5); //if opp is marked Is_Migrated_Commission__c we always set start date to be now - 5 days
+            else if(mondayAccount.Plan_Period__c != null && //monthly plans
+                    mondayAccount.Active_Contract__r.Period__c != null &&
+                    mondayAccount.Plan_Period__c.containsIgnoreCase('monthly') && 
+                    mondayAccount.Active_Contract__r.Period__c.containsIgnoreCase('monthly')){ 
+                newPC.Start_Date__c = mondayAccount.Active_Contract__r.StartDate;
                 newPC.End_Date__c = newPC.Start_Date__c.addYears(1); //in first pc - start date of PCs of accounts with monthly plan is taken from active contract
                 newPC.Is_Future_Payment__c = true;
             } else { // PC default start date is Sign_Up_Date__c from the monday account
-                Date sixMonthsAgo = Date.today().addMonths(-6);
-                if(sixMonthsAgo > monday_acc.Sign_Up_Date__c){ //if sign up date is earlier then 6 months ago, we set the start date of the pc to 6 months ago
-                    newPC.Start_Date__c = sixMonthsAgo;
-                } else {
-                    newPC.Start_Date__c = monday_acc.Sign_Up_Date__c;
-                }
+                newPC.Start_Date__c = mondayAccount.Sign_Up_Date__c;
             }
         } else {    //PC created from ARR increase - start date is Last_ARR_Update_Timestamp__c (BB send us the relevant start date to the field Last_ARR_Update_Timestamp__c)
                     // OR from Partner Transfer - start date is Last_ARR_Update_Timestamp__c and end date is set from prev pc end date for monthly plans (not here)
-            newPC.Start_Date__c = monday_acc.Last_ARR_Update_Timestamp__c;
-            if(monday_acc.Plan_Period__c != null && monday_acc.Plan_Period__c.containsIgnoreCase('monthly')){ //monthly plans
+            newPC.Start_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c;
+            if(mondayAccount.Plan_Period__c != null && mondayAccount.Plan_Period__c.containsIgnoreCase('monthly')){ //monthly plans
                 newPC.Is_Future_Payment__c = true;
             }
         }
 
         // end date default logic - if period from cm is not null then we add it to the start date
-        if(newPC.End_Date__c == null && partner_comp.Partner_Commission_Model__r.Commission_Model__r.Period__c != null) {
-            newPC.End_Date__c = newPC.Start_Date__c.addMonths(Integer.valueOf(partner_comp.Partner_Commission_Model__r.Commission_Model__r.Period__c));
+        if(newPC.End_Date__c == null && partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Period__c != null) {
+            newPC.End_Date__c = newPC.Start_Date__c.addMonths(Integer.valueOf(partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Period__c));
         }
         
         //percentage logic
-        if(monday_acc.Account_Source_Type__c == 'Inbound'){
-            newPC.Percentage__c = partner_comp.Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c;
-        } else if(monday_acc.Account_Source_Type__c == 'Outbound'){
-            newPC.Percentage__c = partner_comp.Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c;
+        if(mondayAccount.Account_Source_Type__c == 'Inbound'){
+            newPC.Percentage__c = partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c;
+        } else if(mondayAccount.Account_Source_Type__c == 'Outbound'){
+            newPC.Percentage__c = partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c;
         }
 
         return newPC;
-    }
-
-    public Map<Id,Account> getChannelPartnersMap(Set<Id> channelPartnersIds){
-        Map<Id,Account> channelPartnersMap = new Map<Id,Account>([select Id, Name, Partner_Tier__c, Partner_Type__c, Partner_Commission_Model__c, Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c, Partner_Commission_Model__r.Commission_Model__r.Period__c, Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c, Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c from Account where Id IN: channelPartnersIds]);
-        return channelPartnersMap;
     }
 
     public void upsertPartnerCommissionInQueue(List<Partner_Commission__c> newPartnerCommissionList, String queueName){

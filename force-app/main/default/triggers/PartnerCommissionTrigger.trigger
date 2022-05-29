@@ -5,6 +5,7 @@ trigger PartnerCommissionTrigger on Partner_Commission__c (before insert, before
             partnerCommissionHelper.checkIfExistingPcDatesOverlap(Trigger.new, Trigger.oldMap);
             partnerCommissionHelper.updateEndDateOnRenewableFalse(Trigger.new, Trigger.oldMap);
             if(Trigger.isInsert) { 
+                partnerCommissionHelper.limitPcStartDate(Trigger.new);
                 partnerCommissionHelper.updatePartnerCommissionTriggerValidFrom(Trigger.new); 
                 PartnerCommissionHelper.setPcCounterAndPreviousPc(Trigger.new);
             }

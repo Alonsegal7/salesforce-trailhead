@@ -18,7 +18,7 @@ public class PartnerCommission_AccPlanPeriod_Queue implements System.Queueable {
                 if(acc.Active_Contract__c != null) activeContractsIds.add(acc.Active_Contract__c);
             }
             Map<Id,Contract> activeContractsMap = new Map<Id,Contract>([select Id, StartDate, EndDate, Period__c from Contract where Id in: activeContractsIds]);
-            Set<Id> channelPartnersIds = new Set<Id>();
+            Set<Id> accountIdsForGetAccountsMap = new Set<Id>();
             Map<Id,Set<Id>> mondayAccountPartnerIdToCreatePC = new Map<Id,Set<Id>>();
 
             for(Account mondayAccount: mondayAccountsList){
@@ -31,7 +31,8 @@ public class PartnerCommission_AccPlanPeriod_Queue implements System.Queueable {
                 //set end date from active contract to last pcs and prepare new pcs
                 for(Partner_Commission__c pc: mondayAccIdPartnerCommisionMap.get(mondayAccount.Id)) {
                     if(pc.End_Date__c == null || pc.End_Date__c > Date.today()){
-                        channelPartnersIds.add(pc.Partner_Company__c);
+                        accountIdsForGetAccountsMap.add(mondayAccount.Id);
+                        accountIdsForGetAccountsMap.add(pc.Partner_Company__c);
                         newPartnerCommissionList.add(new Partner_Commission__c(
                             Id = pc.Id, 
                             is_Last__c = false, 
@@ -53,7 +54,7 @@ public class PartnerCommission_AccPlanPeriod_Queue implements System.Queueable {
             }
 
             if(!mondayAccountPartnerIdToCreatePC.isEmpty()){
-                Map<Id,Account> channelPartnersMap = pcService.getChannelPartnersMap(channelPartnersIds);
+                Map<Id,Account> accountsMap = pcService.getAccountsMap(accountIdsForGetAccountsMap);
                 for(Id mondayAccId: mondayAccountPartnerIdToCreatePC.keySet()){
                     Account mondayAcc = mondayAccountsMap.get(mondayAccId);
                     String openReason = '';
@@ -62,7 +63,7 @@ public class PartnerCommission_AccPlanPeriod_Queue implements System.Queueable {
                     Contract activeCon = activeContractsMap.get(mondayAcc.Active_Contract__c);
                     //TBD - need to exclude yearly <-> two-yearly 
                     for(Id partnerId: mondayAccountPartnerIdToCreatePC.get(mondayAccId)){
-                        Partner_Commission__c newPartnerCommission = pcService.createPartnerCommissionRecord(mondayAcc, channelPartnersMap.get(partnerId), null, openReason);
+                        Partner_Commission__c newPartnerCommission = pcService.createNewPc(accountsMap.get(mondayAccId), accountsMap.get(partnerId), null, openReason);
                         newPartnerCommission.Start_Date__c = activeCon.StartDate;
                         if(activeCon.Period__c.containsIgnoreCase('monthly')){
                             newPartnerCommission.End_Date__c = activeCon.StartDate.addYears(1);

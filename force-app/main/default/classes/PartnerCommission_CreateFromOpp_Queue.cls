@@ -9,10 +9,15 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
     }
     
     public void execute(System.QueueableContext ctx) {
-        List<Partner_Commission__c> newPcList = new List<Partner_Commission__c>();
         PartnerCommissionService pcService = new PartnerCommissionService();
         try {
-            Map<Id, Account> accountsMap = getAccountsMap(oppsList);
+            List<Partner_Commission__c> newPcList = new List<Partner_Commission__c>();
+            Set<Id> accountIds = new Set<Id>();
+            for(Opportunity opp: oppsList){
+                accountIds.add(opp.Channel_Partner__c);
+                accountIds.add(opp.AccountId);
+            }
+            Map<Id, Account> accountsMap = pcService.getAccountsMap(accountIds);
             if(accountsMap.isEmpty()) return;
             if(isRunningFromScript) createReason = 'Fix opps with missing PC';
             Map<Id,Opportunity> partnerCoSellOppsMap = new Map<Id,Opportunity>();
@@ -24,7 +29,7 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
                     continue;
                 }
                 if(!accountsMap.containsKey(opp.AccountId) || !accountsMap.containsKey(opp.Channel_Partner__c)) continue;
-                Partner_Commission__c newPc = pcService.createPartnerCommissionRecord(accountsMap.get(opp.AccountId), accountsMap.get(opp.Channel_Partner__c), opp, createReason);
+                Partner_Commission__c newPc = pcService.createNewPc(accountsMap.get(opp.AccountId), accountsMap.get(opp.Channel_Partner__c), opp, createReason);
                 if(isRunningFromScript) newPc.Trigger_Valid_From__c = opp.CloseDate.toStartOfMonth();
                 newPcList.add(newPc);
             }
@@ -37,29 +42,6 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
             pcService.sendErrorEmail(CLASS_NAME_CONST, ex.getMessage());
             throw ex;
         }
-    }
-
-    private Map<Id, Account> getAccountsMap(List<Opportunity> oppsList){
-        Set<Id> accountIds = new Set<Id>();
-        Map<String, Schema.RecordTypeInfo> accountRecordTypesMap = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName();
-        Id partnerRecordTypeId = accountRecordTypesMap.get('Partner_Company').getRecordTypeId();
-        Id mondayRecordTypeId = accountRecordTypesMap.get('Monday_Account').getRecordTypeId();
-
-        for(Opportunity opp: oppsList){
-            accountIds.add(opp.Channel_Partner__c);
-            accountIds.add(opp.AccountId);
-        }
-        return new Map<Id, Account>([select Id, ARR__c, Name, Partner_Tier__c, Sign_Up_Date__c, Last_ARR_Update_Timestamp__c, Account_Source_Type__c, 
-                                        Active_Contract__r.StartDate, Active_Contract__r.Period__c, Plan_Period__c, 
-                                        Partner_Type__c, primary_pulse_account_id__c, Partner_Commission_Model__c, 
-                                        Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c, 
-                                        Partner_Commission_Model__r.Commission_Model__r.Period__c, 
-                                        Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c, 
-                                        Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c 
-                                        from Account 
-                                        where Id IN: accountIds 
-                                        and ((RecordTypeId =: mondayRecordTypeId and primary_pulse_account_id__c != null) 
-                                            or (RecordTypeId =: partnerRecordTypeId and Partner_Commission_Model__c != null))]);
     }
 
     private void handleCosellOpps(Map<Id,Opportunity> partnerCoSellOppsMap, Set<Id> internalCoSellOpps, List<Partner_Commission__c> newPcList, Map<Id, Account> accountsMap, PartnerCommissionService pcService){
@@ -94,7 +76,7 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
                 quoteId = oppIdToQuoteMap.get(opp.co_sell_opportunity__c).Id;
             }
             if(startDateForCoSell != null && accountsMap.containsKey(opp.AccountId) && accountsMap.containsKey(opp.Channel_Partner__c)){ //create PCs for co-sell opps
-                Partner_Commission__c newPc = pcService.createPartnerCommissionRecord(accountsMap.get(opp.AccountId), accountsMap.get(opp.Channel_Partner__c), opp, createReason);
+                Partner_Commission__c newPc = pcService.createNewPc(accountsMap.get(opp.AccountId), accountsMap.get(opp.Channel_Partner__c), opp, createReason);
                 newPc.Start_Date__c = startDateForCoSell;
                 newPc.subscription_for_start_date__c = subId;
                 newPc.quote_for_start_date__c = quoteId;

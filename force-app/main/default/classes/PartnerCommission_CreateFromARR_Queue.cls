@@ -14,7 +14,7 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
             Map<Id,List<Partner_Commission__c>> mondayAccIdPartnerCommisionMap = pcService.getLastPcsMap(mondayAccountsMap.keySet());
             if(mondayAccIdPartnerCommisionMap.isEmpty()) return;
             Map<String, GB_Threshold__c> gbThresholdsMap = pcService.getThsMap();
-            Set<Id> channelPartnersIds = new Set<Id>();
+            Set<Id> accountIdsForGetAccountsMap = new Set<Id>();
             Map<Id,Set<Id>> mondayAccountPartnerIdToCreatePC = new Map<Id,Set<Id>>();
             for(Account mondayAccount: mondayAccountsList){
                 if(!mondayAccIdPartnerCommisionMap.containsKey(mondayAccount.Id)) continue; //monday account has no pcs
@@ -22,7 +22,8 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
                 if(mondayAccount.ARR__c >= gbThresholdsMap.get(mondayAccount.Account_Source_Type__c).Min_ARR__c) { //add pc for accounts that reached TH and have no active pc
                     for(Partner_Commission__c pc: mondayAccIdPartnerCommisionMap.get(mondayAccount.Id)) {
                         if(pc.End_Date__c != null && pc.End_Date__c <= mondayAccount.Last_ARR_Update_Timestamp__c){ //create pc
-                            channelPartnersIds.add(pc.Partner_Company__c);
+                            accountIdsForGetAccountsMap.add(mondayAccount.Id);
+                            accountIdsForGetAccountsMap.add(pc.Partner_Company__c);
                             newPartnerCommissionList.add(new Partner_Commission__c(Id = pc.Id, is_Last__c = false));
                             if(mondayAccountPartnerIdToCreatePC.containsKey(mondayAccount.Id)){
                                 mondayAccountPartnerIdToCreatePC.get(mondayAccount.Id).add(pc.Partner_Company__c);
@@ -47,10 +48,10 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
             }
 
             if(!mondayAccountPartnerIdToCreatePC.isEmpty()){
-                Map<Id,Account> channelPartnersMap = pcService.getChannelPartnersMap(channelPartnersIds);
+                Map<Id,Account> accountsMap = pcService.getAccountsMap(accountIdsForGetAccountsMap);
                 for(Id mondayAccId: mondayAccountPartnerIdToCreatePC.keySet()){
                     for(Id partnerId: mondayAccountPartnerIdToCreatePC.get(mondayAccId)){
-                        Partner_Commission__c newPartnerCommission = pcService.createPartnerCommissionRecord(mondayAccountsMap.get(mondayAccId), channelPartnersMap.get(partnerId), null, 'ARR above TH');
+                        Partner_Commission__c newPartnerCommission = pcService.createNewPc(accountsMap.get(mondayAccId), accountsMap.get(partnerId), null, 'ARR above TH');
                         newPartnerCommissionList.add(newPartnerCommission);
                     }
                 }
