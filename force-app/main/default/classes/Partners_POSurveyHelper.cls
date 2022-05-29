@@ -37,8 +37,8 @@ public without sharing class Partners_POSurveyHelper {
                                                 Name, 
                                                 Partner_CSM__c,
                                                 PSM__c,
-                                                Partner__c,
-                                                (select Id from Surveys__r where Survey_Type__c = 'Partners - Post Onboarding' and Survey_Status__c = 'Future' limit 1),
+                                                Channel_Partner__c,
+                                                (select Id from Surveys__r where Survey_Type__c = 'Partners - Post Onboarding' and Survey_Status__c = 'Future' and Canceled__c = false limit 1),
                                                 (select Id, 
                                                         Name, 
                                                         CloseDate, 
@@ -114,7 +114,7 @@ public without sharing class Partners_POSurveyHelper {
             Survey_Sent_Date__c = currOpp.CloseDate.addDays(90),
             PCSM__c = acc.Partner_CSM__c,
             PSM__c = acc.PSM__c,
-            Partner__c = acc.Partner__c,
+            Partner__c = acc.Channel_Partner__c,
             Survey_Type__c = 'Partners - Post Onboarding',
             Survey_Status__c = 'Future'
         ));
