@@ -17,9 +17,9 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
 
     public Database.QueryLocator start(Database.BatchableContext BC){
         List<String> types = new List<String>{'Partners - Post Onboarding', 'Partners - Ongoing'};
-        String query = 'select Id, Survey_Type__c, Account__c, Contact__c, Partner_PO_Survey_Opportunity__c, Survey_Sent_Date__c, Account__r.Plan_Tier__c, Account__r.Plan_Seats__c, Account__r.Monday_Account_Status__c, Account__r.Channel_Partner__c from Survey__c';
-        query += ' where Survey_Sent_Date__c = TODAY AND Survey_Type__c in: types';
-        if(!Test.isRunningTest()) query += ' AND Account__r.Plan_Tier__c = \'Enterprise\' AND Account__r.Plan_Seats__c >= 100 Account__r.Monday_Account_Status__c = \'Paying Account\' AND Account__r.Channel_Partner__c != null';
+        String query = 'select Id, Survey_Type__c, Account__c, Contact__c, Partner_PO_Survey_Opportunity__c, Survey_Sent_Date__c, Account__r.Plan_Tier__c, Account__r.Plan_Seats__c,';
+        query += ' Account__r.Monday_Account_Status__c, Account__r.Channel_Partner__c, Account__r.Partner__c, Account__r.Partner_CSM__c, Account__r.PSM__c, PCSM__c, PSM__c, Partner__c from Survey__c';
+        query += ' where Survey_Sent_Date__c <= TODAY AND Survey_Type__c in: types AND Survey_Status__c = \'Future\' AND Canceled__c = False';
         try{
             return Database.getQueryLocator(query);
         }catch(Exception e){
@@ -30,22 +30,42 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
 
     public void execute(Database.BatchableContext BC, list<Survey__c> scope){
         try{
+            List<Survey__c> surveysToCancel = new List<Survey__c>();
             List<Survey__c> surveysToUpdate = new List<Survey__c>();
             List<Survey__c> surveysToCreate = new List<Survey__c>();
+            List<Survey__c> surveysToCreate_future = new List<Survey__c>();
             Map<Id,Survey__c> accountToSurvey_map = new Map<Id,Survey__c>();
             Integer monthsToAdd;
             for(Survey__c s: scope){
+                if(!Test.isRunningTest()){
+                    if(s.Account__r.Plan_Tier__c != 'Enterprise' || 
+                            (s.Survey_Type__c == 'Partners - Ongoing' && s.Account__r.Plan_Seats__c < 100) || 
+                            s.Account__r.Monday_Account_Status__c != 'Paying Account' || 
+                            s.Account__r.Channel_Partner__c == null){ //check if survey is not matching criterias for sending - cancel
+                        surveysToCancel.add(new Survey__c(
+                            Id = s.Id,
+                            Canceled__c = true
+                        ));
+                        continue;
+                    }
+                }
                 accountToSurvey_map.put(s.Account__c, s);
-                //generate next surveys and add them to surveys to create
+                //generate future surveys
                 if(s.Survey_Type__c == 'Partners - Post Onboarding') monthsToAdd = 3;
                 else if(s.Survey_Type__c == 'Partners - Ongoing') monthsToAdd = 6;
                 else continue;
-                surveysToCreate.add(new Survey__c(
+                surveysToCreate_future.add(new Survey__c(
                     Account__c = s.Account__c,
                     Survey_Type__c = 'Partners - Ongoing',
-                    Survey_Sent_Date__c = s.Survey_Sent_Date__c.addMonths(monthsToAdd)
+                    Survey_Sent_Date__c = Date.today().addMonths(monthsToAdd),
+                    PCSM__c = s.Account__r.Partner_CSM__c,
+                    PSM__c = s.Account__r.PSM__c,
+                    Partner__c = s.Account__r.Channel_Partner__c,
+                    Survey_Status__c = 'Future'
                 ));
             }
+            if(!surveysToCancel.isEmpty()) Database.update(surveysToCancel);
+            if(accountToSurvey_map.isEmpty()) return;
             //get all Account Contact Relationships
             List<AccountContactRelation> acr_list = [select Id, 
                                                     AccountId, Account.Name, 
@@ -70,19 +90,27 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
                         Account__c = acr.AccountId,
                         Contact__c = acr.ContactId,
                         Partner_PO_Survey_Opportunity__c = existingSurvey.Partner_PO_Survey_Opportunity__c,
-                        Survey_Sent_Date__c = existingSurvey.Survey_Sent_Date__c
+                        Survey_Sent_Date__c = existingSurvey.Survey_Sent_Date__c,
+                        Survey_Type__c = existingSurvey.Survey_Type__c,
+                        PCSM__c = existingSurvey.PCSM__c,
+                        PSM__c = existingSurvey.PSM__c,
+                        Partner__c = existingSurvey.Partner__c,
+                        Survey_Status__c = 'Future'
                     ));
                 }
                 debugString += '<br/><a href="https://monday.lightning.force.com/lightning/r/Contact/'+acr.ContactId+'/view">'+acr.Contact.Name+'</a> ('+acr.account.name+') will recieve survey.';
             }
             //update & insert the surveys
             if(!surveysToUpdate.isEmpty()) Database.update(surveysToUpdate);
-            if(!surveysToCreate.isEmpty()) Database.insert(surveysToCreate);
+            list<Survey__c> surveysToCreateTotal = new list<Survey__c>(surveysToCreate);
+            surveysToCreateTotal.addAll(surveysToCreate_future);
+            if(!surveysToCreateTotal.isEmpty()) Database.insert(surveysToCreateTotal);
             //set qualtrix trigger
             List<Survey__c> allTodaySurveys = new List<Survey__c>(surveysToUpdate);
             allTodaySurveys.addAll(surveysToCreate);
             for(Survey__c s: allTodaySurveys){
-                s.Trigger_Outbound_Message_to_Qualtrix__c = true;
+                s.Trigger_Outbound_Message_Qualtrix__c = 1;
+                s.Survey_Status__c = 'Sent';
             }
             Database.update(allTodaySurveys);
             totalCons += allTodaySurveys.size();
