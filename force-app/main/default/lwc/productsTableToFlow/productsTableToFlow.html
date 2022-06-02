@@ -1,0 +1,61 @@
+<template>
+    <!--<div class="slds-m-around_medium slds-p-vertical_x-small">
+        <img src={mondayLogo}>
+    </div>-->
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </template>
+    <div class="slds-p-vertical_x-small" style="position:relative" >
+        <lightning-datatable key-field="sku" 
+            data={data} 
+            hide-checkbox-column
+            columns={columns} 
+            suppress-bottom-bar
+            errors={tableErrors}
+            oncellchange={handleCellchange}
+            draft-values={draftValues}
+            column-widths-mode="auto">
+        </lightning-datatable>
+        <div class ="slds-p-vertical_x-small">
+            <lightning-layout>
+                <lightning-layout-item size="3">
+                    <div class="slds-p-right_medium">
+                        <lightning-input type="number" name="totalList" label="Total List" value={totalList} formatter="currency" disabled></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <lightning-input type="number" name="totalNet" label="Total Net" value={totalNet} formatter="currency" disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <div class="slds-p-top_medium">
+                        <button class="slds-button slds-button_brand slds-float_right" onclick={handleSubmit}>Submit</button>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <!--<div class ="slds-align_absolute-center slds-p-vertical_x-small">
+        </div>-->
+    </div>
+
+    <template if:true={showSubmitModal}>
+        <section  class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">We found some errors.. 🙄</h1>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p class="slds-text-body_regular slds-text-heading_small">Please go back and click on the ⛔ Icon to see the error details for each product</p><br/>
+                    <img src={errorReachGif}>
+
+                    <p class="slds-text-body_regular slds-text-heading_small">If you don't have any errors on the table, please make sure that you have at least one product with quantity</p><br/>
+
+                </div>
+                 <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" title="Close" onclick={closeModalAction}></lightning-button>
+               </footer> 
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

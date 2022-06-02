@@ -69,10 +69,12 @@ public class PartnerCommission_PartnerTransfer_Queue implements System.Queueable
                         }
                     }
                     if(!partnersToCreatePC.isEmpty()){
-                        Map<Id,Account> channelPartnersMap = pcService.getChannelPartnersMap(new Set<Id>(partnersToCreatePC.values()));
+                        Set<Id> allaccountsForCreate = new Set<Id>(partnersToCreatePC.values());
+                        allaccountsForCreate.addAll(mondayAccountsMap.keySet());
+                        Map<Id,Account> accountsMap = pcService.getAccountsMap(allaccountsForCreate);
                         for(Id mondayAccId: partnersToCreatePC.keySet()){
-                            if(mondayAccountsMap.containsKey(mondayAccId) && channelPartnersMap.containsKey(partnersToCreatePC.get(mondayAccId))){
-                                Partner_Commission__c newPc = pcService.createPartnerCommissionRecord(mondayAccountsMap.get(mondayAccId), channelPartnersMap.get(partnersToCreatePC.get(mondayAccId)), null, 'Partners Transfer');
+                            if(accountsMap.containsKey(mondayAccId) && accountsMap.containsKey(partnersToCreatePC.get(mondayAccId))){
+                                Partner_Commission__c newPc = pcService.createNewPc(accountsMap.get(mondayAccId), accountsMap.get(partnersToCreatePC.get(mondayAccId)), null, 'Partners Transfer');
                                 newPc.Start_Date__c = newPc.Start_Date__c.addSeconds(1); //we set start date to be 1 second after the mondayAccount.Last_ARR_Update_Timestamp__c so the new partner will get comission only for new transactions
                                 if(monthlyPlans_enddates.containsKey(mondayAccId)){
                                     newPc.End_Date__c = monthlyPlans_enddates.get(mondayAccId);

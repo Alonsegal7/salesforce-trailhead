@@ -83,11 +83,19 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
         Set<Id> res = new Set<Id>();
         Map<Id,Opportunity> mainOppsWithCmtFields_map = new Map<Id,Opportunity>(queryOppsCmtFields(oppsToSync_map.keySet()));
         List<Opportunity> secOppsToUpdate_list = new List<Opportunity>();
+        Set<Id> secOppsIds = new Set<Id>(oppsToSync_map.values());
+        Map<Id,Opportunity> secOppsWithARROverride = new Map<Id,Opportunity>([select Id from Opportunity where Claimed_ARR_Override__c != null and Id in: secOppsIds]);
+        //add query for sec opps with Claimed_ARR_Override__c != null
         for(Id mainOppId: oppsToSync_map.keySet()){
             Opportunity secOpp = new Opportunity(Id = oppsToSync_map.get(mainOppId));
             Opportunity currMainOpp = mainOppsWithCmtFields_map.get(mainOppId);
             for(Co_sell_Main_to_Secondary_Opp_Mapping__mdt mainToSecCmt: mainToSecOppMapping_cmt){
-                secOpp.put(mainToSecCmt.Field_API_Name__c, currMainOpp.get(mainToSecCmt.Field_API_Name__c));
+                if(mainToSecCmt.Field_API_Name__c == 'Claimed_ARR__c' //before sync claimed arr we check if the arr was overwitten
+                    && secOppsWithARROverride.containsKey(oppsToSync_map.get(mainOppId))){ //and if it was - we do not sync the claimed arr field
+                    //do not sync claimed arr 
+                } else {
+                    secOpp.put(mainToSecCmt.Field_API_Name__c, currMainOpp.get(mainToSecCmt.Field_API_Name__c));
+                }
             }
             secOppsToUpdate_list.add(secOpp);
         }

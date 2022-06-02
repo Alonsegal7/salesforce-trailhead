@@ -22,7 +22,8 @@ public without sharing class Batch_PartnersPOSurveySendTest {
         Survey__c s = new Survey__c(
             Account__c = a.Id,
             Survey_Sent_Date__c = Date.today(),
-            Survey_Type__c = 'Partners - Post Onboarding'
+            Survey_Type__c = 'Partners - Post Onboarding',
+            Survey_Status__c = 'Future'
         );
         insert s;
         Test.startTest();

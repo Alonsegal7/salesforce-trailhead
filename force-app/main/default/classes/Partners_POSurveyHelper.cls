@@ -19,9 +19,9 @@ public without sharing class Partners_POSurveyHelper {
         query += ' and Expected_Plan_Seats__c >= 20';
         query += ' and Account.CSM__c = null';
         query += ' and RecordType.DeveloperName = \'Partner_Opportunity\'';
+        query += ' and Channel_Partner__c != null';
         query += ' and Account.Plan_Period__c != \'Monthly\'';
-        query += ' and CloseDate >= LAST_N_DAYS:90';
-        query += ' and (Account.Next_PO_Survey_Date__c = null or Account.Next_PO_Survey_Date__c < TODAY)'; //exclude opp with account that is already expected to get a survey
+        query += ' and CloseDate >= LAST_N_DAYS:30';
         return query;
     }
 
@@ -35,6 +35,10 @@ public without sharing class Partners_POSurveyHelper {
         }
         List<Account> accountsToExamine = [select Id, 
                                                 Name, 
+                                                Partner_CSM__c,
+                                                PSM__c,
+                                                Channel_Partner__c,
+                                                (select Id from Surveys__r where Survey_Type__c = 'Partners - Post Onboarding' and Survey_Status__c = 'Future' and Canceled__c = false limit 1),
                                                 (select Id, 
                                                         Name, 
                                                         CloseDate, 
@@ -50,13 +54,14 @@ public without sharing class Partners_POSurveyHelper {
         Opportunity currOpp, prevOpp, prev2Opp;
         List<Survey__c> surveysToCreate = new List<Survey__c>();
         for(Account acc: accountsToExamine){
+            if(!acc.Surveys__r.isEmpty()) continue; //account already has a future PO survey 
             currOpp = null;
             prevOpp = null;
             prev2Opp = null;
             debugString += '<br/><br/> account: <a href="https://monday.lightning.force.com/lightning/r/Account/'+acc.Id+'/view">'+acc.Name+'</a>';
             if(acc.Opportunities.size() == 1){ //no prev opp - new business - always send survey
                 currOpp = acc.Opportunities[0];
-                addSurvey(surveysToCreate, currOpp, acc.Id);
+                addSurvey(surveysToCreate, currOpp, acc);
                 debugString += '<br/> Result: account has one opp only - good for survey!';
                 continue;
             }
@@ -69,7 +74,7 @@ public without sharing class Partners_POSurveyHelper {
                 if(i>0) {
                     prevOpp = acc.Opportunities[i-1];
                 } else {
-                    addSurvey(surveysToCreate, currOpp, acc.Id);
+                    addSurvey(surveysToCreate, currOpp, acc);
                     debugString += '<br/> Result: account has no relevant prev opps for comparison - good for survey!';
                     break;
                 }
@@ -77,7 +82,7 @@ public without sharing class Partners_POSurveyHelper {
                 if(i>1) prev2Opp = acc.Opportunities[i-2];
                 //compare to prev opps
                 if(comparePrevOpps(currOpp, prevOpp, prev2Opp)){
-                    addSurvey(surveysToCreate, currOpp, acc.Id);
+                    addSurvey(surveysToCreate, currOpp, acc);
                     break;
                 }
             }
@@ -102,11 +107,16 @@ public without sharing class Partners_POSurveyHelper {
         ));
     }
 
-    private void addSurvey(List<Survey__c> surveysToCreate, Opportunity currOpp, Id accId){
+    private void addSurvey(List<Survey__c> surveysToCreate, Opportunity currOpp, Account acc){
         surveysToCreate.add(new Survey__c(
-            Account__c = accId,
+            Account__c = acc.Id,
             Partner_PO_Survey_Opportunity__c = String.valueOf(currOpp.Id),
-            Survey_Sent_Date__c = currOpp.CloseDate.addDays(90)
+            Survey_Sent_Date__c = currOpp.CloseDate.addDays(90),
+            PCSM__c = acc.Partner_CSM__c,
+            PSM__c = acc.PSM__c,
+            Partner__c = acc.Channel_Partner__c,
+            Survey_Type__c = 'Partners - Post Onboarding',
+            Survey_Status__c = 'Future'
         ));
     }
 

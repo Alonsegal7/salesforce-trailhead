@@ -1,3 +1,4 @@
+import SystemModstamp from "@salesforce/schema/AcceptedEventRelation.SystemModstamp";
 import {api, LightningElement,track} from "lwc";
 
 export default class calcEndDate extends LightningElement {
@@ -35,24 +36,30 @@ export default class calcEndDate extends LightningElement {
     }
     handleChangeDate(evt) {
         this.StartDate = evt.target.value;
-        if (this.StartDate != null && this.Duration != null){
-            this.calcExpr();}
+        if (this.StartDate != null && this.StartDate != '' && this.Duration != null && this.Duration != ''){
+            this.calcExpr();
+        } else {
+            this.EndDate = null;
+        }
     }
     handleChangeDuration(evt) { 
         this.Duration = evt.target.value;
-        if (this.StartDate != null && this.Duration != null){
-            this.calcExpr();}
+        if (this.StartDate != null && this.StartDate != '' && this.Duration != null && this.Duration != ''){
+            this.calcExpr();
+        } else {
+            this.EndDate = null;
+        }
     }
     @api
     validate(){ //validation 
-
+        console.log('validate: required' + this.required);
+        console.log('validate: Duration' + this.Duration);
+        console.log('validate: StartDate' + this.StartDate);
         if(this.required == true || this.required == 'true'){ // fileds are mandatory
-            if (this.Duration == null || this.StartDate== null){
+            if (this.Duration == null || this.Duration == '' 
+                || this.StartDate == null || this.StartDate == '' || this.StartDate == undefined){
                 var errorMessage = 'Start Date and Duration are mandatory fields';
-                return { 
-                    isValid: false,
-                    errorMessage: errorMessage
-            };
+                return { isValid: false, errorMessage: errorMessage };
             } else { // passed validation
                 return { isValid: true };
             }
