@@ -24,7 +24,7 @@ public class PartnerCommissionService {
         System.enqueueJob(new PartnerCommission_CreateFromOpp_Queue(relevantOppsList));
     }
 
-    // create or end PC due to ARR change
+    // create or end PC due to ARR change or plan period change
     public void partnerCommissionFromAccount(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
         List<Account> relevantMondayAccounts_arr = new List<Account>();
         List<Account> relevantMondayAccounts_planPeriod = new List<Account>();
@@ -35,8 +35,9 @@ public class PartnerCommissionService {
                 && (acc.ARR__c != oldAccountsMap.get(acc.Id).ARR__c //arr changed
                     || (acc.Plan_Period__c != oldAccountsMap.get(acc.Id).Plan_Period__c //plan period changed
                         && acc.Plan_Period__c != null //plan period not changed to null
-                        && !(acc.Plan_Period__c.containsIgnoreCase('yearly') && oldAccountsMap.get(acc.Id).Plan_Period__c.containsIgnoreCase('yearly'))))){ //plan period not changed yearly <-> two-yearly
-                    //if plan period is changed we do not run the arr logic even if the arr changed as well
+                        && oldAccountsMap.get(acc.Id).Plan_Period__c != null //plan period not changed from null
+                        && !(acc.Plan_Period__c.containsIgnoreCase('yearly')  //plan period not changed yearly <-> two-yearly
+                            && oldAccountsMap.get(acc.Id).Plan_Period__c.containsIgnoreCase('yearly'))))){ 
                     if(acc.Plan_Period__c != oldAccountsMap.get(acc.Id).Plan_Period__c) relevantMondayAccounts_planPeriod.add(acc);
                     else relevantMondayAccounts_arr.add(acc); 
             }
