@@ -21,7 +21,12 @@ public class PartnerCommissionService {
         }   
         if(relevantOppsList.isEmpty()) return;
         firstRunOpp = false;
-        System.enqueueJob(new PartnerCommission_CreateFromOpp_Queue(relevantOppsList));
+        if(ApexLimits.queueableLimitReached()) {
+            PartnerCommission_CreateFromOpp_Queue q = new PartnerCommission_CreateFromOpp_Queue();
+            q.createPcs(relevantOppsList);
+        } else {
+            System.enqueueJob(new PartnerCommission_CreateFromOpp_Queue(relevantOppsList));
+        }
     }
 
     // create or end PC due to ARR change or plan period change
