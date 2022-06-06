@@ -64,6 +64,18 @@ public class PartnerCommissionServiceTest {
         update opp;
     }
 
+    static testmethod void test_accPlanChanged(){
+        Account acc = [select Id from Account where recordTypeId =: ACC_MA_RT_CONST limit 1];
+        Contract cont = TestObjectCreator.CreateContract(acc);
+        cont.Period__c = 'monthly';
+        cont.StartDate = date.today();
+        cont.endDate = date.today().addYears(1);
+        insert cont;
+        acc.Plan_Period__c = 'monthly';
+        acc.Active_Contract__c = cont.Id;
+        update acc;
+    }
+
     static testmethod void test_PartnerCommission_renewMonthlyPCs(){
         List<Partner_Commission__c> pcList = [select Id from Partner_Commission__c];
         pcList.get(0).Is_Future_Payment__c = true;
