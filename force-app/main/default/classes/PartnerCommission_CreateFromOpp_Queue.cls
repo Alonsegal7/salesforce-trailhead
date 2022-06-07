@@ -4,16 +4,24 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
     private String createReason = 'GB Opp Closed';
     private static final String CLASS_NAME_CONST = 'PartnerCommission_CreateFromOpp_Queue';
 
+    public PartnerCommission_CreateFromOpp_Queue() {
+    }
+
     public PartnerCommission_CreateFromOpp_Queue(List<Opportunity> oppsList) {
         this.oppsList = oppsList;
     }
     
     public void execute(System.QueueableContext ctx) {
+        createPcs(oppsList);
+    }
+
+    public void createPcs(List<Opportunity> opps){
+        //move logic to func and call synchroniously in case you are in batch
         PartnerCommissionService pcService = new PartnerCommissionService();
         try {
             List<Partner_Commission__c> newPcList = new List<Partner_Commission__c>();
             Set<Id> accountIds = new Set<Id>();
-            for(Opportunity opp: oppsList){
+            for(Opportunity opp: opps){
                 accountIds.add(opp.Channel_Partner__c);
                 accountIds.add(opp.AccountId);
             }
@@ -22,7 +30,7 @@ public class PartnerCommission_CreateFromOpp_Queue implements System.Queueable {
             if(isRunningFromScript) createReason = 'Fix opps with missing PC';
             Map<Id,Opportunity> partnerCoSellOppsMap = new Map<Id,Opportunity>();
             Set<Id> internalCoSellOpps = new Set<Id>();
-            for(Opportunity opp: oppsList){
+            for(Opportunity opp: opps){
                 if(opp.co_sell_opportunity__c != null) {
                     partnerCoSellOppsMap.put(opp.Id, opp);
                     internalCoSellOpps.add(opp.co_sell_opportunity__c);

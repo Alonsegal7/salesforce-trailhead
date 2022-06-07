@@ -133,4 +133,12 @@ public without sharing class Partner_PaymentRequestServiceTest {
             Test.stopTest();
         }
     }
+
+    static testmethod void test_scheduledPortions(){
+        Test.startTest();
+        MdfPortions_ScheduledAvailableByDate p = new MdfPortions_ScheduledAvailableByDate();
+        String sch = '0 0 * * * ?';
+        system.schedule('Test_MdfPortions_ScheduledAvailableByDate', sch, p);
+        Test.stopTest();
+    }
 }
