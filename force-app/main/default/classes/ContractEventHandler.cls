@@ -23,7 +23,7 @@ public with sharing class ContractEventHandler {
                     (oldQuotes.get(quote.Id).Manual_Trigger__c != quote.Manual_Trigger__c && quote.Manual_Trigger__c == 'Create Active Contract')) && 
                     !alreadyHandledQuotes.containskey(quote.id) && quote.Is_Correction__c==false) {
                     //For pro-rated, get the contract id in order to retrive the current contract seats to add the event added seats
-                    if (quote.Quote_Type__c=='Pro-rated- Additional Seats' && quote.Get_Contract_Id__c!=null) {
+                    if ((quote.Quote_Type__c=='Pro-rated- Additional Seats' || quote.Quote_Type__c == 'Service - Stand Alone') && quote.Get_Contract_Id__c!=null) {
                         currentQuotesProRatedContracts.add((Id)quote.Get_Contract_Id__c);
                     }
                     quotesToHandle.add(quote);
