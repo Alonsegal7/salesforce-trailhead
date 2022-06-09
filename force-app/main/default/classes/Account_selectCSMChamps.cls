@@ -17,14 +17,17 @@ public without sharing class Account_selectCSMChamps {
     public static Map<String,Object> getAllContacts(Id accountId){
         try {
             Map<String,Object> res = new Map<String,Object>();
-            list<AccountContactRelation> acrs = [select Id, ContactId, Contact.CSM_Champion__c, Contact.FirstName, Contact.LastName from AccountContactRelation where AccountId =: accountId];
+            list<AccountContactRelation> acrs = [select Id, ContactId, Contact.CSM_Champion__c, Contact.FirstName, Contact.LastName, Contact.Title from AccountContactRelation where AccountId =: accountId];
             set<Id> selected_champs = new set<Id>();
             list<optionWrapper> contacts_options = new list<optionWrapper>();
+            string contact_label = '';
             for(AccountContactRelation acr: acrs){
                 if(acr.Contact.CSM_Champion__c){
                     selected_champs.add(acr.ContactId);
                 } 
-                contacts_options.add(new optionWrapper(acr.Contact.FirstName + ' ' + acr.Contact.LastName, acr.ContactId));
+                contact_label = acr.Contact.FirstName + ' ' + acr.Contact.LastName;
+                if(acr.Contact.Title != null && acr.Contact.Title != '') contact_label += ' ('+acr.Contact.Title+')';
+                contacts_options.add(new optionWrapper(contact_label, acr.ContactId));
             }
             res.put('contacts_options', contacts_options);
             res.put('selected_champs', selected_champs);
