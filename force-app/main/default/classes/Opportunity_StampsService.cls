@@ -33,7 +33,7 @@ public without sharing class Opportunity_StampsService {
 
         if (relevantOppsOwnerChange.isEmpty()) return;
         
-        Map<Id,User> usersMap = new Map<Id,User>([SELECT Id, AccountId, Team__c, Profile.Name, Group__c,
+        Map<Id,User> usersMap = new Map<Id,User>([SELECT Id, AccountId, Account.PDM__c, Team__c, Profile.Name, Group__c,
                                                     ManagerId, Manager.ManagerId, Manager.Team__c 
                                                     FROM USER 
                                                     WHERE Id IN: relevantUsers]);
@@ -43,6 +43,9 @@ public without sharing class Opportunity_StampsService {
             User currOwner = usersMap.get(opp.OwnerId);
             if (currOwner != null) {
                 opp.Channel_Partner__c = currOwner.AccountId;
+                if(opp.Channel_Partner__c != null && opp.PDM__c == null) {//channel partner assigned and PDM was not assigned before
+                    opp.PDM__c = currOwner.Account.PDM__c;
+                } 
                 if(currOwner.Profile.Name == 'Channel Managers'){ //Owner is CPM
                     opp.CPM_Manager2__c = currOwner.ManagerId;
                     opp.Owner_s_Manager__c = currOwner.Id;
