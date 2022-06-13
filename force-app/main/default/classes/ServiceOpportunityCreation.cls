@@ -8,7 +8,7 @@ public without sharing class ServiceOpportunityCreation {
             //Profile userProfile = [SELECT Id, Name FROM Profile WHERE Id =: currentUserProfile];
  
             List<Account> relevantAccounts=  new List<Account>([
-                SELECT Id, Name,Owner_s_Profile__c, Active_Contract__c, Company__c, Pricing_Version__c, ParentId,CurrencyIsoCode,primary_pulse_account_id__c
+                SELECT Id, Name,Owner_s_Profile__c, Active_Contract__c, Company__c, Pricing_Version__c, ParentId,CurrencyIsoCode,primary_pulse_account_id__c,Latest_Billing_Entity__c
                 FROM Account 
                 WHERE Id IN: accountsforserviceIds 
                 ORDER BY ARR__c 
@@ -32,6 +32,7 @@ public without sharing class ServiceOpportunityCreation {
                     Probability = 20,
                     Type= 'Service',
                     Parent_Company__c=a.ParentId,
+                    Billing_Entity__c=a.Latest_Billing_Entity__c,
                     Pricing_Version__c=a.Pricing_Version__c,
                     CurrencyIsoCode = a.CurrencyIsoCode,
                     primary_pulse_account_id__c=a.primary_pulse_account_id__c
