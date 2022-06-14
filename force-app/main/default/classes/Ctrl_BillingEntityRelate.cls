@@ -29,7 +29,9 @@ public class Ctrl_BillingEntityRelate  {
 	public static Opportunity getOpportunity(Id oppId){
 		Opportunity o = null;
 		List<Opportunity> lo = [SELECT Id, Name, AccountId, Billing_Entity__c, Billing_Entity__r.Name, Account.Latest_Billing_Entity__c, Account.Latest_Billing_Entity__r.Name, 
-									   Account.Latest_Billing_Entity__r.VAT_Number__c 
+									   Account.Latest_Billing_Entity__r.Customer_Has_VAT_Number__c, Account.Latest_Billing_Entity__r.VAT_Number__c, 
+									   Account.Latest_Billing_Entity__r.Customer_Has_QST_Number__c, Account.Latest_Billing_Entity__r.QST_Number__c, 
+									   Account.Latest_Billing_Entity__r.Shipping_Country_G__c, Account.Latest_Billing_Entity__r.Shipping_State__c 
 								FROM Opportunity
 								WHERE Id =: oppId];
 
@@ -397,10 +399,10 @@ public class Ctrl_BillingEntityRelate  {
 		return mso;
 	}
 	@AuraEnabled(cacheable=true)
-	public static String CallVatService(String countryName, String vatNumber){
+	public static String CallVatService(String countryName, String vatNumber, String testType){
 		system.debug('### countryName: ' + countryName);
 		system.debug('### vatNumber: ' + vatNumber);
-		return VatVerificationService.CallVatService(countryName,vatNumber,null);
+		return VatVerificationService.CallVatService(countryName, vatNumber, testType);
 	}
 
 	public class BillingEntityWrap {
@@ -460,10 +462,25 @@ public class Ctrl_BillingEntityRelate  {
 
 	//Start Tal - VAT Logic
 	@AuraEnabled(cacheable=true)
-	public static String getValuesCallVatService(String BEId){
-		List<Billing_Entity__c> beToSearch = [SELECT Id, VAT_Number__c, Shipping_Country_G__c FROM Billing_Entity__c WHERE Id =: BEId];
-		String getVatVerification = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].VAT_Number__c,null);
-		return getVatVerification;
+	public static Map <String, Object> getValuesCallVatService(String BEId){
+		Map <String, Object> res = new Map <String, Object>();
+		res.put('service_available', true);
+		String vatValidationResponse = null;
+		String qstValidationResponse = null;
+		List<Billing_Entity__c> beToSearch = [SELECT Id, Customer_Has_VAT_Number__c, Customer_Has_QST_Number__c, VAT_Number__c, QST_Number__c, Shipping_Country_G__c, Shipping_State__c FROM Billing_Entity__c WHERE Id =: BEId];
+		String vatType = null;
+		if (beToSearch[0].Shipping_Country_G__c == 'Canada') vatType = 'GST';
+		if (beToSearch[0].VAT_Number__c != null) vatValidationResponse = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].VAT_Number__c, vatType);
+		res.put('raw', vatValidationResponse);
+		if (vatValidationResponse == 'unknown') res.put('service_available', false);
+		if (vatType == null && vatValidationResponse != 'unknown') res.put('vat_valid', (vatValidationResponse != 'invalid'));
+		if (vatType != null && vatValidationResponse != 'unknown') res.put('gst_valid', (vatValidationResponse != 'invalid'));
+
+		if (beToSearch[0].QST_Number__c != null) qstValidationResponse = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].QST_Number__c, 'QST');
+		if (qstValidationResponse != null && qstValidationResponse != 'unknown') res.put('qst_valid', (vatValidationResponse != 'invalid'));
+
+		System.debug('iCloudius - VAT GST/QST check response:\n' + JSON.serializePretty(res));
+		return res;
 	}
 
 	@AuraEnabled

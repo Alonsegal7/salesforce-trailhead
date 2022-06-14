@@ -49,6 +49,9 @@
 		var spinner = cmp.find("cmspinneredit");
 		$A.util.removeClass(spinner, "slds-hide");
 		//Start Tal - VAT Logic
+		console.log('Submitting and service status is: ' + cmp.get('v.getVatServiceStatus'));
+		console.log('Submitting and customer vat number is: ' + cmp.get('v.customerVatNumber'));
+		
 		if(cmp.get('v.getVatServiceStatus') == 'Active'){
 			if(cmp.get('v.customerVatNumber') == 'Yes'){
 				hlp.callVatService(cmp,evt);
@@ -68,8 +71,9 @@
 		cmp.set('v.editFormSubmitting', true);
 		var spinner = cmp.find("cmspinneredit");
 		$A.util.removeClass(spinner, "slds-hide");
-		//evt.stopPropagation();
-		//evt.preventDefault();
+		evt.stopPropagation();
+		evt.preventDefault();
+		hlp.callVatService(cmp, evt, 'edit');
 		//hlp.testUniqu(cmp, evt);
 	},
 	handleSuccess : function (cmp, evt, hlp) {
@@ -207,35 +211,111 @@
 	handleToggleChanged : function (component, event, helper) {
 		var target = event.getSource();
 		var txtValField = target.get("v.fieldName");
+		var selectedValue = target.get("v.value");
 		var toggleValue = component.get("v.toggleChecked");
+		var hasSO = component.get("v.hasPartnerSO");
+		var formNewShippingFields = component.get("v.form_new_shipping_fields");
+		var formNewFields = component.get("v.form_new_fields");
+		var shippingFiled = '';
 
 		if(toggleValue == true){
 			if(txtValField === 'Name'){
 				component.set('v.shipToName', target.get("v.value"));
+				shippingFiled = 'Ship_To_Name__c';
 			}
 	
 			if(txtValField ==='Country__c'){
 				component.set('v.shippingCountry', target.get("v.value"));
+				component.set('v.isCanada', (selectedValue == 'Canada'));
+				shippingFiled = 'Shipping_Country_G__c';
+			}
+
+			if(txtValField ==='Shipping_Country_G__c'){
+				component.set('v.isCanada', (selectedValue == 'Canada'));
+				shippingFiled = 'Shipping_Country_G__c';
 			}
 
 			if(txtValField === 'Billing_State__c'){
 				component.set('v.shippingState', target.get("v.value"));
+				component.set('v.isQuebec', (selectedValue == 'Quebec'));
+				shippingFiled = 'Shipping_State__c';
+			}
+
+			if(txtValField === 'Shipping_State__c'){
+				component.set('v.isQuebec', (selectedValue == 'Quebec'));
+				shippingFiled = 'Shipping_State__c';
 			}
 	
 			if(txtValField === 'City__c'){
 				component.set('v.shippingCity', target.get("v.value"));
+				shippingFiled = 'Shipping_City__c';
 			}
 	
 			if(txtValField === 'Street__c'){
 				component.set('v.shippingStreet', target.get("v.value"));
+				shippingFiled = 'Shipping_Street__c';
 			}
 	
 			if(txtValField === 'Zip_Postal_Code__c'){
 				component.set('v.shippingZipCode', target.get("v.value"));
+				shippingFiled = 'Shipping_Zip_Postal_Code__c';
+			}
+			if (hasSO && formNewShippingFields != null && Array.isArray(formNewShippingFields)){
+				if (selectedValue == 'sync'){
+					for (let i = 0; i < formNewFields.length; i++){
+						for (let j = 0; j < formNewShippingFields.length; j++){
+							if (formNewFields[i].name == 'Name' && formNewShippingFields[j].name == 'Ship_To_Name__c') {
+								formNewShippingFields[j].val = formNewFields[i].val;
+								break;
+							}
+							if (formNewFields[i].name == 'Country__c' && formNewShippingFields[j].name == 'Shipping_Country_G__c') {
+								formNewShippingFields[j].val = formNewFields[i].val;
+								break;
+							}
+							if (formNewFields[i].name == 'Billing_State__c' && formNewShippingFields[j].name == 'Shipping_State__c') {
+								formNewShippingFields[j].val = formNewFields[i].val;
+								break;
+							}
+							if (formNewFields[i].name == 'City__c' && formNewShippingFields[j].name == 'Shipping_City__c') {
+								formNewShippingFields[j].val = formNewFields[i].val;
+								break;
+							}
+							if (formNewFields[i].name == 'Street__c' && formNewShippingFields[j].name == 'Shipping_Street__c') {
+								formNewShippingFields[j].val = formNewFields[i].val;
+								break;
+							}
+							if (formNewFields[i].name == 'Zip_Postal_Code__c' && formNewShippingFields[j].name == 'Shipping_Zip_Postal_Code__c') {
+								formNewShippingFields[j].val = formNewFields[i].val;
+								break;
+							}
+						}
+					}
+					component.set("v.form_new_shipping_fields", formNewShippingFields);
+				} else {
+					for (let i = 0; i < formNewShippingFields.length; i++){
+						if (formNewShippingFields[i].name == shippingFiled){
+							formNewShippingFields[i].val = selectedValue;
+							component.set("v.form_new_shipping_fields", formNewShippingFields);
+							break;
+						}
+					}
+				}
 			}
 		}
 	},
 	//End Tal
+    handleEditFieldChange : function(cmp, evt, hlp){
+        var target = evt.getSource();
+		var txtValField = target.get("v.fieldName");
+		var selectedValue = target.get("v.value");
+        if(txtValField ==='Shipping_Country_G__c'){
+            cmp.set('v.edit_shipping_country', selectedValue);
+        }
+        
+        if(txtValField === 'Shipping_State__c'){
+            cmp.set('v.edit_shipping_state', selectedValue);
+        }
+    },
 
 	//Start Tal - VAT Logic
 	updateRequiredVAT : function(component, event, helper){

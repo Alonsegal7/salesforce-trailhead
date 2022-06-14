@@ -17,8 +17,27 @@
 							lbe.val = storeResponse.opportunity.Billing_Entity__c;
 							lbe.text = storeResponse.opportunity.Billing_Entity__r.Name;
 							cmp.set('v.has_existing', true);
+
+
+							let be = storeResponse.opportunity.Account.Latest_Billing_Entity__r;
+							cmp.set('v.edit_country', be.Country__c);
+							cmp.set('v.edit_state', be.Billing_State__c);
+							cmp.set('v.edit_shipping_country', be.Shipping_Country_G__c);
+							cmp.set('v.edit_shipping_state', be.Shipping_State__c);
+							if ((!this.isEmpty(be.Customer_Has_VAT_Number__c) && be.Customer_Has_VAT_Number__c == 'Yes') || !this.isEmpty(be.VAT_Number__c)){
+								cmp.set('v.edit_has_vat', 'Yes');
+							} else {
+								cmp.set('v.edit_has_vat', 'No');
+							}
+							if ((!this.isEmpty(be.Customer_Has_QST_Number__c) && be.Customer_Has_QST_Number__c == 'Yes') || !this.isEmpty(be.QST_Number__c)){
+								cmp.set('v.edit_has_qst', 'Yes');
+							} else {
+								cmp.set('v.edit_has_qst', 'No');
+							}
+
+
 							if(!this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__c) && !this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r)){
-								cmp.set('v.showVATInEdtForm', (this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r.VAT_Number__c)));
+								//cmp.set('v.showVATInEdtForm', (this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r.VAT_Number__c)));
 							}
 						}
 						cmp.set('v.latest_be', lbe);
@@ -75,6 +94,12 @@
 					}
 					/**/
 					if (storeResponse.hasOwnProperty('partnerSORequest') && storeResponse.hasOwnProperty('fieldMapping')){
+						if (!this.isEmpty(storeResponse.partnerSORequest.VAT_Text__c)){
+							console.log('VAT_Text__c: ' + storeResponse.partnerSORequest.VAT_Text__c);
+							cmp.set('v.vatAttribute', storeResponse.partnerSORequest.VAT_Text__c);
+							cmp.set('v.customerVatNumber', 'Yes');
+							console.log('vatAttribute: ' + cmp.get('v.vatAttribute'));
+						}
 						if (!this.isEmpty(storeResponse.partnerSORequest) && !this.isEmpty(storeResponse.fieldMapping)){
 							var mappedFields = cmp.get('v.form_new_fields');
 							if (!this.isEmpty(mappedFields)){
@@ -83,19 +108,29 @@
 										mappedFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping[mappedFields[i].name]];
                                     }
 								}
-								//console.log('mappedFields: ' + JSON.stringify(mappedFields));
+								console.log('mappedFields: ' + JSON.stringify(mappedFields));
 								cmp.set('v.form_new_fields', mappedFields);
 								cmp.set('v.hasPartnerSO', true);
+								cmp.set('v.toggleChecked', false);
 							}
 							
 							var mappedShippingFields = cmp.get('v.form_new_shipping_fields');
 							if (!this.isEmpty(mappedShippingFields)){
 								for (var i = 0; i < mappedShippingFields.length; i++){
+									/*
+									if (mappedShippingFields[i].name == 'Ship_To_Name__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Name']];
+									if (mappedShippingFields[i].name == 'Shipping_Country_G__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Country__c']];
+									if (mappedShippingFields[i].name == 'Shipping_State__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Billing_State__c']];
+									if (mappedShippingFields[i].name == 'Shipping_City__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['City__c']];
+									if (mappedShippingFields[i].name == 'Shipping_Street__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Street__c']];
+									if (mappedShippingFields[i].name == 'Shipping_Zip_Postal_Code__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Zip_Postal_Code__c']];
+									*/									
 									if (!this.isEmpty(storeResponse.fieldMapping[mappedFields[i].name])){
 										mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping[mappedShippingFields[i].name]];
                                     }
+									
 								}
-								//console.log('mappedFields: ' + JSON.stringify(mappedFields));
+								console.log('mappedShippingFields: ' + JSON.stringify(mappedShippingFields));
 								cmp.set('v.form_new_shipping_fields', mappedShippingFields);
 							} 
 							cmp.set('v.hasPartnerSO', true);
@@ -126,66 +161,126 @@
         $A.enqueueAction(action);
 	},
 
-	callVatService : function(cmp, evt){
+	callVatService : function(cmp, evt, fromForm){
 		console.log('--------------callVatService---------------')
 		var fields = evt.getParam("fields");
 		console.log('fields: ' + JSON.stringify(fields));
 		console.log('--------------callVatService---------------+'+fields);
 		var allowSubmit = cmp.get('v.allowSubmit');
-		//Start Tal - VAT Logic
-		var getVatNumber = fields.VAT_Number__c;
-		if (!this.isEmpty(fields)){
+
+		if (!this.isEmpty(fields.VAT_Number__c)){
+			var params = {};
+			params.countryName = fields.Shipping_Country_G__c;
+			params.vatNumber = fields.VAT_Number__c;
+			if (fields.Shipping_Country_G__c == 'Canada'){
+				params.testType = 'GST';
+			}
+
 			var action = cmp.get("c.CallVatService");
-			action.setParams({
-				"countryName": fields.Shipping_Country_G__c,           
-                "vatNumber": getVatNumber
-			});
+			action.setParams(params);
+			action.setCallback(this, function(response) {
+				var state = response.getState();
+				if (state === "SUCCESS"){
+					var storeResponse = response.getReturnValue();
+					console.log('VAT-SERVICE----' + storeResponse);
+					cmp.set('v.getServiceStatus', storeResponse);
+					if (storeResponse == 'invalid') {
+						if(cmp.get('v.endPoint_duplicate') == false){
+							if (fields.Shipping_Country_G__c){
+								cmp.set('v.gstError', true);
+								if (!this.isEmpty(fields.QST_Number__c)){
+									this.callVatServiceQST(cmp, evt);
+								} else {
+									cmp.set('v.showVatErrorCmp', true);
+								}
+							} else {
+								cmp.set('v.vatError', true);
+								cmp.set('v.showVatErrorCmp', true);
+							}
+						}
+
+						if(cmp.get('v.endPoint_duplicate') == true){
+							cmp.set('v.showVatErrorCmp', true);
+							cmp.set('v.invalidVATForm', true);
+						}
+					}
+					//service is down
+					else if (storeResponse=='unknown') {
+						cmp.find('notifLib').showToast({
+							"title": 'Wrong VAT Number- ',
+							"variant": 'warning',
+							"mode":"sticky",
+							"message": 'Service is down - please contract bizops'
+						});
+					} else{//Vat number returned true - go next step
+						cmp.set('v.vatError', false);
+						cmp.set('v.gstError', false);
+						if (fields.Shipping_Country_G__c == 'Canada' && !this.isEmpty(fields.QST_Number__c)){
+							this.callVatServiceQST(cmp, evt);
+						} else {
+							if (fromForm == 'edit'){
+								cmp.find('mainEBEForm').submit(fields);
+							} else {
+								this.testUniqu(cmp, evt);
+							}
+						}
+					}
+				}
+			})
 			
+			$A.enqueueAction(action);
+		} else {
+			if (fields.Shipping_Country_G__c == 'Canada' && !this.isEmpty(fields.QST_Number__c)){
+				this.callVatServiceQST(cmp, evt);
+			} else {
+				if (fromForm == 'edit'){
+					cmp.find('mainEBEForm').submit(fields);
+				} else {
+					this.testUniqu(cmp, evt);
+				}
+			}
 		}
-		//End Tal - VAT Logic
-	
+	},
+
+	callVatServiceQST : function(cmp, evt, fromForm){
+		var fields = evt.getParam("fields");
+		var params = {};
+		params.countryName = fields.Shipping_Country_G__c;
+		params.vatNumber = fields.QST_Number__c;
+		params.testType = 'QST';
+		
+		var action = cmp.get("c.CallVatService");
+		action.setParams(params);
 		action.setCallback(this, function(response) {
 			var state = response.getState();
 			if (state === "SUCCESS"){
 				var storeResponse = response.getReturnValue();
-				console.log('VAT-SERVICE----' + storeResponse);
+				console.log('VAT-SERVICE-QST: ' + storeResponse);
 				cmp.set('v.getServiceStatus', storeResponse);
-				if (storeResponse=='invalid') {
-					//Before all - Check vat number
-					//Start Tal -VAT Logic - Remove this Toast
-						// cmp.find('notifLib').showToast({
-						// 	"title": 'Wrong VAT Number- ',
-						// 	"variant": 'warning',
-						// 	"mode":"sticky",
-						// 	"message": 'Please check VAT and country information'
-						// });
-					//End Tal - VAT Logic - Remove this Toast
-					//Start Tal - VAT Logic
-					if(cmp.get('v.endPoint_duplicate') == false){
-						cmp.set('v.showVatErrorCmp', true);
-					}
-					
-					if(cmp.get('v.endPoint_duplicate') == true){
-						cmp.set('v.showVatErrorCmp', true);
-						cmp.set('v.invalidVATForm', true);
-					}
-					//End Tal - VAT Logic
-				}
-				//service is down
-				else if (storeResponse=='unknown') {
+				if (storeResponse == 'invalid') {
+					cmp.set('v.qstError', true);
+					cmp.set('v.showVatErrorCmp', true);
+				} else if (storeResponse == 'unknown') {//service is down
 					cmp.find('notifLib').showToast({
-						"title": 'Wrong VAT Number- ',
+						"title": 'VAT Service is down',
 						"variant": 'warning',
 						"mode":"sticky",
 						"message": 'Service is down - please contract bizops'
 					});
-				}
-				else{//Vat number returned true - go next step
-					this.testUniqu(cmp,evt);
+				} else {//Vat number returned true - go next step
+					cmp.set('v.qstError', false);
+					if (cmp.set('v.gstError')){
+						cmp.set('v.showVatErrorCmp', true);
+					} else {
+						if (fromForm == 'edit'){
+							cmp.find('mainEBEForm').submit(fields);
+						} else {
+							this.testUniqu(cmp, evt);
+						}
+					}
 				}
 			}
 		})
-		
 		$A.enqueueAction(action);
 	},
 
@@ -196,7 +291,7 @@
 		var allowSubmit = cmp.get('v.allowSubmit');
 		//Start Tal - VAT Logic
 		var getVatNumber = fields.VAT_Number__c;
-		//End Tal - VAT Logic
+		//End Tal - VAT Logicוואו
 		if (!this.isEmpty(fields)){
 			var action = cmp.get("c.testUniquness");
 			action.setParams({
@@ -358,12 +453,13 @@
         $A.enqueueAction(action);
 	},
 	isEmpty : function (obj){
-		return (obj == null || typeof(obj) == 'undefined' || obj == '' || obj == 'undefined');
+		return ((obj == null || typeof(obj) == 'undefined' || obj == '' || obj == 'undefined') && obj !== 0 && obj !== '0' && obj !== false);
 	},
 
 	//Start Tal - VAT Logic
 	checkVATBeforeRelate : function(cmp, evt){
 		var beId = cmp.get('v.currently_selected');
+		var country = cmp.get('v.shippingCountry');
 		if (this.isEmpty(beId)){
 			beId = cmp.get('v.selected_be');
 			if (!this.isEmpty(beId)){
@@ -377,28 +473,40 @@
         action.setCallback(this, function(response) {
 			var state = response.getState();
 			var storeResponse = response.getReturnValue();
-			cmp.set('v.getServiceStatus', storeResponse);
 			if (state === "SUCCESS") {
-				if (storeResponse=='invalid') {
-					cmp.set('v.showVatErrorCmp', true);
-					cmp.set('v.invalidVATForm', true);
+				if (!this.isEmpty(storeResponse.raw)){
+					cmp.set('v.getServiceStatus', storeResponse.raw);
 				}
-				//service is down
-				else if (storeResponse=='unknown') {
+
+				if (!storeResponse.service_available){
+					//service is down
 					cmp.find('notifLib').showToast({
 						"title": 'Wrong VAT Number- ',
 						"variant": 'warning',
 						"mode":"sticky",
 						"message": 'Service is down - please contract bizops'
 					});
-				}
-				else{
-					if(cmp.get('v.selection_mode') == 'choose existing' || cmp.get('v.selection_mode') == 'search'){
-						this.relate(cmp, evt);
+				} else {
+					if (storeResponse.hasOwnProperty('qst_valid')){
+						cmp.set('v.qstError', storeResponse.qst_valid);
 					}
+					if (storeResponse.hasOwnProperty('gst_valid')){
+						cmp.set('v.gstError', !storeResponse.gst_valid);
+					}
+					if (storeResponse.hasOwnProperty('vat_valid')){
+						cmp.set('v.vatError', !storeResponse.vat_valid);
+					}
+					if (cmp.get('v.qstError') || cmp.get('v.gstError') || cmp.get('v.vatError')){
+						cmp.set('v.showVatErrorCmp', true);
+						cmp.set('v.invalidVATForm', true);
+					} else {
+						if(cmp.get('v.selection_mode') == 'choose existing' || cmp.get('v.selection_mode') == 'search'){
+							this.relate(cmp, evt);
+						}
 
-					if(cmp.get('v.endPoint_duplicate') == false){
-						this.testUniqu(cmp,evt);
+						if(cmp.get('v.endPoint_duplicate') == false){
+							this.testUniqu(cmp,evt);
+						}
 					}
 				}
 			}

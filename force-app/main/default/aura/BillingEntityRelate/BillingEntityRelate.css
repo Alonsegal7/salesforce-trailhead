@@ -277,3 +277,17 @@
     .THIS .form-btn-container .row:last-child {
         margin-top: 32px;
     }
+    .THIS label.custom {
+        display: block;
+    }
+    .THIS label.mandatory:before {
+        content: ' *';
+        color: rgb(234, 0, 30);
+        padding: 0 2px 0 0;
+    }
+    .THIS .section-title {
+        padding: 4px;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 4px 0 0px;
+    }
