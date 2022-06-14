@@ -13,12 +13,6 @@
                 <lightning-button variant="Brand" label="Start Saas Process" onclick={InitSaasAgreement}></lightning-button>
             </lightning-layout-item>
         </template>
-        <template if:true={showDPAbutton}>
-            <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of TOS + DPA. Please click on the button to start the CLM Process</div>
-            <lightning-layout-item padding="around-medium">
-                <lightning-button variant="Brand" label="Start DPA Process" onclick={InitDPA}></lightning-button>
-            </lightning-layout-item>
-        </template>
         <template if:true={showAddendum}>
             <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of Addendum (negotiated). Please click on the button to start the CLM Process</div>
             <lightning-layout-item padding="around-medium">
@@ -36,7 +30,11 @@
                 </lightning-datatable>
                 <div class="slds-p-around_medium lgc-bg">
             </div>  
+            <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of TOS + DPA. Please click on the button to start the CLM Process</div>
         </template>
+        <lightning-layout-item padding="around-medium">
+            <lightning-button variant="Brand" label="Start DPA Process" onclick={InitDPA}></lightning-button>
+        </lightning-layout-item>
         <lightning-button variant="neutral" label="Back" onclick={closeAction}></lightning-button>
     </lightning-card>
     </lightning-quick-action-panel>
