@@ -19,8 +19,10 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
     @api objectApiName;
     missingRelevantInfo=false;
     showSaaSbutton=false;
-    // showDPAbutton=false;
+    showSaaSMSG=false;
     showAddendum=false;
+    showAddendumMSG=false;
+    showDPAMSG=false;
     salesOrderSelectedAgreementType;
     columns = companyLegalDocuments;
     showCompanyLegalDocTable=false;
@@ -88,10 +90,22 @@ checkIfLegalDocExist(){
             this.missingRelevantInfo=false;
             this.showCompanyLegalDocTable=true;
             this.companyLegalDocsList=response;
-        } else { //didn't find existing docs
-            this.legalDocExistForCompany=false;
+        } 
+            else { //didn't find existing docs
+                this.legalDocExistForCompany=false;
+                    if (this.salesOrderSelectedAgreementType=='SaaS Agreement' ) {
+                        this.showSaaSMSG=true;
+                        
+                     }
+                     else if (this.salesOrderSelectedAgreementType=='Addendum (negotiated)' ) {
+                         this.showAddendumMSG=true;
+                     }
+                     else if (this.salesOrderSelectedAgreementType=='TOS + DPA'){
+                         this.showDPAMSG=true;
+
+                     }
         }
-        //#2
+        //#2 
         if (this.salesOrderSelectedAgreementType=='SaaS Agreement' ) {
             this.showSaaSbutton=true;
         } else if (this.salesOrderSelectedAgreementType=='Addendum (negotiated)' ) {
