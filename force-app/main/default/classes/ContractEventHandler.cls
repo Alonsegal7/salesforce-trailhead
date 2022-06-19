@@ -83,7 +83,7 @@ public with sharing class ContractEventHandler {
                 if (!qlisMap.isempty()) {
                     for (Quote quote : quotesToHandle) {
                         isRevisedProRatedQuote=false;
-                        if (quote.Quote_Type__c=='Pro-rated- Additional Seats') {
+                        if (quote.Quote_Type__c=='Pro-rated- Additional Seats' || quote.Quote_Type__c == 'Service - Stand Alone') {
                             //First, check if there are contract events for this oppty (We are assuming that if a quote is created for the same oppty is changing the current contract events)
                             conEventsToCancel.addall(CheckIfEventsExistForOppty(existingContractAndconEventMap.get(quote.Get_Contract_Id__c),quote.OpportunityId));
                             //is pro-rated  (Contract from opp is maaped from metadata)
