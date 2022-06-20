@@ -60,6 +60,9 @@ public class OpportunityHelper {
             }else{
                 opp.Opportunity_Type__c  = 'New Business';
             }
+            if(opp.Type == 'Service'){
+                opp.Opportunity_Type__c  = 'Service';
+            }          
         }
     } 
 
