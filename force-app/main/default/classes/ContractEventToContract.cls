@@ -203,7 +203,22 @@ public with sharing class ContractEventToContract {
             this.accToUpdateList = accToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            Database.update(accToUpdateList);
+            try {
+                Database.update(accToUpdateList);
+            }      
+            catch (Exception ex) {
+                if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
+                    try {
+                        Database.update(accToUpdateList); 
+                    }
+                    catch (Exception e) {
+                        System.debug('Message: ' + e.getMessage());
+                    }
+                }
+                else {
+                    System.debug('Message: ' + ex.getMessage());
+                }
+            }
         }
     }
 
