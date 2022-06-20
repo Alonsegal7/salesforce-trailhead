@@ -20,14 +20,14 @@ public without sharing class ServiceOpportunityCreation {
             
             Map<Id,Account> accountsWithIds = new Map<Id,Account>();
             for (Account a : relevantAccounts) {
-                Id getRelevantRT = a.Owner_s_Profile__c == 'Partner Community Custom' ? PartnerOppRtId : internalOppRtId;
+                //Id getRelevantRT = a.Owner_s_Profile__c == 'Partner Community Custom' ? PartnerOppRtId : internalOppRtId;
                 serviceOppsToCreate.add(new Opportunity(
                     Name = a.Name + ' - ' + ' Service Opportnity' ,
                     Company__c = a.Company__c,
                     AccountId = a.Id,
                     CloseDate = system.today(),
                     Selected_Company_Contract__c = a.active_contract__c,
-                    RecordTypeId = getRelevantRT,
+                    RecordTypeId = InternalOppRtId,
                     StageName = 'Qualified',
                     Probability = 20,
                     Type= 'Service',
