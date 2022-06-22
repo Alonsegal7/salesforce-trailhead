@@ -19,8 +19,10 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
     @api objectApiName;
     missingRelevantInfo=false;
     showSaaSbutton=false;
-    showDPAbutton=false;
+    showSaaSMSG=false;
     showAddendum=false;
+    showAddendumMSG=false;
+    showDPAMSG=false;
     salesOrderSelectedAgreementType;
     columns = companyLegalDocuments;
     showCompanyLegalDocTable=false;
@@ -82,26 +84,33 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
 
 checkIfLegalDocExist(){
     checkIfLegalDocExist({oppId: this.recordId, legalDocType: this.salesOrderSelectedAgreementType }).then((response)=>{
+        //#1
         //Found legal document type record by the so agreement type - call list of legal docs table
         if(response!=null){
             this.missingRelevantInfo=false;
             this.showCompanyLegalDocTable=true;
             this.companyLegalDocsList=response;
         } 
-        //Didn't found legal document type record by the so agreement type 
-        else if (this.salesOrderSelectedAgreementType=='SaaS Agreement' ) {
-            this.legalDocExistForCompany=false;
+            else { //didn't find existing docs
+                this.legalDocExistForCompany=false;
+                    if (this.salesOrderSelectedAgreementType=='SaaS Agreement' ) {
+                        this.showSaaSMSG=true;
+                        
+                     }
+                     else if (this.salesOrderSelectedAgreementType=='Addendum (negotiated)' ) {
+                         this.showAddendumMSG=true;
+                     }
+                     else if (this.salesOrderSelectedAgreementType=='TOS + DPA'){
+                         this.showDPAMSG=true;
+
+                     }
+        }
+        //#2 
+        if (this.salesOrderSelectedAgreementType=='SaaS Agreement' ) {
             this.showSaaSbutton=true;
-        }
-        else if (this.salesOrderSelectedAgreementType=='TOS + DPA' ) {
-            this.legalDocExistForCompany=false;
-            this.showDPAbutton=true;
-        }
-        else if (this.salesOrderSelectedAgreementType=='Addendum (negotiated)' ) {
-            this.legalDocExistForCompany=false;
+        } else if (this.salesOrderSelectedAgreementType=='Addendum (negotiated)' ) {
             this.showAddendum=true;
         }
-
     }).catch(error => {
         console.log(error.body.message);
         this.dispatchEvent(
@@ -150,7 +159,9 @@ checkIfLegalDocExist(){
         }
         {!Opportunity.Id}
 
-    }        
+    } 
+    
+
     closeAction(){
         this.dispatchEvent(new CloseActionScreenEvent());
     }
