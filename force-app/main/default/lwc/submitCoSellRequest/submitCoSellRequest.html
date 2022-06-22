@@ -36,6 +36,11 @@
                             <template for:each={newCosellInputFields} for:item="cosellReqFieldName">
                                 <lightning-input-field key={cosellReqFieldName} data-id={cosellReqFieldName} field-name={cosellReqFieldName} required onchange={updateCosellRequest}></lightning-input-field>    
                             </template>
+                            <!-- Solutions Lookup - displayed only if reason is "Partner Solution" -->
+                            <template if:true={displaySolutionLookup}>
+                                <lightning-input-field field-name="Solution__c" required onchange={updateCosellRequest}></lightning-input-field>    
+                            </template>
+                            <!-- PS fields - displayed only if reason is "Professional Services Sales Expertise" -->
                             <template if:true={displayPsFields}>
                                 <template for:each={psFields} for:item="psField">
                                     <lightning-input-field key={psField} data-id={psField} field-name={psField} required onchange={updateCosellRequest}></lightning-input-field>    
@@ -170,6 +175,15 @@
                                         </lightning-layout-item>
                                     </template>
                                 </lightning-layout>
+                                <!-- Solutions Lookup - displayed only if reason is "Partner Solution" -->
+                                <template if:true={displaySolutionLookup}>
+                                    <lightning-layout multiple-rows>
+                                        <lightning-layout-item size="12">
+                                            <lightning-input-field field-name="Solution__c" required onchange={updateCosellRequest}></lightning-input-field>    
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                     
+                                </template>
                                 <!-- PS fields - displayed only if reason is "Professional Services Sales Expertise" -->
                                 <template if:true={displayPsFields}>
                                     <lightning-layout multiple-rows>
