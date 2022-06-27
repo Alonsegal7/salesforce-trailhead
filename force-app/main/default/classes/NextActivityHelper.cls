@@ -19,9 +19,11 @@ public class NextActivityHelper {
         boolean shouldUpdate = false;
         List<Lead> recordsToUpdate = new List<Lead>();
 
-        for (Lead lead : [SELECT Id, time_zone_offset__c, Next_activity_date__c, Next_activity__c FROM Lead WHERE Id =: ids]) {
+        for (Lead lead : [SELECT Id, time_zone_offset__c, Next_activity_date__c, Next_activity__c,
+        (SELECT Id, ActivityDate, Subject FROM Tasks WHERE ActivityDate >= :System.TODAY() AND Status != 'Completed' ORDER BY ActivityDate ASC LIMIT 1)
+        FROM Lead WHERE Id =: ids]) {
            shouldUpdate = false;
-           Task[] nextTasks = getLeadTasks(lead.Id);
+            Task[] nextTasks = lead.Tasks;
             if(nextTasks.size() > 0){
                 if(lead.Next_activity_date__c != nextTasks[0].ActivityDate || lead.Next_activity__c != nextTasks[0].Subject){
                     shouldUpdate = true;
@@ -58,9 +60,11 @@ public class NextActivityHelper {
         boolean shouldUpdate = false;
         List<Opportunity> recordsToUpdate = new List<Opportunity>();
 
-        for (Opportunity opp : [SELECT Id, Next_activity_date__c, Next_activity__c  FROM Opportunity WHERE Id =: ids]) {
+        for (Opportunity opp : [SELECT Id, Next_activity_date__c, Next_activity__c,
+        (SELECT Id, ActivityDate, Subject FROM Tasks WHERE ActivityDate >= :System.TODAY() AND Status != 'Completed' ORDER BY ActivityDate ASC LIMIT 1)
+        FROM Opportunity WHERE Id =: ids]) {
             shouldUpdate = false;
-            Task[] nextTasks = getOpportunityTasks(opp.Id);
+            Task[] nextTasks = opp.Tasks;
             if(nextTasks.size() > 0){
                 if(opp.Next_activity_date__c != nextTasks[0].ActivityDate || opp.Next_activity__c != nextTasks[0].Subject){
                     shouldUpdate = true;
@@ -95,19 +99,4 @@ public class NextActivityHelper {
             }
         }
     }
-    
-    private static Task[] getOpportunityTasks(String Id){
-        return [SELECT Id, ActivityDate, Subject FROM Task 
-                WHERE WhatId = :Id AND ActivityDate >= :System.TODAY() AND Status != 'Completed'
-                ORDER BY ActivityDate ASC 
-                LIMIT 1];
-    }
-    
-    private static Task[] getLeadTasks(String Id){
-        return [SELECT Id, ActivityDate, Subject FROM Task 
-                WHERE WhoId = :Id AND ActivityDate >= :System.TODAY() AND Status != 'Completed'
-                ORDER BY ActivityDate ASC 
-                LIMIT 1];
-    }
-    
 }
