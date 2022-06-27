@@ -42,6 +42,7 @@ export default class SubmitCoSellRequest extends LightningElement {
     associateScreen = false;
     submittedScreen = false;
     displayPsFields = false;
+    displaySolutionLookup = false;
     psTypeDetailsRequired = true;
     allowSwitchMainSec = false;
     currentOppMustBeMain = false;
@@ -242,6 +243,8 @@ export default class SubmitCoSellRequest extends LightningElement {
         if(fieldName == 'Reason__c'){ 
             if(fieldVal == 'Professional Services Sales Expertise') this.displayPsFields = true;
             else this.displayPsFields = false;
+            if(fieldVal == 'Partner Solution') this.displaySolutionLookup = true;
+            else this.displaySolutionLookup = false;
         } else if(fieldName == 'PS_Type__c'){
             if(fieldVal == 'Onboarding') this.psTypeDetailsRequired = false;
             else this.psTypeDetailsRequired = true;
@@ -251,6 +254,7 @@ export default class SubmitCoSellRequest extends LightningElement {
     handleMainRadioChange(e) {
         this.whatYouWishValue = e.detail.value;
         this.displayPsFields = false;
+        this.displaySolutionLookup = false;
         this.customError = '';
         if(this.whatYouWishValue == 'newopp'){ // Create a co-sell opp opportunity
             this.associateScreen = false;
