@@ -1,33 +1,33 @@
 public without sharing class ServiceOpportunityCreation {
         @AuraEnabled
-        public static List<Opportunity> createServiceOpportunities(List<Id> accountsforserviceIds){
+        public static List<Opportunity> createServiceOpportunities(List<Id> accountsIdsForServiceOppCreation){
     
-            Id InternalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
-            Id PartnerOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
+            Id internalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
+            Id partnerOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
             //Id currentUserProfile = userinfo.getProfileId();
             //Profile userProfile = [SELECT Id, Name FROM Profile WHERE Id =: currentUserProfile];
  
-            List<Account> relevantAccounts=  new List<Account>([
+            List<Account> accountsForServiceOppCreation=  new List<Account>([
                 SELECT Id, Name,Owner_s_Profile__c, Active_Contract__c, Company__c, Pricing_Version__c, ParentId,CurrencyIsoCode,primary_pulse_account_id__c,Latest_Billing_Entity__c
                 FROM Account 
-                WHERE Id IN: accountsforserviceIds 
+                WHERE Id IN: accountsIdsForServiceOppCreation 
                 ORDER BY ARR__c 
                 DESC]
             );
     
             List<Opportunity> serviceOppsToCreate = new List<Opportunity>();
-            if(relevantAccounts.isEmpty()) return null;
+            if(accountsForServiceOppCreation.isEmpty()) return null;
             
             Map<Id,Account> accountsWithIds = new Map<Id,Account>();
-            for (Account a : relevantAccounts) {
-                Id getRelevantRT = a.Owner_s_Profile__c == 'Partner Community Custom' ? PartnerOppRtId : internalOppRtId;
+            for (Account a : accountsForServiceOppCreation) {
+                Id getRelevantRT = a.Owner_s_Profile__c == 'Partner Community Custom' ? partnerOppRtId : internalOppRtId;
                 serviceOppsToCreate.add(new Opportunity(
                     Name = a.Name + ' - ' + ' Service Opportnity' ,
                     Company__c = a.Company__c,
                     AccountId = a.Id,
                     CloseDate = system.today(),
                     Selected_Company_Contract__c = a.active_contract__c,
-                    RecordTypeId = getRelevantRT,
+                    RecordTypeId = internalOppRtId,
                     StageName = 'Qualified',
                     Probability = 20,
                     Type= 'Service',

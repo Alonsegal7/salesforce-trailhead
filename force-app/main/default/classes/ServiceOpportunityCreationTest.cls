@@ -21,7 +21,7 @@ public without sharing class ServiceOpportunityCreationTest {
     }
 
     @isTest
-    static void Checkopportunitycreation(){
+    static void checkOpportunityCreation(){
         Account accountforserviceId = [SELECT Id,Active_Contract__c FROM Account limit 1];
         Id InternalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
         Test.startTest();
