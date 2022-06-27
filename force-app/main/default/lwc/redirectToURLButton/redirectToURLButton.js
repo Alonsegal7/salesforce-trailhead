@@ -13,7 +13,7 @@ export default class RedirectToURLButton extends LightningElement {
         this.error = '';
         console.log('Entered createClick');
         createServiceOpportunities({
-            accountsforserviceIds:[this.record]})
+            accountsIdsForServiceOppCreation:[this.record]})
         .then((response)=>{
             this.opportunityId = response[0].Id;
             console.log('record id: '+ this.record);
