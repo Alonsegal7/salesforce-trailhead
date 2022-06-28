@@ -22,7 +22,7 @@ public without sharing class CoSellRequestService {
             opp.CoSell_TH_Error_Triggered_by__c = UserInfo.getFirstName() + ' ' + UserInfo.getLastName();
             update opp;
             String body = '';
-            body += runningUserInfo.FirstName + ' ' + runningUserInfo.LastName + ' has tried to submit a co-sell request for '+ Account.Name + ' from opportunity ' + opp.Name + '(Id: '+opp.Id+') and got blocked because this deal does not match the ARR TH requirment for Co-Sell (10K)';
+            body += runningUserInfo.FirstName + ' ' + runningUserInfo.LastName + ' has tried to submit a co-sell request for '+ opp.Account.Name + ' from opportunity ' + opp.Name + '(Id: '+opp.Id+') and got blocked because this deal does not match the ARR TH requirment for Co-Sell (10K)';
             list<string> toAddresses = new list<string>();
             toAddresses.add('kseniasm@monday.com');
             toAddresses.add('avivc@monday.com');
