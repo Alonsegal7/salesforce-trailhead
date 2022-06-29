@@ -1,14 +1,14 @@
 <template>
     <div class="wrap-all">
-        <lightning-quick-action-panel header="Select CSM Champions">
+        <lightning-quick-action-panel header="Manage Survey Contacts">
             <template if:true={isLoading}>
                 <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
             </template>
             <template if:false={isLoading}>
                 <lightning-dual-listbox name="csmChampSelect"
-                    label="Select CSM Champions"
+                    label="Please move to the right section the contacts you want to send them CSAT survey"
                     source-label="Available Contacts"
-                    selected-label="Please move the contacts you want to set as CSM Champions to the right"
+                    selected-label="Selected Contacts for CSAT Survey"
                     options={contacts_options}
                     value={selected_champs}
                     onchange={handleChampSelected}
