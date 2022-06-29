@@ -239,4 +239,29 @@ public class OpportunityHelperTest {
 
                         
     }
+
+    @isTest
+    static void shoulDetermineServiceType() {
+        // Arrange
+        Id companyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
+        Id mondayAccountRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+		Profile admin = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User manager = new User(Alias = 'manager',Country='United Kingdom',Email='manager@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = admin.Id,TimeZoneSidKey='America/Los_Angeles', UserName='manager@monday.com');
+		insert manager;
+		User user = new User(Alias='standt1', ManagerId=manager.Id, Country='United Kingdom',Email='demo1@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing123@monday.com');
+		insert user;
+        Account companyA = new Account(Name='companyA', RecordTypeId=companyRecordTypeId, OwnerId=user.Id, CSM__c=user.Id);
+		insert companyA;
+        Account mondayAccount = new Account(Name='monday account', RecordTypeId=mondayAccountRecordTypeId, Company__c=companyA.Id, OwnerId=user.Id, CSM__c=user.Id, primary_pulse_account_id__c='12');
+        insert mondayAccount;
+        Opportunity opp = new Opportunity(Name='opportunity', StageName='Qualified', Expected_Plan_Name__c='1', CloseDate=system.today(), Company__c=companyA.Id, AccountId=companyA.Id);
+        insert opp;
+        // Update tyoe for opp 
+        opp.Opportunity_Type__c ='Service';
+        update opp;
+        List<opportunity> oppList = new List<opportunity>();
+        oppList.add(opp);
+        OpportunityHelper.determineOppType(oppList);            
+    }
 }
