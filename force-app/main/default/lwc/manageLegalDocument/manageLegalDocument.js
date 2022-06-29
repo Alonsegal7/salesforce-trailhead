@@ -23,6 +23,7 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
     showAddendum=false;
     showAddendumMSG=false;
     showDPAMSG=false;
+    showDPAbutton=false;
     salesOrderSelectedAgreementType;
     columns = companyLegalDocuments;
     showCompanyLegalDocTable=false;
@@ -58,10 +59,16 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
                 if (this.salesOrderSelectedAgreementType=='monday.com SaaS' || this.salesOrderSelectedAgreementType=='Customer SaaS' ) {
                     this.salesOrderSelectedAgreementType='SaaS Agreement';
                 }
-                //We only support SaaS and TOS + DPA Agreements (For Now)
-                if (this.salesOrderSelectedAgreementType!='SaaS Agreement' && this.salesOrderSelectedAgreementType!='TOS + DPA'  && this.salesOrderSelectedAgreementType!='Addendum (negotiated)' ) {
+                //We only support SaaS + DPA + Addendum (negotiated) Agreements (For Now)
+                if (this.salesOrderSelectedAgreementType!='SaaS Agreement' && this.salesOrderSelectedAgreementType!='TOS + DPA'  && this.salesOrderSelectedAgreementType!='Addendum (negotiated)') {
                     this.missingRelevantInfo=true;
                 }
+
+                if (this.salesOrderSelectedAgreementType == 'Terms of Service'){
+                    this.missingRelevantInfo=true;
+                    this.showDPAbutton=true;
+                }
+
                 //Check if there is a clm process under this SO legal agreement type
                 else{
                     this.checkIfLegalDocExist();
@@ -70,6 +77,7 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
             //Didnt found a quote type sales order with valid billing entity and open opp
             else if (data==undefined) {
                 this.missingRelevantInfo=true;
+                
             }
             else if (error) {
                 this.missingRelevantInfo=true;
@@ -87,7 +95,7 @@ checkIfLegalDocExist(){
         //#1
         //Found legal document type record by the so agreement type - call list of legal docs table
         if(response!=null){
-            this.missingRelevantInfo=false;
+            this.showDPAbutton=true;
             this.showCompanyLegalDocTable=true;
             this.companyLegalDocsList=response;
         } 
@@ -95,22 +103,33 @@ checkIfLegalDocExist(){
                 this.legalDocExistForCompany=false;
                     if (this.salesOrderSelectedAgreementType=='SaaS Agreement' ) {
                         this.showSaaSMSG=true;
+                        this.showDPAbutton=true;
                         
                      }
                      else if (this.salesOrderSelectedAgreementType=='Addendum (negotiated)' ) {
                          this.showAddendumMSG=true;
+                         this.showDPAbutton=true;
                      }
                      else if (this.salesOrderSelectedAgreementType=='TOS + DPA'){
                          this.showDPAMSG=true;
-
+                         this.showDPAbutton=true;
                      }
+                     else if (this.salesOrderSelectedAgreementType=='Terms of Service'){
+                        this.showDPAbutton=true;
+                    }
         }
         //#2 
         if (this.salesOrderSelectedAgreementType=='SaaS Agreement' ) {
             this.showSaaSbutton=true;
+            this.showDPAbutton=true;
         } else if (this.salesOrderSelectedAgreementType=='Addendum (negotiated)' ) {
             this.showAddendum=true;
+            this.showDPAbutton=true;
         }
+        else if (this.salesOrderSelectedAgreementType=='Terms of Service'){
+            this.showDPAbutton=true;
+        }
+
     }).catch(error => {
         console.log(error.body.message);
         this.dispatchEvent(
