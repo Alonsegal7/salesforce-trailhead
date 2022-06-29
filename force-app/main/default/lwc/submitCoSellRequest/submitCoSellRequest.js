@@ -3,6 +3,7 @@ import { CloseActionScreenEvent } from 'lightning/actions';
 import { getRecord, updateRecord, getFieldValue } from 'lightning/uiRecordApi';
 import createNewCoSellRequest from '@salesforce/apex/CoSellRequestService.createNewCoSellRequest';
 import getAssociatePotentialOpps from '@salesforce/apex/CoSellRequestService.getAssociatePotentialOpps';
+import send10Kemail from '@salesforce/apex/CoSellRequestService.send10Kemail';
 import OPP_ACCOUNTID from "@salesforce/schema/Opportunity.AccountId";
 import OPP_STAGE from "@salesforce/schema/Opportunity.StageName";
 import OPP_ARR from "@salesforce/schema/Opportunity.Green_Bucket_ARR_V2__c";
@@ -114,7 +115,7 @@ export default class SubmitCoSellRequest extends LightningElement {
             var ownerSegment = getFieldValue(data, OPP_OWNER_SEGMENT); //for sales
             if(ownersManagerTeam == 'CP - ANZ Team' || ownersOffice == 'Sydney Office') isAnzTeam = true;
             else if(this.currentOppRT == 'Internal_Opportunity' && ownerSegment == 'SMB') isSmb = true;
-            //if(isSmb || isAnzTeam || totalArr >= 10000){
+            if(isSmb || isAnzTeam || totalArr >= 10000){
                 this.customError = '';
                 this.arrIsUnder10k = false;
                 if(syncedQuoteId){
@@ -135,15 +136,23 @@ export default class SubmitCoSellRequest extends LightningElement {
                     this.modalHeader = 'Submit Co-Sell Request';
                     this.mainScreen = true;
                 }
-            /*} else {
+            } else {
                 this.modalHeader = 'Submit Co-Sell Request';
                 var err10K = 'Submit Co-Sell Request is available only for accounts that reached 10K ARR (including current opp ARR).';
                 err10K += ' This account ARR is ' + accArr + ' and this opportunity ARR is ' + oppArr + ' so total ARR is ' + totalArr;
+                err10K += '. If you have any question about this process please reach out to your manager or the Biz Ops team.';
                 this.customError = err10K;
                 this.arrIsUnder10k = true;
-            }*/
+                this.callback_send10Kemail();
+            }
         }
         this.isLoading = false;
+    }
+
+    callback_send10Kemail(){
+        send10Kemail({
+            opportunityId: this.recordId
+        });
     }
 
     handleBackToCoSellLeader(event){
