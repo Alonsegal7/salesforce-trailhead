@@ -27,7 +27,7 @@ public without sharing class CoSellRequestService {
             toAddresses.add('kseniasm@monday.com');
             toAddresses.add('avivc@monday.com');
             toAddresses.add('naomida@monday.com');
-            Utilities.sendEmail('Co-Sell 10K arr TH validation occured on '+ Account.Name, body, toAddresses);
+            Utilities.sendEmail('Co-Sell 10K arr TH validation occured on '+ opp.Account.Name, body, toAddresses);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
         }
