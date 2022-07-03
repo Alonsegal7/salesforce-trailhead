@@ -3,6 +3,7 @@ public with sharing class dealhub_Product_Pricing_Service {
     public static boolean firstPostFired=false;
     public static Map<string, Object> globalVars = new Map<string, Object>();
 
+    @AuraEnabled
     public static string getPricesFromDealhub(string tier, string crrncyCode, string pricingVersion, list<string> skusList){
         string productsParams = getProductsParameters(tier, crrncyCode,  pricingVersion, skusList);
         string getPrices = getProdutsPricing(productsParams);
