@@ -80,7 +80,7 @@
                 <lightning-layout-item if:true={showTotalPricing} size="3" padding="horizontal-small">
                     <lightning-input type="number" name="totalNet" label="Total Net" value={totalNet} formatter="currency" disabled></lightning-input>
                 </lightning-layout-item>
-                <lightning-layout-item size="6" padding="horizontal-small">
+                <lightning-layout-item size={submitButtonPosition} padding="horizontal-small">
                     <div class="slds-p-top_medium">
                         <button class="slds-button slds-button_brand slds-float_right" onclick={handleSubmit}>Submit</button>
                     </div>

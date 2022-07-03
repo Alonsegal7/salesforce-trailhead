@@ -98,6 +98,7 @@ export default class ProductsTableToFlow extends LightningElement {
     exchangeRate;
     pricingVersionForHtml;
     syncedQuotePricingVerision;
+    submitButtonPosition;
     
     @wire(getRecord, { recordId: '$recordId', fields: fields })
     fetchOppty({ data }) {//if is not under quote context, will not run
@@ -189,11 +190,14 @@ export default class ProductsTableToFlow extends LightningElement {
     }
 
     defineTier(){
-        if (this.oppExpectedPlan==null || this.oppExpectedPlan==undefined) {
-            this.tierSelection=this.accCurerentPlan;
+        if ((this.oppExpectedPlan==null || this.oppExpectedPlan==undefined) && this.accCurerentPlan !=null && this.accCurerentPlan != undefined) {
+            this.tierSelection= this.accCurerentPlan =='Basic' ? this.tierSelection='Standard' : this.tierSelection=this.accCurerentPlan;
         }
-        else{
+        else if (this.oppExpectedPlan!=null && this.oppExpectedPlan!=undefined) {
             this.tierSelection=this.oppExpectedPlan;
+        }
+        else {
+            this.tierSelection='Enterprise';
         }
     }
         
@@ -596,6 +600,13 @@ export default class ProductsTableToFlow extends LightningElement {
         this.columns[2].initialWidth=this.quantityColumnWidth= parseInt(this.quantityColumnWidth);
         this.columns[3].initialWidth=this.discountColumnWidth= parseInt(this.discountColumnWidth);
         this.columns[4].initialWidth=this.totalColumnWidth=parseInt(this.totalColumnWidth);
+
+        if (this.context=='quote') {
+            this.submitButtonPosition="12";
+        }
+        if (this.context=='PartnerSOR') {
+            this.submitButtonPosition="6";
+        }
     }
     
     resetValuesOnChange(){

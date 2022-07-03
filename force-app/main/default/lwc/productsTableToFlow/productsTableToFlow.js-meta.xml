@@ -21,8 +21,8 @@
                         description="The deal currency"/>
                         <property name="parentRecId" type="String" label="ParentId" 
                         description="The parent id of the record which the products will be created on"/>
-                        <property name="context" type="String" label="Process (SOR or Forecast)" 
-                        description="The context of this component - if it is SOR, it will create SOR records if it is Forecast, it will create quote and line items. make sure to send the parent id (SOR or Opportuinty) at the ParentId input field"/>
+                        <property name="context" type="String" label="Process (PartnerSOR or quote)" 
+                        description="The context of this component - if it is PartnerSOR, it will create SOR records if it is quote, it will create quote and line items. make sure to send the parent id (SOR or Opportuinty) at the ParentId input field"/>
                         <propertyType name="T" extends="SObject" label="Product Table" description="Plesae make sure to add only the Product list from the product get records" />
                         <property label="Products List" name="Products" role="inputOnly" type="{T[]}" />
                         <property name="contractId" type="String" label="Account Current Contract Id" 
