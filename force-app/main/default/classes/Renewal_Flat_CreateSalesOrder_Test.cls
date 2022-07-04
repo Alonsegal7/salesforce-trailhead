@@ -140,7 +140,6 @@ public class Renewal_Flat_CreateSalesOrder_Test {
             List<Id>renewalOppIds = new List<Id>();
             renewalOppIds.add(renewalOpp.Id);
             Renewal_Flat_CreateSalesOrder.createRenewalSalesOrder(renewalOppIds);
-            
             test.stopTest();
             
             Quote oppQuote = [SELECT Id,OpportunityId,Quote_Source__c,ContractId,Is_Finalized__c,AccountId FROM Quote WHERE OpportunityId IN:renewalOppIds][0];

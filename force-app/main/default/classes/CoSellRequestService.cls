@@ -13,6 +13,25 @@ public without sharing class CoSellRequestService {
         }
         set;
     }
+
+    @AuraEnabled
+    public static void send10Kemail(Id opportunityId){
+        try {
+            User runningUserInfo = [select FirstName, LastName from User where Id =: UserInfo.getUserId()];
+            Opportunity opp = [select Id, Name, Account.Name from Opportunity where Id =: opportunityId];
+            opp.CoSell_TH_Error_Triggered_by__c = UserInfo.getFirstName() + ' ' + UserInfo.getLastName();
+            update opp;
+            String body = '';
+            body += runningUserInfo.FirstName + ' ' + runningUserInfo.LastName + ' has tried to submit a co-sell request for '+ opp.Account.Name + ' from opportunity ' + opp.Name + '(Id: '+opp.Id+') and got blocked because this deal does not match the ARR TH requirment for Co-Sell (10K)';
+            list<string> toAddresses = new list<string>();
+            toAddresses.add('kseniasm@monday.com');
+            toAddresses.add('avivc@monday.com');
+            toAddresses.add('naomida@monday.com');
+            Utilities.sendEmail('Co-Sell 10K arr TH validation occured on '+ opp.Account.Name, body, toAddresses);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
+        }
+    }
     
     @AuraEnabled
     public static List<Opportunity> getAssociatePotentialOpps(Id accountId, String mainOppRecordTypeName){
