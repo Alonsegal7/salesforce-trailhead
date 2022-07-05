@@ -17,10 +17,11 @@ import EXPECTED_PLAN_TIER from '@salesforce/schema/Opportunity.Expected_Plan_Tie
 import CURRENT_ACCOUNT_PLAN_TIER from '@salesforce/schema/Opportunity.Account.Plan_Tier__c';
 import SYNCED_QUOTE from '@salesforce/schema/Opportunity.SyncedQuoteId';
 import SYNCED_QUOTE_PRICING_VERSION from '@salesforce/schema/Opportunity.SyncedQuote.Pricing_Version__c';
+import SYNCED_QUOTE_TYPE from '@salesforce/schema/Opportunity.SyncedQuote.Document_Type__c';
 import OPP_ARR from '@salesforce/schema/Opportunity.Green_Bucket_ARR_V2__c'; 
 import EXCHANGE_RATE from '@salesforce/schema/Opportunity.USD_exchange_rate__c'; 
 
-const fields = [SYNCED_QUOTE_PRICING_VERSION,EXCHANGE_RATE,OPP_ARR,PRICING_VERSION,CURRENCYISO,PRIOR_ARR,EXPECTED_PLAN_TIER,CURRENT_ACCOUNT_PLAN_TIER,SYNCED_QUOTE];
+const fields = [SYNCED_QUOTE_TYPE,SYNCED_QUOTE_PRICING_VERSION,EXCHANGE_RATE,OPP_ARR,PRICING_VERSION,CURRENCYISO,PRIOR_ARR,EXPECTED_PLAN_TIER,CURRENT_ACCOUNT_PLAN_TIER,SYNCED_QUOTE];
 
 export default class ProductsTableToFlow extends LightningElement {
 
@@ -99,6 +100,7 @@ export default class ProductsTableToFlow extends LightningElement {
     pricingVersionForHtml;
     syncedQuotePricingVerision;
     submitButtonPosition;
+    syncedQuoteType;
     
     @wire(getRecord, { recordId: '$recordId', fields: fields })
     fetchOppty({ data }) {//if is not under quote context, will not run
@@ -115,6 +117,7 @@ export default class ProductsTableToFlow extends LightningElement {
             this.addedArr= getFieldValue(data, OPP_ARR);
             this.exchangeRate= getFieldValue(data, EXCHANGE_RATE);
             this.syncedQuotePricingVerision=getFieldValue(data, SYNCED_QUOTE_PRICING_VERSION);
+            this.syncedQuoteType=getFieldValue(data, SYNCED_QUOTE_TYPE);
             this.pricingVersionForHtml = this.oppCurrentPriVersion;
             this.resetValuesOnChange();
             this.defineTier();
@@ -165,7 +168,13 @@ export default class ProductsTableToFlow extends LightningElement {
     runForecastProcess(){ //when wire record change - run full process 
         this.isLoading=true;
         if((this.syncedQuote!=null && this.syncedQuote!=undefined) && 
-            (this.oppCurrentCrrncy!=undefined && this.oppCurrentPriVersion!=undefined && this.tierSelection!=undefined) && this.syncedQuotePricingVerision==this.oppCurrentPriVersion && this.tierSelection == this.oppExpectedPlan && this.currStateData==null){ //I have existing quote
+            (this.oppCurrentCrrncy!=undefined && 
+            this.oppCurrentPriVersion!=undefined && 
+            this.tierSelection!=undefined) && 
+            this.syncedQuotePricingVerision==this.oppCurrentPriVersion && 
+            this.tierSelection == this.oppExpectedPlan && this.currStateData==null &&
+            this.syncedQuoteType=='Forecast'){ //I have existing forecast quote
+
             this.currentForecastQuoteId=this.syncedQuote;
             getCurrentForecast({quoteId: this.currentForecastQuoteId}).then((currentState)=>{
                     if(currentState[0]!=null){ 
