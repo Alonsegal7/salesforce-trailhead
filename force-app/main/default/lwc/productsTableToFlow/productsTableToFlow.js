@@ -192,11 +192,12 @@ export default class ProductsTableToFlow extends LightningElement {
             });
         }
         else{
-            this.currStateData=null;//clean current state if not supposed to be current state
+            this.currStateData=null;//if pricing version or currency is different then current forecast, refersh table data
             this.currentContractCoreProductQty=0;
         }
         this.defineDealhubProductRequest(this.tierSelection,this.oppCurrentCrrncy,this.oppCurrentPriVersion);
     }
+    
 
     defineTier(){
         if ((this.oppExpectedPlan==null || this.oppExpectedPlan==undefined) && this.accCurerentPlan !=null && this.accCurerentPlan != undefined) {
@@ -209,6 +210,7 @@ export default class ProductsTableToFlow extends LightningElement {
             this.tierSelection='Enterprise';
         }
     }
+
         
     defineDealhubProductRequest(tier, crrncyCode, pricingVersion){
         this.duration=12;
