@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue, updateRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 import Id from '@salesforce/user/Id';
 import COSELL_REQUEST_ID from '@salesforce/schema/Opportunity.Co_Sell_Request__c';
 import COSELL_REQUEST_STATUS from '@salesforce/schema/Opportunity.Co_Sell_Request__r.Status__c';
@@ -27,7 +28,6 @@ export default class Opportunity_PartnerImpactSurveyCosell extends LightningElem
                 ]})
     wiredRecord({ error, data }) {
         if (data) {
-            console.log('loading co-sell impact survey...');
             this.coSellReqId = getFieldValue(data, COSELL_REQUEST_ID);
             var coSellReqStatus = getFieldValue(data, COSELL_REQUEST_STATUS);
             var recordType = getFieldValue(data, OPP_RECORD_TYPE);
@@ -35,19 +35,13 @@ export default class Opportunity_PartnerImpactSurveyCosell extends LightningElem
             var accountCosellLeader = getFieldValue(data, ACCOUNT_COSELL_LEADER);
             var oppOwnerId = getFieldValue(data, OPP_OWNERID);
             var oppOwnerManagerId = getFieldValue(data, OPP_OWNER_MANAGERID);
-            console.log('co-sell request id: '+ this.coSellReqId);
-            console.log('opp record type: '+ recordType);
-            console.log('survey filled: '+ surveyFilled); //PROBLEM - RETURNS NULL B/C SHARING RULES
-            console.log('account Cosell Leader: '+ accountCosellLeader);
             if(this.coSellReqId != null && this.coSellReqId != undefined && coSellReqStatus == 'Approved' // only for opps with approved co-sell req
                 && surveyFilled == false //survey was not filled yet
                 && (this.userId == oppOwnerId || this.userId == oppOwnerManagerId) //survey open only for opp owner / owner's manager
                 && ((recordType == 'Partner_Opportunity' && accountCosellLeader == 'Partners') || (recordType == 'Internal_Opportunity' && accountCosellLeader == 'Sales'))){ //survey is open by leader (partner opps for partners leader and internal opps for sales leader)
                 this.load = true; //load survey
-                console.log('loading co-sell impact survey now!');
             } else {
                 this.load = false; //do not load survey
-                console.log('NO co-sell impact survey needed!');
             }
             this.error = undefined;
         } else if (error) {
@@ -68,6 +62,7 @@ export default class Opportunity_PartnerImpactSurveyCosell extends LightningElem
         updateRecord(recordInput)
         .then(() => {
             console.log('success update survey filled by/date.');
+            refreshApex(this.wiredRecord);
         })
         .catch(error => {
             console.log('error updating survey filled by/date: ' + JSON.stringify(error));
@@ -85,7 +80,6 @@ export default class Opportunity_PartnerImpactSurveyCosell extends LightningElem
 
         // Return the date in "YYYY-MM-DD" format
         let yyyyMmDd = rightNow.toISOString().slice(0,10);
-        console.log(yyyyMmDd); // Displays the user's current date, e.g. "2020-05-15"
         return yyyyMmDd;
     }
 }
