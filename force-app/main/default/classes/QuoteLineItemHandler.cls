@@ -13,7 +13,7 @@ public class QuoteLineItemHandler {
             //Fetch opportunity line item for sync
             Map<Id, OpportunityLineItem> mapOppLineItems = new Map<Id, OpportunityLineItem>();
 
-            for(OpportunityLineItem oli : [SELECT Id, ARR__c, Tier__c, PS_Start_Date__c, Product_Type__c, Plan_Period__c, Seats__c, CC_Claim_Product__c,Co_Sell_Product__c, PS_Hours__c, Expiration_Date__c FROM OpportunityLineItem WHERE Opportunity.SyncedQuoteId IN: quoteIds]){
+            for(OpportunityLineItem oli : [SELECT Id, ARR__c, Tier__c, PS_Start_Date__c, Product_Type__c, Plan_Period__c, Seats__c, CC_Claim_Product__c,Co_Sell_Product__c, PS_Hours__c, Expiration_Date__c, Service_Revenue__c FROM OpportunityLineItem WHERE Opportunity.SyncedQuoteId IN: quoteIds]){
                 mapOppLineItems.put(oli.Id, oli); 
             }
             
@@ -21,6 +21,8 @@ public class QuoteLineItemHandler {
             for (QuoteLineItem qli : newLineItems) {
                 OpportunityLineItem oli = mapOppLineItems.get(mapQuoteLineItemSortOrder.get(qli.Id));
                 system.debug('Raz Ben Ron oli: '+oli);
+                system.debug('Raz Ben Ron oli: '+qli.DealHub_Net_Price_USD__c);
+                system.debug('Raz Ben Ron oli: '+qli);
                 if (oli != null && !oli.CC_Claim_Product__c && !oli.Co_Sell_Product__c) {
                     oli.ARR__c = qli.ARR__c;
                     oli.Tier__c = qli.Tier__c;
@@ -34,6 +36,8 @@ public class QuoteLineItemHandler {
                     oli.PS_Hours__c = qli.Hours__c;
                     oli.Expiration_Date__c = qli.Expiration_Date__c;
                     oli.PS_Start_Date__c = qli.ServiceDate;
+                    oli.Service_Revenue__c=qli.DealHub_Net_Price_USD__c;
+                    oli.Exchange_test__c = qli.Net_Per_Unit__c;
                     lstOppotunityToUpdate.add(oli);
                 }
             }
