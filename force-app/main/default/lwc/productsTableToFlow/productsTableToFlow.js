@@ -107,21 +107,21 @@ export default class ProductsTableToFlow extends LightningElement {
         if (data) { 
             this.oppData=data;
             this.isQuoteContext=true;
-            this.oppCurrentPriVersion = getFieldValue(data, PRICING_VERSION);
-            this.oppCurrentCrrncy = getFieldValue(data, CURRENCYISO);
-            this.crrncyIso = getFieldValue(data, CURRENCYISO);
+            this.oppCurrentPriVersion = getFieldValue(data, PRICING_VERSION);//manual by user
+            this.oppCurrentCrrncy = getFieldValue(data, CURRENCYISO);//manual by user
+            this.crrncyIso = getFieldValue(data, CURRENCYISO);//manual by user
             this.priorArr = getFieldValue(data, PRIOR_ARR);
             this.oppExpectedPlan = getFieldValue(data, EXPECTED_PLAN_TIER);
             this.accCurerentPlan = getFieldValue(data, CURRENT_ACCOUNT_PLAN_TIER);
             this.syncedQuote = getFieldValue(data, SYNCED_QUOTE);
             this.addedArr= getFieldValue(data, OPP_ARR);
             this.exchangeRate= getFieldValue(data, EXCHANGE_RATE);
-            this.syncedQuotePricingVerision=getFieldValue(data, SYNCED_QUOTE_PRICING_VERSION);
+            this.syncedQuotePricingVerision=getFieldValue(data, SYNCED_QUOTE_PRICING_VERSION);//manual by user
             this.syncedQuoteType=getFieldValue(data, SYNCED_QUOTE_TYPE);
             this.pricingVersionForHtml = this.oppCurrentPriVersion;
-            this.resetValuesOnChange();
+            this.resetValues();// for cases that we change pricing version or currency, reset on load, the calculation will run on draft on the runForecastProcessOnLoad process
             this.defineTier();
-            this.runForecastProcess();
+            this.runForecastProcessOnLoad();   
         }
     }
     
@@ -163,9 +163,7 @@ export default class ProductsTableToFlow extends LightningElement {
         this.validateError(this.listOfDrafts); //Validate draft values
         this.calculateProductsPricing(this.listOfDrafts);//Calculate pricing
     }
-
-
-    runForecastProcess(){ //when wire record change - run full process 
+    runForecastProcessOnLoad(){ //when wire record change - run full process 
         this.isLoading=true;
         if((this.syncedQuote!=null && this.syncedQuote!=undefined) && 
             (this.oppCurrentCrrncy!=undefined && 
@@ -173,7 +171,7 @@ export default class ProductsTableToFlow extends LightningElement {
             this.tierSelection!=undefined) && 
             this.syncedQuotePricingVerision==this.oppCurrentPriVersion && 
             this.tierSelection == this.oppExpectedPlan && this.currStateData==null &&
-            this.syncedQuoteType=='Forecast'){ //I have existing forecast quote
+            this.syncedQuoteType=='Forecast'){ //I have existing forecast quote, call the server to get the forecast information back to the table
 
             this.currentForecastQuoteId=this.syncedQuote;
             getCurrentForecast({quoteId: this.currentForecastQuoteId}).then((currentState)=>{
@@ -197,21 +195,7 @@ export default class ProductsTableToFlow extends LightningElement {
         }
         this.defineDealhubProductRequest(this.tierSelection,this.oppCurrentCrrncy,this.oppCurrentPriVersion);
     }
-    
 
-    defineTier(){
-        if ((this.oppExpectedPlan==null || this.oppExpectedPlan==undefined) && this.accCurerentPlan !=null && this.accCurerentPlan != undefined) {
-            this.tierSelection= this.accCurerentPlan =='Basic' ? this.tierSelection='Standard' : this.tierSelection=this.accCurerentPlan;
-        }
-        else if (this.oppExpectedPlan!=null && this.oppExpectedPlan!=undefined) {
-            this.tierSelection=this.oppExpectedPlan;
-        }
-        else {
-            this.tierSelection='Enterprise';
-        }
-    }
-
-        
     defineDealhubProductRequest(tier, crrncyCode, pricingVersion){
         this.duration=12;
         this.isLoading=true;
@@ -257,18 +241,19 @@ export default class ProductsTableToFlow extends LightningElement {
         }); 
     }
 
-    setTableValues(){// will run on load and on tier, pricing or currency change
-            this.data = JSON.parse(this.jsonSkusData).skus;//Parse dealhub api response
-            for (let i in this.data) {//set values on load (also if we have exiting data, to allow additional products, init all data all the time)
-                this.data[i].productName=this.context=='quote' ? this.Products.find(({ Product_Identifier__c }) => Product_Identifier__c === this.data[i].sku).Short_Product_Name__c : this.Products.find(({ Product_Identifier__c }) => Product_Identifier__c === this.data[i].sku).Name
-                this.data[i].quantity=0;
-                this.data[i].discount=0;
-                this.data[i].total=0;
-                this.data[i].crrncy=this.crrncyIso; 
-                this.data[i].originalListPrice =this.data[i].price;
-                this.showProductsTable=true;
-                this.isLoading=false;
-        }
+    setTableValues(){//For psor, will run on load, and for forecast will run on wire
+        this.data = JSON.parse(this.jsonSkusData).skus;//Parse dealhub api response
+        this.data.forEach(entity => { //set values on load (also if we have exiting data, to allow additional products, init all data all the time)
+            entity.productName=this.context=='quote' ? this.Products.find(({ Product_Identifier__c }) => Product_Identifier__c === entity.sku).Short_Product_Name__c : this.Products.find(({ Product_Identifier__c }) => Product_Identifier__c === entity.sku).Name
+            entity.quantity=0;
+            entity.discount=0;
+            entity.total=0;
+            entity.crrncy=this.crrncyIso; 
+            entity.originalListPrice =entity.price;
+        });
+
+         this.showProductsTable=true;
+         this.isLoading=false;
         
         if (this.currStateData) {//do we have existing data? if so, add it to the draft list and calculate
             this.currStateData.forEach(singleData => {
@@ -283,9 +268,6 @@ export default class ProductsTableToFlow extends LightningElement {
             //this.validateError(this.listOfDrafts); //Validate draft values on load
             this.calculateProductsPricing(this.listOfDrafts);//Calculate pricing on load
     }
-
-
-    
     handleListOfDrafts(currentDraft, listOfDraftsInput){//This function update the list with the last draft value of a specific line
         var singleCurrentDraftValue = {}
         var newCurrentDraftValue = {}        
@@ -313,8 +295,6 @@ export default class ProductsTableToFlow extends LightningElement {
             parseInt(this.coreProductQty=currentDraft[0].quantity) + parseInt(this.currentContractCoreProductQty);
         }
     }
-
-
     calculateProductsPricing(drafts){//we are alwys runing on all draft valus to auto calculate cases where a line hold an error, and the other isn't, when the error will removed, all the lines will be calculated and will show numbers
         this.totalList=0;//reset values on each calculation
         this.totalNet=0;//reset values on each calculation
@@ -339,7 +319,6 @@ export default class ProductsTableToFlow extends LightningElement {
          });    
          this.addedArr = this.totalNet != 0 ? this.totalNet * this.exchangeRate - this.priorArr : 0;
     }
-
     validateError(listOfDraftsToValidate) {
         this.getCurrentCoreAmount(this.tierSelection,listOfDraftsToValidate);
         this.validateSubmit=false;
@@ -619,8 +598,7 @@ export default class ProductsTableToFlow extends LightningElement {
             this.submitButtonPosition="6";
         }
     }
-    
-    resetValuesOnChange(){
+    resetValues(){
         this.totalList=0;
         this.totalNet=0;
         this.addedArr=0;
@@ -630,14 +608,11 @@ export default class ProductsTableToFlow extends LightningElement {
             this.oppCurrentPriVersion="6"
         }
     }
-
     handleTierChange(event){
         this.tierSelection=event.detail.value;
-        this.resetValuesOnChange();
+        this.resetValues();
         this.defineDealhubProductRequest(event.detail.value,this.oppCurrentCrrncy,this.oppCurrentPriVersion);
     }
-    
-
     getCurrentCoreAmount(tier,draftList){
         if (draftList.find(({ sku }) => sku === this.convertTierToSku(tier)) !=null){//when tier changed, we need to get the correct core amout to run validation
             parseInt(this.coreProductQty=draftList.find(({ sku }) => sku === this.convertTierToSku(tier)).quantity) + parseInt(this.currentContractCoreProductQty);
@@ -646,7 +621,6 @@ export default class ProductsTableToFlow extends LightningElement {
             this.coreProductQty=0;
         }
     }
-
     convertTierToSku(selectedTier){
         if (selectedTier=='Pro') {
             return 'CORE-PRO'
@@ -658,7 +632,6 @@ export default class ProductsTableToFlow extends LightningElement {
             return 'CORE-STD'
         }
     }
-
     convertSkuToTier(sku){
         if (sku.includes('PRO')) {
             return 'Pro'
@@ -668,6 +641,17 @@ export default class ProductsTableToFlow extends LightningElement {
         }
         if (sku.includes('STD')) {
             return 'Standard'
+        }
+    }
+    defineTier(){
+        if ((this.oppExpectedPlan==null || this.oppExpectedPlan==undefined) && this.accCurerentPlan !=null && this.accCurerentPlan != undefined) {
+            this.tierSelection= this.accCurerentPlan =='Basic' ? this.tierSelection='Standard' : this.tierSelection=this.accCurerentPlan;
+        }
+        else if (this.oppExpectedPlan!=null && this.oppExpectedPlan!=undefined) {
+            this.tierSelection=this.oppExpectedPlan;
+        }
+        else {
+            this.tierSelection='Enterprise';
         }
     }
 }

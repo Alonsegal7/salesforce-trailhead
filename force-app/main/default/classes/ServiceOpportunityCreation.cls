@@ -50,4 +50,3 @@ public without sharing class ServiceOpportunityCreation {
             return serviceOppsToCreate;
         }
     }
-

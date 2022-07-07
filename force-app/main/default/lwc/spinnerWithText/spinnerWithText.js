@@ -21,4 +21,3 @@ export default class SpinnerWithText extends LightningElement {
         }
     }
 }
-I

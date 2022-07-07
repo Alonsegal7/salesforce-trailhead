@@ -28,12 +28,57 @@ public without sharing class Partner_PaymentRequestService {
         }
     }
 
-    // used to get the available Marketing Activities for selection in a lightning-dual-listbox
     @AuraEnabled
-    public static Map<String, Object> getMdfOptions(Id partnerCompanyId, Id paymentReqId, Date requestedMonth){
+    public static Map<String, Object> getFilesScreenData(Id partnerCompanyId, Id paymentReqId, Date requestedMonth){
+        try{
+            Map<String, Object> res = new Map<String, Object>();
+            getSpiff(res, partnerCompanyId, requestedMonth);
+            getMdfOptions(res, partnerCompanyId, paymentReqId, requestedMonth);   
+            return res;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
+        }
+    }
+
+    public static void getSpiff(Map<String, Object> res, Id partnerCompanyId, Date requestedMonth){
+        try {
+            Date spiffDate = getQuarterStartDate(requestedMonth);
+            list<Spiff__c> spiff_list = [select Id, Amount__c, Spiff_Date__c from Spiff__c 
+                                            where Channel_Partner__c =: partnerCompanyId 
+                                            and Spiff_Date__c >= 2022-04-01
+                                            and Spiff_Date__c <=: spiffDate 
+                                            and Payment_Request__c = null
+                                            order by Spiff_Date__c DESC limit 1];
+            if(spiff_list.isEmpty()){
+                res.put('spiff', null);
+            } else {
+                res.put('spiff', spiff_list.get(0));
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
+        }
+    }
+
+    public static date getQuarterStartDate(Date requestedMonth){
+        Integer month = requestedMonth.month();
+        Integer new_month;
+        if(month >= 1 && month <= 3){ // q1
+            new_month = 1;
+        } else if(month >= 4 && month <= 6){ //q2
+            new_month = 4;
+        } else if(month >= 7 && month <= 9){ //q3
+            new_month = 7;
+        } else if(month >= 10 && month <= 12){ //q4
+            new_month = 10;
+        }
+        Date res = requestedMonth.addMonths(-(month - 1)).addMonths(new_month - 1).toStartOfMonth();
+        return res;
+    }
+
+    // used to get the available Marketing Activities for selection in a lightning-dual-listbox
+    public static void getMdfOptions(Map<String, Object> res, Id partnerCompanyId, Id paymentReqId, Date requestedMonth){
         try {
             Date dateForQuery = requestedMonth.addMonths(1).toStartOfMonth();
-            Map<String, Object> res = new Map<String, Object>();
             String query = 'select Id, Name, Available_Amount_for_Payment__c, Last_Payment_Request__c, Last_Payment_Request_Status__c, MDF_Requested_Amount__c, Monthly_Requested_Amount__c, (select Id from MDF_Payment_Portions__r where Payment_Request__c =: paymentReqId and Is_Available_by_Date__c = true)';
             query += ' from Partner_Marketing_Activity__c';
             query += ' where Channel_Partner__c =: partnerCompanyId'; //marketing activities related to the partner
@@ -43,7 +88,7 @@ public without sharing class Partner_PaymentRequestService {
             if(paymentReqId == null) query = query + ' and Available_Amount_for_Payment__c > 0'; //from homepage - marketing activities with available amount
             else query = query + ' and (Available_Amount_for_Payment__c > 0 or Last_Payment_Request__c =: paymentReqId)'; //for draft payment reqs we display the selected marketing activities as well by Last_Payment_Request__c
             List<Partner_Marketing_Activity__c> pma_list = Database.query(query);
-            if(pma_list.isEmpty()) return res;
+            if(pma_list.isEmpty()) return;
             List<optionWrapper> mdfOptions_list = new List<optionWrapper>();
             Map<Id,Decimal> mdfIdtoAmount_map = new Map<Id,Decimal>();
             Set<Id> selectedPmaIds = new Set<Id>();
@@ -65,7 +110,6 @@ public without sharing class Partner_PaymentRequestService {
             res.put('mdfOptions_list', mdfOptions_list);
             res.put('mdfIdtoAmount_map', mdfIdtoAmount_map);
             res.put('selected_list', selectedPmaIds);
-            return res;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
         }
@@ -213,6 +257,7 @@ public without sharing class Partner_PaymentRequestService {
                                             Decimal mdfAmount, 
                                             List<Id> selectedMDFs, 
                                             Decimal spiffAmount, 
+                                            Id spiffId,
                                             Id invoiceFileVerId, 
                                             String invoiceCurrency, 
                                             String invoiceNumber, 
@@ -222,6 +267,7 @@ public without sharing class Partner_PaymentRequestService {
                     Id = paymentRequestId, 
                     MDF_Amount__c = 0, 
                     Spiff_Amount__c = 0, 
+                    Spiff__c = spiffId,
                     Invoice_Content_Version_Id__c = invoiceFileVerId, 
                     Invoice_Currency__c = invoiceCurrency,
                     Invoice_Date__c = invoiceDate,
@@ -231,16 +277,35 @@ public without sharing class Partner_PaymentRequestService {
             if(spiffAmount != null && spiffAmount > 0) paymentRequestToUpdate.Spiff_Amount__c = spiffAmount;
             Database.update(paymentRequestToUpdate);
             if(selectedMDFs != null && !selectedMDFs.isEmpty()) updateRelatedMDFs(paymentRequestId, selectedMDFs);
+            if(spiffId != null) {
+                connectSpiffToPR(spiffId, paymentRequestId);
+            }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
         }
     }
 
+    private static void connectSpiffToPR(Id spiffId, Id paymentReqId){ // update payment request Id on the spiff record
+        Spiff__c spiffToUpdate = new Spiff__c(
+            Id = spiffId,
+            Payment_Request__c = paymentReqId
+        );
+        Database.update(spiffToUpdate);
+    }
+
     //submit payment request for approval
     @AuraEnabled
-    public static void submitForApproval(Id paymentRequestId, Decimal mdfAmount, List<Id> selectedMDFs, Decimal spiffAmount, Id invoiceFileVerId, String invoiceCurrency, String invoiceNumber, Date invoiceDate){
+    public static void submitForApproval(Id paymentRequestId, 
+                                        Decimal mdfAmount, 
+                                        List<Id> selectedMDFs, 
+                                        Decimal spiffAmount, 
+                                        Id spiffId, 
+                                        Id invoiceFileVerId, 
+                                        String invoiceCurrency, 
+                                        String invoiceNumber, 
+                                        Date invoiceDate){
         try {
-            updatePaymentRequest(paymentRequestId, mdfAmount, selectedMDFs, spiffAmount, invoiceFileVerId, invoiceCurrency, invoiceNumber, invoiceDate);
+            updatePaymentRequest(paymentRequestId, mdfAmount, selectedMDFs, spiffAmount, spiffId, invoiceFileVerId, invoiceCurrency, invoiceNumber, invoiceDate);
             Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();          
             req.setObjectId(paymentRequestId);
             req.setProcessDefinitionNameOrId('Payment_Request_Approval_Process');

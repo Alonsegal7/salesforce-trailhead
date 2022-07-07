@@ -161,6 +161,7 @@ export default class ExpectedPlanPicker extends LightningElement {
  
     if (data) {
       this.plans = JSON.parse(data);
+      console.log('ExpectedPlanPicker getPlans wire result: '+ JSON.stringify(this.plans));
       this.updateMatchingPlan();
       this.setPlanOptions();
     }

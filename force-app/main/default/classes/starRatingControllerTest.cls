@@ -20,9 +20,12 @@ public with sharing class starRatingControllerTest {
         
         Map<String,String> valuesMap = new Map<String,String>();
         valuesMap.put('Easy_to_Communicate__c', '5');
+        Map<String,String> openText = new Map<String,String>();
+        openText.put('fieldname', 'Impact_Survey_Open_Text__c');
+        openText.put('value', 'testtttt');
         Test.startTest();
         starRatingController.getSurveyInitData('test', true);
-        starRatingController.updateValues(csr2.Id, 'Co_Sell_Request__c', valuesMap, 'Impact_Survey_Filled__c');
+        starRatingController.updateValues(csr2.Id, 'Co_Sell_Request__c', valuesMap, openText, 'Impact_Survey_Filled__c');
         Test.stopTest();
     }
 }

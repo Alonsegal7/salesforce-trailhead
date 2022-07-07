@@ -37,5 +37,3 @@ public without sharing class ServiceOpportunityCreationTest {
         system.assertEquals(accountforserviceId.Active_Contract__c,opp.Selected_Company_Contract__c);
     }
 }
-    
-  

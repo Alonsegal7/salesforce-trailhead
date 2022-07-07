@@ -7,4 +7,3 @@ global with sharing class dealhubServiceRestResource {
         return dealhub_Product_Pricing_Service.getPricesFromDealhub(tier,crrncyCode,pricingVersion,mySkusList);
     }
 }
-
