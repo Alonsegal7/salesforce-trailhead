@@ -69,18 +69,18 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
             //get all Account Contact Relationships
             List<AccountContactRelation> acr_list = [select Id, 
                                                     AccountId, Account.Name, 
-                                                    ContactId, Contact.Name, Contact.CSM_Champion__c
+                                                    ContactId, Contact.Name, Contact.PCSM_Champion__c
                                                     from AccountContactRelation 
                                                     where AccountId in: accountToSurvey_map.keySet()];
             if(acr_list.isEmpty()) return;
             //mark accounts with champions contacts - for those accounts only champions will recieve surveys, otherwise all contacts will recieve
             Set<Id> accountsWithChampions = new Set<Id>();
             for(AccountContactRelation acr: acr_list){
-                if(acr.Contact.CSM_Champion__c) accountsWithChampions.add(acr.AccountId);
+                if(acr.Contact.PCSM_Champion__c) accountsWithChampions.add(acr.AccountId);
             }
             //generate surveys
             for(AccountContactRelation acr: acr_list){
-                if(accountsWithChampions.contains(acr.AccountId) && !acr.Contact.CSM_Champion__c) continue; //accounts with champions contacts - for those accounts only champions will recieve surveys, otherwise all contacts will recieve
+                if(accountsWithChampions.contains(acr.AccountId) && !acr.Contact.PCSM_Champion__c) continue; //accounts with champions contacts - for those accounts only champions will recieve surveys, otherwise all contacts will recieve
                 Survey__c existingSurvey = accountToSurvey_map.get(acr.AccountId);
                 if(existingSurvey.Contact__c == null){ // existing survey not assigned yet
                     existingSurvey.Contact__c = acr.ContactId;
