@@ -20,9 +20,6 @@ public class QuoteLineItemHandler {
             List<OpportunityLineItem> lstOppotunityToUpdate = new List<OpportunityLineItem>();
             for (QuoteLineItem qli : newLineItems) {
                 OpportunityLineItem oli = mapOppLineItems.get(mapQuoteLineItemSortOrder.get(qli.Id));
-                system.debug('Raz Ben Ron oli: '+oli);
-                system.debug('Raz Ben Ron oli: '+qli.DealHub_Net_Price_USD__c);
-                system.debug('Raz Ben Ron oli: '+qli);
                 if (oli != null && !oli.CC_Claim_Product__c && !oli.Co_Sell_Product__c) {
                     oli.ARR__c = qli.ARR__c;
                     oli.Tier__c = qli.Tier__c;
@@ -37,12 +34,13 @@ public class QuoteLineItemHandler {
                     oli.Expiration_Date__c = qli.Expiration_Date__c;
                     oli.PS_Start_Date__c = qli.ServiceDate;
                     oli.Service_Revenue__c=qli.DealHub_Net_Price_USD__c;
-                    oli.Exchange_test__c = qli.Net_Per_Unit__c;
                     lstOppotunityToUpdate.add(oli);
                 }
             }
+            System.debug('QuoteLineItemHandler completed oli loop, starting update. lstOppotunityToUpdate: '+lstOppotunityToUpdate);
             update lstOppotunityToUpdate;
         }catch(Exception e){
+            System.debug('QuoteLineItemHandler entered error: '+e.getMessage());
             Utilities.sendDebugEmail('Error in QuoteLineItemHandler syncQuotes',e,e.getMessage());
         }
     }        
