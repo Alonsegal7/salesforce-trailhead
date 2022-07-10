@@ -73,7 +73,7 @@ public class OpportunityHelper {
             } 
         }
         if(!signedQuotesIds.isEmpty()) {
-            List<Quote> quotesList = [SELECT Id,Opportunity.DH_Signer_Title__c,Opportunity.DH_Signer_Name_c__c,Opportunity.DH_Date_of_Signature__c,DH_Date_of_Signature__c,
+            List<Quote> quotesList = [SELECT Id,Opportunity.DH_Signer_Title__c,Opportunity.DH_Signer_Name_c__c,Opportunity.DH_Signer_Email__c,Opportunity.DH_Date_of_Signature__c,DH_Date_of_Signature__c,
                                     DH_Signer_Name__c,DH_Signer_Title__c, Is_Manually_Signed__c,Document_Type__c,Opportunity.Manual_Signature_Reason__c 
                                     FROM Quote 
                                     WHERE Id = :signedQuotesIds AND Is_Manually_Signed__c = false AND Document_Type__c='Sales Order' AND DH_Quote_Status__c='Approved'];
@@ -82,6 +82,7 @@ public class OpportunityHelper {
                 q.Manual_Signature_Reason__c=q.Opportunity.Manual_Signature_Reason__c;
                 q.DH_Date_of_Signature__c=q.Opportunity.DH_Date_of_Signature__c;
                 q.DH_Signer_Name__c=q.Opportunity.DH_Signer_Name_c__c;
+                q.DH_Signer_Email__c=q.Opportunity.DH_Signer_Email__c;
                 q.DH_Signer_Title__c=q.Opportunity.DH_Signer_Title__c;
             }
             if (!quotesList.isEmpty()) update quotesList;
@@ -89,7 +90,7 @@ public class OpportunityHelper {
     }
 
     public static void cloneOlisForCoSell(List<Opportunity> opps,map <Id, Opportunity> oldMap){
-        list<Opportunity> masterCosellOpps= new list<Opportunity>();
+        /*list<Opportunity> masterCosellOpps= new list<Opportunity>();
         for(Opportunity opp : opps){ 
             if(opp.Main_Co_Sell_Opportunity__c
                 &&opp.StageName=='Closed Won'
@@ -149,7 +150,7 @@ public class OpportunityHelper {
             }catch(Exception e){
                 Utilities.sendDebugEmail('Error in OpportunityHelper: cloneOlisForCoSell ',e,e.getMessage());   
             }
-        }
+        }*/
     }
     
     //public static void handleAccountIdChange(Opportunity opportunity){
