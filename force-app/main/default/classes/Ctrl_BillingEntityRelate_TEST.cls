@@ -32,7 +32,7 @@ private class Ctrl_BillingEntityRelate_TEST {
 		Ctrl_BillingEntityRelate.testUniquness(be.VAT_Number__c, '', '', '', '');
 		Ctrl_BillingEntityRelate.doRelate(o.Id, be.Id);
 		Test.isRunningTest();
-		Ctrl_BillingEntityRelate.CallVatService('Luxembourg','LU26375245', null);
+		Ctrl_BillingEntityRelate.CallVatService('Luxembourg','LU26375245', null, null);
 
 		Ctrl_BillingEntityRelate.getValuesCallVatService(be.Id);
 		Ctrl_BillingEntityRelate.updateBillingEntityFields(be.Id, 'Yes', 'LU26375245', 'irrelevant'); //scenario #1 - VAT is required
