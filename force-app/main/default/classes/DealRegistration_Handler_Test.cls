@@ -197,7 +197,7 @@ public class DealRegistration_Handler_Test {
         
         Deal_Registration__c reg = [SELECT Id, Expected_Tier__c, Expected_Plan_Seats__c, Expected_Closed_Date__c, Use_Cases__c,
                                     Department__c, OwnerId, Competition_They_re_Evaluating__c, Tools_in_their_Ecosystem__c,
-                                    Current_Tool__c, Timeline_Why__c, Pains__c, Champion_Title__c, Source__c, Partner_Marketing_Activity__c
+                                    Current_Tool__c, Timeline_Why__c, Pains__c, Champion_Title__c, Source__c, Partner_Marketing_Activity__c, Solution__c
                                     FROM Deal_Registration__c WHERE Id =: dealRegRecord.Id LIMIT 1];
         
         newLead = new Lead();

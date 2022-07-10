@@ -24,7 +24,7 @@ public class PartnerCommission_AccPlanPeriod_Queue implements System.Queueable {
             for(Account mondayAccount: mondayAccountsList){
                 Contract activeCon = activeContractsMap.get(mondayAccount.Active_Contract__c);
                 if(!mondayAccIdPartnerCommisionMap.containsKey(mondayAccount.Id)) continue; //monday account has no pcs
-                if(mondayAccount.Plan_Period__c != activeCon.Period__c) continue; //if the active contract period matches the account plan period - if not we do nothing
+                if(activeCon == null || mondayAccount.Plan_Period__c != activeCon.Period__c) continue; //if the active contract period matches the account plan period - if not we do nothing
                 String closeReason = '';
                 if(mondayAccount.Plan_Period__c.containsIgnoreCase('monthly')) closeReason = 'Yearly to Monthly Transfer';
                 else if(mondayAccount.Plan_Period__c.containsIgnoreCase('yearly')) closeReason = 'Monthly to Yearly Transfer';

@@ -3,7 +3,7 @@ public without sharing class Batch_PartnersPOSurveyNextDate implements Database.
     private List<String> emailRecepients = new List<String>{'kseniasm@monday.com','avivc@monday.com'};
     private Set<Id> res = new Set<Id>();
     private string debugString = '';
-    private Boolean dryRun = false; //a flag to simulate a run without actually updating anything (for testing)
+    private Boolean dryRun = false;
 
     public Batch_PartnersPOSurveyNextDate(){
     }

@@ -3,6 +3,7 @@ public with sharing class dealhub_Product_Pricing_Service {
     public static boolean firstPostFired=false;
     public static Map<string, Object> globalVars = new Map<string, Object>();
 
+    @AuraEnabled
     public static string getPricesFromDealhub(string tier, string crrncyCode, string pricingVersion, list<string> skusList){
         string productsParams = getProductsParameters(tier, crrncyCode,  pricingVersion, skusList);
         string getPrices = getProdutsPricing(productsParams);
@@ -66,8 +67,14 @@ public with sharing class dealhub_Product_Pricing_Service {
                     pricingParam.name='product.plan';
                     pricingParam.value=globalVars.get('tier');
                     productSku.parameters.add(pricingParam);
-                    
                 }
+                if (parameter.name == 'Admin_Section.Assign_Pricing_Factor') {
+                    dealhub_PricingParameters.PricingParameter pricingParam = new dealhub_PricingParameters.PricingParameter();
+                    pricingParam.name='Admin_Section.Assign_Pricing_Factor';
+                    pricingParam.value='true';
+                    productSku.parameters.add(pricingParam);
+                    
+                }   
             }
             //define factors
             for (dealhub_ProductParameters.Product_factors factor : currentSku.parameters_for.product_factors) {

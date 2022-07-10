@@ -55,11 +55,11 @@ public class OpportunityHelper {
 
     public static void determineOppType(List<Opportunity> opportunities){
         for(Opportunity opp : opportunities) { 
-            if(opp.Is_Account_Green_Bucket_New__c){
-                opp.Opportunity_Type__c  = 'Expansion';
+            if(opp.Type == 'Service'){
+                opp.Opportunity_Type__c  = 'Service';
             }else{
-                opp.Opportunity_Type__c  = 'New Business';
-            }
+                opp.Opportunity_Type__c = opp.Is_Account_Green_Bucket_New__c ? 'Expansion' : 'New Business';
+            }         
         }
     } 
 

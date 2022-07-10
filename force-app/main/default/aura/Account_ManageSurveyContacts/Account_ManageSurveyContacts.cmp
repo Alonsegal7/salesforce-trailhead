@@ -1,0 +1,65 @@
+<aura:component 
+    controller="Account_selectCSMChamps" 
+    implements="forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" 
+    access="global">
+    <aura:html tag="style">
+        .cuf-content { 
+            padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+            padding: 0rem !important;
+        }
+        .slds-modal__content{
+            height:unset !important;
+            max-height:unset !important;
+        }
+        .slds-modal__close{
+            display:none;
+        }
+        .slds-modal__container{
+            transform:unset !important;
+        }	
+    </aura:html>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="errMsg" type="String" default="" />
+    <aura:attribute name="spinner" type="boolean" default="true"/>
+
+    <aura:attribute name="contactsOptions" type="List" default=""/>
+    <aura:attribute name="selectedChamps" type="String[]" default=""/>
+    <aura:attribute name="originallySelected" type="String[]" default=""/>
+
+    <aura:if isTrue="{!v.spinner}">
+        <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+		<aura:set attribute="else">
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Manage Survey Contacts</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <aura:if isTrue="{!not(v.errMsg=='')}">
+							<div class="slds-text-heading_small slds-text-align_center slds-text-color_error">{!v.errMsg}</div>
+						</aura:if>
+						<lightning:dualListbox name="csmChampSelect"
+                            label="Please move to the right section the contacts you want to send them CSAT survey"
+                            sourceLabel="Available Contacts"
+                            selectedLabel="Selected Contacts for CSAT Survey"
+                            options="{!v.contactsOptions}"
+                            value="{!v.selectedChamps}"
+                            onchange="{!c.handleChampSelected}"
+                            disableReordering="true">
+                        </lightning:dualListbox>
+					</div>    
+					<footer class="slds-modal__footer">
+						<lightning:button label="Cancel" class="slds-button slds-button_neutral" onclick="{!c.closeModal}" />
+						<lightning:button label="Save" class="slds-button slds-button_brand" onclick="{!c.handleSave}" />
+					</footer>
+				</div>
+			</section>
+		</aura:set>
+    </aura:if>	
+</aura:component>

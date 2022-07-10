@@ -13,6 +13,7 @@ export default class StarRating extends LightningElement {
     @api showSuccessToast = false;  //flag to display success toast when survey is submitted
     @api showLegend = false;        //Optional - display under the question a legend 1 star - do not agree 5 start - extremely agree
     @api showHiUsername = false;    //Optional - show a Hi, FirstName to the user at the top of the survey
+    @api openTextFieldName;         //Optional - in case we want to display a comments open text this will be the api name of the field to map to
     load = false;
     questions = [];
     error;
@@ -67,10 +68,16 @@ export default class StarRating extends LightningElement {
     }
 
     updateTargetRecord(){
+        let openText = {};
+        if(this.openTextFieldName){
+            openText['fieldname'] = this.openTextFieldName;
+            openText['value'] = this.template.querySelector('lightning-textarea').value;
+        }
         updateValues({
             recordId: this.targetRecId,
             objectApiName: this.objectApiName,
             valuesMap: this.valuesMap,
+            openText: openText,
             surveyFilledField: this.surveyFilledFieldApiName
         }).then(result => {
             console.log('StarRating updateValues result: '+JSON.stringify(result));

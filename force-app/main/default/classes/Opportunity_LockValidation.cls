@@ -11,11 +11,16 @@ public without sharing class Opportunity_LockValidation {
     public void cosellLockValidation(List<Opportunity> newOpps, Map<Id,Opportunity> oldOppsMap){ //prevent secondary opps from being updated
         Map<Id,Opportunity> potentialOpps_map = new Map<Id,Opportunity>();
         for(Opportunity opp: newOpps){ 
-            if(opp.Co_Sell_Opportunity__c == null || opp.Need_Sync_Co_Sell__c) continue; //not co-sell or already marked as need to be synced
+            if(opp.Co_Sell_Opportunity__c == null || (opp.Need_Sync_Co_Sell__c && opp.Main_Co_Sell_Opportunity__c)) continue; //not co-sell or main co-sell that is already marked as need to be synced
             for(Co_sell_Main_to_Secondary_Opp_Mapping__mdt cmt: Opportunity_CoSellSyncService.mainToSecOppMapping_cmt){ //we prevent the update only for cmt fields
                 if(opp.get(cmt.Field_API_Name__c) != oldOppsMap.get(opp.Id).get(cmt.Field_API_Name__c)){ //field from cmt was updated
-                    if(Opportunity_CoSellSyncService.isSecondaryCoSellOpp(opp)) potentialOpps_map.put(opp.Id, opp);
-                    else if(Opportunity_CoSellSyncService.isMainCoSellOpp(opp)) opp.Need_Sync_Co_Sell__c = true;
+                    if(Opportunity_CoSellSyncService.isSecondaryCoSellOpp(opp)) {
+                        if(cmt.Field_API_Name__c == 'Claimed_ARR__c' && opp.Claimed_ARR_Override__c != oldOppsMap.get(opp.Id).Claimed_ARR_Override__c){
+                            //if the changed field is Claimed_ARR__c and it was changed b/c Claimed_ARR_Override__c was changed - we allow it
+                        } else {
+                            potentialOpps_map.put(opp.Id, opp);
+                        }
+                    } else if(Opportunity_CoSellSyncService.isMainCoSellOpp(opp)) opp.Need_Sync_Co_Sell__c = true;
                 }
             }
         }

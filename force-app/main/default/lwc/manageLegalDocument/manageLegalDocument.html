@@ -1,44 +1,76 @@
 <template>
     <lightning-quick-action-panel title="Quick Action Title">
-        <lightning-card  variant="Narrow"  title="CLM Legal Document"
-         icon-name="standard:partners">
-        <template if:true={missingRelevantInfo}>
-            <lightning-layout-item flexibility="auto" padding="around-medium">
-                <div class="slds-p-around_medium slds-text-align_left">Hi there, Welcome to CLM workflow! Please note that currently, we only support SaaS, TOS+DPA and Addendum (negotiated). Please make sure that the opportunity is not closed and that it includes Sales Order with SaaS or TOS+DPA agreement type and valid billing entity.</div>
-            </lightning-layout-item>
-        </template>
-        <template if:true={showSaaSbutton}>
-            <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of SaaS Agreement. Please click on the button to start the CLM Process</div>
-            <lightning-layout-item padding="around-medium">
-                <lightning-button variant="Brand" label="Start Saas Process" onclick={InitSaasAgreement}></lightning-button>
-            </lightning-layout-item>
-        </template>
-        <template if:true={showDPAbutton}>
-            <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of TOS + DPA. Please click on the button to start the CLM Process</div>
-            <lightning-layout-item padding="around-medium">
-                <lightning-button variant="Brand" label="Start DPA Process" onclick={InitDPA}></lightning-button>
-            </lightning-layout-item>
-        </template>
-        <template if:true={showAddendum}>
-            <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of Addendum (negotiated). Please click on the button to start the CLM Process</div>
-            <lightning-layout-item padding="around-medium">
-                <lightning-button variant="Brand" label="Addendum (negotiated)" onclick={InitAddendum}></lightning-button>
-            </lightning-layout-item>
-        </template>
-        <template if:true={showCompanyLegalDocTable}>
-            <lightning-layout-item flexibility="auto" padding="around-medium">
-                <div class="slds-p-around_medium slds-text-align_left">Hey! We found that there are an existing agreements matching your sales order agreement type. Here are the details:</div>
-            </lightning-layout-item>
-                <lightning-datatable
+            <lightning-card  variant="Narrow"  title="CLM Legal Document" icon-name="standard:partners">
+                <template if:true={missingRelevantInfo}>
+                    <lightning-layout-item flexibility="auto" padding="around-medium">
+                        <div class="slds-p-around_medium slds-text-align_left">Hi there, Welcome to CLM workflow! We support initiations of SaaS, Addendum (negotiated) and DPAs. To initiate the workflow, please make sure that the opportunity is not closed and that it includes Sales Order with the relevant Agreement Type field and valid billing entity.</div>
+                    </lightning-layout-item>
+                </template>
+
+                <template if:true={showSaaSMSG}>
+                    <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of SaaS Agreement. Please click on the button to start the CLM Process</div>
+                    <lightning-layout-item padding="around-medium"></lightning-layout-item>        
+                </template>
+      
+                <template if:true={showAddendumMSG}>
+                    <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of Addendum (negotiated). Please click on the button to start the CLM Process</div>
+                    <lightning-layout-item padding="around-medium"></lightning-layout-item>
+                </template>
+
+                <template if:true={showDPAMSG}>
+                    <div class="slds-p-around_medium slds-text-align_left">Welcome to the CLM legal document screen! The system has recognized that this opportunity includes a sales order with legal type of TOS+DPA. Please click on the button to start the CLM Process</div>
+                    <lightning-layout-item padding="around-medium"></lightning-layout-item>
+                </template>
+            
+
+        
+                <template if:true={showCompanyLegalDocTable}>
+                    <lightning-layout-item flexibility="auto" padding="around-medium">
+                        <div class="slds-p-around_medium slds-text-align_left">Hey! We found that there are an existing agreements matching your sales order agreement type. Here are the details:</div>
+                    </lightning-layout-item>
+
+                    <lightning-datatable
                         key-field="Id"
                         data={companyLegalDocsList}
                         columns={columns}>
-                </lightning-datatable>
-                <div class="slds-p-around_medium lgc-bg">
-            </div>  
-        </template>
-        <lightning-button variant="neutral" label="Back" onclick={closeAction}></lightning-button>
-    </lightning-card>
+                    </lightning-datatable>
+                    <div class="slds-p-around_medium lgc-bg">
+                    </div>  
+                </template>
+
+                <lightning-layout horizontal-align="spread">
+                    <lightning-layout>
+                        <template if:true={showSaaSbutton}>
+                            <lightning-layout-item padding="around-small" >
+                             <lightning-button variant="Brand" label="Initiate SaaS Request" onclick={InitSaasAgreement}></lightning-button>
+                            </lightning-layout-item>
+                        </template>
+
+                        <template if:true={showAddendum}>
+                            <lightning-layout-item padding="around-small" >
+                                <lightning-button variant="Brand" label="Initiate Addendum (negotiated) Request" onclick={InitAddendum}></lightning-button>
+                            </lightning-layout-item>
+                        </template>
+                
+
+                        <template if:true={showDPAbutton}>
+                            <lightning-layout-item padding="around-small" >
+                                <lightning-button variant="Brand" label="Initiate Start DPA Request" onclick={InitDPA}></lightning-button>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                
+                
+                    <lightning-layout-item padding="around-small">
+                        <lightning-button variant="neutral" label="Back" onclick={closeAction}></lightning-button>
+                    </lightning-layout-item>
+                
+            </lightning-layout>
+               
+            
+            
+
+            </lightning-card>
     </lightning-quick-action-panel>
 
 </template>

@@ -32,9 +32,9 @@ export default class DashboardImportantLinks extends LightningElement {
         this.links.push(JSON.parse(JSON.stringify(item)));
 
         item = {};
-        item.name = 'Partner Academy on Lessonly';
-        item.title = 'Partner Academy on Lessonly';
-        item.hoverTitle = 'Partner Academy on Lessonly';
+        item.name = 'Partner Hub';
+        item.title = 'Partner Hub';
+        item.hoverTitle = 'Partner Hub';
         item.url = partnerAcademyURL;
         item.src = icons + '/Lessonly.png';
         this.links.push(JSON.parse(JSON.stringify(item)));        

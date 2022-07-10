@@ -127,10 +127,34 @@ public without sharing class Partner_PaymentRequestServiceTest {
             User u = Partner_PaymentRequestService.getCurrUser();
             Partner_PaymentRequestService.getData(Date.today().addMonths(1).toStartOfMonth(), null, u);
             Partner_PaymentRequestService.deleteOldFiles(prList.get(0).Id);
-            Partner_PaymentRequestService.updatePaymentRequest(prList.get(0).Id, 300, null, 200, null, 'USD', '1000', Date.today());
-            Partner_PaymentRequestService.submitForApproval(prList.get(0).Id, 300, null, 200, null, 'USD', '1000', Date.today());
-            Partner_PaymentRequestService.getMdfOptions(partnerUser.Contact.AccountId, prList.get(0).Id, Date.today());
+            Partner_PaymentRequestService.updatePaymentRequest(prList.get(0).Id, //Id paymentRequestId
+                                                                300, //Decimal mdfAmount
+                                                                new List<Id>{pma.Id}, //List<Id> selectedMDFs
+                                                                200, //Decimal spiffAmount
+                                                                null, //Id invoiceFileVerId
+                                                                null, //Id spiffId
+                                                                'USD', //String invoiceCurrency
+                                                                '1000', //String invoiceNumber
+                                                                Date.today()); //Date invoiceDate
+            Partner_PaymentRequestService.submitForApproval(prList.get(0).Id, //Id paymentRequestId
+                                                            300, //Decimal mdfAmount
+                                                            null, //List<Id> selectedMDFs
+                                                            200, //Decimal spiffAmount
+                                                            null, //Id spiffId
+                                                            null, //Id invoiceFileVerId
+                                                            'USD', //String invoiceCurrency
+                                                            '1000', //String invoiceNumber
+                                                            Date.today()); //Date invoiceDate
+            Partner_PaymentRequestService.getFilesScreenData(partnerUser.Contact.AccountId, prList.get(0).Id, Date.today());
             Test.stopTest();
         }
+    }
+
+    static testmethod void test_scheduledPortions(){
+        Test.startTest();
+        MdfPortions_ScheduledAvailableByDate p = new MdfPortions_ScheduledAvailableByDate();
+        String sch = '0 0 * * * ?';
+        system.schedule('Test_MdfPortions_ScheduledAvailableByDate', sch, p);
+        Test.stopTest();
     }
 }

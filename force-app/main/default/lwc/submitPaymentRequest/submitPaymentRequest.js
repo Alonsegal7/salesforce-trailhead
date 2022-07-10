@@ -7,7 +7,7 @@ import getData from '@salesforce/apex/Partner_PaymentRequestService.getData';
 import deleteOldFiles from '@salesforce/apex/Partner_PaymentRequestService.deleteOldFiles';
 import submitForApproval from '@salesforce/apex/Partner_PaymentRequestService.submitForApproval';
 import updatePaymentRequest from '@salesforce/apex/Partner_PaymentRequestService.updatePaymentRequest';
-import getMdfOptions from '@salesforce/apex/Partner_PaymentRequestService.getMdfOptions';
+import getFilesScreenData from '@salesforce/apex/Partner_PaymentRequestService.getFilesScreenData';
 import submittedScreenGif from '@salesforce/resourceUrl/makeItRainGif';
 import PAYMENT_REQ_STATUS_FIELD from '@salesforce/schema/Payment_Request__c.Status__c';
 import PAYMENT_REQ_MONTH_FIELD from '@salesforce/schema/Payment_Request__c.Month__c';
@@ -93,6 +93,7 @@ export default class SubmitPaymentRequest extends LightningElement {
     mdfNumRequiredFiles;
     invoiceNumber;
     invoiceDate;
+    spiffId;
     
     //sort & filter variables for datatable in data screen
     //allows sort & filter the datatable
@@ -121,7 +122,6 @@ export default class SubmitPaymentRequest extends LightningElement {
     wiredCurrUser(result) {
         if (result.data) {
             this.currUserObj = result.data;
-            console.log('currUserObj: ' + JSON.stringify(this.currUserObj));
             this.userFullName = this.currUserObj['Name'];
             if(this.currUserObj['AccountId'] != null) this.isPartnerUser = true;
             if(this.isPartnerUser){
@@ -132,13 +132,12 @@ export default class SubmitPaymentRequest extends LightningElement {
                 this.urlSuffix = '/view';
             }
         } else if (result.error) {
-            console.log('wiredCurrUser error: '+JSON.stringify(result.error));
             this.error = result.error;
             this.currUserObj = undefined;
         }
     }
 
-    @wire(getRecord, { recordId: '$recordId', fields: [PAYMENT_REQ_STATUS_FIELD, PAYMENT_REQ_MONTH_FIELD, PAYMENT_REQ_MDF_FIELD, PAYMENT_REQ_SPIFF_FIELD] })
+    @wire(getRecord, { recordId: '$recordId', fields: [PAYMENT_REQ_STATUS_FIELD, PAYMENT_REQ_MONTH_FIELD, PAYMENT_REQ_MDF_FIELD, PAYMENT_REQ_SPIFF_FIELD, PAYMENT_REQ_INV_DATE, PAYMENT_REQ_INV_NUM] })
     wiredPaymentReq(result) {
         this.wiredPaymentReqResult = result;
         if (result.data) {
@@ -178,10 +177,6 @@ export default class SubmitPaymentRequest extends LightningElement {
 
     handleCurrencyChange(event) {
         this.currencyValue = event.detail.value;
-    }
-
-    handleSpiffAmountChange(event) {
-        this.spiffAmount = event.detail.value;
     }
 
     onViewBreakdownClick(){
@@ -238,10 +233,8 @@ export default class SubmitPaymentRequest extends LightningElement {
         })
         .then(result => {
             this.commissionData = result;
-            console.log('commission Data: ' + JSON.stringify(this.commissionData));
             if(result.status == 'success'){
                 this.paymentRequestLink = this.urlPrefix + 'detail/' + result.paymentReqId + this.urlSuffix;
-                console.log('Payment Request Id: ' + this.commissionData.paymentReqId);
                 if(this.commissionData.collectionsList.length > 0){
                     this.datatableSetup();
                 }
@@ -282,13 +275,11 @@ export default class SubmitPaymentRequest extends LightningElement {
 
     handleMDFChange(e){
         this.selectedMDFs = e.detail.value;
-        console.log('selected MDFs: ' + this.selectedMDFs);
         if(this.selectedMDFs.length > 0) {
             this.showUploadMdfFiles = true;
             this.fileKeyMdf = this.commissionData.paymentReqId + '1';
             this.mdfFileUploadLabel = 'In order to get the payment for ' + this.selectedMonth + ' MDF, please upload relevant files here:';
         } else this.showUploadMdfFiles = false;
-        console.log('showUploadMdfFiles: '+this.showUploadMdfFiles);
         let totalMdfAmount = 0;
         let mdfCount = 0;
         this.selectedMDFs.forEach(mdfId => {
@@ -297,7 +288,6 @@ export default class SubmitPaymentRequest extends LightningElement {
         });
         this.mdfAmount = totalMdfAmount;
         this.mdfNumRequiredFiles = mdfCount;
-        console.log('mdfAmount: '+this.mdfAmount);
     }
 
     loadFilesScreen(){
@@ -305,7 +295,7 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.customError = undefined;
         this.invoiceFileUploadLabel = 'In order to get the payment for ' + this.selectedMonth + ' please upload your invoice here:';
         this.isLoading = true;
-        getMdfOptions({
+        getFilesScreenData({
             partnerCompanyId: this.currUserObj['AccountId'],
             paymentReqId: this.recordId,
             requestedMonth: this.monthValue
@@ -313,12 +303,17 @@ export default class SubmitPaymentRequest extends LightningElement {
             this.mdfOptions = result.mdfOptions_list;
             this.mdfIdtoAmount_map = result.mdfIdtoAmount_map;
             this.selectedMDFs = result.selected_list;
+            this.spiffObj = result.spiff;
+            console.log('spiff: ' + JSON.stringify(this.spiffObj));
+            if(this.spiffObj == null || this.spiffObj == undefined){
+                this.spiffAmout = 0;
+                this.spiffId = null;
+            } else {
+                this.spiffAmount = this.spiffObj.Amount__c == null ? 0: this.spiffObj.Amount__c;
+                this.spiffId = this.spiffObj.Id;
+            }
             if(this.selectedMDFs != null && this.selectedMDFs.length > 0) this.mdfNumRequiredFiles = this.selectedMDFs.length;
-            console.log('mdf Options: '+JSON.stringify(this.mdfOptions));
-            console.log('mdf Id to Amount map: '+JSON.stringify(this.mdfIdtoAmount_map));
-            console.log('selectedMDFs: '+JSON.stringify(this.selectedMDFs));
             if(this.mdfOptions != null && this.mdfOptions.length > 0) this.mdfFound = true;
-            console.log('mdf Found: '+this.mdfFound);
             if(this.recordId && this.filesScreenFirstRun){ //running from existing payment request (draft or rejected) - need to delete old files 
                 this.filesScreenFirstRun = false;
                 deleteOldFiles({
@@ -338,7 +333,6 @@ export default class SubmitPaymentRequest extends LightningElement {
                 if(this.runningFromHomepage && this.filesScreenFirstRun) {
                     this.filesScreenFirstRun = false;
                     if(this.selectedMDFs == undefined || this.selectedMDFs.length == 0) this.mdfAmount = 0;
-                    this.spiffAmount = 0;
                 }
                 this.dataScreen = false;
                 this.setModalToNormal();
@@ -356,7 +350,6 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.error = undefined;
         this.customError = undefined;
         this.isLoading = true;
-        console.log('this.uploadedInvoiceId: '+ this.uploadedInvoiceId);
         this.template.querySelectorAll('c-file-upload-improved').forEach(element => { 
             element.clearSessionStorage();
         });
@@ -365,6 +358,7 @@ export default class SubmitPaymentRequest extends LightningElement {
             mdfAmount: this.mdfAmount,
             selectedMDFs: this.selectedMDFs,
             spiffAmount: this.spiffAmount,
+            spiffId: this.spiffId,
             invoiceFileVerId: this.uploadedInvoiceId,
             invoiceCurrency: this.currencyValue,
             invoiceNumber: this.invoiceNumber,
@@ -441,12 +435,12 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.error = undefined;
         if(this.submitInputValidation(event)){
             this.isLoading = true;
-            console.log('this.uploadedInvoiceId: '+ this.uploadedInvoiceId);
             submitForApproval({
                 paymentRequestId: this.commissionData.paymentReqId,
                 mdfAmount: this.mdfAmount,
                 selectedMDFs: this.selectedMDFs,
                 spiffAmount: this.spiffAmount,
+                spiffId: this.spiffId,
                 invoiceFileVerId: this.uploadedInvoiceId,
                 invoiceCurrency: this.currencyValue,
                 invoiceNumber: this.invoiceNumber,
@@ -539,8 +533,6 @@ export default class SubmitPaymentRequest extends LightningElement {
     }
 
     handleSendVersIds(event){
-        console.log('In handleSendVersIds');
-        console.log('event.detail: '+ JSON.stringify(event.detail));
         this.uploadedInvoiceId = event.detail['versIds'][0];
     }
 
@@ -554,6 +546,8 @@ export default class SubmitPaymentRequest extends LightningElement {
         this.mdfFound = false;
         this.showUploadMdfFiles = false;
         this.spiffAmount = 0;
+        this.invoiceNumber = null;
+        this.invoiceDate = null;
         localStorage.clear();
         if(this.viewBreakdownMode || this.monthScreen){
             this.viewBreakdownMode = false;

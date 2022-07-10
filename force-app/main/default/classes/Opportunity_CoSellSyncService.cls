@@ -85,7 +85,6 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
         List<Opportunity> secOppsToUpdate_list = new List<Opportunity>();
         Set<Id> secOppsIds = new Set<Id>(oppsToSync_map.values());
         Map<Id,Opportunity> secOppsWithARROverride = new Map<Id,Opportunity>([select Id from Opportunity where Claimed_ARR_Override__c != null and Id in: secOppsIds]);
-        //add query for sec opps with Claimed_ARR_Override__c != null
         for(Id mainOppId: oppsToSync_map.keySet()){
             Opportunity secOpp = new Opportunity(Id = oppsToSync_map.get(mainOppId));
             Opportunity currMainOpp = mainOppsWithCmtFields_map.get(mainOppId);
@@ -122,6 +121,8 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
                 }
             }
         }
+        /*
+        //success emails
         if(!successIds.isEmpty()){
             String emailBody = '';
             list<opportunity> updatedOpps = [select Id, Name from Opportunity where Id in: successIds];
@@ -129,7 +130,7 @@ public without sharing class Opportunity_CoSellSyncService implements Database.B
                 emailBody += '<br/><br/><a href="https://monday.lightning.force.com/lightning/r/Opportunity/'+opp.Id+'/view">'+opp.Name+'</a>';
             }
             Utilities.sendEmail('Success ' + emailTitle, emailBody, new List<String>{'kseniasm@monday.com'});
-        }
+        }*/
         if(errorsFound != ''){
             Utilities.sendEmail('Error ' + emailTitle, errorsFound, new List<String>{'kseniasm@monday.com'});
         }
