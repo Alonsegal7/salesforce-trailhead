@@ -10,142 +10,166 @@
                 if (!this.isEmpty(storeResponse)){
 					//console.log('Init call response: ' + storeResponse);
 					storeResponse = JSON.parse(storeResponse);
-					if (storeResponse.hasOwnProperty('opportunity')){
-						var lbe = {};
-						cmp.set('v.loadedOpp', storeResponse.opportunity);
-						if (!this.isEmpty(storeResponse.opportunity) && !this.isEmpty(storeResponse.opportunity.Billing_Entity__c)){
-							lbe.val = storeResponse.opportunity.Billing_Entity__c;
-							lbe.text = storeResponse.opportunity.Billing_Entity__r.Name;
-							cmp.set('v.has_existing', true);
+					cmp.set('v.date_today', storeResponse.date_today);
+					try{
+						if (storeResponse.hasOwnProperty('opportunity')){
+							var lbe = {};
+							cmp.set('v.loadedOpp', storeResponse.opportunity);
+							if (!this.isEmpty(storeResponse.opportunity) && !this.isEmpty(storeResponse.opportunity.Billing_Entity__c)){
+								lbe.val = storeResponse.opportunity.Billing_Entity__c;
+								lbe.text = storeResponse.opportunity.Billing_Entity__r.Name;
+								cmp.set('v.has_existing', true);
 
-
-							let be = storeResponse.opportunity.Account.Latest_Billing_Entity__r;
-							cmp.set('v.edit_country', be.Country__c);
-							cmp.set('v.edit_state', be.Billing_State__c);
-							cmp.set('v.edit_shipping_country', be.Shipping_Country_G__c);
-							cmp.set('v.edit_shipping_state', be.Shipping_State__c);
-							if ((!this.isEmpty(be.Customer_Has_VAT_Number__c) && be.Customer_Has_VAT_Number__c == 'Yes') || !this.isEmpty(be.VAT_Number__c)){
-								cmp.set('v.edit_has_vat', 'Yes');
-							} else {
-								cmp.set('v.edit_has_vat', 'No');
+								if(!this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__c) && !this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r)){
+									//cmp.set('v.showVATInEdtForm', (this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r.VAT_Number__c)));
+									let be = storeResponse.opportunity.Account.Latest_Billing_Entity__r;
+									cmp.set('v.edit_country', be.Country__c);
+									cmp.set('v.edit_state', be.Billing_State__c);
+									cmp.set('v.edit_shipping_country', be.Shipping_Country_G__c);
+									cmp.set('v.edit_shipping_state', be.Shipping_State__c);
+									if ((!this.isEmpty(be.Customer_Has_VAT_Number__c) && be.Customer_Has_VAT_Number__c == 'Yes') || !this.isEmpty(be.VAT_Number__c)){
+										cmp.set('v.edit_has_vat', 'Yes');
+									} else {
+										cmp.set('v.edit_has_vat', 'No');
+									}
+									if ((!this.isEmpty(be.Customer_Has_QST_Number__c) && be.Customer_Has_QST_Number__c == 'Yes') || !this.isEmpty(be.QST_Number__c)){
+										cmp.set('v.edit_has_qst', 'Yes');
+									} else {
+										cmp.set('v.edit_has_qst', 'No');
+									}
+								}
 							}
-							if ((!this.isEmpty(be.Customer_Has_QST_Number__c) && be.Customer_Has_QST_Number__c == 'Yes') || !this.isEmpty(be.QST_Number__c)){
-								cmp.set('v.edit_has_qst', 'Yes');
-							} else {
-								cmp.set('v.edit_has_qst', 'No');
-							}
-
-
-							if(!this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__c) && !this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r)){
-								//cmp.set('v.showVATInEdtForm', (this.isEmpty(storeResponse.opportunity.Account.Latest_Billing_Entity__r.VAT_Number__c)));
+							cmp.set('v.latest_be', lbe);
+							cmp.set('v.beToUPdate', lbe.val);
+						}
+						if (storeResponse.hasOwnProperty('bestMatch')) {
+							cmp.set('v.list_best_match', storeResponse.bestMatch);
+							for (var i = 0; i < storeResponse.bestMatch.length; i++){
+								if (storeResponse.bestMatch[i].selected){
+									cmp.set('v.currently_selected', storeResponse.bestMatch[i].bEId);
+								}
+								console.log('Selected by default: ' + cmp.get('v.currently_selected'));
 							}
 						}
-						cmp.set('v.latest_be', lbe);
-					}
-					if (storeResponse.hasOwnProperty('bestMatch')) {
-						cmp.set('v.list_best_match', storeResponse.bestMatch);
-						for (var i = 0; i < storeResponse.bestMatch.length; i++){
-							if (storeResponse.bestMatch[i].selected){
-								cmp.set('v.currently_selected', storeResponse.bestMatch[i].bEId);
+						if (storeResponse.hasOwnProperty('moreOptions')) {
+							cmp.set('v.list_more_options', storeResponse.moreOptions);
+						}
+						if (storeResponse.hasOwnProperty('newFormFields') && storeResponse.newFormFields.length > 0) {
+							var theFields = new Array();
+							for (var i = 0; i < storeResponse.newFormFields.length; i++){
+								var f = {};
+								f.name = storeResponse.newFormFields[i].name;
+								f.req = storeResponse.newFormFields[i].required;
+								theFields.push(JSON.parse(JSON.stringify(f)));
 							}
-							console.log('Selected by default: ' + cmp.get('v.currently_selected'));
+							console.log('theFields: ' + JSON.stringify(theFields));
+							cmp.set('v.form_new_fields', theFields);
+							cmp.set('v.enable_form_new', true);
 						}
-					}
-					if (storeResponse.hasOwnProperty('moreOptions')) {
-						cmp.set('v.list_more_options', storeResponse.moreOptions);
-					}
-					if (storeResponse.hasOwnProperty('newFormFields') && storeResponse.newFormFields.length > 0) {
-						var theFields = new Array();
-						for (var i = 0; i < storeResponse.newFormFields.length; i++){
-							var f = {};
-							f.name = storeResponse.newFormFields[i].name;
-							f.req = storeResponse.newFormFields[i].required;
-							theFields.push(JSON.parse(JSON.stringify(f)));
-						}
-						cmp.set('v.form_new_fields', theFields);
-						cmp.set('v.enable_form_new', true);
-					}
 
-					//Start Tal
-					if (storeResponse.hasOwnProperty('newFormShippingFields') && storeResponse.newFormShippingFields.length > 0) {
-						var theShippingFields = new Array();
-						for (var i = 0; i < storeResponse.newFormShippingFields.length; i++){
-							var f = {};
-							f.name = storeResponse.newFormShippingFields[i].name;
-							f.req = storeResponse.newFormShippingFields[i].required;
-							theShippingFields.push(JSON.parse(JSON.stringify(f)));
-						}
-						cmp.set('v.form_new_shipping_fields', theShippingFields);
-						cmp.set('v.enable_form_new', true);
+						//Start Tal
+						if (storeResponse.hasOwnProperty('newFormShippingFields') && storeResponse.newFormShippingFields.length > 0) {
+							var theShippingFields = new Array();
+							for (var i = 0; i < storeResponse.newFormShippingFields.length; i++){
+								var f = {};
+								f.name = storeResponse.newFormShippingFields[i].name;
+								f.req = storeResponse.newFormShippingFields[i].required;
+								theShippingFields.push(JSON.parse(JSON.stringify(f)));
+							}
+							cmp.set('v.form_new_shipping_fields', theShippingFields);
+							cmp.set('v.enable_form_new', true);
 						
-					}
-					//End Tal
+						}
+						//End Tal
 
-					if (storeResponse.hasOwnProperty('editFormFields') && storeResponse.editFormFields.length > 0) {
-						var theEditFields = new Array();
-						for (var i = 0; i < storeResponse.editFormFields.length; i++){
-							var ef = {};
-							f.name = storeResponse.editFormFields[i].name;
-							f.req = storeResponse.newFormFields[i].required;
-							theEditFields.push(JSON.parse(JSON.stringify(f)));
-						}
-						cmp.set('v.form_edit_fields', theEditFields);
-						//cmp.set('v.enable_form_new', true);
-					}
-					/**/
-					if (storeResponse.hasOwnProperty('partnerSORequest') && storeResponse.hasOwnProperty('fieldMapping')){
-						if (!this.isEmpty(storeResponse.partnerSORequest.VAT_Text__c)){
-							console.log('VAT_Text__c: ' + storeResponse.partnerSORequest.VAT_Text__c);
-							cmp.set('v.vatAttribute', storeResponse.partnerSORequest.VAT_Text__c);
-							cmp.set('v.customerVatNumber', 'Yes');
-							console.log('vatAttribute: ' + cmp.get('v.vatAttribute'));
-						}
-						if (!this.isEmpty(storeResponse.partnerSORequest) && !this.isEmpty(storeResponse.fieldMapping)){
-							var mappedFields = cmp.get('v.form_new_fields');
-							if (!this.isEmpty(mappedFields)){
-								for (var i = 0; i < mappedFields.length; i++){
-									if (!this.isEmpty(storeResponse.fieldMapping[mappedFields[i].name])){
-										mappedFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping[mappedFields[i].name]];
-                                    }
-								}
-								console.log('mappedFields: ' + JSON.stringify(mappedFields));
-								cmp.set('v.form_new_fields', mappedFields);
-								cmp.set('v.hasPartnerSO', true);
-								cmp.set('v.toggleChecked', false);
+						if (storeResponse.hasOwnProperty('editFormFields') && storeResponse.editFormFields.length > 0) {
+							var theEditFields = new Array();
+							for (var i = 0; i < storeResponse.editFormFields.length; i++){
+								var ef = {};
+								f.name = storeResponse.editFormFields[i].name;
+								f.req = storeResponse.newFormFields[i].required;
+								theEditFields.push(JSON.parse(JSON.stringify(f)));
 							}
-							
-							var mappedShippingFields = cmp.get('v.form_new_shipping_fields');
-							if (!this.isEmpty(mappedShippingFields)){
-								for (var i = 0; i < mappedShippingFields.length; i++){
-									/*
-									if (mappedShippingFields[i].name == 'Ship_To_Name__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Name']];
-									if (mappedShippingFields[i].name == 'Shipping_Country_G__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Country__c']];
-									if (mappedShippingFields[i].name == 'Shipping_State__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Billing_State__c']];
-									if (mappedShippingFields[i].name == 'Shipping_City__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['City__c']];
-									if (mappedShippingFields[i].name == 'Shipping_Street__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Street__c']];
-									if (mappedShippingFields[i].name == 'Shipping_Zip_Postal_Code__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Zip_Postal_Code__c']];
-									*/									
-									if (!this.isEmpty(storeResponse.fieldMapping[mappedFields[i].name])){
-										mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping[mappedShippingFields[i].name]];
-                                    }
-									
+							cmp.set('v.form_edit_fields', theEditFields);
+							//cmp.set('v.enable_form_new', true);
+						}
+
+						/**/
+						if (!this.isEmpty(storeResponse.partnerSORequest)){
+							cmp.set('v.related_partner_so', storeResponse.partnerSORequest);
+						}
+
+						if (storeResponse.hasOwnProperty('partnerSORequest') && storeResponse.hasOwnProperty('fieldMapping')){
+							cmp.set('v.isCanada', (storeResponse.partnerSORequest.Shipping_Country__c == 'Canada'));
+							cmp.set('v.isQuebec', (storeResponse.partnerSORequest.Shipping_State__c == 'Quebec'));
+
+							if (!this.isEmpty(storeResponse.partnerSORequest.VAT_Text__c)){
+								console.log('VAT_Text__c: ' + storeResponse.partnerSORequest.VAT_Text__c);
+								cmp.set('v.vatAttribute', storeResponse.partnerSORequest.VAT_Text__c);
+								cmp.set('v.customerVatNumber', 'Yes');
+								console.log('vatAttribute: ' + cmp.get('v.vatAttribute'));
+							} else {
+								cmp.set('v.customerVatNumber', 'No');
+							}
+
+							if (!this.isEmpty(storeResponse.partnerSORequest.QST_Number__c)){
+								console.log('QST_Number__c: ' + storeResponse.partnerSORequest.QST_Number__c);
+								cmp.set('v.vatAttribute', storeResponse.partnerSORequest.QST_Number__c);
+								cmp.set('v.qstQ', 'Yes');
+								console.log('qstNumber: ' + cmp.get('v.vatAttribute'));
+							} else {
+								cmp.set('v.qstQ', 'No');
+							}
+
+							if (!this.isEmpty(storeResponse.partnerSORequest) && !this.isEmpty(storeResponse.fieldMapping)){
+								var mappedFields = cmp.get('v.form_new_fields');
+								if (!this.isEmpty(mappedFields)){
+									for (var i = 0; i < mappedFields.length; i++){
+										if (!this.isEmpty(storeResponse.fieldMapping[mappedFields[i].name])){
+											mappedFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping[mappedFields[i].name]];
+										}
+									}
+									console.log('mappedFields: ' + JSON.stringify(mappedFields));
+									cmp.set('v.form_new_fields', mappedFields);
+									cmp.set('v.hasPartnerSO', true);
+									cmp.set('v.toggleChecked', false);
 								}
-								console.log('mappedShippingFields: ' + JSON.stringify(mappedShippingFields));
-								cmp.set('v.form_new_shipping_fields', mappedShippingFields);
-							} 
-							cmp.set('v.hasPartnerSO', true);
+							
+								var mappedShippingFields = cmp.get('v.form_new_shipping_fields');
+								if (!this.isEmpty(mappedShippingFields)){
+									for (var i = 0; i < mappedShippingFields.length; i++){
+										/*
+										if (mappedShippingFields[i].name == 'Ship_To_Name__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Name']];
+										if (mappedShippingFields[i].name == 'Shipping_Country_G__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Country__c']];
+										if (mappedShippingFields[i].name == 'Shipping_State__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Billing_State__c']];
+										if (mappedShippingFields[i].name == 'Shipping_City__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['City__c']];
+										if (mappedShippingFields[i].name == 'Shipping_Street__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Street__c']];
+										if (mappedShippingFields[i].name == 'Shipping_Zip_Postal_Code__c') mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping['Zip_Postal_Code__c']];
+										*/									
+										if (!this.isEmpty(storeResponse.fieldMapping[mappedFields[i].name])){
+											mappedShippingFields[i].val = storeResponse.partnerSORequest[storeResponse.fieldMapping[mappedShippingFields[i].name]];
+										}
+									
+									}
+									console.log('mappedShippingFields: ' + JSON.stringify(mappedShippingFields));
+									cmp.set('v.form_new_shipping_fields', mappedShippingFields);
+								} 
+								cmp.set('v.hasPartnerSO', true);
+							}
 						}
-					}
-					console.log('B1: ' + storeResponse.hasOwnProperty('fieldValidations'));
-					if (storeResponse.hasOwnProperty('fieldValidations') && !this.isEmpty(storeResponse.fieldValidations.list_rules)){
-						cmp.set('v.fieldValidations', storeResponse.fieldValidations.list_rules);
-						console.log('Field validation rules found: ' + storeResponse.fieldValidations.list_rules.length);
-						if (storeResponse.fieldValidations.list_rules.length > 15 && storeResponse.fieldValidations.list_rules.length < 21){
-							cmp.set('v.validationRulesCloseToLimit', true);
+						console.log('B1: ' + storeResponse.hasOwnProperty('fieldValidations'));
+						if (storeResponse.hasOwnProperty('fieldValidations') && !this.isEmpty(storeResponse.fieldValidations.list_rules)){
+							cmp.set('v.fieldValidations', storeResponse.fieldValidations.list_rules);
+							console.log('Field validation rules found: ' + storeResponse.fieldValidations.list_rules.length);
+							if (storeResponse.fieldValidations.list_rules.length > 15 && storeResponse.fieldValidations.list_rules.length < 21){
+								cmp.set('v.validationRulesCloseToLimit', true);
+							}
+							if (storeResponse.fieldValidations.list_rules.length > 20){
+								cmp.set('v.tooManyValidationRules', true);
+							}
 						}
-						if (storeResponse.fieldValidations.list_rules.length > 20){
-							cmp.set('v.tooManyValidationRules', true);
-						}
+					} catch (err) {
+						console.log('Error initializing: ' + err);
 					}
 					
 					/**/
@@ -167,6 +191,11 @@
 		console.log('fields: ' + JSON.stringify(fields));
 		console.log('--------------callVatService---------------+'+fields);
 		var allowSubmit = cmp.get('v.allowSubmit');
+		var BEId = cmp.get('v.beToUPdate');
+		var isEditing = cmp.get('v.edit_existing');
+		cmp.set('v.vatError', false);
+		cmp.set('v.gstError', false);
+		cmp.set('v.qstError', false);
 
 		if (!this.isEmpty(fields.VAT_Number__c)){
 			var params = {};
@@ -175,6 +204,11 @@
 			if (fields.Shipping_Country_G__c == 'Canada'){
 				params.testType = 'GST';
 			}
+			if(isEditing && !this.isEmpty(BEId)){
+				params.beId = BEId;
+			}
+
+			console.log('VAT Validation params: ' + JSON.stringify(params));
 
 			var action = cmp.get("c.CallVatService");
 			action.setParams(params);
@@ -183,19 +217,23 @@
 				if (state === "SUCCESS"){
 					var storeResponse = response.getReturnValue();
 					console.log('VAT-SERVICE----' + storeResponse);
+					cmp.set('v.vatServiceCalled', true);
 					cmp.set('v.getServiceStatus', storeResponse);
 					if (storeResponse == 'invalid') {
 						if(cmp.get('v.endPoint_duplicate') == false){
-							if (fields.Shipping_Country_G__c){
+							if (fields.Shipping_Country_G__c == 'Canada'){
+								console.log('GST Error, hold submit');
 								cmp.set('v.gstError', true);
 								if (!this.isEmpty(fields.QST_Number__c)){
-									this.callVatServiceQST(cmp, evt);
+									this.callVatServiceQST(cmp, evt, fromForm);
 								} else {
 									cmp.set('v.showVatErrorCmp', true);
+									this.hideAllSpinners(cmp, evt);
 								}
 							} else {
 								cmp.set('v.vatError', true);
 								cmp.set('v.showVatErrorCmp', true);
+								this.hideAllSpinners(cmp, evt);
 							}
 						}
 
@@ -219,6 +257,15 @@
 							this.callVatServiceQST(cmp, evt);
 						} else {
 							if (fromForm == 'edit'){
+								if (fields.Customer_Has_VAT_Number__c == 'No'){
+									fields.VAT_Number__c = null;
+								}
+								if (!fields.hasOwnProperty('Customer_Has_QST_Number__c') || fields.Customer_Has_QST_Number__c == 'No'){
+									fields.QST_Number__c = null;
+								}
+								if (cmp.get('v.vatServiceCalled')){
+									fields.Last_VAT_Validation_Date__c = cmp.get('v.date_today');
+								}
 								cmp.find('mainEBEForm').submit(fields);
 							} else {
 								this.testUniqu(cmp, evt);
@@ -234,6 +281,15 @@
 				this.callVatServiceQST(cmp, evt);
 			} else {
 				if (fromForm == 'edit'){
+					if (fields.Customer_Has_VAT_Number__c == 'No'){
+						fields.VAT_Number__c = null;
+					}
+					if (!fields.hasOwnProperty('Customer_Has_QST_Number__c') || fields.Customer_Has_QST_Number__c == 'No'){
+						fields.QST_Number__c = null;
+					}
+					if (cmp.get('v.vatServiceCalled')){
+						fields.Last_VAT_Validation_Date__c = cmp.get('v.date_today');
+					}
 					cmp.find('mainEBEForm').submit(fields);
 				} else {
 					this.testUniqu(cmp, evt);
@@ -248,7 +304,12 @@
 		params.countryName = fields.Shipping_Country_G__c;
 		params.vatNumber = fields.QST_Number__c;
 		params.testType = 'QST';
-		
+		var BEId = cmp.get('v.beToUPdate');
+		var isEditing = cmp.get('v.edit_existing');
+		if(isEditing && !this.isEmpty(BEId)){
+			params.beId = BEId;
+		}
+
 		var action = cmp.get("c.CallVatService");
 		action.setParams(params);
 		action.setCallback(this, function(response) {
@@ -256,10 +317,13 @@
 			if (state === "SUCCESS"){
 				var storeResponse = response.getReturnValue();
 				console.log('VAT-SERVICE-QST: ' + storeResponse);
+				cmp.set('v.vatServiceCalled', true);
 				cmp.set('v.getServiceStatus', storeResponse);
 				if (storeResponse == 'invalid') {
+					console.log('QST Error, hold submit');
 					cmp.set('v.qstError', true);
 					cmp.set('v.showVatErrorCmp', true);
+					this.hideAllSpinners(cmp, evt);
 				} else if (storeResponse == 'unknown') {//service is down
 					cmp.find('notifLib').showToast({
 						"title": 'VAT Service is down',
@@ -269,10 +333,20 @@
 					});
 				} else {//Vat number returned true - go next step
 					cmp.set('v.qstError', false);
-					if (cmp.set('v.gstError')){
+					if (cmp.get('v.gstError')){
 						cmp.set('v.showVatErrorCmp', true);
+						this.hideAllSpinners(cmp, evt);
 					} else {
 						if (fromForm == 'edit'){
+							if (fields.Customer_Has_VAT_Number__c == 'No'){
+								fields.VAT_Number__c = null;
+							}
+							if (!fields.hasOwnProperty('Customer_Has_QST_Number__c') || fields.Customer_Has_QST_Number__c == 'No'){
+								fields.QST_Number__c = null;
+							}
+							if (cmp.get('v.vatServiceCalled')){
+								fields.Last_VAT_Validation_Date__c = cmp.get('v.date_today');
+							}
 							cmp.find('mainEBEForm').submit(fields);
 						} else {
 							this.testUniqu(cmp, evt);
@@ -318,13 +392,38 @@
 							this.fieldValidations(cmp, evt);
 						} else {
 							console.log('Submit');
-							var mainForm = cmp.find('mainBEForm');
-							mainForm.submit(fields);
-							//Start Tal - VAT Logic
-							if(cmp.get('v.getVatServiceStatus') == 'Active'){
-								this.updateBillingEntityFields(cmp, evt);
+							try{
+								if (cmp.get('v.vatServiceCalled')){
+									fields.Last_VAT_Validation_Date__c = cmp.get('v.date_today');
+								}
+								var mainForm = cmp.find('mainEBEForm');
+								if (!this.isEmpty(mainForm)){
+									if (fields.Customer_Has_VAT_Number__c == 'No'){
+										fields.VAT_Number__c = null;
+									}
+									if (!fields.hasOwnProperty('Customer_Has_QST_Number__c') || fields.Customer_Has_QST_Number__c == 'No'){
+										fields.QST_Number__c = null;
+									}
+									mainForm.submit(fields);
+									console.log('Edit form submitted');
+								} else {
+									var mainForm = cmp.find('mainBEForm');
+									mainForm.submit(fields);
+									console.log('New form submitted');
+								}
+
+								//Start Tal - VAT Logic
+								/*
+								if(cmp.get('v.getVatServiceStatus') == 'Active'){
+									console.log('Calling updateBillingEntityFields');
+									this.updateBillingEntityFields(cmp, evt);
+									console.log('updateBillingEntityFields called');
+								}
+								*/
+								//End Tal - VAT Logic
+							} catch (err){
+								console.log('Error trying to submit: ' + err);
 							}
-							//End Tal - VAT Logic
 						}
 					}   
 				}
@@ -355,6 +454,9 @@
 					}
 					if (this.isEmpty(storeResponse.matchesFound) || !Array.isArray(storeResponse.matchesFound) || storeResponse.matchesFound.length == 0){
 						console.log('Submitting...' + cmp.get('v.invalidVATForm'));
+						if (cmp.get('v.vatServiceCalled')){
+							fields.Last_VAT_Validation_Date__c = cmp.get('v.date_today');
+						}
 						if(cmp.get('v.invalidVATForm') == false){
 							var mainForm = cmp.find('mainBEForm');
 							mainForm.submit(fields);
@@ -363,16 +465,22 @@
 							var mainForm = cmp.find('invalidVATFormId');
 							mainForm.submit(fields);
 						}
-						//Start Tal - VAT Logic
-						if(cmp.get('v.billingEntityId') != null || cmp.get('v.beToUPdate') != null){
-							this.updateBillingEntityFields(cmp, evt);
-							this.relate(cmp, evt);
+						try{
+							//Start Tal - VAT Logic
+							if(cmp.get('v.billingEntityId') != null || cmp.get('v.beToUPdate') != null){
+								this.updateBillingEntityFields(cmp, evt);
+								this.relate(cmp, evt);
+							}
+							//End Tal - VAT Logic
+						} catch (err){
+							console.log('Error calling post submit logic: ' + err);
 						}
-						//End Tal - VAT Logic
+						
 					} else {
 						console.log('Not Submitting...');
 						cmp.set('v.altList', storeResponse.matchesFound);
 						cmp.set('v.showAltPopup', true);
+						this.hideAllSpinners(cmp, evt);
 					}
 				}
 				/*
@@ -467,6 +575,9 @@
 			}
 		}
 		cmp.set('v.beToUPdate', beId);
+		cmp.set('v.qstError', false);
+		cmp.set('v.gstError', false);
+		cmp.set('v.vatError', false);
 
 		var action = cmp.get("c.getValuesCallVatService");
         action.setParams({ "BEId" :  beId});
@@ -474,6 +585,7 @@
 			var state = response.getState();
 			var storeResponse = response.getReturnValue();
 			if (state === "SUCCESS") {
+				cmp.set('v.vatServiceCalled', true);
 				if (!this.isEmpty(storeResponse.raw)){
 					cmp.set('v.getServiceStatus', storeResponse.raw);
 				}
@@ -487,18 +599,39 @@
 						"message": 'Service is down - please contract bizops'
 					});
 				} else {
-					if (storeResponse.hasOwnProperty('qst_valid')){
-						cmp.set('v.qstError', storeResponse.qst_valid);
+					console.log('checkVATBeforeRelate response: ' + JSON.stringify(storeResponse));
+					if (!this.isEmpty(storeResponse.billing_entity)){
+						cmp.set('v.isCanada', (storeResponse.billing_entity.Shipping_Country_G__c == 'Canada'));
+						cmp.set('v.isQuebec', (storeResponse.billing_entity.Shipping_State__c == 'Quebec'));
+						if (!this.isEmpty(storeResponse.billing_entity.VAT_Number__c)){
+							cmp.set('v.customerVatNumber', 'Yes');
+							cmp.set('v.vatAttribute', storeResponse.billing_entity.VAT_Number__c);
+						} else {
+							cmp.set('v.customerVatNumber', 'No');
+						}
+
+						if (!this.isEmpty(storeResponse.billing_entity.QST_Number__c)){
+							cmp.set('v.qstQ', 'Yes');
+							cmp.set('v.qstNumber', storeResponse.billing_entity.QST_Number__c);
+						} else {
+							cmp.set('v.qstQ', 'No');
+						}
 					}
-					if (storeResponse.hasOwnProperty('gst_valid')){
+					if (storeResponse.hasOwnProperty('qst_valid') && cmp.get('v.isCanada') && cmp.get('v.isQuebec')){ // Boaz - Prevent QST validation from poping 
+						cmp.set('v.qstError', !storeResponse.qst_valid);
+					}
+					if (storeResponse.hasOwnProperty('gst_valid') && cmp.get('v.isCanada')){ // Boaz - Prevent GST validation from poping 
 						cmp.set('v.gstError', !storeResponse.gst_valid);
 					}
 					if (storeResponse.hasOwnProperty('vat_valid')){
 						cmp.set('v.vatError', !storeResponse.vat_valid);
 					}
 					if (cmp.get('v.qstError') || cmp.get('v.gstError') || cmp.get('v.vatError')){
+						console.log('Show VAT Error before relate');
 						cmp.set('v.showVatErrorCmp', true);
-						cmp.set('v.invalidVATForm', true);
+						cmp.set('v.edit_existing', true);
+						cmp.find('mainEBEForm').set('v.recordId', beId);
+						//cmp.set('v.invalidVATForm', true);
 					} else {
 						if(cmp.get('v.selection_mode') == 'choose existing' || cmp.get('v.selection_mode') == 'search'){
 							this.relate(cmp, evt);
@@ -625,6 +758,19 @@
         var spinner = cmp.find("cmspinner");
         $A.util.removeClass(spinner, "slds-hide");
         $A.enqueueAction(action);
-	}
+	},
 	//End Tal - VAT Logic
+	resetToLoadedSO : function(cmp, evt){
+		let pso = cmp.get('v.related_partner_so');
+
+	},
+	hideAllSpinners : function (cmp, evt){
+		var spinner = cmp.find("cmspinner");
+        $A.util.addClass(spinner, "slds-hide");
+		var spinner = cmp.find("cmspinnernew");
+        $A.util.addClass(spinner, "slds-hide");
+		var spinner = cmp.find("cmspinneredit");
+        $A.util.addClass(spinner, "slds-hide");
+		cmp.set('v.editFormSubmitting ', false);
+	}
 })

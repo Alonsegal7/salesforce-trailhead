@@ -37,6 +37,7 @@
 		cmp.set('v.form_new', false);
 	},
 	openEdit : function(cmp, evt, hlp){
+		cmp.set('v.beToUPdate', cmp.get('v.latest_be').val);
 		cmp.set('v.edit_existing', true);
 	},
 	closeEdit : function(cmp, evt, hlp){
@@ -53,7 +54,7 @@
 		console.log('Submitting and customer vat number is: ' + cmp.get('v.customerVatNumber'));
 		
 		if(cmp.get('v.getVatServiceStatus') == 'Active'){
-			if(cmp.get('v.customerVatNumber') == 'Yes'){
+			if(cmp.get('v.customerVatNumber') == 'Yes' || cmp.get('v.qstQ')){
 				hlp.callVatService(cmp,evt);
 			}
 			else{
@@ -77,17 +78,20 @@
 		//hlp.testUniqu(cmp, evt);
 	},
 	handleSuccess : function (cmp, evt, hlp) {
-		console.log('in success: ' + id);
+		console.log('in success');
 		var payload = evt.getParams().response;
 		var id = payload.id;
 		console.log('Saved Billing Entity Id: ' + id);
+
+		cmp.set('v.currently_selected', id);
+
 		//Start Tal - VAT Logic
 		if(cmp.get('v.getVatServiceStatus') == 'Active'){
 			cmp.set('v.beIdAfterSuccess', id);
 			hlp.updateBillingEntityFieldsFromCreate(cmp, evt);
 		}
 		//End Tal - VAT Logic
-		cmp.set('v.currently_selected', id);
+		
 		cmp.find('notifLib').showToast({
 			"title": 'Success!',
 			"variant": 'success',
@@ -97,6 +101,7 @@
 		hlp.relate(cmp, evt);
 	},
 	handleEditSuccess : function (cmp, evt, hlp) {
+		console.log('In edit success');
 		var payload = evt.getParams().response;
 		var id = payload.id;
 		cmp.set('v.editFormSubmitting', false);
@@ -217,6 +222,35 @@
 		var formNewShippingFields = component.get("v.form_new_shipping_fields");
 		var formNewFields = component.get("v.form_new_fields");
 		var shippingFiled = '';
+
+		console.log('Toggle: ' + toggleValue);
+		console.log('selectedValue: ' + selectedValue);
+		console.log('Field name: ' + txtValField);
+		if (!toggleValue){
+			if (txtValField == 'Shipping_Country_G__c'){
+				component.set('v.isCanada', (selectedValue == 'Canada'));
+			}
+			if (txtValField == 'Shipping_State__c'){
+				component.set('v.isQuebec', (selectedValue == 'Quebec'));
+			}
+
+			if (selectedValue == 'sync'){
+				for (let j = 0; j < formNewShippingFields.length; j++){
+					formNewShippingFields[j].val = null;
+				}
+				component.set("v.form_new_shipping_fields", formNewShippingFields);
+				let vf = component.find('vatValue');
+				if (!helper.isEmpty(vf)){
+					vf.set('v.value', null);
+				}
+				component.set('v.shipToName', null);
+				component.set('v.shippingCountry', null);
+				component.set('v.shippingState', null);
+				component.set('v.shippingCity', null);
+				component.set('v.shippingStreet', null);
+				component.set('v.shippingZipCode', null);
+			}
+		}
 
 		if(toggleValue == true){
 			if(txtValField === 'Name'){
