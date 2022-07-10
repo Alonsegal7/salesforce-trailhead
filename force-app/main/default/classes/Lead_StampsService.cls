@@ -177,7 +177,7 @@ public without sharing class Lead_StampsService {
             return;
         }
         Set<String> ownerFunctionsToExclude = new Set<String>{'Marketing','Product','Bot'};
-        Map<Id,User> ownersMap = new Map<Id,User>([select Id, Function__c, Outbound__c, ManagerId, Manager.Team__c, Group__c, Business_Role__c, Segment__c, Seniority__c, Team__c, Office__c, Office_Region__c, Quota_Carrying__c, Name, UserRole.Name from User where Id in :usersIds]);
+        Map<Id,User> ownersMap = new Map<Id,User>([select Id, Function__c, Outbound__c, ManagerId, Manager.Team__c, Group__c, Business_Role__c, Segment__c, Seniority__c, Team__c, Office__c, Office_Region__c, Quota_Carrying__c, SDR_Transition_To_AE__c, Name, UserRole.Name from User where Id in :usersIds]);
         system.debug('ownersMap: '+ ownersMap);
         User currOwner;
         for(Lead leadRec: relevantLeads){
@@ -227,7 +227,7 @@ public without sharing class Lead_StampsService {
                     leadRec.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
                 }
                 //sdr bdr stamps
-                if(currOwner.Function__c == 'SDR' || currOwner.Business_Role__c == 'SDR' || currOwner.Function__c == 'BDR' || currOwner.Business_Role__c == 'BDR'){
+                if(currOwner.Function__c == 'SDR' || currOwner.Business_Role__c == 'SDR' || currOwner.Function__c == 'BDR' || currOwner.Business_Role__c == 'BDR' || currOwner.SDR_Transition_To_AE__c){
                     leadRec.SDR_Name__c = leadRec.OwnerId;
                     leadRec.SDR_Name_for_reports__c = currOwner.Name;
                     leadRec.SDR_Team__c = currOwner.Team__c;
