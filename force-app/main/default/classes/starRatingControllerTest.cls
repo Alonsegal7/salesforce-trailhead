@@ -5,6 +5,7 @@ public with sharing class starRatingControllerTest {
         Account a = TestObjectCreator.CreateAccount();
         a.Co_Sell_Leader__c = 'Sales';
         insert a;
+        user u = [select id from user where isActive = true and group__c = 'Sales' and Profile.Name = 'monday Sales - AE' limit 1];
 
         List<Opportunity> oppsList = new List<Opportunity>();
         Opportunity opp3 = TestObjectCreator.CreateOpp(a);
@@ -12,7 +13,7 @@ public with sharing class starRatingControllerTest {
 
         Co_Sell_Request__c csr2 = new Co_Sell_Request__c(
             Main_Opportunity__c = opp3.Id,
-            Secondary_Opportunity_Owner__c = UserInfo.getUserId(),
+            Secondary_Opportunity_Owner__c = u.Id,
             Type__c = 'Create',
             Monday_Account__c = a.Id
         );
