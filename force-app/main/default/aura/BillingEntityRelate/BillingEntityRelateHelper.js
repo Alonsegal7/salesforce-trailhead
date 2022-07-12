@@ -81,7 +81,7 @@
 						
 						}
 						//End Tal
-
+						
 						if (storeResponse.hasOwnProperty('editFormFields') && storeResponse.editFormFields.length > 0) {
 							var theEditFields = new Array();
 							for (var i = 0; i < storeResponse.editFormFields.length; i++){
@@ -98,11 +98,9 @@
 						if (!this.isEmpty(storeResponse.partnerSORequest)){
 							cmp.set('v.related_partner_so', storeResponse.partnerSORequest);
 						}
-
-						if (storeResponse.hasOwnProperty('partnerSORequest') && storeResponse.hasOwnProperty('fieldMapping')){
+						if (storeResponse.hasOwnProperty('partnerSORequest') && !this.isEmpty(storeResponse.partnerSORequest) && storeResponse.hasOwnProperty('fieldMapping')){
 							cmp.set('v.isCanada', (storeResponse.partnerSORequest.Shipping_Country__c == 'Canada'));
 							cmp.set('v.isQuebec', (storeResponse.partnerSORequest.Shipping_State__c == 'Quebec'));
-
 							if (!this.isEmpty(storeResponse.partnerSORequest.VAT_Text__c)){
 								console.log('VAT_Text__c: ' + storeResponse.partnerSORequest.VAT_Text__c);
 								cmp.set('v.vatAttribute', storeResponse.partnerSORequest.VAT_Text__c);
@@ -111,7 +109,6 @@
 							} else {
 								cmp.set('v.customerVatNumber', 'No');
 							}
-
 							if (!this.isEmpty(storeResponse.partnerSORequest.QST_Number__c)){
 								console.log('QST_Number__c: ' + storeResponse.partnerSORequest.QST_Number__c);
 								cmp.set('v.vatAttribute', storeResponse.partnerSORequest.QST_Number__c);
@@ -455,20 +452,31 @@
 					if (this.isEmpty(storeResponse.matchesFound) || !Array.isArray(storeResponse.matchesFound) || storeResponse.matchesFound.length == 0){
 						console.log('Submitting...' + cmp.get('v.invalidVATForm'));
 						if (cmp.get('v.vatServiceCalled')){
+							console.log('Assigning Last_VAT_Validation_Date__c');
 							fields.Last_VAT_Validation_Date__c = cmp.get('v.date_today');
 						}
 						if(cmp.get('v.invalidVATForm') == false){
+							console.log('Choosing form to submit');
 							var mainForm = cmp.find('mainBEForm');
-							mainForm.submit(fields);
+							if (this.isEmpty(mainForm)){
+								mainForm = cmp.find('mainEBEForm');
+							}
+							try{
+								mainForm.submit(fields);
+							} catch (err){
+								console.log('Error submitting: ' + err);
+							}
 						}
 						if(cmp.get('v.invalidVATForm') == true){
+							console.log('5');
 							var mainForm = cmp.find('invalidVATFormId');
 							mainForm.submit(fields);
 						}
 						try{
 							//Start Tal - VAT Logic
+							console.log('6');
 							if(cmp.get('v.billingEntityId') != null || cmp.get('v.beToUPdate') != null){
-								this.updateBillingEntityFields(cmp, evt);
+								//this.updateBillingEntityFields(cmp, evt);
 								this.relate(cmp, evt);
 							}
 							//End Tal - VAT Logic
@@ -507,6 +515,7 @@
 
 	},
 	relate : function(cmp, evt){
+		console.log('In relate');
 		var oppId = cmp.get('v.recordId');
 		var beId = cmp.get('v.currently_selected');
 		if (this.isEmpty(beId)){
@@ -523,12 +532,14 @@
 			//End Tal - VAT Logic
 		}
 
+		console.log('In relate 1');
 		var action = cmp.get("c.doRelate");
         action.setParams({ "oppId" : oppId, "BEId" :  beId});
         action.setCallback(this, function(response) {
 			var state = response.getState();
             if (state === "SUCCESS") {
 				var storeResponse = response.getReturnValue();
+				console.log('Relate response: ' + JSON.stringify(storeResponse));
                 if (!this.isEmpty(storeResponse) && storeResponse.hasOwnProperty('status') && storeResponse.status == 'success'){
 					cmp.set('v.latest_be', storeResponse.related_be);
 					cmp.set('v.has_existing', true);
@@ -603,18 +614,24 @@
 					if (!this.isEmpty(storeResponse.billing_entity)){
 						cmp.set('v.isCanada', (storeResponse.billing_entity.Shipping_Country_G__c == 'Canada'));
 						cmp.set('v.isQuebec', (storeResponse.billing_entity.Shipping_State__c == 'Quebec'));
-						if (!this.isEmpty(storeResponse.billing_entity.VAT_Number__c)){
+						console.log('isCanada: ' + cmp.get('v.isCanada'));
+						console.log('isQuebec: ' + cmp.get('v.isQuebec'));
+						if (!this.isEmpty(storeResponse.billing_entity.VAT_Number__c) || storeResponse.billing_entity.Customer_Has_VAT_Number__c == 'Yes'){
 							cmp.set('v.customerVatNumber', 'Yes');
+							cmp.set('v.edit_has_vat', 'Yes');
 							cmp.set('v.vatAttribute', storeResponse.billing_entity.VAT_Number__c);
 						} else {
 							cmp.set('v.customerVatNumber', 'No');
+							cmp.set('v.edit_has_vat', 'No');
 						}
 
-						if (!this.isEmpty(storeResponse.billing_entity.QST_Number__c)){
+						if (!this.isEmpty(storeResponse.billing_entity.QST_Number__c) || storeResponse.billing_entity.Customer_Has_QST_Number__c == 'Yes'){
 							cmp.set('v.qstQ', 'Yes');
+							cmp.set('v.edit_has_qst', 'Yes');
 							cmp.set('v.qstNumber', storeResponse.billing_entity.QST_Number__c);
 						} else {
 							cmp.set('v.qstQ', 'No');
+							cmp.set('v.edit_has_qst', 'No');
 						}
 					}
 					if (storeResponse.hasOwnProperty('qst_valid') && cmp.get('v.isCanada') && cmp.get('v.isQuebec')){ // Boaz - Prevent QST validation from poping 
