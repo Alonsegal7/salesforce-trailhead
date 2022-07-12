@@ -1,0 +1,751 @@
+<template>
+  <!-- indication on existing handover -->
+  <template if:true={hasExistingHandover}>
+    <div class="slds-text-align_center">
+      <!-- different indication for each context, when running from close process we will show the next button -->
+      <template if:true={hideSubmitButton}>
+        <h2>
+          This opportunity has already been handed over.<br />Click Next to move
+          forward or
+          <lightning-formatted-url
+            label=" Go to Handover"
+            value={linkToExistingHO}
+            target="_blank"
+          ></lightning-formatted-url>
+        </h2>
+      </template>
+      <template if:false={hideSubmitButton}>
+        <h2>
+          This opportunity has already been handed over<br /><lightning-formatted-url
+            label="Go to Handover"
+            value={linkToExistingHO}
+            target="_blank"
+          ></lightning-formatted-url>
+        </h2>
+      </template>
+    </div>
+  </template>
+  <template if:false={hasExistingHandover}>
+    <lightning-record-edit-form
+      object-api-name="Handover__c"
+      onsuccess={handleSuccess}
+      onsubmit={handleSubmit}
+      onerror={handleError}
+    >
+      <template if:true={isLoading}>
+        <div class="slds-is-relative" style="min-height: 50vh">
+          <lightning-spinner
+            alternative-text="Loading..."
+            size="medium"
+          ></lightning-spinner>
+        </div>
+      </template>
+      <lightning-messages> </lightning-messages>
+      <!-- Intro Section -->
+      <template if:false={isLoading}>
+        <lightning-layout multiple-rows="true">
+          <!-- Intro Section LEFT -->
+          <lightning-layout-item padding="around-small" size="6">
+            <lightning-layout multiple-rows="true">
+              <lightning-layout-item size="9">
+                <p>This account will be handed over to AM</p>
+              </lightning-layout-item>
+              <lightning-layout-item size="3">
+                <lightning-input
+                  type="toggle"
+                  label="involve_am"
+                  variant="label-hidden"
+                  checked={showAmFields}
+                  message-toggle-active="Yes"
+                  message-toggle-inactive="No"
+                  disabled={lockThresholds}
+                  onchange={handleAmNeededChange}
+                ></lightning-input>
+              </lightning-layout-item>
+              <lightning-layout-item size="9">
+                <p>{onboardingTitle}</p>
+              </lightning-layout-item>
+              <lightning-layout-item size="3">
+                <lightning-input
+                  type="toggle"
+                  label="involve_ic"
+                  variant="label-hidden"
+                  checked={showObFields}
+                  message-toggle-active="Yes"
+                  message-toggle-inactive="No"
+                  disabled={lockThresholds}
+                  onchange={handleObNeededChange}
+                ></lightning-input>
+              </lightning-layout-item>
+              <lightning-layout-item size="9">
+                <p>This account will be handed over to CSM</p>
+              </lightning-layout-item>
+              <lightning-layout-item size="1">
+                <lightning-input
+                  type="toggle"
+                  label="involve_csm"
+                  variant="label-hidden"
+                  checked={showCsmFields}
+                  message-toggle-active="Yes"
+                  message-toggle-inactive="No"
+                  disabled={lockThresholds}
+                  onchange={handleCsmNeededChange}
+                ></lightning-input>
+              </lightning-layout-item>
+              <lightning-layout-item size="2" class="slds-p-left_medium">
+                <template if:true={showCsmFields}>
+                  <lightning-badge
+                    label={kindOfCsm}
+                    class={csmBadgeClass}
+                  ></lightning-badge>
+                </template>
+              </lightning-layout-item>
+            </lightning-layout>
+          </lightning-layout-item>
+        </lightning-layout>
+        <template if:true={showAmFields}>
+          <div class="slds-p-around_small">
+            <p>
+              This account should be handed over to AM. In case this account
+              should stay with you, please indicate this in the below question
+              and provide the reason.
+            </p>
+          </div>
+          <lightning-layout multiple-rows="true">
+            <lightning-layout-item padding="around-small" size="6">
+              <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="9">
+                  <p>Would you like to keep this account?</p>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                  <lightning-input
+                    type="toggle"
+                    label="keep_account"
+                    variant="label-hidden"
+                    message-toggle-active="Yes"
+                    message-toggle-inactive="No"
+                    onchange={handleKeepChange}
+                  ></lightning-input>
+                </lightning-layout-item>
+                <template if:true={isKeepAccount}>
+                  <lightning-input-field
+                    field-name="Keep_Account_Request_Reason__c"
+                    variant="label-stacked"
+                    required
+                  ></lightning-input-field>
+                </template>
+              </lightning-layout>
+            </lightning-layout-item>
+          </lightning-layout>
+        </template>
+        <template if:true={isHandoverNeeded}>
+          <lightning-accordion
+            class="example-accordion slds-grid slds-gutters"
+            active-section-name={activeSections}
+            allow-multiple-sections-open
+          >
+            <!-- Section A - Commercial Information -->
+            <lightning-accordion-section
+              name="A"
+              label="Commercial Information"
+            >
+              <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="6">
+                  <div class="slds-p-bottom_x-small">
+                    <lightning-input-field
+                      field-name="Commercial_Comments__c"
+                      variant="label-stacked"
+                      value={commercialComments}
+                      data-id="commercial_comments"
+                      name="commercial_comments"
+                      class="slds-p-bottom_none slds-m-bottom_none"
+                    ></lightning-input-field>
+                    <div
+                      class="slds-text-color_weak slds-text-body_small slds-p-left_xx-small"
+                    >
+                      Please elaborate on any special terms that were agreed and
+                      not specified in the SO
+                    </div>
+                  </div>
+                  <template if:true={showAmFields}>
+                    <div class="slds-p-bottom_x-small">
+                      <lightning-input-field
+                        field-name="Handover_Notes__c"
+                        variant="label-stacked"
+                        class="slds-p-bottom_none slds-m-bottom_none"
+                        required
+                      >
+                      </lightning-input-field>
+                      <div
+                        class="slds-text-color_weak slds-text-body_small slds-p-left_xx-small"
+                      >
+                        Any defined use cases, measurement or success metrics,
+                        pricing tiers, discounts, or other relevant discussions
+                        that were not mentioned in the SO
+                      </div>
+                    </div>
+                  </template>
+                  <template if:true={extendedOptOutDays}>
+                    <lightning-input-field
+                      field-name="Opt_Out_Days__c"
+                      variant="label-stacked"
+                      value={optOutDays}
+                      disabled
+                    ></lightning-input-field>
+                    <lightning-input-field
+                      field-name="Opt_Out_Reason__c"
+                      variant="label-stacked"
+                      required
+                    ></lightning-input-field>
+                  </template>
+                  <lightning-layout
+                    multiple-rows="true"
+                    class="slds-p-around_xx-small"
+                  >
+                    <lightning-layout-item
+                      size="1"
+                      class="slds-p-vertical_medium slds-p-left_xx-small"
+                    >
+                      <lightning-input
+                        type="checkbox"
+                        label="is_poc"
+                        data-id="is_poc"
+                        variant="label-hidden"
+                        onchange={handlePocChange}
+                      ></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item
+                      size="11"
+                      class="slds-p-around_xx-small"
+                    >
+                      <p>
+                        Check this box if the customer is using the
+                        {optOutDays}-day opt-out as an extended validation
+                        period. In other words, will the customer require more
+                        attention during the first {optOutDays} days of
+                        onboarding because they are at higher risk of using the
+                        opt-out?
+                      </p>
+                    </lightning-layout-item>
+                  </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                  <lightning-input
+                    label="Legal Agreement Type"
+                    value={legalAgreementType}
+                    disabled
+                  >
+                  </lightning-input>
+                  <lightning-input
+                    label="Addendum to SO"
+                    value={addendumToSo}
+                    class="slds-p-vertical_x-small"
+                    disabled
+                  ></lightning-input>
+                  <lightning-input-field
+                    field-name="Security_IT_Review__c"
+                    variant="label-stacked"
+                    onchange={handleSecurityReviewChange}
+                    class="slds-p-horizontal_none"
+                    required
+                  >
+                  </lightning-input-field>
+                  <template if:true={showSecurityReviewType}>
+                    <lightning-input-field
+                      field-name="Security_IT_Review_Level__c"
+                      variant="label-stacked"
+                      class="slds-p-horizontal_none"
+                      required
+                    >
+                    </lightning-input-field>
+                  </template>
+                </lightning-layout-item>
+              </lightning-layout>
+            </lightning-accordion-section>
+            <!-- Section B - Points of Contacts -->
+            <lightning-accordion-section name="B" label="Points of Contacts">
+              <lightning-layout multiple-rows="true">
+                <template if:true={loadCustomSearch}>
+                  <lightning-layout-item size="6" padding="around-small">
+                    <div class="slds-p-around_x-small">
+                      <p>Business Point of Contact</p>
+                      <c-search-component
+                        name="business-poc"
+                        obj-name="Contact"
+                        icon-name="standard:contact"
+                        placeholder="Search"
+                        onlookup={handleContactLookupChange}
+                        display-fields="Name, Company_Name__c"
+                        fields-to-create={contactFieldsToCreate}
+                        create-record="true"
+                        value-name={businessContactName}
+                        value-id={businessContactId}
+                      >
+                      </c-search-component>
+                    </div>
+                    <div class="slds-p-around_x-small">
+                      <p>Signatory Contact</p>
+                      <c-search-component
+                        name="signatory-poc"
+                        obj-name="Contact"
+                        icon-name="standard:contact"
+                        placeholder="Search"
+                        onlookup={handleContactLookupChange}
+                        display-fields="Name, Company_Name__c"
+                        fields-to-create={contactFieldsToCreate}
+                        create-record="true"
+                        value-name={signatoryContactName}
+                        value-id={signatoryContactId}
+                      >
+                      </c-search-component>
+                    </div>
+                  </lightning-layout-item>
+                  <lightning-layout-item size="6" padding="around-small">
+                    <div class="slds-p-around_x-small">
+                      <p>Desicion Maker</p>
+                      <c-search-component
+                        name="desicion-poc"
+                        obj-name="Contact"
+                        icon-name="standard:contact"
+                        placeholder="Search"
+                        onlookup={handleContactLookupChange}
+                        display-fields="Name, Company_Name__c"
+                        fields-to-create={contactFieldsToCreate}
+                        create-record="true"
+                      >
+                      </c-search-component>
+                    </div>
+                    <template if:true={showObFields}>
+                      <div class="slds-p-around_x-small">
+                        <p>Onboarding Contact</p>
+                        <c-search-component
+                          name="onboarding-poc"
+                          obj-name="Contact"
+                          icon-name="standard:contact"
+                          placeholder="Search"
+                          onlookup={handleContactLookupChange}
+                          display-fields="Name, Company_Name__c"
+                          fields-to-create={contactFieldsToCreate}
+                          create-record="true"
+                        >
+                        </c-search-component>
+                      </div>
+                    </template>
+                  </lightning-layout-item>
+                </template>
+              </lightning-layout>
+            </lightning-accordion-section>
+            <!-- Section C - Account Scoring -->
+            <template if:true={showAmFields}>
+              <lightning-accordion-section name="C" label="Account Scoring">
+                <div class="slds-p-around_small">
+                  <p>
+                    From your experience, please score this account's potential
+                    to grow in the short term (up to 12 months) and long term
+                    (up to 3 years)
+                  </p>
+                </div>
+                <lightning-layout padding="around-small" multiple-rows>
+                  <lightning-layout-item size="6" padding="around-small">
+                    <lightning-slider
+                      label="Short Term Growth"
+                      value="3"
+                      max="5"
+                      data-id="short-term-growth"
+                    ></lightning-slider>
+                    <lightning-slider
+                      label="Long Term Growth"
+                      value="3"
+                      max="5"
+                      data-id="long-term-growth"
+                    ></lightning-slider>
+                  </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout padding="around-small" multiple-rows>
+                  <lightning-layout-item size="6" padding="around-small">
+                    <lightning-layout multiple-rows>
+                      <lightning-layout-item size="9">
+                        <p>
+                          Have you talked about potential growth with the
+                          customer?
+                        </p>
+                      </lightning-layout-item>
+                      <lightning-layout-item size="3">
+                        <lightning-input
+                          type="toggle"
+                          label="talked_growth"
+                          data-id="talked_growth"
+                          variant="label-hidden"
+                          message-toggle-active="Yes"
+                          message-toggle-inactive="No"
+                          onchange={handleTalkedGrowth}
+                        >
+                        </lightning-input>
+                      </lightning-layout-item>
+                    </lightning-layout>
+                  </lightning-layout-item>
+                </lightning-layout>
+                <template if:true={isTalkedGrowth}>
+                  <lightning-layout padding="around-small" multiple-rows>
+                    <lightning-layout-item size="6" padding="around-small">
+                      <lightning-layout>
+                        <lightning-layout-item size="9">
+                          <p>
+                            How many potential monday.com users are in the
+                            company in the second year after this current
+                            contract?
+                          </p>
+                        </lightning-layout-item>
+                        <lightning-layout-item
+                          size="3"
+                          class="slds-p-left_x-small"
+                        >
+                          <lightning-input-field
+                            field-name="Account_Users_Potential__c"
+                            variant="label-hidden"
+                            required
+                          ></lightning-input-field>
+                        </lightning-layout-item>
+                      </lightning-layout>
+                    </lightning-layout-item>
+                  </lightning-layout>
+                </template>
+              </lightning-accordion-section>
+            </template>
+            <!-- Section D - Use Case Information -->
+            <lightning-accordion-section name="D" label="Use Case Information">
+              <!-- Integrations -->
+              <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="6">
+                  <lightning-input-field
+                    field-name="Integration_Required__c"
+                    variant="label-stacked"
+                    onchange={handleIntegrationsChange}
+                    name="integrations"
+                  ></lightning-input-field>
+                  <template if:true={showOtherIntegration}>
+                    <lightning-input-field
+                      field-name="Other_integration__c"
+                      variant="label-stacked"
+                      required
+                    ></lightning-input-field>
+                  </template>
+                </lightning-layout-item>
+              </lightning-layout>
+              <div class="slds-p-vertical-x_small">
+                <h3>
+                  <b><u>Use Cases the Client Wants to Implement</u></b>
+                </h3>
+              </div>
+              <!-- Primary use case and additional use cases selection -->
+              <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="6">
+                  <div class="slds-box">
+                    <p>
+                      <u><b>Primary Use Case</b></u>
+                    </p>
+                    <lightning-card>
+                      <lightning-combobox
+                        name="primaryUseCasePl"
+                        label="Main Use Case"
+                        placeholder="Select Use Case"
+                        options={useCases}
+                        data-id="pri-uc-name"
+                        required
+                      ></lightning-combobox>
+                      <lightning-input-field
+                        field-name="Client_Complexity__c"
+                        variant="label-stacked"
+                        data-id="pri-uc-complex"
+                        required
+                      ></lightning-input-field>
+                      <lightning-input-field
+                        field-name="Main_Use_Case_Estimated_Number_of_Users__c"
+                        variant="label-stacked"
+                        data-id="pri-uc-users"
+                        required
+                      >
+                      </lightning-input-field>
+                      <lightning-input-field
+                        field-name="Main_Use_Case_Description_New__c"
+                        variant="label-stacked"
+                        data-id="pri-uc-desc"
+                        required
+                      >
+                      </lightning-input-field>
+                      <lightning-input
+                        type="toggle"
+                        label="Are There Additional Use Cases?"
+                        message-toggle-active="Yes"
+                        message-toggle-inactive="No"
+                        onchange={handleAdditionalUseCasesToggle}
+                      ></lightning-input>
+                    </lightning-card>
+                  </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                  <template if:true={isAdditionalUseCases}>
+                    <div class="slds-box">
+                      <lightning-dual-listbox
+                        name="additionalUseCasesPl"
+                        label="Additional Use Cases"
+                        source-label="Available"
+                        selected-label="Selected"
+                        size="5"
+                        options={useCases}
+                        onchange={handleAdditionalUseCaseChange}
+                      ></lightning-dual-listbox>
+                    </div>
+                  </template>
+                </lightning-layout-item>
+              </lightning-layout>
+              <!-- Additional Use Cases -->
+              <template if:true={showAdditionalUseCases}>
+                <lightning-layout multiple-rows="true">
+                  <template for:each={additionalUseCases} for:item="use_case">
+                    <lightning-layout-item
+                      size="6"
+                      key={use_case}
+                      data-key={use_case}
+                      class="slds-p-around_small"
+                    >
+                      <div class="slds-box slds-p-around_small">
+                        <p>
+                          <u><b>Additional Use Case - {use_case}</b></u>
+                        </p>
+                        <lightning-card>
+                          <div class="slds-p-horizontal_xx-small">
+                            <lightning-combobox
+                              label="Client Complexity"
+                              value={value}
+                              options={complexityOptions}
+                              name={use_case}
+                              class="add-use-cases-complex"
+                              required
+                            ></lightning-combobox>
+                          </div>
+                          <div class="slds-p-horizontal_xx-small">
+                            <lightning-input
+                              type="number"
+                              label="Estimated Number of Users"
+                              name={use_case}
+                              class="add-use-cases-users"
+                              required
+                            >
+                            </lightning-input>
+                          </div>
+                          <div class="slds-p-top_xx-small">
+                            <lightning-textarea
+                              label="Use Case Description"
+                              variant="label-stacked"
+                              name={use_case}
+                              class="add-use-cases-desc"
+                              required
+                            ></lightning-textarea>
+                          </div>
+                        </lightning-card>
+                      </div>
+                    </lightning-layout-item>
+                  </template>
+                </lightning-layout>
+              </template>
+              <!-- Notes to CSM -->
+              <template if:true={showCsmOrObFields}>
+                <lightning-layout multiple-rows="true">
+                  <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field
+                      field-name="AE_Notes_to_CSM__c"
+                      variant="label-stacked"
+                      required
+                    ></lightning-input-field>
+                  </lightning-layout-item>
+                </lightning-layout>
+              </template>
+              <template if:true={showObFields}>
+                <!-- is urgent assignment details -->
+                <lightning-layout multiple-rows="true">
+                  <lightning-layout-item size="6" padding="around-small">
+                    <lightning-layout multiple-rows="true">
+                      <lightning-layout-item size="9">
+                        <p>Is this an Urgent Assignment for Onboarding?</p>
+                      </lightning-layout-item>
+                      <lightning-layout-item size="3">
+                        <lightning-input
+                          type="toggle"
+                          label="is_urgent"
+                          data-id="is_urgent"
+                          variant="label-hidden"
+                          message-toggle-active="Yes"
+                          message-toggle-inactive="No"
+                          onchange={handleUrgentAssignment}
+                        >
+                        </lightning-input>
+                      </lightning-layout-item>
+                      <template if:true={isUrgent}>
+                        <lightning-input-field
+                          field-name="Reason_For_Urgent_Assignment__c"
+                          variant="label-stacked"
+                          required
+                        ></lightning-input-field>
+                      </template>
+                    </lightning-layout>
+                  </lightning-layout-item>
+                </lightning-layout>
+              </template>
+            </lightning-accordion-section>
+            <!-- Section E - Products -->
+            <lightning-accordion-section name="E" label="monday.com Products">
+              <template if:false={isLoading}>
+                <!-- table headers -->
+                <div class="slds-p-around_small">
+                  <div class="slds-box">
+                    <lightning-layout multiple-rows="true">
+                      <lightning-layout-item
+                        size="2"
+                        class="slds-p-around_x-small"
+                        ><b>Product Name</b></lightning-layout-item
+                      >
+                      <lightning-layout-item
+                        size="2"
+                        class="slds-p-around_x-small"
+                        ><b>Quantity</b>
+                      </lightning-layout-item>
+                      <lightning-layout-item
+                        size="2"
+                        class="slds-p-around_x-small"
+                        ><b>Net PPU</b>
+                      </lightning-layout-item>
+                      <lightning-layout-item
+                        size="2"
+                        class="slds-p-around_x-small"
+                        ><b>Total</b>
+                      </lightning-layout-item>
+                      <lightning-layout-item
+                        size="4"
+                        class="slds-p-around_x-small"
+                        ><b>Status</b>
+                      </lightning-layout-item>
+                    </lightning-layout>
+                    <!-- table entries -->
+                    <lightning-layout multiple-rows="true">
+                      <template for:each={productsData} for:item="product">
+                        <lightning-layout-item
+                          size="2"
+                          key={product}
+                          class="slds-p-around_x-small"
+                        >
+                          <p>{product.productName}</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item
+                          size="2"
+                          key={product}
+                          class="slds-p-around_x-small"
+                        >
+                          <p>{product.quantity}</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item
+                          size="2"
+                          key={product}
+                          class="slds-p-around_x-small"
+                        >
+                          <p>{product.ppu} {product.currency}</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item
+                          size="2"
+                          key={product}
+                          class="slds-p-around_x-small"
+                        >
+                          <p>{product.total} {product.currency}</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item
+                          size="4"
+                          key={product}
+                          class="slds-p-around_x-small"
+                        >
+                          <lightning-input-field
+                            field-name={product.fieldName}
+                            disabled={product.isLocked}
+                            value={product.status}
+                            variant="label-hidden"
+                          ></lightning-input-field>
+                        </lightning-layout-item>
+                      </template>
+                    </lightning-layout>
+                  </div>
+                </div>
+              </template>
+            </lightning-accordion-section>
+            <!-- Section F - Services and Customer Requirements -->
+            <lightning-accordion-section
+              name="F"
+              label="Services and Customer Requirements"
+            >
+              <div class="slds-p-around_xx-small">
+                <lightning-layout multiple-rows="true">
+                  <lightning-layout-item padding="around-small" size="6">
+                    <lightning-layout multiple-rows="true">
+                      <template if:true={isEnterprise}>
+                        <lightning-layout-item size="9">
+                          <p>
+                            Is support for multiple time zones or countries
+                            required?
+                          </p>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3">
+                          <lightning-input
+                            type="toggle"
+                            variant="label-hidden"
+                            message-toggle-active="Yes"
+                            message-toggle-inactive="No"
+                            data-id="asked_time_zone"
+                          ></lightning-input>
+                        </lightning-layout-item>
+                      </template>
+                      <lightning-layout-item size="9">
+                        <p>Is Assistance with another language required?</p>
+                      </lightning-layout-item>
+                      <lightning-layout-item size="3">
+                        <lightning-input
+                          type="toggle"
+                          variant="label-hidden"
+                          message-toggle-active="Yes"
+                          message-toggle-inactive="No"
+                          onchange={handleLanguageNeeded}
+                          data-id="asked_lang"
+                        ></lightning-input>
+                      </lightning-layout-item>
+                    </lightning-layout>
+                  </lightning-layout-item>
+                  <lightning-layout-item padding="around-small" size="6">
+                    <template if:true={showLanguageChoice}>
+                      <lightning-input-field
+                        field-name="Language__c"
+                        variant="label-stacked"
+                        required
+                      ></lightning-input-field>
+                    </template>
+                  </lightning-layout-item>
+                </lightning-layout>
+              </div>
+            </lightning-accordion-section>
+          </lightning-accordion>
+        </template>
+        <!-- submit button, will be hidden when running from close process -->
+        <template if:true={isHandoverNeeded}>
+          <template if:false={hideSubmitButton}>
+            <div class="slds-align_absolute-center">
+              <lightning-button
+                type="submit"
+                variant="brand"
+                label="Submit"
+                title="Submit"
+                class="slds-m-left_x-small"
+              >
+              </lightning-button>
+            </div>
+          </template>
+        </template>
+      </template>
+    </lightning-record-edit-form>
+  </template>
+</template>
