@@ -28,7 +28,6 @@
   <aura:attribute name="hasExistingHandover" type="boolean" default="false" />
   <aura:attribute name="record" type="Object" />
   <aura:attribute name="recordSaveError" type="String" />
-  <aura:attribute name="isSoManuallySigned" type="Boolean" default="false" />
 
   <!--Field Sets attributes-->
   <aura:attribute name="showFieldSetForm" type="Boolean" default="false" />

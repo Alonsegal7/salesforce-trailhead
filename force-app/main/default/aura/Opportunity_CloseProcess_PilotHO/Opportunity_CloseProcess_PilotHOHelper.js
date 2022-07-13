@@ -317,7 +317,7 @@
 		if(component.get('v.innerPathValue') == 'Claim'){ 
 			helper.callback_saveManualFields(component, event, helper);
 		} else if(component.get('v.innerPathValue') == 'ManualSignature'){ // manualy signed
-			console.log('opp close proc ho: submit_closedWon isSoManuallySigned: '+component.get('v.oppData.Is_SO_Signed__c'));
+			console.log('opp close proc ho: submit_closedWon is so manually signed marked?: '+component.get('v.closedFields.Is_SO_Signed__c'));
 			console.log('opp close proc ho: submit_closedWon entered manually signed input validation');
 			var manualSignatureInputValid = true;
 			component.find('manuallySignedFields').forEach(function (field) {
@@ -329,10 +329,10 @@
 			console.log('opp close proc ho: submit_closedWon checkFilesUploaded result: ' + helper.checkFilesUploaded(component, event, helper));
 			var filesUploaded = helper.checkFilesUploaded(component, event, helper);
 			if(manualSignatureInputValid && filesUploaded){
-				console.log('opp close proc ho: submit_closedWon Manual Signature vass,lid input');
+				console.log('opp close proc ho: submit_closedWon Manual Signature valid input');
 				helper.callback_saveManualFields(component, event, helper);
 			} else {
-				console.log('opp close proc ho: submit_closedWon Manual Signature not valid input');
+				console.log('opp close proc ho: submit_closedWon Manual Signature invalid input!');
 			}
 		}else if(component.get('v.innerPathValue') == 'CCClaim'){ // cc claim - here we do save stage
 			helper.callback_closeOpp(component, event, helper, "Closed Won");
