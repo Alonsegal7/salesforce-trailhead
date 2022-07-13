@@ -8,6 +8,20 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         this.sObjectType_forBatch = sObjectType;
     }*/
 
+    public static map<string,Schema.DescribeSObjectResult> bigBrain_Callout_Objs_Describe {
+        get {
+            if (bigBrain_Callout_Objs_Describe == null) {
+                bigBrain_Callout_Objs_Describe = new map<string,Schema.DescribeSObjectResult>();
+                List<Schema.DescribeSobjectResult> results= Schema.describeSObjects(new List<string>(bigBrainCalloutControl_cmt.keySet()));
+                for(Integer i=0; i<results.size(); i++){
+                    bigBrain_Callout_Objs_Describe.put(results[i].getName(), results[i]);
+                }
+            }
+            return bigBrain_Callout_Objs_Describe;
+        }
+        set;
+    }
+
     // map of CMT data - key = Object Name, value = BigBrain_Callout_Control__mdt record
     public static map<string,BigBrain_Callout_Control__mdt> bigBrainCalloutControl_cmt {
         get {
@@ -48,7 +62,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     public Database.QueryLocator start(Database.BatchableContext BC){
         try {
             // we use global describe to get all the fields for the query
-            List<String> fields = new List<String>(Schema.getGlobalDescribe().get(sObjectType_forBatch).getDescribe().fields.getMap().keySet());
+            List<String> fields = new List<String>(DescribeService.getSObjDescribe(sObjectType_forBatch).fields.getMap().keySet());
             String query = 'SELECT ' + String.join(fields, ',') + ' FROM Opportunity where Need_Sync_to_BB__c = true order by LastModifiedDate ASC limit 200';
             System.debug('BigBrain_CalloutService batch start query: ' + query);
             return Database.getQueryLocator(query);
@@ -72,7 +86,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     //end of batch
 
     public static void sendCalloutSingleObj(Id objId, String objName){
-        List<String> fields = new List<String>(Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().keySet());
+        List<String> fields = new List<String>(DescribeService.getSObjDescribe(objName).fields.getMap().keySet());
         String query = 'SELECT ' + String.join(fields, ',') + ' FROM ' + objName + ' where Id = \'' + objId + '\'';
         System.debug('BigBrain_CalloutService sendCalloutSingleObj query: ' + query);
         List<SObject> obj_list = database.query(query);
@@ -181,9 +195,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         if (cmt!=null && cmt.Field_Set_Name__c!=null) fsname = cmt.Field_Set_Name__c;
         else return res;
         
-        SObjectType sobjectGlobalDescribe = Schema.getGlobalDescribe().get(sobjectType);
-        if(sobjectGlobalDescribe == null) return res;
-        Schema.FieldSet fs = sobjectGlobalDescribe.getDescribe().fieldSets.getMap().get(fsname);
+        Schema.FieldSet fs = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get(fsname);
 
         if(fs != null){ //check if field from fieldSet was updated
             for(Schema.FieldSetMember fsm : fs.getFields()){
