@@ -321,7 +321,7 @@
 			console.log('opp close proc ho: submit_closedWon entered manually signed input validation');
 			var manualSignatureInputValid = true;
 			component.find('manuallySignedFields').forEach(function (field) {
-				if (!field.get("v.value") || component.get('v.oppData.Is_SO_Signed__c') == false) {
+				if (!field.get("v.value") || !component.get('v.closedFields.Is_SO_Signed__c')) {
 					manualSignatureInputValid = false;
 				}
 				field.reportValidity();
