@@ -1,4 +1,22 @@
 public with sharing class ContractEventToContract {
+    private static void updateAndRetry(List<SObject> recordsToUpdate ) {
+        try {
+            update recordsToUpdate;
+        }      
+        catch (Exception ex) {
+            if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
+                try {
+                    update recordsToUpdate; 
+                }
+                catch (Exception e) {
+                    System.debug('Message: ' + e.getMessage());
+                }
+            }
+            else {
+                System.debug('Message: ' + ex.getMessage());
+            }
+        }
+    }
     public static Map<string, id> createdContForSubOrder = new Map<string, id>();
     public static void ContractEventCreateNewContract(Map<Id, List<Contract_Event__c>> conEvents, List<SObject> objects, string objType) {
        try{
@@ -174,7 +192,7 @@ public with sharing class ContractEventToContract {
             oppsToUpdate.add(opp);
         }
         if (!oppsToUpdate.isEmpty()) {
-            update oppsToUpdate;
+            updateAndRetry(oppsToUpdate);
         }
     }catch(Exception e){
         Utilities.sendDebugEmail('Error in ContractEventCreateNewContract.updateContractArrChangeToOpenOps ',e,e.getMessage());  
@@ -203,22 +221,7 @@ public with sharing class ContractEventToContract {
             this.accToUpdateList = accToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            try {
-                Database.update(accToUpdateList);
-            }      
-            catch (Exception ex) {
-                if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
-                    try {
-                        Database.update(accToUpdateList); 
-                    }
-                    catch (Exception e) {
-                        System.debug('Message: ' + e.getMessage());
-                    }
-                }
-                else {
-                    System.debug('Message: ' + ex.getMessage());
-                }
-            }
+            updateAndRetry(accToUpdateList);
         }
     }
 
@@ -228,22 +231,7 @@ public with sharing class ContractEventToContract {
             this.contractToUpdateList = contractToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            try {
-                Database.update(contractToUpdateList);
-            }      
-            catch (Exception ex) {
-                if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
-                    try {
-                            Database.update(contractToUpdateList);  
-                    }
-                    catch (Exception e) {
-                        System.debug('Message: ' + e.getMessage());
-                    }
-                }
-                else {
-                    System.debug('Message: ' + ex.getMessage());
-                }
-            }
+            updateAndRetry(contractToUpdateList);
         }
     }
     private class updateValuesToCreatedContract implements System.Queueable {
