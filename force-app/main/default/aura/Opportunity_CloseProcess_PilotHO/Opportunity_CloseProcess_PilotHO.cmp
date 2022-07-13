@@ -155,13 +155,6 @@
                     <!--close lost fields that are displayed for non gb opps-->
                     <lightning:inputField
                       aura:id="ClosedLostFieldCheck"
-                      fieldName="StageName"
-                      required="true"
-                      value="Closed Lost"
-                      disabled="true"
-                    />
-                    <lightning:inputField
-                      aura:id="ClosedLostFieldCheck"
                       fieldName="Lost_Reason__c"
                       value="{!v.closedFields.Lost_Reason__c}"
                       required="true"

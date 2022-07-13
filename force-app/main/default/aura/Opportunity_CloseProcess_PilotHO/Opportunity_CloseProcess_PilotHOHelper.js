@@ -91,8 +91,6 @@
 		console.log('opp close proc ho: handleClosedLostStageSelected');
 		component.set('v.innerPathValue', 'LostInfo');
 		component.set('v.isModalOpen', true);
-
-		helper.handleFieldSets(component, event, helper);
 	},
 
 	callback_saveInnerPicklistPath : function(component, event, helper, innerValue){ //save the innerPicklistPath
