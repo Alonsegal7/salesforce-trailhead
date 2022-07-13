@@ -28,7 +28,8 @@
                             console.log('opp close proc ho: close stage selected: fields from field set: '+JSON.stringify(component.get("v.fields")));
                         }
                     }
-                    if(component.get('v.oppData.Co_Sell_Opportunity__c') != null 
+					if(component.get('v.isClosedWon')){
+						if(component.get('v.oppData.Co_Sell_Opportunity__c') != null 
                         && component.get('v.oppData.Co_Sell_Opportunity__c') != ''
                         && component.get('v.oppData.Account.Co_Sell_Leader__c') != '' 
                         && component.get('v.oppData.Account.Co_Sell_Leader__c') != null
@@ -37,9 +38,12 @@
                         && component.get('v.oppData.Co_Sell_Request__r.Status__c') == 'Approved'
                         && component.get('v.oppData.Co_Sell_Request__r.Impact_Survey_Filled__c') == false){
                         helper.callback_coSellSurvey(component, event, helper);
-                    } else {
-                        helper.handleClosedWonStageSelected(component, event, helper);
-                    }
+                    	} else {
+							helper.handleClosedWonStageSelected(component, event, helper);
+						}
+					} else {
+						helper.handleClosedLostStageSelected(component, event, helper);
+					}
                 }  else {
 					errMsg = 'Oops... Server issue loading opportunity data (storeResponse is null in callbackInit). Please reach out to Biz Ops.';
 					component.set("v.errMsg", errMsg);
@@ -80,13 +84,11 @@
             helper.callFlow_getOpportunitySummary(component, event, helper);
         }
 
-		component.set('v.isClosedWon', true);
 		component.set('v.isModalOpen', true);
 	},
 
 	handleClosedLostStageSelected : function (component, event, helper){
 		console.log('opp close proc ho: handleClosedLostStageSelected');
-		component.set('v.isClosedLost', true);
 		component.set('v.innerPathValue', 'LostInfo');
 		component.set('v.isModalOpen', true);
 
