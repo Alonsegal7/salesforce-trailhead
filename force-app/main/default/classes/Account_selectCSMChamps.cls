@@ -17,12 +17,12 @@ public without sharing class Account_selectCSMChamps {
     public static Map<String,Object> getAllContacts(Id accountId){
         try {
             Map<String,Object> res = new Map<String,Object>();
-            list<AccountContactRelation> acrs = [select Id, ContactId, Contact.CSM_Champion__c, Contact.FirstName, Contact.LastName, Contact.Title from AccountContactRelation where AccountId =: accountId];
+            list<AccountContactRelation> acrs = [select Id, ContactId, Contact.PCSM_Champion__c, Contact.FirstName, Contact.LastName, Contact.Title from AccountContactRelation where AccountId =: accountId];
             set<Id> selected_champs = new set<Id>();
             list<optionWrapper> contacts_options = new list<optionWrapper>();
             string contact_label = '';
             for(AccountContactRelation acr: acrs){
-                if(acr.Contact.CSM_Champion__c){
+                if(acr.Contact.PCSM_Champion__c){
                     selected_champs.add(acr.ContactId);
                 } 
                 contact_label = acr.Contact.FirstName + ' ' + acr.Contact.LastName;
@@ -48,7 +48,7 @@ public without sharing class Account_selectCSMChamps {
                 if(!originally_selected.contains(currently_selected_Id)){ //newely selected champs
                     consToUpdate.add(new Contact(
                         Id = currently_selected_Id,
-                        CSM_Champion__c = true
+                        PCSM_Champion__c = true
                     ));
                 }
             }
@@ -56,7 +56,7 @@ public without sharing class Account_selectCSMChamps {
                 if(!currently_selected.contains(originally_selected_Id)){
                     consToUpdate.add(new Contact(
                         Id = originally_selected_Id,
-                        CSM_Champion__c = false
+                        PCSM_Champion__c = false
                     ));
                 }
             }

@@ -7,7 +7,7 @@ public without sharing class Account_selectCSMChampsTest {
         Contact con = new Contact(
             Email='test@monday.com', 
             LastName = 'test',
-            CSM_Champion__c = true, 
+            PCSM_Champion__c = true, 
             AccountId = acc.Id);
         insert con;
     }

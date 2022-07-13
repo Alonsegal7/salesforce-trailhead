@@ -62,4 +62,4 @@
 			</section>
 		</aura:set>
     </aura:if>	
-</aura:component>	
+</aura:component>

@@ -53,7 +53,7 @@
                         </template>
                 
 
-                        <template if:false={missingRelevantInfo}>
+                        <template if:true={showDPAbutton}>
                             <lightning-layout-item padding="around-small" >
                                 <lightning-button variant="Brand" label="Initiate Start DPA Request" onclick={InitDPA}></lightning-button>
                             </lightning-layout-item>
@@ -74,6 +74,3 @@
     </lightning-quick-action-panel>
 
 </template>
-
-
-

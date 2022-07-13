@@ -3,6 +3,7 @@
     <apiVersion>51.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
+        <target>lightning__FlowScreen</target>
         <target>lightning__RecordPage</target>
         <target>lightning__AppPage</target>
         <target>lightningCommunity__Page</target>
@@ -11,6 +12,9 @@
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
             <property name="recordId" type="String" label="Record Id" description="Automatically bind the page's record id to the component variable"/>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" type="String"  default="" role="inputOnly" label="Enter recordId" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

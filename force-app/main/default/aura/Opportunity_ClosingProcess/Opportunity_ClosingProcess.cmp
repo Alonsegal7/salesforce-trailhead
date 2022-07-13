@@ -45,7 +45,7 @@
     
     <force:recordData aura:id="recordEditor"
         layoutType="FULL"
-        fields="StageName,Probability,Is_SO_Signed__c,DH_Date_of_Signature__c,DH_Signer_Name_c__c,DH_Signer_Title__c,Manual_Signature_Reason__c,Lost_Reason__c,Which_competitor__c,Which_features_were_missing__c,What_Would_You_Like_To_Claim__c,Close_Process_Path__c"
+        fields="StageName,Probability,Is_SO_Signed__c,DH_Date_of_Signature__c,DH_Signer_Name_c__c,DH_Signer_Email__c,DH_Signer_Title__c,Manual_Signature_Reason__c,Lost_Reason__c,Which_competitor__c,Which_features_were_missing__c,What_Would_You_Like_To_Claim__c,Close_Process_Path__c"
         recordId="{!v.recordId}"
         targetRecord="{!v.record}"
         targetFields="{!v.closedFields}"
@@ -465,6 +465,7 @@
                                     <lightning:input aura:id="manuallySignedFields" type="checkbox" label="Is SO Manually Signed?" checked="{!v.closedFields.Is_SO_Signed__c}" value="{!v.closedFields.Is_SO_Signed__c}" required="true" onchange="{!c.isSOManuallySignedClicked}"/>
                                     <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Date_of_Signature__c" value="{!v.closedFields.DH_Date_of_Signature__c}" required="true" />
                                     <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Signer_Name_c__c" value="{!v.closedFields.DH_Signer_Name_c__c}" required="true"/>
+                                    <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Signer_Email__c" value="{!v.closedFields.DH_Signer_Email__c}" required="true"/>
                                     <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Signer_Title__c" value="{!v.closedFields.DH_Signer_Title__c}" required="true"/>
                                     <lightning:inputField aura:id="manuallySignedFields" fieldName="Manual_Signature_Reason__c" value="{!v.closedFields.Manual_Signature_Reason__c}" required="true" onchange="{!c.prioritySO}"/>
                                     <c:fileUploadImproved aura:id="fileUploadImp"
