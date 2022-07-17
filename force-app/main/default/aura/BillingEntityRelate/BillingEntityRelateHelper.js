@@ -536,7 +536,9 @@
 			}
 			//End Tal - VAT Logic
 		}
-
+		if(this.isEmpty(beId)){
+			beId = cmp.get('v.latest_be.val');
+		}
 		console.log('In relate 1');
 		var action = cmp.get("c.doRelate");
         action.setParams({ "oppId" : oppId, "BEId" :  beId});
