@@ -2,6 +2,7 @@ public class Ctrl_BillingEntityRelate  {
 	@AuraEnabled
 	public static String getInitialParameters(Id oppId){
 		String res = '';
+		Date d = Date.today();
 		Map <String, object> mso = new Map <String, object>();
 		mso.put('opportunity', getOpportunity(oppId));
         mso.put('fieldMapping', getfieldMapping());
@@ -12,6 +13,7 @@ public class Ctrl_BillingEntityRelate  {
 		mso.put('newFormShippingFields', getNewFormShippingFields());
 		mso.put('editFormFields', getEditFormFields());
 		mso.put('fieldValidations', getFieldValidations());
+		mso.put('date_today', d);
 		System.debug('iCloudius - Initial Parameters:\n' + JSON.serializePretty(mso));
 		res = JSON.serialize(mso);
 		return res;
@@ -29,7 +31,9 @@ public class Ctrl_BillingEntityRelate  {
 	public static Opportunity getOpportunity(Id oppId){
 		Opportunity o = null;
 		List<Opportunity> lo = [SELECT Id, Name, AccountId, Billing_Entity__c, Billing_Entity__r.Name, Account.Latest_Billing_Entity__c, Account.Latest_Billing_Entity__r.Name, 
-									   Account.Latest_Billing_Entity__r.VAT_Number__c 
+									   Account.Latest_Billing_Entity__r.Customer_Has_VAT_Number__c, Account.Latest_Billing_Entity__r.VAT_Number__c, 
+									   Account.Latest_Billing_Entity__r.Customer_Has_QST_Number__c, Account.Latest_Billing_Entity__r.QST_Number__c, 
+									   Account.Latest_Billing_Entity__r.Shipping_Country_G__c, Account.Latest_Billing_Entity__r.Shipping_State__c 
 								FROM Opportunity
 								WHERE Id =: oppId];
 
@@ -217,6 +221,7 @@ public class Ctrl_BillingEntityRelate  {
 		}
 
 		baseQuery += ' FROM Billing_Entity__c WHERE Status__c = \'Active\' AND ';
+		if (be.Id != null) baseQuery += 'Id != \'' + be.Id + '\' AND ';
 
 		List <Billing_Entity__c> BEsFound = null;
 		if (!preventiveRules.isEmpty()){
@@ -397,10 +402,20 @@ public class Ctrl_BillingEntityRelate  {
 		return mso;
 	}
 	@AuraEnabled(cacheable=true)
-	public static String CallVatService(String countryName, String vatNumber){
+	public static String CallVatService(String countryName, String vatNumber, String testType, Id beId){
 		system.debug('### countryName: ' + countryName);
 		system.debug('### vatNumber: ' + vatNumber);
-		return VatVerificationService.CallVatService(countryName,vatNumber,null);
+		system.debug('### beId: ' + beId);
+		String vatServiceResponse = VatVerificationService.CallVatService(countryName, vatNumber, testType);
+		if (beId != null) updateLastServiceCall(beId);
+		return vatServiceResponse;
+	}
+
+	@Future
+	public static void updateLastServiceCall(Id beId){
+		System.debug('iCloudius - Updating Last_VAT_Validation_Date__c on: ' + beId);
+		Billing_Entity__c be = new Billing_Entity__c(Id = beId, Last_VAT_Validation_Date__c = Date.today());
+		update be;
 	}
 
 	public class BillingEntityWrap {
@@ -458,16 +473,55 @@ public class Ctrl_BillingEntityRelate  {
 		}
 	}
 
+	/*
+	* This loads the Billing Entity currently being edited.
+	* This is required since VAT/GST(QST) fields cannot simply 
+	* Load with the form and needs to be calculated
+	*/
+	@AuraEnabled
+	public static Map <String, Object> getBE(Id BEId){
+		Map <String, Object> res = new Map <String, Object>();
+		res.put('billing_entity_found', true);
+		List <Billing_Entity__c> lbe = [SELECT Id, Name, Shipping_Country_G__c, Shipping_State__c FROM Billing_Entity__c WHERE Id = :BEId];
+		if (lbe != null && !lbe.isEmpty()) res.put('billing_entity', lbe[0]);
+		if (lbe == null || lbe.isEmpty()) res.put('billing_entity_found', false);
+		System.debug('iCloudius - Billing Entity loaded for editing:\n' + JSON.serializePretty(res));
+		return res;
+	}
+
 	//Start Tal - VAT Logic
 	@AuraEnabled(cacheable=true)
-	public static String getValuesCallVatService(String BEId){
-		List<Billing_Entity__c> beToSearch = [SELECT Id, VAT_Number__c, Shipping_Country_G__c FROM Billing_Entity__c WHERE Id =: BEId];
-		String getVatVerification = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].VAT_Number__c,null);
-		return getVatVerification;
+	public static Map <String, Object> getValuesCallVatService(String BEId){
+		Map <String, Object> res = new Map <String, Object>();
+		res.put('service_available', true);
+		String vatValidationResponse = null;
+		String qstValidationResponse = null;
+		List<Billing_Entity__c> beToSearch = [SELECT Id, Customer_Has_VAT_Number__c, Customer_Has_QST_Number__c, VAT_Number__c, QST_Number__c, Shipping_Country_G__c, Shipping_State__c FROM Billing_Entity__c WHERE Id =: BEId];
+		System.debug('iCloudius - getValuesCallVatService - beToSearch:\n' + JSON.serializePretty(beToSearch));
+		if (beToSearch != null && !beToSearch.isEmpty()) res.put('billing_entity', beToSearch[0]);
+		String vatType = null;
+		if (beToSearch[0].Shipping_Country_G__c == 'Canada') vatType = 'GST';
+		if (beToSearch[0].VAT_Number__c != null) vatValidationResponse = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].VAT_Number__c, vatType);
+		System.debug('iCloudius - vatValidationResponse: ' + vatValidationResponse);
+		res.put('raw', vatValidationResponse);
+		if (vatValidationResponse == 'unknown') res.put('service_available', false);
+		if (vatType == null && vatValidationResponse != 'unknown') res.put('vat_valid', (vatValidationResponse != 'invalid'));
+		if (vatType != null && vatValidationResponse != 'unknown') res.put('gst_valid', (vatValidationResponse != 'invalid'));
+
+		if (beToSearch[0].QST_Number__c != null) qstValidationResponse = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].QST_Number__c, 'QST');
+		System.debug('iCloudius - qstValidationResponse: ' + qstValidationResponse);
+
+		updateLastServiceCall(BEId);
+
+		if (qstValidationResponse != null && qstValidationResponse != 'unknown') { res.put('qst_valid', (qstValidationResponse != 'invalid')); }
+
+		System.debug('iCloudius - VAT GST/QST check response:\n' + JSON.serializePretty(res));
+		return res;
 	}
 
 	@AuraEnabled
 	public static void updateBillingEntityFields(Id BEId, String customerVat, String vatNumber, String vatServiceStatus){
+		System.debug('updateBillingEntityFields - start');
 		String getVatServiceStatus = '';
 		
 		List<Billing_Entity__c> beToUpdate = [SELECT Id, Customer_Has_VAT_Number__c, VAT_Number__c, Last_VAT_Validation_Date__c FROM Billing_Entity__c WHERE Id =: BEId];
@@ -486,6 +540,7 @@ public class Ctrl_BillingEntityRelate  {
 			}
 			Database.update(beToUpdate[0]);
 		}
+		System.debug('updateBillingEntityFields - finish');
 	}
 
 	@AuraEnabled
