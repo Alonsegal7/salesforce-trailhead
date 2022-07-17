@@ -11,6 +11,10 @@ public with sharing class updateMainAccountOnContract {
                 }
             }
         }
+        if (contractIds.isEmpty()) {
+            return;
+        }
+        
         List<account> allRelatedMAs = [SELECT Id, ARR__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: contractIds]; //get all monday accounts that their Active_Contract__c (contract id) is in the contracts set
         Map<Id, List<Account>> contractsMap = new Map<Id, List<Account>> (); //empty map with columns: contract id, matching monday accounts (list)
         for (Account relatedMA : allRelatedMAs) { //put monday account values in the contractsMap
