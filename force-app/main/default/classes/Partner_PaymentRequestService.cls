@@ -205,7 +205,13 @@ public without sharing class Partner_PaymentRequestService {
             Decimal monthlyAmount = 0, yearlyAmount = 0, twoYearlyAmount = 0, inboundPercent = 0, outboundPercent = 0;
             if(!collectionsList.isEmpty()) {
                 //get inbound outbound percent
-                Partner_Commission_Model__c pcm = [select Id, Commission_Model__r.Inbound_Percent__c, Commission_Model__r.Outbound_Percent__c from Partner_Commission_Model__c where Partner_Company__c =: partnerCompanyId and Start_Date__c <=: monthForQuery and (End_Date__c = null or End_Date__c >=: monthForQuery) limit 1];
+                List<Partner_Commission_Model__c> pcmList = [select Id, Commission_Model__r.Inbound_Percent__c, Commission_Model__r.Outbound_Percent__c from Partner_Commission_Model__c where Partner_Company__c =: partnerCompanyId and Start_Date__c <=: monthForQuery and (End_Date__c = null or End_Date__c >=: monthForQuery) limit 1];
+                if(pcmList.isEmpty()){
+                    res.put('errorMsg','Partner Commission Model does not exist for ' + month.month() +'/'+month.year()+'! Please reach out to your CPM.');
+                    res.put('status', 'error');
+                    return res;
+                }
+                Partner_Commission_Model__c pcm = pcmList[0];
                 inboundPercent = pcm.Commission_Model__r.Inbound_Percent__c / 100;
                 outboundPercent = pcm.Commission_Model__r.Outbound_Percent__c / 100;
                 //sum amounts by plan
