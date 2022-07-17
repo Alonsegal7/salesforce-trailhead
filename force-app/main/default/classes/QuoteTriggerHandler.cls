@@ -56,7 +56,7 @@ public with sharing class QuoteTriggerHandler {
             List<QuoteLineItem> qlisToDelete = new List<QuoteLineItem>();
             for(Quote newQuote : newQuotes) { 
                 if (newquote.DH_Quote_Status__c!=oldQuotes.get(newQuote.Id).DH_Quote_Status__c&&
-                    newQuote.DH_Quote_Status__c == 'Archived')
+                    newQuote.DH_Quote_Status__c == 'Archived' && oldQuotes.get(newQuote.Id).DH_Quote_Status__c != 'Won')
                     archivedQuoteIds.add(newQuote.Id);
             }
             if(archivedQuoteIds.isEmpty())
