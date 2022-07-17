@@ -27,7 +27,7 @@ public without sharing class CoSellRequestService {
             toAddresses.add('kseniasm@monday.com');
             toAddresses.add('avivc@monday.com');
             toAddresses.add('naomida@monday.com');
-            Utilities.sendEmail('Co-Sell 10K arr TH validation occured on '+ Account.Name, body, toAddresses);
+            Utilities.sendEmail('Co-Sell 10K arr TH validation occured on '+ opp.Account.Name, body, toAddresses);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());
         }
@@ -45,7 +45,8 @@ public without sharing class CoSellRequestService {
                                         and AccountId =: accountId 
                                         and RecordType.DeveloperName in: recordTypes 
                                         and Co_Sell_Opportunity__c = null 
-                                        and (Co_Sell_Request__c = null or Co_Sell_Request__r.Status__c = 'Rejected')];
+                                        and (Co_Sell_Request__c = null or Co_Sell_Request__r.Status__c = 'Rejected')
+                                        and (Owner.Profile.Name = 'Partner Community Custom' or Owner.Group__c = 'Sales')];
             return res;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + ' ' + e.getStackTraceString());

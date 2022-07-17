@@ -131,7 +131,7 @@ public class CreatePartnerUserCtrl {
 				newUserRec.CompanyName = contactRec.Account.Name;
 				newUserRec.Created_date__c = Date.today();
 				newUserRec.Alias = newUserRec.FirstName.left(1) + newUserRec.LastName.left(6);
-				newUserRec.CommunityNickname = newUserRec.Alias;
+				newUserRec.CommunityNickname = newUserRec.Alias + String.valueOf(contactRec.Id);
 				newUserRec.ManagerId = contactRec.OwnerId;
 				newUserRec.ContactId = contactRec.Id;
 				newUsersList.add(newUserRec);

@@ -32,12 +32,12 @@ public with sharing class Account_StampsService {
         if (relevantAccountsOwnerChange.isEmpty() && relevantAccountsCSMChange.isEmpty()) return;
         
         
-        Map<Id,User> usersMap = new Map<Id,User>([SELECT Id, Business_Role__c, Manager.Team__c, ManagerId,Email FROM USER WHERE Id IN: relevantUsers]);
+        Map<Id,User> usersMap = new Map<Id,User>([SELECT Id, Group__c, Business_Role__c, Manager.Team__c, ManagerId,Email FROM USER WHERE Id IN: relevantUsers]);
 
         //update owner stamps on the relevant accounts
         for (Account acc : relevantAccountsOwnerChange) {
             User currOwner = usersMap.get(acc.OwnerId);
-            if (oldAccounts != null && oldAccounts.get(acc.Id).OwnerId != null) {
+            if (oldAccounts != null) {
                 acc.PreviousOwner__c = oldAccounts.get(acc.Id).OwnerId;
             }
             System.debug('Account_OwnerStamps currOwner: '+ currOwner);
@@ -46,6 +46,9 @@ public with sharing class Account_StampsService {
                     String ownerBusinessRole = currOwner.Business_Role__c;
                     acc.AM__c = ownerBusinessRole == 'AM' ? acc.OwnerId : null;
                     acc.AE__c = ownerBusinessRole == 'AE' ? acc.OwnerId : null;
+                }
+                if (currOwner.Group__c == 'Partners'){
+                    acc.Partner__c = acc.OwnerId;
                 }
                 acc.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
                 acc.Owner_s_Manager__c = currOwner.ManagerId;

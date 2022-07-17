@@ -2,7 +2,7 @@ public with sharing class Quote_CloseCorrectionOpp {
     public static void Quote_CloseCorrectionOpp(List<Quote> newQuotes, map<Id,Quote> oldQuotes) {
         List<Opportunity> oppsToUpdate = new List<Opportunity>(); //correction opps to update list
         for(Quote quote : newQuotes){
-            if (quote.Is_Correction__c && //correction quote only
+            if ((quote.Is_Correction__c || quote.Servie_PS_Quote__c)&& //correction quote only
                 quote.IsSyncing && //quote is synced to opp
                 quote.DH_Quote_Status__c != oldQuotes.get(quote.Id).DH_Quote_Status__c && //DH quote status changed
                 quote.DH_Quote_Status__c == 'Won'){ //DH quote status changed to 'Won'

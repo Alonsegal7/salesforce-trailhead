@@ -241,7 +241,7 @@
                                     </div>
                                 </lightning-layout-item>
                                 <lightning-layout-item size="6">
-                                    <lightning-input type="number" name="spiff" label="Spiff Amount $" formatter="currency" value={spiffAmount} step="0.01" onchange={handleSpiffAmountChange}></lightning-input>
+                                    <lightning-input type="number" name="spiff" label="Spiff Amount $" formatter="currency" value={spiffAmount} step="0.01" disabled></lightning-input>
                                 </lightning-layout-item>
                             </lightning-layout>
                             <template if:true={showUploadMdfFiles}>

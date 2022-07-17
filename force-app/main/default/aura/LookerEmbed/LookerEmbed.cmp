@@ -17,7 +17,7 @@
           LayoutType="FULL"
 		  mode="VIEW"
                       />
-    <aura:if isTrue="{!and(v.record.primary_pulse_account_id__c != null, v.record.primary_pulse_account_id__c != '') }">
+    <aura:if isTrue= "{!or(and(v.record.primary_pulse_account_id__c != null, v.record.primary_pulse_account_id__c != ''), v.record == null)}">
 		<iframe src="{! v.finalUrl}" 
             id="looker-embed"
             width="{!v.width}"
@@ -27,8 +27,8 @@
             sandbox="{!v.sandbox}"
             scrolling="{!v.scrolling}"/>
     </aura:if>
-    
-    <aura:if isTrue="{!or(v.record.primary_pulse_account_id__c == null, v.record.primary_pulse_account_id__c == '') }">
+
+    <aura:if isTrue= "{!and(or(v.record.primary_pulse_account_id__c == null, v.record.primary_pulse_account_id__c == ''), v.record != null)}">
         <h1>Loading Account...</h1>
     </aura:if>
    	

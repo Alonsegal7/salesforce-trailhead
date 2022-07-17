@@ -12,12 +12,15 @@ public without sharing class starRatingController {
     }
 
     @AuraEnabled
-    public static sobject updateValues(Id recordId, String objectApiName, Map<String,String> valuesMap, String surveyFilledField) {
+    public static sobject updateValues(Id recordId, String objectApiName, Map<String,String> valuesMap, Map<String,String> openTextMap, String surveyFilledField) {
         try {
             string query = 'select Id from '+objectApiName+' where Id = \''+recordId+'\'';
             sobject recToUpdate = Database.query(query);
             for(String key: valuesMap.keySet()){
                 recToUpdate.put(key, Decimal.valueOf(valuesMap.get(key))); //the answer fields must be of type Number
+            }
+            if(openTextMap != null && !openTextMap.isEmpty()){
+                recToUpdate.put(openTextMap.get('fieldname'), openTextMap.get('value'));
             }
             if(surveyFilledField != null && surveyFilledField != ''){
                 recToUpdate.put(surveyFilledField, true);

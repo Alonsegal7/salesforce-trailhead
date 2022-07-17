@@ -5,19 +5,46 @@ public without sharing class Opportunity_ClosingProcess {
         try{
             String res = '';
             Map <String, object> mso = new Map <String, object>();
+            updateCompSize_opp(oppId);
             mso.put('opportunity', getOpportunityData(oppId));
-            mso.put('subscription', getSubscription(oppId));
-            mso.put('internalOppLost_NotExpansion', InternalOpportunity_Lost_NotExpansion());
-            mso.put('internalOppLWon_Expansion', InternalOpportunity_Won_Expansion());
-            mso.put('internalOppLWon_NotExpansion', InternalOpportunity_Won_NotExpansion());
-            mso.put('partnerOppLWonLost_Expansion', PartnerOpportunity_WonLost_NotExpansion());
-            // mso.put('quote', getQuote(oppId));
-            System.debug('iCloudius - Initial Parameters:\n' + JSON.serializePretty(mso));
+            System.debug('Opportunity_ClosingProcess - Initial Parameters:\n' + JSON.serializePretty(mso));
             res = JSON.serialize(mso);
             return res;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
+    }
+
+    @AuraEnabled
+    public static string closedStageSelected(Id oppId){
+        try {
+            String res = '';
+            Map <String, object> mso = new Map <String, object>();
+            updateCompSize_opp(oppId);
+            Opportunity opp = getOpportunityData(oppId);
+            mso.put('opportunity', opp);
+            String fieldsStr = getFieldSet(opp);
+            mso.put('fieldsStr', fieldsStr);
+            System.debug('Opportunity_ClosingProcess - closedStageSelected:\n' + JSON.serializePretty(mso));
+            res = JSON.serialize(mso);
+            return res;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    public static String getFieldSet(Opportunity opp){
+        String oppType = opp.Type == 'Renewal' ? 'Renewal' : opp.Opportunity_Type__c;
+        String fs_name = '';
+        if(opp.RecordType.DeveloperName == 'Internal_Opportunity' && opp.Is_Potential_GB_Opportunity__c){
+            if(oppType == 'New Business') fs_name = 'CloseProcess_RequiredFields_NewBusiness';
+            else if(oppType == 'Expansion'){
+                if(opp.Green_Bucket_ARR_V2__c >= 5000) fs_name = 'CloseProcess_RequiredFields_Exp_above5K';
+                else fs_name = 'CloseProcess_RequiredFields_Exp_under5K';
+            }
+        }
+        if(fs_name != '') return getFieldsFromFieldSet('Opportunity', fs_name);
+        else return null;
     }
 
     @AuraEnabled
@@ -48,40 +75,6 @@ public without sharing class Opportunity_ClosingProcess {
     }
 
     @AuraEnabled
-    public static Boolean getSubscription(Id recordId){
-        try{
-            system.debug('### recordId: ' + recordId);
-            Boolean isOppNull = false;
-            Boolean hasWonSO_SubClaimCC = false;
-            Map<Id, Subscription__c> subs;
-    
-            Opportunity opp = [SELECT Id, StageName, AccountId, Is_Primary_SO_Signed__c FROM Opportunity WHERE Id =: recordId LIMIT 1];
-                subs = new Map<Id, Subscription__c>([
-                    SELECT Id, Name, Seats__c, Product_Code__c, Name_for_CC_Claim__c, Claimed_On_Opportunity__r.Co_Sell_Opportunity__c,Is_Claimed__c
-                    FROM Subscription__c 
-                    WHERE Monday_Account__c =: opp.AccountId AND 
-                    (Is_Claimed__c = false OR (Claimed_On_Opportunity__r.Co_Sell_Opportunity__c =: opp.Id AND Claimed_On_Opportunity_Co_Sell__c = null)) 
-                    AND Status__c != 'DELETED' AND (Payment_Method__c LIKE '%BLUESNAP%' OR Include_In_CC_Claim__c = true)
-                    ORDER BY CreatedDate DESC
-                ]);
-            
-            if(!subs.isEmpty()){
-                system.debug('### subs: ' + subs);
-                isOppNull = true;
-            }else{
-                system.debug('### opp null');
-                isOppNull = false;
-            }
-            
-            hasWonSO_SubClaimCC = isOppNull;
-            system.debug('### hasWonSO_SubClaimCC: ' + hasWonSO_SubClaimCC);
-            return hasWonSO_SubClaimCC;
-        }catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-
-    @AuraEnabled
     public static Opportunity saveInnerPicklistPath(Id recordId, String innerPicklistPath){
         try{
             Opportunity opp = new Opportunity(Id = recordId, Close_Process_Path__c = innerPicklistPath);
@@ -100,14 +93,16 @@ public without sharing class Opportunity_ClosingProcess {
             for(OpportunityStage oStage : [SELECT MasterLabel, DefaultProbability FROM OpportunityStage WHERE isActive = true AND MasterLabel =: oppStageName]){
                 stageMap.put(oStage.MasterLabel, oStage.DefaultProbability);
             }
+            if(oppStageName == 'Closed Won') updateCompSize_account(recordId);
             Opportunity opp = new Opportunity(Id = recordId); 
             opp.StageName = oppStageName;
             opp.Close_Process_Path__c = 'Done';
             opp.Probability = stageMap.get(oppStageName);
             update opp;
-            opp = [SELECT Id, Green_Bucket_ARR_V2__c FROM Opportunity WHERE Id =: recordId LIMIT 1];
+            opp = getOpportunityData(recordId);
             Map <String, object> mso = new Map <String, object>();
-		    mso.put('opportunityARR', opp);
+            mso.put('opportunityARR', opp); //for old cmp - remove after pilot is done
+            mso.put('opportunity', opp);
             res = JSON.serialize(mso);
             return res;
         } catch (Exception e) {
@@ -119,21 +114,46 @@ public without sharing class Opportunity_ClosingProcess {
     @AuraEnabled(Cacheable=true)
     public static String getFieldsFromFieldSet(String objectName, String fieldSetName){
         try{
-            system.debug('### objectName: ' + objectName);
-            system.debug('### fieldSetName: ' + fieldSetName);
             Schema.DescribeSObjectResult sObjectDescribe = Schema.getGlobalDescribe().get(ObjectName).getDescribe();
-    
             Schema.FieldSet fieldSet = sObjectDescribe.FieldSets.getMap().get(fieldSetName);
-    
-            System.debug('fields => '+fieldSet.getFields());
             return JSON.serialize(fieldSet.getFields()); 
         }catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
 
+    public static void updateCompSize_opp(Id recordId){
+        Opportunity oppRecord = [SELECT Id, Company__c, Company_Employees__c, Company_Size__c FROM Opportunity WHERE Id =:recordId];
+        if (oppRecord.Company_Employees__c != oppRecord.Company_Size__c) {
+            Opportunity opp = new Opportunity(
+                Id = recordId,
+                Company_Size__c = Integer.valueOf(oppRecord.Company_Employees__c)
+            );
+            update opp;
+        }
+    }
+
+    public static void updateCompSize_account(Id recordId){
+        Opportunity oppRecord = [SELECT Id, Company__c, Company_Employees__c, Company_Size__c FROM Opportunity WHERE Id =:recordId];
+        if (oppRecord.Company_Employees__c != oppRecord.Company_Size__c) {
+            Account acc = [SELECT Id, NumberOfEmployees FROM Account WHERE Id =: oppRecord.Company__c];
+            acc.NumberOfEmployees = Integer.valueOf(oppRecord.Company_Size__c);
+            System.debug('updating comp size to '+ acc.NumberOfEmployees);
+            update acc;
+        }
+    }
+
     @AuraEnabled
-    public static String handover_updateCompSizeRecalcTH(Id recordId){
+    public static String handover_updateCompSizeRecalcTH(Id recordId){ //for old cmp - remove after pilot is done
+        /* 
+        this method is called after submit form of field set fields for close won
+        opp.Company_Employees__c is updated by the form 
+        then we check if Company_Employees__c is not equal to Company_Size__c (formula)
+        if so - we update the NumberOfEmployees of the company (opp.Company__c) to be equal to opp.Company_Size__c
+        then we query the HO thresholds and return them to aura
+
+        NOTE: if we remove this method we loose the update of the company (!)
+        */
         try {
             String res = '';
             System.debug('Entered handover_updateCompSizeRecalcTH');
@@ -159,65 +179,5 @@ public without sharing class Opportunity_ClosingProcess {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-    }
-
-    public static List <Map<String, Object>> InternalOpportunity_Lost_NotExpansion(){
-		List<String> ls = new List<String>();
-		List <Map<String, Object>> lmss = new List <Map<String, Object>>();
-		for(Schema.FieldSetMember f : SObjectType.Opportunity.FieldSets.InternalOpportunity_Lost_NotExpansion.getFields()) {
-            Map<String, Object> tmp = new Map<String, Object>();
-			tmp.put('name', f.getFieldPath());
-			tmp.put('required', (f.getDbRequired() || f.getRequired()));
-			lmss.add(tmp);
-			ls.add(f.getFieldPath());
-		}
-		return lmss;
-    }
-
-    public static List <Map<String, Object>> InternalOpportunity_Won_Expansion(){
-		System.debug('### Tal Test');
-		List<String> ls = new List<String>();
-		List <Map<String, Object>> lmss = new List <Map<String, Object>>();
-		for(Schema.FieldSetMember f : SObjectType.Opportunity.FieldSets.InternalOpportunity_Won_Expansion.getFields()) {
-			Map<String, Object> tmp = new Map<String, Object>();
-			tmp.put('name', f.getFieldPath());
-			tmp.put('required', (f.getDbRequired() || f.getRequired()));
-			lmss.add(tmp);
-			ls.add(f.getFieldPath());
-		}
-		System.debug('### Tal - New Fieldset mapping:\n' + JSON.serializePretty(lmss));
-		return lmss;
-    }
-
-    public static List <Map<String, Object>> InternalOpportunity_Won_NotExpansion(){
-		System.debug('### Tal Test');
-		List<String> ls = new List<String>();
-		List <Map<String, Object>> lmss = new List <Map<String, Object>>();
-		for(Schema.FieldSetMember f : SObjectType.Opportunity.FieldSets.InternalOpportunity_Won_NotExpansion.getFields()) {
-			Map<String, Object> tmp = new Map<String, Object>();
-			tmp.put('name', f.getFieldPath());
-			tmp.put('required', (f.getDbRequired() || f.getRequired()));
-			lmss.add(tmp);
-			ls.add(f.getFieldPath());
-		}
-		System.debug('### Tal - New Fieldset mapping:\n' + JSON.serializePretty(lmss));
-		return lmss;
-    }
-
-    public static List <Map<String, Object>> PartnerOpportunity_WonLost_NotExpansion(){
-		System.debug('### Tal Test');
-		List<String> ls = new List<String>();
-		List <Map<String, Object>> lmss = new List <Map<String, Object>>();
-		for(Schema.FieldSetMember f : SObjectType.Opportunity.FieldSets.PartnerOpportunity_WonLost_NotExpansion.getFields()) {
-            system.debug('### f.getRequired(): ' + f.getRequired());
-            system.debug('### f.getFieldPath(): ' + f.getFieldPath());
-			Map<String, Object> tmp = new Map<String, Object>();
-			tmp.put('name', f.getFieldPath());
-			tmp.put('required', (f.getDbRequired() || f.getRequired()));
-			lmss.add(tmp);
-			ls.add(f.getFieldPath());
-		}
-		System.debug('### Tal - New Fieldset mapping:\n' + JSON.serializePretty(lmss));
-		return lmss;
     }
 }

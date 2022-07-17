@@ -13,12 +13,12 @@ public class OpportunityLineItemHandler {
         system.debug('Raz Ben Ron OLIH oliIds: '+oliIds);
         //set<Id> oliIds=NewOlis.keySet();
         for(QuoteLineItem qli : [SELECT Id, Sales_Order_Primary_Line__c, ARR__c, Tier__c, Product_Type__c, Opportunity_Line_Item_Id__c, Plan_Period__c, Seats__c,
-                                Training_Hours__c, Is_Primary__c, Added_Seats__c, Hours__c, Expiration_Date__c, ServiceDate
+                                Training_Hours__c, Is_Primary__c, Added_Seats__c, Hours__c, Expiration_Date__c, ServiceDate, DealHub_Net_Price_USD__c
                                 FROM QuoteLineItem WHERE Opportunity_Line_Item_ID__c =: oliIds]){
             lstQLIUpdate.add(new OpportunityLineItem(
                 Id = qli.Opportunity_Line_Item_ID__c,
                 ARR__c = qli.ARR__c,
-                 Tier__c = qli.Tier__c,
+                Tier__c = qli.Tier__c,
                 Product_Type__c = qli.Product_Type__c,
                 Plan_Period__c = qli.Plan_Period__c,
                 Seats__c = qli.Seats__c,
@@ -28,7 +28,8 @@ public class OpportunityLineItemHandler {
                 Added_Seats__c = qli.Added_Seats__c,
                 PS_Hours__c = qli.Hours__c,
                 Expiration_Date__c = qli.Expiration_Date__c,
-                PS_Start_Date__C = qli.ServiceDate
+                PS_Start_Date__C = qli.ServiceDate,
+                Service_Revenue__c=qli.DealHub_Net_Price_USD__c
             ));
         }
         system.debug('Raz Ben Ron OLIH lstQLIUpdate: '+lstQLIUpdate);
