@@ -22,6 +22,8 @@
     console.log("opp close proc ho: handleClosedStageSelected");
     var stageName = event.getParam("detail").value;
     if (stageName == "Closed Won" || stageName == "Closed Lost") {
+      if (stageName == "Closed Won") component.set('v.isClosedWon', true);
+      else component.set('v.isClosedLost', true);
       helper.callback_closedStageSelected(component, event, helper, stageName);
     } else {
       component.set("v.hideUpdateButton", false);

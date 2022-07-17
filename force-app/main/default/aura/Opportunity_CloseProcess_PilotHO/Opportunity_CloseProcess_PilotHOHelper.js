@@ -28,7 +28,8 @@
                             console.log('opp close proc ho: close stage selected: fields from field set: '+JSON.stringify(component.get("v.fields")));
                         }
                     }
-                    if(component.get('v.oppData.Co_Sell_Opportunity__c') != null 
+					if(component.get('v.isClosedWon')){
+						if(component.get('v.oppData.Co_Sell_Opportunity__c') != null 
                         && component.get('v.oppData.Co_Sell_Opportunity__c') != ''
                         && component.get('v.oppData.Account.Co_Sell_Leader__c') != '' 
                         && component.get('v.oppData.Account.Co_Sell_Leader__c') != null
@@ -37,9 +38,12 @@
                         && component.get('v.oppData.Co_Sell_Request__r.Status__c') == 'Approved'
                         && component.get('v.oppData.Co_Sell_Request__r.Impact_Survey_Filled__c') == false){
                         helper.callback_coSellSurvey(component, event, helper);
-                    } else {
-                        helper.handleClosedWonStageSelected(component, event, helper);
-                    }
+                    	} else {
+							helper.handleClosedWonStageSelected(component, event, helper);
+						}
+					} else {
+						helper.handleClosedLostStageSelected(component, event, helper);
+					}
                 }  else {
 					errMsg = 'Oops... Server issue loading opportunity data (storeResponse is null in callbackInit). Please reach out to Biz Ops.';
 					component.set("v.errMsg", errMsg);
@@ -80,17 +84,13 @@
             helper.callFlow_getOpportunitySummary(component, event, helper);
         }
 
-		component.set('v.isClosedWon', true);
 		component.set('v.isModalOpen', true);
 	},
 
 	handleClosedLostStageSelected : function (component, event, helper){
 		console.log('opp close proc ho: handleClosedLostStageSelected');
-		component.set('v.isClosedLost', true);
 		component.set('v.innerPathValue', 'LostInfo');
 		component.set('v.isModalOpen', true);
-
-		helper.handleFieldSets(component, event, helper);
 	},
 
 	callback_saveInnerPicklistPath : function(component, event, helper, innerValue){ //save the innerPicklistPath
@@ -317,11 +317,11 @@
 		if(component.get('v.innerPathValue') == 'Claim'){ 
 			helper.callback_saveManualFields(component, event, helper);
 		} else if(component.get('v.innerPathValue') == 'ManualSignature'){ // manualy signed
-			console.log('opp close proc ho: submit_closedWon isSoManuallySigned: '+component.get('v.oppData.Is_SO_Signed__c'));
+			console.log('opp close proc ho: submit_closedWon is so manually signed marked?: '+component.get('v.closedFields.Is_SO_Signed__c'));
 			console.log('opp close proc ho: submit_closedWon entered manually signed input validation');
 			var manualSignatureInputValid = true;
 			component.find('manuallySignedFields').forEach(function (field) {
-				if (!field.get("v.value") || component.get('v.oppData.Is_SO_Signed__c') == false) {
+				if (!field.get("v.value") || !component.get('v.closedFields.Is_SO_Signed__c')) {
 					manualSignatureInputValid = false;
 				}
 				field.reportValidity();
@@ -329,10 +329,10 @@
 			console.log('opp close proc ho: submit_closedWon checkFilesUploaded result: ' + helper.checkFilesUploaded(component, event, helper));
 			var filesUploaded = helper.checkFilesUploaded(component, event, helper);
 			if(manualSignatureInputValid && filesUploaded){
-				console.log('opp close proc ho: submit_closedWon Manual Signature vass,lid input');
+				console.log('opp close proc ho: submit_closedWon Manual Signature valid input');
 				helper.callback_saveManualFields(component, event, helper);
 			} else {
-				console.log('opp close proc ho: submit_closedWon Manual Signature not valid input');
+				console.log('opp close proc ho: submit_closedWon Manual Signature invalid input!');
 			}
 		}else if(component.get('v.innerPathValue') == 'CCClaim'){ // cc claim - here we do save stage
 			helper.callback_closeOpp(component, event, helper, "Closed Won");
