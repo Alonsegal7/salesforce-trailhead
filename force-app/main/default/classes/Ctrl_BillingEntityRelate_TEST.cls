@@ -38,6 +38,7 @@ private class Ctrl_BillingEntityRelate_TEST {
 		Ctrl_BillingEntityRelate.updateBillingEntityFields(be.Id, 'Yes', 'LU26375245', 'irrelevant'); //scenario #1 - VAT is required
 		Ctrl_BillingEntityRelate.updateBillingEntityFields(be.Id, 'No', 'LU26375245', 'unknown'); // scenario #2 - VAT is not required
 		Ctrl_BillingEntityRelate.isVATrequiresChecking();
+		Ctrl_BillingEntityRelate.getBE(be.Id);
 
 	}
 }

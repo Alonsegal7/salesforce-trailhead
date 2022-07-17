@@ -221,6 +221,7 @@ public class Ctrl_BillingEntityRelate  {
 		}
 
 		baseQuery += ' FROM Billing_Entity__c WHERE Status__c = \'Active\' AND ';
+		if (be.Id != null) baseQuery += 'Id != \'' + be.Id + '\' AND ';
 
 		List <Billing_Entity__c> BEsFound = null;
 		if (!preventiveRules.isEmpty()){
@@ -470,6 +471,22 @@ public class Ctrl_BillingEntityRelate  {
 			this.billingAddress = billingAddress;
 			this.shippingAddress = shippingAddress;
 		}
+	}
+
+	/*
+	* This loads the Billing Entity currently being edited.
+	* This is required since VAT/GST(QST) fields cannot simply 
+	* Load with the form and needs to be calculated
+	*/
+	@AuraEnabled
+	public static Map <String, Object> getBE(Id BEId){
+		Map <String, Object> res = new Map <String, Object>();
+		res.put('billing_entity_found', true);
+		List <Billing_Entity__c> lbe = [SELECT Id, Name, Shipping_Country_G__c, Shipping_State__c FROM Billing_Entity__c WHERE Id = :BEId];
+		if (lbe != null && !lbe.isEmpty()) res.put('billing_entity', lbe[0]);
+		if (lbe == null || lbe.isEmpty()) res.put('billing_entity_found', false);
+		System.debug('iCloudius - Billing Entity loaded for editing:\n' + JSON.serializePretty(res));
+		return res;
 	}
 
 	//Start Tal - VAT Logic

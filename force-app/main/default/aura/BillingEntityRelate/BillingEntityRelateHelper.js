@@ -435,6 +435,11 @@
 	fieldValidations : function(cmp, evt){
 		console.log('Initiating field validations');
 		var fields = evt.getParam("fields");
+		if (cmp.get('v.edit_existing')){
+			fields.Id = cmp.get('v.beToUPdate');
+		}
+		console.log('Fields to validate: ' + JSON.stringify(fields));
+
 		cmp.set('v.formFieldsToSubmit', fields);
 		var action = cmp.get("c.fieldValidations");
 		action.setParams({ "be": fields });
@@ -566,6 +571,7 @@
             }
             var spinner = cmp.find("cmspinner");
         	$A.util.addClass(spinner, "slds-hide");
+			this.hideAllSpinners(cmp, evt);
         });
         var spinner = cmp.find("cmspinner");
         $A.util.removeClass(spinner, "slds-hide");
@@ -612,6 +618,11 @@
 				} else {
 					console.log('checkVATBeforeRelate response: ' + JSON.stringify(storeResponse));
 					if (!this.isEmpty(storeResponse.billing_entity)){
+						cmp.set('v.edit_shipping_country', storeResponse.billing_entity.Shipping_Country_G__c);
+						cmp.set('v.edit_country', storeResponse.billing_entity.Shipping_Country_G__c);
+						cmp.set('v.edit_shipping_state', storeResponse.billing_entity.Shipping_State__c);
+						cmp.set('v.edit_state', storeResponse.billing_entity.Shipping_State__c);
+
 						cmp.set('v.isCanada', (storeResponse.billing_entity.Shipping_Country_G__c == 'Canada'));
 						cmp.set('v.isQuebec', (storeResponse.billing_entity.Shipping_State__c == 'Quebec'));
 						console.log('isCanada: ' + cmp.get('v.isCanada'));
@@ -781,12 +792,32 @@
 		let pso = cmp.get('v.related_partner_so');
 
 	},
+	loadBEforEdit : function(cmp, evt, beId2Load){
+		var action = cmp.get("c.getBE");
+		action.setParams({ "BEId" : beId2Load });
+        action.setCallback(this, function(response) {
+			var state = response.getState();
+			var storeResponse = response.getReturnValue();
+            if (state === "SUCCESS") {
+				if (storeResponse.billing_entity_found){
+					cmp.set('v.isCanada', (storeResponse.billing_entity.Shipping_Country_G__c == 'Canada'));
+					cmp.set('v.isQuebec', (storeResponse.billing_entity.Shipping_State__c == 'Quebec'));
+				}
+            }
+            var spinner = cmp.find("cmspinneredit");
+        	$A.util.addClass(spinner, "slds-hide");
+        });
+        var spinner = cmp.find("cmspinneredit");
+        $A.util.removeClass(spinner, "slds-hide");
+        $A.enqueueAction(action);
+	},
 	hideAllSpinners : function (cmp, evt){
 		var spinner = cmp.find("cmspinner");
-        $A.util.addClass(spinner, "slds-hide");
-		var spinner = cmp.find("cmspinnernew");
-        $A.util.addClass(spinner, "slds-hide");
-		var spinner = cmp.find("cmspinneredit");
+        if (!this.isEmpty(spinner)) $A.util.addClass(spinner, "slds-hide");
+		spinner = cmp.find("cmspinnernew");
+		if (!this.isEmpty(spinner)) $A.util.addClass(spinner, "slds-hide");
+		spinner = cmp.find("cmspinneredit");
+		if (!this.isEmpty(spinner)) $A.util.addClass(spinner, "slds-hide");
         $A.util.addClass(spinner, "slds-hide");
 		cmp.set('v.editFormSubmitting ', false);
 	}

@@ -37,7 +37,10 @@
 		cmp.set('v.form_new', false);
 	},
 	openEdit : function(cmp, evt, hlp){
-		cmp.set('v.beToUPdate', cmp.get('v.latest_be').val);
+		let beId = cmp.get('v.latest_be').val;
+		cmp.set('v.beToUPdate', beId);
+		console.log('Opening edit for: ' + beId);
+		hlp.loadBEforEdit(cmp, evt, beId);
 		cmp.set('v.edit_existing', true);
 	},
 	closeEdit : function(cmp, evt, hlp){
@@ -104,6 +107,13 @@
 		console.log('In edit success');
 		var payload = evt.getParams().response;
 		var id = payload.id;
+		let opp = cmp.get('v.loadedOpp');
+		console.log('BE Id: ' + id);
+		console.log('Opp.Billing_Entity__c: ' + opp.Billing_Entity__c);
+		cmp.set('v.currently_selected', id);
+		if (id != opp.Billing_Entity__c){
+			hlp.relate(cmp, evt);
+		}
 		cmp.set('v.editFormSubmitting', false);
 		$A.get("e.force:closeQuickAction").fire();
 		$A.get('e.force:refreshView').fire();
