@@ -1,0 +1,15 @@
+.csm_badge_gold {
+    background-color: gold;
+}
+.csm_badge_silver {
+    background-color: silver;
+}
+.csm_badge_bronze {
+    background-color: maroon;
+    color: white;
+}
+:host {
+    --slds-c-accordion-heading-font-size: 1.05rem;
+    --slds-c-accordion-summary-color-background: ghostwhite;
+    --slds-c-card-shadow: 0px 2px 5px silver;
+}

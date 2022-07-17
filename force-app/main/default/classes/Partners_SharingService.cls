@@ -379,7 +379,10 @@ public without sharing class Partners_SharingService {
             userRolesToPartnerCompMap.put(user.UserRoleId, user.Contact.AccountId);
         }
         //get the groups by the userRoles
-        List<Group> groupsList = [select Id, DeveloperName, RelatedId, Type from Group where RelatedId in: userRolesToPartnerCompMap.keySet() and Type = 'Role' and (DeveloperName like '%PartnerUser' or DeveloperName like '%PartnerManager')];
+        List<Group> groupsList = [select Id, DeveloperName, RelatedId, Type from Group 
+                                    where RelatedId in: userRolesToPartnerCompMap.keySet() 
+                                    and Type = 'Role' 
+                                    and DeveloperName like '%PartnerUser'];
         Map<Id,List<Id>> partnerCompToGroupsMap = new Map<Id,List<Id>>();
         Id partnerCompId;
         for(Group groupRec: groupsList){ //for every group (can be max 2 per partner comp - user and manager) we will create account share
