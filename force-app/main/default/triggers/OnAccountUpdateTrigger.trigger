@@ -52,6 +52,7 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
                 targetsServ.updateTargetOnAccSourceTypeChange(Trigger.new, Trigger.oldMap);
             } 
             Account_SourceTypeOnOpps.updateSourceTypeOnOpps(Trigger.new, Trigger.oldMap);
+            updateMainAccountOnContract.updateMainAccountOnContract(Trigger.new, Trigger.oldMap);
         }
         if(trigger.isInsert||trigger.IsUpdate){
             Account_SetCompanyDomains.Account_SetCompanyDomains(trigger.new,trigger.oldmap);
