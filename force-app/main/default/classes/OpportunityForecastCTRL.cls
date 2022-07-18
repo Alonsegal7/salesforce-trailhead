@@ -77,6 +77,7 @@ public without sharing class OpportunityForecastCTRL {
                     Seats__c=Double.valueof(productsMap.get(prod).get('quantity')),
                     Subtotal__c=Double.valueof(productsMap.get(prod).get('quantity'))*12*( Double.valueof(productsMap.get(prod).get('netUnit'))),
                     DealHub_Net_Price__c=Double.valueof(productsMap.get(prod).get('quantity'))*12*( Double.valueof(productsMap.get(prod).get('netUnit'))),
+                    SKU__c=string.valueof(productsMap.get(prod).get('sku')),
                     Quantity=(Double.valueof(productsMap.get(prod).get('quantity')))*12));
             }
 
