@@ -197,7 +197,11 @@ public without sharing class CoSellRequestService {
     private static void setAssignedApprover(Co_Sell_Request__c newCoSellReq, List<Opportunity> oppsList){
         String coSellLeader = oppsList.get(0).Account.Co_Sell_Leader__c;
         if(coSellLeader == 'Partners') newCoSellReq.Assigned_Approver__c = newCoSellReq.CPM__c;
-        else if(coSellLeader == 'Sales') newCoSellReq.Assigned_Approver__c = [select ManagerId from User where Id =: newCoSellReq.Sales_User__c].ManagerId;
+        else if(coSellLeader == 'Sales') {
+            User u = [select ManagerId, Office__c from User where Id =: newCoSellReq.Sales_User__c];
+            if(u.Office__c == 'Sydney Office') newCoSellReq.Assigned_Approver__c = '0053X00000BnkHOQAZ'; //set dean swan as deafault approver for ANZ
+            else newCoSellReq.Assigned_Approver__c = u.ManagerId;
+        }
     }
 
     private static void setSalesUserId(Co_Sell_Request__c newCoSellReq, Map<Id,Opportunity> oppsMap){
