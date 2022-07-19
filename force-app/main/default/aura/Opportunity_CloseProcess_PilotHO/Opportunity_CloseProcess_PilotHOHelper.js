@@ -24,7 +24,6 @@
                         if(fieldsStr != null && fieldsStr != ''){
                             let fields = JSON.parse(fieldsStr);
                             component.set("v.fields", fields);
-                            //component.set('v.showFieldSetForm', true);
                             console.log('opp close proc ho: close stage selected: fields from field set: '+JSON.stringify(component.get("v.fields")));
                         }
                     }
@@ -62,7 +61,7 @@
 		console.log('opp close proc ho: handleClosedWonStageSelected');
         
         //if Close_Process_Path__c is not empty we set the path step to where it stopped last time by Close_Process_Path__c value (Claim, SOInfo, ManualSignature, CCClaim, Handover, OppSummary)
-        if(component.get('v.oppData.Close_Process_Path__c') != null && component.get('v.oppData.Close_Process_Path__c') != ''){
+        if(component.get('v.oppData.Close_Process_Path__c') != null && component.get('v.oppData.Close_Process_Path__c') != '' && component.get('v.oppData.Close_Process_Path__c') != 'LostInfo'){
             component.set('v.innerPathValue', component.get('v.oppData.Close_Process_Path__c'));
         } else { // Close_Process_Path__c is empty - first time to run close process
             if(component.get('v.oppData.Is_Primary_SO_Signed__c')){
@@ -90,6 +89,9 @@
 	handleClosedLostStageSelected : function (component, event, helper){
 		console.log('opp close proc ho: handleClosedLostStageSelected');
 		component.set('v.innerPathValue', 'LostInfo');
+		if(component.get('v.fields').length > 0){ 
+            component.set('v.showFieldSetForm', true);
+        }
 		component.set('v.isModalOpen', true);
 	},
 
@@ -219,7 +221,7 @@
 								"title": "Opportunity stage changed succesfully to Closed Lost!"                      
 							});
 						}
-						if(component.get('v.showHandover') == true){
+						if(component.get('v.isClosedWon') && component.get('v.showHandover') == true){
 							component.set('v.innerPathValue', 'Handover');
 						}else{
 							helper.postHandoverActions(component, event, helper); //this checks if opp summary is needed otherwise ends the process
@@ -366,7 +368,7 @@
 					component.set('v.innerPathValue', 'OppSummary');
 					helper.callFlow_getOpportunitySummary(component, event, helper);
 				} else {
-					component.set('v.innerPathValue', 'continueToSummary');
+					//component.set('v.innerPathValue', 'continueToSummary');
 					helper.callback_closeOpp(component, event, helper, "Closed Lost");
 				}
 			} else if(saveResult.state == "ERROR") {
@@ -389,7 +391,7 @@
 
 	setPreviousStep : function (component, event, helper){    
         if(component.get('v.fields').length > 0 &&
-            (component.get('v.innerPathValue') == 'Claim' || component.get('v.innerPathValue') == 'SOInfo')){ 
+            (component.get('v.innerPathValue') == 'Claim' || component.get('v.innerPathValue') == 'SOInfo' || component.get('v.innerPathValue') == 'LostInfo')){ 
                 component.set('v.showFieldSetForm', true);
         }
 		if(component.get('v.innerPathValue') == 'ManualSignature'){

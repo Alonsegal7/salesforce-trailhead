@@ -23,6 +23,8 @@ public without sharing class HandoverFromOpportunity_HelperTest {
         opp.RecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
         insert opp;
 
+        HandoverFromOpportunity_Helper.getObHoursMap(opp.Id);
+        HandoverFromOpportunity_Helper.getExistingHandoverOnOpp(opp.Id);
     }
     @isTest
     static void shouldGetPickListValues() {

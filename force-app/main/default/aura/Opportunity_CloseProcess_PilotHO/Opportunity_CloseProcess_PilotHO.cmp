@@ -1,10 +1,6 @@
-<aura:component
-  controller="Opportunity_ClosingProcess"
-  implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId"
-  access="global"
->
+<aura:component controller="Opportunity_ClosingProcess" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+  <aura:html tag="style"> .cuf-content { padding: 0 0rem !important; } .slds-p-around--medium { padding: 0rem !important; } .slds-modal__content{ height:unset !important; max-height:unset !important; } .slds-modal__close{ display:none; } .slds-modal__container{ transform:unset !important; } </aura:html>
   <lightning:overlayLibrary aura:id="overlayLib" />
-
   <aura:attribute name="recordId" type="Id" />
   <aura:attribute name="errMsg" type="String" default="" />
   <aura:attribute name="showSpinner" type="Boolean" default="false" />
@@ -17,770 +13,436 @@
   <aura:attribute name="closedFields" type="Object" />
   <aura:attribute name="variant" type="String" default="non-linear" />
   <aura:attribute name="hideUpdateButton" type="Boolean" default="false" />
-  <aura:attribute
-    name="hideStagePathUpdateBtn"
-    type="Boolean"
-    default="false"
-  />
+  <aura:attribute name="hideStagePathUpdateBtn" type="Boolean" default="false" />
   <aura:attribute name="innerPathValue" type="String" />
   <aura:attribute name="showWhatSigned" type="Boolean" default="false" />
   <aura:attribute name="showHandover" type="boolean" default="false" />
   <aura:attribute name="hasExistingHandover" type="boolean" default="false" />
   <aura:attribute name="record" type="Object" />
   <aura:attribute name="recordSaveError" type="String" />
-
   <!--Field Sets attributes-->
   <aura:attribute name="showFieldSetForm" type="Boolean" default="false" />
   <!--flag to show fields from field sets-->
   <aura:attribute name="fields" type="List" default="[]" />
   <!--list of fields from auto-chosen field set-->
   <!--Field Sets attributes-->
-
   <!--File upload improved attributes-->
-  <aura:attribute
-    name="filetype"
-    type="List"
-    default="['.png', '.jpg', '.jpeg', '.pdf']"
-  />
+  <aura:attribute name="filetype" type="List" default="['.png', '.jpg', '.jpeg', '.pdf']" />
   <aura:attribute name="multiple" type="Boolean" default="true" />
   <aura:attribute name="disabled" type="Boolean" default="true" />
   <!--File upload improved attributes-->
-
   <lightning:quickActionAPI aura:id="quickActionAPI" />
   <lightning:notificationsLibrary aura:id="notifLib" />
-
-  <force:recordData
-    aura:id="recordEditor"
-    layoutType="FULL"
-    fields="StageName,Probability,Is_SO_Signed__c,DH_Date_of_Signature__c,DH_Signer_Name_c__c,DH_Signer_Email__c,DH_Signer_Title__c,Manual_Signature_Reason__c,Lost_Reason__c,Which_competitor__c,Which_features_were_missing__c,What_Would_You_Like_To_Claim__c,Close_Process_Path__c"
-    recordId="{!v.recordId}"
-    targetRecord="{!v.record}"
-    targetFields="{!v.closedFields}"
-    recordUpdated="{!c.recordUpdated}"
-    mode="EDIT"
-  />
-
+  <force:recordData aura:id="recordEditor" layoutType="FULL" fields="StageName,Probability,Is_SO_Signed__c,DH_Date_of_Signature__c,DH_Signer_Name_c__c,DH_Signer_Email__c,DH_Signer_Title__c,Manual_Signature_Reason__c,Lost_Reason__c,Which_competitor__c,Which_features_were_missing__c,What_Would_You_Like_To_Claim__c,Close_Process_Path__c" recordId="{!v.recordId}" targetRecord="{!v.record}" targetFields="{!v.closedFields}" recordUpdated="{!c.recordUpdated}" mode="EDIT" />
   <!-- If the Stage is already Closed or an open stage was selected - we display the path with update button
         else we display the picklis path without update button to select closed won/lost-->
   <aura:if isTrue="{!!v.hideStagePathUpdateBtn}">
     <!-- hideStagePathUpdateBtn = FALSE -->
-    <lightning:path
-      aura:id="path"
-      recordId="{!v.recordId}"
-      variant="linear"
-      hideUpdateButton="{!v.hideStagePathUpdateBtn}"
-      onselect="{!c.handleStageSelected}"
-    />
+    <lightning:path aura:id="path" recordId="{!v.recordId}" variant="linear" hideUpdateButton="{!v.hideStagePathUpdateBtn}" onselect="{!c.handleStageSelected}" />
     <aura:set attribute="else">
       <!-- hideStagePathUpdateBtn = TRUE -->
-      <lightning:picklistPath
-        aura:id="picklistPath"
-        recordId="{!v.recordId}"
-        variant="linear"
-        picklistFieldApiName="StageName"
-        onselect="{!c.handleClosedStageSelected}"
-      />
+      <lightning:picklistPath aura:id="picklistPath" recordId="{!v.recordId}" variant="linear" picklistFieldApiName="StageName" onselect="{!c.handleClosedStageSelected}" />
     </aura:set>
   </aura:if>
-
   <aura:if isTrue="{!v.isModalOpen}">
-    <section
-      role="dialog"
-      tabindex="-1"
-      aria-labelledby="modal-heading-01"
-      aria-modal="true"
-      aria-describedby="modal-content-id-1"
-      class="slds-modal slds-modal_medium slds-fade-in-open"
-    >
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_medium slds-fade-in-open">
       <div class="slds-modal__container">
         <header class="slds-modal__header">
-          <lightning:buttonIcon
-            iconName="utility:close"
-            onclick="{! c.closeModal }"
-            alternativeText="close"
-            variant="bare-inverse"
-            class="slds-modal__close"
-          />
-          <h2
-            id="modal-heading-01"
-            class="slds-text-heading_medium slds-hyphenate"
-          >
-            Close Opportunity Process Pilot HO
-          </h2>
+          <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-p-bottom_x-small"> Close Opportunity Process Pilot HO </h2>
+          <aura:if isTrue="{!v.innerPathValue != 'continueToSummary'}">
+            <aura:if isTrue="{!and(v.isClosedLost,greaterthanorequal(v.oppData.Green_Bucket_ARR_V2__c, 10000))}">
+              <lightning:progressIndicator currentStep="{!v.innerPathValue}" type="path" variant="base">
+                <lightning:progressStep label="Lost Information" value="LostInfo" />
+                <lightning:progressStep label="Opportunity Summary" value="OppSummary" />
+              </lightning:progressIndicator>
+            </aura:if>
+            <aura:if isTrue="{!v.isClosedWon}">
+              <lightning:progressIndicator currentStep="{!v.innerPathValue}" type="path" variant="base">
+                <aura:if isTrue="{!v.oppData.Is_Primary_SO_Signed__c}">
+                  <lightning:progressStep label="SO Information" value="SOInfo" />
+                </aura:if>
+                <aura:if isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, v.innerPathValue != 'continueToSummary')}">
+                  <lightning:progressStep label="Key Info" value="Claim" />
+                </aura:if>
+                <aura:if isTrue="{!!v.oppData.Is_Primary_SO_Signed__c}">
+                  <aura:if isTrue="{!v.closedFields.What_Would_You_Like_To_Claim__c == 'Sales Order ARR + CC Payments'}">
+                    <lightning:progressStep label="Manual Signature" value="ManualSignature" />
+                  </aura:if>
+                  <aura:if isTrue="{!v.closedFields.What_Would_You_Like_To_Claim__c == 'Sales Order ARR'}">
+                    <lightning:progressStep label="Manual Signature" value="ManualSignature" />
+                  </aura:if>
+                </aura:if>
+                <lightning:progressStep label="CC Claim" value="CCClaim" />
+                <aura:if isTrue="{!and(v.oppData.RecordType.Name == 'Internal Opportunity', v.showHandover == true)}">
+                  <lightning:progressStep label="Handover" value="Handover" />
+                </aura:if>
+                <aura:if isTrue="{!or(greaterthanorequal(v.oppData.Green_Bucket_ARR_V2__c, 10000), v.innerPathValue == 'OppSummary')}">
+                  <lightning:progressStep label="Opportunity Summary" value="OppSummary" />
+                </aura:if>
+              </lightning:progressIndicator>
+              <lightning:accordion allowMultipleSectionsOpen="true">
+                <lightning:accordionSection name="A" label="Need Help?">
+                  <aura:set attribute="body">
+                    <div class="slds-box slds-box_xx-small">
+                      <aura:if isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, v.closedFields.What_Would_You_Like_To_Claim__c != 'CC Payments')}">
+                        <aura:if isTrue="{!v.closedFields.What_Would_You_Like_To_Claim__c != undefined}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="Missing" size="12"> You Claimed: <b>{!v.closedFields.What_Would_You_Like_To_Claim__c}</b>
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!v.innerPathValue == 'Claim'}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12"> You don't have Signed SO <br />
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <lightning:layout>
+                          <lightning:layoutItem title="" size="12"> You need to review/update the following: </lightning:layoutItem>
+                        </lightning:layout>
+                        <lightning:layout>
+                          <lightning:layoutItem title="" size="12">
+                            <span>
+                              <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                            </span>Manual Signature fields
+                          </lightning:layoutItem>
+                        </lightning:layout>
+                        <lightning:layout>
+                          <lightning:layoutItem title="" size="12">
+                            <span>
+                              <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                            </span>If Prioity SO - choose from BigBrain Pickers
+                          </lightning:layoutItem>
+                        </lightning:layout>
+                        <lightning:layout>
+                          <lightning:layoutItem title="" size="12">
+                            <span>
+                              <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                            </span>CC Claim
+                          </lightning:layoutItem>
+                        </lightning:layout>
+                        <aura:if isTrue="{!v.showHandover == true}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <span>
+                                <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                              </span>Create Handover
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!v.showHandover == false}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <br /> No Handover to create <br />
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!v.oppData.Green_Bucket_ARR_V2__c >= 10000}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <span>
+                                <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                              </span>Optional: Update the Opportunity Summary
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000)}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <br /> Your Green Bucket ARR is <b>less than 10k</b>, no need to create an Opportunity Summary <br />
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                      </aura:if>
+                      <aura:if isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, v.closedFields.What_Would_You_Like_To_Claim__c == 'CC Payments')}">
+                        <aura:if isTrue="{!v.closedFields.What_Would_You_Like_To_Claim__c != undefined}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="Missing" size="12"> You Claimed: <b>{!v.closedFields.What_Would_You_Like_To_Claim__c}</b>
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!v.closedFields.Close_Process_Path__c == 'Claim'}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12"> You don't have Signed SO <br />
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <lightning:layout>
+                          <lightning:layoutItem title="" size="12"> You need to review/update the following: </lightning:layoutItem>
+                        </lightning:layout>
+                        <lightning:layout>
+                          <lightning:layoutItem title="" size="12">
+                            <span>
+                              <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                            </span>CC Claim
+                          </lightning:layoutItem>
+                        </lightning:layout>
+                        <aura:if isTrue="{!v.showHandover == true}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <span>
+                                <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                              </span>Create Handover
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!v.showHandover == false}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <br /> No Handover to create <br />
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!v.oppData.Green_Bucket_ARR_V2__c >= 10000}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <span>
+                                <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                              </span>Optional: Update the Opportunity Summary
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000)}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <br /> Your Green Bucket ARR is <b>less than 10k</b>, no need to create an Opportunity Summary <br />
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                      </aura:if>
+                      <aura:if isTrue="{!v.oppData.Is_Primary_SO_Signed__c}">
+                        <lightning:layout>
+                          <lightning:layoutItem title="" size="12">
+                            <span>
+                              <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                            </span>You have Signed SO <br /> You need to review/update the following:
+                          </lightning:layoutItem>
+                        </lightning:layout>
+                        <lightning:layout>
+                          <lightning:layoutItem title="" size="12">
+                            <span>
+                              <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                            </span>Review SO Information
+                          </lightning:layoutItem>
+                        </lightning:layout>
+                        <lightning:layout>
+                          <lightning:layoutItem title="" size="12">
+                            <span>
+                              <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                            </span>CC Claim
+                          </lightning:layoutItem>
+                        </lightning:layout>
+                        <aura:if isTrue="{!v.showHandover == true}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <span>
+                                <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                              </span>Create Handover
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!v.showHandover == false}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <br /> No Handover to create <br />
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!v.oppData.Green_Bucket_ARR_V2__c >= 10000}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <span>
+                                <lightning:icon iconName="utility:check" variant="success" size="xx-small" />
+                              </span>Optional: Update the Opportunity Summary
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                        <aura:if isTrue="{!lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000)}">
+                          <lightning:layout>
+                            <lightning:layoutItem title="" size="12">
+                              <br /> Your Green Bucket is less than 10k, no need to create an Opportunity Summary <br />
+                            </lightning:layoutItem>
+                          </lightning:layout>
+                        </aura:if>
+                      </aura:if>
+                    </div>
+                  </aura:set>
+                </lightning:accordionSection>
+              </lightning:accordion>
+            </aura:if>
+          </aura:if>
         </header>
-        <div
-          class="slds-modal__content slds-p-around_medium"
-          id="modal-content-id-1"
-        >
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
           <aura:if isTrue="{!v.showSpinner}">
-            <div
-              role="status"
-              class="slds-spinner slds-spinner_large slds-spinner_brand"
-            >
+            <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
               <span class="slds-assistive-text">Loading</span>
               <div class="slds-spinner__dot-a"></div>
               <div class="slds-spinner__dot-b"></div>
             </div>
           </aura:if>
           <aura:if isTrue="{!v.isClosedLost}">
-            <lightning:progressIndicator
-              currentStep="{!v.innerPathValue}"
-              type="path"
-              variant="base"
-            >
-              <aura:if isTrue="{!v.innerPathValue != 'continueToSummary'}">
-                <lightning:progressStep
-                  label="Lost Information"
-                  value="LostInfo"
-                />
-                <aura:if
-                  isTrue="{!greaterthanorequal(v.oppData.Green_Bucket_ARR_V2__c, 10000)}"
-                >
-                  <lightning:progressStep
-                    label="Opportunity Summary"
-                    value="OppSummary"
-                  />
-                </aura:if>
-              </aura:if>
-            </lightning:progressIndicator>
             <aura:if isTrue="{!v.innerPathValue == 'LostInfo'}">
               <lightning:card>
                 <aura:if isTrue="{!!v.showFieldSetForm}">
-                  <lightning:recordEditForm
-                    recordId="{!v.recordId}"
-                    objectApiName="Opportunity"
-                    aura:id="closedLostFields"
-                  >
+                  <lightning:recordEditForm recordId="{!v.recordId}" objectApiName="Opportunity" aura:id="closedLostFields">
                     <lightning:messages aura:id="lostMessage" />
                     <!--close lost fields that are displayed for non gb opps-->
-                    <lightning:inputField
-                      aura:id="ClosedLostFieldCheck"
-                      fieldName="Lost_Reason__c"
-                      value="{!v.closedFields.Lost_Reason__c}"
-                      required="true"
-                    />
-                    <lightning:inputField
-                      aura:id="ClosedLostFieldCheck"
-                      fieldName="Which_competitor__c"
-                      value="{!v.closedFields.Which_competitor__c}"
-                      required="true"
-                    />
-                    <lightning:inputField
-                      aura:id="ClosedLostFieldCheck"
-                      fieldName="Which_features_were_missing__c"
-                      value="{!v.closedFields.Which_features_were_missing__c}"
-                      required="true"
-                    />
+                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="StageName" required="true" value="Closed Lost" disabled="true" />
+                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Lost_Reason__c" value="{!v.closedFields.Lost_Reason__c}" required="true" />
+                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_competitor__c" value="{!v.closedFields.Which_competitor__c}" required="true" />
+                    <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Which_features_were_missing__c" value="{!v.closedFields.Which_features_were_missing__c}" required="true" />
                   </lightning:recordEditForm>
                 </aura:if>
                 <aura:if isTrue="{!v.showFieldSetForm}">
-                  <div class="slds-text-heading_small">
-                    Please fill the following fields in order to Close Lost this
-                    opportunity
-                  </div>
-                  <lightning:recordEditForm
-                    onsubmit="{!handleSubmitValidation_Lost}"
-                    onsuccess="{!c.handleSuccessFieldSets}"
-                    onerror="{!c.turnOffSpinner}"
-                    recordId="{!v.recordId}"
-                    objectApiName="Opportunity"
-                    aura:id="validationLostFields"
-                  >
+                  <lightning:recordEditForm onsubmit="{!c.handleSubmitValidation_Lost}" onsuccess="{!c.handleSuccessFieldSets}" onerror="{!c.turnOffSpinner}" recordId="{!v.recordId}" objectApiName="Opportunity" aura:id="validationLostFields">
                     <lightning:messages />
-                    <aura:iteration
-                      items="{!v.fields}"
-                      var="field"
-                      indexVar="i"
-                    >
-                      <div class="slds-grid slds-gutters">
-                        <div class="slds-col slds-size_1-of-1">
-                          <lightning:inputField
-                            rendered=""
-                            variant="label-stacked"
-                            required="{!field.required}"
-                            fieldName="{!field.fieldPath}"
-                          />
-                        </div>
+                    <div class="slds-grid slds-gutters_direct">
+                      <!--MULTIPICKLIST column on the left-->
+                      <div class="slds-col slds-grid slds-grid_vertical slds-size_2-of-3">
+                        <aura:iteration items="{!v.fields}" var="field" indexVar="i">
+                          <aura:if isTrue="{!field.typeApex == 'MULTIPICKLIST'}">
+                            <div class="slds-col">
+                              <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}" />
+                            </div>
+                          </aura:if>
+                        </aura:iteration>
                       </div>
-                    </aura:iteration>
-                    <div class="slds-align_absolute-center">
-                      <lightning:button
-                        variant="brand"
-                        label="Submit"
-                        type="submit"
-                      />
+                      <div class="slds-col slds-grid slds-size_1-of-3 slds-wrap slds-grid_vertical-align-start slds-p-top--medium">
+                        <!--not MULTIPICKLIST column on the right-->
+                        <aura:iteration items="{!v.fields}" var="field" indexVar="i">
+                          <aura:if isTrue="{!field.typeApex != 'MULTIPICKLIST'}">
+                            <div class="slds-col slds-size_1-of-1">
+                              <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}" />
+                            </div>
+                          </aura:if>
+                        </aura:iteration>
+                      </div>
+                    </div>
+                    <div class="slds-p-bottom_medium ">
+                      <lightning:button type="submit" label="Next" variant="brand" class="slds-float_right" />
+                      <lightning:button label="Cancel" onclick="{!c.closeModal}" class="slds-float_right slds-m-right_x-small" />
                     </div>
                   </lightning:recordEditForm>
                 </aura:if>
               </lightning:card>
             </aura:if>
             <aura:if isTrue="{!v.innerPathValue == 'OppSummary'}">
-              <lightning:flow
-                aura:id="closedOppSumFlowData"
-                onstatuschange="{!c.handleStatusChange_OpportunityCloseSummary}"
-              />
+              <lightning:flow aura:id="closedOppSumFlowData" onstatuschange="{!c.handleStatusChange_OpportunityCloseSummary}" />
             </aura:if>
             <aura:if isTrue="{!v.innerPathValue == 'continueToSummary'}">
               <lightning:card>
                 <div style="text-align: center">
-                  <ui:message
-                    title="You've finished the Closed Lost Process"
-                    severity="confirm"
-                    closable="true"
-                  >
-                    <br />
-                    If you want to fill the Opportunity Summary<br /> Click
-                    <b>Next Step</b> button<br /><br /> If you want to SKIP the
-                    Opportunity Summary<br /> Click <b>Finish</b> button<br />
+                  <ui:message title="You've finished the Closed Lost Process" severity="confirm" closable="true">
+                    <br /> If you want to fill the Opportunity Summary <br /> Click <b>Next</b> button <br />
+                    <br /> If you want to SKIP the Opportunity Summary <br /> Click <b>Finish</b> button <br />
                   </ui:message>
                 </div>
               </lightning:card>
             </aura:if>
           </aura:if>
           <aura:if isTrue="{!v.isClosedWon}">
-            <aura:if isTrue="{!v.innerPathValue != 'continueToSummary'}">
-              <lightning:progressIndicator
-                currentStep="{!v.innerPathValue}"
-                type="path"
-                variant="base"
-              >
-                <aura:if isTrue="{!v.oppData.Is_Primary_SO_Signed__c}">
-                  <lightning:progressStep
-                    label="SO Information"
-                    value="SOInfo"
-                  />
-                </aura:if>
-                <aura:if
-                  isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, v.innerPathValue != 'continueToSummary')}"
-                >
-                  <lightning:progressStep label="Key Info" value="Claim" />
-                </aura:if>
-                <aura:if isTrue="{!!v.oppData.Is_Primary_SO_Signed__c}">
-                  <aura:if
-                    isTrue="{!v.closedFields.What_Would_You_Like_To_Claim__c == 'Sales Order ARR + CC Payments'}"
-                  >
-                    <lightning:progressStep
-                      label="Manual Signature"
-                      value="ManualSignature"
-                    />
-                  </aura:if>
-                  <aura:if
-                    isTrue="{!v.closedFields.What_Would_You_Like_To_Claim__c == 'Sales Order ARR'}"
-                  >
-                    <lightning:progressStep
-                      label="Manual Signature"
-                      value="ManualSignature"
-                    />
-                  </aura:if>
-                </aura:if>
-                <lightning:progressStep label="CC Claim" value="CCClaim" />
-                <aura:if
-                  isTrue="{!and(v.oppData.RecordType.Name == 'Internal Opportunity', v.showHandover == true)}"
-                >
-                  <lightning:progressStep label="Handover" value="Handover" />
-                </aura:if>
-                <aura:if
-                  isTrue="{!or(greaterthanorequal(v.oppData.Green_Bucket_ARR_V2__c, 10000), v.innerPathValue == 'OppSummary')}"
-                >
-                  <lightning:progressStep
-                    label="Opportunity Summary"
-                    value="OppSummary"
-                  />
-                </aura:if>
-              </lightning:progressIndicator>
-            </aura:if>
-            <aura:if isTrue="{!v.innerPathValue != 'continueToSummary'}">
+            <aura:if isTrue="{!and(v.oppData.Is_Primary_SO_Signed__c, v.innerPathValue == 'SOInfo')}">
               <lightning:card>
-                <lightning:accordion allowMultipleSectionsOpen="true">
-                  <lightning:accordionSection name="A" label="Need Help?">
-                    <aura:set attribute="body">
-                      <div class="slds-box slds-box_xx-small">
-                        <aura:if
-                          isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, v.closedFields.What_Would_You_Like_To_Claim__c != 'CC Payments')}"
-                        >
-                          <aura:if
-                            isTrue="{!v.closedFields.What_Would_You_Like_To_Claim__c != undefined}"
-                          >
-                            <lightning:layout>
-                              <lightning:layoutItem title="Missing" size="12">
-                                You Claimed:
-                                <b
-                                  >{!v.closedFields.What_Would_You_Like_To_Claim__c}</b
-                                >
-                              </lightning:layoutItem>
-                            </lightning:layout>
+                <aura:if isTrue="{!!v.showFieldSetForm}">
+                  <lightning:recordEditForm recordId="{!v.recordId}" objectApiName="Opportunity">
+                    <lightning:messages />
+                    <lightning:outputField iconName="quotes" fieldName="SyncedQuoteId" />
+                  </lightning:recordEditForm>
+                  <lightning:input label="DH Tier" value="{!v.oppData.SyncedQuote.DH_Tier__c}" disabled="true" />
+                  <lightning:input label="Total Seats" value="{!v.oppData.SyncedQuote.Total_Seats__c}" disabled="true" />
+                  <lightning:input label="DH Period" value="{!v.oppData.SyncedQuote.DH_Period__c}" disabled="true" />
+                </aura:if>
+                <aura:if isTrue="{!v.showFieldSetForm}">
+                  <lightning:recordEditForm onsubmit="{!c.handleSubmitValidation_SOWon}" onsuccess="{!c.handleSuccessFieldSets}" onerror="{!c.turnOffSpinner}" recordId="{!v.recordId}" aura:id="validationSOFields" objectApiName="Opportunity">
+                    <lightning:messages />
+                    <div class="slds-grid slds-gutters_direct">
+                      <!--MULTIPICKLIST column on the left-->
+                      <div class="slds-col slds-grid slds-grid_vertical slds-size_2-of-3">
+                        <aura:iteration items="{!v.fields}" var="field" indexVar="i">
+                          <aura:if isTrue="{!field.typeApex == 'MULTIPICKLIST'}">
+                            <div class="slds-col">
+                              <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}" />
+                            </div>
                           </aura:if>
-                          <aura:if isTrue="{!v.innerPathValue == 'Claim'}">
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                You don't have Signed SO <br />
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <lightning:layout>
-                            <lightning:layoutItem title="" size="12">
-                              You need to review/update the following:
-                            </lightning:layoutItem>
-                          </lightning:layout>
-                          <lightning:layout>
-                            <lightning:layoutItem title="" size="12">
-                              <span
-                                ><lightning:icon
-                                  iconName="utility:check"
-                                  variant="success"
-                                  size="xx-small" /></span
-                              >Manual Signature fields
-                            </lightning:layoutItem>
-                          </lightning:layout>
-                          <lightning:layout>
-                            <lightning:layoutItem title="" size="12">
-                              <span
-                                ><lightning:icon
-                                  iconName="utility:check"
-                                  variant="success"
-                                  size="xx-small" /></span
-                              >If Prioity SO - choose from BigBrain Pickers
-                            </lightning:layoutItem>
-                          </lightning:layout>
-                          <lightning:layout>
-                            <lightning:layoutItem title="" size="12">
-                              <span
-                                ><lightning:icon
-                                  iconName="utility:check"
-                                  variant="success"
-                                  size="xx-small" /></span
-                              >CC Claim
-                            </lightning:layoutItem>
-                          </lightning:layout>
-                          <aura:if isTrue="{!v.showHandover == true}">
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <span
-                                  ><lightning:icon
-                                    iconName="utility:check"
-                                    variant="success"
-                                    size="xx-small" /></span
-                                >Create Handover
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if isTrue="{!v.showHandover == false}">
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <br />
-                                No Handover to create
-                                <br />
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if
-                            isTrue="{!v.oppData.Green_Bucket_ARR_V2__c >= 10000}"
-                          >
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <span
-                                  ><lightning:icon
-                                    iconName="utility:check"
-                                    variant="success"
-                                    size="xx-small" /></span
-                                >Optional: Update the Opportunity Summary
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if
-                            isTrue="{!lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000)}"
-                          >
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <br />
-                                Your Green Bucket ARR is <b>less than 10k</b>,
-                                no need to create an Opportunity Summary
-                                <br />
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                        </aura:if>
-
-                        <aura:if
-                          isTrue="{!and(!v.oppData.Is_Primary_SO_Signed__c, v.closedFields.What_Would_You_Like_To_Claim__c == 'CC Payments')}"
-                        >
-                          <aura:if
-                            isTrue="{!v.closedFields.What_Would_You_Like_To_Claim__c != undefined}"
-                          >
-                            <lightning:layout>
-                              <lightning:layoutItem title="Missing" size="12">
-                                You Claimed:
-                                <b
-                                  >{!v.closedFields.What_Would_You_Like_To_Claim__c}</b
-                                >
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if
-                            isTrue="{!v.closedFields.Close_Process_Path__c == 'Claim'}"
-                          >
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                You don't have Signed SO <br />
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <lightning:layout>
-                            <lightning:layoutItem title="" size="12">
-                              You need to review/update the following:
-                            </lightning:layoutItem>
-                          </lightning:layout>
-                          <lightning:layout>
-                            <lightning:layoutItem title="" size="12">
-                              <span
-                                ><lightning:icon
-                                  iconName="utility:check"
-                                  variant="success"
-                                  size="xx-small" /></span
-                              >CC Claim
-                            </lightning:layoutItem>
-                          </lightning:layout>
-                          <aura:if isTrue="{!v.showHandover == true}">
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <span
-                                  ><lightning:icon
-                                    iconName="utility:check"
-                                    variant="success"
-                                    size="xx-small" /></span
-                                >Create Handover
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if isTrue="{!v.showHandover == false}">
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <br />
-                                No Handover to create
-                                <br />
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if
-                            isTrue="{!v.oppData.Green_Bucket_ARR_V2__c >= 10000}"
-                          >
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <span
-                                  ><lightning:icon
-                                    iconName="utility:check"
-                                    variant="success"
-                                    size="xx-small" /></span
-                                >Optional: Update the Opportunity Summary
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if
-                            isTrue="{!lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000)}"
-                          >
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <br />
-                                Your Green Bucket ARR is <b>less than 10k</b>,
-                                no need to create an Opportunity Summary
-                                <br />
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                        </aura:if>
-
-                        <aura:if isTrue="{!v.oppData.Is_Primary_SO_Signed__c}">
-                          <lightning:layout>
-                            <lightning:layoutItem title="" size="12">
-                              <span
-                                ><lightning:icon
-                                  iconName="utility:check"
-                                  variant="success"
-                                  size="xx-small" /></span
-                              >You have Signed SO <br />
-                              You need to review/update the following:
-                            </lightning:layoutItem>
-                          </lightning:layout>
-                          <lightning:layout>
-                            <lightning:layoutItem title="" size="12">
-                              <span
-                                ><lightning:icon
-                                  iconName="utility:check"
-                                  variant="success"
-                                  size="xx-small" /></span
-                              >Review SO Information
-                            </lightning:layoutItem>
-                          </lightning:layout>
-                          <lightning:layout>
-                            <lightning:layoutItem title="" size="12">
-                              <span
-                                ><lightning:icon
-                                  iconName="utility:check"
-                                  variant="success"
-                                  size="xx-small" /></span
-                              >CC Claim
-                            </lightning:layoutItem>
-                          </lightning:layout>
-                          <aura:if isTrue="{!v.showHandover == true}">
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <span
-                                  ><lightning:icon
-                                    iconName="utility:check"
-                                    variant="success"
-                                    size="xx-small" /></span
-                                >Create Handover
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if isTrue="{!v.showHandover == false}">
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <br />
-                                No Handover to create
-                                <br />
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if
-                            isTrue="{!v.oppData.Green_Bucket_ARR_V2__c >= 10000}"
-                          >
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <span
-                                  ><lightning:icon
-                                    iconName="utility:check"
-                                    variant="success"
-                                    size="xx-small" /></span
-                                >Optional: Update the Opportunity Summary
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                          <aura:if
-                            isTrue="{!lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000)}"
-                          >
-                            <lightning:layout>
-                              <lightning:layoutItem title="" size="12">
-                                <br />
-                                Your Green Bucket is less than 10k, no need to
-                                create an Opportunity Summary
-                                <br />
-                              </lightning:layoutItem>
-                            </lightning:layout>
-                          </aura:if>
-                        </aura:if>
+                        </aura:iteration>
                       </div>
-                    </aura:set>
-                  </lightning:accordionSection>
-                </lightning:accordion>
+                      <div class="slds-col slds-grid slds-size_1-of-3 slds-wrap slds-grid_vertical-align-start slds-p-top--medium">
+                        <!--not MULTIPICKLIST column on the right-->
+                        <aura:iteration items="{!v.fields}" var="field" indexVar="i">
+                          <aura:if isTrue="{!field.typeApex != 'MULTIPICKLIST'}">
+                            <div class="slds-col slds-size_1-of-1">
+                              <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}" />
+                            </div>
+                          </aura:if>
+                        </aura:iteration>
+                      </div>
+                    </div>
+                    <div class="slds-p-bottom_medium ">
+                      <lightning:button type="submit" label="Next" variant="brand" class="slds-float_right" />
+                      <lightning:button label="Cancel" onclick="{!c.closeModal}" class="slds-float_right slds-m-right_x-small" />
+                    </div>
+                  </lightning:recordEditForm>
+                </aura:if>
               </lightning:card>
             </aura:if>
-            <aura:if
-              isTrue="{!and(v.oppData.Is_Primary_SO_Signed__c, v.innerPathValue == 'SOInfo')}"
-            >
-              <aura:if isTrue="{!!v.showSpinner}">
-                <lightning:card>
-                  <aura:if isTrue="{!!v.showFieldSetForm}">
-                    <lightning:recordEditForm
-                      recordId="{!v.recordId}"
-                      objectApiName="Opportunity"
-                    >
-                      <lightning:messages />
-                      <lightning:outputField
-                        iconName="quotes"
-                        fieldName="SyncedQuoteId"
-                      />
-                    </lightning:recordEditForm>
-
-                    <lightning:input
-                      label="DH Tier"
-                      value="{!v.oppData.SyncedQuote.DH_Tier__c}"
-                      disabled="true"
-                    />
-                    <lightning:input
-                      label="Total Seats"
-                      value="{!v.oppData.SyncedQuote.Total_Seats__c}"
-                      disabled="true"
-                    />
-                    <lightning:input
-                      label="DH Period"
-                      value="{!v.oppData.SyncedQuote.DH_Period__c}"
-                      disabled="true"
-                    />
-                  </aura:if>
-
-                  <aura:if isTrue="{!v.showFieldSetForm}">
-                    <lightning:recordEditForm
-                      onsubmit="{!c.handleSubmitValidation_SOWon}"
-                      onsuccess="{!c.handleSuccessFieldSets}"
-                      onerror="{!c.turnOffSpinner}"
-                      recordId="{!v.recordId}"
-                      aura:id="validationSOFields"
-                      objectApiName="Opportunity"
-                    >
-                      <lightning:messages />
-                      <ui:message title="Key Information:" severity="info">
-                        Please make sure you populate all the following fields
-                        before closing the opportunity.<br />
-                      </ui:message>
-                      <aura:iteration
-                        items="{!v.fields}"
-                        var="field"
-                        indexVar="i"
-                      >
-                        <div class="slds-grid slds-gutters">
-                          <div class="slds-col slds-size_1-of-1">
-                            <lightning:inputField
-                              rendered=""
-                              variant="label-stacked"
-                              required="{!field.required}"
-                              fieldName="{!field.fieldPath}"
-                            />
-                          </div>
-                        </div>
-                      </aura:iteration>
-                      <div class="slds-align_absolute-center">
-                        <lightning:button
-                          variant="brand"
-                          label="Submit"
-                          type="submit"
-                        />
-                      </div>
-                    </lightning:recordEditForm>
-                  </aura:if>
-                </lightning:card>
-              </aura:if>
-            </aura:if>
             <aura:if isTrue="{!v.innerPathValue == 'Claim'}">
-              <aura:if isTrue="{!!v.showSpinner}">
-                <lightning:card>
-                  <aura:if isTrue="{!!v.showFieldSetForm}">
-                    <div class="slds-box slds-box_xx-small">
-                      <c:opportunity_ClaimDetails recordId="{!v.recordId}" />
-                    </div>
-                    <div>
-                      <lightning:recordEditForm
-                        recordId="{!v.recordId}"
-                        objectApiName="Opportunity"
-                        aura:id="closedWonFields"
-                      >
-                        <lightning:messages aura:id="claimMessage" />
-
-                        <lightning:inputField
-                          aura:id="newOpportunityClaimField"
-                          fieldName="What_Would_You_Like_To_Claim__c"
-                          value="{!v.closedFields.What_Would_You_Like_To_Claim__c}"
-                          onchange="{!c.setWhatWouldYouLikeToClaim}"
-                          required="true"
-                        />
-                      </lightning:recordEditForm>
-                    </div>
-                  </aura:if>
-                  <aura:if isTrue="{!v.showFieldSetForm}">
-                    <lightning:recordEditForm
-                      onsubmit="{!c.handleSubmitValidation_ClaimWon}"
-                      onsuccess="{!c.handleSuccessFieldSets}"
-                      onerror="{!c.turnOffSpinner}"
-                      recordId="{!v.recordId}"
-                      objectApiName="Opportunity"
-                      aura:id="validationClaimFields"
-                    >
-                      <lightning:messages />
-
-                      <ui:message title="Key Information:" severity="info">
-                        Please make sure you populate all the following fields
-                        before closing the opportunity.<br />
-                      </ui:message>
-                      <aura:iteration
-                        items="{!v.fields}"
-                        var="field"
-                        indexVar="i"
-                      >
-                        <div class="slds-grid slds-gutters">
-                          <div class="slds-col slds-size_1-of-1">
-                            <lightning:inputField
-                              rendered=""
-                              variant="label-stacked"
-                              required="{!field.required}"
-                              fieldName="{!field.fieldPath}"
-                            />
-                          </div>
-                        </div>
-                      </aura:iteration>
-                      <div class="slds-align_absolute-center">
-                        <lightning:button
-                          variant="brand"
-                          label="Submit"
-                          type="submit"
-                        />
-                      </div>
+              <lightning:card>
+                <aura:if isTrue="{!!v.showFieldSetForm}">
+                  <div class="slds-box slds-box_xx-small">
+                    <c:opportunity_ClaimDetails recordId="{!v.recordId}" />
+                  </div>
+                  <div>
+                    <lightning:recordEditForm recordId="{!v.recordId}" objectApiName="Opportunity" aura:id="closedWonFields">
+                      <lightning:messages aura:id="claimMessage" />
+                      <lightning:inputField aura:id="newOpportunityClaimField" fieldName="What_Would_You_Like_To_Claim__c" value="{!v.closedFields.What_Would_You_Like_To_Claim__c}" onchange="{!c.setWhatWouldYouLikeToClaim}" required="true" />
                     </lightning:recordEditForm>
-                  </aura:if>
-                </lightning:card>
-              </aura:if>
+                  </div>
+                </aura:if>
+                <aura:if isTrue="{!v.showFieldSetForm}">
+                  <lightning:recordEditForm onsubmit="{!c.handleSubmitValidation_ClaimWon}" onsuccess="{!c.handleSuccessFieldSets}" onerror="{!c.turnOffSpinner}" recordId="{!v.recordId}" objectApiName="Opportunity" aura:id="validationClaimFields">
+                    <lightning:messages />
+                    <div class="slds-grid slds-gutters_direct">
+                      <!--MULTIPICKLIST column on the left-->
+                      <div class="slds-col slds-grid slds-grid_vertical slds-size_2-of-3">
+                        <aura:iteration items="{!v.fields}" var="field" indexVar="i">
+                          <aura:if isTrue="{!field.typeApex == 'MULTIPICKLIST'}">
+                            <div class="slds-col">
+                              <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}" />
+                            </div>
+                          </aura:if>
+                        </aura:iteration>
+                      </div>
+                      <div class="slds-col slds-grid slds-size_1-of-3 slds-wrap slds-grid_vertical-align-start slds-p-top--medium">
+                        <!--not MULTIPICKLIST column on the right-->
+                        <aura:iteration items="{!v.fields}" var="field" indexVar="i">
+                          <aura:if isTrue="{!field.typeApex != 'MULTIPICKLIST'}">
+                            <div class="slds-col slds-size_1-of-1">
+                              <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}" />
+                            </div>
+                          </aura:if>
+                        </aura:iteration>
+                      </div>
+                    </div>
+                    <div class="slds-p-bottom_medium ">
+                      <lightning:button type="submit" label="Next" variant="brand" class="slds-float_right" />
+                      <lightning:button label="Cancel" onclick="{!c.closeModal}" class="slds-float_right slds-m-right_x-small" />
+                    </div>
+                  </lightning:recordEditForm>
+                </aura:if>
+              </lightning:card>
             </aura:if>
             <aura:if isTrue="{!v.innerPathValue == 'ManualSignature'}">
               <aura:if isTrue="{!!v.showSpinner}">
                 <lightning:card>
-                  <lightning:recordEditForm
-                    onsubmit="{!v.submitDetails}"
-                    recordId="{!v.recordId}"
-                    objectApiName="Opportunity"
-                    aura:id="closedFields"
-                  >
+                  <lightning:recordEditForm onsubmit="{!v.submitDetails}" recordId="{!v.recordId}" objectApiName="Opportunity" aura:id="closedFields">
                     <lightning:messages aura:id="oppMessage" />
-                    <lightning:input
-                      aura:id="manuallySignedFields"
-                      type="checkbox"
-                      label="Is SO Manually Signed?"
-                      checked="{!v.closedFields.Is_SO_Signed__c}"
-                      value="{!v.closedFields.Is_SO_Signed__c}"
-                      required="true"
-                      onchange="{!c.isSOManuallySignedClicked}"
-                    />
-                    <lightning:inputField
-                      aura:id="manuallySignedFields"
-                      fieldName="DH_Date_of_Signature__c"
-                      value="{!v.closedFields.DH_Date_of_Signature__c}"
-                      required="true"
-                    />
-                    <lightning:inputField
-                      aura:id="manuallySignedFields"
-                      fieldName="DH_Signer_Name_c__c"
-                      value="{!v.closedFields.DH_Signer_Name_c__c}"
-                      required="true"
-                    />
-                    <lightning:inputField
-                      aura:id="manuallySignedFields"
-                      fieldName="DH_Signer_Email__c"
-                      value="{!v.closedFields.DH_Signer_Email__c}"
-                      required="true"
-                    />
-                    <lightning:inputField
-                      aura:id="manuallySignedFields"
-                      fieldName="DH_Signer_Title__c"
-                      value="{!v.closedFields.DH_Signer_Title__c}"
-                      required="true"
-                    />
-                    <lightning:inputField
-                      aura:id="manuallySignedFields"
-                      fieldName="Manual_Signature_Reason__c"
-                      value="{!v.closedFields.Manual_Signature_Reason__c}"
-                      required="true"
-                      onchange="{!c.prioritySO}"
-                    />
-                    <c:fileUploadImproved
-                      aura:id="fileUploadImp"
-                      label="Attachment"
-                      acceptedFormats="{!v.filetype}"
-                      allowMultiple="false"
-                      sessionKey="{!v.recordId}"
-                      recordId="{!v.recordId}"
-                      required="true"
-                      maxAllowed="1"
-                      multiple="false"
-                      filenameSuffix="-signed"
-                    ></c:fileUploadImproved>
+                    <lightning:input aura:id="manuallySignedFields" type="checkbox" label="Is SO Manually Signed?" checked="{!v.closedFields.Is_SO_Signed__c}" value="{!v.closedFields.Is_SO_Signed__c}" required="true" onchange="{!c.isSOManuallySignedClicked}" />
+                    <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Date_of_Signature__c" value="{!v.closedFields.DH_Date_of_Signature__c}" required="true" />
+                    <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Signer_Name_c__c" value="{!v.closedFields.DH_Signer_Name_c__c}" required="true" />
+                    <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Signer_Email__c" value="{!v.closedFields.DH_Signer_Email__c}" required="true" />
+                    <lightning:inputField aura:id="manuallySignedFields" fieldName="DH_Signer_Title__c" value="{!v.closedFields.DH_Signer_Title__c}" required="true" />
+                    <lightning:inputField aura:id="manuallySignedFields" fieldName="Manual_Signature_Reason__c" value="{!v.closedFields.Manual_Signature_Reason__c}" required="true" onchange="{!c.prioritySO}" />
+                    <c:fileUploadImproved aura:id="fileUploadImp" label="Attachment" acceptedFormats="{!v.filetype}" allowMultiple="false" sessionKey="{!v.recordId}" recordId="{!v.recordId}" required="true" maxAllowed="1" multiple="false" filenameSuffix="-signed"></c:fileUploadImproved>
                   </lightning:recordEditForm>
                 </lightning:card>
               </aura:if>
@@ -793,154 +455,71 @@
               </aura:if>
             </aura:if>
             <aura:if isTrue="{!v.innerPathValue == 'continueToSummary'}">
-              <aura:if
-                isTrue="{!greaterthanorequal(v.oppData.Green_Bucket_ARR_V2__c, 10000)}"
-              >
+              <aura:if isTrue="{!greaterthanorequal(v.oppData.Green_Bucket_ARR_V2__c, 10000)}">
                 <lightning:card>
                   <div style="text-align: center">
-                    <ui:message
-                      title="Congrats!! You've finished the Closed Won Process :)"
-                      severity="confirm"
-                      closable="true"
-                    >
-                      <br />
-                      If you want to fill the Opporutnity Summary<br /> Click
-                      <b>Next Step</b> button<br /><br /> If you want to SKIP
-                      the Opporutnity Summary<br /> Click
-                      <b>Finish</b> button<br />
+                    <ui:message title="Congrats!! You've finished the Closed Won Process :)" severity="confirm" closable="true">
+                      <br /> If you want to fill the Opporutnity Summary <br /> Click <b>Next</b> button <br />
+                      <br /> If you want to SKIP the Opporutnity Summary <br /> Click <b>Finish</b> button <br />
                     </ui:message>
                   </div>
                 </lightning:card>
               </aura:if>
-              <aura:if
-                isTrue="{!lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000)}"
-              >
+              <aura:if isTrue="{!lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000)}">
                 <lightning:card>
                   <div style="text-align: center">
-                    <ui:message
-                      title="Congrats!! You've finished the Closed Won Process :)"
-                      severity="confirm"
-                      closable="true"
-                    >
-                      <br />
-                      To finish the process,<br /> Click
-                      <b>Finish</b> button<br />
+                    <ui:message title="Congrats!! You've finished the Closed Won Process :)" severity="confirm" closable="true">
+                      <br /> To finish the process, <br /> Click <b>Finish</b> button <br />
                     </ui:message>
                   </div>
                 </lightning:card>
               </aura:if>
             </aura:if>
             <aura:if isTrue="{!v.innerPathValue == 'Handover'}">
-              <c:handoverFromOpportunity
-                aura:id="handoverScreen"
-                context="Close Process"
-                recordId="{!v.recordId}"
-                onhosuccess="{!c.handleSuccessHandover}"
-                onhoerror="{!c.handleErrorHandover}"
-                onfoundexisting="{!c.handleExistingHandover}"
-              >
-              </c:handoverFromOpportunity>
+              <c:handoverFromOpportunity aura:id="handoverScreen" context="Close Process" recordId="{!v.recordId}" onhosuccess="{!c.handleSuccessHandover}" onhoerror="{!c.handleErrorHandover}" onfoundexisting="{!c.handleExistingHandover}"></c:handoverFromOpportunity>
             </aura:if>
-            <aura:if
-              isTrue="{!or(v.innerPathValue == 'OppSummary', v.closedFields.Close_Process_Path__c == 'OppSummary')}"
-            >
-              <lightning:flow
-                aura:id="closedOppSumFlowData"
-                onstatuschange="{!c.handleStatusChange_OpportunityCloseSummary}"
-              />
+            <aura:if isTrue="{!or(v.innerPathValue == 'OppSummary', v.closedFields.Close_Process_Path__c == 'OppSummary')}">
+              <lightning:flow aura:id="closedOppSumFlowData" onstatuschange="{!c.handleStatusChange_OpportunityCloseSummary}" />
             </aura:if>
           </aura:if>
-
           <aura:if isTrue="{!not(v.errMsg=='')}">
-            <div
-              class="slds-text-heading_small slds-text-align_center slds-text-color_error"
-            >
-              {!v.errMsg}
-            </div>
+            <div class="slds-text-heading_small slds-text-align_center slds-text-color_error"> {!v.errMsg} </div>
           </aura:if>
         </div>
         <!-- FOOTER -->
-        <aura:if
-          isTrue="{!and(v.innerPathValue != 'continueToSummary', !v.showFieldSetForm)}"
-        >
+        <aura:if isTrue="{!and(v.innerPathValue != 'continueToSummary', !v.showFieldSetForm)}">
           <aura:if isTrue="{!v.innerPathValue != 'OppSummary'}">
             <footer class="slds-modal__footer">
               <aura:if isTrue="{!v.innerPathValue != 'Handover'}">
-                <lightning:button
-                  variant="neutral"
-                  label="Cancel"
-                  title="Cancel"
-                  onclick="{! c.closeModal }"
-                />
+                <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModal }" />
               </aura:if>
-              <aura:if
-                isTrue="{!and(v.innerPathValue != 'LostInfo', v.innerPathValue != 'Handover')}"
-              >
-                <lightning:button
-                  variant="neutral"
-                  label="Previous"
-                  title="Previous"
-                  onclick="{!c.previousStep}"
-                />
+              <aura:if isTrue="{!and(v.innerPathValue != 'Handover', or(v.innerPathValue != 'LostInfo',v.fields.length > 0))}">
+                <lightning:button variant="neutral" label="Previous" title="Previous" onclick="{!c.previousStep}" />
               </aura:if>
               <aura:if isTrue="{!v.innerPathValue != 'Handover'}">
-                <lightning:button
-                  variant="brand"
-                  label="Next Step"
-                  title="Next Step"
-                  onclick="{!c.submitDetails}"
-                />
+                <lightning:button variant="brand" label="Next" title="Next" onclick="{!c.submitDetails}" />
                 <aura:set attribute="else">
-                    <aura:if isTrue="{!v.hasExistingHandover}">
-                        <lightning:button
-                        variant="brand"
-                        label="Next"
-                        title="Next"
-                        onclick="{!c.submitDetails}"
-                        />
-                        <aura:set attribute="else">
-                            <lightning:button
-                            variant="brand"
-                            label="Submit Handover"
-                            title="Submit Handover"
-                            onclick="{!c.submitDetails}"
-                            /> 
-                        </aura:set>
-                    </aura:if>
+                  <aura:if isTrue="{!v.hasExistingHandover}">
+                    <lightning:button variant="brand" label="Next" title="Next" onclick="{!c.submitDetails}" />
+                    <aura:set attribute="else">
+                      <lightning:button variant="brand" label="Submit Handover" title="Submit Handover" onclick="{!c.submitDetails}" />
+                    </aura:set>
+                  </aura:if>
                 </aura:set>
               </aura:if>
             </footer>
           </aura:if>
         </aura:if>
         <aura:if isTrue="{!v.innerPathValue == 'continueToSummary'}">
-          <aura:if
-            isTrue="{!or(greaterthanorequal(v.oppData.Green_Bucket_ARR_V2__c, 10000), v.closedFields.StageName == 'Closed Lost')}"
-          >
+          <aura:if isTrue="{!or(greaterthanorequal(v.oppData.Green_Bucket_ARR_V2__c, 10000), v.closedFields.StageName == 'Closed Lost')}">
             <footer class="slds-modal__footer">
-              <lightning:button
-                variant="brand"
-                label="Finish"
-                title="Finish"
-                onclick="{! c.closeModal }"
-              />
-              <lightning:button
-                variant="neutral"
-                label="Next Step"
-                title="Next Step"
-                onclick="{!c.submitDetails}"
-              />
+              <lightning:button variant="brand" label="Finish" title="Finish" onclick="{! c.closeModal }" />
+              <lightning:button variant="neutral" label="Next" title="Next" onclick="{!c.submitDetails}" />
             </footer>
           </aura:if>
-          <aura:if
-            isTrue="{!and(lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000), v.closedFields.StageName == 'Closed Won')}"
-          >
+          <aura:if isTrue="{!and(lessthan(v.oppData.Green_Bucket_ARR_V2__c, 10000), v.closedFields.StageName == 'Closed Won')}">
             <footer class="slds-modal__footer">
-              <lightning:button
-                variant="brand"
-                label="Finish"
-                title="Finish"
-                onclick="{! c.closeModal }"
-              />
+              <lightning:button variant="brand" label="Finish" title="Finish" onclick="{! c.closeModal }" />
             </footer>
           </aura:if>
         </aura:if>

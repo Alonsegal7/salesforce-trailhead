@@ -64,26 +64,35 @@
   },
 
   handleSuccessFieldSets: function (component, event, helper) {
+    console.log("opp close proc ho: handleSuccessFieldSets");
+    component.set('v.showSpinner', false);
     component.set("v.showFieldSetForm", false);
   },
 
   turnOffSpinner: function (component, event, helper) {
+    console.log("opp close proc ho: turnOffSpinner");
     component.set("v.showSpinner", false);
   },
 
   handleSubmitValidation_SOWon: function (component, event, helper) {
+    console.log("opp close proc ho: handleSubmitValidation_SOWon");
     event.preventDefault();
     component.find("validationSOFields").submit();
+    component.set('v.showSpinner', true);
   },
 
   handleSubmitValidation_ClaimWon: function (component, event, helper) {
+    console.log("opp close proc ho: handleSubmitValidation_ClaimWon");
     event.preventDefault();
     component.find("validationClaimFields").submit();
+    component.set('v.showSpinner', true);
   },
 
   handleSubmitValidation_Lost: function (component, event, helper) {
+    console.log("opp close proc ho: handleSubmitValidation_Lost");
     event.preventDefault();
     component.find("validationLostFields").submit();
+    component.set('v.showSpinner', true);
   },
 
   prioritySO: function (component, event, helper) {

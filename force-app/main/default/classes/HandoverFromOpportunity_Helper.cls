@@ -72,6 +72,31 @@ public without sharing class HandoverFromOpportunity_Helper {
     }
   }
 
+  @AuraEnabled(cacheable=true)
+  public static Map<String,Object> getObHoursMap(Id oppId) {
+    try{
+      Map<String,Object> hoursMap = new Map<String,Object>();
+      Decimal support = 0;
+      Decimal adv = 0;
+      Decimal add_adv = 0;
+      for(OpportunityLineItem oli: [SELECT Id, Product2.Name, PS_Hours__c FROM OpportunityLineItem WHERE Is_Primary__c = true and OpportunityId =: oppId and Product_Type__c = 'Onboarding' and Product2.Name != null]){
+        if(oli.Product2.Name.containsIgnoreCase('Support')){
+          support += oli.PS_Hours__c;
+        } else if(oli.Product2.Name.containsIgnoreCase('Advanced Onboarding Hours') || oli.Product2.Name.containsIgnoreCase('Advanced Onboarding Package')){
+          adv += oli.PS_Hours__c;
+        } else if(oli.Product2.Name.containsIgnoreCase('Additional Advanced Onboarding Hours')){
+          add_adv += oli.PS_Hours__c;
+        }
+      }
+      hoursMap.put('support',support);
+      hoursMap.put('adv',adv);
+      hoursMap.put('add_adv',add_adv);
+      return hoursMap;
+    } catch (Exception e) {
+      throw new AuraHandledException(e.getMessage());
+    }
+  }
+
   @AuraEnabled
   public static Map<String, Object> createRecords(
     Map<String, List<Map<String, Object>>> recordsMap
