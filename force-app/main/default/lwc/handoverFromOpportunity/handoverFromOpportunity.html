@@ -61,16 +61,6 @@
                     <center class="field-title"><h1>CSM</h1></center>
                     <template if:true={showCsmFields}>
                       <center>Will be assigned</center>
-                    </template>
-                    <template if:false={showCsmFields}>
-                      <template if:true={csmFullName}>
-                        <center>Already assigned to {csmFullName}</center>
-                      </template>
-                      <template if:false={csmFullName}>
-                        <center>Not needed</center>
-                      </template>
-                    </template>
-                    <template if:true={showCsmPackIcon}>
                       <template if:true={showSilverMedal}>
                         <div class="slds-align_absolute-center slds-p-top_x-small" style="height: 50px; width: 50px;">
                             <p><img src={silverMedalIcon}></p>
@@ -85,6 +75,14 @@
                         <div class="slds-align_absolute-center slds-p-top_x-small" style="height: 50px; width: 50px;">
                             <p><img src={bronzeMedalIcon}></p>
                         </div>
+                      </template>
+                    </template>
+                    <template if:false={showCsmFields}>
+                      <template if:true={csmFullName}>
+                        <center>Already assigned to {csmFullName}</center>
+                      </template>
+                      <template if:false={csmFullName}>
+                        <center>Not needed</center>
                       </template>
                     </template>
                 </div>

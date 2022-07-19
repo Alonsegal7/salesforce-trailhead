@@ -222,11 +222,7 @@ export default class HandoverFromOpportunity extends NavigationMixin(
   get showCsmOrObFields() {
     return this.showCsmFields || this.showObFields;
   }
-
-  get showCsmPackIcon(){
-    return this.showCsmFields || this.csmFullName;
-  }
-
+  
   connectedCallback() {
     this.lockThresholds = this.context === "Close Process" ? true : false; //thresholds can only be tuned when running from manual context
     this.hideSubmitButton = this.context === "Close Process" ? true : false; //when ran from close process the submit will be done with the "Next" button of the component
