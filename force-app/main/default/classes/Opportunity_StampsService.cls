@@ -4,6 +4,8 @@ public without sharing class Opportunity_StampsService {
         try {
             updateOwnerStamps(newOpps,oldMap);
             updateCloseProcessPathOnReopen(newOpps,oldMap);
+            updatedAddedSeats(newOpps,oldMap);
+            updatedGreenBucketConverted(newOpps,oldMap);
         } catch(Exception e) {
             Utilities.sendDebugEmail('Error in Account_StampsService',e,e.getMessage());
         }
@@ -54,6 +56,58 @@ public without sharing class Opportunity_StampsService {
                     opp.CPM_Manager2__c = currOwner.AccountId != null ? currOwner.Manager.ManagerId : null; //if owner is partner
                     opp.Owner_s_Manager__c = currOwner.ManagerId;
                     opp.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
+                }
+            }
+        }
+    }
+
+    /*  only before update
+        Update Added_Seats__c calculation
+        Object: Opportunity
+        Fields: Current_Account_Seats__c and Expected_Plan_Seats__c (This field is a core calculation)
+    */
+    public static void updatedAddedSeats(List<Opportunity> newOpps, Map<Id,Opportunity> oldMap){
+        if(oldMap == null) return;
+        for(Opportunity opp : newOpps){
+            if(opp.StageName != oldMap.get(opp.Id).StageName && opp.StageName == 'Closed Won'){
+                if(opp.Expected_Plan_Seats__c == null){
+                    opp.Added_Seats__c = 0;
+                }
+
+                else{
+                    if(opp.Current_Account_Seats__c == null){
+                        opp.Added_Seats__c = opp.Expected_Plan_Seats__c;
+                    }
+
+                    else{
+                        opp.Added_Seats__c = opp.Expected_Plan_Seats__c - opp.Current_Account_Seats__c;
+                    }
+                }
+            }
+        }
+    }
+
+    /*  before insert & update
+        Update Is_GB_when_converted__c
+        Object: Opportunity
+        Fields: Is_GB_when_converted__c and Expected_Plan_Name__c and Is_Potential_GB_Opportunity__c and CreatedDate
+    */
+    public static void updatedGreenBucketConverted(List<Opportunity> newOpps, Map<Id,Opportunity> oldMap){
+        for(Opportunity opp : newOpps){
+            Date createdDateComp = null;
+            createdDateComp = Date.newInstance(2021, 3, 6);
+            /*  1st Condition --> insert only + Partner RT
+                2nd Condition --> insert & update + CreatedDate > 6.3.2021 + Is_GB_when_converted__c = null
+            */
+            if((oldMap == null && opp.RecordType.DeveloperName == 'Partner_Opportunity' && opp.Expected_Plan_Name__c != null)
+                || 
+                (opp.Expected_Plan_Name__c != oldMap.get(opp.Id).Expected_Plan_Name__c && opp.Is_GB_when_converted__c == null && opp.CreatedDate > createdDateComp)){
+                if(opp.Is_Potential_GB_Opportunity__c == true){
+                    opp.Is_GB_when_converted__c = 'True';
+                }
+
+                else{
+                    opp.Is_GB_when_converted__c = 'False';
                 }
             }
         }
