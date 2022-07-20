@@ -1,22 +1,4 @@
 public with sharing class ContractEventToContract {
-    private static void updateAndRetry(List<SObject> recordsToUpdate ) {
-        try {
-            update recordsToUpdate;
-        }      
-        catch (Exception ex) {
-            if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
-                try {
-                    update recordsToUpdate; 
-                }
-                catch (Exception e) {
-                    System.debug('Message: ' + e.getMessage());
-                }
-            }
-            else {
-                System.debug('Message: ' + ex.getMessage());
-            }
-        }
-    }
     public static Map<string, id> createdContForSubOrder = new Map<string, id>();
     public static void ContractEventCreateNewContract(Map<Id, List<Contract_Event__c>> conEvents, List<SObject> objects, string objType) {
        try{
@@ -192,7 +174,7 @@ public with sharing class ContractEventToContract {
             oppsToUpdate.add(opp);
         }
         if (!oppsToUpdate.isEmpty()) {
-            updateAndRetry(oppsToUpdate);
+            Utilities.updateAndRetry(oppsToUpdate);
         }
     }catch(Exception e){
         Utilities.sendDebugEmail('Error in ContractEventCreateNewContract.updateContractArrChangeToOpenOps ',e,e.getMessage());  
@@ -221,7 +203,7 @@ public with sharing class ContractEventToContract {
             this.accToUpdateList = accToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            updateAndRetry(accToUpdateList);
+            Utilities.updateAndRetry(accToUpdateList);
         }
     }
 
@@ -231,7 +213,7 @@ public with sharing class ContractEventToContract {
             this.contractToUpdateList = contractToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            updateAndRetry(contractToUpdateList);
+            Utilities.updateAndRetry(contractToUpdateList);
         }
     }
     private class updateValuesToCreatedContract implements System.Queueable {
