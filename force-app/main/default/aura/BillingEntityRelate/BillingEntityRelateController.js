@@ -52,6 +52,7 @@
 		evt.preventDefault();
 		var spinner = cmp.find("cmspinneredit");
 		$A.util.removeClass(spinner, "slds-hide");
+
 		//Start Tal - VAT Logic
 		console.log('Submitting and service status is: ' + cmp.get('v.getVatServiceStatus'));
 		console.log('Submitting and customer vat number is: ' + cmp.get('v.customerVatNumber'));
@@ -91,7 +92,7 @@
 		//Start Tal - VAT Logic
 		if(cmp.get('v.getVatServiceStatus') == 'Active'){
 			cmp.set('v.beIdAfterSuccess', id);
-			hlp.updateBillingEntityFieldsFromCreate(cmp, evt);
+			//hlp.updateBillingEntityFieldsFromCreate(cmp, evt);
 		}
 		//End Tal - VAT Logic
 		
