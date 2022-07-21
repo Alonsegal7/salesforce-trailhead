@@ -187,6 +187,7 @@
 		var fields = evt.getParam("fields");
 		console.log('fields: ' + JSON.stringify(fields));
 		console.log('--------------callVatService---------------+'+fields);
+
 		var allowSubmit = cmp.get('v.allowSubmit');
 		var BEId = cmp.get('v.beToUPdate');
 		var isEditing = cmp.get('v.edit_existing');
@@ -214,6 +215,7 @@
 				if (state === "SUCCESS"){
 					var storeResponse = response.getReturnValue();
 					console.log('VAT-SERVICE----' + storeResponse);
+                    
 					cmp.set('v.vatServiceCalled', true);
 					cmp.set('v.getServiceStatus', storeResponse);
 					if (storeResponse == 'invalid') {
@@ -385,6 +387,7 @@
 						var fieldValidations = cmp.get('v.fieldValidations');
 						console.log('fieldValidations.length: ' + fieldValidations.length);
 						console.log('allowSubmit: ' + allowSubmit);
+                        
 						if (!this.isEmpty(fieldValidations) && fieldValidations.length > 0 && !allowSubmit){
 							this.fieldValidations(cmp, evt);
 						} else {
@@ -448,6 +451,7 @@
 			if (state === "SUCCESS") {
 				var storeResponse = response.getReturnValue();
 				console.log('Field validations response: ' + storeResponse);
+                
 				if (!this.isEmpty(storeResponse)){
 					storeResponse = JSON.parse(storeResponse);
 					console.log('Found existing records: ' + JSON.stringify(storeResponse.matchesFound));
