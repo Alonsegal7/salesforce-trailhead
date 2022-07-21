@@ -496,25 +496,24 @@ export default class HandoverFromOpportunity extends NavigationMixin(
         return false;
       } else {
         console.log(
-          "entered validateInputs from Close Process - passed and returning true"
+          "entered validateInputs from Close Process - passed"
         );
-        return true;
       }
     }
-    if (this.businessContactId === undefined) {
+    if (this.businessContactId === undefined || this.businessContactId == null) {
       this.customError = "Please choose a business contact for this handover";
       return false;
     }
-    if (this.signatoryContactId === undefined) {
+    if (this.signatoryContactId === undefined || this.signatoryContactId == null) {
       this.customError = "Please choose a signatory contact for this handover";
       return false;
     }
-    if (this.desicionContactId === undefined) {
+    if (this.desicionContactId === undefined || this.desicionContactId == null) {
       this.customError =
         "Please choose a desicion maker contact for this handover";
       return false;
     }
-    if (this.showObFields && this.obContactId === undefined) {
+    if (this.showObFields && (this.obContactId === undefined || this.obContactId == null)) {
       this.customError =
         "Please choose an onboarding contact for this handover";
       return false;
@@ -601,9 +600,7 @@ export default class HandoverFromOpportunity extends NavigationMixin(
       this.expendedFields.Business_Point_of_Contact__c = this.businessContactId;
       this.expendedFields.Signatory_Contact__c = this.signatoryContactId;
       this.expendedFields.Decision_Maker__c = this.desicionContactId;
-      if (this.obContactId)
-        this.expendedFields.Onboarding_Main_Point_of_Contact__c =
-          this.obContactId;
+      if (this.obContactId) this.expendedFields.Onboarding_Main_Point_of_Contact__c = this.obContactId;
       // section D
       this.expendedFields.Short_Term_Growth__c = this.template.querySelector(
         '[data-id="short-term-growth"]'
