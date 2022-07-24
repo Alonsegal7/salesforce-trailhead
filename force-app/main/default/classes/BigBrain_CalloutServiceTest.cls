@@ -28,7 +28,7 @@ public without sharing class BigBrain_CalloutServiceTest {
         opp.Need_Sync_to_BB__c = false;
         update opp;
         opp.Transition_to_GB__c = true;
-        opp.Claimed_ARR__c = 10000;
+        opp.Claimed_ARR_Override__c = 10000;
         update opp;
         opp = [select Need_Sync_to_BB__c from Opportunity limit 1];
         System.assertEquals(true, opp.Need_Sync_to_BB__c);
