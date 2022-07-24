@@ -93,7 +93,6 @@ export default class SubmitPaymentRequest extends LightningElement {
     mdfNumRequiredFiles;
     invoiceNumber;
     invoiceDate;
-    spiffId;
     
     //sort & filter variables for datatable in data screen
     //allows sort & filter the datatable
@@ -242,6 +241,10 @@ export default class SubmitPaymentRequest extends LightningElement {
                     this.showCancelButton = false;
                     this.monthScreen = false;
                 }
+                if(this.commissionData.spiffAmount != null){
+                    this.spiffAmount = this.commissionData.spiffAmount;
+                }
+                console.log('spiff amount: ' + this.spiffAmount);
                 this.setModalToLarge();
                 this.dataScreen = true;
             } else { //custom error
@@ -303,15 +306,6 @@ export default class SubmitPaymentRequest extends LightningElement {
             this.mdfOptions = result.mdfOptions_list;
             this.mdfIdtoAmount_map = result.mdfIdtoAmount_map;
             this.selectedMDFs = result.selected_list;
-            this.spiffObj = result.spiff;
-            console.log('spiff: ' + JSON.stringify(this.spiffObj));
-            if(this.spiffObj == null || this.spiffObj == undefined){
-                this.spiffAmout = 0;
-                this.spiffId = null;
-            } else {
-                this.spiffAmount = this.spiffObj.Amount__c == null ? 0: this.spiffObj.Amount__c;
-                this.spiffId = this.spiffObj.Id;
-            }
             if(this.selectedMDFs != null && this.selectedMDFs.length > 0) this.mdfNumRequiredFiles = this.selectedMDFs.length;
             if(this.mdfOptions != null && this.mdfOptions.length > 0) this.mdfFound = true;
             if(this.recordId && this.filesScreenFirstRun){ //running from existing payment request (draft or rejected) - need to delete old files 
@@ -357,8 +351,6 @@ export default class SubmitPaymentRequest extends LightningElement {
             paymentRequestId: this.commissionData.paymentReqId,
             mdfAmount: this.mdfAmount,
             selectedMDFs: this.selectedMDFs,
-            spiffAmount: this.spiffAmount,
-            spiffId: this.spiffId,
             invoiceFileVerId: this.uploadedInvoiceId,
             invoiceCurrency: this.currencyValue,
             invoiceNumber: this.invoiceNumber,
@@ -439,8 +431,6 @@ export default class SubmitPaymentRequest extends LightningElement {
                 paymentRequestId: this.commissionData.paymentReqId,
                 mdfAmount: this.mdfAmount,
                 selectedMDFs: this.selectedMDFs,
-                spiffAmount: this.spiffAmount,
-                spiffId: this.spiffId,
                 invoiceFileVerId: this.uploadedInvoiceId,
                 invoiceCurrency: this.currencyValue,
                 invoiceNumber: this.invoiceNumber,

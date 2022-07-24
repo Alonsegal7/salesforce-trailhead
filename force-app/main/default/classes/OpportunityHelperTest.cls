@@ -264,4 +264,59 @@ public class OpportunityHelperTest {
         oppList.add(opp);
         OpportunityHelper.determineOppType(oppList);            
     }
+    
+    @isTest
+    static void updatedAddedSeats_Test() {
+        // Opportunity_StampsService class --> updatedAddedSeats method
+        Id companyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
+        Id mondayAccountRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+		Profile admin = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User manager = new User(Alias = 'manager',Country='United Kingdom',Email='manager@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = admin.Id,TimeZoneSidKey='America/Los_Angeles', UserName='manager@monday.com');
+		insert manager;
+		User user = new User(Alias='standt1', ManagerId=manager.Id, Country='United Kingdom',Email='demo1@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing123@monday.com');
+		insert user;
+        Account companyA = new Account(Name='companyA', RecordTypeId=companyRecordTypeId, OwnerId=user.Id, CSM__c=user.Id);
+		insert companyA;
+        Account mondayAccount = new Account(Name='monday account', RecordTypeId=mondayAccountRecordTypeId, Company__c=companyA.Id, OwnerId=user.Id, CSM__c=user.Id, primary_pulse_account_id__c='12');
+        insert mondayAccount;
+        Opportunity opp = new Opportunity(Name='opportunity', StageName='Qualified', Expected_Plan_Seats__c=50, CloseDate=system.today(), Company__c=companyA.Id, AccountId=companyA.Id);
+        insert opp;
+        // Update stage to 'Closed Won'
+        opp.StageName = 'Closed Won';
+        update opp;
+		opp = [SELECT Id, Expected_Plan_Seats__c, Added_Seats__c, Current_Account_Seats__c FROM Opportunity WHERE Id =: opp.Id LIMIT 1];
+        System.assertEquals(opp.Added_Seats__c, opp.Expected_Plan_Seats__c);
+        
+        Opportunity oppWithoutPlan = new Opportunity(Name='opportunity', StageName='Qualified', Expected_Plan_Seats__c=null, CloseDate=system.today(), Company__c=companyA.Id, AccountId=companyA.Id);
+        insert oppWithoutPlan;
+        oppWithoutPlan.StageName = 'Closed Won';
+        update oppWithoutPlan;
+		oppWithoutPlan = [SELECT Id, Expected_Plan_Seats__c, Added_Seats__c, Current_Account_Seats__c FROM Opportunity WHERE Id =: oppWithoutPlan.Id LIMIT 1];
+        System.assertEquals(oppWithoutPlan.Added_Seats__c, 0);
+    }
+    
+    @isTest
+    static void updatedGreenBucketConverted_Test() {
+        // Opportunity_StampsService class --> updatedGreenBucketConverted method
+        Id companyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
+        Id mondayAccountRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+		Profile admin = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User manager = new User(Alias = 'manager',Country='United Kingdom',Email='manager@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = admin.Id,TimeZoneSidKey='America/Los_Angeles', UserName='manager@monday.com');
+		insert manager;
+		User user = new User(Alias='standt1', ManagerId=manager.Id, Country='United Kingdom',Email='demo1@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing123@monday.com');
+		insert user;
+        Account companyA = new Account(Name='companyA', RecordTypeId=companyRecordTypeId, OwnerId=user.Id, CSM__c=user.Id);
+		insert companyA;
+        Account mondayAccount = new Account(Name='monday account', RecordTypeId=mondayAccountRecordTypeId, Company__c=companyA.Id, OwnerId=user.Id, CSM__c=user.Id, primary_pulse_account_id__c='12');
+        insert mondayAccount;
+        Opportunity opp = new Opportunity(Name='opportunity', StageName='Qualified', Is_GB_when_converted__c = null, Expected_Plan_Name__c='Enterprise 20 Yearly', Is_Potential_GB_Opportunity__c = false, CloseDate=system.today(), Company__c=companyA.Id, AccountId=companyA.Id);
+        insert opp;
+        // Update Expected_Plan_Name__c to 'Enterprise 50 Yearly'
+        opp.Expected_Plan_Name__c = 'Enterprise 50 Yearly';
+        update opp;
+		opp = [SELECT Id, Expected_Plan_Name__c, Is_Potential_GB_Opportunity__c, Is_GB_when_converted__c FROM Opportunity WHERE Id =: opp.Id LIMIT 1];
+        System.assertEquals(opp.Is_GB_when_converted__c, 'False', opp.Is_Potential_GB_Opportunity__c + opp.Is_GB_when_converted__c);        
+    }
 }

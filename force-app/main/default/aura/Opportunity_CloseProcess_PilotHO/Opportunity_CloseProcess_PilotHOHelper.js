@@ -24,11 +24,11 @@
                         if(fieldsStr != null && fieldsStr != ''){
                             let fields = JSON.parse(fieldsStr);
                             component.set("v.fields", fields);
-                            //component.set('v.showFieldSetForm', true);
                             console.log('opp close proc ho: close stage selected: fields from field set: '+JSON.stringify(component.get("v.fields")));
                         }
                     }
-                    if(component.get('v.oppData.Co_Sell_Opportunity__c') != null 
+					if(component.get('v.isClosedWon')){
+						if(component.get('v.oppData.Co_Sell_Opportunity__c') != null 
                         && component.get('v.oppData.Co_Sell_Opportunity__c') != ''
                         && component.get('v.oppData.Account.Co_Sell_Leader__c') != '' 
                         && component.get('v.oppData.Account.Co_Sell_Leader__c') != null
@@ -37,9 +37,12 @@
                         && component.get('v.oppData.Co_Sell_Request__r.Status__c') == 'Approved'
                         && component.get('v.oppData.Co_Sell_Request__r.Impact_Survey_Filled__c') == false){
                         helper.callback_coSellSurvey(component, event, helper);
-                    } else {
-                        helper.handleClosedWonStageSelected(component, event, helper);
-                    }
+                    	} else {
+							helper.handleClosedWonStageSelected(component, event, helper);
+						}
+					} else {
+						helper.handleClosedLostStageSelected(component, event, helper);
+					}
                 }  else {
 					errMsg = 'Oops... Server issue loading opportunity data (storeResponse is null in callbackInit). Please reach out to Biz Ops.';
 					component.set("v.errMsg", errMsg);
@@ -58,7 +61,7 @@
 		console.log('opp close proc ho: handleClosedWonStageSelected');
         
         //if Close_Process_Path__c is not empty we set the path step to where it stopped last time by Close_Process_Path__c value (Claim, SOInfo, ManualSignature, CCClaim, Handover, OppSummary)
-        if(component.get('v.oppData.Close_Process_Path__c') != null && component.get('v.oppData.Close_Process_Path__c') != ''){
+        if(component.get('v.oppData.Close_Process_Path__c') != null && component.get('v.oppData.Close_Process_Path__c') != '' && component.get('v.oppData.Close_Process_Path__c') != 'LostInfo'){
             component.set('v.innerPathValue', component.get('v.oppData.Close_Process_Path__c'));
         } else { // Close_Process_Path__c is empty - first time to run close process
             if(component.get('v.oppData.Is_Primary_SO_Signed__c')){
@@ -80,17 +83,16 @@
             helper.callFlow_getOpportunitySummary(component, event, helper);
         }
 
-		component.set('v.isClosedWon', true);
 		component.set('v.isModalOpen', true);
 	},
 
 	handleClosedLostStageSelected : function (component, event, helper){
 		console.log('opp close proc ho: handleClosedLostStageSelected');
-		component.set('v.isClosedLost', true);
 		component.set('v.innerPathValue', 'LostInfo');
+		if(component.get('v.fields').length > 0){ 
+            component.set('v.showFieldSetForm', true);
+        }
 		component.set('v.isModalOpen', true);
-
-		helper.handleFieldSets(component, event, helper);
 	},
 
 	callback_saveInnerPicklistPath : function(component, event, helper, innerValue){ //save the innerPicklistPath
@@ -219,7 +221,7 @@
 								"title": "Opportunity stage changed succesfully to Closed Lost!"                      
 							});
 						}
-						if(component.get('v.showHandover') == true){
+						if(component.get('v.isClosedWon') && component.get('v.showHandover') == true){
 							component.set('v.innerPathValue', 'Handover');
 						}else{
 							helper.postHandoverActions(component, event, helper); //this checks if opp summary is needed otherwise ends the process
@@ -317,11 +319,11 @@
 		if(component.get('v.innerPathValue') == 'Claim'){ 
 			helper.callback_saveManualFields(component, event, helper);
 		} else if(component.get('v.innerPathValue') == 'ManualSignature'){ // manualy signed
-			console.log('opp close proc ho: submit_closedWon isSoManuallySigned: '+component.get('v.oppData.Is_SO_Signed__c'));
+			console.log('opp close proc ho: submit_closedWon is so manually signed marked?: '+component.get('v.closedFields.Is_SO_Signed__c'));
 			console.log('opp close proc ho: submit_closedWon entered manually signed input validation');
 			var manualSignatureInputValid = true;
 			component.find('manuallySignedFields').forEach(function (field) {
-				if (!field.get("v.value") || component.get('v.oppData.Is_SO_Signed__c') == false) {
+				if (!field.get("v.value") || !component.get('v.closedFields.Is_SO_Signed__c')) {
 					manualSignatureInputValid = false;
 				}
 				field.reportValidity();
@@ -329,10 +331,10 @@
 			console.log('opp close proc ho: submit_closedWon checkFilesUploaded result: ' + helper.checkFilesUploaded(component, event, helper));
 			var filesUploaded = helper.checkFilesUploaded(component, event, helper);
 			if(manualSignatureInputValid && filesUploaded){
-				console.log('opp close proc ho: submit_closedWon Manual Signature vass,lid input');
+				console.log('opp close proc ho: submit_closedWon Manual Signature valid input');
 				helper.callback_saveManualFields(component, event, helper);
 			} else {
-				console.log('opp close proc ho: submit_closedWon Manual Signature not valid input');
+				console.log('opp close proc ho: submit_closedWon Manual Signature invalid input!');
 			}
 		}else if(component.get('v.innerPathValue') == 'CCClaim'){ // cc claim - here we do save stage
 			helper.callback_closeOpp(component, event, helper, "Closed Won");
@@ -366,7 +368,7 @@
 					component.set('v.innerPathValue', 'OppSummary');
 					helper.callFlow_getOpportunitySummary(component, event, helper);
 				} else {
-					component.set('v.innerPathValue', 'continueToSummary');
+					//component.set('v.innerPathValue', 'continueToSummary');
 					helper.callback_closeOpp(component, event, helper, "Closed Lost");
 				}
 			} else if(saveResult.state == "ERROR") {
@@ -389,7 +391,7 @@
 
 	setPreviousStep : function (component, event, helper){    
         if(component.get('v.fields').length > 0 &&
-            (component.get('v.innerPathValue') == 'Claim' || component.get('v.innerPathValue') == 'SOInfo')){ 
+            (component.get('v.innerPathValue') == 'Claim' || component.get('v.innerPathValue') == 'SOInfo' || component.get('v.innerPathValue') == 'LostInfo')){ 
                 component.set('v.showFieldSetForm', true);
         }
 		if(component.get('v.innerPathValue') == 'ManualSignature'){

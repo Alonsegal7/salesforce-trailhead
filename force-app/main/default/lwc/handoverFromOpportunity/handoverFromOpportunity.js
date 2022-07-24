@@ -5,10 +5,14 @@ import { CloseActionScreenEvent } from "lightning/actions";
 import { NavigationMixin } from "lightning/navigation";
 import { reduceErrors } from "c/ldsUtils";
 import { refreshApex } from "@salesforce/apex";
+import silverMedal from '@salesforce/resourceUrl/silverMedal';
+import goldMedal from '@salesforce/resourceUrl/goldMedal';
+import bronzeMedal from '@salesforce/resourceUrl/bronzeMedal';
 import getUseCasePLV from "@salesforce/apex/HandoverFromOpportunity_Helper.getUseCasePLV";
 import getComplexityPLV from "@salesforce/apex/HandoverFromOpportunity_Helper.getComplexityPLV";
 import getHandoverFieldMapping from "@salesforce/apex/HandoverFromOpportunity_Helper.getHandoverFieldMapping";
 import getCurrentQuoteLineItems from "@salesforce/apex/HandoverFromOpportunity_Helper.getCurrentQuoteLineItems";
+import getObHoursMap from "@salesforce/apex/HandoverFromOpportunity_Helper.getObHoursMap";
 import getContactNameById from "@salesforce/apex/HandoverFromOpportunity_Helper.getContactNameById";
 import getExistingHandoverOnOpp from "@salesforce/apex/HandoverFromOpportunity_Helper.getExistingHandoverOnOpp";
 import createRecordsApex from "@salesforce/apex/HandoverFromOpportunity_Helper.createRecords";
@@ -29,6 +33,7 @@ import THRESHOLD_PASS_AM from "@salesforce/schema/Opportunity.Passed_AM_Threshol
 import THRESHOLD_PASS_CSM from "@salesforce/schema/Opportunity.Passed_CSM_Threshold__c";
 import THRESHOLD_PASS_OB from "@salesforce/schema/Opportunity.Passed_Onboarding_Threshold__c";
 import LEGAL_AGREEMENT_TYPE from "@salesforce/schema/Opportunity.SyncedQuote.Legal_Agreement_Type__c";
+import ACCOUNT_CSM_FULLNAME from "@salesforce/schema/Opportunity.CSM_Name_Formula__c";
 
 const oppFields = [
   COMPANY_ID,
@@ -47,7 +52,8 @@ const oppFields = [
   KIND_OF_CSM,
   EXPECTED_TIER,
   SALES_USE_CASES,
-  OPT_OUT_DAYS
+  OPT_OUT_DAYS,
+  ACCOUNT_CSM_FULLNAME
 ];
 
 export default class HandoverFromOpportunity extends NavigationMixin(
@@ -56,6 +62,9 @@ export default class HandoverFromOpportunity extends NavigationMixin(
   @api recordId;
   @api context = "Manual Creation";
   expendedFields = {};
+  silverMedalIcon = silverMedal;
+  goldMedalIcon = goldMedal;
+  bronzeMedalIcon = bronzeMedal;
   oppData;
   companyId;
   accountId;
@@ -109,6 +118,7 @@ export default class HandoverFromOpportunity extends NavigationMixin(
   hasExistingHandover = false;
   existingHandoverId;
   linkToExistingHO;
+  csmFullName;
 
   productsData = [
     {
@@ -166,6 +176,25 @@ export default class HandoverFromOpportunity extends NavigationMixin(
       if (this.kindOfCsm.includes("Bronze")) return "csm_badge_bronze";
     } else return;
   }
+
+  get showSilverMedal(){
+    if (this.kindOfCsm) {
+      return this.kindOfCsm.includes("Silver");
+    } else return;
+  }
+
+  get showGoldMedal(){
+    if (this.kindOfCsm) {
+      return this.kindOfCsm.includes("Gold");
+    } else return;
+  }
+
+  get showBronzeMedal(){
+    if (this.kindOfCsm) {
+      return this.kindOfCsm.includes("Bronze");
+    } else return;
+  }
+
   get extendedOptOutDays() {
     if (this.optOutDays > 30) return true;
     else return false;
@@ -185,15 +214,15 @@ export default class HandoverFromOpportunity extends NavigationMixin(
   }
   get onboardingTitle() {
     if (this.showObFields) {
-      return `This account is entitled for ${this.kindOfIc} Services`;
+      return `${this.kindOfIc} Services`;
     } else {
-      return "This account is entitled for Implementation Consulting";
+      return "Implementation Consulting";
     }
   }
   get showCsmOrObFields() {
     return this.showCsmFields || this.showObFields;
   }
-
+  
   connectedCallback() {
     this.lockThresholds = this.context === "Close Process" ? true : false; //thresholds can only be tuned when running from manual context
     this.hideSubmitButton = this.context === "Close Process" ? true : false; //when ran from close process the submit will be done with the "Next" button of the component
@@ -205,6 +234,7 @@ export default class HandoverFromOpportunity extends NavigationMixin(
       this.oppData = data;
       this.showAmFields = getFieldValue(data, THRESHOLD_PASS_AM);
       this.showCsmFields = getFieldValue(data, THRESHOLD_PASS_CSM);
+      this.csmFullName = getFieldValue(data, ACCOUNT_CSM_FULLNAME);
       this.showObFields = getFieldValue(data, THRESHOLD_PASS_OB);
       this.isLoading = false;
       this.companyId = getFieldValue(data, COMPANY_ID);
@@ -466,25 +496,24 @@ export default class HandoverFromOpportunity extends NavigationMixin(
         return false;
       } else {
         console.log(
-          "entered validateInputs from Close Process - passed and returning true"
+          "entered validateInputs from Close Process - passed"
         );
-        return true;
       }
     }
-    if (this.businessContactId === undefined) {
+    if (this.businessContactId === undefined || this.businessContactId == null) {
       this.customError = "Please choose a business contact for this handover";
       return false;
     }
-    if (this.signatoryContactId === undefined) {
+    if (this.signatoryContactId === undefined || this.signatoryContactId == null) {
       this.customError = "Please choose a signatory contact for this handover";
       return false;
     }
-    if (this.desicionContactId === undefined) {
+    if (this.desicionContactId === undefined || this.desicionContactId == null) {
       this.customError =
         "Please choose a desicion maker contact for this handover";
       return false;
     }
-    if (this.showObFields && this.obContactId === undefined) {
+    if (this.showObFields && (this.obContactId === undefined || this.obContactId == null)) {
       this.customError =
         "Please choose an onboarding contact for this handover";
       return false;
@@ -505,6 +534,8 @@ export default class HandoverFromOpportunity extends NavigationMixin(
           });
         this.expendedFields = fields;
         this.updateAutoMapping();
+        console.log('this.obHours_map'+this.obHours_map);
+        this.updateObHours();
         this.updateUserInputs();
         this.handleUseCasesToCreate(); //create a draft of the use cases, will only be submitted later on with "createRecords" to save loading time in the close process
         if (Object.keys(this.mappingErrorJson).length > 0) {
@@ -523,6 +554,25 @@ export default class HandoverFromOpportunity extends NavigationMixin(
       this.isLoading = false;
     }
   }
+
+  @wire(getObHoursMap, { oppId: "$recordId" })
+  oBHoursMap({ error, data }) {
+    if (data) {
+      console.log("oBHoursMap: " + JSON.stringify(data));
+      this.obHours_map = data;
+    }
+    if (error) {
+      console.log("oBHoursMap error");
+      console.error(reduceErrors(error));
+    }
+  }
+
+  updateObHours(){
+    this.expendedFields.Onboarding_Support_Hours__c = this.obHours_map.support;
+    this.expendedFields.Onboarding_Advanced_Hours__c = this.obHours_map.adv;
+    this.expendedFields.Onboarding_Advanced_Additional_Hours__c = this.obHours_map.add_adv;
+  }
+
   updateUserInputs() {
     try {
       this.expendedFields.Source__c =
@@ -550,9 +600,7 @@ export default class HandoverFromOpportunity extends NavigationMixin(
       this.expendedFields.Business_Point_of_Contact__c = this.businessContactId;
       this.expendedFields.Signatory_Contact__c = this.signatoryContactId;
       this.expendedFields.Decision_Maker__c = this.desicionContactId;
-      if (this.obContactId)
-        this.expendedFields.Onboarding_Main_Point_of_Contact__c =
-          this.obContactId;
+      if (this.obContactId) this.expendedFields.Onboarding_Main_Point_of_Contact__c = this.obContactId;
       // section D
       this.expendedFields.Short_Term_Growth__c = this.template.querySelector(
         '[data-id="short-term-growth"]'

@@ -7,6 +7,9 @@
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
         <target>lightning__FlowScreen</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+
     </targets>
 
     <targetConfigs>
@@ -41,8 +44,8 @@
 
 
         <targetConfig targets="lightning__RecordPage">
-            <property name="context" type="String" label="Process (SOR or Forecast)" 
-            description="The context of this component - if it is SOR, it will create SOR records if it is Forecast, it will create quote and line items. make sure to send the parent id (SOR or Opportuinty) at the ParentId input field"/>
+            <property name="context" type="String" label="Process (PartnerSOR or quote)" 
+            description="The context of this component - if it is PartnerSOR, it will create SOR records if it is quote, it will create quote and line items. make sure to send the parent id (SOR or Opportuinty) at the ParentId input field"/>
             <property name="productColumnWidth" type="String" label="Product Column Width" 
             description="The Product Column Width"/>
             <property name="unitPriceColumnWidth" type="Integer" label="Unit Price Column Width" 
@@ -53,7 +56,23 @@
             description="The Discount Column Width"/>
             <property name="totalColumnWidth" type="Integer" label="Total Column Width" 
             description="The Total Column Width"/>
-</targetConfig>
+        </targetConfig>
+
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="context" type="String" label="Process (PartnerSOR or quote)" 
+            description="The context of this component - if it is PartnerSOR, it will create SOR records if it is quote, it will create quote and line items. make sure to send the parent id (SOR or Opportuinty) at the ParentId input field"/>
+            <property name="productColumnWidth" type="String" label="Product Column Width" 
+            description="The Product Column Width"/>
+            <property name="unitPriceColumnWidth" type="Integer" label="Unit Price Column Width" 
+            description="The Unit Price Column Width"/>
+            <property name="quantityColumnWidth" type="Integer" label="Quantity Column Width" 
+            description="The Quantity Column Width"/>
+            <property name="discountColumnWidth" type="Integer" label="Discount Column Width" 
+            description="The Discount Column Width"/>
+            <property name="totalColumnWidth" type="Integer" label="Total Column Width" 
+            description="The Total Column Width"/>
+            <property name="recordId" type="String" label="Record Id" description="Automatically bind the page's record id to the component variable"/>
+        </targetConfig>
 
 
         

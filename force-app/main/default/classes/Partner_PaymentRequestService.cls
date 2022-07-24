@@ -32,28 +32,8 @@ public without sharing class Partner_PaymentRequestService {
     public static Map<String, Object> getFilesScreenData(Id partnerCompanyId, Id paymentReqId, Date requestedMonth){
         try{
             Map<String, Object> res = new Map<String, Object>();
-            getSpiff(res, partnerCompanyId, requestedMonth);
             getMdfOptions(res, partnerCompanyId, paymentReqId, requestedMonth);   
             return res;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
-        }
-    }
-
-    public static void getSpiff(Map<String, Object> res, Id partnerCompanyId, Date requestedMonth){
-        try {
-            Date spiffDate = getQuarterStartDate(requestedMonth);
-            list<Spiff__c> spiff_list = [select Id, Amount__c, Spiff_Date__c from Spiff__c 
-                                            where Channel_Partner__c =: partnerCompanyId 
-                                            and Spiff_Date__c >= 2022-04-01
-                                            and Spiff_Date__c <=: spiffDate 
-                                            and Payment_Request__c = null
-                                            order by Spiff_Date__c DESC limit 1];
-            if(spiff_list.isEmpty()){
-                res.put('spiff', null);
-            } else {
-                res.put('spiff', spiff_list.get(0));
-            }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
         }
@@ -205,7 +185,13 @@ public without sharing class Partner_PaymentRequestService {
             Decimal monthlyAmount = 0, yearlyAmount = 0, twoYearlyAmount = 0, inboundPercent = 0, outboundPercent = 0;
             if(!collectionsList.isEmpty()) {
                 //get inbound outbound percent
-                Partner_Commission_Model__c pcm = [select Id, Commission_Model__r.Inbound_Percent__c, Commission_Model__r.Outbound_Percent__c from Partner_Commission_Model__c where Partner_Company__c =: partnerCompanyId and Start_Date__c <=: monthForQuery and (End_Date__c = null or End_Date__c >=: monthForQuery) limit 1];
+                List<Partner_Commission_Model__c> pcmList = [select Id, Commission_Model__r.Inbound_Percent__c, Commission_Model__r.Outbound_Percent__c from Partner_Commission_Model__c where Partner_Company__c =: partnerCompanyId and Start_Date__c <=: monthForQuery and (End_Date__c = null or End_Date__c >=: monthForQuery) limit 1];
+                if(pcmList.isEmpty()){
+                    res.put('errorMsg','Partner Commission Model does not exist for ' + month.month() +'/'+month.year()+'! Please reach out to your CPM.');
+                    res.put('status', 'error');
+                    return res;
+                }
+                Partner_Commission_Model__c pcm = pcmList[0];
                 inboundPercent = pcm.Commission_Model__r.Inbound_Percent__c / 100;
                 outboundPercent = pcm.Commission_Model__r.Outbound_Percent__c / 100;
                 //sum amounts by plan
@@ -218,11 +204,12 @@ public without sharing class Partner_PaymentRequestService {
                 }
             }
             if(paymentRequestId == null){
-                Id newPaymentReqId = saveNewPaymentRequest(runningUser, partnerCompanyId, month, monthlyAmount, yearlyAmount, twoYearlyAmount);
-                Batch_SearchAndReplace linkPaymentReqToCollectionsBatch = new Batch_SearchAndReplace(collectionsMap.keySet(), 'Commission_Collection__c', 'Payment_Request__c', String.valueOf(newPaymentReqId), 'Link Collections to Payment Request Id: ' + newPaymentReqId);
+                Payment_Request__c newPaymentReq = saveNewPaymentRequest(runningUser, partnerCompanyId, month, monthlyAmount, yearlyAmount, twoYearlyAmount);
+                Batch_SearchAndReplace linkPaymentReqToCollectionsBatch = new Batch_SearchAndReplace(collectionsMap.keySet(), 'Commission_Collection__c', 'Payment_Request__c', String.valueOf(newPaymentReq.Id), 'Link Collections to Payment Request Id: ' + newPaymentReq.Id);
                 Utilities.cleanFlexQueue();
                 Database.executeBatch(linkPaymentReqToCollectionsBatch, 100);
-                res.put('paymentReqId',newPaymentReqId);
+                res.put('paymentReqId',newPaymentReq.Id);
+                res.put('spiffAmount',newPaymentReq.Spiff_Amount__c);
             } else {
                 res.put('paymentReqId',paymentRequestId);
             }
@@ -233,6 +220,7 @@ public without sharing class Partner_PaymentRequestService {
             res.put('totalAmount', monthlyAmount + yearlyAmount + twoYearlyAmount);
             res.put('inboundPercent',inboundPercent);
             res.put('outboundPercent',outboundPercent);
+
             res.put('status', 'success');
             return res;
         } catch (Exception e) {
@@ -256,8 +244,6 @@ public without sharing class Partner_PaymentRequestService {
     public static void updatePaymentRequest(Id paymentRequestId, 
                                             Decimal mdfAmount, 
                                             List<Id> selectedMDFs, 
-                                            Decimal spiffAmount, 
-                                            Id spiffId,
                                             Id invoiceFileVerId, 
                                             String invoiceCurrency, 
                                             String invoiceNumber, 
@@ -266,20 +252,14 @@ public without sharing class Partner_PaymentRequestService {
             Payment_Request__c paymentRequestToUpdate = new Payment_Request__c(
                     Id = paymentRequestId, 
                     MDF_Amount__c = 0, 
-                    Spiff_Amount__c = 0, 
-                    Spiff__c = spiffId,
                     Invoice_Content_Version_Id__c = invoiceFileVerId, 
                     Invoice_Currency__c = invoiceCurrency,
                     Invoice_Date__c = invoiceDate,
                     Invoice_Number__c = invoiceNumber
                 );
             if(mdfAmount != null && mdfAmount > 0) paymentRequestToUpdate.MDF_Amount__c = mdfAmount;
-            if(spiffAmount != null && spiffAmount > 0) paymentRequestToUpdate.Spiff_Amount__c = spiffAmount;
             Database.update(paymentRequestToUpdate);
             if(selectedMDFs != null && !selectedMDFs.isEmpty()) updateRelatedMDFs(paymentRequestId, selectedMDFs);
-            if(spiffId != null) {
-                connectSpiffToPR(spiffId, paymentRequestId);
-            }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
         }
@@ -298,14 +278,12 @@ public without sharing class Partner_PaymentRequestService {
     public static void submitForApproval(Id paymentRequestId, 
                                         Decimal mdfAmount, 
                                         List<Id> selectedMDFs, 
-                                        Decimal spiffAmount, 
-                                        Id spiffId, 
                                         Id invoiceFileVerId, 
                                         String invoiceCurrency, 
                                         String invoiceNumber, 
                                         Date invoiceDate){
         try {
-            updatePaymentRequest(paymentRequestId, mdfAmount, selectedMDFs, spiffAmount, spiffId, invoiceFileVerId, invoiceCurrency, invoiceNumber, invoiceDate);
+            updatePaymentRequest(paymentRequestId, mdfAmount, selectedMDFs, invoiceFileVerId, invoiceCurrency, invoiceNumber, invoiceDate);
             Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();          
             req.setObjectId(paymentRequestId);
             req.setProcessDefinitionNameOrId('Payment_Request_Approval_Process');
@@ -343,7 +321,7 @@ public without sharing class Partner_PaymentRequestService {
     }
 
     // create new payment request
-    private static Id saveNewPaymentRequest(User runningUser, Id partnerCompanyId, Date paymentRequestDate, Decimal monthlyAmount, Decimal yearlyAmount, Decimal twoYearlyAmount){
+    private static Payment_Request__c saveNewPaymentRequest(User runningUser, Id partnerCompanyId, Date paymentRequestDate, Decimal monthlyAmount, Decimal yearlyAmount, Decimal twoYearlyAmount){
         String partnerCompanyName = runningUser.Account.Name;
         Id cpmId = runningUser.ManagerId;
         Payment_Request__c newPaymentRequest = new Payment_Request__c();
@@ -356,7 +334,32 @@ public without sharing class Partner_PaymentRequestService {
         newPaymentRequest.Total_Commission_Amount__c = monthlyAmount + yearlyAmount + twoYearlyAmount;
         newPaymentRequest.OwnerId = runningUser.Id;
         newPaymentRequest.Month__c = paymentRequestDate.toStartOfMonth();
+        Spiff__c spiff = getSpiff(partnerCompanyId, paymentRequestDate);
+        newPaymentRequest.Spiff_Amount__c = spiff != null ? spiff.Amount__c : 0;
+        newPaymentRequest.Spiff__c = spiff != null ? spiff.Id : null;
         Database.insert(newPaymentRequest);
-        return newPaymentRequest.Id;
+        if(spiff != null) {
+            connectSpiffToPR(spiff.Id, newPaymentRequest.Id);
+        }
+        return newPaymentRequest;
+    }
+
+    public static Spiff__c getSpiff(Id partnerCompanyId, Date requestedMonth){
+        Date spiffDate = getQuarterStartDate(requestedMonth);
+        list<Spiff__c> spiff_list = [select Id, Amount__c, Spiff_Date__c from Spiff__c 
+                                        where Channel_Partner__c =: partnerCompanyId 
+                                        and Spiff_Date__c >= 2022-04-01
+                                        and Spiff_Date__c <=: spiffDate 
+                                        and Payment_Request__c = null
+                                        order by Spiff_Date__c DESC limit 1];
+                                        /*
+                                        populate the Spiff on the payment request for the last month of the spiff month quarter.
+                                        For example: Q2.22 (April - June), auto-populate the spiff amount of Q2 (spiff date is 1-Apr-2022) in the Payment Request of June 2022 (requested in July).
+                                         */
+        if(spiff_list.isEmpty()){
+            return null;
+        } else {
+            return spiff_list[0];
+        }
     }
 }

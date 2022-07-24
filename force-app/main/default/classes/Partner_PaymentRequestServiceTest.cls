@@ -130,17 +130,13 @@ public without sharing class Partner_PaymentRequestServiceTest {
             Partner_PaymentRequestService.updatePaymentRequest(prList.get(0).Id, //Id paymentRequestId
                                                                 300, //Decimal mdfAmount
                                                                 new List<Id>{pma.Id}, //List<Id> selectedMDFs
-                                                                200, //Decimal spiffAmount
                                                                 null, //Id invoiceFileVerId
-                                                                null, //Id spiffId
                                                                 'USD', //String invoiceCurrency
                                                                 '1000', //String invoiceNumber
                                                                 Date.today()); //Date invoiceDate
             Partner_PaymentRequestService.submitForApproval(prList.get(0).Id, //Id paymentRequestId
                                                             300, //Decimal mdfAmount
                                                             null, //List<Id> selectedMDFs
-                                                            200, //Decimal spiffAmount
-                                                            null, //Id spiffId
                                                             null, //Id invoiceFileVerId
                                                             'USD', //String invoiceCurrency
                                                             '1000', //String invoiceNumber
