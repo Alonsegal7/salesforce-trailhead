@@ -2,6 +2,7 @@ trigger OnOpportunityLineItemUpdate on OpportunityLineItem (after insert, after 
     if(Trigger.isInsert && Trigger.isAfter && OpportunityLineItemHandler.isTriggerFire){
         //Set<Id> qliIds = Trigger.newMap.keyset();
         OpportunityLineItemHandler.sync(Trigger.newMap);
+        OpportunityLineItemHandler.populateOpportunityFields(Trigger.newMap);
     }
     if(Trigger.isBefore && Trigger.isDelete){
         OpportunityLineItemHandler.restoreCreditCardOlis(Trigger.oldMap);

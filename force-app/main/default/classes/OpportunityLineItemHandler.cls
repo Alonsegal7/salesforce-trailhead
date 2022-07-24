@@ -39,6 +39,7 @@ public class OpportunityLineItemHandler {
             isTriggerFire = true;
         }
     }
+
     public static void restoreCreditCardOlis(map<Id,Opportunitylineitem> oldOLIs) {
         list<Opportunitylineitem> olisToInsert= new list<Opportunitylineitem>();
         for(Opportunitylineitem oli: oldOLIs.values()){
@@ -53,5 +54,44 @@ public class OpportunityLineItemHandler {
         if(!olisToInsert.isEmpty())
             insert olisToInsert;
 
+    }
+
+    /*  Only After Insert
+        Transfer PB logic to Code:
+            Process Builder Name: Opportunity Line Item Created
+        Related Magic 2.0 item:
+            https://monday.monday.com/boards/2016847993/pulses/2949048428
+        Object: OpportunityLineItem
+            Update Opportunity fields while a new OLI is created
+    */
+    public static void populateOpportunityFields(Map<Id, OpportunityLineItem> newOlisMap){
+        Set<Id> parentOppIds = new Set<Id>();
+        List<Opportunity> oppUpdate = new List <Opportunity>();
+        for(OpportunityLineItem oli : newOlisMap.values()){
+            if(oli.ListPrice != null){
+                parentOppIds.add(oli.OpportunityId);
+            }
+        }
+        
+        if(!parentOppIds.isEmpty()){
+            for(Opportunity opp : [SELECT Id, Name, Expiration_Date__c, PS_Start_Date__c, Price_Per_Hour__c,
+                                    (SELECT Id, Name, Expiration_Date__c, OpportunityId, PS_Start_Date__c, ListPrice FROM OpportunityLineItems) 
+                                    FROM Opportunity WHERE Id IN: parentOppIds]){
+                for(OpportunityLineItem oli : opp.Opportunitylineitems){
+                    if(oli.OpportunityId == opp.Id){
+                        opp.Expiration_Date__c = oli.Expiration_Date__c;
+                        opp.PS_Start_Date__c = oli.PS_Start_Date__c;
+                        opp.Price_Per_Hour__c = oli.ListPrice;
+                        oppUpdate.add(opp);
+                    }
+                }
+            }
+        }
+
+        if(!oppUpdate.isEmpty()){
+            isTriggerFire = false;
+            update oppUpdate;
+            isTriggerFire = true;
+        }
     }
 }
