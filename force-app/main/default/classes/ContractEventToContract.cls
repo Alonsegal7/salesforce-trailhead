@@ -174,7 +174,7 @@ public with sharing class ContractEventToContract {
             oppsToUpdate.add(opp);
         }
         if (!oppsToUpdate.isEmpty()) {
-            update oppsToUpdate;
+            Utilities.updateAndRetry(oppsToUpdate);
         }
     }catch(Exception e){
         Utilities.sendDebugEmail('Error in ContractEventCreateNewContract.updateContractArrChangeToOpenOps ',e,e.getMessage());  
@@ -203,22 +203,7 @@ public with sharing class ContractEventToContract {
             this.accToUpdateList = accToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            try {
-                Database.update(accToUpdateList);
-            }      
-            catch (Exception ex) {
-                if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
-                    try {
-                        Database.update(accToUpdateList); 
-                    }
-                    catch (Exception e) {
-                        System.debug('Message: ' + e.getMessage());
-                    }
-                }
-                else {
-                    System.debug('Message: ' + ex.getMessage());
-                }
-            }
+            Utilities.updateAndRetry(accToUpdateList);
         }
     }
 
@@ -228,22 +213,7 @@ public with sharing class ContractEventToContract {
             this.contractToUpdateList = contractToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            try {
-                Database.update(contractToUpdateList);
-            }      
-            catch (Exception ex) {
-                if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
-                    try {
-                            Database.update(contractToUpdateList);  
-                    }
-                    catch (Exception e) {
-                        System.debug('Message: ' + e.getMessage());
-                    }
-                }
-                else {
-                    System.debug('Message: ' + ex.getMessage());
-                }
-            }
+            Utilities.updateAndRetry(contractToUpdateList);
         }
     }
     private class updateValuesToCreatedContract implements System.Queueable {

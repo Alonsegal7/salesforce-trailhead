@@ -122,6 +122,28 @@ public without sharing class Utilities {
             }
         }
     }
+
+    public static void updateAndRetry(List<SObject> recordsToUpdate ) {
+        try {
+            update recordsToUpdate;
+        }      
+        catch (Exception ex) {
+            if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
+                try {
+                    update recordsToUpdate; 
+                }
+                catch (Exception e) {
+                    System.debug('Message: ' + e.getMessage());
+                }
+            }
+            else {
+                System.debug('Message: ' + ex.getMessage());
+            }
+        }
+    }
+
+
+
     public static String setFirstLetterUpper(String str){
         return str.substring(0,1).toUpperCase() + str.substring(1,str.length());
     }
