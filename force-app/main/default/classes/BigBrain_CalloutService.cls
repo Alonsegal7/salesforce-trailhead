@@ -56,7 +56,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     public void execute(SchedulableContext SC) {
         try{
             Utilities.cleanFlexQueue();
-            Database.executeBatch(this, BATCH_SIZE);
+            Database.executeBatch(this, this.BATCH_SIZE);
         } catch(Exception e){
             Utilities.sendEmail('Error in BigBrain_CalloutService execute schedule: ',e.getMessage()+ ' ' + e.getStackTraceString(), new list<string>{'kseniasm@monday.com'});   
         }
@@ -67,8 +67,8 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     public Database.QueryLocator start(Database.BatchableContext BC){
         try {
             // we use global describe to get all the fields for the query
-            List<String> fields = new List<String>(DescribeService.getSObjDescribe(sObjectType_forBatch).fields.getMap().keySet());
-            String query = 'SELECT ' + String.join(fields, ',') + ' FROM Opportunity where Need_Sync_to_BB__c = true order by LastModifiedDate ASC limit ' + string.valueOf(START_QUERY_LIMIT);
+            List<String> fields = new List<String>(DescribeService.getSObjDescribe(this.sObjectType_forBatch).fields.getMap().keySet());
+            String query = 'SELECT ' + String.join(fields, ',') + ' FROM Opportunity where Need_Sync_to_BB__c = true order by LastModifiedDate ASC limit ' + string.valueOf(this.START_QUERY_LIMIT);
             System.debug('BigBrain_CalloutService batch start query: ' + query);
             return Database.getQueryLocator(query);
         } catch(Exception e){
