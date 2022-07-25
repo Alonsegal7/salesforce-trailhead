@@ -1,12 +1,17 @@
 public without sharing class BigBrain_CalloutService implements Database.Batchable<sObject>,Schedulable,Database.AllowsCallouts {
 
     /*link to design chart: https://lucid.app/lucidchart/5803c1f3-1ee7-4e05-b364-15c1d6212b89/edit?invitationId=inv_dd4cd748-7d62-4dd2-acb2-03e46696a2db */
-    private static final Integer BATCH_SIZE = 10;
+    private Integer BATCH_SIZE = 10;
+    private Integer START_QUERY_LIMIT = 200;
     private string sObjectType_forBatch = 'Opportunity';
 
-    /*public BigBrain_CalloutService(String sObjectType){
-        this.sObjectType_forBatch = sObjectType;
-    }*/
+    public BigBrain_CalloutService(){
+    }
+
+    public BigBrain_CalloutService(Integer size, Integer start_limit){ //for manual runs
+        this.BATCH_SIZE = size;
+        this.START_QUERY_LIMIT = start_limit;
+    }
 
     public static map<string,Schema.DescribeSObjectResult> bigBrain_Callout_Objs_Describe {
         get {
@@ -63,7 +68,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         try {
             // we use global describe to get all the fields for the query
             List<String> fields = new List<String>(DescribeService.getSObjDescribe(sObjectType_forBatch).fields.getMap().keySet());
-            String query = 'SELECT ' + String.join(fields, ',') + ' FROM Opportunity where Need_Sync_to_BB__c = true order by LastModifiedDate ASC limit 200';
+            String query = 'SELECT ' + String.join(fields, ',') + ' FROM Opportunity where Need_Sync_to_BB__c = true order by LastModifiedDate ASC limit ' + string.valueOf(START_QUERY_LIMIT);
             System.debug('BigBrain_CalloutService batch start query: ' + query);
             return Database.getQueryLocator(query);
         } catch(Exception e){
