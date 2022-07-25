@@ -68,7 +68,7 @@ public with sharing class OpportunityForecastCTRL_Test {
         Opportunity opp = [select id,USD_exchange_rate__c,CurrencyIsoCode,Pricing_Version__c,SyncedQuoteID from opportunity limit 1];
         string data = '[{"sku":"CORE-PRO","id":1,"price":16,"error":"","productName":"Pro Plan","quantity":"20","discount":0,"total":3840,"crrncy":"USD","originalListPrice":16,"netUnit":16}]';
 
-        list<quotelineitem> qlis = OpportunityForecastCTRL.insertForecastQuote(opp.id,data,'Pro');
+        list<quotelineitem> qlis = OpportunityForecastCTRL.insertForecastQuote(opp.id,data,'Pro','New Contract');
         System.assertEquals(qlis.size(), 1);
     }
 }

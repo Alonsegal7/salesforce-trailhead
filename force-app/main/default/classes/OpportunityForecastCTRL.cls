@@ -12,7 +12,7 @@ public without sharing class OpportunityForecastCTRL {
    @AuraEnabled
    public static Opportunity getOppDetails(string oppId){
     try {
-     Opportunity opp = [select id,Expected_Plan_Tier__c,account.plan_tier__c,Prior_ARR__c, USD_exchange_rate__c,SyncedQuoteID, CurrencyIsoCode, Pricing_Version__c, DH_Expected_Plan_Tier__c, name from Opportunity where id =: oppId];
+     Opportunity opp = [select id,Expected_Quote_Type__c,Expected_Plan_Tier__c,account.plan_tier__c,Prior_ARR__c, USD_exchange_rate__c,SyncedQuoteID, CurrencyIsoCode, Pricing_Version__c, DH_Expected_Plan_Tier__c, name from Opportunity where id =: oppId];
      return opp;
     } catch (Exception e) {
         throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
@@ -20,8 +20,9 @@ public without sharing class OpportunityForecastCTRL {
    }
    
    @AuraEnabled
-   public static list<quotelineitem> insertForecastQuote(Id oppId, string productsData,string tier){
+   public static list<quotelineitem> insertForecastQuote(Id oppId, string productsData,string tier, string contractType){
     try {
+        string conType = contractType=='Pro-rated'? 'Pro-rated- Additional Seats':contractType;
         Opportunity oppty = getOppDetails(oppId);
         Map<String, Map<String,Object>> productsMap = parseProductResponse(productsData);
         List<String> relevantSKUs = new List<String>();
@@ -37,7 +38,7 @@ public without sharing class OpportunityForecastCTRL {
                 name='Forecast Quote #' + string.valueof(Math.Random()).right(6),
                 OpportunityId = oppty.Id,
                 Document_Type__c = 'Forecast',
-                Quote_Type__c = 'New Contract',
+                Quote_Type__c = conType,
                 DH_Tier__c = tier,
                 Duration__c = 12,
                 DH_Period__c = 'Yearly',
@@ -81,7 +82,7 @@ public without sharing class OpportunityForecastCTRL {
                     Quantity=(Double.valueof(productsMap.get(prod).get('quantity')))*12));
             }
 
-            if (oppty.prior_arr__c != null) {
+            if (oppty.prior_arr__c != null && conType!='Pro-rated- Additional Seats') {
                 //add Current Account ARR as QLI with negative ammount - contract arr
                 qlisToCreate.add(new QuoteLineItem(
                     QuoteId=quote.Id,
@@ -96,8 +97,7 @@ public without sharing class OpportunityForecastCTRL {
                 insert qlisToCreate;
             }
 
-            oppsToUpdate.add(new opportunity(id=oppty.Id,
-            SyncedQuoteId=quote.Id));
+            oppsToUpdate.add(new opportunity(id=oppty.Id,SyncedQuoteId=quote.Id,Expected_Quote_Type__c=contractType));
 
             if (!oppsToUpdate.isempty()) {
                 update oppsToUpdate;

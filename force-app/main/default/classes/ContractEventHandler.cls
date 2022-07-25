@@ -57,8 +57,7 @@ public with sharing class ContractEventHandler {
                 Set<String> quoteFieldNames = quoteFieldMap.keySet();
                 String Set_Joined_Quote = String.join((Iterable<String>)quoteFieldNames, ' ,Quote.');
                 String qry = Set_Joined_QLI+', '+'Quote.'+Set_Joined_Quote;
-                //qry = qry.replaceAll('[(){};\\"\']', '');
-                system.debug('qry'+qry);
+                
                 List<QuoteLineItem> quoteQlis = Database.query('select ' + qry + ' from QuoteLineItem WHERE Quote.Id IN: quotesToHandle');
                 Map<Id, List<QuoteLineItem>> qlisMap = new Map<Id, List<QuoteLineItem>>();
                 //this map is used for getting the recuring line item (crrntly alwys will be licnse) of the quote to add the added seats to the contract
