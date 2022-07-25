@@ -93,15 +93,26 @@ public without sharing class Opportunity_StampsService {
         Fields: Is_GB_when_converted__c and Expected_Plan_Name__c and Is_Potential_GB_Opportunity__c and CreatedDate
     */
     public static void updatedGreenBucketConverted(List<Opportunity> newOpps, Map<Id,Opportunity> oldMap){
+        Boolean updateOppFields = false;
         for(Opportunity opp : newOpps){
             Date createdDateComp = null;
             createdDateComp = Date.newInstance(2021, 3, 6);
             /*  1st Condition --> insert only + Partner RT
                 2nd Condition --> insert & update + CreatedDate > 6.3.2021 + Is_GB_when_converted__c = null
             */
-            if((oldMap == null && opp.RecordType.DeveloperName == 'Partner_Opportunity' && opp.Expected_Plan_Name__c != null)
-                || 
-                (opp.Expected_Plan_Name__c != oldMap.get(opp.Id).Expected_Plan_Name__c && opp.Is_GB_when_converted__c == null && opp.CreatedDate > createdDateComp)){
+            if(oldMap == null){
+                if(opp.RecordType.DeveloperName == 'Partner_Opportunity' && opp.Expected_Plan_Name__c != null){
+                    updateOppFields = true;
+                }
+            }
+
+            else{
+                if((opp.Expected_Plan_Name__c != oldMap.get(opp.Id).Expected_Plan_Name__c && opp.Is_GB_when_converted__c == null && opp.CreatedDate > createdDateComp)){
+                    updateOppFields = true;
+                }
+            }
+
+            if(updateOppFields == true){
                 if(opp.Is_Potential_GB_Opportunity__c == true){
                     opp.Is_GB_when_converted__c = 'True';
                 }
@@ -109,6 +120,7 @@ public without sharing class Opportunity_StampsService {
                 else{
                     opp.Is_GB_when_converted__c = 'False';
                 }
+                updateOppFields = false;
             }
         }
     }
