@@ -16,7 +16,7 @@ public without sharing class Opportunity_Calculate_ARR {
                     opp.Claimed_ARR__c = opp.Product_ARR__c; 
                 }
             }
-             else if(opp.CC_Products_ARR_Sum__c!=oldOpps.get(opp.Id).CC_Products_ARR_Sum__c){//dosn't have quote
+             else if((opp.CC_Products_ARR_Sum__c!=oldOpps.get(opp.Id).CC_Products_ARR_Sum__c) && opp.Billing_Ids__c==null){//dosn't have quote and is by new cc claim infra (w/o billing ids)
                 opp.Claimed_ARR__c = opp.CC_Products_ARR_Sum__c;
                 opp.Expected_ARR__c = opp.CC_Products_ARR_Sum__c;
             }
