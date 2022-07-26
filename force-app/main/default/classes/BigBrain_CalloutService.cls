@@ -1,16 +1,34 @@
 public without sharing class BigBrain_CalloutService implements Database.Batchable<sObject>,Schedulable,Database.AllowsCallouts {
-
-    /*link to design chart: https://lucid.app/lucidchart/5803c1f3-1ee7-4e05-b364-15c1d6212b89/edit?invitationId=inv_dd4cd748-7d62-4dd2-acb2-03e46696a2db */
+    /*link to design chart: 
+    https://lucid.app/lucidchart/5803c1f3-1ee7-4e05-b364-15c1d6212b89/edit?invitationId=inv_dd4cd748-7d62-4dd2-acb2-03e46696a2db 
+    */
     private Integer BATCH_SIZE = 10;
     private Integer START_QUERY_LIMIT = 200;
-    private string sObjectType_forBatch = 'Opportunity';
+    private string SOBJECT_TYPE = 'Opportunity';
 
     public BigBrain_CalloutService(){
     }
 
-    public BigBrain_CalloutService(Integer size, Integer start_limit){ //for manual runs
+    /* to schedule or execute a single batch run:
+        scheduled job - you need to set the batch size, start query limit and sobject type in the constructor
+        BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 500, 'Opportunity');
+        String sch = '0 15 * * * ?';
+        system.schedule('Sync Opps to BB', sch, p1);
+
+        single batch - you need to set the start query limit and sobject type in the constructor and batch size in the execute
+        BigBrain_CalloutService p2 = new BigBrain_CalloutService(200, 'Account');   
+        Database.executeBatch(p2, 20);     
+     */
+
+    public BigBrain_CalloutService(Integer size, Integer start_limit, String sobject_type){ 
         this.BATCH_SIZE = size;
         this.START_QUERY_LIMIT = start_limit;
+        this.SOBJECT_TYPE = sobject_type;
+    }
+
+    public BigBrain_CalloutService(Integer start_limit, String sobject_type){ 
+        this.START_QUERY_LIMIT = start_limit;
+        this.SOBJECT_TYPE = sobject_type;
     }
 
     public static map<string,Schema.DescribeSObjectResult> bigBrain_Callout_Objs_Describe {
@@ -67,9 +85,10 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     public Database.QueryLocator start(Database.BatchableContext BC){
         try {
             // we use global describe to get all the fields for the query
-            List<String> fields = new List<String>(DescribeService.getSObjDescribe(this.sObjectType_forBatch).fields.getMap().keySet());
-            String query = 'SELECT ' + String.join(fields, ',') + ' FROM Opportunity where Need_Sync_to_BB__c = true order by LastModifiedDate ASC limit ' + string.valueOf(this.START_QUERY_LIMIT);
-            System.debug('BigBrain_CalloutService batch start query: ' + query);
+            List<String> fields = new List<String>(DescribeService.getSObjDescribe(this.SOBJECT_TYPE).fields.getMap().keySet());
+            String query = 'SELECT ' + String.join(fields, ',');
+            query += ' FROM '+this.SOBJECT_TYPE;
+            query += ' WHERE Need_Sync_to_BB__c = true order by LastModifiedDate ASC limit ' + string.valueOf(this.START_QUERY_LIMIT);
             return Database.getQueryLocator(query);
         } catch(Exception e){
             Utilities.sendEmail('Error in BigBrain_CalloutService start: ',e.getMessage()+ ' ' + e.getStackTraceString(), new list<string>{'kseniasm@monday.com'});   
@@ -93,9 +112,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     public static void sendCalloutSingleObj(Id objId, String objName){
         List<String> fields = new List<String>(DescribeService.getSObjDescribe(objName).fields.getMap().keySet());
         String query = 'SELECT ' + String.join(fields, ',') + ' FROM ' + objName + ' where Id = \'' + objId + '\'';
-        System.debug('BigBrain_CalloutService sendCalloutSingleObj query: ' + query);
         List<SObject> obj_list = database.query(query);
-        System.debug('BigBrain_CalloutService sendCalloutSingleObj obj_list: ' + obj_list);
         if(!obj_list.isEmpty()) sendUpdateCalloutToBB(obj_list);
     }
 
@@ -112,7 +129,6 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         request.setTimeout(120000);
         if (!Test.isRunningTest()){
             HttpResponse response = http.send(request); 
-            System.debug('BigBrain_CalloutService batch execute sendUpdateCalloutToBB response status code: ' + response.getStatusCode() + ' ; body: '+ response.getBody());   
         }
     }
 
@@ -122,15 +138,12 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
             for(sobject rec: sobjList){
                 rec.put('Need_Sync_to_BB__c', value);
             }
-            System.debug('BigBrain_CalloutService batch execute setNeedSyncToBB sobjList: ' + sobjList);
         } else {
             list<sobject> sobjectsToUpdate = new list<sobject>();
             for(sobject rec: sobjList){
                 String rec_json = '{"attributes":{"type":"'+string.valueof(rec.getSObjectType())+'"},"Id":"'+string.valueOf(rec.get('Id'))+'","Need_Sync_to_BB__c":"'+string.valueOf(value)+'"}';
-                System.debug('BigBrain_CalloutService batch execute setNeedSyncToBB rec_json: ' + rec_json);
                 sobjectsToUpdate.add((sobject)JSON.deserialize(rec_json, sobject.class));
             }
-            System.debug('BigBrain_CalloutService batch execute setNeedSyncToBB sobjectsToUpdate: ' + sobjectsToUpdate);
             Database.update(sobjectsToUpdate);
         }
     }
@@ -145,7 +158,6 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
                 recordsToSendCallout_list.add(rec);
             }
         }
-        System.debug('BigBrain_CalloutService manualSync recordsToSendCallout_list: ' + recordsToSendCallout_list);
         System.enqueueJob(new sendCalloutToBBQueue(recordsToSendCallout_list));
     }
 
@@ -187,7 +199,6 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         if(!recordsToUpdate_list.isEmpty()){
             setNeedSyncToBB(recordsToUpdate_list, true, runUpdateDML); // runUpdateDML = Trigger.isAfter
         }
-        System.debug('BigBrain_CalloutService markRecordsToSync recordsToUpdate_list: ' + recordsToUpdate_list);
         return recordsToUpdate_list;
     }
 
