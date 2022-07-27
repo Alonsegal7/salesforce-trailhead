@@ -1,4 +1,9 @@
 <template>
+  <template if:true={isLoading}>
+    <div class="slds-is-relative" style="min-height: 50vh">
+      <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+    </div>
+  </template>
   <!-- indication on existing handover -->
   <template if:true={hasExistingHandover}>
     <div class="slds-text-align_center">
@@ -16,14 +21,8 @@
   </template>
   <template if:false={hasExistingHandover}>
     <lightning-record-edit-form object-api-name="Handover__c" onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}>
-      <template if:true={isLoading}>
-        <div class="slds-is-relative" style="min-height: 50vh">
-          <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
-        </div>
-      </template>
       <lightning-messages></lightning-messages>
       <!-- Intro Section -->
-      <template if:false={isLoading}>
         <template if:true={hideSubmitButton}><!-- running from Close Process -->
           <lightning-layout horizontal-align="space">
             <lightning-layout-item padding="around-small">
@@ -348,7 +347,6 @@
             </lightning-accordion-section>
             <!-- Section E - Products -->
             <lightning-accordion-section name="E" label="monday.com Products">
-              <template if:false={isLoading}>
                 <!-- table headers -->
                 <div class="slds-p-around_small">
                   <div class="slds-box">
@@ -391,7 +389,6 @@
                     </lightning-layout>
                   </div>
                 </div>
-              </template>
             </lightning-accordion-section>
             <!-- Section F - Services and Customer Requirements -->
             <lightning-accordion-section name="F" label="Services and Customer Requirements">
@@ -433,7 +430,6 @@
             </div>
           </template>
         </template>
-      </template>
     </lightning-record-edit-form>
   </template>
 </template>

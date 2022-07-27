@@ -20,8 +20,11 @@ import SYNCED_QUOTE_PRICING_VERSION from '@salesforce/schema/Opportunity.SyncedQ
 import SYNCED_QUOTE_TYPE from '@salesforce/schema/Opportunity.SyncedQuote.Document_Type__c';
 import OPP_ARR from '@salesforce/schema/Opportunity.Green_Bucket_ARR_V2__c'; 
 import EXCHANGE_RATE from '@salesforce/schema/Opportunity.USD_exchange_rate__c'; 
+import CURRENT_ACCOUNT_CONTRACT from '@salesforce/schema/Opportunity.Account.Active_Contract__c';
+import EXPECTED_QUOTE_TYPE from '@salesforce/schema/Opportunity.Expected_Quote_Type__c';
 
-const fields = [SYNCED_QUOTE_TYPE,SYNCED_QUOTE_PRICING_VERSION,EXCHANGE_RATE,OPP_ARR,PRICING_VERSION,CURRENCYISO,PRIOR_ARR,EXPECTED_PLAN_TIER,CURRENT_ACCOUNT_PLAN_TIER,SYNCED_QUOTE];
+
+const fields = [EXPECTED_QUOTE_TYPE,CURRENT_ACCOUNT_CONTRACT,SYNCED_QUOTE_TYPE,SYNCED_QUOTE_PRICING_VERSION,EXCHANGE_RATE,OPP_ARR,PRICING_VERSION,CURRENCYISO,PRIOR_ARR,EXPECTED_PLAN_TIER,CURRENT_ACCOUNT_PLAN_TIER,SYNCED_QUOTE];
 
 export default class ProductsTableToFlow extends LightningElement {
 
@@ -88,7 +91,7 @@ export default class ProductsTableToFlow extends LightningElement {
     currentStateIsContract=false;
     tiersOptions;
     tierSelection;
-    priorArr;
+    priorArr = 0;
     oppExpectedPlan;
     accCurerentPlan;
     syncedQuote;
@@ -101,30 +104,37 @@ export default class ProductsTableToFlow extends LightningElement {
     syncedQuotePricingVerision;
     submitButtonPosition;
     syncedQuoteType;
+    ContractTypeVal='New Contract';
+    disableTier=false;
+    oppExpectedQuoteType;
+    isProRated=false;
+    disableContractType=false;
     
     @wire(getRecord, { recordId: '$recordId', fields: fields })
     fetchOppty({ data }) {//if is not under quote context, will not run
-        if (data) { 
+         if (data) { 
             this.oppData=data;
             this.isQuoteContext=true;
-            this.oppCurrentPriVersion = getFieldValue(data, PRICING_VERSION);//manual by user
-            this.oppCurrentCrrncy = getFieldValue(data, CURRENCYISO);//manual by user
-            this.crrncyIso = getFieldValue(data, CURRENCYISO);//manual by user
+            this.oppCurrentPriVersion = getFieldValue(data, PRICING_VERSION);
+            this.oppCurrentCrrncy = getFieldValue(data, CURRENCYISO);
+            this.crrncyIso = getFieldValue(data, CURRENCYISO);
             this.priorArr = getFieldValue(data, PRIOR_ARR);
             this.oppExpectedPlan = getFieldValue(data, EXPECTED_PLAN_TIER);
             this.accCurerentPlan = getFieldValue(data, CURRENT_ACCOUNT_PLAN_TIER);
             this.syncedQuote = getFieldValue(data, SYNCED_QUOTE);
             this.addedArr= getFieldValue(data, OPP_ARR);
             this.exchangeRate= getFieldValue(data, EXCHANGE_RATE);
-            this.syncedQuotePricingVerision=getFieldValue(data, SYNCED_QUOTE_PRICING_VERSION);//manual by user
+            this.syncedQuotePricingVerision=getFieldValue(data, SYNCED_QUOTE_PRICING_VERSION);
             this.syncedQuoteType=getFieldValue(data, SYNCED_QUOTE_TYPE);
+            this.oppExpectedQuoteType=getFieldValue(data, EXPECTED_QUOTE_TYPE);
+            this.contractId=getFieldValue(data, CURRENT_ACCOUNT_CONTRACT);
             this.pricingVersionForHtml = this.oppCurrentPriVersion;
             this.resetValues();// for cases that we change pricing version or currency, reset on load, the calculation will run on draft on the runForecastProcessOnLoad process
             this.defineTier();
-            this.runForecastProcessOnLoad();   
+            this.defineQuoteType();
+            this.runForecastProcessOnLoad();  
         }
     }
-    
     connectedCallback(){
         if(this.context=='quote'){  
             //for forecast type, show values as number and not currency
@@ -142,6 +152,11 @@ export default class ProductsTableToFlow extends LightningElement {
                 { label: 'Pro', value: 'Pro'},
                 { label: 'Enterprise', value: 'Enterprise'},    
             ];
+
+            this.contractTypOptions = [
+                { label: 'New Contract', value: 'New Contract'},
+                { label: 'Pro-Rated', value: 'Pro-rated'}  
+            ];
         }
 
         if(this.context=='PartnerSOR'){
@@ -149,12 +164,38 @@ export default class ProductsTableToFlow extends LightningElement {
             this.tierSelection = this.Products.find(({ Product_Identifier__c }) => Product_Identifier__c === JSON.parse(this.jsonSkusData).skus[0].sku).Subscription_main_tier__c;
             if (this.contractId!=null) {
                 this.currentStateIsContract=true;
-                this.getContractProduct();
+                 this.getContractProduct();
             }
+           
             if (this.contractId==null) {
                 this.setTableValues();
             }
         }
+    }
+
+    handleContractTypeChange(event){
+        this.ContractTypeVal=event.detail.value;
+        if (this.ContractTypeVal=='New Contract') {
+            this.handleNewContract();
+        }   
+        if (this.ContractTypeVal=='Pro-rated') {
+            this.handleProRated();
+        }
+    }
+
+    handleProRated(){
+        this.isProRated=true;
+        this.disableTier=true;
+        this.tierSelection=this.accCurerentPlan;
+        this.defineDealhubProductRequest(this.tierSelection,this.oppCurrentCrrncy,this.oppCurrentPriVersion);
+    }
+
+    handleNewContract(){
+        this.disableTier=false;
+        this.isProRated=false;
+        this.resetValues();
+        this.defineTier();
+        this.defineDealhubProductRequest(this.tierSelection,this.oppCurrentCrrncy,this.oppCurrentPriVersion);
     }
     
     handleCellchange(event) { 
@@ -241,7 +282,7 @@ export default class ProductsTableToFlow extends LightningElement {
         }); 
     }
 
-    setTableValues(){//For psor, will run on load, and for forecast will run on wire
+    setTableValues(){
         this.data = JSON.parse(this.jsonSkusData).skus;//Parse dealhub api response
         this.data.forEach(entity => { //set values on load (also if we have exiting data, to allow additional products, init all data all the time)
             entity.productName=this.context=='quote' ? this.Products.find(({ Product_Identifier__c }) => Product_Identifier__c === entity.sku).Short_Product_Name__c : this.Products.find(({ Product_Identifier__c }) => Product_Identifier__c === entity.sku).Name
@@ -317,7 +358,13 @@ export default class ProductsTableToFlow extends LightningElement {
                 this.totalNet+=this.data.find(({ sku })  => sku === draftVal.sku).total;  
             }
          });    
+         if(this.ContractTypeVal=='New Contract'){
          this.addedArr = this.totalNet != 0 ? this.totalNet * this.exchangeRate - this.priorArr : 0;
+         }
+
+         if(this.ContractTypeVal=='Pro-rated'){
+            this.addedArr = this.totalNet != 0 ? this.totalNet * this.exchangeRate : 0;
+         }
     }
     validateError(listOfDraftsToValidate) {
         this.getCurrentCoreAmount(this.tierSelection,listOfDraftsToValidate);
@@ -498,7 +545,7 @@ export default class ProductsTableToFlow extends LightningElement {
                 }); 
             }
             if(this.context=='quote'){
-                insertForecastQuote( {oppId: this.oppData.id, productsData: JSON.stringify(this.productsToInsert), tier: this.tierSelection}).then((res)=>{
+                insertForecastQuote( {oppId: this.oppData.id, productsData: JSON.stringify(this.productsToInsert), tier: this.tierSelection, contractType: this.ContractTypeVal}).then((res)=>{
                     if (res[0]!=null) {
                         refreshApex(this.oppData);
                         this.dispatchEvent(
@@ -565,13 +612,13 @@ export default class ProductsTableToFlow extends LightningElement {
         delete obj[oldKey];
         }
 
-    getContractProduct(){//for pro-rated types
+        getContractProduct(){//for pro-rated types
         getCurrentContractProduct({contractId: this.contractId}).then((conProds)=>{
             if(conProds[0]!=null){ 
                 this.currentContractCoreProductQty=conProds.find(({ SKU__c }) => SKU__c === 'CORE-PRO' || SKU__c === 'CORE-ENT' || SKU__c === 'CORE-STD').Quantity__c;
                 this.coreProductQty = this.currentContractCoreProductQty;
                 this.setCurrentStateFields(conProds);//convert response to context object
-                this.setTableValues();
+                if(this.context='PartnerSOR'){this.setTableValues();} // json price sent from flow - go direct to set table function
                 }
 
         }).catch(error => {
@@ -585,18 +632,20 @@ export default class ProductsTableToFlow extends LightningElement {
         }); 
     }
     setTableWidth(){
-        this.columns[0].initialWidth=this.productColumnWidth=parseInt(this.productColumnWidth);
-        this.columns[1].initialWidth=this.unitPriceColumnWidth=parseInt(this.unitPriceColumnWidth);
-        this.columns[2].initialWidth=this.quantityColumnWidth= parseInt(this.quantityColumnWidth);
-        this.columns[3].initialWidth=this.discountColumnWidth= parseInt(this.discountColumnWidth);
-        this.columns[4].initialWidth=this.totalColumnWidth=parseInt(this.totalColumnWidth);
-
         if (this.context=='quote') {
+            if (window.screen.width>1800) {//for desktop screen, set the total for 210
+                this.totalColumnWidth=210;
+            }
             this.submitButtonPosition="12";
         }
         if (this.context=='PartnerSOR') {
             this.submitButtonPosition="6";
         }
+        this.columns[0].initialWidth=this.productColumnWidth=parseInt(this.productColumnWidth);
+        this.columns[1].initialWidth=this.unitPriceColumnWidth=parseInt(this.unitPriceColumnWidth);
+        this.columns[2].initialWidth=this.quantityColumnWidth= parseInt(this.quantityColumnWidth);
+        this.columns[3].initialWidth=this.discountColumnWidth= parseInt(this.discountColumnWidth);
+        this.columns[4].initialWidth=this.totalColumnWidth=parseInt(this.totalColumnWidth);
     }
     resetValues(){
         this.totalList=0;
@@ -606,6 +655,9 @@ export default class ProductsTableToFlow extends LightningElement {
 
         if (this.oppCurrentPriVersion=="8") {//v8 pricing are v6 pricing
             this.oppCurrentPriVersion="6"
+        }
+        if (this.syncedQuotePricingVerision=="8") {//v8 pricing are v6 pricing
+            this.syncedQuotePricingVerision="6"
         }
     }
     handleTierChange(event){
@@ -652,6 +704,27 @@ export default class ProductsTableToFlow extends LightningElement {
         }
         else {
             this.tierSelection='Enterprise';
+        }
+    }
+
+
+     defineQuoteType(){
+        if(this.oppExpectedQuoteType==null || this.oppExpectedQuoteType==undefined){
+            this.ContractTypeVal=='New Contract';
+        }
+        else{
+            this.ContractTypeVal=this.oppExpectedQuoteType;
+        }
+        if(this.ContractTypeVal=='New Contract'){
+            this.disableTier=false;
+            this.isProRated=false;
+        }
+        if(this.ContractTypeVal=='Pro-rated'){
+            this.disableTier=true;
+            this.isProRated=true;
+        }
+        if(this.contractId==null || this.contractId == undefined){
+            this.disableContractType=true;
         }
     }
 }

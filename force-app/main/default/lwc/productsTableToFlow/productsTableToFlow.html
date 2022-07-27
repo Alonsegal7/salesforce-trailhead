@@ -5,13 +5,17 @@
             <lightning-layout-item padding="horizontal-small">
                 <div class="header-column">
                     <lightning-icon icon-name="standard:forecasts" alternative-text="Forecast" title="Forecast" ></lightning-icon> 
-                </div>
+                </div> 
+                 <lightning-combobox name="ContractType"
+                label="Contract Type" value={ContractTypeVal} disabled={disableContractType}
+                options={contractTypOptions} onchange={handleContractTypeChange}>
+            </lightning-combobox>
             </lightning-layout-item>
+            
             <lightning-layout-item >
                 <div class="slds-p-vertical_small">
                     <p class="slds-text-title_bold" >Forecast</p>
                 </div>
-                    
             </lightning-layout-item>
         <div class="slds-p-horizontal_small">
         </div>
@@ -19,7 +23,7 @@
                 <lightning-layout multiple-rows class="account-info">
                     <lightning-layout-item padding="horizontal-small">
                         <lightning-combobox name="tierInput"
-                        label="Tier" value={tierSelection} placeholder={chosenTier}
+                        label="Tier" value={tierSelection} placeholder={chosenTier} disabled={disableTier}
                         options={tiersOptions} onchange={handleTierChange}></lightning-combobox>
                     </lightning-layout-item>
                     <lightning-layout-item padding="horizontal-small">
@@ -44,6 +48,11 @@
                         <div class="header-column">
                             <p class="field-title">Currency</p>
                             <p><lightning-formatted-text value={oppCurrentCrrncy}></lightning-formatted-text></p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="horizontal-small" >
+                        <div if:true={isProRated} class="slds-p-vertical_small">
+                            <p class="field-title" >For pro-rated, quantities input as added seats</p>
                         </div>
                     </lightning-layout-item>
                 </lightning-layout>

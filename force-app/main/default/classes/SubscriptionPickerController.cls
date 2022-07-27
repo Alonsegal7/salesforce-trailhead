@@ -144,10 +144,10 @@ public without sharing class SubscriptionPickerController {
                             sub.Claim_Date_Co_Sell__c=datetime.now();
                         }
                     }
-                    // if(opp.Billing_Ids__c==null)
-                    //     opp.Billing_Ids__c=sub.Billing_Ids__c;
-                    // else
-                    //     opp.Billing_Ids__c+=','+sub.Billing_Ids__c;
+                    if(opp.Billing_Ids__c!=null){//If you don't have Billing ids, you are on the new cc claim infra, if you have, act as old infra (by ids)
+                        opp.Billing_Ids__c+=','+sub.Billing_Ids__c;
+                    }
+                        
                     //if(IsSandbox)//update from BB in production only
                     sub.Is_Claimed__c=true;
                 }else{
@@ -185,7 +185,7 @@ public without sharing class SubscriptionPickerController {
                 oli.Force_Delete__c=true;
             }
             system.debug('Raz Ben Ron opp.Billing_Ids__c: '+opp.Billing_Ids__c);
-            //String billingIdsTemp=opp.Billing_Ids__c;
+            String billingIdsTemp=opp.Billing_Ids__c;
             for(Subscription__c sub: subs){
                 ///disconnect subscription from opportunity
                 if(sub.Claimed_On_Opportunity__c==oppId){
@@ -203,21 +203,21 @@ public without sharing class SubscriptionPickerController {
                     sub.Opportunity_Product_Id__c=null;
                     sub.Is_Claimed__c=false;
                 }
-                ///remove id from Billing ids on oppotunity
-                // list<string> billIds=sub.Billing_Ids__c.split(',');
-                // if(billingIdsTemp!=null){
-                //     for(String bId: billIds){
-                //         integer index=billingIdsTemp.indexof(bId);
-                //         if(index>=0){//if id found
-                //             integer idLen=bId.length();
-                //             integer fullBillingIdsLen=billingIdsTemp.length();
-                //             billingIdsTemp=billingIdsTemp.substring(0,index)+billingIdsTemp.substring(math.min(index+idlen+1,fullBillingIdsLen),fullBillingIdsLen);
-                //         }
-                //     }
-                // }
+                //remove id from Billing ids on oppotunity
+                list<string> billIds=sub.Billing_Ids__c.split(',');
+                if(billingIdsTemp!=null){
+                    for(String bId: billIds){
+                        integer index=billingIdsTemp.indexof(bId);
+                        if(index>=0){//if id found
+                            integer idLen=bId.length();
+                            integer fullBillingIdsLen=billingIdsTemp.length();
+                            billingIdsTemp=billingIdsTemp.substring(0,index)+billingIdsTemp.substring(math.min(index+idlen+1,fullBillingIdsLen),fullBillingIdsLen);
+                        }
+                    }
+                }
             }
             system.debug('Raz Ben Ron olis: '+olis);
-            //opp.Billing_Ids__c=billingIdsTemp;
+            opp.Billing_Ids__c=billingIdsTemp;
 
             //connect to lates claimed subscription
             Subscription__c latestSub=getLatestClaimedSub(oppId,null,subsToUnclaim);
