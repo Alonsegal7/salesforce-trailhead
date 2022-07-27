@@ -109,22 +109,22 @@ public with sharing class Account_StampsServiceTest {
 
     @isTest
     static void shouldStampPartnerOnCreation(){
-        User partnerUser = [select Id from User Where LastName = 'Test3' limit 1];
+        Id partnerUserId = [select Id, Name from User where Profile.Name = 'Partner Community Custom' and IsActive = true and ManagerId != null and Manager.IsActive = true limit 1].Id;
         Account acc = TestObjectCreator.CreateAccount();
         acc.Pulse_Account_Id__c = '123';
-        acc.OwnerId = partnerUser.Id;
+        acc.OwnerId = partnerUserId;
         insert acc;
         acc = [SELECT Id, Partner__c FROM Account WHERE Pulse_Account_Id__c = '123' LIMIT 1];
-        system.assertEquals(partnerUser.Id, acc.Partner__c);
+        system.assertEquals(partnerUserId, acc.Partner__c);
     }
 
     @isTest
     static void shouldStampPartnerOnUpdate(){
-        User partnerUser = [select Id from User Where LastName = 'Test3' limit 1];
+        Id partnerUserId = [select Id, Name from User where Profile.Name = 'Partner Community Custom' and IsActive = true and ManagerId != null and Manager.IsActive = true limit 1].Id;
         Account acc = [select Id from Account limit 1];
-        acc.OwnerId = partnerUser.Id;
+        acc.OwnerId = partnerUserId;
         Update acc; 
         acc = [SELECT Id, Partner__c FROM Account LIMIT 1];
-        system.assertEquals(partnerUser.Id, acc.Partner__c);
+        system.assertEquals(partnerUserId, acc.Partner__c);
     }
 }
