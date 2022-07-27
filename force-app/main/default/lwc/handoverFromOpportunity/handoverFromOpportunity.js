@@ -1,6 +1,6 @@
 import { LightningElement, api, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import { getRecord, getFieldValue } from "lightning/uiRecordApi";
+import { getRecord, updateRecord, getFieldValue } from "lightning/uiRecordApi";
 import { CloseActionScreenEvent } from "lightning/actions";
 import { NavigationMixin } from "lightning/navigation";
 import { reduceErrors } from "c/ldsUtils";
@@ -742,8 +742,26 @@ export default class HandoverFromOpportunity extends NavigationMixin(
       this.dispatchEvent(errorEventToParent);
     }
   }
+
+  updateOpp(){
+    const fields = {};
+    fields['Id'] = this.recordId;
+    fields['Handed_Over__c'] = true;
+
+    const recordInput = { fields };
+
+    updateRecord(recordInput)
+        .then(() => {
+            
+        })
+        .catch(error => {
+            console.log('error updating opp with Handed_Over__c = true')
+        });
+  }
+
   handleSuccess(event) {
     try {
+      this.updateOpp();
       this.newHandoverId = event.detail.id;
       const successEventToParent = new CustomEvent("hosuccess", {
         detail: event.detail
