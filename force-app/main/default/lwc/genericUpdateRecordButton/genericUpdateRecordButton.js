@@ -9,11 +9,18 @@ export default class genericUpdateRecordButton extends LightningElement {
     @api fieldName;
     @api value;
 
+    convertStringToBoolean (str){
+        if (str == 'true')
+            return true;
+        else if (str == 'false')
+            return false;
+    }
+
     handleClick() {
         console.log('recordId: '+this.recordId);
         const fields = {};
         fields['Id'] = this.recordId;
-        fields[this.fieldName] = this.value;
+        fields[this.fieldName] = this.value == 'true' || this.value == 'false' ? this.convertStringToBoolean(this.value) : this.value;
         console.log('fields: '+JSON.stringify(fields));
         console.log('fieldName: '+this.fieldName);
         console.log('value: '+this.value);
