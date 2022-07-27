@@ -17,11 +17,6 @@ public with sharing class Account_StampsServiceTest {
         insert userRecord1;
         userRecord2.ManagerId = userRecord1.Id;
         insert userRecord2;
-        User userRecord3 = TestUtils.getUserWithoutRole(profileId);
-        userRecord3.LastName = 'Test3';
-        userRecord3.Group__c = 'Partners';
-        userRecord3.ManagerId = userRecord1.Id;
-        insert userRecord3;
         Account accountRecord = TestObjectCreator.CreateAccount();
         insert accountRecord;
         accountRecord.OwnerId = userRecord1.Id;
