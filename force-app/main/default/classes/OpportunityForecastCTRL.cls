@@ -12,7 +12,7 @@ public without sharing class OpportunityForecastCTRL {
    @AuraEnabled
    public static Opportunity getOppDetails(string oppId){
     try {
-     Opportunity opp = [select id,Expected_Quote_Type__c,Expected_Plan_Tier__c,account.plan_tier__c,Prior_ARR__c, USD_exchange_rate__c,SyncedQuoteID, CurrencyIsoCode, Pricing_Version__c, DH_Expected_Plan_Tier__c, name from Opportunity where id =: oppId];
+     Opportunity opp = [select id,account.active_contract__c,Expected_Quote_Type__c,Expected_Plan_Tier__c,account.plan_tier__c,Prior_ARR__c, USD_exchange_rate__c,SyncedQuoteID, CurrencyIsoCode, Pricing_Version__c, DH_Expected_Plan_Tier__c, name from Opportunity where id =: oppId];
      return opp;
     } catch (Exception e) {
         throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
@@ -24,13 +24,21 @@ public without sharing class OpportunityForecastCTRL {
     try {
         string conType = contractType=='Pro-rated'? 'Pro-rated- Additional Seats':contractType;
         Opportunity oppty = getOppDetails(oppId);
+        Id currAccCon = oppty.account.active_contract__c;
         Map<String, Map<String,Object>> productsMap = parseProductResponse(productsData);
         List<String> relevantSKUs = new List<String>();
+        Map<string, Contract_Product__c> conProdMap = new Map<string, Contract_Product__c>();
 
         for (String prod : productsMap.keySet()) {
             relevantSKUs.add((string)productsMap.get(prod).get('sku'));
         }
         relevantSKUs.add('ARR-BALANCE');
+
+        if (conType=='Pro-rated- Additional Seats') {//is pro-rated, get curret contract to calculate added and total seats to qli
+            for (contract_product__c conProd : getCurrentContractProduct(currAccCon)) {
+                 conProdMap.put(conProd.SKU__c,conProd);
+            }
+        }
 
         Id standardPriceBookId = [SELECT Id FROM Pricebook2 WHERE Is_Main__c = true][0].Id;
         Quote quote = new Quote(
@@ -62,7 +70,8 @@ public without sharing class OpportunityForecastCTRL {
 
 
             for (string prod : productsMap.keySet()) {
-               qlisToCreate.add(new QuoteLineItem(
+                Boolean conProdExist = isContractProductExist(string.valueof(productsMap.get(prod).get('sku')),conProdMap);
+                qlisToCreate.add(new QuoteLineItem(
                     QuoteId=quote.Id,
                     PricebookEntryId=mappedSkuCurrencyToPBE.get(productsMap.get(prod).get('sku') + (string)productsMap.get(prod).get('crrncy')),
                     UnitPrice=Double.valueof(productsMap.get(prod).get('netUnit')),
@@ -75,7 +84,8 @@ public without sharing class OpportunityForecastCTRL {
                     Discount=Double.valueof(productsMap.get(prod).get('discount')),
                     Product_Type__c='License',
                     List_Price__c=Double.valueof(productsMap.get(prod).get('price')),
-                    Seats__c=Double.valueof(productsMap.get(prod).get('quantity')),
+                    Added_Seats__c =Double.valueof(productsMap.get(prod).get('quantity')),
+                    Seats__c = conProdExist==true ? Double.valueof(productsMap.get(prod).get('quantity')) + conProdMap.get(string.valueof(productsMap.get(prod).get('sku'))).quantity__c : Double.valueof(productsMap.get(prod).get('quantity')),
                     Subtotal__c=Double.valueof(productsMap.get(prod).get('quantity'))*12*( Double.valueof(productsMap.get(prod).get('netUnit'))),
                     DealHub_Net_Price__c=Double.valueof(productsMap.get(prod).get('quantity'))*12*( Double.valueof(productsMap.get(prod).get('netUnit'))),
                     SKU__c=string.valueof(productsMap.get(prod).get('sku')),
@@ -124,7 +134,7 @@ public without sharing class OpportunityForecastCTRL {
 
    @AuraEnabled
    public static List<quotelineitem> getCurrentQuoteLineItems(Id quoteId){
-   List<quotelineitem> qlis = [select Product_Identifier_SKU__c, Tier__c,Net_Per_Unit__c,Seats__c,Discount,DealHub_Net_Price__c,List_Price__c,CurrencyIsoCode from quotelineitem where quoteid =: quoteId];
+   List<quotelineitem> qlis = [select Product_Identifier_SKU__c, Added_Seats__c,Tier__c,Net_Per_Unit__c,Seats__c,Discount,DealHub_Net_Price__c,List_Price__c,CurrencyIsoCode from quotelineitem where quoteid =: quoteId];
     return qlis;
    }
 
@@ -132,5 +142,12 @@ public without sharing class OpportunityForecastCTRL {
    public static List<contract_product__c> getCurrentContractProduct(Id contractId){
    List<contract_product__c> contProducts = [select SKU__c,Quantity__c, Net_Per_Unit__c ,List_Per_Unit__c,CurrencyIsoCode,Discount__c from contract_product__c where Recurring_Product_ARR__c>0 and contract__c =: contractId];
    return contProducts;
+   }
+
+   public static Boolean isContractProductExist(string sku, Map<string, Contract_Product__c> cprodMap){
+       if (cprodMap.get(sku)!=null) {
+           return true;
+       }
+       return false;
    }
 }

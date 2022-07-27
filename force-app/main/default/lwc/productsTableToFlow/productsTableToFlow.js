@@ -183,7 +183,7 @@ export default class ProductsTableToFlow extends LightningElement {
         }
     }
 
-    handleProRated(){
+    handleProRated(){//pro-rated quantities will be added only. we handle added and total values directly from the server (on the ctrl)
         this.isProRated=true;
         this.disableTier=true;
         this.tierSelection=this.accCurerentPlan;
@@ -591,7 +591,7 @@ export default class ProductsTableToFlow extends LightningElement {
 
         if(this.currentStateIsContract==false){//current state it quote
             sku='Product_Identifier_SKU__c';
-            quantity='Seats__c';
+            quantity= this.isProRated==true? 'Added_Seats__c': 'Seats__c';//for pro-rated, treat quantity as added seats
             discount='Discount';
             list='List_Price__c';
         }
@@ -617,9 +617,12 @@ export default class ProductsTableToFlow extends LightningElement {
             if(conProds[0]!=null){ 
                 this.currentContractCoreProductQty=conProds.find(({ SKU__c }) => SKU__c === 'CORE-PRO' || SKU__c === 'CORE-ENT' || SKU__c === 'CORE-STD').Quantity__c;
                 this.coreProductQty = this.currentContractCoreProductQty;
-                this.setCurrentStateFields(conProds);//convert response to context object
-                if(this.context='PartnerSOR'){this.setTableValues();} // json price sent from flow - go direct to set table function
+               
+                if(this.context='PartnerSOR'){
+                    this.setTableValues(); // json price sent from flow - go direct to set table function
+                    this.setCurrentStateFields(conProds);//convert response to context object
                 }
+            }
 
         }).catch(error => {
             this.dispatchEvent(
@@ -708,7 +711,7 @@ export default class ProductsTableToFlow extends LightningElement {
     }
 
 
-     defineQuoteType(){
+     defineQuoteType(){//define values on load
         if(this.oppExpectedQuoteType==null || this.oppExpectedQuoteType==undefined){
             this.ContractTypeVal=='New Contract';
         }
