@@ -9,6 +9,7 @@ public with sharing class CoSellRequestServiceTest {
         Account a = TestObjectCreator.CreateAccount();
         a.Co_Sell_Leader__c = 'Sales';
         insert a;
+        Id partnerUserId = [select Id, Name from User where Profile.Name = 'Partner Community Custom' and IsActive = true and ManagerId != null and Manager.IsActive = true limit 1].Id;
 
         List<Opportunity> oppsList = new List<Opportunity>();
         Opportunity opp1 = TestObjectCreator.CreateOpp(a);
@@ -19,15 +20,16 @@ public with sharing class CoSellRequestServiceTest {
         opp1.Expected_Plan_Seats__c = 40;
         opp1.Expected_Plan_Tier__c = 'Enterprise';
         opp1.Expected_Plan_Period__c = 'Yearly';
-        opp1.RecordTypeId = partnerOppRT;
+        opp1.RecordTypeId = internalOppRT;
         opp1.StageName = 'Closed Won';
         opp1.Transition_to_GB__c = true;
         opp1.Claimed_ARR__c = 10000;
+        opp1.OwnerId = u.id;
         opp2.Expected_Plan_Seats__c = 40;
         opp2.Expected_Plan_Tier__c = 'Enterprise';
         opp2.Expected_Plan_Period__c = 'Yearly';
-        opp2.RecordTypeId = internalOppRT;
-        opp2.OwnerId = u.id;
+        opp2.RecordTypeId = partnerOppRT;
+        opp2.OwnerId = partnerUserId;
         opp2.StageName = 'Closed Won';
         opp2.Transition_to_GB__c = true;
         opp2.Claimed_ARR__c = 10000;
@@ -49,7 +51,7 @@ public with sharing class CoSellRequestServiceTest {
         );
         Co_Sell_Request__c csr2 = new Co_Sell_Request__c(
             Main_Opportunity__c = opp3.Id,
-            Secondary_Opportunity_Owner__c = u.Id,
+            Secondary_Opportunity_Owner__c = partnerUserId,
             Type__c = 'Create',
             Monday_Account__c = a.Id
         );

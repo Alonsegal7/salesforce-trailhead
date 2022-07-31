@@ -9,8 +9,9 @@ public without sharing class Opportunity_Calculate_ARR {
                 opp.Claimed_ARR__c =opp.Claimed_ARR_Override__c;
             } 
             else if(opp.Main_Co_Sell_Opportunity__c || opp.Co_Sell_Request__c == null || opp.Co_Sell_Opportunity__c == null){  //not secondary co-sell - we do not calc the arr based on quotes for secondary co-sell opps (they do not have quotes)
-                if (isManagedByDealhub(opp)){//quote exists?
-                opp.Expected_ARR__c = opp.Quote_ARR__c + opp.CC_Products_ARR_Sum__c; 
+                if (isManagedByDealhub(opp)){//quote exists? -- could be type sales order or quote
+                    opp.Expected_ARR__c = opp.Quote_ARR__c + opp.CC_Products_ARR_Sum__c; 
+                    opp.Claimed_ARR__c = opp.CC_Products_ARR_Sum__c;//i can have a quote that evetunally didn't signed. if so, give me the cc calim (0 is also ok)
 
                 if(opp.Is_Primary_SO_Signed__c) {//quote is won? (the product_arr__c will hold cc claim if exists)
                     opp.Claimed_ARR__c = opp.Product_ARR__c; 

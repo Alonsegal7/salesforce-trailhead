@@ -45,7 +45,7 @@ public without sharing class Opportunity_RenewalCreation {
         Id getRelevantRT = userProfile.Name == 'Renewals' ? csOppRtId : internalOppRtId;
 
         List<Contract> relevantContracts =  new List<Contract>([
-            SELECT Id, Name, EndDate, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Manager__c, Renewal_Opp_Created_from_Contract__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c, CurrencyIsoCode, Renewal_Opportunity_Creation_Status__c, Last_Event_Payment_Method__c, Last_SO_Event_Payment_Terms__c,
+            SELECT Id, Name, EndDate, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Opp_Created_from_Contract__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c, CurrencyIsoCode, Renewal_Opportunity_Creation_Status__c, Last_Event_Payment_Method__c, Last_SO_Event_Payment_Terms__c,
             (SELECT Id, Billing_Entity__c FROM Contract_Events__r ORDER BY CreatedDate DESC LIMIT 1),
             (SELECT Id, Name, Active_Contract__c, Company__c, Company__r.Name, Pricing_Version__c, Latest_Billing_Entity__c FROM Accounts__r WHERE ARR__c != null ORDER BY ARR__c DESC LIMIT 1)
             FROM Contract 
@@ -67,7 +67,6 @@ public without sharing class Opportunity_RenewalCreation {
                 Selected_Company_Contract__c = c.Id,
                 Original_Contract_ARR__c = c.Contract_ARR__c,
                 OwnerId = c.Primary_Renewal_Owner__c,
-                Renewal_Manager__c = c.Renewal_Manager__c,
                 RecordTypeId = getRelevantRT,
                 StageName = 'Qualified',
                 Probability = 20,
@@ -147,7 +146,7 @@ public without sharing class Opportunity_RenewalCreation {
         Boolean NeedToUpdateOpp=false;
 
         for (Contract singleCon : newContracts.values()) {
-            if((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c) || (singleCon.Renewal_Manager__c != oldContracts.get(singleCon.Id).Renewal_Manager__c || singleCon.Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c)){
+            if((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c) || singleCon.Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c){
                 relevantContMap.put(singleCon.Id, singleCon);
                 if ((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c)) {
                     NeedToUpdateOpp=true;
@@ -155,9 +154,8 @@ public without sharing class Opportunity_RenewalCreation {
             }
         }
         if (!relevantContMap.isEmpty()) {
-            List<Account> realtedMA = [SELECT Id, Renewal_Manager__c, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: relevantContMap.keySet() AND ARR__c != null ORDER BY ARR__c DESC];  
+            List<Account> realtedMA = [SELECT Id, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: relevantContMap.keySet() AND ARR__c != null ORDER BY ARR__c DESC];  
             for (Account acc : realtedMA) {
-                acc.Renewal_Manager__c = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
                 acc.Renewal_Owner__c  = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
                 accsToUpdate.add(acc);
             }
