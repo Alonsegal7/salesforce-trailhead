@@ -6,19 +6,20 @@
                 <div class="header-column">
                     <lightning-icon icon-name="standard:forecasts" alternative-text="Forecast" title="Forecast" ></lightning-icon> 
                 </div> 
-                 <lightning-combobox name="ContractType"
-                label="Contract Type" value={ContractTypeVal} disabled={disableContractType}
-                options={contractTypOptions} onchange={handleContractTypeChange}>
-            </lightning-combobox>
             </lightning-layout-item>
-            
             <lightning-layout-item >
                 <div class="slds-p-vertical_small">
                     <p class="slds-text-title_bold" >Forecast</p>
                 </div>
             </lightning-layout-item>
-        <div class="slds-p-horizontal_small">
-        </div>
+            <lightning-layout-item size="12" padding="horizontal-small">
+                <lightning-layout multiple-rows> 
+            <lightning-combobox name="ContractType"
+            label="Contract Type" value={ContractTypeVal} disabled={disableContractType}
+            options={contractTypOptions} onchange={handleContractTypeChange}>
+        </lightning-combobox>
+    </lightning-layout>
+    </lightning-layout-item>
             <lightning-layout-item size="12">
                 <lightning-layout multiple-rows class="account-info">
                     <lightning-layout-item padding="horizontal-small">
