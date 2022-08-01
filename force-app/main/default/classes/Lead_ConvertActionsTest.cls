@@ -1,6 +1,5 @@
 @isTest
-public class LeadTriggerHandlerWithoutSharingTest {
-    
+public without sharing class Lead_ConvertActionsTest {
     @testSetup
     static void setup() {
         Account company = TestObjectCreator.CreateCompany();
@@ -42,5 +41,4 @@ public class LeadTriggerHandlerWithoutSharingTest {
         System.assertEquals(fiOrig.Body, fi.Body);
         Test.stopTest();
     }
-
 }
