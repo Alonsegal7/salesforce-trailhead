@@ -99,19 +99,11 @@ public without sharing class Partners_POSurveyHelper {
         return debugString;
     }
 
-    private void addAccountForUpdate(List<Account> accountsToUpdate, Opportunity currOpp, Id accId){
-        accountsToUpdate.add(new Account(
-            Id = accId,
-            Last_PO_Survey_Opportunity__c = String.valueOf(currOpp.Id),
-            Next_PO_Survey_Date__c = currOpp.CloseDate.addDays(90)
-        ));
-    }
-
     private void addSurvey(List<Survey__c> surveysToCreate, Opportunity currOpp, Account acc){
         surveysToCreate.add(new Survey__c(
             Account__c = acc.Id,
             Partner_PO_Survey_Opportunity__c = String.valueOf(currOpp.Id),
-            Survey_Sent_Date__c = currOpp.CloseDate.addDays(90),
+            Survey_Sent_Date__c = currOpp.CloseDate.addDays(28),
             PCSM__c = acc.Partner_CSM__c,
             PSM__c = acc.PSM__c,
             Partner__c = acc.Channel_Partner__c,
