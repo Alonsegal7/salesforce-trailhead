@@ -241,7 +241,7 @@ export default class SubmitPaymentRequest extends LightningElement {
                     this.showCancelButton = false;
                     this.monthScreen = false;
                 }
-                if(this.commissionData.spiffAmount != null){
+                if(this.commissionData.spiffAmount != null && this.commissionData.spiffAmount != undefined){
                     this.spiffAmount = this.commissionData.spiffAmount;
                 }
                 console.log('spiff amount: ' + this.spiffAmount);
