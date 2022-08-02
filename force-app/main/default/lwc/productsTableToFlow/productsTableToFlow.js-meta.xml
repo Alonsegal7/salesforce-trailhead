@@ -40,6 +40,8 @@
                         description="The Discount Column Width"/>
                         <property name="totalColumnWidth" type="Integer" label="Total Column Width" 
                         description="The Total Column Width"/>
+                        <property name="recordId" type="String" label="Record Id" description="Automatically bind the page's record id to the component variable"/>
+
         </targetConfig>
 
 
