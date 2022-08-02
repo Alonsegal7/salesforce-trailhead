@@ -24,7 +24,7 @@ public with sharing class dealhub_Product_Pricing_Service {
         paramHeaderReq.skus=skusList;
         bodyBeforeReplace = JSON.serialize(paramHeaderReq);
         body = bodyBeforeReplace.replace('"currencyIsoCode":', '"currency":');
-        return sendRequest('https://dealhub.valooto.com/api/v1/products/parameters','POST',body);
+        return sendRequest('https://api-us1.dealhub.io/api/v1/products/parameters','POST',body);
     }
 
     public static string getProdutsPricing(string parameterReqJson){
@@ -95,7 +95,7 @@ public with sharing class dealhub_Product_Pricing_Service {
         }
         bodyBeforeReplace = JSON.serialize(pricingHeaderReq);
         body = bodyBeforeReplace.replace('"currencyIsoCode":', '"currency":');
-        return sendRequest('https://dealhub.valooto.com/api/v1/products/pricing','POST',body);
+        return sendRequest('https://api-us1.dealhub.io/api/v1/products/pricing','POST',body);
     }
 
     public static string sendRequest(String url, String method, String body){
