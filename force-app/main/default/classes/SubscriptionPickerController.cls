@@ -8,7 +8,7 @@ public without sharing class SubscriptionPickerController {
             Id oppAccId=opp.AccountId;
             Id opptyId=opp.Id;
             //CS Renewal Opp will only take the renewal subscription for claiming
-            string query='select id,name,Seats__c,Tier__c,ARR__c, Product_Code__c,Name_for_CC_Claim__c, Name_for_CC_Claim_Full_ARR__c,Claimed_On_Opportunity__r.Co_Sell_Opportunity__c,Is_Claimed__c,ARR_Gain__c,Period__c from Subscription__c where Monday_Account__c=:oppAccId';
+            string query='select id,name,Seats__c,Tier__c,ARR__c, Product_Code__c,Name_for_CC_Claim__c, Name_for_CC_Claim_Full_ARR__c,Claimed_On_Opportunity__r.Co_Sell_Opportunity__c,Is_Claimed__c,ARR_Gain__c,Period__c,Claimable_Activation_Date__c from Subscription__c where Monday_Account__c=:oppAccId';
             if (opp.RecordTypeId==CSRecordType && opp.Type.contains('Renewal')) {
                 query+=' and Is_Claimed__c=false and Status__c=\'ACTIVE\'' + 'and Payment_Method__c like \'%BLUESNAP%\' order by Activation_Date__c';
             }
@@ -19,7 +19,7 @@ public without sharing class SubscriptionPickerController {
             system.debug('query'+query);
 
                 Map<Id, Subscription__c> subs = new Map<Id, Subscription__c>((List<Subscription__c>)Database.query(query));
-            system.debug('Raz Ben Ron currentCon from Controller, '+subs);
+            system.debug('Raz Ben Ron currentCon from Controller , '+subs);
             return subs;
         }catch(Exception e){
             throw new AuraHandledException(e.getMessage());
@@ -62,7 +62,7 @@ public without sharing class SubscriptionPickerController {
         try{
             system.debug('Raz Ben Ron oppId from Controller, '+oppId);
             Opportunity opp=[select id,Pricebook2Id,Billing_Ids__c,CurrencyIsoCode,Expected_Plan_Tier__c,Expected_Plan_Period__c,Expected_Plan_Seats__c,
-                                Is_Primary_SO_Signed__c,Last_Claimed_Subscription__c,
+                                Is_Primary_SO_Signed__c,Last_Claimed_Subscription__c,AccountId,First_Subscription_Claimed_on_Opp__c,
                                 Co_Sell_Opportunity__c,Co_Sell_V2__c,Main_Co_Sell_Opportunity__c,Co_Sell_Opportunity__r.OwnerId
                                 from Opportunity where id=:oppId][0];
             List<Opportunitylineitem> olisToInsert= new List<Opportunitylineitem>();
@@ -77,7 +77,7 @@ public without sharing class SubscriptionPickerController {
                                         from Opportunitylineitem 
                                         where OpportunityId=:oppId and CC_Claim_Product__c=true and Subscription__c!=null]){
                 claimedSubsFromOlis.add(oli.Subscription__c);  
-                system.debug('Raz Ben Ron oli.Subscription__c:'+ oli.Subscription__c);                                           
+                system.debug('Raz Ben Ron oli.Subdkjhscription__c:'+ oli.Subscription__c);                                           
             }
             map<String,PricebookEntry> productByCode= new map<String,PricebookEntry>();
             Id priceBook=null;
@@ -109,6 +109,14 @@ public without sharing class SubscriptionPickerController {
             Subscription__c latestSub=getLatestClaimedSub(oppId,subsIdsToClaim,null);
             if(opp.Last_Claimed_Subscription__c!=latestSub.Id)
                 opp.Last_Claimed_Subscription__c=latestSub.Id;
+
+            // check if first subscription was claimed on the opportunity
+            Set<Id> toclaimIds= new Set<Id>();
+            for(String subId: subsIdsToClaim)
+                toClaimIds.add(subId);
+            boolean firstSubClaimed=isFirstSubClaimed(opp,toClaimIds,null);
+            if(firstSubClaimed!=null&&firstSubClaimed!=opp.First_Subscription_Claimed_on_Opp__c)
+                opp.First_Subscription_Claimed_on_Opp__c=firstSubClaimed;
 
             for(Subscription__c sub: subsToClaim){
                 system.debug('Raz Ben Ron sub id:'+ sub.Id);
@@ -176,7 +184,7 @@ public without sharing class SubscriptionPickerController {
     public static map<Id,Subscription__c> uncliamSubscriptions(list<String> subsToUnclaim,String oppId){
         try{
             system.debug('Raz Ben Ron subsToUnclaim from Controller, '+subsToUnclaim);
-            Opportunity opp=[select id,Billing_Ids__c,Last_Claimed_Subscription__c from Opportunity where id=:oppId][0];
+            Opportunity opp=[select id,Billing_Ids__c,Last_Claimed_Subscription__c,AccountId,First_Subscription_Claimed_on_Opp__c from Opportunity where id=:oppId][0];
             list<Subscription__c> subs=[select id,Billing_Ids__c,Claimed_On_Opportunity__c,Claimed_On_Opportunity_Co_Sell__c,ARR_Gain__c,Name_for_CC_Claim__c from Subscription__c where Id in: subsToUnclaim];
             system.debug('Raz Ben Ron subs from Controller, '+subs);
             ///handle delete OLIs
@@ -225,6 +233,14 @@ public without sharing class SubscriptionPickerController {
                 opp.Last_Claimed_Subscription__c=null;
             else if(opp.Last_Claimed_Subscription__c!=latestSub.Id)
                 opp.Last_Claimed_Subscription__c=latestSub.Id;
+            
+            // check if first sub claimed on opp
+            Set<Id> unclaimIds= new set<id>();
+            for(String subId: subsToUnclaim)
+                unclaimIds.add(subId);
+            boolean firstSubClaimed=isFirstSubClaimed(opp,null,unclaimIds);
+            if(firstSubClaimed!=null&&firstSubClaimed!=opp.First_Subscription_Claimed_on_Opp__c)
+                opp.First_Subscription_Claimed_on_Opp__c=firstSubClaimed;
 
             if(!olis.isEmpty()){
                 update olis;
@@ -336,6 +352,23 @@ public without sharing class SubscriptionPickerController {
         else
             return null;
 
+    }
+
+    public static boolean isFirstSubClaimed(Opportunity opp, set<Id> toClaimIds, set<Id> unclaimIds){
+        boolean firstSubClaimed=false;
+        Id firstSubOnMA= [select id from Subscription__c where Monday_Account__c=:opp.AccountId order by Activation_Date__c ASC limit 1][0].Id;
+        system.debug('Raz Ben Ron firstSubOnMA: '+firstSubOnMA);
+        if(firstSubOnMA!=null){
+            if(toClaimIds!=null){
+                if(getClaimed(opp.Id).containsKey(firstSubOnMA)||toClaimIds.contains(firstSubOnMA))//claimed on opp or in new claimed subs
+                    firstSubClaimed=true;
+            }else if(unclaimIds!=null){
+                if(getClaimed(opp.Id).containsKey(firstSubOnMA)&&!unclaimIds.contains(firstSubOnMA))// claimed on opp and not removed
+                    firstSubClaimed=true;  
+            }
+        }
+        system.debug('Raz Ben Ron firstSubClaimed: '+firstSubClaimed);
+        return firstSubClaimed;
     }
     
 }
