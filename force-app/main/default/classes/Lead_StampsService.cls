@@ -19,7 +19,6 @@ public without sharing class Lead_StampsService {
     2. check if the related company is an outbound company 
     updated the corresponding lead fields accordingly */
     public static void markCompanyRelatedStampsUponCreaion(List<Lead> newLeads, Map<Id,Lead> oldLeads){ //this runs on update as well b/c BB might update the Related_Company short time after lead creation. so business wise this is upon creation but the transaction can be update
-        system.debug('entering markCompanyRelatedStampsUponCreaion');
         List<Lead> relevantLeads = new List<Lead>();
         Set<Id> relatedCompsIds = new Set<Id>();
         for(Lead lead: newLeads){
@@ -31,13 +30,11 @@ public without sharing class Lead_StampsService {
             }
         }
         if(relevantLeads.isEmpty()){
-            System.debug('no relevantLeads were found , exiting markCompanyRelatedStampsUponCreaion');
             return;
         }
         Map<Id,Account> relatedCompsWithArr = new Map<Id,Account>([select Id from Account where ARR__c > 0 and Name != 'gmail.com' and Id in: relatedCompsIds]);
         Map<Id,Account> relatedOutboundComps = new Map<Id,Account>([select Id from Account where Named_Account__c = true and Name != 'gmail.com' and Id in: relatedCompsIds]);
         if(relatedCompsWithArr.isEmpty() && relatedOutboundComps.isEmpty()) {
-            System.debug('all related companies had ARR <= 0 and are non-outbound, exiting markCompanyRelatedStampsUponCreaion');
             return;
         }
         for(Lead lead: relevantLeads){
@@ -77,14 +74,6 @@ public without sharing class Lead_StampsService {
             lead.Type__c = lead.Account_ARR__c > 0 ? 'Expansion' : 'New Business';
             lead.Channel__c = lead.Channel_Lead_Source__c == 'None' ? '-' : lead.Channel_Lead_Source__c;
             lead.Received_timestamp__c = Date.today();
-            if(String.valueOf(lead.OwnerId).startsWith('005')) {
-                leadsForDistFirst.add(lead);
-                usersToQueryName.add(lead.OwnerId);     
-            }
-        }
-        Map<Id,User> ownersWithName = new Map<Id,User>([select name from User where Id in: usersToQueryName]);
-        for(Lead lead:leadsForDistFirst){
-            lead.Distributed_to_First__c = ownersWithName.get(lead.OwnerId).Name;
         }
     }
 
@@ -159,7 +148,6 @@ public without sharing class Lead_StampsService {
     }
 
     public static void ownerStamps(List<Lead> newLeads, Map<Id,Lead> oldLeadsMap){
-        system.debug('Entered userStamps');
         Set<Id> usersIds = new Set<Id>();
         List<Lead> relevantLeads = new List<Lead>();
         for(Lead newLead: newLeads){
@@ -173,12 +161,27 @@ public without sharing class Lead_StampsService {
             }
         }
         if(relevantLeads.isEmpty()) {
-            system.debug('Exiting userStamps - no relevantLeads found');
             return;
         }
         Set<String> ownerFunctionsToExclude = new Set<String>{'Marketing','Product','Bot'};
-        Map<Id,User> ownersMap = new Map<Id,User>([select Id, Function__c, Outbound__c, ManagerId, Manager.Team__c, Group__c, Business_Role__c, Segment__c, Seniority__c, Team__c, Office__c, Office_Region__c, Quota_Carrying__c, SDR_Transition_To_AE__c, Name, UserRole.Name from User where Id in :usersIds]);
-        system.debug('ownersMap: '+ ownersMap);
+        Map<Id,User> ownersMap = new Map<Id,User>([select Id, 
+                                                    Function__c, 
+                                                    Outbound__c, 
+                                                    ManagerId, 
+                                                    Manager.Team__c, 
+                                                    Group__c, 
+                                                    Business_Role__c, 
+                                                    Segment__c, 
+                                                    Seniority__c, 
+                                                    Team__c, 
+                                                    Office__c, 
+                                                    Office_Region__c, 
+                                                    Quota_Carrying__c, 
+                                                    SDR_Transition_To_AE__c, 
+                                                    Name, 
+                                                    UserRole.Name 
+                                                    from User 
+                                                    where Id in :usersIds]);
         User currOwner;
         for(Lead leadRec: relevantLeads){
             if(ownersMap.get(leadRec.OwnerId).Group__c == 'Integration User') continue; // we do not stamp owners that have group = integration user
@@ -188,7 +191,6 @@ public without sharing class Lead_StampsService {
                 || leadRec.Owner_Name_Initial__c == null // no initial owner
                 || !String.valueOf(oldLeadsMap.get(leadRec.Id).OwnerId).startsWith('005') //prev owner was queue
                 || ownersMap.get(oldLeadsMap.get(leadRec.Id).OwnerId).Group__c == 'Integration User'){ //prev owner was user with group = integration user
-                system.debug('Updating initial user stamps');
                 //stamp initial fields
                 leadRec.Owner_Business_Role_Initial__c = currOwner.Business_Role__c;
                 leadRec.Owner_Group_Initial__c = currOwner.Group__c;
@@ -201,9 +203,9 @@ public without sharing class Lead_StampsService {
                 leadRec.Owner_Team_Initial__c = currOwner.Team__c;
                 leadRec.Is_Owner_Outbound_Rep_Initial__c = currOwner.Outbound__c;
                 leadRec.Owner_s_Function_Initial__c = currOwner.Function__c;
+                if(oldLeadsMap == null) leadRec.Distributed_to_First__c = currOwner.Name; //only on create
             }
             //update live fields
-            system.debug('Updating live user stamps');
             leadRec.Owner_Business_Role_Live__c = currOwner.Business_Role__c;
             leadRec.Owner_Group_Live__c = currOwner.Group__c;
             leadRec.Owner_Name_Live__c = currOwner.Name;

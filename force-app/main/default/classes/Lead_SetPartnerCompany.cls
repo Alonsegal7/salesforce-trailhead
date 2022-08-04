@@ -1,5 +1,4 @@
 public without sharing class Lead_SetPartnerCompany {
-    public static Id internalRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Internal_Lead').getRecordTypeId();
     public static Id partnerRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Partner_Lead').getRecordTypeId();
 
     public static void Lead_SetPartnerCompany(list<Lead> newLeads, map<Id,Lead> oldLeads){
