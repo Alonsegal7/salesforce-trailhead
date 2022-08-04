@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="name" label="Button Name" type="String" description="The button label."/>
+            <property name="recordId" label="Record Id" type="String" description= "The record Id that will be updated by the button - use {recordId}."/>
+            <property name="fieldName" label="Field To Update" type="String" description="The API name of the field to be updated in the record. Currently supporting Text and Boolean types only."/>
+            <property name="value" label="Value To Update" type="String" description="The value to update in the selected field."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
