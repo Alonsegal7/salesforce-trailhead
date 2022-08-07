@@ -1,15 +1,16 @@
 import { LightningElement, wire, api } from 'lwc';
 import {FlowNavigationNextEvent, FlowNavigationBackEvent} from 'lightning/flowSupport';
+import { getPicklistValues } from 'lightning/uiObjectInfoApi';  
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { refreshApex } from '@salesforce/apex';
 import ERROR_GIF from '@salesforce/resourceUrl/errorReachGif';
 import createProducts_SOR from '@salesforce/apex/dealhubAPI_CreateProductsService.createProductsForSOR';
 import getProductsByTier from '@salesforce/apex/OpportunityForecastCTRL.getProductsByTier';
 import insertForecastQuote from '@salesforce/apex/OpportunityForecastCTRL.insertForecastQuote';
+import removeLineItemsAndQuotes from '@salesforce/apex/OpportunityForecastCTRL.removeLineItemsAndQuotes';
 import getPricesFromDealhub from '@salesforce/apex/dealhub_Product_Pricing_Service.getPricesFromDealhub';
 import getCurrentForecast from '@salesforce/apex/OpportunityForecastCTRL.getCurrentQuoteLineItems';
 import getCurrentContractProduct from '@salesforce/apex/OpportunityForecastCTRL.getCurrentContractProduct';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { getRecord, getFieldValue,updateRecord } from 'lightning/uiRecordApi';
 import PRICING_VERSION from '@salesforce/schema/Opportunity.Pricing_Version__c';
 import CURRENCYISO from '@salesforce/schema/Opportunity.CurrencyIsoCode';
 import PRIOR_ARR from '@salesforce/schema/Opportunity.Prior_ARR__c';
@@ -22,14 +23,13 @@ import OPP_ARR from '@salesforce/schema/Opportunity.Green_Bucket_ARR_V2__c';
 import EXCHANGE_RATE from '@salesforce/schema/Opportunity.USD_exchange_rate__c'; 
 import CURRENT_ACCOUNT_CONTRACT from '@salesforce/schema/Opportunity.Account.Active_Contract__c';
 import EXPECTED_QUOTE_TYPE from '@salesforce/schema/Opportunity.Expected_Quote_Type__c';
+import CURRENCY_VALIDATION from '@salesforce/schema/Opportunity.validateCurrencyChange__c';
 
-
-const fields = [EXPECTED_QUOTE_TYPE,CURRENT_ACCOUNT_CONTRACT,SYNCED_QUOTE_TYPE,SYNCED_QUOTE_PRICING_VERSION,EXCHANGE_RATE,OPP_ARR,PRICING_VERSION,CURRENCYISO,PRIOR_ARR,EXPECTED_PLAN_TIER,CURRENT_ACCOUNT_PLAN_TIER,SYNCED_QUOTE];
+const fields = [CURRENCY_VALIDATION,EXPECTED_QUOTE_TYPE,CURRENT_ACCOUNT_CONTRACT,SYNCED_QUOTE_TYPE,SYNCED_QUOTE_PRICING_VERSION,EXCHANGE_RATE,OPP_ARR,PRICING_VERSION,CURRENCYISO,PRIOR_ARR,EXPECTED_PLAN_TIER,CURRENT_ACCOUNT_PLAN_TIER,SYNCED_QUOTE];
 
 export default class ProductsTableToFlow extends LightningElement {
 
     columns = [
-        /*{ label: 'SKU', fieldName: 'sku',type: 'text', initialWidth: 32},*/
         { label: 'Product', fieldName: 'productName',type: 'text', initialWidth: null },
         { label: 'Unit Price', fieldName: 'price', type: 'currency',editable: true, initialWidth: null, //price = list unit price from the json file
         typeAttributes: 
@@ -109,32 +109,52 @@ export default class ProductsTableToFlow extends LightningElement {
     oppExpectedQuoteType;
     isProRated=false;
     disableContractType=false;
-    
+    modalFields = [CURRENCYISO];
+    oppId;
+    validateCurrencyChange;
+    isLoadingModal;
+    handledByCurrencyChangeProcess=false;
+    listOfDraftsOnCurrencyChange=[];
+    currencyValues;
+
+    @wire(getPicklistValues, { recordTypeId: '0121t000000LucvAAC', fieldApiName: CURRENCYISO })
+    fetch({ data }) {
+        if (data) {
+            this.currencyValues=data.values;
+        }
+    }
+
     @wire(getRecord, { recordId: '$recordId', fields: fields })
     fetchOppty({ data }) {//if is not under quote context, will not run
          if (data) { 
             this.oppData=data;
+            this.oppId=data.id;
             this.isQuoteContext=true;
             this.oppCurrentPriVersion = getFieldValue(data, PRICING_VERSION);
+            this.validateCurrencyChange = getFieldValue(data, CURRENCY_VALIDATION);
             this.oppCurrentCrrncy = getFieldValue(data, CURRENCYISO);
             this.crrncyIso = getFieldValue(data, CURRENCYISO);
             this.priorArr = getFieldValue(data, PRIOR_ARR);
-            this.oppExpectedPlan = getFieldValue(data, EXPECTED_PLAN_TIER);
-            this.accCurerentPlan = getFieldValue(data, CURRENT_ACCOUNT_PLAN_TIER);
             this.syncedQuote = getFieldValue(data, SYNCED_QUOTE);
             this.addedArr= getFieldValue(data, OPP_ARR);
             this.exchangeRate= getFieldValue(data, EXCHANGE_RATE);
             this.syncedQuotePricingVerision=getFieldValue(data, SYNCED_QUOTE_PRICING_VERSION);
             this.syncedQuoteType=getFieldValue(data, SYNCED_QUOTE_TYPE);
-            this.oppExpectedQuoteType=getFieldValue(data, EXPECTED_QUOTE_TYPE);
             this.contractId=getFieldValue(data, CURRENT_ACCOUNT_CONTRACT);
             this.pricingVersionForHtml = this.oppCurrentPriVersion;
             this.resetValues();// for cases that we change pricing version or currency, reset on load, the calculation will run on draft on the runForecastProcessOnLoad process
-            this.defineTier();
-            this.defineQuoteType();
-            this.runForecastProcessOnLoad();  
+
+            if (this.handledByCurrencyChangeProcess==false) {//if process handled by currency change, do not take plan, type and tier
+                this.oppExpectedPlan = getFieldValue(data, EXPECTED_PLAN_TIER);
+                this.accCurerentPlan = getFieldValue(data, CURRENT_ACCOUNT_PLAN_TIER);
+                this.oppExpectedQuoteType=getFieldValue(data, EXPECTED_QUOTE_TYPE);
+                this.defineTier();
+                this.defineQuoteType();
+                this.runForecastProcessOnLoad();  
+            }
         }
     }
+
     connectedCallback(){
         if(this.context=='quote'){  
             //for forecast type, show values as number and not currency
@@ -238,6 +258,7 @@ export default class ProductsTableToFlow extends LightningElement {
     }
 
     defineDealhubProductRequest(tier, crrncyCode, pricingVersion){
+        console.log('defining req');
         this.duration=12;
         this.isLoading=true;
         getProductsByTier({tier: tier}).then((productsDate)=>{//get products name 
@@ -283,6 +304,7 @@ export default class ProductsTableToFlow extends LightningElement {
     }
 
     setTableValues(){
+        console.log('set values');
         this.data = JSON.parse(this.jsonSkusData).skus;//Parse dealhub api response
         this.data.forEach(entity => { //set values on load (also if we have exiting data, to allow additional products, init all data all the time)
             entity.productName=this.context=='quote' ? this.Products.find(({ Product_Identifier__c }) => Product_Identifier__c === entity.sku).Short_Product_Name__c : this.Products.find(({ Product_Identifier__c }) => Product_Identifier__c === entity.sku).Name
@@ -292,10 +314,9 @@ export default class ProductsTableToFlow extends LightningElement {
             entity.crrncy=this.crrncyIso; 
             entity.originalListPrice =entity.price;
         });
-
          this.showProductsTable=true;
          this.isLoading=false;
-        
+
         if (this.currStateData) {//do we have existing data? if so, add it to the draft list and calculate
             this.currStateData.forEach(singleData => {
                 if (this.data.find(({ sku })  => sku === singleData.sku) != null){//make sure existing data is relevent to current table data
@@ -306,6 +327,17 @@ export default class ProductsTableToFlow extends LightningElement {
             }
          });
         }
+
+        if(this.handledByCurrencyChangeProcess==true){//if currency changed by modal, and we have existing forecast, it means that on load we capture the current state and kept the drafts. so now, we need to handle the new pricing
+            this.listOfDrafts.forEach(draftVal => { 
+                if (this.data.find(({ sku })  => sku === draftVal.sku)!=null ) {
+                    draftVal.price = this.data.find(({ sku })  => sku === draftVal.sku).price;//get the price fro the dealhub response
+                    draftVal.quantity = this.listOfDraftsOnCurrencyChange.find(({ sku })  => sku === draftVal.sku).quantity;//get draft value if changed before currency change
+                    draftVal.discount = this.listOfDraftsOnCurrencyChange.find(({ sku })  => sku === draftVal.sku).discount;//get draft value if changed before currency change
+                    }
+                }); 
+        }
+
             //this.validateError(this.listOfDrafts); //Validate draft values on load
             this.calculateProductsPricing(this.listOfDrafts);//Calculate pricing on load
     }
@@ -340,6 +372,8 @@ export default class ProductsTableToFlow extends LightningElement {
         this.totalList=0;//reset values on each calculation
         this.totalNet=0;//reset values on each calculation
         this.addedArr=0;//reset values on each calculation
+        console.log('set calc price');
+
         drafts.forEach(draftVal => { 
             if (this.data.find(({ sku })  => sku === draftVal.sku) != null) {//check first if the draft sku exist in datatable
                 let baseListPrice = draftVal.price != null ? this.data.find(({ sku })  => sku === draftVal.sku).price = draftVal.price : this.data.find(({ sku })  => sku === draftVal.sku).price = this.data.find(({ sku })  => sku === draftVal.sku).originalListPrice;
@@ -365,7 +399,12 @@ export default class ProductsTableToFlow extends LightningElement {
          if(this.ContractTypeVal=='Pro-rated'){
             this.addedArr = this.totalNet != 0 ? this.totalNet * this.exchangeRate : 0;
          }
+
+         if (this.handledByCurrencyChangeProcess==true) {
+             this.handleSubmit();//if is handled by currency change process, create the new forecast after currnecy change and all calculations run (dealhub, draft and pricing)
+        }
     }
+
     validateError(listOfDraftsToValidate) {
         this.getCurrentCoreAmount(this.tierSelection,listOfDraftsToValidate);
         this.validateSubmit=false;
@@ -507,6 +546,8 @@ export default class ProductsTableToFlow extends LightningElement {
                 }
 
     handleSubmit(){
+        console.log('submiting');
+
         this.isLoading=true;
         if (this.validateSubmit==true || this.totalList==0) {
             this.showSubmitModal=true;
@@ -546,12 +587,16 @@ export default class ProductsTableToFlow extends LightningElement {
             }
             if(this.context=='quote'){
                 insertForecastQuote( {oppId: this.oppData.id, productsData: JSON.stringify(this.productsToInsert), tier: this.tierSelection, contractType: this.ContractTypeVal}).then((res)=>{
+                    console.log('inserting quote '+ this.oppCurrentCrrncy);
                     if (res[0]!=null) {
-                        refreshApex(this.oppData);
+                        this.handledByCurrencyChangeProcess=false;
+                        this.calculateProductsPricing(this.listOfDrafts);//Calculate pricing again after quote was inserted
+                        this.handledByCurrencyChangeProcess=false;
+                        this.syncedQuote=res[0].QuoteId;
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: 'Success!',
-                                message: 'Forecast Created!',
+                                message: '💰Forecast Updated Successfully💰',
                                 variant: 'success',
                             }),
                         );
@@ -728,6 +773,68 @@ export default class ProductsTableToFlow extends LightningElement {
         }
         if(this.contractId==null || this.contractId == undefined){
             this.disableContractType=true;
+        }
+    }
+
+    handleCurrencyChange(event){//curency changed - remove quote, qli, oli, update new currency, and add the new quote with the updated currency                
+        const currency =event.detail.value;
+        this.isLoading=true;
+
+        const fields = {};
+        fields.Id = this.oppId;
+        fields.CurrencyIsoCode =currency;
+        fields.Expected_ARR__c =0;
+        const recordInput = { fields };
+
+        this.listOfDrafts.forEach(draftVal => { //if the user changed values on existing forecast and then changed currency, keep the changed values to get before submit
+            this.listOfDraftsOnCurrencyChange.push(draftVal);
+            }); 
+
+            if(this.syncedQuote!=null){
+                this.handledByCurrencyChangeProcess=true;
+                removeLineItemsAndQuotes( {oppty: this.oppId, syncedQuote: this.syncedQuote}).then(()=>{//remove quote qli and oli
+                updateRecord(recordInput).then(() => {//update the new currency - wait until its updated and only then submit the new forecast (so the updated currency will be updated properly on the new quote)
+                    this.crrncyIso=currency;
+                        this.defineDealhubProductRequest(this.tierSelection,currency,this.oppCurrentPriVersion);
+                })
+                .catch(error => {
+                    this.isLoading=false;
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Products Error - Please contact BizOps ',
+                            message: error.body.message,
+                            variant: 'error',
+                        }),
+                    );
+                });
+                
+            }).catch(error => {
+                this.isLoading=false;
+                this.validateSubmit==true;
+                this.error=error;
+                console.log(this.error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Products Error - Please contact BizOps ',
+                        message: error.body.message,
+                        variant: 'error',
+                    }),
+                );
+            }); 
+        }
+        else{//just update the new currency - the dealhub request will run on wire (due to currency change)
+            updateRecord(recordInput).then(() => {
+            })
+            .catch(error => {
+                this.isLoading=false;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Products Error - Please contact BizOps ',
+                        message: error.body.message,
+                        variant: 'error',
+                    }),
+                );
+            });
         }
     }
 }

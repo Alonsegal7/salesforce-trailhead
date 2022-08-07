@@ -18,6 +18,7 @@ public without sharing class OpportunityForecastCTRL {
         throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
     }
    }
+
    
    @AuraEnabled
    public static list<quotelineitem> insertForecastQuote(Id oppId, string productsData,string tier, string contractType){
@@ -40,7 +41,7 @@ public without sharing class OpportunityForecastCTRL {
             }
         }
 
-        Id standardPriceBookId = [SELECT Id FROM Pricebook2 WHERE Is_Main__c = true][0].Id;
+        Id standardPriceBookId = [SELECT Id FROM Pricebook2 WHERE Is_Main__c = true and isactive = true][0].Id;
         Quote quote = new Quote(
                
                 name='Forecast Quote #' + string.valueof(Math.Random()).right(6),
@@ -150,4 +151,36 @@ public without sharing class OpportunityForecastCTRL {
        }
        return false;
    }
+
+   @AuraEnabled
+   public static void removeLineItemsAndQuotes(Id oppty, Id syncedQuote){//first step for currency change
+
+        List<OpportunityLineItem> olis = [select id , quote_line_item__c, quote_line_item__r.QuoteId from OpportunityLineItem where opportunityId =: oppty];
+        List<Quote> quoteToDel = [select id from quote where OpportunityId =: oppty];
+        
+        
+        try {
+        if (!quoteToDel.isempty()) {
+            delete quoteToDel;
+        }
+
+        if (!olis.isempty()) {
+            delete olis;
+        }
+
+        } catch (Exception ex) {
+            if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
+                try {
+                    delete quoteToDel;
+                    delete olis;
+                }
+                catch (Exception e) {
+                    System.debug('Message: ' + e.getMessage());
+                }
+            }
+            else {
+                System.debug('Message: ' + ex.getMessage());
+            }
+        }
+    }
 }

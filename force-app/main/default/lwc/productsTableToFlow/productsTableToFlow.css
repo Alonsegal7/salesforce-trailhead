@@ -27,3 +27,7 @@
     font-size: 13px;
     text-transform: capitalize;
   }
+
+  .modalBody {
+    position: relative;
+}

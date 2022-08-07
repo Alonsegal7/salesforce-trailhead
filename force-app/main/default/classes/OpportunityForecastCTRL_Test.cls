@@ -71,4 +71,19 @@ public with sharing class OpportunityForecastCTRL_Test {
         list<quotelineitem> qlis = OpportunityForecastCTRL.insertForecastQuote(opp.id,data,'Pro','New Contract');
         System.assertEquals(qlis.size(), 1);
     }
+    @istest
+
+    public static void testRemoveOppliQuote(){
+        Opportunity opp = [select id,USD_exchange_rate__c,CurrencyIsoCode,Pricing_Version__c,SyncedQuoteID from opportunity limit 1];
+        string data = '[{"sku":"CORE-PRO","id":1,"price":16,"error":"","productName":"Pro Plan","quantity":"20","discount":0,"total":3840,"crrncy":"USD","originalListPrice":16,"netUnit":16}]';
+
+        list<quotelineitem> qlis = OpportunityForecastCTRL.insertForecastQuote(opp.id,data,'Pro','New Contract');
+
+        Opportunity syncedQuoteOpp = [select id,SyncedQuoteID from opportunity limit 1];
+
+        System.assertEquals(qlis.size(), 1);
+        OpportunityForecastCTRL.removeLineItemsAndQuotes(opp.id,syncedQuoteOpp.SyncedQuoteID);
+        list<quotelineitem> deleteQlis = [select id from quotelineitem limit 1];
+        System.assertEquals(deleteQlis.size(), 0);
+    }
 }

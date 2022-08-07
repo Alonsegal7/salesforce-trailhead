@@ -1,127 +1,129 @@
 <template>
     <lightning-card variant="Narrow">
-    <template if:true={isQuoteContext}>
-        <lightning-layout multiple-rows class="account-info">
-            <lightning-layout-item padding="horizontal-small">
+       <template if:true={isLoading}>
+          <lightning-spinner alternative-text="Loading" variant="brand" size="large"> </lightning-spinner>
+       </template>
+       <template if:true={isQuoteContext}>
+          <lightning-layout multiple-rows class="account-info" >
+             <lightning-layout-item padding="horizontal-small">
                 <div class="header-column">
-                    <lightning-icon icon-name="standard:forecasts" alternative-text="Forecast" title="Forecast" ></lightning-icon> 
-                </div> 
-            </lightning-layout-item>
-            <lightning-layout-item >
-                <div class="slds-p-vertical_small">
-                    <p class="slds-text-title_bold" >Forecast </p>  <p class="slds-p-vertical_small" >We would love to hear your feedback  <a target="_blank" href="https://forms.monday.com/forms/38bee1fd03d4bd51f29e7d70ae92d591?r=use1">Here :)</a></p> 
+                   <lightning-icon icon-name="standard:forecasts" alternative-text="Forecast" title="Forecast" ></lightning-icon>
                 </div>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" padding="horizontal-small">
-                <lightning-layout multiple-rows> 
-            <lightning-combobox name="ContractType"
-            label="Contract Type" value={ContractTypeVal} disabled={disableContractType}
-            options={contractTypOptions} onchange={handleContractTypeChange}>
-        </lightning-combobox>
-    </lightning-layout>
-
-
-    </lightning-layout-item>
-            <lightning-layout-item size="12">
-                <lightning-layout multiple-rows class="account-info">
-                    <lightning-layout-item padding="horizontal-small">
-                        <lightning-combobox name="tierInput"
-                        label="Tier" value={tierSelection} placeholder={chosenTier} disabled={disableTier}
-                        options={tiersOptions} onchange={handleTierChange}></lightning-combobox>
-                    </lightning-layout-item>
-                    <lightning-layout-item padding="horizontal-small">
-                        <div class="header-column">
-                            <p class="field-title" title="Pricing version">Pricing v</p>
-                            <p><lightning-formatted-number value={pricingVersionForHtml} maximum-fraction-digits="0"></lightning-formatted-number></p>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item padding="horizontal-small">
-                        <div class="header-column">
-                            <p class="field-title">Current ARR</p>
-                            <p><lightning-formatted-number value={priorArr} maximum-fraction-digits="2" format-style="decimal"></lightning-formatted-number></p>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item padding="horizontal-small">
-                        <div class="header-column">
-                            <p class="field-title">Added ARR</p>
-                            <p><lightning-formatted-number value={addedArr} maximum-fraction-digits="0" format-style="decimal"></lightning-formatted-number></p>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item padding="horizontal-small">
-                        <div class="header-column">
-                            <p class="field-title">Currency</p>
-                            <p><lightning-formatted-text value={oppCurrentCrrncy}></lightning-formatted-text></p>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item padding="horizontal-small" >
-                        <div if:true={isProRated} class="slds-p-vertical_small">
-                            <p class="field-title" >For pro-rated, quantities input as added seats</p>
-                        </div>
-                    </lightning-layout-item>
+             </lightning-layout-item>
+             <lightning-layout-item >
+                <div class="slds-p-vertical_small">
+                   <p class="slds-text-title_bold" >Forecast </p>
+                   <p class="slds-p-vertical_small" >We would love to hear your feedback  <a target="_blank" href="https://forms.monday.com/forms/38bee1fd03d4bd51f29e7d70ae92d591?r=use1">Here :)</a></p>
+                </div>
+             </lightning-layout-item>
+             <lightning-layout-item size="12" padding="horizontal-small">
+                <lightning-layout multiple-rows class="slds-grid_vertical-align-end">
+                   <lightning-combobox name="ContractType"
+                      label="Contract Type" value={ContractTypeVal} disabled={disableContractType}
+                      options={contractTypOptions} onchange={handleContractTypeChange}>
+                   </lightning-combobox>
+                   <lightning-layout-item padding="horizontal-small">
+                      <lightning-combobox name="currencyType"
+                      label="Currency" value={oppCurrentCrrncy} disabled={validateCurrencyChange}
+                      options={currencyValues} onchange={handleCurrencyChange}>
+                   </lightning-combobox>
+                     </lightning-layout-item>
+                     <lightning-layout-item if:true={validateCurrencyChange} padding="horizontal-small">
+                     <lightning-helptext icon-name="utility:clear" content="You cannot change currency if the opportunity have claimed cc payments or sales order/quote"></lightning-helptext>
+                  </lightning-layout-item>
                 </lightning-layout>
-            </lightning-layout-item>
-    </lightning-layout>
-
-    </template>
-
-    <template if:true={isLoading}>
-        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
-        </lightning-spinner>
-    </template>
-    <template if:true={showProductsTable}>    
-    <div class="slds-p-vertical_x-small" style="position:relative" >
-
-        <lightning-datatable key-field="sku" 
-            data={data} 
-            hide-checkbox-column
-            columns={columns} 
-            suppress-bottom-bar
-            errors={tableErrors}
-            oncellchange={handleCellchange}
-            draft-values={draftValues}
-            column-widths-mode="auto"
-            >
-        </lightning-datatable>
-        <div class ="slds-p-vertical_x-small">
-            <lightning-layout>
-                <lightning-layout-item if:true={showTotalPricing} size="3" padding="horizontal-small">
-                    <div class="slds-p-right_medium" >
-                        <lightning-input type="number" name="totalList" label="Total List" value={totalList} formatter="currency" disabled></lightning-input>
-                    </div>
-                </lightning-layout-item>
-                <lightning-layout-item if:true={showTotalPricing} size="3" padding="horizontal-small">
-                    <lightning-input type="number" name="totalNet" label="Total Net" value={totalNet} formatter="currency" disabled></lightning-input>
-                </lightning-layout-item>
-                <lightning-layout-item size={submitButtonPosition} padding="horizontal-small">
-                    <div class="slds-p-top_medium">
-                        <button class="slds-button slds-button_brand slds-float_right" onclick={handleSubmit}>Submit</button>
-                    </div>
-                </lightning-layout-item>
-            </lightning-layout>
-        </div>
-    </div>
-</template>
-
-    <template if:true={showSubmitModal}>
-        <section  class="slds-modal slds-fade-in-open">
-            <div class="slds-modal__container">
+             </lightning-layout-item>
+             <lightning-layout-item size="12">
+                <lightning-layout multiple-rows class="account-info">
+                   <lightning-layout-item padding="horizontal-small">
+                      <lightning-combobox name="tierInput"
+                         label="Tier" value={tierSelection} placeholder={chosenTier} disabled={disableTier}
+                         options={tiersOptions} onchange={handleTierChange}></lightning-combobox>
+                   </lightning-layout-item>
+                   <lightning-layout-item padding="horizontal-small">
+                      <div class="header-column">
+                         <p class="field-title" title="Pricing version">Pricing v</p>
+                         <p>
+                            <lightning-formatted-number value={pricingVersionForHtml} maximum-fraction-digits="0"></lightning-formatted-number>
+                         </p>
+                      </div>
+                   </lightning-layout-item>
+                   <lightning-layout-item padding="horizontal-small">
+                      <div class="header-column">
+                         <p class="field-title">Current ARR</p>
+                         <p>
+                            <lightning-formatted-number value={priorArr} maximum-fraction-digits="2" format-style="decimal"></lightning-formatted-number>
+                         </p>
+                      </div>
+                   </lightning-layout-item>
+                   <lightning-layout-item padding="horizontal-small">
+                      <div class="header-column">
+                         <p class="field-title">Added ARR</p>
+                         <p>
+                            <lightning-formatted-number value={addedArr} maximum-fraction-digits="0" format-style="decimal"></lightning-formatted-number>
+                         </p>
+                      </div>
+                   </lightning-layout-item>
+                   <lightning-layout-item padding="horizontal-small" >
+                      <div if:true={isProRated} class="slds-p-vertical_small">
+                         <p class="field-title" >For pro-rated, quantities input as added seats</p>
+                      </div>
+                   </lightning-layout-item>
+                </lightning-layout>
+             </lightning-layout-item>
+          </lightning-layout>
+       </template>
+       <template if:true={showProductsTable}>
+          <div class="slds-p-vertical_x-small" style="position:relative" >
+             <lightning-datatable key-field="sku" 
+                data={data} 
+                hide-checkbox-column
+                columns={columns} 
+                suppress-bottom-bar
+                errors={tableErrors}
+                oncellchange={handleCellchange}
+                draft-values={draftValues}
+                column-widths-mode="auto"
+                >
+             </lightning-datatable>
+             <div class ="slds-p-vertical_x-small">
+                <lightning-layout>
+                   <lightning-layout-item if:true={showTotalPricing} size="3" padding="horizontal-small">
+                      <div class="slds-p-right_medium" >
+                         <lightning-input type="number" name="totalList" label="Total List" value={totalList} formatter="currency" disabled></lightning-input>
+                      </div>
+                   </lightning-layout-item>
+                   <lightning-layout-item if:true={showTotalPricing} size="3" padding="horizontal-small">
+                      <lightning-input type="number" name="totalNet" label="Total Net" value={totalNet} formatter="currency" disabled></lightning-input>
+                   </lightning-layout-item>
+                   <lightning-layout-item size={submitButtonPosition} padding="horizontal-small">
+                      <div class="slds-p-top_medium">
+                         <button class="slds-button slds-button_brand slds-float_right" onclick={handleSubmit}>Submit</button>
+                      </div>
+                   </lightning-layout-item>
+                </lightning-layout>
+             </div>
+          </div>
+       </template>
+       <template if:true={showSubmitModal}>
+          <section  class="slds-modal slds-fade-in-open">
+             <div class="slds-modal__container">
                 <header class="slds-modal__header">
-                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">We found some errors.. 🙄</h1>
+                   <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">We found some errors.. 🙄</h1>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium">
-                    <p class="slds-text-body_regular slds-text-heading_small">Please go back and click on the ⛔ Icon to see the error details for each product</p><br/>
-                    <img src={errorReachGif}>
-
-                    <p class="slds-text-body_regular slds-text-heading_small">If you don't have any errors on the table, please make sure that you have at least one product with quantity</p><br/>
-
+                   <p class="slds-text-body_regular slds-text-heading_small">Please go back and click on the ⛔ Icon to see the error details for each product</p>
+                   <br/>
+                   <img src={errorReachGif}>
+                   <p class="slds-text-body_regular slds-text-heading_small">If you don't have any errors on the table, please make sure that you have at least one product with quantity</p>
+                   <br/>
                 </div>
-                 <footer class="slds-modal__footer">
-                    <lightning-button variant="brand" label="Close" title="Close" onclick={closeModalAction}></lightning-button>
-               </footer> 
-            </div>
-        </section>
-        <div class="slds-backdrop slds-backdrop_open"></div>
-    </template>
-</lightning-card>
-
-</template>
+                <footer class="slds-modal__footer">
+                   <lightning-button variant="brand" label="Close" title="Close" onclick={closeModalAction}></lightning-button>
+                </footer>
+             </div>
+          </section>
+          <div class="slds-backdrop slds-backdrop_open"></div>
+       </template>
+    </lightning-card>
+ </template>
