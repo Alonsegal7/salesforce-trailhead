@@ -3,6 +3,61 @@ public without sharing class Utilities {
     static map<id,GB_Threshold__c> allTHs= null;
     static Pricebook2 mainPB= null;
 
+    public class sendEmailRequest {
+        //required
+        @InvocableVariable(label='To Address (separated by comma)' required=true)
+        public list<String> toAddress;
+        @InvocableVariable(label='Email Template Id' required=true)
+        public Id templateId;
+        @InvocableVariable(label='Who Id (The identifier of an object in the database, typically a contact, lead, or user. The database record for that object is read and used in merge field processing)' required=true)
+        public Id whoId;
+        //optional
+        @InvocableVariable(label='ccRecipients (separated by comma)' required=false)
+        public list<String> ccRecipients;
+        @InvocableVariable(label='reply to address' required=false)
+        public String replyTo;
+        @InvocableVariable(label='Sender Display Name (in case you fill this, the email will be sent from the running user)' required=false)
+        public String senderDisplayName;
+        @InvocableVariable(label='Organization-Wide Email Address Id (in case you fill this, Sender Display Name is not relevant)' required=false)
+        public Id oweaId;
+        @InvocableVariable(label='What Id (Identifies an object in the database, like an account or opportunity. The record for that object is read and used in merge field processing)' required=false)
+        public Id whatId;
+    }
+
+    @InvocableMethod(label='Send Email by Apex')
+    public static void sendEmail(List<sendEmailRequest> requests) {
+        try {
+            List<Messaging.SingleEmailMessage> allEmailsToSend = new List<Messaging.SingleEmailMessage>();
+            for(sendEmailRequest req : requests){
+                allEmailsToSend.add(generateEmail(req.toAddress, req.ccRecipients, req.replyTo, req.whoId, req.templateId, req.senderDisplayName, req.oweaId));
+            }
+            Messaging.sendEmail(allEmailsToSend);
+        } catch(Exception e){
+            Utilities.sendEmail('Error in sendEmail: ', e.getMessage() + '\n' + e.getStackTraceString(), new List<String>{'kseniasm@monday.com'}); 
+        }
+    }
+
+    public static Messaging.SingleEmailMessage generateEmail(List<String> toAddresses, List<String> ccAddresses, String replyTo, Id targetObjectId, Id emailTemplateId, String senderDisplayName, Id oweaId){
+        Messaging.SingleEmailMessage renderedEmail = Messaging.renderStoredEmailTemplate(emailTemplateId, targetObjectId, null);
+		Messaging.SingleEmailMessage resEmail = new Messaging.SingleEmailMessage();
+		resEmail.setSubject(renderedEmail.getSubject());
+		resEmail.setHtmlBody(renderedEmail.getHtmlBody());
+        resEmail.setPlainTextBody(renderedEmail.getPlainTextBody());
+        resEmail.setToAddresses(toAddresses);
+		resEmail.setBccAddresses(new List<String>{'kseniasm@monday.com','mayga@monday.com'});
+		resEmail.setSaveAsActivity(false);
+
+        if(ccAddresses != null) resEmail.setCcAddresses(ccAddresses);
+		if(replyTo != null && replyTo != '') resEmail.setReplyTo(replyTo); 
+		if(senderDisplayName == null || senderDisplayName == '') {
+            Id orgWideEmailAddressId = (oweaId == null || oweaId == '') ? oweaId : [select Id from orgWideEmailAddress where Address =: 'bizops@monday.com' limit 1].Id;
+            resEmail.setOrgWideEmailAddressId(orgWideEmailAddressId);
+        } else {
+            resEmail.setSenderDisplayName(senderDisplayName);
+        }
+		return resEmail;
+	}
+
     //Sends an email to the Salesforce admins
     public static void sendDebugEmail(String subject, Exception e, String additionalData){
         list<String> toAddresses=new list<String>{label.SystemNotificationsDL};
@@ -36,20 +91,6 @@ public without sharing class Utilities {
         }catch(Exception e){}
     }
     
-    public static map<Id,list<User>> getDirectSubordinatesByRole(){
-        map<Id,list<User>> directSubordinatesByRole=new map<Id,list<User>>();
-        
-        for (User user :[select Id, IsActive, Name, UserRoleId, UserRole.ParentRoleId, UserRole.Name,
-                                ProfileId, Profile.Name
-                         from User]){
-            if (directSubordinatesByRole.get(user.UserRoleId)==null)
-                directSubordinatesByRole.put(user.UserRoleId, new list<User>());
-            if (directSubordinatesByRole.get(user.UserRole.ParentRoleId)==null)
-                directSubordinatesByRole.put(user.UserRole.ParentRoleId, new list<User>());
-            directSubordinatesByRole.get(user.UserRole.ParentRoleId).add(user);
-        }
-        return directSubordinatesByRole;
-    }
     public static String capitalizeString(String str){
         return str.subString(0,1).toUpperCase()+str.subString(1,str.length());
     }
@@ -67,8 +108,7 @@ public without sharing class Utilities {
         return allTHs;
     }
     public static Pricebook2 getMainPB(){
-        if(mainPB==null)
-            mainPB= [select id from pricebook2 where Is_Main__c=true limit 1][0];
+        if(mainPB==null && !Test.isRunningTest()) mainPB = [select id from pricebook2 where Is_Main__c=true limit 1][0];
         return mainPB;
     }
 
@@ -160,6 +200,10 @@ public without sharing class Utilities {
         public void execute(System.QueueableContext ctx) {
             Database.update(sobjectsToUpdate);
         }
+    }
+
+    public static Date convertDatetimeToDate(Datetime dt){
+        return Date.newinstance(dT.year(), dT.month(), dT.day());
     }
 
     public static Id MARecordTypeId {  
