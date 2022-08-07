@@ -62,9 +62,9 @@ public with sharing class dealhub_Product_Pricing_Service {
                     productSku.parameters.add(pricingParam);
                     
                 }
-                if (parameter.name == 'product.plan') {
+                if (parameter.name == 'Admin_Section.Quote_Tier') {
                     dealhub_PricingParameters.PricingParameter pricingParam = new dealhub_PricingParameters.PricingParameter();
-                    pricingParam.name='product.plan';
+                    pricingParam.name='Admin_Section.Quote_Tier';
                     pricingParam.value=globalVars.get('tier');
                     productSku.parameters.add(pricingParam);
                 }
