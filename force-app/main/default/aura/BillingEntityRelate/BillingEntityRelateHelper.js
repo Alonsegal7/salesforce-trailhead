@@ -111,9 +111,9 @@
 							}
 							if (!this.isEmpty(storeResponse.partnerSORequest.QST_Number__c)){
 								console.log('QST_Number__c: ' + storeResponse.partnerSORequest.QST_Number__c);
-								cmp.set('v.vatAttribute', storeResponse.partnerSORequest.QST_Number__c);
+								cmp.set('v.qstNumber', storeResponse.partnerSORequest.QST_Number__c);
 								cmp.set('v.qstQ', 'Yes');
-								console.log('qstNumber: ' + cmp.get('v.vatAttribute'));
+								console.log('qstNumber: ' + cmp.get('v.qstNumber'));
 							} else {
 								cmp.set('v.qstQ', 'No');
 							}
@@ -214,11 +214,15 @@
 				var state = response.getState();
 				if (state === "SUCCESS"){
 					var storeResponse = response.getReturnValue();
-					console.log('VAT-SERVICE----' + storeResponse);
-                    
+					storeResponse = JSON.parse(storeResponse);
+					let statusRes = storeResponse.status;
+					let failReson = storeResponse.reason;
+					console.log('VAT-SERVICE----' + statusRes);
 					cmp.set('v.vatServiceCalled', true);
-					cmp.set('v.getServiceStatus', storeResponse);
-					if (storeResponse == 'invalid') {
+					cmp.set('v.getServiceStatus', statusRes);
+					if (statusRes == 'invalid') {
+						console.log('this fail reason----' + this.setFailReason(failReson));
+						cmp.set('v.getVatServiceFailReasonDescription',this.setFailReason(failReson));
 						if(cmp.get('v.endPoint_duplicate') == false){
 							if (fields.Shipping_Country_G__c == 'Canada'){
 								console.log('GST Error, hold submit');
@@ -236,13 +240,13 @@
 							}
 						}
 
-						if(cmp.get('v.endPoint_duplicate') == true){
+						if( cmp.get('v.endPoint_duplicate') == true){
 							cmp.set('v.showVatErrorCmp', true);
 							cmp.set('v.invalidVATForm', true);
 						}
 					}
 					//service is down
-					else if (storeResponse=='unknown') {
+					else if (statusRes=='unknown') {
 						cmp.find('notifLib').showToast({
 							"title": 'Wrong VAT Number- ',
 							"variant": 'warning',
@@ -297,6 +301,23 @@
 		}
 	},
 
+	setFailReason : function(failReason){
+		if (failReason=='invalid_format') {
+			return 'Oh Snap!🙄 - It looks like the format of the number is invalid - Please make sure to verify the format on the guru link below and make sure its valid. Then,';
+        }
+        if (failReason=='invalid_country') {
+			return 'Oh Snap!🙄 - It looks like the shipping country is invalid. Please make sure to set the correct shipping country for this vat number. Then,';
+        }
+        if (failReason=='business_is_not_vat_registered') {
+			return 'Oh Snap!🙄 - It looks like the business is not registered - Please make sure to verify with the customer that business is registered in order to add this vat number. Then,';
+        }
+        if (failReason=='business_is_not_active') {
+			return 'Oh Snap!🙄 - It looks like the business is not active - Please make sure to verify with the customer that business is active in order to add this vat number. Then,';     
+		 }
+        if (failReason=='service_unavailable') {
+			return 'Please note - invalid unavailable';    
+		 }
+	},
 	callVatServiceQST : function(cmp, evt, fromForm){
 		var fields = evt.getParam("fields");
 		var params = {};
@@ -315,15 +336,20 @@
 			var state = response.getState();
 			if (state === "SUCCESS"){
 				var storeResponse = response.getReturnValue();
-				console.log('VAT-SERVICE-QST: ' + storeResponse);
+				storeResponse = JSON.parse(storeResponse);
+				let statusRes = storeResponse.status;
+				let failReson = storeResponse.reason;
+				console.log('VAT-SERVICE-QST: ' + statusRes);
 				cmp.set('v.vatServiceCalled', true);
-				cmp.set('v.getServiceStatus', storeResponse);
-				if (storeResponse == 'invalid') {
+				cmp.set('v.getServiceStatus', statusRes);
+				if (statusRes == 'invalid') {
 					console.log('QST Error, hold submit');
+					console.log('this fail reason----' + this.setFailReason(failReson));
+					cmp.set('v.getVatServiceQSTFailReasonDescription',this.setFailReason(failReson));
 					cmp.set('v.qstError', true);
 					cmp.set('v.showVatErrorCmp', true);
 					this.hideAllSpinners(cmp, evt);
-				} else if (storeResponse == 'unknown') {//service is down
+				} else if (statusRes == 'unknown') {//service is down
 					cmp.find('notifLib').showToast({
 						"title": 'VAT Service is down',
 						"variant": 'warning',
@@ -609,8 +635,8 @@
 			var storeResponse = response.getReturnValue();
 			if (state === "SUCCESS") {
 				cmp.set('v.vatServiceCalled', true);
-				if (!this.isEmpty(storeResponse.raw)){
-					cmp.set('v.getServiceStatus', storeResponse.raw);
+				if (!this.isEmpty(storeResponse.vatStatus)){
+					cmp.set('v.getServiceStatus', storeResponse.vatStatus);
 				}
 
 				if (!storeResponse.service_available){
@@ -662,6 +688,8 @@
 					}
 					if (cmp.get('v.qstError') || cmp.get('v.gstError') || cmp.get('v.vatError')){
 						console.log('Show VAT Error before relate');
+						cmp.set('v.getVatServiceFailReasonDescription',this.setFailReason(storeResponse.vatStatusReason));
+						cmp.set('v.getVatServiceQSTFailReasonDescription',this.setFailReason(storeResponse.qstVatStatusReason));
 						cmp.set('v.showVatErrorCmp', true);
 						cmp.set('v.edit_existing', true);
 						cmp.find('mainEBEForm').set('v.recordId', beId);

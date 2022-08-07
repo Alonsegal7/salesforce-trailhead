@@ -47,7 +47,7 @@
 		cmp.set('v.edit_existing', false);
 	},
 	handleSubmit : function (cmp, evt, hlp) {
-		var radioButtonValue = cmp.get("v.radioValue");
+		//var radioButtonValue = cmp.get("v.radioValue");
 		evt.stopPropagation();
 		evt.preventDefault();
 		var spinner = cmp.find("cmspinneredit");

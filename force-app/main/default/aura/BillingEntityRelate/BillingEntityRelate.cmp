@@ -83,6 +83,8 @@
 	<aura:attribute name="beIdAfterSuccess" type="Id"/>
 	<aura:attribute name="getServiceStatus" type="String" default=""/><!--If vatService is 'irrelevant' - we shouldn't populate the 'Last_VAT_Validation_Date__c' field on the Billing Entity level-->
 	<aura:attribute name="getVatServiceStatus" type="String" default="" />
+	<aura:attribute name="getVatServiceFailReasonDescription" type="String" default="" />
+	<aura:attribute name="getVatServiceQSTFailReasonDescription" type="String" default="" />
 	<!--End Tal - VAT Logic-->
 
 	<aura:handler name="init" value="{! this }" action="{! c.doInit }" />
@@ -523,19 +525,19 @@
 								
 								<aura:if isTrue="{! v.vatError }">
 									<p class="slds-m-top_x-small">We identified that the customer's VAT number is invalid.</p>
-									<p class="slds-m-top_x-small">Please add the correct VAT number and check your Ship-To-Country</p>
+									<p class="slds-m-top_x-small">{! v.getVatServiceFailReasonDescription } add the correct VAT number and try again</p>
 								</aura:if>
 								<aura:if isTrue="{! and(v.gstError, not(v.qstError)) }">
 									<p class="slds-m-top_x-small">We identified that the customer's GST number is invalid.</p>
-									<p class="slds-m-top_x-small">Please add the correct GST number and check your Ship-To-Country</p>
+									<p class="slds-m-top_x-small">{! v.getVatServiceFailReasonDescription } add the correct GST number and try again</p>
 								</aura:if>
 								<aura:if isTrue="{! and(not(v.gstError), v.qstError) }">
 									<p class="slds-m-top_x-small">We identified that the customer's QST number is invalid.</p>
-									<p class="slds-m-top_x-small">Please add the correct QST number and check your Ship-To-Country</p>
+									<p class="slds-m-top_x-small">{! v.getVatServiceQSTFailReasonDescription } add the correct QST number and try again</p>
 								</aura:if>
 								<aura:if isTrue="{! and(v.gstError, v.qstError) }">
 									<p class="slds-m-top_x-small">We identified that the customer's GST number and QST number are invalid.</p>
-									<p class="slds-m-top_x-small">Please add the correct GST &amp; QST numbers and check your Ship-To-Country</p>
+									<p class="slds-m-top_x-small">QST Reason: {! v.getVatServiceQSTFailReasonDescription } add the correct QST number and try again, GST Reason: {! v.getVatServiceFailReasonDescription } add the correct GST &amp; QST numbers and try again</p>
 								</aura:if>
 								
 								<p class="slds-m-top_x-small">You can head to this 
@@ -708,19 +710,19 @@
 							</h2>
 							<aura:if isTrue="{! v.vatError }">
 								<p class="slds-m-top_x-small">We identified that the customer's VAT number is invalid.</p>
-								<p class="slds-m-top_x-small">Please add the correct VAT number and check your Ship-To-Country</p>
+								<p class="slds-m-top_x-small">{! v.getVatServiceFailReasonDescription } add the correct VAT number and try again</p>
 							</aura:if>
 							<aura:if isTrue="{! and(v.gstError, not(v.qstError)) }">
 								<p class="slds-m-top_x-small">We identified that the customer's GST number is invalid.</p>
-								<p class="slds-m-top_x-small">Please add the correct GST number and check your Ship-To-Country</p>
+								<p class="slds-m-top_x-small">{! v.getVatServiceFailReasonDescription } add the correct GST number and try again</p>
 							</aura:if>
 							<aura:if isTrue="{! and(not(v.gstError), v.qstError) }">
 								<p class="slds-m-top_x-small">We identified that the customer's QST number is invalid.</p>
-								<p class="slds-m-top_x-small">Please add the correct QST number and check your Ship-To-Country</p>
+								<p class="slds-m-top_x-small">{! v.getVatServiceQSTFailReasonDescription } add the correct QST number and try again</p>
 							</aura:if>
 							<aura:if isTrue="{! and(v.gstError, v.qstError) }">
 								<p class="slds-m-top_x-small">We identified that the customer's GST number and QST number are invalid.</p>
-								<p class="slds-m-top_x-small">Please add the correct GST &amp; QST numbers and check your Ship-To-Country</p>
+								<p class="slds-m-top_x-small">QST Reason: {! v.getVatServiceQSTFailReasonDescription } add the correct QST number and try again, GST Reason: {! v.getVatServiceFailReasonDescription } add the correct GST &amp; QST numbers and try again</p>
 							</aura:if>
 
 							<p class="slds-m-top_x-small">You can head to this 
@@ -865,19 +867,19 @@
 								
 								<aura:if isTrue="{! v.vatError }">
 									<p class="slds-m-top_x-small">We identified that the customer's VAT number is invalid.</p>
-									<p class="slds-m-top_x-small">Please add the correct VAT number and check your Ship-To-Country</p>
+									<p class="slds-m-top_x-small">{! v.getVatServiceFailReasonDescription } add the correct VAT number and try again</p>
 								</aura:if>
 								<aura:if isTrue="{! and(v.gstError, not(v.qstError)) }">
 									<p class="slds-m-top_x-small">We identified that the customer's GST number is invalid.</p>
-									<p class="slds-m-top_x-small">Please add the correct GST number and check your Ship-To-Country</p>
+									<p class="slds-m-top_x-small">{! v.getVatServiceFailReasonDescription } add the correct GST number and try again</p>
 								</aura:if>
 								<aura:if isTrue="{! and(not(v.gstError), v.qstError) }">
 									<p class="slds-m-top_x-small">We identified that the customer's QST number is invalid.</p>
-									<p class="slds-m-top_x-small">Please add the correct QST number and check your Ship-To-Country</p>
+									<p class="slds-m-top_x-small">{! v.getVatServiceQSTFailReasonDescription } add the correct QST number and try again</p>
 								</aura:if>
 								<aura:if isTrue="{! and(v.gstError, v.qstError) }">
 									<p class="slds-m-top_x-small">We identified that the customer's GST number and QST number are invalid.</p>
-									<p class="slds-m-top_x-small">Please add the correct GST &amp; QST numbers and check your Ship-To-Country</p>
+									<p class="slds-m-top_x-small">QST Reason: {! v.getVatServiceQSTFailReasonDescription } add the correct QST number and try again, GST Reason: {! v.getVatServiceFailReasonDescription } add the correct GST &amp; QST numbers and try again</p>
 								</aura:if>
 								
 								<p class="slds-m-top_x-small">You can head to this 

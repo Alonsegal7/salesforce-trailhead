@@ -1,10 +1,6 @@
 public with sharing class VatVerificationService {
 
     public static string CallVatService(String countryName, String vatNumber, string canadaVatType){
-        //Start Tal - VAT Logic
-        String isInvalid = 'invalid'; 
-        //End Tal - VAT Logic
-        String isIrrelevant='irrelevant';
         List<Country_Region_Mapping__c> countryCode = [SELECT Name, Country_Name__c, Region__c, Sub_Region__c FROM Country_Region_Mapping__c WHERE Vat_Number_Verification_Required__c = true AND Country_Name__c =: countryName];
         //Country code that are marked on the custom setting as required
         if (!countryCode.isempty() && vatNumber != null && vatNumber != '') {
@@ -35,20 +31,20 @@ public with sharing class VatVerificationService {
             else {
                     resBody = '{"status":"valid"}';
                 }
-
-            responseMap = (Map<String, Object>)JSON.deserializeUntyped(resBody);
-            return string.valueof(responseMap.get('status'));
+            
+            ResponseWrapper resWrapper = ResponseWrapper.parse(resBody);//create object to handle response
+            return HandleResponse(resWrapper);
         }
 
         //Start Tal - VAT Logic
         else if(!countryCode.isEmpty() && (vatNumber == null || vatNumber == '')){
-            return isInvalid;
+            return '{"status":"invalid"}';
         }
         //End Tal - VAT Logic
 
         //The country wasn't defined as required on Country_Region_Mapping__c
         else {
-            return isIrrelevant;    
+            return '{"status":"irrelevant"}';
         }
     }
 
@@ -141,5 +137,36 @@ public with sharing class VatVerificationService {
         list <string> respone = new list <string>();
         respone.add(CallVatService(countryName,vatNumber,canadaVatType));
         return respone;
+    }
+
+    public class ResponseWrapper {
+        public String status {get;set;}
+        public String reason {get;set;}
+        public string reasonDescription {get;set;}
+    }
+
+    public static ResponseWrapper parse(String json) {
+        return (ResponseWrapper) System.JSON.deserialize(json, ResponseWrapper.class);
+    }
+
+    public static string HandleResponse(ResponseWrapper wrapper){
+        string res;
+        if (wrapper.reason=='invalid_format') {
+            wrapper.reasonDescription='Invalid format';
+        }
+        if (wrapper.reason=='invalid_country') {
+            wrapper.reasonDescription='Invalid country';
+        }
+        if (wrapper.reason=='business_is_not_vat_registered') {
+            wrapper.reasonDescription='The business is not vat registered';
+        }
+        if (wrapper.reason=='business_is_not_active') {
+            wrapper.reasonDescription='The business does not exist';
+        }
+        if (wrapper.reason=='service_unavailable') {
+            wrapper.reasonDescription='Validation service is unavailable';
+        }
+        res=JSON.serialize(wrapper);
+        return res;
     }
 }

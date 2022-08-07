@@ -52,7 +52,7 @@ public class Ctrl_BillingEntityRelate  {
 			query += s + ', ';
 		}
 
-		query += 'Id, Name FROM Partner_SO_Request__c WHERE Partner_Opportunity__c = \'' + oppId + '\' ORDER BY CreatedDate DESC';
+		query += 'Id, Name FROM Partner_SO_Request__c WHERE Partner_Opportunity__c = \'' + oppId + '\' AND Active__c = true';// ORDER BY CreatedDate DESC
 		List <Partner_SO_Request__c> lp = Database.query(query);
 
 		if (lp != null && !lp.isEmpty()){
@@ -493,27 +493,51 @@ public class Ctrl_BillingEntityRelate  {
 	@AuraEnabled(cacheable=true)
 	public static Map <String, Object> getValuesCallVatService(String BEId){
 		Map <String, Object> res = new Map <String, Object>();
+		Map <String, Object> vatResMap = new Map<String, Object>();
+		
 		res.put('service_available', true);
 		String vatValidationResponse = null;
+		String vatValidationReason = null;
+		String qstValidationReason = null;
 		String qstValidationResponse = null;
+
 		List<Billing_Entity__c> beToSearch = [SELECT Id, Customer_Has_VAT_Number__c, Customer_Has_QST_Number__c, VAT_Number__c, QST_Number__c, Shipping_Country_G__c, Shipping_State__c FROM Billing_Entity__c WHERE Id =: BEId];
 		System.debug('iCloudius - getValuesCallVatService - beToSearch:\n' + JSON.serializePretty(beToSearch));
 		if (beToSearch != null && !beToSearch.isEmpty()) res.put('billing_entity', beToSearch[0]);
 		String vatType = null;
 		if (beToSearch[0].Shipping_Country_G__c == 'Canada') vatType = 'GST';
-		if (beToSearch[0].VAT_Number__c != null) vatValidationResponse = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].VAT_Number__c, vatType);
+		
+		if (beToSearch[0].VAT_Number__c != null){
+			vatResMap = (Map<String, Object>)JSON.deserializeUntyped(VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].VAT_Number__c, vatType));
+			vatValidationResponse = string.valueof(vatResMap.get('status'));
+			vatValidationReason = string.valueof(vatResMap.get('reason'));
+		}
 		System.debug('iCloudius - vatValidationResponse: ' + vatValidationResponse);
-		res.put('raw', vatValidationResponse);
+		res.put('vatStatus', vatValidationResponse);
+		res.put('vatStatusReason', vatValidationReason);
+		
 		if (vatValidationResponse == 'unknown') res.put('service_available', false);
-		if (vatType == null && vatValidationResponse != 'unknown') res.put('vat_valid', (vatValidationResponse != 'invalid'));
-		if (vatType != null && vatValidationResponse != 'unknown') res.put('gst_valid', (vatValidationResponse != 'invalid'));
+		if (vatType == null && vatValidationResponse != 'unknown') {
+			res.put('vat_valid', (vatValidationResponse != 'invalid'));
+		}
+		if (vatType != null && vatValidationResponse != 'unknown'){
+		 	res.put('gst_valid', (vatValidationResponse != 'invalid'));
+		}
 
-		if (beToSearch[0].QST_Number__c != null) qstValidationResponse = VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].QST_Number__c, 'QST');
+		if (beToSearch[0].QST_Number__c != null) {
+			vatResMap = (Map<String, Object>)JSON.deserializeUntyped(VatVerificationService.CallVatService(beToSearch[0].Shipping_Country_G__c, beToSearch[0].QST_Number__c, 'QST'));
+			qstValidationResponse = string.valueof(vatResMap.get('status'));
+			qstValidationReason = string.valueof(vatResMap.get('reason'));
+		}
+		
 		System.debug('iCloudius - qstValidationResponse: ' + qstValidationResponse);
 
 		updateLastServiceCall(BEId);
 
-		if (qstValidationResponse != null && qstValidationResponse != 'unknown') { res.put('qst_valid', (qstValidationResponse != 'invalid')); }
+		if (qstValidationResponse != null && qstValidationResponse != 'unknown') {
+			 res.put('qst_valid', (qstValidationResponse != 'invalid')); 
+			 res.put('qstVatStatusReason', qstValidationReason);
+			}
 
 		System.debug('iCloudius - VAT GST/QST check response:\n' + JSON.serializePretty(res));
 		return res;
