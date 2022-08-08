@@ -156,17 +156,17 @@ public without sharing class OpportunityForecastCTRL {
    public static void removeLineItemsAndQuotes(Id oppty, Id syncedQuote){//first step for currency change
 
         List<OpportunityLineItem> olis = [select id , quote_line_item__c, quote_line_item__r.QuoteId from OpportunityLineItem where opportunityId =: oppty];
-        List<Quote> quoteToDel = [select id from quote where OpportunityId =: oppty];
+        List<Quote> quoteToDel = [select id ,Document_Type__c from quote where OpportunityId =: oppty and Document_Type__c='Forecast'];
         
         
         try {
-        if (!quoteToDel.isempty()) {
+        if (!quoteToDel.isempty()) {//only if found forecast type quotes, run delition
             delete quoteToDel;
+            if (!olis.isempty()) {
+                delete olis;
+            }
         }
 
-        if (!olis.isempty()) {
-            delete olis;
-        }
 
         } catch (Exception ex) {
             if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
