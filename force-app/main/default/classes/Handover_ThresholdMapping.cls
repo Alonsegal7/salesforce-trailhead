@@ -99,6 +99,10 @@ public without sharing class Handover_ThresholdMapping {
                         continue;
                     }
                 }
+                if (thCr.Operator__c == 'notequal' && oppFieldValue == null && thCrFieldValue != null) {
+                    System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - not Null value detected, passing criteria');
+                    continue;    
+                }
                 else {
                     System.debug('Handover_ThresholdMapping compareThresholdsToOppValues - Null value detected, failing criteria');
                     isMatch = false;
