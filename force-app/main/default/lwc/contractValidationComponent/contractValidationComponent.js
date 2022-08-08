@@ -142,14 +142,9 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
                 this.maId=data.AccountId;
                 if(data.Account.primary_pulse_account_id__c==undefined)
                     this.isBBIdEmpty=true;
-                //this.originalBBId==data.Account.primary_pulse_account_id__c;
                 this.maBBId=data.Account.primary_pulse_account_id__c;
                 this.oppId=data.Id;
 
-                console.log('orin - selectedPV: '+this.selectedPV);
-
-                console.log('orin - selectedPV: '+parseInt(data.Pricing_Version__c));
-                console.log('orin - ACC PV: '+parseInt(data.Account.Pricing_Version__c));
                 
                 if (parseInt(data.Account.Pricing_Version__c)>parseInt(data.Pricing_Version__c)) {
                     this.disableButton=true;
@@ -319,8 +314,6 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
         event.preventDefault();
         const fields = event.detail.fields;
         const selectedPV = fields.Pricing_Version__c;
-        console.log('orin - selectedPV2: '+selectedPV);
-        console.log('orin - ACC PV2: '+this.accPV);
         if (parseInt(selectedPV)>=parseInt(this.accPV)) {
              this.disableButton=false;
              this.monAccPvAboveOppPv=false;
