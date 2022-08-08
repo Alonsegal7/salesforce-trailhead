@@ -71,7 +71,7 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
     isBBIdEmpty=false;
     disableButton=false;
     monAccPvAboveOppPv=false;
-    
+
 
     @wire(contractFromBB,{oppId:'$recordId'})
         wiredContract({data, error}){
@@ -145,6 +145,11 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
                 //this.originalBBId==data.Account.primary_pulse_account_id__c;
                 this.maBBId=data.Account.primary_pulse_account_id__c;
                 this.oppId=data.Id;
+
+                console.log('orin - selectedPV: '+this.selectedPV);
+
+                console.log('orin - selectedPV: '+parseInt(data.Pricing_Version__c));
+                console.log('orin - ACC PV: '+parseInt(data.Account.Pricing_Version__c));
                 
                 if (parseInt(data.Account.Pricing_Version__c)>parseInt(data.Pricing_Version__c)) {
                     this.disableButton=true;
@@ -311,21 +316,22 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
         
     }
     handleSaveOpp(event){
+        event.preventDefault();
         const fields = event.detail.fields;
-        this.template.querySelector('lightning-record-form').submit(fields);
-        //this.presentMessgaes=false;
-    }
-    handleSuccessOpp(event){
-        const selectedPV = event.detail.fields.Pricing_Version__c.value;
-        if (selectedPV>=this.accPV) {
+        const selectedPV = fields.Pricing_Version__c;
+        console.log('orin - selectedPV2: '+selectedPV);
+        console.log('orin - ACC PV2: '+this.accPV);
+        if (parseInt(selectedPV)>=parseInt(this.accPV)) {
              this.disableButton=false;
              this.monAccPvAboveOppPv=false;
+             this.template.querySelector('lightning-record-form').submit(fields);
         }
         else{
             this.disableButton=true;
             this.monAccPvAboveOppPv=true;
         }
     }
+
     handleToggleChange(event){
         this.connectAccount=event.target.checked;
     }
