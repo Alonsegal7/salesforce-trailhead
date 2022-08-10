@@ -49,12 +49,12 @@ public without sharing class Utilities {
 
         if(ccAddresses != null) resEmail.setCcAddresses(ccAddresses);
 		if(replyTo != null && replyTo != '') resEmail.setReplyTo(replyTo); 
-		if(senderDisplayName == null || senderDisplayName == '') {
-            Id orgWideEmailAddressId = (oweaId == null || oweaId == '') ? oweaId : [select Id from orgWideEmailAddress where Address =: 'bizops@monday.com' limit 1].Id;
-            resEmail.setOrgWideEmailAddressId(orgWideEmailAddressId);
-        } else {
-            resEmail.setSenderDisplayName(senderDisplayName);
-        }
+        if(oweaId != null && oweaId != ''){
+            list<orgWideEmailAddress> owea_list = [select Id from orgWideEmailAddress where Id =: oweaId limit 1];
+            if(owea_list != null && !owea_list.isEmpty()){
+                resEmail.setOrgWideEmailAddressId(owea_list[0].Id);
+            }
+        } else if(senderDisplayName != null && senderDisplayName != '') resEmail.setSenderDisplayName(senderDisplayName);
 		return resEmail;
 	}
 
@@ -68,11 +68,9 @@ public without sharing class Utilities {
      
     public static void sendEmail(String subject, String body, list<String> toAddresses){
         Messaging.SingleEmailMessage mail=new Messaging.SingleEmailMessage();
-        
         mail.setToAddresses(toAddresses);
         mail.setSubject(subject);
         mail.setHtmlBody(body+'<br/><br/>Timestamp: '+Datetime.now());
-        
         try{
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{mail});
         }catch(Exception e){}
@@ -80,12 +78,10 @@ public without sharing class Utilities {
     
     public static void sendEmail(String subject, String body, list<String> toAddresses, list<String> bccAddresses){
         Messaging.SingleEmailMessage mail=new Messaging.SingleEmailMessage();
-        
         mail.setToAddresses(toAddresses);
         mail.setBccAddresses(bccAddresses);
         mail.setSubject(subject);
         mail.setHtmlBody(body+'<br/><br/>Timestamp: '+Datetime.now());
-        
         try{
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{mail});
         }catch(Exception e){}
@@ -181,8 +177,6 @@ public without sharing class Utilities {
             }
         }
     }
-
-
 
     public static String setFirstLetterUpper(String str){
         return str.substring(0,1).toUpperCase() + str.substring(1,str.length());

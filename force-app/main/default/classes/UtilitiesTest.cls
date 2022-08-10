@@ -57,6 +57,7 @@ public without sharing class UtilitiesTest {
         sendEmailReq.toAddress = new list<string>{'kseniasm@monday.com'};
         sendEmailReq.templateId = [select Id from EmailTemplate where DeveloperName = 'TestTemplateUtilitiesTest' limit 1].Id;
         sendEmailReq.whoId = newLead.Id;
+        sendEmailReq.senderDisplayName = 'test';
         List<Utilities.sendEmailRequest> sendEmailReq_list = new List<Utilities.sendEmailRequest>();
         sendEmailReq_list.add(sendEmailReq);
         Test.startTest();
