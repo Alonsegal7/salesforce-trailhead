@@ -7,8 +7,8 @@ public without sharing class Utilities {
         //required
         @InvocableVariable(label='To Address (separated by comma)' required=true)
         public list<String> toAddress;
-        @InvocableVariable(label='Email Template Id' required=true)
-        public Id templateId;
+        @InvocableVariable(label='Email Template Unique Name' required=true)
+        public String emailTempUniqName;
         @InvocableVariable(label='Who Id (The identifier of an object in the database, typically a contact, lead, or user. The database record for that object is read and used in merge field processing)' required=true)
         public Id whoId;
         //optional
@@ -18,27 +18,31 @@ public without sharing class Utilities {
         public String replyTo;
         @InvocableVariable(label='Sender Display Name (in case you fill this, the email will be sent from the running user)' required=false)
         public String senderDisplayName;
-        @InvocableVariable(label='Organization-Wide Email Address Id (in case you fill this, Sender Display Name is not relevant)' required=false)
-        public Id oweaId;
+        @InvocableVariable(label='Organization-Wide Email Address (in case you fill this, Sender Display Name is not relevant)' required=false)
+        public String oweaAddress;
         @InvocableVariable(label='What Id (Identifies an object in the database, like an account or opportunity. The record for that object is read and used in merge field processing)' required=false)
         public Id whatId;
     }
 
+    /* we added this invocable method bc curren */
     @InvocableMethod(label='Send Email by Apex')
     public static void sendEmail(List<sendEmailRequest> requests) {
         try {
             List<Messaging.SingleEmailMessage> allEmailsToSend = new List<Messaging.SingleEmailMessage>();
             for(sendEmailRequest req : requests){
-                allEmailsToSend.add(generateEmail(req.toAddress, req.ccRecipients, req.replyTo, req.whoId, req.templateId, req.senderDisplayName, req.oweaId));
+                Messaging.SingleEmailMessage m = generateEmail(req.toAddress, req.ccRecipients, req.replyTo, req.whoId, req.emailTempUniqName, req.senderDisplayName, req.oweaAddress);
+                if(m != null)allEmailsToSend.add(m);
             }
-            Messaging.sendEmail(allEmailsToSend);
+            if(!allEmailsToSend.isEmpty()) Messaging.sendEmail(allEmailsToSend);
         } catch(Exception e){
             Utilities.sendEmail('Error in sendEmail: ', e.getMessage() + '\n' + e.getStackTraceString(), new List<String>{'kseniasm@monday.com'}); 
         }
     }
 
-    public static Messaging.SingleEmailMessage generateEmail(List<String> toAddresses, List<String> ccAddresses, String replyTo, Id targetObjectId, Id emailTemplateId, String senderDisplayName, Id oweaId){
-        Messaging.SingleEmailMessage renderedEmail = Messaging.renderStoredEmailTemplate(emailTemplateId, targetObjectId, null);
+    public static Messaging.SingleEmailMessage generateEmail(List<String> toAddresses, List<String> ccAddresses, String replyTo, Id targetObjectId, String emailTempUniqName, String senderDisplayName, String oweaAddress){
+        List<EmailTemplate> emailTemp_list = [select Id from EmailTemplate where DeveloperName =: emailTempUniqName limit 1];
+        if(emailTemp_list == null || emailTemp_list.isEmpty()) return null;
+        Messaging.SingleEmailMessage renderedEmail = Messaging.renderStoredEmailTemplate(emailTemp_list[0].Id, targetObjectId, null);
 		Messaging.SingleEmailMessage resEmail = new Messaging.SingleEmailMessage();
 		resEmail.setSubject(renderedEmail.getSubject());
 		resEmail.setHtmlBody(renderedEmail.getHtmlBody());
@@ -49,8 +53,8 @@ public without sharing class Utilities {
 
         if(ccAddresses != null) resEmail.setCcAddresses(ccAddresses);
 		if(replyTo != null && replyTo != '') resEmail.setReplyTo(replyTo); 
-        if(oweaId != null && oweaId != ''){
-            list<orgWideEmailAddress> owea_list = [select Id from orgWideEmailAddress where Id =: oweaId limit 1];
+        if(oweaAddress != null && oweaAddress != ''){
+            list<orgWideEmailAddress> owea_list = [select Id from orgWideEmailAddress where Address =: oweaAddress limit 1];
             if(owea_list != null && !owea_list.isEmpty()){
                 resEmail.setOrgWideEmailAddressId(owea_list[0].Id);
             }

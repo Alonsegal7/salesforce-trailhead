@@ -55,7 +55,7 @@ public without sharing class UtilitiesTest {
 
         Utilities.sendEmailRequest sendEmailReq = new Utilities.sendEmailRequest();
         sendEmailReq.toAddress = new list<string>{'kseniasm@monday.com'};
-        sendEmailReq.templateId = [select Id from EmailTemplate where DeveloperName = 'TestTemplateUtilitiesTest' limit 1].Id;
+        sendEmailReq.emailTempUniqName = 'TestTemplateUtilitiesTest';
         sendEmailReq.whoId = newLead.Id;
         sendEmailReq.senderDisplayName = 'test';
         List<Utilities.sendEmailRequest> sendEmailReq_list = new List<Utilities.sendEmailRequest>();
