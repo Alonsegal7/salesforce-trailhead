@@ -48,7 +48,6 @@
                                 <div class="custom-box">
                                     <label for="lpId" class="slds-form-element__label slds-no-flex">Current List Price ({currency})</label>
                                     <lightning-helptext content="Price Per Seat"></lightning-helptext>
-                                    <!--<lightning-input-field id="lpId" field-name="List_Price__c" variant="label-hidden" value={listPrice} disabled></lightning-input-field>-->
                                     <lightning-input id="lpId" type="number" name="list price" disabled={isListPriceDisabled} value={listPrice} variant="label-hidden" onchange={handleListPrice}></lightning-input>
                                 </div>
                             </lightning-layout-item>
@@ -101,7 +100,6 @@
                     </div>
                     <div class="slds-col slds-size_3-of-12">
                         <lightning-layout-item size="12" padding="around-medium" >
-                            <!--<lightning-button class="slds-m-top_small" type="submit" label="Save" onclick={handleSuccess}></lightning-button>-->
                             <lightning-button class="slds-m-top_large" variant="brand" label="Save" onclick={handleSave}></lightning-button>
                         </lightning-layout-item>
                     </div>
@@ -159,8 +157,7 @@
                             fields={fields}
                             columns="1"
                             mode="view"
-                            onsubmit={handleSaveOpp}
-                            onsuccess={handleSuccessOpp}>
+                            onsubmit={handleSaveOpp}>
                     </lightning-record-form>
                     <template if:true={isBBIdEmpty}>
                         <br/>
