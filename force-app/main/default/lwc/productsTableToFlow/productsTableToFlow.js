@@ -546,75 +546,77 @@ export default class ProductsTableToFlow extends LightningElement {
                 }
 
     handleSubmit(){
-        console.log('submiting');
-
         this.isLoading=true;
-        if (this.validateSubmit==true || this.totalList==0) {
-            this.showSubmitModal=true;
-            this.isLoading=false;
-        }
-        if(this.validateSubmit==false && this.totalList>0){
-            this.isLoading=true;
-            this.productsToInsert=[];
-            //Get relevant products
-            this.data.forEach(singleProd => {
-                if((singleProd.total>0 || (singleProd.total==0 && singleProd.discount==100))){
-                    this.productsToInsert.push(singleProd);
-                }
-            });
-            //Now, check context
-            if(this.context=='PartnerSOR'){
-                let recId = this.parentRecId;
-                createProducts_SOR( {sor: recId, productsData: JSON.stringify(this.productsToInsert)}).then(()=>{
-                    this.isLoading=false;
-                    if (this.availableActions.find((action) => action === 'NEXT')) {
-                        // navigate to the next screen
-                        const navigateNextEvent = new FlowNavigationNextEvent();
-                        this.dispatchEvent(navigateNextEvent);
-                    }
-                }).catch(error => {
-                    this.validateSubmit==true;
-                    this.error=error;
-                    console.log(this.error);
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Products Error - Please contact BizOps ',
-                            message: error.body.message,
-                            variant: 'error',
-                        }),
-                    );
-                }); 
+        setTimeout(() => {//wait a bit in cases where the user set values to draft-val w/o event 
+            console.log('submiting');
+            if (this.validateSubmit==true || this.totalList==0) {
+                this.showSubmitModal=true;
+                this.isLoading=false;
             }
-            if(this.context=='quote'){
-                insertForecastQuote( {oppId: this.oppData.id, productsData: JSON.stringify(this.productsToInsert), tier: this.tierSelection, contractType: this.ContractTypeVal}).then((res)=>{
-                    console.log('inserting quote '+ this.oppCurrentCrrncy);
-                    if (res[0]!=null) {
-                        this.handledByCurrencyChangeProcess=false;
-                        this.calculateProductsPricing(this.listOfDrafts);//Calculate pricing again after quote was inserted
-                        this.handledByCurrencyChangeProcess=false;
-                        this.syncedQuote=res[0].QuoteId;
+            if(this.validateSubmit==false && this.totalList>0){
+                this.isLoading=true;
+                this.productsToInsert=[];
+                //Get relevant products
+                this.data.forEach(singleProd => {
+                    if((singleProd.total>0 || (singleProd.total==0 && singleProd.discount==100))){
+                        this.productsToInsert.push(singleProd);
+                    }
+                });
+                //Now, check context
+                if(this.context=='PartnerSOR'){
+                    let recId = this.parentRecId;
+                    createProducts_SOR( {sor: recId, productsData: JSON.stringify(this.productsToInsert)}).then(()=>{
+                        this.isLoading=false;
+                        if (this.availableActions.find((action) => action === 'NEXT')) {
+                            // navigate to the next screen
+                            const navigateNextEvent = new FlowNavigationNextEvent();
+                            this.dispatchEvent(navigateNextEvent);
+                        }
+                    }).catch(error => {
+                        this.validateSubmit==true;
+                        this.error=error;
+                        console.log(this.error);
                         this.dispatchEvent(
                             new ShowToastEvent({
-                                title: 'Success!',
-                                message: '💰Forecast Updated Successfully💰',
-                                variant: 'success',
+                                title: 'Products Error - Please contact BizOps ',
+                                message: error.body.message,
+                                variant: 'error',
                             }),
                         );
-                    }
-                    this.isLoading=false;
-                }).catch(error => {
-                    this.validateSubmit==true
-                    this.isLoading=false;
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Products Error - Please contact BizOps ',
-                            message: error.body.message,
-                            variant: 'error',
-                        }),
-                    );
-                }); 
+                    }); 
+                }
+                if(this.context=='quote'){
+                    insertForecastQuote( {oppId: this.oppData.id, productsData: JSON.stringify(this.productsToInsert), tier: this.tierSelection, contractType: this.ContractTypeVal}).then((res)=>{
+                        console.log('inserting quote '+ this.oppCurrentCrrncy);
+                        if (res[0]!=null) {
+                            this.handledByCurrencyChangeProcess=false;
+                            this.calculateProductsPricing(this.listOfDrafts);//Calculate pricing again after quote was inserted
+                            this.handledByCurrencyChangeProcess=false;
+                            this.syncedQuote=res[0].QuoteId;
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Success!',
+                                    message: '💰Forecast Updated Successfully💰',
+                                    variant: 'success',
+                                }),
+                            );
+                        }
+                        this.isLoading=false;
+                    }).catch(error => {
+                        this.validateSubmit==true
+                        this.isLoading=false;
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Products Error - Please contact BizOps ',
+                                message: error.body.message,
+                                variant: 'error',
+                            }),
+                        );
+                    }); 
+                }
             }
-        }
+        }, '0202');
+
     }
     closeModalAction(){
         this.showSubmitModal=false;
