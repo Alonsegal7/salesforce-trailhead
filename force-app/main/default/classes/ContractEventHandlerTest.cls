@@ -431,4 +431,57 @@ public with sharing class ContractEventHandlerTest {
         System.assertEquals(null ,ma12.Active_Contract__c);
     }
 
+    @IsTest
+    public static void ConnectActivationToSalesOrderContract() {
+        TestObjectCreator.persistImmediate = true;
+        DateTime dT = System.now();
+        Date startDate = date.newinstance(dT.year(), dT.month(), dT.day());
+        Date endDate = date.newinstance(dT.year()+1, dT.month(), dT.day());
+        Account company = TestObjectCreator.CreateCompany();
+        Account ma = TestObjectCreator.CreateMondayAccount(company);
+        TestObjectCreator.persistImmediate = false;
+        ma.primary_pulse_account_id__c='12211';
+        update ma;
+
+        TestObjectCreator.persistImmediate = true;
+        Opportunity opportunity = TestObjectCreator.CreateOpp(ma);
+        Quote quoteNewCont = TestObjectCreator.CreateNonContractQuote(opportunity, 'New Contract');
+        QuoteLineItem quoteLicenseLine = TestObjectCreator.CreateQuoteLineItem(quoteNewCont, 'License', 1, 1.0);
+        quoteLicenseLine.Duration__c=12;
+        quoteLicenseLine.ServiceDate=startDate;
+        quoteLicenseLine.End_Date__c=endDate;
+        quoteLicenseLine.Duration__c=12;
+        quoteLicenseLine.Tier__c='Pro';
+        quoteLicenseLine.List_Price__c=38;
+        quoteLicenseLine.Net_Per_Unit__c=263;
+        quoteLicenseLine.arr__c=123;
+        TestObjectCreator.persistImmediate = false;
+        update quoteLicenseLine;
+        
+
+        List<OpportunityLineItem> opportunityLines = new List<OpportunityLineItem>{ TestObjectCreator.CreateOpportunityProduct(opportunity, quoteLicenseLine) };
+        quoteNewCont.DH_Quote_Status__c='Won';
+        quoteNewCont.Document_Type__c='Sales Order';
+        update quoteNewCont;
+
+        contract con = [select id,Core_Activation__c from contract limit 1];
+
+        Subscription__c sub = TestObjectCreator.CreateSubscription();
+        sub.Pulse_Account_Id__c='12211';
+        sub.Deactivation_Date__c=endDate;
+        sub.Activation_Date__c=startDate;
+        sub.Activated_via_Import_SO__c=true;
+        sub.Source_Sales_Order__c=quoteNewCont.Id;
+        sub.contract__c=con.id;
+        insert sub;
+
+        contract con1 = [select id,Core_Activation__c from contract limit 1];
+
+        Contract_Event__c conEve = [select Id,sku__c,Related_Activation__c, IsRecurring__c, Net_Unit_Price__c from contract_event__c where contract__c=:con.Id and sku__c='CORE-PRO' limit 1];
+
+        System.assertEquals(conEve.Related_Activation__c ,sub.Id);
+        System.assertEquals(con1.Core_Activation__c ,sub.Id);
+
+    }
+
 }

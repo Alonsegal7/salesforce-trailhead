@@ -150,7 +150,8 @@ public with sharing class ContractEventToContract {
             Seats__c =conEvent.Quantity__c,
             Auto_Renewal__c=conEvent.Auto_Renewal__c,
             Notes_for_renewal__c=conEvent.Notes_for_renewal__c,
-            Discount_on_renewal__c=conEvent.Discount_on_renewal__c
+            Discount_on_renewal__c=conEvent.Discount_on_renewal__c,
+            Core_Activation__c=conEvent.subscription__c//if we have subscription on the event which created the contract, he is the core event
         );
         return contract;
     }
