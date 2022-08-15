@@ -46,3 +46,5 @@ force-app/main/default/classes/RHX_*
 force-app/main/default/triggers/RHX_*
 node_modules
 package-lock.json
+.prettierignore
+package.json

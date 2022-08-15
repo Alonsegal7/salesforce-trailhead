@@ -87,7 +87,7 @@ public with sharing class Handover_ThresholdMappingTest {
         update comp;
         opp.CSM_Package__c = 'Silver';
         update opp;
-        opp.StageName = 'Buying process';
+        opp.StageName = 'Closed Won';
         update opp;
         
 		Test.stopTest();
@@ -106,18 +106,22 @@ public with sharing class Handover_ThresholdMappingTest {
         Account comp2 = [SELECT Id, NumberOfEmployees FROM Account WHERE Name = 'testco2' LIMIT 1];
         HO_Threshold__c amTh = [SELECT Id FROM HO_Threshold__c WHERE Type__c = 'AM' and Name = 'AM test2' LIMIT 1];
         
-        Test.startTest();
-
+        
         Opportunity opp = TestObjectCreator.CreateOpp(mondayAcc);
         opp.Company__c = comp2.Id;
         opp.Name = 'test2';
         opp.RecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
         insert opp;
         
+        Test.startTest();
+
+        Batch_CalculateHandoverThresholds batch = new Batch_CalculateHandoverThresholds();
+        Database.executeBatch(batch, 20);
+        
 		Test.stopTest();
         
         opp = [SELECT Id, StageName, HO_Threshold_AM__c, Passed_AM_Threshold__c FROM Opportunity WHERE Name = 'test2' LIMIT 1];
- 
+        
         System.assertEquals(opp.HO_Threshold_AM__c, amTh.Id);
         System.assertEquals(opp.Passed_AM_Threshold__c, false);
     }
@@ -136,7 +140,7 @@ public with sharing class Handover_ThresholdMappingTest {
         delete oli;
         comp.NumberOfEmployees = 1550;
         update comp;
-        opp.StageName = 'Buying process';
+        opp.StageName = 'Closed Won';
         update opp;
         
 		Test.stopTest();
@@ -154,17 +158,11 @@ public with sharing class Handover_ThresholdMappingTest {
         Account comp = [SELECT Id, NumberOfEmployees FROM Account WHERE Name = 'test1' LIMIT 1];
         HO_Threshold__c amTh = [SELECT Id FROM HO_Threshold__c WHERE Type__c = 'AM' and Name = 'AM test1' LIMIT 1];
         
-        opp.StageName = 'Buying process';
-        update opp;
-        
-        opp = [SELECT Id, StageName, HO_Threshold_AM__c FROM Opportunity WHERE Name = 'test1' LIMIT 1];
-        System.assertEquals(opp.HO_Threshold_AM__c, amTh.Id);
-        
         Test.startTest();
         
         comp.NumberOfEmployees = 1550;
         update comp;
-        opp.StageName = 'Evaluation';
+        opp.StageName = 'Closed Won';
         update opp;
         
 		Test.stopTest();
@@ -202,7 +200,7 @@ public with sharing class Handover_ThresholdMappingTest {
         update comp;
         opp.CSM_Package__c = 'Silver';
         update opp;
-        opp.StageName = 'Buying process';
+        opp.StageName = 'Closed Won';
         update opp;
         
         Test.stopTest();
@@ -223,5 +221,14 @@ public with sharing class Handover_ThresholdMappingTest {
         HO_Threshold__c amTh = [SELECT Id FROM HO_Threshold__c WHERE Type__c = 'AM' and Name = 'AM test1' LIMIT 1];
         List<HO_Threshold_Criteria__c> thCrList = Handover_ThresholdMapping.findExistingThCr(amTh.Id);
         Handover_ThresholdMapping.updateThCr(thCrList, amTh.Id);
+    }
+
+    @isTest
+    public static void shouldRunSchedule() {
+        String sch = '0 0 0 * * ?';
+        Test.startTest();
+        String jobId = System.schedule('myJobTestJobName', sch, new Batch_CalculateHandoverThresholds());
+        Test.stopTest();
+        System.assertNotEquals(jobId, null);
     }
 }

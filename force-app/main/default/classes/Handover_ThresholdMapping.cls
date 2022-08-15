@@ -1,68 +1,95 @@
 public without sharing class Handover_ThresholdMapping {
 
+    /*this function was designed to work as before trigger from efficiancy considerations. 
+    Thresholds that are based on formula fields will not be up to date when this runs. 
+    At the moment this service runs only when the stage changes to closed won and there can't be a scenario where the opp is closed won and a value that impacts a formula (e.g. Owner's office) are changed at the same transaction.*/   
     public static void linkOpportunityToThresholdFromTrigger(List<Opportunity> opps, Map<Id, Opportunity> oldOpps) {
         try {
             List<Opportunity> relevantOpps = new List<Opportunity>();
             Id oppInternalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
             for (Opportunity opp : opps) {
-                if (opp.RecordTypeId == oppInternalOppRtId && (opp.Manual_Trigger__c == 'Calculate HO Thresholds' || opp.StageName != oldOpps.get(opp.Id).StageName || oldOpps == null)) { //new oppty or stage changed or manual trigger
+                if (opp.RecordTypeId == oppInternalOppRtId && 
+                 (opp.Manual_Trigger__c == 'Calculate HO Thresholds' || (opp.StageName == 'Closed Won' && opp.StageName != oldOpps.get(opp.Id).StageName))) { //stage changed to won or manual trigger
                     relevantOpps.add(opp);
                     if(opp.Manual_Trigger__c == 'Calculate HO Thresholds') opp.Manual_Trigger__c = '';
                 }
             }
             if (!relevantOpps.isEmpty()){
-                Map<Id,List<HO_Threshold_Criteria__c>> thresholdsWithCriterias = getThresholdsWithThresholdCriterias();
-                linkOppsToThresholds(relevantOpps, thresholdsWithCriterias);
+                linkOppsToThresholds(relevantOpps, false);
             }
         } catch(Exception e){
             Utilities.sendDebugEmail('Error in Handover_ThresholdMapping ',e,e.getMessage());    
         }
     }
 
-    public static void recalcHandoverThresholdFromAfterTrigger(List<Opportunity> opps){
-        System.debug('Entered recalcHandoverThresholdFromAfterTrigger');
-        List<Opportunity> updatedOpps = new List<Opportunity>();
-        for (Opportunity opp : opps) {
-            updatedOpps.add(new Opportunity(Id = opp.Id, Manual_Trigger__c = 'Calculate HO Thresholds'));
-        }
-        update updatedOpps;
-    }
-
-    public static Map<Id,List<HO_Threshold_Criteria__c>> getThresholdsWithThresholdCriterias() {
-        System.debug('Handover_ThresholdMapping getRelevantThresholdsWithThresholdCriterias entered.');
-        Map<Id,List<HO_Threshold_Criteria__c>> thresholdsWithCriterias = new Map<Id,List<HO_Threshold_Criteria__c>>();
-        List<HO_Threshold_Criteria__c> relevantThCriterias = new List<HO_Threshold_Criteria__c>();
-        relevantThCriterias = [SELECT Id, HO_Threshold__c, Criteria_Name__c, Target_Field_API_Name__c, Value__c, Operator__c, Relevant_for_Pass__c, Relevant_for_Link__c FROM HO_Threshold_Criteria__c WHERE Is_Active__c = TRUE AND HO_Threshold__r.Active__c = TRUE];
-        if (relevantThCriterias != null) {
-            for (HO_Threshold_Criteria__c thCr : relevantThCriterias) {
-                if (thresholdsWithCriterias.containsKey(thCr.HO_Threshold__c)) {
-                    thresholdsWithCriterias.get(thCr.HO_Threshold__c).add(thCr);
+    public static String relevantOppFields { //static variable that will return a list of all the opportunity fields used by the thresholds
+        get {
+            relevantOppFields = '';
+            Set<String> oppFieldsSet = new Set<String>();
+            for (Id thId : thresholdsWithCriteriasGlobalMap.keySet()) {
+                for(HO_Threshold_Criteria__c thCr : (List<HO_Threshold_Criteria__c>)(thresholdsWithCriteriasGlobalMap.get(thId).get('criterias'))) {
+                    oppFieldsSet.add(thCr.Target_Field_API_Name__c);
                 }
-                else {
-                    thresholdsWithCriterias.put(thCr.HO_Threshold__c,new List<HO_Threshold_Criteria__c>{thCr});
-                }   
             }
+            for (String field : oppFieldsSet) {
+                relevantOppFields += ',' + field;
+            }
+            return relevantOppFields;
         }
-        System.debug('Handover_ThresholdMapping getRelevantThresholdsWithThresholdCriterias found ' + thresholdsWithCriterias.size() + ' relevant thresholds and ' + relevantThCriterias.size() + ' threshold criterias in total');
-        return thresholdsWithCriterias;
+        set;
     }
 
-    public static void linkOppsToThresholds(List<Opportunity> relevantOpps, Map<Id,List<HO_Threshold_Criteria__c>> thresholdsWithCriterias) {
-        Map<Id, HO_Threshold__c> thresholdsMap = new Map<Id, HO_Threshold__c>([SELECT Id, Type__c, Always_Pass__c FROM HO_Threshold__c WHERE Id IN: thresholdsWithCriterias.keySet() AND Active__c = TRUE]);
+    public static Map<Id,Map<String, Object>> thresholdsWithCriteriasGlobalMap {  
+        /* this static variable will return all the thresholds with their threshold criteria, output stracture: 
+        a2e7T0000004KB7QAM={
+            criterias=(
+                HO_Threshold_Criteria__c:{Id=a2d7T0000008a04QAA, HO_Threshold__c=a2e7T0000004KB7QAM, Criteria_Name__c=Account CSM, Target_Field_API_Name__c=CSM_Name_Formula__c, Operator__c=equal, Relevant_for_Pass__c=false, Relevant_for_Link__c=true}, 
+                HO_Threshold_Criteria__c:{Id=a2d7T0000008a05QAA, HO_Threshold__c=a2e7T0000004KB7QAM, Criteria_Name__c=CSM Package, Target_Field_API_Name__c=Quote_CSM_Package__c, Value__c=Bronze;Silver, Operator__c=one of, Relevant_for_Pass__c=false, Relevant_for_Link__c=true}), 
+            threshold=
+                HO_Threshold__c:{Id=a2e7T0000004KB7QAM, Type__c=CSM, Always_Pass__c=true}
+        }*/
+        get {
+            if (thresholdsWithCriteriasGlobalMap == null) {
+                thresholdsWithCriteriasGlobalMap = new Map<Id,Map<String, Object>>();
+                List<HO_Threshold_Criteria__c> thCrList = [
+                    SELECT Id, HO_Threshold__c, HO_Threshold__r.Type__c, HO_Threshold__r.Always_Pass__c, 
+                    Criteria_Name__c, Target_Field_API_Name__c, Value__c, Operator__c, Relevant_for_Pass__c, Relevant_for_Link__c 
+                    FROM HO_Threshold_Criteria__c WHERE Is_Active__c = TRUE AND HO_Threshold__r.Active__c = TRUE
+                ];
+                for (HO_Threshold_Criteria__c thCr : thCrList) {
+                    if (thresholdsWithCriteriasGlobalMap.containsKey(thCr.HO_Threshold__c)) {
+                        ((List<HO_Threshold_Criteria__c>)thresholdsWithCriteriasGlobalMap.get(thCr.HO_Threshold__c).get('criterias')).add(thCr);
+                    }
+                    else {
+                        thresholdsWithCriteriasGlobalMap.put(thCr.HO_Threshold__c, new Map<String, Object>{
+                            'threshold' => new HO_Threshold__c(Id = thCr.HO_Threshold__c, Type__c = thCr.HO_Threshold__r.Type__c, Always_Pass__c = thCr.HO_Threshold__r.Always_Pass__c),
+                            'criterias' => new List<HO_Threshold_Criteria__c>{thCr}
+                        });
+                    }   
+                }
+            }
+            return thresholdsWithCriteriasGlobalMap;
+        }
+        set;
+    }
+
+    public static void linkOppsToThresholds(List<Opportunity> relevantOpps, Boolean isRunDml) {
         Boolean isMatch, isPass;
         String thresholdFieldName, thresholdPassFieldName;
         for (Opportunity opp : relevantOpps) {
             isMatch = isPass = false;
             opp.HO_Threshold_AM__c = opp.HO_Threshold_CSM__c = opp.HO_Threshold_Onboarding__c = null;
             opp.Passed_AM_Threshold__c = opp.Passed_CSM_Threshold__c = opp.Passed_Onboarding_Threshold__c = false;
-            for (HO_Threshold__c th : thresholdsMap.values()) {
-                isMatch = checkMatch(opp, th, thresholdsWithCriterias.get(th.Id), 'isLink');
+            for (Id thId : thresholdsWithCriteriasGlobalMap.keySet()) {
+                HO_Threshold__c th = (HO_Threshold__c)(thresholdsWithCriteriasGlobalMap.get(thId).get('threshold'));
+                List<HO_Threshold_Criteria__c> criteriaList = (List<HO_Threshold_Criteria__c>)(thresholdsWithCriteriasGlobalMap.get(th.Id).get('criterias'));
+                isMatch = checkMatch(opp, th, criteriaList, 'isLink');
                 if (isMatch) {
                     thresholdFieldName = th.Type__c == 'AM' ? 'HO_Threshold_AM__c' : th.Type__c == 'CSM' ? 'HO_Threshold_CSM__c' : th.Type__c == 'Onboarding' ? 'HO_Threshold_Onboarding__c' : null;
                     opp.put(thresholdFieldName, th.Id);
                     //once matched, check if passed the threshold
                     thresholdPassFieldName = th.Type__c == 'AM' ? 'Passed_AM_Threshold__c' : th.Type__c == 'CSM' ? 'Passed_CSM_Threshold__c' : th.Type__c == 'Onboarding' ? 'Passed_Onboarding_Threshold__c' : null;
-                    if(th.Always_Pass__c || checkMatch(opp, th, thresholdsWithCriterias.get(th.Id), 'isPass')) {
+                    if(th.Always_Pass__c || checkMatch(opp, th, criteriaList, 'isPass')) {
                         opp.put(thresholdPassFieldName, true);    
                     }
                     else {
@@ -70,6 +97,9 @@ public without sharing class Handover_ThresholdMapping {
                     }
                 }
             }
+        }
+        if (isRunDml) {
+            update relevantOpps;
         }
     }
 

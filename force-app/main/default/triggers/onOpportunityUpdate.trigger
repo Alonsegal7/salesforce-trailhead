@@ -47,7 +47,6 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
     if(Trigger.isAfter && Trigger.isInsert){
         Partners_SharingService.createOpportunityShares(Trigger.new, Trigger.oldMap);
         Opportunity_RenewalCreation.updateRenewalStatus(Trigger.new, Trigger.oldMap);
-        Handover_ThresholdMapping.recalcHandoverThresholdFromAfterTrigger(Trigger.new);
     }
 
     //CALLOUT TO BB
