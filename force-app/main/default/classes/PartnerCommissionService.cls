@@ -220,59 +220,87 @@ public class PartnerCommissionService {
                                         or (RecordTypeId =: partnerRecordTypeId and Partner_Commission_Model__c != null))]);
     }
 
+    
+
     // this method is the core for PC creation, all partner commission logic creates PCs by this method
     public Partner_Commission__c createNewPc(Account mondayAccount, Account partnerAccount, Opportunity opp, String creationReson){
         Partner_Commission__c newPC = new Partner_Commission__c();
         newPC.Creation_Reason__c = creationReson;
+        newPC.Created_From__c = 'Code';
         newPC.Name = mondayAccount.primary_pulse_account_id__c + ' - ' + partnerAccount.Name + ' - ' + partnerAccount.Partner_Tier__c;
+        if(opp != null) newPC.Opportunity__c = opp.Id;
+        mapMondayAccountFields(newPC, mondayAccount);
+        mapPartnerCompanyFields(newPC, partnerAccount);
+        setStartEndDates(newPC, mondayAccount, partnerAccount, opp, creationReson, isMonthly(newPC, mondayAccount));
+        setPercentage(newPC, 
+                    mondayAccount.Account_Source_Type__c, 
+                    partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c, 
+                    partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c);
+        return newPC;
+    }
+
+    private void mapPartnerCompanyFields(Partner_Commission__c newPC, Account partnerAccount){
         newPC.Partner_Commission_Model__c = partnerAccount.Partner_Commission_Model__c;
         newPC.Partner_Company__c = partnerAccount.Id;
         newPC.Partner_ID__c = partnerAccount.Id;
         newPC.Partner_Type__c = partnerAccount.Partner_Type__c;
         newPC.Type__c = partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Commission_Type__c;
+        newPc.Partner_Company_Tier__c = partnerAccount.Partner_Tier__c;
+    }
+
+    private void mapMondayAccountFields(Partner_Commission__c newPC, Account mondayAccount){
         newPC.Monday_Account__c = mondayAccount.Id;
         newPC.Pulse_Account_ID__c = mondayAccount.primary_pulse_account_id__c;
         newPC.Account_Source__c = mondayAccount.Account_Source_Type__c;
-        newPC.Created_From__c = 'Code';
         newPC.ARR_Upon_Create__c = mondayAccount.ARR__c;
         newPc.Monday_Account_Tier__c = mondayAccount.Plan_Tier__c;
-        newPc.Partner_Company_Tier__c = partnerAccount.Partner_Tier__c;
+    }
 
-        //start date (and end date for monthly plans) logic
-        if(opp != null) { //First PC created from close won a GB opp
-            newPC.Opportunity__c = opp.Id;
+    private void setPercentage(Partner_Commission__c newPC, String sourceType, Decimal inboundPercent, Decimal outboundPercent){
+        if(sourceType == 'Inbound'){
+            newPC.Percentage__c = inboundPercent;
+        } else if(sourceType== 'Outbound'){
+            newPC.Percentage__c = outboundPercent;
+        }
+    }
+
+    private Boolean isMonthly(Partner_Commission__c newPC, Account mondayAccount){
+        Boolean res = false;
+        if(mondayAccount.Plan_Period__c != null && 
+            mondayAccount.Plan_Period__c.containsIgnoreCase('monthly') && 
+            mondayAccount.Active_Contract__r.Period__c != null &&
+            mondayAccount.Active_Contract__r.Period__c.containsIgnoreCase('monthly')){
+                res = true;
+                newPC.Is_Future_Payment__c = true;   
+        }
+        return res;
+    }
+
+    private void setStartEndDates(Partner_Commission__c newPC, Account mondayAccount, Account partnerAccount, Opportunity opp, String creationReson, Boolean isMonthly){
+        //start date logic
+        if(opp != null) { //First PC created from closed won transition to GB opp
             if(opp.Is_Migrated_Commission__c) newPC.Start_Date__c = Datetime.now().addDays(-5); //if opp is marked Is_Migrated_Commission__c we always set start date to be now - 5 days
-            else if(mondayAccount.Plan_Period__c != null && //monthly plans
-                    mondayAccount.Active_Contract__r.Period__c != null &&
-                    mondayAccount.Plan_Period__c.containsIgnoreCase('monthly') && 
-                    mondayAccount.Active_Contract__r.Period__c.containsIgnoreCase('monthly')){ 
+            else if(isMonthly){ //First PC is monthly plan - start date is taken from contract
                 newPC.Start_Date__c = mondayAccount.Active_Contract__r.StartDate;
-                newPC.End_Date__c = newPC.Start_Date__c.addYears(1); //in first pc - start date of PCs of accounts with monthly plan is taken from active contract
-                newPC.Is_Future_Payment__c = true;
-            } else { // PC default start date is Sign_Up_Date__c from the monday account
+            } else { // First PC (not monthly) default start date is Sign_Up_Date__c from the monday account
                 newPC.Start_Date__c = mondayAccount.Sign_Up_Date__c;
             }
-        } else {    //PC created from ARR increase - start date is Last_ARR_Update_Timestamp__c (BB send us the relevant start date to the field Last_ARR_Update_Timestamp__c)
-                    // OR from Partner Transfer - start date is Last_ARR_Update_Timestamp__c and end date is set from prev pc end date for monthly plans (not here)
-            newPC.Start_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c;
-            if(mondayAccount.Plan_Period__c != null && mondayAccount.Plan_Period__c.containsIgnoreCase('monthly')){ //monthly plans
-                newPC.Is_Future_Payment__c = true;
-            }
+        } else {// not first PC
+                if(creationReson == 'Yearly to Monthly Transfer' || creationReson == 'Monthly to Yearly Transfer'){ // start
+                    newPC.Start_Date__c = mondayAccount.Active_Contract__r.StartDate;
+                } else { // start date is Last_ARR_Update_Timestamp__c for
+                        // PCs created from ARR increase
+                        //or from Partner Transfer
+                    newPC.Start_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c;
+                }
         }
 
-        // end date default logic - if period from cm is not null then we add it to the start date
-        if(newPC.End_Date__c == null && partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Period__c != null) {
+        //end date logic
+        if(isMonthly){ //monthly end date is always +1 year to the start date
+            newPC.End_Date__c = newPC.Start_Date__c.addYears(1); 
+        }else if(newPC.End_Date__c == null && partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Period__c != null) { // end date default logic - if period from cm is not null then we add it to the start date
             newPC.End_Date__c = newPC.Start_Date__c.addMonths(Integer.valueOf(partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Period__c));
-        }
-        
-        //percentage logic
-        if(mondayAccount.Account_Source_Type__c == 'Inbound'){
-            newPC.Percentage__c = partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Inbound_Percent__c;
-        } else if(mondayAccount.Account_Source_Type__c == 'Outbound'){
-            newPC.Percentage__c = partnerAccount.Partner_Commission_Model__r.Commission_Model__r.Outbound_Percent__c;
-        }
-
-        return newPC;
+        }                                   
     }
 
     public void upsertPartnerCommissionInQueue(List<Partner_Commission__c> newPartnerCommissionList, String queueName){

@@ -13,7 +13,6 @@ public class PartnerCommission_PartnerTransfer_Queue implements System.Queueable
     public void execute(System.QueueableContext ctx) {
         List<Partner_Commission__c> newPartnerCommissionList = new List<Partner_Commission__c>();
         PartnerCommissionService pcService = new PartnerCommissionService();
-        map<Id,Datetime> monthlyPlans_enddates = new map<Id,Datetime>(); //store the end date of prev pcs of monthly ma's cause we put it in the new pc
         try{
             Map<Id,Account> mondayAccountsMap = new Map<Id,Account>(mondayAccountsList);
             if(!partnersToClosePC.isEmpty()){   // close all PCs of prev partners
@@ -41,9 +40,6 @@ public class PartnerCommission_PartnerTransfer_Queue implements System.Queueable
                             updatedPc.Close_Reason__c = 'Partners Transfer';
                         }
                         newPartnerCommissionList.add(updatedPc);
-                        if(pc.Monday_Account__r.Plan_Period__c.containsIgnoreCase('monthly')){ //monthly account
-                            monthlyPlans_enddates.put(pc.Monday_Account__c, pc.End_Date__c);
-                        }
                     }
                 }
             }
@@ -75,10 +71,8 @@ public class PartnerCommission_PartnerTransfer_Queue implements System.Queueable
                         for(Id mondayAccId: partnersToCreatePC.keySet()){
                             if(accountsMap.containsKey(mondayAccId) && accountsMap.containsKey(partnersToCreatePC.get(mondayAccId))){
                                 Partner_Commission__c newPc = pcService.createNewPc(accountsMap.get(mondayAccId), accountsMap.get(partnersToCreatePC.get(mondayAccId)), null, 'Partners Transfer');
-                                newPc.Start_Date__c = newPc.Start_Date__c.addSeconds(1); //we set start date to be 1 second after the mondayAccount.Last_ARR_Update_Timestamp__c so the new partner will get comission only for new transactions
-                                if(monthlyPlans_enddates.containsKey(mondayAccId)){
-                                    newPc.End_Date__c = monthlyPlans_enddates.get(mondayAccId);
-                                }
+                                //we set start date to be 1 second after the mondayAccount.Last_ARR_Update_Timestamp__c so the new partner will get comission only for new transactions
+                                newPc.Start_Date__c = newPc.Start_Date__c.addSeconds(1); 
                                 newPartnerCommissionList.add(newPc);
                             }
                         }
