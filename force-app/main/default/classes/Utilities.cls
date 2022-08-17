@@ -222,18 +222,18 @@ public without sharing class Utilities {
             return CompanyRecordTypeId;  
         }  
         set;  
-    }   
+    }
 
     public static Id personalTargetRT {  
         get {  
             if (personalTargetRT == null) {  
-                personalTargetRT = Schema.SObjectType.Target__c.getRecordTypeInfosByDeveloperName().get('Target').getRecordTypeId();  
+                personalTargetRT = Schema.SObjectType.Target__c.getRecordTypeInfosByDeveloperName().get('Personal_Target').getRecordTypeId();  
             }
             return personalTargetRT;  
         }  
         set;  
     }   
-
+    
     public static Id AccountsPoolUserId {  
         get {  
             if (AccountsPoolUserId == null) {  
