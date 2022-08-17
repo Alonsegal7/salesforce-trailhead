@@ -11,8 +11,21 @@ public class PartnerCommission_AccPlanPeriod_Queue implements System.Queueable {
         PartnerCommissionService pcService = new PartnerCommissionService();
         try {
             Map<Id,Account> mondayAccountsMap = new Map<Id,Account>(mondayAccountsList);
-            Map<Id,List<Partner_Commission__c>> mondayAccIdPartnerCommisionMap = pcService.getLastPcsMap(mondayAccountsMap.keySet());
-            if(mondayAccIdPartnerCommisionMap.isEmpty()) return;
+            Map<Id,List<Partner_Commission__c>> maPcs_map = pcService.getLastPcsMap(mondayAccountsMap.keySet());
+            //remove the pcs that are not active or are monthly with is_future_payment__c = false (old monthly pcs)
+            for(Id maId: maPcs_map.keySet()){
+                list<Partner_Commission__c> curr_pc_list = maPcs_map.get(maId);
+                for(Integer i=0;i<curr_pc_list.size();i++){
+                    Partner_Commission__c curr_pc = curr_pc_list[i];
+                    if(!curr_pc.Is_Active__c || //not active
+                        (!curr_pc.Is_Future_Payment__c && mondayAccountsMap.get(maId).Plan_Period__c == 'yearly')){ //or old monthly (is_future_payment__c = false) changed to yearly
+                        curr_pc_list.remove(i);
+                    }
+                }
+                if(curr_pc_list.isEmpty()) maPcs_map.remove(maId);
+            }
+            if(maPcs_map.isEmpty()) return;
+
             Set<Id> activeContractsIds = new Set<Id>();
             for(Account acc: mondayAccountsList){
                 if(acc.Active_Contract__c != null) activeContractsIds.add(acc.Active_Contract__c);
@@ -22,14 +35,15 @@ public class PartnerCommission_AccPlanPeriod_Queue implements System.Queueable {
             Map<Id,Set<Id>> maToPartnerComp_map = new Map<Id,Set<Id>>();
 
             for(Account mondayAccount: mondayAccountsList){
+                if(!maPcs_map.containsKey(mondayAccount.Id)) continue; // monday account has no pcs
                 Contract activeCon = activeContractsMap.get(mondayAccount.Active_Contract__c);
-                if(!mondayAccIdPartnerCommisionMap.containsKey(mondayAccount.Id)) continue; //monday account has no pcs
-                if(activeCon == null || mondayAccount.Plan_Period__c != activeCon.Period__c) continue; //if the active contract period matches the account plan period - if not we do nothing
+                if(activeCon == null || mondayAccount.Plan_Period__c != activeCon.Period__c) continue;  // active contract is null 
+                                                                                                        // or active contract period does not match the ma new plan period
                 String closeReason = '';
                 if(mondayAccount.Plan_Period__c.containsIgnoreCase('monthly')) closeReason = 'Yearly to Monthly Transfer';
                 else if(mondayAccount.Plan_Period__c.containsIgnoreCase('yearly')) closeReason = 'Monthly to Yearly Transfer';
 
-                for(Partner_Commission__c pc: mondayAccIdPartnerCommisionMap.get(mondayAccount.Id)) {
+                for(Partner_Commission__c pc: maPcs_map.get(mondayAccount.Id)) {
                     if(pc.End_Date__c == null || pc.End_Date__c > Date.today()){
                         accountIdsForGetAccountsMap.add(mondayAccount.Id);
                         accountIdsForGetAccountsMap.add(pc.Partner_Company__c);

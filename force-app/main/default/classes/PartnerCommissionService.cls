@@ -378,18 +378,28 @@ public class PartnerCommissionService {
     //get last pcs list per moday account
     // we can have more than 1 last pc in case 2 partners are getting commission for 1 monday account!!!
     public Map<Id,List<Partner_Commission__c>> getLastPcsMap(Set<Id> mondayAccountsIds){
-        Map<Id,List<Partner_Commission__c>> mondayAccIdPartnerCommisionMap = new Map<Id,List<Partner_Commission__c>>();
-        List<Partner_Commission__c> lastPartnerCommissionList = [select Id, Is_Future_Payment__c, Monday_Account__c, Partner_Company__c, End_Date__c, Counter__c, Previous_Partner_Commission__c, Pulse_Account_Id__c from Partner_Commission__c where Monday_Account__c IN: mondayAccountsIds and is_Last__c = true and Renewable__c = true];
-        if(lastPartnerCommissionList.isEmpty()) return mondayAccIdPartnerCommisionMap;
+        Map<Id,List<Partner_Commission__c>> maPcs_map = new Map<Id,List<Partner_Commission__c>>();
+        List<Partner_Commission__c> lastPartnerCommissionList = [select Id, 
+                                                                    Is_Active__c,
+                                                                    Is_Future_Payment__c, 
+                                                                    Monday_Account__c, 
+                                                                    Monday_Account__r.Plan_Period__c, 
+                                                                    Partner_Company__c, 
+                                                                    End_Date__c, Counter__c, Previous_Partner_Commission__c, Pulse_Account_Id__c 
+                                                                    from Partner_Commission__c 
+                                                                    where Monday_Account__c IN: mondayAccountsIds 
+                                                                    and is_Last__c = true 
+                                                                    and Renewable__c = true];
+        if(lastPartnerCommissionList.isEmpty()) return maPcs_map;
         //build map of MA and it's last PCs list
         for(Partner_Commission__c partnerCom: lastPartnerCommissionList){
-            if(mondayAccIdPartnerCommisionMap.containsKey(partnerCom.Monday_Account__c)){
-                mondayAccIdPartnerCommisionMap.get(partnerCom.Monday_Account__c).add(partnerCom);
+            if(maPcs_map.containsKey(partnerCom.Monday_Account__c)){
+                maPcs_map.get(partnerCom.Monday_Account__c).add(partnerCom);
             } else {
-                mondayAccIdPartnerCommisionMap.put(partnerCom.Monday_Account__c, new List<Partner_Commission__c>{partnerCom});
+                maPcs_map.put(partnerCom.Monday_Account__c, new List<Partner_Commission__c>{partnerCom});
             }
         }
-        return mondayAccIdPartnerCommisionMap;
+        return maPcs_map;
     }
 
     //runs in before insert!
@@ -399,12 +409,12 @@ public class PartnerCommissionService {
             mondayAccountIds.add(pc.Monday_Account__c);
             pc.Counter__c = 1;
         }
-        Map<Id,List<Partner_Commission__c>> mondayAccIdPartnerCommisionMap = getLastPcsMap(mondayAccountIds);
-        if(mondayAccIdPartnerCommisionMap.isEmpty()) return;
+        Map<Id,List<Partner_Commission__c>> maPcs_map = getLastPcsMap(mondayAccountIds);
+        if(maPcs_map.isEmpty()) return;
 
         for(Partner_Commission__c newPc: newPcList){
-            if(!mondayAccIdPartnerCommisionMap.containsKey(newPc.Monday_Account__c)) continue;
-            for(Partner_Commission__c existingPc: mondayAccIdPartnerCommisionMap.get(newPc.Monday_Account__c)){
+            if(!maPcs_map.containsKey(newPc.Monday_Account__c)) continue;
+            for(Partner_Commission__c existingPc: maPcs_map.get(newPc.Monday_Account__c)){
                 if(newPc.Partner_Company__c == existingPc.Partner_Company__c){
                     if(existingPc.Counter__c != null) newPc.Counter__c += existingPc.Counter__c;
                     else newPc.Counter__c = 2;

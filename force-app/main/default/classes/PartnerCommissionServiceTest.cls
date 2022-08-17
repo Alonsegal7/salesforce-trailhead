@@ -1,7 +1,6 @@
 @isTest
 public class PartnerCommissionServiceTest {
     private static final Id OPP_PARTNER_RT_CONST = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
-    private static final Id ACC_MA_RT_CONST = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
     private static final Id ACC_PARTNER_COMP_RT_CONST = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();
 
     @TestSetup
@@ -46,7 +45,7 @@ public class PartnerCommissionServiceTest {
 		insert user;
 
         //create monday account
-        Account mondayAcc = new Account(OwnerId = user.Id, Name = 'testMOnday', RecordTypeId = ACC_MA_RT_CONST, primary_pulse_account_id__c = '12345', Account_Source_Type__c = 'Inbound', Sign_Up_Date__c = Date.today().addMonths(-7), Plan_Period__c = 'yearly');
+        Account mondayAcc = new Account(OwnerId = user.Id, Name = 'testMOnday', RecordTypeId = Utilities.MARecordTypeId, primary_pulse_account_id__c = '12345', Account_Source_Type__c = 'Inbound', Sign_Up_Date__c = Date.today().addMonths(-7), Plan_Period__c = 'yearly');
         insert mondayAcc;
 
         //create opportunity with opp.Potential_GB_Opp_Override__c=='Yes'
@@ -65,7 +64,7 @@ public class PartnerCommissionServiceTest {
     }
 
     static testmethod void test_accPlanChanged(){
-        Account acc = [select Id from Account where recordTypeId =: ACC_MA_RT_CONST limit 1];
+        Account acc = [select Id from Account where recordTypeId =: Utilities.MARecordTypeId limit 1];
         Contract cont = TestObjectCreator.CreateContract(acc);
         cont.Period__c = 'monthly';
         cont.StartDate = date.today();
@@ -97,7 +96,7 @@ public class PartnerCommissionServiceTest {
         System.assertEquals(1, pcList.size());
         System.assertEquals(Date.today().addMonths(-6), pcList.get(0).Start_Date__c);
         //update MA ARR below TH
-        Account mondayAcc = [select Id, Is_GB_Account_Partners__c from Account where RecordTypeId =: ACC_MA_RT_CONST limit 1];
+        Account mondayAcc = [select Id, Is_GB_Account_Partners__c from Account where RecordTypeId =: Utilities.MARecordTypeId limit 1];
         System.assertEquals(true, mondayAcc.Is_GB_Account_Partners__c);
         mondayAcc.ARR__c = 4000;
         mondayAcc.Last_ARR_Update_Timestamp__c = Datetime.now();
@@ -111,7 +110,7 @@ public class PartnerCommissionServiceTest {
 
     static testmethod void testAccSourceTypeChange(){
         //update MA Source Type to Outbound
-        Account mondayAcc = [select Id from Account where RecordTypeId =: ACC_MA_RT_CONST limit 1];
+        Account mondayAcc = [select Id from Account where RecordTypeId =: Utilities.MARecordTypeId limit 1];
         mondayAcc.Account_Source_Type__c = 'Outbound';
         Test.startTest();
         update mondayAcc;
@@ -131,7 +130,7 @@ public class PartnerCommissionServiceTest {
         pcList.get(0).End_Date__c = Datetime.now().addSeconds(-1);
         update pcList;
         //update MA ARR above TH
-        Account mondayAcc = [select Id from Account where RecordTypeId =: ACC_MA_RT_CONST limit 1];
+        Account mondayAcc = [select Id from Account where RecordTypeId =: Utilities.MARecordTypeId limit 1];
         mondayAcc.ARR__c = 9000;
         mondayAcc.Last_ARR_Update_Timestamp__c = Datetime.now();
         Test.startTest();

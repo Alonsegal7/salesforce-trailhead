@@ -2,13 +2,11 @@
 public class PartnerCommission_CreateFromOpp_Test {
     private static final Id OPP_PARTNER_RT_CONST = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
     private static final Id OPP_INTERNAL_RT_CONST = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
-    private static final Id ACC_MA_RT_CONST = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
     private static final Id ACC_PARTNER_COMP_RT_CONST = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();
 
     @TestSetup
     static void makeData(){
         Map<String, Schema.RecordTypeInfo> accountRecordTypesMap = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName();
-
         //create THs
         List<GB_Threshold__c> ths = new List<GB_Threshold__c>();
         GB_Threshold__c th = TestObjectCreator.CreateGBThreshold('Partner_Opportunity');
@@ -42,7 +40,7 @@ public class PartnerCommission_CreateFromOpp_Test {
 		insert user;
 
         //create monday account
-        Account mondayAcc = new Account(OwnerId = user.Id, Name = 'testMOnday', RecordTypeId = ACC_MA_RT_CONST, primary_pulse_account_id__c = '12345', Account_Source_Type__c = 'Inbound', Sign_Up_Date__c = Date.today());
+        Account mondayAcc = new Account(OwnerId = user.Id, Name = 'testMOnday', RecordTypeId = Utilities.MARecordTypeId, primary_pulse_account_id__c = '12345', Account_Source_Type__c = 'Inbound', Sign_Up_Date__c = Date.today());
         insert mondayAcc;
 
         Opportunity internalOpp = TestObjectCreator.CreateOpp(mondayAcc);
