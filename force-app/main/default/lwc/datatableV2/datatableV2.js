@@ -377,6 +377,7 @@ export default class DatatableV2 extends LightningElement {
             this.maxRowSelection = (this.singleRowSelection) ? 1 : this.tableData.length;
 
             console.log('Processing Datatable');
+            console.log('this.tableData: '+JSON.stringify(this.tableData));
             this.processDatatable();
 
         } else {
@@ -437,7 +438,7 @@ export default class DatatableV2 extends LightningElement {
 
             // JSON Version set recordData
             this.recordData = [...this.tableData];
-
+            console.log('this.recordData: '+JSON.stringify(this.recordData));
             // JSON Version Special Field Types
             this.types.forEach(t => {
                 switch(t.type) {
@@ -479,7 +480,9 @@ export default class DatatableV2 extends LightningElement {
 
             // Call Apex Controller and get Column Definitions and update Row Data
             let data = (this.tableData) ? JSON.parse(JSON.stringify([...this.tableData])) : [];
+            console.log('data: '+JSON.stringify(data));
             let fieldList = (this.columnFields.length > 0) ? this.columnFields.replace(/\s/g, '') : ''; // Remove spaces
+            console.log('fieldList: '+JSON.stringify(fieldList));
             console.log('Passing data to Apex Controller', data);
             getReturnResults({ records: data, fieldNames: fieldList })
             .then(result => {

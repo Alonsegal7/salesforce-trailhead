@@ -13,7 +13,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         scheduled job - you need to set the batch size, start query limit and sobject type in the constructor
         BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 500, 'Opportunity');
         String sch = '0 15 * * * ?';
-        system.schedule('Sync Opps to BB', sch, p1);
+        system.schedule('test schedule BigBrain_CalloutService', sch, p);
 
         single batch - you need to set the start query limit and sobject type in the constructor and batch size in the execute
         BigBrain_CalloutService p2 = new BigBrain_CalloutService(200, 'Account');   

@@ -1,8 +1,8 @@
 public with sharing class relatedPopoverHelper {
 
-    public static Id companyRecordTypeId = Utils.MARecordTypeId;
-    public static Id MARecordTypeId = Utils.CompanyRecordTypeId;
-    public static Id accountsPoolUserId = Utils.AccountsPoolUserId;
+    public static Id companyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
+    public static Id MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+    public static Id accountsPoolUserId = '0053X00000Bo8ZZQAZ';
 
     // 
     @AuraEnabled(cacheable=true)

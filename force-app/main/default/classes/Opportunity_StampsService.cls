@@ -100,6 +100,18 @@ public without sharing class Opportunity_StampsService {
             /*  1st Condition --> insert only + Partner RT
                 2nd Condition --> insert & update + CreatedDate > 6.3.2021 + Is_GB_when_converted__c = null
             */
+            // if((oldMap == null && opp.RecordType.DeveloperName == 'Partner_Opportunity' && opp.Expected_Plan_Name__c != null)
+            //     || 
+            //     (opp.Expected_Plan_Name__c != oldMap.get(opp.Id).Expected_Plan_Name__c && opp.Is_GB_when_converted__c == null && opp.CreatedDate > createdDateComp)){
+            //     if(opp.Is_Potential_GB_Opportunity__c == true){
+            //         opp.Is_GB_when_converted__c = 'True';
+            //     }
+
+            //     else{
+            //         opp.Is_GB_when_converted__c = 'False';
+            //     }
+            // }
+
             if(oldMap == null){
                 if(opp.RecordType.DeveloperName == 'Partner_Opportunity' && opp.Expected_Plan_Name__c != null){
                     updateOppFields = true;

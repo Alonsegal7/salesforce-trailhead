@@ -64,7 +64,7 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
                     this.missingRelevantInfo=true;
                 }
 
-                if (this.salesOrderSelectedAgreementType == 'Terms of Service'){
+                if (this.salesOrderSelectedAgreementType == 'Terms of Service' ){
                     this.missingRelevantInfo=true;
                     this.showDPAbutton=true;
                 }
@@ -72,6 +72,7 @@ export default class ManageLegalDocument extends NavigationMixin(LightningElemen
                 //Check if there is a clm process under this SO legal agreement type
                 else{
                     this.checkIfLegalDocExist();
+                    
                 }
             }
             //Didnt found a quote type sales order with valid billing entity and open opp
@@ -114,9 +115,10 @@ checkIfLegalDocExist(){
                          this.showDPAMSG=true;
                          this.showDPAbutton=true;
                      }
-                     else if (this.salesOrderSelectedAgreementType=='Terms of Service'){
+                     else if (this.salesOrderSelectedAgreementType=='Terms of Service' ){
                         this.showDPAbutton=true;
                     }
+                
         }
         //#2 
         if (this.salesOrderSelectedAgreementType=='SaaS Agreement' ) {
@@ -126,7 +128,7 @@ checkIfLegalDocExist(){
             this.showAddendum=true;
             this.showDPAbutton=true;
         }
-        else if (this.salesOrderSelectedAgreementType=='Terms of Service'){
+        else if (this.salesOrderSelectedAgreementType=='Terms of Service' ){
             this.showDPAbutton=true;
         }
 

@@ -12,6 +12,7 @@ public with sharing class Quote_CreateQuoteHistory {
                 * Approval Process on Quote object: Finance approval to signed SO
             */
             if(Approval.isLocked(quote.Id) == false){
+                system.debug('### Approval.isLocked(quote.Id): ' + Approval.isLocked(quote.Id));
                 for (Schema.FieldSetMember fldSetMmber : trackChangesFieldSet.getFields()) {
                     if (quote.get(fldSetMmber.getFieldPath()) != oldQuotes.get(quote.Id).get(fldSetMmber.getFieldPath())) {
                         if (!historyMap.containskey(fldSetMmber.getFieldPath()) || historyMap.get(fldSetMmber.getFieldPath())!=quote.get(fldSetMmber.getFieldPath())) {

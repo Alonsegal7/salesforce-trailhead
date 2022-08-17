@@ -66,7 +66,7 @@ public class OpportunityLineItemHandler {
     */
     public static void populateOpportunityFields(Map<Id, OpportunityLineItem> newOlisMap){
         Set<Id> parentOppIds = new Set<Id>();
-        List<Opportunity> oppUpdate = new List <Opportunity>();
+        List<Opportunity> oppUpdate = new List<Opportunity>();
         for(OpportunityLineItem oli : newOlisMap.values()){
             if(oli.ListPrice != null){
                 parentOppIds.add(oli.OpportunityId);
@@ -82,13 +82,15 @@ public class OpportunityLineItemHandler {
                         opp.Expiration_Date__c = oli.Expiration_Date__c;
                         opp.PS_Start_Date__c = oli.PS_Start_Date__c;
                         opp.Price_Per_Hour__c = oli.ListPrice;
-                        oppUpdate.add(opp);
+                        if(!oppUpdate.contains(opp)){
+                            oppUpdate.add(opp);
+                        }
                     }
                 }
             }
         }
-
-        if(!oppUpdate.isEmpty()){
+        
+        if(!oppUpdate.isEmpty() && isTriggerFire){
             isTriggerFire = false;
             update oppUpdate;
             isTriggerFire = true;

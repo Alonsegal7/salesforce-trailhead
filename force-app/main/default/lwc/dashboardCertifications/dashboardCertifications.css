@@ -17,6 +17,9 @@ h3{
     border: none;
     padding: 10px 16px 16px;
 }
+ul{
+    cursor: pointer;
+}
 li{
     float: left;
     width: 127px;

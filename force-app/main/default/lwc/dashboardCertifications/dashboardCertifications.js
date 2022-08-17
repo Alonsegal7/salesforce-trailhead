@@ -1,6 +1,7 @@
 import { LightningElement } from 'lwc';
 import badges from '@salesforce/resourceUrl/DashboardCertifications';
 import loadCertifications from '@salesforce/apex/Ctrl_DashboardPageApp.getCertifications';
+import certReportURL from '@salesforce/label/c.Dashboard_CertificationReport';
 
 export default class DashboardCertifications extends LightningElement {
     salesBadge;
@@ -18,6 +19,10 @@ export default class DashboardCertifications extends LightningElement {
         this.amBadge = badges + '/am_badge.png';
         this.csmBadge = badges + '/csm_badge.png';
         this.init();
+    }
+
+    handleClick(){
+        window.location.href = certReportURL;
     }
 
     init(){

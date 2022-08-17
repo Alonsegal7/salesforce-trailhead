@@ -317,6 +317,7 @@ export default class contractValidationComponent extends NavigationMixin(Lightni
         if (parseInt(selectedPV)>=parseInt(this.accPV)) {
              this.disableButton=false;
              this.monAccPvAboveOppPv=false;
+             this.isLoading;
              this.template.querySelector('lightning-record-form').submit(fields);
         }
         else{

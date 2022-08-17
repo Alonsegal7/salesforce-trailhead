@@ -117,16 +117,16 @@ public without sharing class Ctrl_DashboardPageApp {
         Id accountId = null;
         List <User> lu = [SELECT Id, AccountId, Account.Partner_Tier__c FROM User WHERE Id = :userId];
         if (lu != null && !lu.isEmpty() && lu[0].AccountId != null) accountId = lu[0].AccountId;
-        List <Contact> lc = [SELECT Id, Certified_Sales__c, Certified_Account_Management__c, Certified_PCSM__c 
+        List <Contact> lc = [SELECT Id, Certified_Sales__c, Certified_Account_Management__c, Certified_Consulting__c 
                              FROM Contact 
                              WHERE AccountId = :accountId AND 
-                             ((Certified_Sales__c = true AND Certified_Date_Sales__c = THIS_YEAR) OR 
-                             (Certified_Account_Management__c = true AND Certified_Date_Account_Management__c = THIS_YEAR) OR
-                             (Certified_PCSM__c = true AND Certified_Date_PCSM__c = THIS_YEAR))];
+                             ((Certified_Sales__c = true) OR 
+                             (Certified_Account_Management__c = true) OR
+                             (Certified_Consulting__c = true))];
         if (lc != null && !lc.isEmpty()) for (Contact c: lc){
             if (c.Certified_Sales__c) sales++;
             if (c.Certified_Account_Management__c) am++;
-            if (c.Certified_PCSM__c) csm++;
+            if (c.Certified_Consulting__c) csm++;
         }
 
         if (lu != null && !lu.isEmpty() && lu[0].AccountId != null && lu[0].Account.Partner_Tier__c != null){
