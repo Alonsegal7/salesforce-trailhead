@@ -1,7 +1,8 @@
 public class PartnerCommissionService {
 
     public static Boolean firstRunOpp = true;
-    public static Boolean firstRunAcc = true;
+    public static Boolean firstRunAccArr = true;
+    public static Boolean firstRunAccPlanPeriod = true;
     public static Boolean firstRunAccTrans = true;
     public static Boolean firstRunAccSource = true;
     public static Boolean firstRunAccMerge = true;
@@ -13,9 +14,24 @@ public class PartnerCommissionService {
     // create first PC from transition to GB Opps
     public void partnerCommissionFromGbOpp(List<Opportunity> newOpps, Map<Id, Opportunity> oldOppsMap){
         List<Opportunity> relevantOppsList = new List<Opportunity>();
+        /*
+        FILTER:
+        =======
+        partner opp 
+        AND channel partner assigned 
+        AND monday account assigned
+        AND transition to gb
+        AND closed won
+        AND is changed stage or transition to gb
+        */ 
         Id partnerRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
         for(Opportunity opp: newOpps){
-            if(opp.RecordTypeId == partnerRecordTypeId && opp.Channel_Partner__c != null && opp.AccountId != null && opp.Transition_to_GB__c && opp.StageName == 'Closed Won' && (oldOppsMap.get(opp.Id).StageName != opp.StageName || !oldOppsMap.get(opp.Id).Transition_to_GB__c)){
+            if(opp.RecordTypeId == partnerRecordTypeId 
+                && opp.Channel_Partner__c != null 
+                && opp.AccountId != null 
+                && opp.Transition_to_GB__c 
+                && opp.StageName == 'Closed Won' 
+                && (oldOppsMap.get(opp.Id).StageName != opp.StageName || !oldOppsMap.get(opp.Id).Transition_to_GB__c)){
                 relevantOppsList.add(opp);
             }
         }   
@@ -29,30 +45,55 @@ public class PartnerCommissionService {
         }
     }
 
-    // create or end PC due to ARR change or plan period change
-    public void partnerCommissionFromAccount(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
+    public void pcArrChanged(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
         List<Account> relevantMondayAccounts_arr = new List<Account>();
-        List<Account> relevantMondayAccounts_planPeriod = new List<Account>();
-
+        /*
+        FILTER:
+        =======
+        monday acc 
+        AND gb partners acc 
+        AND arr changed
+        */ 
         for(Account acc: newAccounts){
             if(acc.RecordTypeId == mondayRecordTypeId  //monday acc
                 && acc.Is_GB_Account_Partners__c //gb partners acc
-                && (acc.ARR__c != oldAccountsMap.get(acc.Id).ARR__c //arr changed
-                    || (acc.Plan_Period__c != oldAccountsMap.get(acc.Id).Plan_Period__c //plan period changed
-                        && acc.Plan_Period__c != null //plan period not changed to null
-                        && oldAccountsMap.get(acc.Id).Plan_Period__c != null //plan period not changed from null
-                        && !(acc.Plan_Period__c.containsIgnoreCase('yearly')  //plan period not changed yearly <-> two-yearly
-                            && oldAccountsMap.get(acc.Id).Plan_Period__c.containsIgnoreCase('yearly'))))){ 
-                    if(acc.Plan_Period__c != oldAccountsMap.get(acc.Id).Plan_Period__c) relevantMondayAccounts_planPeriod.add(acc);
-                    else relevantMondayAccounts_arr.add(acc); 
+                && acc.ARR__c != oldAccountsMap.get(acc.Id).ARR__c){
+                    relevantMondayAccounts_arr.add(acc); 
             }
         }
-        if(relevantMondayAccounts_arr.isEmpty() && relevantMondayAccounts_planPeriod.isEmpty()) return;  
-        firstRunAcc = false; 
         if(!relevantMondayAccounts_arr.isEmpty()){
+            firstRunAccArr = false; 
             System.enqueueJob(new PartnerCommission_CreateFromARR_Queue(relevantMondayAccounts_arr));
         }
+    }
+
+    // create or end PC due to ARR change or plan period change
+    public void pcAccPlanPeriod(List<Account> newAccounts, Map<Id,Account> oldAccountsMap){
+        List<Account> relevantMondayAccounts_planPeriod = new List<Account>();
+
+        /*
+        FILTER:
+        =======
+        monday acc 
+        AND gb partners acc 
+        AND plan period changed 
+        AND plan period not changed to/from null 
+        AND plan period not changed yearly <-> two-yearly
+        */
+
+        for(Account acc: newAccounts){
+            if(acc.RecordTypeId == mondayRecordTypeId  //monday acc
+                    && acc.Is_GB_Account_Partners__c //gb partners acc
+                    && acc.Plan_Period__c != oldAccountsMap.get(acc.Id).Plan_Period__c //plan period changed
+                    && acc.Plan_Period__c != null //plan period not changed to null
+                    && oldAccountsMap.get(acc.Id).Plan_Period__c != null //plan period not changed from null
+                    && !(acc.Plan_Period__c.containsIgnoreCase('yearly') && oldAccountsMap.get(acc.Id).Plan_Period__c.containsIgnoreCase('yearly')) //plan period not changed yearly <-> two-yearly
+                ){ 
+                    relevantMondayAccounts_planPeriod.add(acc);
+            }
+        }
         if(!relevantMondayAccounts_planPeriod.isEmpty()){
+            firstRunAccPlanPeriod = false; 
             System.enqueueJob(new PartnerCommission_AccPlanPeriod_Queue(relevantMondayAccounts_planPeriod));
         }
     }
@@ -219,8 +260,6 @@ public class PartnerCommissionService {
                                     and ((RecordTypeId =: mondayRecordTypeId and primary_pulse_account_id__c != null) 
                                         or (RecordTypeId =: partnerRecordTypeId and Partner_Commission_Model__c != null))]);
     }
-
-    
 
     // this method is the core for PC creation, all partner commission logic creates PCs by this method
     public Partner_Commission__c createNewPc(Account mondayAccount, Account partnerAccount, Opportunity opp, String creationReson){
