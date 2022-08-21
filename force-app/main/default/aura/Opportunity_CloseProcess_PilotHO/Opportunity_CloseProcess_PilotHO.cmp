@@ -17,6 +17,7 @@
   <aura:attribute name="innerPathValue" type="String" />
   <aura:attribute name="showWhatSigned" type="Boolean" default="false" />
   <aura:attribute name="showHandover" type="boolean" default="false" />
+  <aura:attribute name="showActivation" type="boolean" default="false" />
   <aura:attribute name="hasExistingHandover" type="boolean" default="false" />
   <aura:attribute name="record" type="Object" />
   <aura:attribute name="recordSaveError" type="String" />
@@ -75,6 +76,9 @@
                 <lightning:progressStep label="CC Claim" value="CCClaim" />
                 <aura:if isTrue="{!and(v.oppData.RecordType.Name == 'Internal Opportunity', v.showHandover == true)}">
                   <lightning:progressStep label="Handover" value="Handover" />
+                </aura:if>
+                <aura:if isTrue="{!and(v.oppData.RecordType.Name == 'Internal Opportunity', v.showActivation == true)}">
+                  <lightning:progressStep label="Activate The Plan!" value="Activation" />
                 </aura:if>
                 <aura:if isTrue="{!or(greaterthanorequal(v.oppData.Green_Bucket_ARR_V2__c, 10000), v.innerPathValue == 'OppSummary')}">
                   <lightning:progressStep label="Opportunity Summary" value="OppSummary" />
@@ -478,6 +482,9 @@
             <aura:if isTrue="{!v.innerPathValue == 'Handover'}">
               <c:handoverFromOpportunity aura:id="handoverScreen" context="Close Process" recordId="{!v.recordId}" onhosuccess="{!c.handleSuccessHandover}" onhoerror="{!c.handleErrorHandover}" onfoundexisting="{!c.handleExistingHandover}"></c:handoverFromOpportunity>
             </aura:if>
+            <aura:if isTrue="{!v.innerPathValue == 'Activation'}">
+              <c:BigBrainEmbed aura:id="activationScreen" recordId="{!v.recordId}" iframeUrl="https://new.bigbrain.me/account/change_contract" width="100%" height="500px"></c:BigBrainEmbed>
+            </aura:if>
             <aura:if isTrue="{!or(v.innerPathValue == 'OppSummary', v.closedFields.Close_Process_Path__c == 'OppSummary')}">
               <lightning:flow aura:id="closedOppSumFlowData" onstatuschange="{!c.handleStatusChange_OpportunityCloseSummary}" />
             </aura:if>
@@ -490,10 +497,10 @@
         <aura:if isTrue="{!and(v.innerPathValue != 'continueToSummary', !v.showFieldSetForm)}">
           <aura:if isTrue="{!v.innerPathValue != 'OppSummary'}">
             <footer class="slds-modal__footer">
-              <aura:if isTrue="{!v.innerPathValue != 'Handover'}">
+              <aura:if isTrue="{!and(v.innerPathValue != 'Handover',v.innerPathValue != 'Activation')}">
                 <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModal }" />
               </aura:if>
-              <aura:if isTrue="{!and(v.innerPathValue != 'Handover', or(v.innerPathValue != 'LostInfo',v.fields.length > 0))}">
+              <aura:if isTrue="{!and(v.innerPathValue != 'Handover',v.innerPathValue != 'Activation', or(v.innerPathValue != 'LostInfo',v.fields.length > 0))}">
                 <lightning:button variant="neutral" label="Previous" title="Previous" onclick="{!c.previousStep}" />
               </aura:if>
               <aura:if isTrue="{!v.innerPathValue != 'Handover'}">

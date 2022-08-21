@@ -54,6 +54,8 @@
     var claim = event.getParam("value");
     event.preventDefault();
     component.set("v.closedFields.What_Would_You_Like_To_Claim__c", claim);
+    helper.checkActivation_InternalOpp(component, event, helper);
+
     //helper.callback_saveManualFields(component, event, helper);
   },
 

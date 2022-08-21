@@ -18,6 +18,7 @@
                         component.set("v.oppData", storeResponse.opportunity);
                         console.log('opp close proc ho: close stage selected: opp data: '+ JSON.stringify(storeResponse.opportunity));
                         helper.checkHandover_InternalOpp(component, event, helper);
+                        helper.checkActivation_InternalOpp(component, event, helper);
                     }
                     if (storeResponse.hasOwnProperty('fieldsStr')){
                         let fieldsStr = storeResponse.fieldsStr;
@@ -177,8 +178,10 @@
 						} else if(component.get('v.innerPathValue') == 'Claim'){
 							if(component.get('v.closedFields.What_Would_You_Like_To_Claim__c') == 'CC Payments'){
 								component.set('v.innerPathValue', 'CCClaim');
+								component.set('v.showActivation', false);
 							}else{
 								component.set('v.innerPathValue', 'ManualSignature');
+								helper.checkActivation_InternalOpp(component, event, helper);
 							}
 						}
 					} else { //tbd
@@ -224,7 +227,7 @@
 						if(component.get('v.isClosedWon') && component.get('v.showHandover') == true){
 							component.set('v.innerPathValue', 'Handover');
 						}else{
-							helper.postHandoverActions(component, event, helper); //this checks if opp summary is needed otherwise ends the process
+							helper.postHandoverActions(component, event, helper); //this checks if opp activation or summary is needed otherwise ends the process
 						}
 					}
 				}
@@ -239,12 +242,20 @@
 	},
 
 	postHandoverActions : function(component, event, helper){
+		if(component.get('v.showActivation') == true){
+            component.set('v.innerPathValue', 'Activation');
+        }else{
+			helper.postActivationActions(component, event, helper);
+        }
+	},
+
+	postActivationActions : function(component, event, helper){
 		if(component.get('v.oppData.Green_Bucket_ARR_V2__c') >= 10000){
-            console.log('opp close proc ho: postHandoverActions continueToSummary');
+            console.log('opp close proc ho: postActivationActions continueToSummary');
             component.set('v.innerPathValue', 'continueToSummary');
         }else{
             component.set('v.innerPathValue', 'Done');
-            console.log('opp close proc ho: postHandoverActions close modal');
+            console.log('opp close proc ho: postActivationActions close modal');
             helper.endProcess(component, event, helper);
         }
 	},
@@ -303,6 +314,16 @@
 		}
 	},
 
+	checkActivation_InternalOpp : function (component, event, helper){
+		if (component.get("v.closedFields.What_Would_You_Like_To_Claim__c")!='CC Payments' && 
+			component.get('v.oppData.Account.primary_pulse_account_id__c')!=null && component.get('v.oppData.SyncedQuote.Ready_For_Activation__c')==true && component.get('v.oppData.SyncedQuote')!='' && component.get('v.oppData.SyncedQuote')!=null && 
+			(component.get('v.oppData.SyncedQuote.DH_Quote_Status__c')=='Approved' || component.get('v.oppData.SyncedQuote.DH_Quote_Status__c')=='Won') && component.get('v.oppData.SyncedQuote.Document_Type__c')=='Sales Order') {//Approved sales order are signed or will be signed - therefore, they would be activated
+			component.set('v.showActivation', true);
+		}else {
+			component.set('v.showActivation', false);
+		}
+	},
+
 	checkFilesUploaded : function(component, event, helper){
 		var fileLWC = component.find("fileUploadImp");
         var validateFileUpload = fileLWC.validate();
@@ -353,8 +374,10 @@
 				helper.postHandoverActions(component, event, helper);
 			}
 			else {
-				component.find('handoverScreen').handleSubmit(); // need to add here to continue to summary or close
+				component.find('handoverScreen').handleSubmit(); // On success, it will go to postHandoverActions function to check if activation is neede or not -- need to add here to continue to summary or close
 			}
+		}else if(component.get('v.innerPathValue') == 'Activation') {
+				helper.postActivationActions(component, event, helper);
 		}
 	},
 
