@@ -174,7 +174,7 @@ public without sharing class Subscription_ConnectToContractEvent {
                         }
                     }
                     //Imported by SO - check if the monday account is different then the activation monday account (activate on different account)
-                    if(sub.Status__c=='ACTIVE'&&sub.Contract__c!=null&&sub.Source_Sales_Order__c!=null&&sub.Activated_via_Import_SO__c==true){
+                    if((sub.Status__c=='ACTIVE' || sub.Status__c=='PENDING' )&&sub.Contract__c!=null&&sub.Source_Sales_Order__c!=null&&sub.Activated_via_Import_SO__c==true){
                         subImportedBySo.add(sub);
                     }
                 }

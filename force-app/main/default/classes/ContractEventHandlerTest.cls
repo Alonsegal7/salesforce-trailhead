@@ -432,7 +432,7 @@ public with sharing class ContractEventHandlerTest {
     }
 
     @IsTest
-    public static void ConnectActivationToSalesOrderContract() {
+    public static void ConnectActivationToSalesOrderContractAndCheckStatus() {
         TestObjectCreator.persistImmediate = true;
         DateTime dT = System.now();
         Date startDate = date.newinstance(dT.year(), dT.month(), dT.day());
@@ -466,6 +466,13 @@ public with sharing class ContractEventHandlerTest {
 
         contract con = [select id,Core_Activation__c from contract limit 1];
 
+
+        contract con1 = [select id,Core_Activation__c,activation_status__c from contract limit 1];
+        Contract_Event__c conEve = [select Id,activation_status__c,sku__c,Related_Activation__c, IsRecurring__c, Net_Unit_Price__c from contract_event__c where contract__c=:con.Id and sku__c='CORE-PRO' limit 1];
+        System.assertEquals(con1.activation_status__c ,'Pending Activation');
+        System.assertEquals(conEve.activation_status__c ,'Pending Activation');
+
+
         Subscription__c sub = TestObjectCreator.CreateSubscription();
         sub.Pulse_Account_Id__c='12211';
         sub.Deactivation_Date__c=endDate;
@@ -473,14 +480,39 @@ public with sharing class ContractEventHandlerTest {
         sub.Activated_via_Import_SO__c=true;
         sub.Source_Sales_Order__c=quoteNewCont.Id;
         sub.contract__c=con.id;
+        sub.status__c='PENDING';
         insert sub;
 
-        contract con1 = [select id,Core_Activation__c from contract limit 1];
+        contract con2 = [select id,Core_Activation__c,activation_status__c from contract limit 1];
+        Contract_Event__c conEve1 = [select Id,activation_status__c,sku__c,Related_Activation__c, IsRecurring__c, Net_Unit_Price__c from contract_event__c where contract__c=:con.Id and sku__c='CORE-PRO' limit 1];
 
-        Contract_Event__c conEve = [select Id,sku__c,Related_Activation__c, IsRecurring__c, Net_Unit_Price__c from contract_event__c where contract__c=:con.Id and sku__c='CORE-PRO' limit 1];
 
-        System.assertEquals(conEve.Related_Activation__c ,sub.Id);
-        System.assertEquals(con1.Core_Activation__c ,sub.Id);
+
+        System.assertEquals(con2.activation_status__c ,'Scheduled Activation');
+        System.assertEquals(conEve1.activation_status__c ,'Scheduled Activation');
+
+        sub.status__c='ACTIVE';
+        update sub;
+
+        contract con3 = [select id,Core_Activation__c,activation_status__c from contract limit 1];
+        Contract_Event__c conEve3 = [select Id,activation_status__c,sku__c,Related_Activation__c, IsRecurring__c, Net_Unit_Price__c from contract_event__c where contract__c=:con.Id and sku__c='CORE-PRO' limit 1];
+
+        System.assertEquals(con3.activation_status__c ,'Active');
+        System.assertEquals(conEve3.activation_status__c ,'Active');
+
+        sub.status__c='INACTIVE';
+        update sub;
+
+
+        contract con4 = [select id,Core_Activation__c,activation_status__c from contract limit 1];
+        Contract_Event__c conEve4 = [select Id,activation_status__c,sku__c,Related_Activation__c, IsRecurring__c, Net_Unit_Price__c from contract_event__c where contract__c=:con.Id and sku__c='CORE-PRO' limit 1];
+
+        System.assertEquals(con4.activation_status__c ,'Inactive');
+        System.assertEquals(conEve4.activation_status__c ,'Inactive');
+
+
+        System.assertEquals(conEve1.Related_Activation__c ,sub.Id);
+        System.assertEquals(con2.Core_Activation__c ,sub.Id);
 
     }
 

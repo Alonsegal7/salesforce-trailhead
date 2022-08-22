@@ -27,6 +27,7 @@ trigger Subscription_Trigger on Subscription__c (after delete, after insert, aft
         if (trigger.IsUpdate) {
                 Subscription_ConnectToContractEvent.SubscriptionToContractEvent(sortedSubs,trigger.oldMap);
                 CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
+                ContractStatusService.subsStatusChanged(sortedSubs,trigger.oldMap);
         }
     }
 }
