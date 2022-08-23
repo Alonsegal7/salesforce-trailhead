@@ -190,4 +190,31 @@ public without sharing class CommissionCommitmentCollectionService {
         }
         return res;
     }
+
+    //set Partner Tier On New Collection when created 
+    public void setPartnerTierOnNewCollection(List<Commission_Collection__c> commissionCollectionList){
+
+        System.debug('CommissionCommitmentCollectionService - setPartnerTierOnNewCollection ----> Started ');
+        Set<Id> accountIds = new Set<Id>();
+        List<Commission_Collection__c> relevantCollections = new List<Commission_Collection__c>();
+
+        //Get all relevant account ids to pull data.
+        for(Commission_Collection__c commissionCollection : commissionCollectionList){
+            if(commissionCollection.Partner_Company__c != null){
+                accountIds.add(commissionCollection.Partner_Company__c);
+                relevantCollections.add(commissionCollection);
+            }
+        }
+
+        if(accountIds == null){
+            return;
+        }
+
+        Map<Id,Account> accounts = new Map<Id,Account> ([SELECT Id, Partner_Tier__c FROM Account WHERE  Id IN : accountIds]);
+        System.debug('CommissionCommitmentCollectionService - setPartnerTierOnNewCollection ----> Accounts ' + accounts);
+
+        for(Commission_Collection__c commissionCollection : relevantCollections){
+            commissionCollection.Partner_Tier_Stemp__c = accounts.get(commissionCollection.Partner_Company__c).Partner_Tier__c;
+        }
+    }
 }
