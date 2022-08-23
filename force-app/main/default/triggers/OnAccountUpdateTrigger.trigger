@@ -23,11 +23,13 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
     }
     if (Trigger.isAfter) {
         if (Trigger.isInsert || Trigger.isUpdate) { 
+            Account_SetCompanyDomains.Account_SetCompanyDomains(trigger.new,trigger.oldmap);
             Account_RegionalCompanyService.findOrCreateRegionalCompany(trigger.new, trigger.oldMap);
             Account_RegionalCompanyService.updateRegionalCompanyOnRelatedObjects(trigger.new, trigger.oldMap);
             Account_Rollup.Account_Rollup_ParentChange(trigger.new, trigger.oldMap);
             Partners_SharingService.createAccountShares(trigger.new, trigger.oldMap);
             Partners_SharingService.createAccountSharesOwnerChange(trigger.new, trigger.oldMap);
+            Account_LeadsCapForPartnerCompany.Account_LeadsCapForPartnerCompany(trigger.new,trigger.oldmap);
         }
         if(Trigger.isUpdate){
             // Partner Commission - start 
@@ -58,10 +60,6 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
             } 
             Account_SourceTypeOnOpps.updateSourceTypeOnOpps(Trigger.new, Trigger.oldMap);
             updateMainAccountOnContract.updateMainAccountOnContract(Trigger.new, Trigger.oldMap);
-        }
-        if(trigger.isInsert||trigger.IsUpdate){
-            Account_SetCompanyDomains.Account_SetCompanyDomains(trigger.new,trigger.oldmap);
-            Account_LeadsCapForPartnerCompany.Account_LeadsCapForPartnerCompany(trigger.new,trigger.oldmap);
         }
 
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
