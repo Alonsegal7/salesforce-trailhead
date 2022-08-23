@@ -6,6 +6,7 @@ trigger OnLeadUpdateTrigger on Lead (after insert, after update, after delete, b
             Account_RegionalCompanyService.linkLeadsToExistingRegionalCompanies(Trigger.new,Trigger.oldMap);
             Lead_SetPartnerCompany.Lead_SetPartnerCompany(Trigger.new,Trigger.oldMap);
             Lead_StampsService.run(Trigger.new,Trigger.oldMap);
+            Lead_RelatedCompanyLogic.updateRelatedCompany(Trigger.new, Trigger.oldMap);
         }
         if(Trigger.isUpdate){
             Partners_SharingService.createLeadShares_ManualTrigger(Trigger.new);
@@ -23,8 +24,28 @@ trigger OnLeadUpdateTrigger on Lead (after insert, after update, after delete, b
     }
 
     if(Trigger.isAfter){
-        if(Trigger.isDelete) CalloutHandler.HandleCallout (Trigger.old,'Delete',null);
-        if (Trigger.isInsert) CalloutHandler.HandleCallout (Trigger.new,'Insert',null);
-        if (Trigger.IsUpdate) CalloutHandler.HandleCallout (Trigger.new,'Update',Trigger.oldMap);
+        //callout to bb only for internal & partner leads
+        if(Trigger.isDelete) {
+            list<lead> callout_leads_del = new list<lead>();
+            for(Lead l: Trigger.old){
+                if(l.RecordTypeId == Utilities.internalLeadRecordTypeId || l.RecordTypeId == Utilities.partnerLeadRecordTypeId){
+                    callout_leads_del.add(l);
+                }
+            }
+            if(!callout_leads_del.isEmpty()){
+                CalloutHandler.HandleCallout (callout_leads_del,'Delete',null);
+            }
+        }else if(Trigger.isInsert || Trigger.isUpdate){
+            list<lead> callout_leads = new list<lead>();
+            for(Lead l: Trigger.new){
+                if(l.RecordTypeId == Utilities.internalLeadRecordTypeId || l.RecordTypeId == Utilities.partnerLeadRecordTypeId){
+                    callout_leads.add(l);
+                }
+            }
+            if(!callout_leads.isEmpty()){
+                if (Trigger.isInsert) CalloutHandler.HandleCallout (callout_leads,'Insert',null);
+                if (Trigger.isUpdate) CalloutHandler.HandleCallout (callout_leads,'Update',Trigger.oldMap);
+            }
+        }
     }
 }

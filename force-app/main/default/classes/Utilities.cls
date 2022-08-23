@@ -97,7 +97,7 @@ public without sharing class Utilities {
     public static map<string,Country_Region_Mapping__c> getRegionMapping(){
         if(regionsMapping==null){
             regionsMapping= new map<string,Country_Region_Mapping__c>();
-            for(Country_Region_Mapping__c rm: [select id,Name,Region__c,Sub_Region__c from Country_Region_Mapping__c])
+            for(Country_Region_Mapping__c rm: [select id,Country_Name__c,Name,Region__c,Sub_Region__c from Country_Region_Mapping__c])
                 regionsMapping.put(rm.Name,rm);
         }
         return regionsMapping;
@@ -222,7 +222,7 @@ public without sharing class Utilities {
             return CompanyRecordTypeId;  
         }  
         set;  
-    }
+    }   
 
     public static Id personalTargetRT {  
         get {  
@@ -233,7 +233,47 @@ public without sharing class Utilities {
         }  
         set;  
     }   
-    
+
+    public static Id rawSignupRecordTypeId {  
+        get {  
+            if (rawSignupRecordTypeId == null) {  
+                rawSignupRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Raw_Signup').getRecordTypeId();  
+            }
+            return rawSignupRecordTypeId;  
+        }  
+        set;  
+    }
+
+    public static Id internalOppRecordTypeId {  
+        get {  
+            if (internalOppRecordTypeId == null) {  
+                internalOppRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();  
+            }
+            return internalOppRecordTypeId;  
+        }  
+        set;  
+    }
+
+    public static Id internalLeadRecordTypeId {  
+        get {  
+            if (internalLeadRecordTypeId == null) {  
+                internalLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Internal_Lead').getRecordTypeId();  
+            }
+            return internalLeadRecordTypeId;  
+        }  
+        set;  
+    }
+
+    public static Id partnerLeadRecordTypeId {  
+        get {  
+            if (partnerLeadRecordTypeId == null) {  
+                partnerLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Partner_Lead').getRecordTypeId();  
+            }
+            return partnerLeadRecordTypeId;  
+        }  
+        set;  
+    }
+
     public static Id AccountsPoolUserId {  
         get {  
             if (AccountsPoolUserId == null) {  
@@ -242,5 +282,16 @@ public without sharing class Utilities {
             return AccountsPoolUserId;  
         }  
         set;  
+    }
+
+
+    public static Map<Id,User> activeUsersMap {  
+        get {  
+            if (activeUsersMap == null) {  
+                activeUsersMap = new Map<Id,User>([SELECT Id FROM User WHERE IsActive = true]);
+            }
+            return activeUsersMap;  
+        }  
+        set;
     }
 }

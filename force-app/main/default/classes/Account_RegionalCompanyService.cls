@@ -254,7 +254,7 @@ public without sharing class Account_RegionalCompanyService {
 
     //map the global companies to their regional companies
     public static Map<Id,List<Account>> getMapCompanyToRegionals(Set<Id> companyIDs) {
-        List<Account> existingRegionalCompaniesList = new List<Account>([SELECT Id, Account_Territory__c, Region__c, Company__c, ParentId, Named_Account__c FROM Account WHERE ParentId IN: companyIDs AND Account_Territory__c = 'Regional']);
+        List<Account> existingRegionalCompaniesList = new List<Account>([SELECT Id, Account_Territory__c, Region__c, Company__c, ParentId, Named_Account__c, Strategic_receiver__c, OwnerId FROM Account WHERE ParentId IN: companyIDs AND Account_Territory__c = 'Regional']);
         Map<Id,List<Account>> companiesWithChildRegionalCompanies = new Map<Id,List<Account>>();
         for (Account acc : existingRegionalCompaniesList) {
             if (companiesWithChildRegionalCompanies.containsKey(acc.ParentId)) {
