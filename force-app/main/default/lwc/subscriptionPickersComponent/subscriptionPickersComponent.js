@@ -16,14 +16,16 @@ import closeDateThisMonth from '@salesforce/schema/Opportunity.Close_Date_This_M
 import oppRecordTypeName from '@salesforce/schema/Opportunity.RecordType.DeveloperName';
 import accId from '@salesforce/schema/Opportunity.AccountId';
 import expectedPlan from '@salesforce/schema/Opportunity.Expected_Plan_Name__c';
+import createdDate from '@salesforce/schema/Opportunity.CreatedDate';
 import user_Id from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
-const fields = [isclosed,accId,closeDateThisMonth,expectedPlan,oppRecordTypeName];
+const fields = [isclosed,accId,closeDateThisMonth,expectedPlan,oppRecordTypeName,createdDate];
 
 export default class subscriptionPickersComponent extends LightningElement {
     @api recordId;
     @track selected=[];
     @track subsToClaim=[];
+    @track unclaimableSubs=[];
     @track newSubsCodes=[];
     @track newClaims=[];
     @track subsClaimed=[];
@@ -57,6 +59,7 @@ export default class subscriptionPickersComponent extends LightningElement {
     planChecked=false;
     oppExpectedPlan;
     oppRecordType;
+    oppCreateDate;
     showRenewalARR=false;
     componentTitle;
 
@@ -68,6 +71,7 @@ export default class subscriptionPickersComponent extends LightningElement {
         this.closeDateThisMonth=getFieldValue(this.oppDetails, closeDateThisMonth);
         this.oppExpectedPlan=getFieldValue(this.oppDetails, expectedPlan);
         this.oppRecordType=getFieldValue(this.oppDetails, oppRecordTypeName);
+        this.oppCreatedDate=getFieldValue(this.oppDetails,createdDate);
         if(this.oppRecordType=='CS_Opportunity') {
             this.showRenewalARR=true;
         }
@@ -82,6 +86,7 @@ export default class subscriptionPickersComponent extends LightningElement {
                 console.log('data: '+JSON.stringify(data));              
                 this.error = undefined;
                 const temp=[];
+                const unclaimableTemp=[];
                 for(let key in data) {
                     var claimName = data[key].Name_for_CC_Claim__c;
                     console.log('rectype'+this.oppRecordType);
@@ -93,13 +98,27 @@ export default class subscriptionPickersComponent extends LightningElement {
                         singleObj2['arrGain'] = data[key].ARR_Gain__c;
                         singleObj2['subId'] = data[key].Id;
                         singleObj2['arr'] = data[key].ARR__c;
-                        console.log('singleObj2: '+JSON.stringify(singleObj2));  
-                        temp.push(singleObj2);
+                        var isClaimable=(data[key].Claimable_Activation_Date__c||data[key].Activation_Date__c>=this.oppCreateDate);
+                        console.log('Raz isClaimable  '+data[key].Id+' '+isClaimable);
+                        singleObj2['isClaimable'] = isClaimable;
+                        console.log('singleObj2 : '+JSON.stringify(singleObj2));  
+                        if(isClaimable){
+                            temp.push(singleObj2);
+                        }else{//not claimable
+                            if(this.isAdmin==true){
+                                temp.push(singleObj2);
+                                singleObj2['label'] += ' - ❌ Passed Claim Date, Available for Admins Only';
+                            }else{
+                                unclaimableTemp.push(singleObj2);
+                                singleObj2['label'] += ' - 🚫 Passed Claim Date';
+                            }
+                        }
                         this.subsMap[key]=data[key];
                         console.log('singleobj'+singleObj2);
                     }
                 }
                 this.subsToClaim=temp;
+                this.unclaimableSubs=unclaimableTemp;
             }
             else if (error) {
                 this.error = error;
@@ -157,16 +176,16 @@ export default class subscriptionPickersComponent extends LightningElement {
     }
 
     get hasSubsToClaim() {                       
-        return this.subsToClaim.length!=0;
+        return this.subsToClaim.length!=0||this.unclaimableSubs.length!=0;
     }
     get hasClaimedSubs() {                       
         return this.subsFinal.length!=0;
     }
     get hasNoSubs() {                       
-        return this.subsFinal.length==0&&this.subsToClaim.length==0&&this.maSubs.length==0;
+        return this.subsFinal.length==0&&this.subsToClaim.length==0&&this.unclaimableSubs.length==0&&this.maSubs.length==0;
     }
     get noSubsAfterSync() {              
-        return this.subsFinal.length==0&&this.subsToClaim.length==0&&this.maSubs.length!=0;
+        return this.subsFinal.length==0&&this.subsToClaim.length==0&&this.unclaimableSubs.length==0&&this.maSubs.length!=0;
     }
     get changesDisabled(){
         console.log('Raz Ben Ron changes disabled?: '+this.oppIsClosed==true&&this.isAdmin==false&&this.closeDateThisMonth==false);
