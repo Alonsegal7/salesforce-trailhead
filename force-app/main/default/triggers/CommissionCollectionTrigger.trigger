@@ -6,6 +6,7 @@ trigger CommissionCollectionTrigger on Commission_Collection__c (before insert, 
         helper.setOpportunity(Trigger.new, Trigger.oldMap);
         helper.setPartnerCommissionReport(Trigger.new, Trigger.oldMap);
         helper.setPartnerCommissionCommitment(Trigger.new, Trigger.oldMap);
+        helper.setPartnerTierOnNewCollection(Trigger.new);
     }
 
     if(Trigger.isAfter){

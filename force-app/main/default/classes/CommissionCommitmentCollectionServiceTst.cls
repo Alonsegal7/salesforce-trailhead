@@ -15,7 +15,11 @@ public without sharing class CommissionCommitmentCollectionServiceTst {
 
         //create partner company
         List<Account> partnersList = new List<Account>();
-        partnersList.add(new Account(Name = 'testPartner', RecordTypeId = accountRecordTypesMap.get('Partner_Company').getRecordTypeId()));
+        partnersList.add(new Account(
+                            Name = 'testPartner', 
+                            RecordTypeId = accountRecordTypesMap.get('Partner_Company').getRecordTypeId(),
+                            Partner_Tier__c = 'Silver'// Michael Add for the test of tier stemp 
+                        ));
         insert partnersList;
     
         //create partner commission model
@@ -74,13 +78,14 @@ public without sharing class CommissionCommitmentCollectionServiceTst {
         insert commitment;
         insert collection; 
 
-        collection = [select Monday_Account__c, Opportunity__c, Commission_Commitment__c from Commission_Collection__c limit 1];
+        collection = [select Monday_Account__c, Opportunity__c, Commission_Commitment__c, Partner_Tier_Stemp__c from Commission_Collection__c limit 1];
         System.assertNotEquals(null, collection.Monday_Account__c);
         System.assertNotEquals(null, collection.Opportunity__c);
         System.assertNotEquals(null, collection.Commission_Commitment__c);
         commitment = [select Monday_Account__c, Opportunity__c from Commission_Commitment__c limit 1];
         System.assertNotEquals(null, commitment.Monday_Account__c);
         System.assertNotEquals(null, commitment.Opportunity__c);
+        System.assertEquals('Silver', collection.Partner_Tier_Stemp__c);
 
         collection.Partner_Commission__c = null;
         collection.Pulse_Account_Id__c = null;
@@ -96,6 +101,9 @@ public without sharing class CommissionCommitmentCollectionServiceTst {
         commitment = [select Monday_Account__c, Opportunity__c from Commission_Commitment__c limit 1];
         System.assertEquals(null, commitment.Monday_Account__c);
         System.assertEquals(null, commitment.Opportunity__c);
+        
+        //Michael add test for tier stemp
+
     }
 
     static testmethod void testReport(){
