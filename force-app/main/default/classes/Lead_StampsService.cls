@@ -151,7 +151,8 @@ public without sharing class Lead_StampsService {
         Set<Id> usersIds = new Set<Id>();
         List<Lead> relevantLeads = new List<Lead>();
         for(Lead newLead: newLeads){
-            if(String.valueOf(newLead.OwnerId).startsWith('005') && //relevant only for owners that are users - not queue
+            if((newLead.RecordTypeId == Utilities.internalLeadRecordTypeId || newLead.RecordTypeId == Utilities.partnerLeadRecordTypeId) &&
+                String.valueOf(newLead.OwnerId).startsWith('005') && //relevant only for owners that are users - not queue
                 (oldLeadsMap == null || //insert
                 newLead.Status != oldLeadsMap.get(newLead.Id).Status || //status change
                 (newLead.OwnerId != oldLeadsMap.get(newLead.Id).OwnerId && newLead.Status != 'Unqualified' && newLead.Status != 'Qualified'))){ //owner update on open leads
