@@ -18,7 +18,9 @@
                         component.set("v.oppData", storeResponse.opportunity);
                         console.log('opp close proc ho: close stage selected: opp data: '+ JSON.stringify(storeResponse.opportunity));
                         helper.checkHandover_InternalOpp(component, event, helper);
-                        helper.checkActivation_InternalOpp(component, event, helper);
+						if (component.get('v.oppData.SyncedQuote.DH_Quote_Status__c')=='Won'){//if it is a won quote, check if the bb service ran (or failed) and re-send it. manually signed handled later (they will not be signed at this point)
+							helper.callback_callBigBrain(component, event, helper);
+						}
                     }
                     if (storeResponse.hasOwnProperty('fieldsStr')){
                         let fieldsStr = storeResponse.fieldsStr;
@@ -165,6 +167,40 @@
 		$A.enqueueAction(action);
 	},
 
+	callback_callBigBrain : function (component, event, helper){
+		//if the api called on sign and failed OR didn't called - call the service
+		if (component.get('v.oppData.SyncedQuote.BigBrain_Preview_API_Status__c')=='Request Sent' || 
+			component.get('v.oppData.SyncedQuote.BigBrain_Preview_API_Status__c')=='' ||
+			component.get('v.oppData.SyncedQuote.BigBrain_Preview_API_Status__c')==null || 
+			component.get('v.oppData.SyncedQuote.BigBrain_Preview_API_Status__c')=='System Error') {
+		var action = component.get("c.checkSalesOrderConflicts");//goto bb service for manually signed
+		action.setParams({ 
+			pulseId : component.get('v.oppData.Account.primary_pulse_account_id__c'),
+			syncedQuoteId : component.get('v.oppData.SyncedQuoteId')
+		});
+		action.setCallback(this, function(response) {
+			var state = response.getState();
+			if (state == "SUCCESS") {
+				var storeResponse = response.getReturnValue();
+				if (storeResponse != null){
+					//storeResponse = JSON.parse(storeResponse);
+					if(storeResponse=='Valid'){
+						component.set('v.bigBrainPreviewIsValid', true);
+					}
+					helper.checkActivation_InternalOpp(component, event, helper);
+			} else {
+				console.log('opp close proc ho: bb process ERROR');
+				let err = response.getError();
+				helper.callbackErrorHander(component, event, helper, err);
+				}
+			}
+		});
+		$A.enqueueAction(action);
+		}
+		else {//That means that the bb service raned properly - now, check condiction for showing activation
+			helper.checkActivation_InternalOpp(component, event, helper);
+		}
+	},
 	callback_saveManualFields : function(component, event, helper){
 		if(component.get('v.oppData.Close_Process_Sys_Admin__c') == false){
 			console.log('opp close proc ho: entered callback_saveManualFields');
@@ -181,7 +217,6 @@
 								component.set('v.showActivation', false);
 							}else{
 								component.set('v.innerPathValue', 'ManualSignature');
-								helper.checkActivation_InternalOpp(component, event, helper);
 							}
 						}
 					} else { //tbd
@@ -194,6 +229,7 @@
 				}
 				component.set('v.showSpinner', false);
 			}));
+
 		}
 	},
 
@@ -314,9 +350,10 @@
 		}
 	},
 
-	checkActivation_InternalOpp : function (component, event, helper){
+	checkActivation_InternalOpp : function (component, event, helper){//if manually signed, the service will run from the client  (handle by the bigBrainPreviewIsValid and pilot by the Import_SO_Pilot__c ). else, the ready for validation field holds the bb status and pilot status
 		if (component.get("v.closedFields.What_Would_You_Like_To_Claim__c")!='CC Payments' && 
-			component.get('v.oppData.Account.primary_pulse_account_id__c')!=null && component.get('v.oppData.SyncedQuote.Ready_For_Activation__c')==true && component.get('v.oppData.SyncedQuote')!='' && component.get('v.oppData.SyncedQuote')!=null && 
+			component.get('v.oppData.Account.primary_pulse_account_id__c')!=null && 
+			(component.get('v.oppData.SyncedQuote.Ready_For_Activation__c')==true || (component.get('v.bigBrainPreviewIsValid')==true && component.get('v.oppData.SyncedQuote.Import_SO_Pilot__c')==true)) && component.get('v.oppData.SyncedQuote')!='' && component.get('v.oppData.SyncedQuote')!=null && 
 			(component.get('v.oppData.SyncedQuote.DH_Quote_Status__c')=='Approved' || component.get('v.oppData.SyncedQuote.DH_Quote_Status__c')=='Won') && component.get('v.oppData.SyncedQuote.Document_Type__c')=='Sales Order') {//Approved sales order are signed or will be signed - therefore, they would be activated
 			component.set('v.showActivation', true);
 		}else {
@@ -353,7 +390,9 @@
 			var filesUploaded = helper.checkFilesUploaded(component, event, helper);
 			if(manualSignatureInputValid && filesUploaded){
 				console.log('opp close proc ho: submit_closedWon Manual Signature valid input');
-				helper.callback_saveManualFields(component, event, helper);
+				helper.callback_saveManualFields(component, event, helper);//after submmited, call bb service
+				helper.callback_callBigBrain(component, event, helper);
+
 			} else {
 				console.log('opp close proc ho: submit_closedWon Manual Signature invalid input!');
 			}
