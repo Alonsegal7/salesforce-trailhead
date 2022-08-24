@@ -72,7 +72,12 @@ public class PartnerCommission_PartnerTransfer_Queue implements System.Queueable
                             if(accountsMap.containsKey(mondayAccId) && accountsMap.containsKey(partnersToCreatePC.get(mondayAccId))){
                                 Partner_Commission__c newPc = pcService.createNewPc(accountsMap.get(mondayAccId), accountsMap.get(partnersToCreatePC.get(mondayAccId)), null, 'Partners Transfer');
                                 //we set start date to be 1 second after the mondayAccount.Last_ARR_Update_Timestamp__c so the new partner will get comission only for new transactions
-                                newPc.Start_Date__c = newPc.Start_Date__c.addSeconds(1); 
+                                if(newPc.Start_Date__c == null){
+                                    newPc.Start_Date__c = Datetime.now();
+                                }else{
+                                    newPc.Start_Date__c = newPc.Start_Date__c.addSeconds(1); 
+                                }
+                                
                                 newPartnerCommissionList.add(newPc);
                             }
                         }
