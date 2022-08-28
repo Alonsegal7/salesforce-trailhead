@@ -25,7 +25,7 @@ public with sharing class ContractStatusService {
             }
         }
         //Get last start date events
-        List<Contract_Product__c> conProdEvent = [select id,Activation_Status__c,product__r.IsRecurring__c,CreatedDate, (select id,Start_Date__c,Activation_Status__c from Contract_Events__r where IsRecurring__c = true ORDER BY Start_Date__c,CreatedDate DESC LIMIT 1) from Contract_Product__c where Contract__c in:contIds AND product__r.IsRecurring__c=true];
+        List<Contract_Product__c> conProdEvent = [select id,Activation_Status__c,product__r.IsRecurring__c, (select id,Start_Date__c,Activation_Status__c from Contract_Events__r where IsRecurring__c = true ORDER BY Start_Date__c DESC LIMIT 1) from Contract_Product__c where Contract__c in:contIds AND product__r.IsRecurring__c=true];
 
         for (Contract_Product__c singleConProdEvent : conProdEvent) {
             conProdToUpdate.add(new Contract_Product__c(Id=singleConProdEvent.Id,Activation_Status__c=singleConProdEvent.Contract_Events__r[0].Activation_Status__c)); 
