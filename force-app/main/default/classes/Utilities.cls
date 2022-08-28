@@ -285,6 +285,16 @@ public without sharing class Utilities {
         set;  
     }
 
+    public static Id preLeadRecordTypeId {  
+        get {  
+            if (preLeadRecordTypeId == null) {  
+                preLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Pre_Lead').getRecordTypeId();  
+            }
+            return preLeadRecordTypeId;  
+        }  
+        set;  
+    }
+
     public static Id AccountsPoolUserId {  
         get {  
             if (AccountsPoolUserId == null) {  

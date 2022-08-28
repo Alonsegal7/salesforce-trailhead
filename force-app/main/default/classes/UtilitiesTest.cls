@@ -6,6 +6,7 @@ public without sharing class UtilitiesTest {
         Id comprt = Utilities.CompanyRecordTypeId;
         Id acui = Utilities.AccountsPoolUserId;
         Id ptrt = Utilities.personalTargetRT;
+        Id preLeadRtId = Utilities.preLeadRecordTypeId;
         string templateText = '<messaging:emailTemplate subject="{!relatedTo.Name}" recipientType="User" relatedToType="Lead"><messaging:htmlEmailBody ><ul><li>test content</li></ul></messaging:htmlEmailBody></messaging:emailTemplate>';
         EmailTemplate t = new EmailTemplate(DeveloperName = 'TestTemplateUtilitiesTest', TemplateType= 'Visualforce', FolderId = UserInfo.getUserId(),
         Name = 'TestEmailVFTemplate',
