@@ -2,7 +2,6 @@ public with sharing class SalesOrderErrorHandlingService {
     
     public static string CallBigBrainPreview(string quoteId,string pulseId){
         List<quote> quotesToUpdate = new List<quote>();
-        try {
             Quote quote = [select id,BigBrain_Preview_API_Status__c,Error_Description__c from quote where id=: quoteid limit 1]; //when bb will work bulk - change to bulk
             string res = '';
             string status ='';
@@ -18,30 +17,36 @@ public with sharing class SalesOrderErrorHandlingService {
                 status=HandleOrderErrors(fakeRes,quoteId);
             }
 
-            if (status!='Valid' && status!='Invalid' ) {//bb returned general error - set status to system error
+            if (status!='Valid' && status!='Invalid') {//bb returned general error - set status to system error
                 quote.BigBrain_Preview_API_Status__c='System Error';
                 quote.Error_Description__c=status;
             }
             else {
                 quote.BigBrain_Preview_API_Status__c=status;//didn't get errors- will return valid/invalid
+                quote.Error_Description__c=null;//for cases where the service first failed, then re-run and succeed - clean the error 
             }
             quotesToUpdate.add(quote);//add the service status to the quote
 
             if (!quotesToUpdate.isempty()) {
-                update quotesToUpdate;
+                try {
+                    update quotesToUpdate;
+                }      
+                catch (Exception ex) {
+                    if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
+                        try {
+                            update quotesToUpdate;
+                        }
+                        catch (Exception e) {
+                            System.debug('Message: ' + e.getMessage());
+                        }
+                    }
+                    else {
+                        System.debug('Message: ' + ex.getMessage());
+                    }
+                    return 'System Error';
+                } 
             }
             return status;
-
-        } catch (Exception e) {
-            List<quote> quotesToUpdateException = new List<quote>();
-            Quote quote = [select id,BigBrain_Preview_API_Status__c,Error_Description__c from quote where id=: quoteid limit 1]; //when bb will work bulk - change to bulk
-            quote.BigBrain_Preview_API_Status__c='System Error';
-            quote.Error_Description__c='SFDC Error->' + e.getMessage();
-            Utilities.sendDebugEmail('Error in CallBigBrainPreview - request exception ',e,e.getMessage());
-            quotesToUpdateException.add(quote);
-            update quotesToUpdate;
-            return 'System Error';
-        }
     }
 
     public static string HandleOrderErrors(string request,id salesOrder){
@@ -53,7 +58,22 @@ public with sharing class SalesOrderErrorHandlingService {
             if (wrapedRes.valid==false) {//bb returned error - handle and return status to quote level
                 List<Order_Activation_Conflict__c> confilcts = handleOrderConflicts(wrapedRes,salesOrder);//handle
                 if (!confilcts.isempty()) {//upsert
-                    upsert confilcts Conflict_Description__c;
+                    try {
+                        upsert confilcts Key__c;
+                    }      
+                    catch (Exception ex) {
+                        if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
+                            try {
+                                upsert confilcts Key__c;
+                            }
+                            catch (Exception e) {
+                                System.debug('Message: ' + e.getMessage());
+                            }
+                        }
+                        else {
+                            System.debug('Message: ' + ex.getMessage());
+                        }
+                    } 
                 }
                 return 'Invalid';
             }
@@ -69,7 +89,8 @@ public with sharing class SalesOrderErrorHandlingService {
             Order_Activation_Conflict__c conflict = new Order_Activation_Conflict__c(
                 Conflict_Description__c=validationError,
                 Type__c='Error',
-                Quote__c=salesOrder
+                Quote__c=salesOrder,
+                Key__c=validationError+salesOrder
             );
             conflicts.add(conflict);
         }
@@ -78,7 +99,8 @@ public with sharing class SalesOrderErrorHandlingService {
                 Conflict_Description__c=validationWarning,
                 Type__c='Error',
                 Fix_Status__c='Not Required For Import',
-                Quote__c=salesOrder
+                Quote__c=salesOrder,
+                Key__c=validationWarning+salesOrder
             );
             conflicts.add(conflict);
         }
