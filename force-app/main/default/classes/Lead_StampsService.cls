@@ -9,6 +9,7 @@ public without sharing class Lead_StampsService {
             markCompanyRelatedStampsUponCreaion(newLeads,oldLeads);
             handlePhoneChange(newLeads,oldLeads);
             handleMqlSql(newLeads,oldLeads);
+            handleSubmitAndResubmit(newLeads,oldLeads);
         } catch(Exception e) {
             Utilities.sendDebugEmail('Error in Lead_StampsService',e,e.getMessage());
         }
@@ -68,11 +69,8 @@ public without sharing class Lead_StampsService {
         for (Lead lead : newLeads) {
             lead.First_Visitor_Id__c=lead.visitor_id__c;
             lead.Lead_created_date__c=Date.today();
-            lead.First_Lead_Source__c = lead.LeadSource;
-            lead.First_Sub_source__c = lead.Sub_source__c;
             lead.Account_Arr_on_Lead_Creation__c = lead.Account_ARR__c;
             lead.Type__c = lead.Account_ARR__c > 0 ? 'Expansion' : 'New Business';
-            lead.Channel__c = lead.Channel_Lead_Source__c == 'None' ? '-' : lead.Channel_Lead_Source__c;
             lead.Received_timestamp__c = Date.today();
         }
     }
@@ -239,6 +237,30 @@ public without sharing class Lead_StampsService {
                     leadRec.SDR_Business_Role__c = currOwner.Business_Role__c;
                 }
             } 
+        }
+    }
+
+    public static void handleSubmitAndResubmit(List<Lead> newLeads, Map<Id,Lead> oldLeads){
+        for (Lead lead : newLeads) {
+            if(oldLeads == null || lead.LeadSource != oldLeads.get(lead.Id).LeadSource) {
+                Lead_Channel_Mapping__mdt lcm = Utilities.getChannelMapping().get(lead.LeadSource);
+                if(lead.Deal_Registration__c == null) {
+                    lead.Lead_Source_Type__c = lcm != null ? lcm.Type__c : 'Inbound';
+                }
+                if ((oldLeads == null && lead.Channel_Lead_Source__c == null) || //new lead without channel
+                (oldLeads != null && lead.LeadSource != oldLeads.get(lead.Id).LeadSource && lead.Channel_Lead_Source__c == oldLeads.get(lead.Id).Channel_Lead_Source__c)) { //resubmission (lead source change) without channel change
+                    lead.Channel_Lead_Source__c = lcm != null ? lcm.Channel__c : 'Other';
+                }
+                if((oldLeads == null && lead.Sub_source__c == null) || //new lead without subsource
+                (oldLeads != null && lead.Sub_source__c != 'None' && lead.Sub_source__c == oldLeads.get(lead.Id).Sub_source__c && lead.LeadSource != oldLeads.get(lead.Id).LeadSource)) { //resubmission (lead source change) without subsource 
+                    lead.Sub_source__c = 'None';
+                }
+                if (oldLeads == null) {
+                    lead.First_Lead_Source__c = lead.LeadSource;
+                    lead.First_Sub_source__c = lead.Sub_source__c;
+                    lead.Channel__c = lead.Channel_Lead_Source__c == 'None' ? '-' : lead.Channel_Lead_Source__c;
+                }
+            }
         }
     }
 

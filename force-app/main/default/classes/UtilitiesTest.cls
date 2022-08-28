@@ -74,6 +74,10 @@ public without sharing class UtilitiesTest {
         Utilities.getAllTHs();
     }
 
+    static testmethod void test_getAllChannelMapping() { 
+        Utilities.getChannelMapping();
+    }
+
     static testmethod void test_capitalizeString() { 
         Utilities.capitalizeString('blabla');
     }

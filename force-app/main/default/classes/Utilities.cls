@@ -1,5 +1,6 @@
 public without sharing class Utilities {
     static map<string,Country_Region_Mapping__c> regionsMapping= null;
+    static map<string,Lead_Channel_Mapping__mdt> channelMapping= null;
     static map<id,GB_Threshold__c> allTHs= null;
     static Pricebook2 mainPB= null;
 
@@ -102,6 +103,16 @@ public without sharing class Utilities {
         }
         return regionsMapping;
     }
+
+    public static map<string,Lead_Channel_Mapping__mdt> getChannelMapping(){
+        if(channelMapping==null){
+            channelMapping= new map<string,Lead_Channel_Mapping__mdt>();
+            for(Lead_Channel_Mapping__mdt lcm: [SELECT Id ,Channel__c, Lead_Source__c, Type__c FROM Lead_Channel_Mapping__mdt])
+                channelMapping.put(lcm.Lead_Source__c,lcm);
+        }
+        return channelMapping;
+    }
+    
     public static map<id,GB_Threshold__c> getAllTHs(){
         if(allTHs==null)
             allTHs= new map<Id,GB_Threshold__c>([select id,Min_ARR__c from GB_Threshold__c]);
