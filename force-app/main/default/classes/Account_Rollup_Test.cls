@@ -3,8 +3,8 @@
 public class Account_Rollup_Test {
     static testMethod void newMaCreatedRecalculateParrent() {        
 
-        Id CompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
-        Id MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+        Id CompanyRecordTypeId = Utilities.CompanyRecordTypeId;
+        Id MARecordTypeId = Utilities.MARecordTypeId;
         
         Account globalCom = new Account();
         globalCom.Name = 'Test Global';
@@ -58,8 +58,8 @@ public class Account_Rollup_Test {
 
     static testMethod void testScheduledLogic() {        
 
-        Id CompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
-        Id MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+        Id CompanyRecordTypeId = Utilities.CompanyRecordTypeId;
+        Id MARecordTypeId = Utilities.MARecordTypeId;
         
         Account globalCom = new Account();
         globalCom.Name = 'Test Global';
@@ -89,6 +89,7 @@ public class Account_Rollup_Test {
             MAPP__c=80,
             WAPP__c=20,
             Members__c=90,
+            Company__c = globalCom.Id,
             ParentId = globalCom.Id);
         insert testMA;
 
@@ -106,8 +107,8 @@ public class Account_Rollup_Test {
 
     static testMethod void MaUpdatedRecalculateParrent() {        
         
-        Id CompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
-        Id MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
+        Id CompanyRecordTypeId = Utilities.CompanyRecordTypeId;
+        Id MARecordTypeId = Utilities.MARecordTypeId;
         
         Account globalCom = new Account();
         globalCom.Name = 'Test Global';
