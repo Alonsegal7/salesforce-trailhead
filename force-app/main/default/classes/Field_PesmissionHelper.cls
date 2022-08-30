@@ -11,8 +11,6 @@ global class Field_PesmissionHelper {
         // Retrieves all the relevant profiles
         List<Profile> relevantProfiles = new List<Profile>([SELECT Id,Name FROM Profile WHERE UserLicense.Name = 'Salesforce' AND (NOT(Name like '%Community%'))]);
         Set<Id> relevantProfileIds = (new Map<Id,SObject>(relevantProfiles)).keySet();
-        System.debug('relevantProfiles: '+ relevantProfiles);
-
         List<FieldPermissions> FPsToUpsert = new List<FieldPermissions>();
 
         for (String f : fieldNames) {
@@ -49,11 +47,7 @@ global class Field_PesmissionHelper {
         }
         try {
             System.debug('FPs to upsert: '+FPsToUpsert);
-            for (FieldPermissions fp : FPsToUpsert) {
-                System.debug('Current FP: '+fp);
-            }
             upsert FPsToUpsert;
-            System.debug('Upsert Succeeded: ');
             return true;
         } catch (Exception e) {
             System.debug('Upsert Failed: '+e.getMessage());
