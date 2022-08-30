@@ -66,7 +66,7 @@ public without sharing class Opportunity_Snapshot implements Database.Batchable<
             query='select Id,Name,RecordType.Name,Forecasted__c,Owner.Manager.name, ';
             query+=' (select id from Opportunity_Snapshots__r order by Snapshot_Date__c desc limit 1) ';
             query+=fieldsToQuery; 
-            query+=' from Opportunity WHERE CloseDate>=THIS_MONTH and  (CloseDate=THIS_QUARTER or CloseDate=NEXT_QUARTER) '; 
+            query+=' from Opportunity WHERE CloseDate >= LAST_N_MONTHS:3 and CloseDate <= NEXT_N_MONTHS:3 '; 
             query+=' and Id NOT IN (SELECT Opportunity__c FROM Opportunity_Snapshot__c where Snapshot_Date__c=today) ';
             if(oppId!=null)
                 query+=' and id=\''+oppId+'\' '; 
