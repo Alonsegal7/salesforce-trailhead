@@ -180,15 +180,27 @@ public without sharing class Utilities {
         }      
         catch (Exception ex) {
             if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
+                Utilities.sendDebugEmail('Error from updateAndRetry - First Attamp. Try again ',ex,ex.getMessage()); 
                 try {
                     update recordsToUpdate; 
                 }
                 catch (Exception e) {
-                    System.debug('Message: ' + e.getMessage());
+                    if (e.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')) {
+                        Utilities.sendDebugEmail('Error from updateAndRetry - Second Attamp. Try again ',e,e.getMessage()); 
+                        try {
+                            update recordsToUpdate; 
+                        }
+                        catch(Exception e1){
+                            Utilities.sendDebugEmail('Error from updateAndRetry - Failed after Second Attamp - Do not try anymore',e1,e1.getMessage()); 
+                        }
+                    }
+                    else {
+                        Utilities.sendDebugEmail('Error from updateAndRetry (Not UNABLE_TO_LOCK_ROW error (Second attamp)) - ',e,e.getMessage()); 
+                    }
                 }
             }
             else {
-                System.debug('Message: ' + ex.getMessage());
+                Utilities.sendDebugEmail('Error from updateAndRetry (Not UNABLE_TO_LOCK_ROW error (only first attamp))  - ',ex,ex.getMessage()); 
             }
         }
     }
