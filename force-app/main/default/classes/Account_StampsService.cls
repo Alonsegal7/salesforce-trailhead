@@ -66,14 +66,16 @@ public with sharing class Account_StampsService {
     
     public static void handleOngoingUpdates(List<Account> newAccounts, map<Id,Account> oldAccounts){ 
         
-        for(Account acc: newAccounts){
-            
+        for(Account acc: newAccounts){  
             if(acc.Named_Account__c && (oldAccounts == null || (oldAccounts != null && !oldAccounts.get(acc.Id).Named_Account__c))) { //Account marked as named account
                 acc.Named_Account_Start_Date__c = Date.today();
             }
             
             if (oldAccounts != null && oldAccounts.get(acc.Id).Named_Account__c && !acc.Named_Account__c) { //Account unmarked as named account
                 acc.Named_Account_End_Date__c = Date.today();
+            }
+            if (acc.RecordTypeId == Utilities.CompanyRecordTypeId && (oldAccounts == null || acc.NumberOfEmployees != oldAccounts.get(acc.Id).NumberOfEmployees)) {
+                acc.Company_Size__c = acc.NumberOfEmployees != null ? Utilities.getCompanySizeRange(acc.NumberOfEmployees) : null;
             }
         }
     }

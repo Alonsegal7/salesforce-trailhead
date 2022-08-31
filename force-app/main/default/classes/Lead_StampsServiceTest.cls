@@ -21,6 +21,7 @@ public with sharing class Lead_StampsServiceTest {
 
         LeadsToInsert.add(new Lead(
             Company='leadWithPhone',
+            NumberOfEmployees=65,
             LastName='LastName',
             Email='test@test.com',
             Phone='12345678',
@@ -192,7 +193,7 @@ public with sharing class Lead_StampsServiceTest {
     }
     @istest
     static void checkGetValuesOnCreate(){
-        Lead createdLead = [select id,visitor_id__c,Sub_source__c,LeadSource,Channel_Lead_Source__c,Type__c,Distributed_to_First__c,OwnerId,First_Visitor_Id__c,Account_ARR__c, Account_Arr_on_Lead_Creation__c, Lead_created_date__c,Salesloft_Import_Link__c,First_Sub_source__c,First_Lead_Source__c,Channel__c,Received_timestamp__c, Distributed_w_o_Phone_Number__c,Distributed_with_Phone__c,Enriched_phone__c,Phone from lead where Company='leadWithPhone' limit 1];
+        Lead createdLead = [select id,visitor_id__c,Sub_source__c,LeadSource,Channel_Lead_Source__c,Type__c,Distributed_to_First__c,OwnerId,First_Visitor_Id__c,Account_ARR__c, Company_Size__c, Account_Arr_on_Lead_Creation__c, Lead_created_date__c,Salesloft_Import_Link__c,First_Sub_source__c,First_Lead_Source__c,Channel__c,Received_timestamp__c, Distributed_w_o_Phone_Number__c,Distributed_with_Phone__c,Enriched_phone__c,Phone from lead where Company='leadWithPhone' limit 1];
         Lead createdLeadOutboundChannel = [select id,Account_ARR__c, Account_Arr_on_Lead_Creation__c,Type__c from lead where Company='test3' limit 1];
 
         system.assertEquals(createdLead.visitor_id__c, createdLead.First_Visitor_Id__c);
@@ -203,7 +204,7 @@ public with sharing class Lead_StampsServiceTest {
         system.assertEquals(Date.today(), createdLead.Received_timestamp__c);
         system.assertEquals('Test', createdLead.Distributed_to_First__c);
         system.assertEquals(createdLead.Type__c, 'New Business');
-        
+        system.assertEquals(createdLead.Company_Size__c, '50-99');
         
         system.assertEquals(createdLeadOutboundChannel.Account_ARR__c, createdLeadOutboundChannel.Account_Arr_on_Lead_Creation__c);
         system.assertEquals(createdLeadOutboundChannel.Type__c, 'Expansion');

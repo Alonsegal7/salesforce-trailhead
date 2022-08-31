@@ -317,7 +317,6 @@ public without sharing class Utilities {
         set;  
     }
 
-
     public static Map<Id,User> activeUsersMap {  
         get {  
             if (activeUsersMap == null) {  
@@ -326,5 +325,29 @@ public without sharing class Utilities {
             return activeUsersMap;  
         }  
         set;
+    }
+
+    public static String getCompanySizeRange(Integer numberOfEmployees) {
+        if (numberOfEmployees >= 1 && numberOfEmployees <= 19) {
+            return '1-19';
+        }
+        if (numberOfEmployees >= 20 && numberOfEmployees <= 49) {
+            return '20-49';
+        }
+        if (numberOfEmployees >= 50 && numberOfEmployees <= 99) {
+            return '50-99';
+        }
+        if (numberOfEmployees >= 100 && numberOfEmployees <= 250) {
+            return '100-250';
+        }
+        if (numberOfEmployees >= 251 && numberOfEmployees <= 1500) {
+            return '251-1500';
+        }
+        if (numberOfEmployees > 1500) {
+            return '1500+';
+        } 
+        else {
+            return null;
+        }
     }
 }

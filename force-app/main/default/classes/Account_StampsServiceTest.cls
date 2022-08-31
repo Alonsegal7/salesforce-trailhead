@@ -24,6 +24,7 @@ public with sharing class Account_StampsServiceTest {
         Account comp1 = TestObjectCreator.CreateCompany();
         comp1.Named_Account__c = true;
         comp1.Name = 'comp1';
+        comp1.NumberOfEmployees = 65;
         insert comp1;
     }
 
@@ -83,9 +84,15 @@ public with sharing class Account_StampsServiceTest {
     }
 
     @isTest
-    static void shouldStampNamedAccountStartDate(){
-        Account comp = [SELECT Id, Named_Account_Start_Date__c FROM Account WHERE Name = 'comp1'];
+    static void shouldStampOnCreate(){
+        Account comp = [SELECT Id, Named_Account_Start_Date__c, Company_Size__c, NumberOfEmployees FROM Account WHERE Name = 'comp1'];
         system.assertEquals(comp.Named_Account_Start_Date__c, Date.today());
+        system.assertEquals(comp.Company_Size__c, '50-99');
+        comp.NumberOfEmployees = 15;
+        update comp;
+        comp = [SELECT Company_Size__c FROM Account WHERE Name = 'comp1'];
+        system.assertEquals(comp.Company_Size__c, '1-19');
+
     }
 
     @isTest

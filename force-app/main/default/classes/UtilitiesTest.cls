@@ -103,4 +103,9 @@ public without sharing class UtilitiesTest {
     static testmethod void test_convertDatetimeToDate() { 
         Utilities.convertDatetimeToDate(Datetime.now());
     }
+
+    @isTest
+    static void getCompanySize() {
+        system.assertEquals('50-99', Utilities.getCompanySizeRange(65));
+    }
 }
