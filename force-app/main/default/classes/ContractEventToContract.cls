@@ -1,4 +1,4 @@
-public with sharing class ContractEventToContract {
+public without sharing class ContractEventToContract {
     public static Map<string, id> createdContForSubOrder = new Map<string, id>();
     public static void ContractEventCreateNewContract(Map<Id, List<Contract_Event__c>> conEvents, List<SObject> objects, string objType) {
        try{
@@ -77,15 +77,19 @@ public with sharing class ContractEventToContract {
                 update quoteToUpdate;
             }
             if (!oppsToUpdate.isEmpty()) {
+                Utilities.cleanFlexQueue();
                 System.enqueueJob(new updateOppQueueable(oppsToUpdate));
             }
             if (!prevContractToUpdate.isEmpty()) {
+                Utilities.cleanFlexQueue();
                 System.enqueueJob(new updatePrevContractQueueable(prevContractToUpdate));
             }
             if (!masterMondayAccountToUpdate.isEmpty()) {
+                Utilities.cleanFlexQueue();
                 System.enqueueJob(new updateAccountQueueable(masterMondayAccountToUpdate));
             }
             if (!createdContractsToUpdate.isEmpty()) {
+                Utilities.cleanFlexQueue();
                 System.enqueueJob(new updateValuesToCreatedContract(createdContractsToUpdate));
             }
         }
@@ -112,12 +116,15 @@ public with sharing class ContractEventToContract {
                 update subsToUpdate;
             }
             if (!masterMondayAccountToUpdate.isEmpty()) {
+                Utilities.cleanFlexQueue();
                 System.enqueueJob(new updateAccountQueueable(masterMondayAccountToUpdate));
             }
             if (!prevContractToUpdate.isEmpty()) {
+                Utilities.cleanFlexQueue();
                 System.enqueueJob(new updatePrevContractQueueable(prevContractToUpdate));
             }
             if (!createdContractsToUpdate.isEmpty()) {
+                Utilities.cleanFlexQueue();
                 System.enqueueJob(new updateValuesToCreatedContract(createdContractsToUpdate));
             }
         }
@@ -195,7 +202,7 @@ public with sharing class ContractEventToContract {
             this.oppToUpdateList = oppToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            Database.update(oppToUpdateList);
+            Utilities.updateAndRetry(oppToUpdateList);
         }
     }
     private class updateAccountQueueable implements System.Queueable {
@@ -223,7 +230,7 @@ public with sharing class ContractEventToContract {
             this.contractToUpdateList = contractToUpdateList;
         }
         public void execute(System.QueueableContext ctx) {
-            Database.update(contractToUpdateList);
+            Utilities.updateAndRetry(contractToUpdateList);
         }
     }
 }
