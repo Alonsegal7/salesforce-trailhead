@@ -35,10 +35,11 @@ public with sharing class SalesOrderErrorHandlingService_Test {
 
         quote q = [select id from quote limit 1];
         SalesOrderErrorHandlingService.CallBigBrainPreview(q.id,'3434');
+        List<Order_Activation_Conflict__c> confs = [select id from Order_Activation_Conflict__c];
  
-        quote q1 = [select id,ConflictsErrorsCounter__c,BigBrain_Preview_API_Status__c,Error_Description__c from quote limit 1];
+        quote q1 = [select id,BigBrain_Preview_API_Status__c,Error_Description__c from quote limit 1];
 
-        system.assertEquals(4, q1.ConflictsErrorsCounter__c);
+        system.assertEquals(4, confs.size());
         system.assertEquals('Invalid', q1.BigBrain_Preview_API_Status__c);
         system.assertEquals(null, q1.Error_Description__c);
     }

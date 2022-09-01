@@ -1,5 +1,6 @@
 public without sharing class Utilities {
     static map<string,Country_Region_Mapping__c> regionsMapping= null;
+    static map<string,Lead_Channel_Mapping__mdt> channelMapping= null;
     static map<id,GB_Threshold__c> allTHs= null;
     static Pricebook2 mainPB= null;
 
@@ -102,6 +103,16 @@ public without sharing class Utilities {
         }
         return regionsMapping;
     }
+
+    public static map<string,Lead_Channel_Mapping__mdt> getChannelMapping(){
+        if(channelMapping==null){
+            channelMapping= new map<string,Lead_Channel_Mapping__mdt>();
+            for(Lead_Channel_Mapping__mdt lcm: [SELECT Id ,Channel__c, Lead_Source__c, Type__c FROM Lead_Channel_Mapping__mdt])
+                channelMapping.put(lcm.Lead_Source__c,lcm);
+        }
+        return channelMapping;
+    }
+    
     public static map<id,GB_Threshold__c> getAllTHs(){
         if(allTHs==null)
             allTHs= new map<Id,GB_Threshold__c>([select id,Min_ARR__c from GB_Threshold__c]);
@@ -169,15 +180,27 @@ public without sharing class Utilities {
         }      
         catch (Exception ex) {
             if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')){
+                Utilities.sendDebugEmail('Error from updateAndRetry - First Attamp. Try again ',ex,ex.getMessage()); 
                 try {
                     update recordsToUpdate; 
                 }
                 catch (Exception e) {
-                    System.debug('Message: ' + e.getMessage());
+                    if (e.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')) {
+                        Utilities.sendDebugEmail('Error from updateAndRetry - Second Attamp. Try again ',e,e.getMessage()); 
+                        try {
+                            update recordsToUpdate; 
+                        }
+                        catch(Exception e1){
+                            Utilities.sendDebugEmail('Error from updateAndRetry - Failed after Second Attamp - Do not try anymore',e1,e1.getMessage()); 
+                        }
+                    }
+                    else {
+                        Utilities.sendDebugEmail('Error from updateAndRetry (Not UNABLE_TO_LOCK_ROW error (Second attamp)) - ',e,e.getMessage()); 
+                    }
                 }
             }
             else {
-                System.debug('Message: ' + ex.getMessage());
+                Utilities.sendDebugEmail('Error from updateAndRetry (Not UNABLE_TO_LOCK_ROW error (only first attamp))  - ',ex,ex.getMessage()); 
             }
         }
     }
@@ -274,6 +297,16 @@ public without sharing class Utilities {
         set;  
     }
 
+    public static Id preLeadRecordTypeId {  
+        get {  
+            if (preLeadRecordTypeId == null) {  
+                preLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Pre_Lead').getRecordTypeId();  
+            }
+            return preLeadRecordTypeId;  
+        }  
+        set;  
+    }
+
     public static Id AccountsPoolUserId {  
         get {  
             if (AccountsPoolUserId == null) {  
@@ -284,7 +317,6 @@ public without sharing class Utilities {
         set;  
     }
 
-
     public static Map<Id,User> activeUsersMap {  
         get {  
             if (activeUsersMap == null) {  
@@ -293,5 +325,29 @@ public without sharing class Utilities {
             return activeUsersMap;  
         }  
         set;
+    }
+
+    public static String getCompanySizeRange(Integer numberOfEmployees) {
+        if (numberOfEmployees >= 1 && numberOfEmployees <= 19) {
+            return '1-19';
+        }
+        if (numberOfEmployees >= 20 && numberOfEmployees <= 49) {
+            return '20-49';
+        }
+        if (numberOfEmployees >= 50 && numberOfEmployees <= 99) {
+            return '50-99';
+        }
+        if (numberOfEmployees >= 100 && numberOfEmployees <= 250) {
+            return '100-250';
+        }
+        if (numberOfEmployees >= 251 && numberOfEmployees <= 1500) {
+            return '251-1500';
+        }
+        if (numberOfEmployees > 1500) {
+            return '1500+';
+        } 
+        else {
+            return null;
+        }
     }
 }

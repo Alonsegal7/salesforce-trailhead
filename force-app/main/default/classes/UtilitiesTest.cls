@@ -6,6 +6,7 @@ public without sharing class UtilitiesTest {
         Id comprt = Utilities.CompanyRecordTypeId;
         Id acui = Utilities.AccountsPoolUserId;
         Id ptrt = Utilities.personalTargetRT;
+        Id preLeadRtId = Utilities.preLeadRecordTypeId;
         string templateText = '<messaging:emailTemplate subject="{!relatedTo.Name}" recipientType="User" relatedToType="Lead"><messaging:htmlEmailBody ><ul><li>test content</li></ul></messaging:htmlEmailBody></messaging:emailTemplate>';
         EmailTemplate t = new EmailTemplate(DeveloperName = 'TestTemplateUtilitiesTest', TemplateType= 'Visualforce', FolderId = UserInfo.getUserId(),
         Name = 'TestEmailVFTemplate',
@@ -74,6 +75,10 @@ public without sharing class UtilitiesTest {
         Utilities.getAllTHs();
     }
 
+    static testmethod void test_getAllChannelMapping() { 
+        Utilities.getChannelMapping();
+    }
+
     static testmethod void test_capitalizeString() { 
         Utilities.capitalizeString('blabla');
     }
@@ -97,5 +102,10 @@ public without sharing class UtilitiesTest {
 
     static testmethod void test_convertDatetimeToDate() { 
         Utilities.convertDatetimeToDate(Datetime.now());
+    }
+
+    @isTest
+    static void getCompanySize() {
+        system.assertEquals('50-99', Utilities.getCompanySizeRange(65));
     }
 }

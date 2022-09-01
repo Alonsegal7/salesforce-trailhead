@@ -1,4 +1,8 @@
 public with sharing class Account_Rollup_Scheduled implements Database.Batchable<sObject>,Schedulable {
+
+    private static Id CompanyRecordTypeId = Utilities.CompanyRecordTypeId;
+    private static Id MARecordTypeId = Utilities.MARecordTypeId;
+
     public void execute(SchedulableContext SC) {
 
         System.debug('Michael - Account_Rollup_Scheduled - Entered scheduled');
@@ -11,14 +15,8 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
     }
     
     public Database.QueryLocator start(Database.BatchableContext BC){
-        String query = 'SELECT Id, ParentId FROM Account WHERE Pending_Rollup__c = true AND ParentId != null LIMIT 10000';
-        try {
-            return Database.getQueryLocator(query);
-        }
-        catch(Exception e){
-            Utilities.sendDebugEmail('Error in Account_Rollup_Scheduled  - getQueryLocator Failed:', e, e.getMessage());
-            return null;
-        }
+        String query = 'SELECT Id, ParentId FROM Account WHERE Pending_Rollup__c = true AND ((recordTypeId =: MARecordTypeId AND ParentId != null) OR (recordTypeId =: CompanyRecordTypeId)) LIMIT 10000';
+        return Database.getQueryLocator(query);
      }
 
     public void execute(Database.BatchableContext BC, list<Account> scope){
@@ -47,8 +45,6 @@ public with sharing class Account_Rollup_Scheduled implements Database.Batchable
             //From the input accounts, create a set of all the parent accounts that requires rollup- will contain 1. inputCompanies and 2. the parents of the inputMAs
             List<Account> inputAccountsList=new List<Account>([SELECT Id,RecordTypeId,ParentId,Pending_Rollup__c FROM Account WHERE Id IN: inputAccounts LIMIT 10000]);
             Set<Id> companiesToRollup = new Set<Id>();
-            Id CompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Company').getRecordTypeId();
-            Id MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Monday_Account').getRecordTypeId();
             for (Account acc : inputAccountsList) {
                 if (acc.recordTypeId == CompanyRecordTypeId) {
                     companiesToRollup.add(acc.Id);

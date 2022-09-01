@@ -21,13 +21,14 @@ public with sharing class Lead_StampsServiceTest {
 
         LeadsToInsert.add(new Lead(
             Company='leadWithPhone',
+            NumberOfEmployees=65,
             LastName='LastName',
             Email='test@test.com',
             Phone='12345678',
             LeadSource='Big Brain - Signup',
             visitor_id__c='123',
             Sub_source__c='Sign up', 
-            Channel_Lead_Source__c = 'Signup', 
+            Channel_Lead_Source__c = 'Outbound',
             OwnerId=userRecord.Id,
             Status='Attempting',
             SQL__c=true,
@@ -192,7 +193,7 @@ public with sharing class Lead_StampsServiceTest {
     }
     @istest
     static void checkGetValuesOnCreate(){
-        Lead createdLead = [select id,visitor_id__c,Sub_source__c,LeadSource,Channel_Lead_Source__c,Type__c,Distributed_to_First__c,OwnerId,First_Visitor_Id__c,Account_ARR__c, Account_Arr_on_Lead_Creation__c, Lead_created_date__c,Salesloft_Import_Link__c,First_Sub_source__c,First_Lead_Source__c,Channel__c,Received_timestamp__c, Distributed_w_o_Phone_Number__c,Distributed_with_Phone__c,Enriched_phone__c,Phone from lead where Company='leadWithPhone' limit 1];
+        Lead createdLead = [select id,visitor_id__c,Sub_source__c,LeadSource,Channel_Lead_Source__c,Type__c,Distributed_to_First__c,OwnerId,First_Visitor_Id__c,Account_ARR__c, Company_Size__c, Account_Arr_on_Lead_Creation__c, Lead_created_date__c,Salesloft_Import_Link__c,First_Sub_source__c,First_Lead_Source__c,Channel__c,Received_timestamp__c, Distributed_w_o_Phone_Number__c,Distributed_with_Phone__c,Enriched_phone__c,Phone from lead where Company='leadWithPhone' limit 1];
         Lead createdLeadOutboundChannel = [select id,Account_ARR__c, Account_Arr_on_Lead_Creation__c,Type__c from lead where Company='test3' limit 1];
 
         system.assertEquals(createdLead.visitor_id__c, createdLead.First_Visitor_Id__c);
@@ -203,7 +204,7 @@ public with sharing class Lead_StampsServiceTest {
         system.assertEquals(Date.today(), createdLead.Received_timestamp__c);
         system.assertEquals('Test', createdLead.Distributed_to_First__c);
         system.assertEquals(createdLead.Type__c, 'New Business');
-        
+        system.assertEquals(createdLead.Company_Size__c, '50-99');
         
         system.assertEquals(createdLeadOutboundChannel.Account_ARR__c, createdLeadOutboundChannel.Account_Arr_on_Lead_Creation__c);
         system.assertEquals(createdLeadOutboundChannel.Type__c, 'Expansion');
@@ -393,5 +394,80 @@ public with sharing class Lead_StampsServiceTest {
 
         system.assertEquals(Date.today(), leadQualifiedStatus.Qualified_Timestamp_DT__c.date());
         system.assertEquals(Date.today(), leadQualifiedStatus.Qualified_timestamp__c);
+    }
+
+    @isTest
+    static void shouldMarkChannelOnCreate(){
+        Lead lead1 = [SELECT Id, Channel_Lead_Source__c, Channel__c, Lead_Source_Type__c, Sub_source__c, LeadSource from Lead WHERE Email = 'test3@monday.com' limit 1]; //this lead was created without a channel, means it should go theough the logic
+        String expectedChannel = Utilities.getChannelMapping().get('Outsource').Channel__c;
+        System.assertEquals(expectedChannel, lead1.Channel_Lead_Source__c);
+        System.assertEquals(expectedChannel, lead1.Channel__c);
+        System.assertEquals('None', lead1.Sub_source__c);
+        System.assertEquals('Outsource', lead1.LeadSource);
+    }
+
+    @isTest
+    static void shouldNotMarkChannelOnCreate(){
+        Lead lead1 = [SELECT Id, Channel_Lead_Source__c, Channel__c, Lead_Source_Type__c, Sub_source__c, LeadSource from Lead WHERE Company = 'leadWithPhone' limit 1]; //this lead was created with a channel, means it shouldn't go theough the logic
+        System.assertEquals('Outbound', lead1.Channel_Lead_Source__c);
+        System.assertEquals('Outbound', lead1.Channel__c);
+        System.assertEquals('Inbound', lead1.Lead_Source_Type__c);
+        System.assertEquals('Sign up', lead1.Sub_source__c);
+        System.assertEquals('Big Brain - Signup', lead1.LeadSource);
+    }
+
+    @isTest
+    static void shouldMarkChannelOnResubmit(){
+        
+        Lead lead1 = [SELECT Id, LeadSource, Channel_Lead_Source__c from Lead WHERE Email = 'test3@monday.com' limit 1];
+        String channelBeforeUpdate = lead1.Channel_Lead_Source__c;
+        
+        Test.startTest();
+        lead1.LeadSource = 'Website - Contact Sales';
+        lead1.Sub_source__c = 'Sign up';
+        update lead1;
+        Test.stopTest();
+        
+        lead1 = [SELECT Id, Channel_Lead_Source__c, Channel__c, Lead_Source_Type__c, Sub_source__c, LeadSource, First_Sub_source__c, First_Lead_Source__c from Lead WHERE Email = 'test3@monday.com' limit 1]; //this lead was updated without a channel, means it should go theough the logic
+        String channelAfterUpdate = lead1.Channel_Lead_Source__c;
+        String expectedChannelCurrent = Utilities.getChannelMapping().get('Website - Contact Sales').Channel__c;
+        String expectedChannelFirst = Utilities.getChannelMapping().get('Outsource').Channel__c;
+
+
+        System.assertEquals(expectedChannelCurrent, lead1.Channel_Lead_Source__c);
+        System.assertEquals(expectedChannelFirst, lead1.Channel__c);
+        System.assertEquals('Inbound', lead1.Lead_Source_Type__c);
+        System.assertEquals('None', lead1.First_Sub_source__c);
+        System.assertEquals('Sign up', lead1.Sub_source__c);
+        System.assertEquals('Outsource', lead1.First_Lead_Source__c);
+        System.assertEquals('Website - Contact Sales', lead1.LeadSource);
+    }
+
+    @isTest
+    static void shouldNotMarkChannelOnResubmit(){
+        
+        Lead lead1 = [SELECT Id, LeadSource, Channel_Lead_Source__c from Lead WHERE Email = 'test3@monday.com' limit 1];
+        String channelBeforeUpdate = lead1.Channel_Lead_Source__c;
+        
+        Test.startTest();
+        lead1.LeadSource = 'Website - Contact Sales';
+        lead1.Sub_source__c = 'Sign up';
+        lead1.Channel_Lead_Source__c = 'Event';
+        update lead1;
+        Test.stopTest();
+        
+        lead1 = [SELECT Id, Channel_Lead_Source__c, Channel__c, Lead_Source_Type__c, Sub_source__c, LeadSource, First_Sub_source__c, First_Lead_Source__c from Lead WHERE Email = 'test3@monday.com' limit 1]; //this lead was updated without a channel, means it should go theough the logic
+        String channelAfterUpdate = lead1.Channel_Lead_Source__c;
+        String expectedChannelCurrent = 'Event';
+        String expectedChannelFirst = Utilities.getChannelMapping().get('Outsource').Channel__c;
+
+
+        System.assertEquals(expectedChannelCurrent, lead1.Channel_Lead_Source__c);
+        System.assertEquals(expectedChannelFirst, lead1.Channel__c);
+        System.assertEquals('Inbound', lead1.Lead_Source_Type__c);
+        System.assertEquals('None', lead1.First_Sub_source__c);
+        System.assertEquals('Sign up', lead1.Sub_source__c);
+        System.assertEquals('Outsource', lead1.First_Lead_Source__c);
+        System.assertEquals('Website - Contact Sales', lead1.LeadSource);
     }
 }

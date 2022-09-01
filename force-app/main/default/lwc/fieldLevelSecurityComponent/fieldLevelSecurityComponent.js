@@ -1,5 +1,4 @@
-import { LightningElement, wire, api, track } from "lwc";
-
+import { LightningElement, api } from "lwc";
 import getfields from "@salesforce/apex/Field_PesmissionHelper.getfields";
 import getSObjects from "@salesforce/apex/Field_PesmissionHelper.getSObjects";
 import enableFieldVisibility from "@salesforce/apex/Field_PesmissionHelper.enableFieldVisibility";
@@ -7,10 +6,10 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 
 export default class FieldLevelSecurityComponent extends LightningElement {
-    @track fields = [];
-    @track selected = [];
-    @track objName = "";
-    @track showSpinner = false;
+    fields = [];
+    selected = [];
+    objName = "";
+    showSpinner = false;
     @api value = "";
     @api fieldsValue = [];
     showFields = false;
@@ -23,20 +22,19 @@ export default class FieldLevelSecurityComponent extends LightningElement {
         return this.selected.length ? this.selected : "none";
     }
 
-    handleObjChange() {
+    async handleObjChange() {
         this.showSpinner = true;
         this.objName = this.template.querySelector('lightning-input').value;
-        getfields({objectname: this.objName}).then((response)=>{
-            console.log('### found fields: '+JSON.parse((JSON.stringify(response))));
-            let Testdata = JSON.parse(JSON.stringify(response));
+        try {
+            let response = await getfields({objectname: this.objName});
+            let rawFields = JSON.parse(JSON.stringify(response));
             let lstOption = [];
-            for (var i = 0;i < Testdata.length;i++) {
-                lstOption.push({value: Testdata[i].QualifiedApiName,label: Testdata[i].DeveloperName});
+            for (var i = 0;i < rawFields.length;i++) {
+                lstOption.push({value: rawFields[i].QualifiedApiName,label: rawFields[i].DeveloperName});
             }
             this.fields = lstOption;
             this.showFields = true;
-        }).catch(error => {
-            console.log('### error: '+error.body.message);
+        } catch (error) {
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error',
@@ -44,9 +42,9 @@ export default class FieldLevelSecurityComponent extends LightningElement {
                     variant: 'error',
                 }),
             );
-        }).finally(()=>{
+        } finally {
             this.showSpinner = false;
-        });
+        }
     }
 
     updateRecordView() {
@@ -65,20 +63,29 @@ export default class FieldLevelSecurityComponent extends LightningElement {
         }
     }
 
-    handleClick() {
+    async handleClick() {
         this.showSpinner = true;
-        console.log('### handle click with fields: '+this.selected);
-        enableFieldVisibility( {objectName: 'Account', fieldNames: this.selected}).then((response)=>{
-            console.log('### succcess');
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: "Success",
-                    message: "Field level security updated successfully",
-                    variant: "success"
-                }),
-            );
+        try {
+            let response = await enableFieldVisibility( {objectName: this.objName, fieldNames: this.selected});
+            if (response == true) {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: "Success",
+                        message: "Field level security updated successfully",
+                        variant: "success"
+                    }),
+                );
+            } else {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: "Error",
+                        message: "There was some kind of error :(",
+                        variant: "error"
+                    }),
+                );
+            }
             this.updateRecordView();
-        }).catch(error => {
+        } catch (error) {
             console.log('### error: '+error.body.message);
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -87,8 +94,8 @@ export default class FieldLevelSecurityComponent extends LightningElement {
                     variant: 'error',
                 }),
             );
-        }).finally(()=>{
+        } finally {
             this.showSpinner = false;
-        });
+        }
     }
   }
