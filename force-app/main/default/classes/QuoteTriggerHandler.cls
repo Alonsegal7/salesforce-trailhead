@@ -50,6 +50,24 @@ public with sharing class QuoteTriggerHandler {
         delete deleteList1;//Quotes
 
     }*/
+    //Quote Is Created, connect the Opp billing entity to the Quote. 
+    public static void connectQuoteToBE(List<Quote> newQuotes, Map<Id,Quote> oldQuotes){
+        List<Id> quotesIds = new List<Id>();
+        for (Quote newQuote : newQuotes){
+            if(newQuote.Document_Type__c != oldQuotes.get(newQuote.Id).Document_Type__c && newQuote.Document_Type__c=='Sales Order')
+                system.debug('Noam in condition for changing'+ newQuote.Id );
+                quotesIds.add(newQuote.Id);
+        }
+        
+        List<Quote> relevantQuotes = [SELECT Id,Billing_Entity__c, Opportunity.Billing_Entity__c FROM quote WHERE Opportunity.Billing_Entity__c != null and Id IN: quotesIds];
+        system.debug('Noam relevantQuotes In condition'+ relevantQuotes );
+        for(Quote quote : relevantQuotes){
+            system.debug('Noam Quote'+ quote);
+            system.debug('Noam BE'+ quote.Opportunity.Billing_Entity__c);
+            quote.Billing_Entity__c = quote.Opportunity.Billing_Entity__c;
+        }
+    }
+
     public static void handleQuoteArchived(List<Quote> newQuotes, Map<Id, Quote> oldQuotes) {
         try{
             Set<Id> archivedQuoteIds= new Set<Id>();
