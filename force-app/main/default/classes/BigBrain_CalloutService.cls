@@ -178,7 +178,6 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     public static list <sobject> markRecordsToSync(list <sobject> sobject_list, map <id,sobject> sobject_oldmap, Boolean runUpdateDML){
         list <sobject> recordsToUpdate_list = new list <sobject>();
         list <sobject> recordsToUpdate_list_RealTime = new list <sobject>();
-
         for (sobject rec : sobject_list){
             if(rec.get('Need_Sync_to_BB__c') == true || rec.get('Need_Sync_to_BB__c') == 'true') continue;
             string sobjectType = string.valueof(rec.getSObjectType());
@@ -201,45 +200,45 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         if(!recordsToUpdate_list.isEmpty()){
             setNeedSyncToBB(recordsToUpdate_list, true, runUpdateDML); // runUpdateDML = Trigger.isAfter
         }
-
+        //Noam - make sure that this function will work 
         if (!recordsToUpdate_list_RealTime.isEmpty()) {//real time action
             System.enqueueJob(new sendCalloutToBBQueue(recordsToUpdate_list_RealTime));
 
         }
         return recordsToUpdate_list;
-        return recordsToUpdate_list_RealTime;
     }
 
     //method to check if the fields from fieldsSet were updated
     //field set name is taken from Field_Set_Name__c field on BigBrain_Callout_Control__mdt CMT by the sobject type
     private static boolean isChangedByFieldSet(sobject rec, string sobjectType, sobject oldRec, BigBrain_Callout_Control__mdt cmt){
         boolean res = false;
+        list <sobject> recordsToUpdate_list_RealTime = new list <sobject>();
         if (rec==null || sobjectType==null || oldRec==null) return res;
         string fsname = null;
         if (cmt!=null && cmt.Field_Set_Name__c!=null) fsname = cmt.Field_Set_Name__c;
         else return res;
         List<String> listForCalloutType = fsname.split(',');
         for (string fldSetName : listForCalloutType) {
+            //for Scheduled 
             if (fldSetName=='UpdateCalloutFields') {
                 Schema.FieldSet fsScheduled = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get('UpdateCalloutFields');
+                if(fsScheduled != null){ //check if field  from fieldSet Scheduled was updated, if so will sync in the object time interval 
+                    for(Schema.FieldSetMember fsm : fsScheduled.getFields()){
+                        if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
+                                res = true; 
+                        }  
+                    }
+                }        
             }
             if (fldSetName=='UpdateCallOutFieldsRealTime') {
                 Schema.FieldSet fsRealTime = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get('UpdateCallOutFieldsRealTime');
-            }
-        }
-        if(fsScheduled != null){ //check if field  from fieldSet Scheduled was updated, if so will sync in the object time interval 
-            for(Schema.FieldSetMember fsm : fsScheduled.getFields()){
-                if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
-                        res = true; 
-                }  
-            }
-        }
-
-        if(fsRealTime != null){ //check if field  from fieldSet realtime was updated, if so will add the object to the queue
-            for(Schema.FieldSetMember fsm : fsRealTime.getFields()){
-                if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
-                    recordsToUpdate_list_RealTime.add(rec);
-                }  
+                if(fsRealTime != null){ //check if field  from fieldSet realtime was updated, if so will add the object to the queue
+                    for(Schema.FieldSetMember fsm : fsRealTime.getFields()){
+                        if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
+                            recordsToUpdate_list_RealTime.add(rec);
+                        }  
+                    }
+                }
             }
         }
         return res;
