@@ -108,7 +108,7 @@ public without sharing class Lead_RelatedCompanyLogicTest {
         insert rawSignUps;
         Test.stopTest();
         
-        rawSignUpA = [SELECT Id, Related_Company__c, Domain_Exists_On_Creation__c, Related_Lead_Code__c, OwnerId, Distribution_reason__c, Related_Distribution_Reason__c, Related_Record_URL__c, Region__c FROM Lead WHERE Id =: rawSignUpA.Id];
+        rawSignUpA = [SELECT Id, Related_Company__c, Domain_Exists_On_Creation__c, Related_Lead_Code__c, RecordTypeId , OwnerId, Distribution_reason__c, Related_Distribution_Reason__c, Related_Record_URL__c, Region__c FROM Lead WHERE Id =: rawSignUpA.Id];
         Account compA = [SELECT Id, Strategic_receiver__c, OwnerId FROM Account WHERE Name = 'compA - Enterprise'];
         Account regCompA = [SELECT Id, Strategic_receiver__c, OwnerId, Region__c, ParentId FROM Account WHERE Name = 'compA - Enterprise - EMEA'];
 
@@ -119,6 +119,7 @@ public without sharing class Lead_RelatedCompanyLogicTest {
         System.assertEquals('Related', rawSignUpA.Distribution_reason__c);
         System.assertEquals('Regional Company Lead Receiver', rawSignUpA.Related_Distribution_Reason__c);
         System.assertEquals('https://monday.lightning.force.com/' +regCompA.Id, rawSignUpA.Related_Record_URL__c);
+        System.assertEquals(Utilities.internalLeadRecordTypeId, rawSignUpA.RecordTypeId);
     }
 
     @isTest
@@ -305,7 +306,7 @@ public without sharing class Lead_RelatedCompanyLogicTest {
         insert rawSignUps;
         Test.stopTest();
         
-        rawSignUpB = [SELECT Id, Related_Company__c, Domain_Exists_On_Creation__c, Related_Lead_Code__c, OwnerId, Distribution_reason__c, Related_Distribution_Reason__c, Related_Record_URL__c, Region__c FROM Lead WHERE Id =: rawSignUpB.Id];
+        rawSignUpB = [SELECT Id, Related_Company__c, Domain_Exists_On_Creation__c, Related_Lead_Code__c, RecordTypeId, OwnerId, Distribution_reason__c, Related_Distribution_Reason__c, Related_Record_URL__c, Region__c FROM Lead WHERE Id =: rawSignUpB.Id];
 
         System.assertEquals(true, rawSignUpB.Related_Lead_Code__c);
         System.assertEquals(true, rawSignUpB.Domain_Exists_On_Creation__c);
@@ -313,6 +314,7 @@ public without sharing class Lead_RelatedCompanyLogicTest {
         System.assertEquals('No Assignment Found', rawSignUpB.Distribution_reason__c);
         System.assertEquals(compB.Id, rawSignUpB.Related_Company__c);
         System.assertEquals(null, rawSignUpB.Related_Record_URL__c);
+        System.assertEquals(Utilities.rawSignupRecordTypeId, rawSignUpB.RecordTypeId);
     }
 
     @isTest

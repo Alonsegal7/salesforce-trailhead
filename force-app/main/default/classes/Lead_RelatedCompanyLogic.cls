@@ -13,6 +13,7 @@ public without sharing class Lead_RelatedCompanyLogic {
                     if(lead.Manual_Trigger__c == 'Run Related Company Logic') lead.Manual_Trigger__c = '';
                 }
             }
+
             if (rawSignUpsWithDomain.isEmpty()) return;
             List<Lead> relatedLeads = new List<Lead>();
             List<Lead> newLeads = new List<Lead>();
@@ -137,6 +138,7 @@ public without sharing class Lead_RelatedCompanyLogic {
         leadToUpdate.Related_Distribution_Reason__c = reason;
         leadToUpdate.Related_Record_URL__c = 'https://monday.lightning.force.com/' +recordIdForUrl;
         leadToUpdate.Related_Lead_Code__c = true;
+        leadToUpdate.RecordTypeId = Utilities.activeUsersMap.get(newOwnerId)?.Group__c == 'Sales' ? Utilities.internalLeadRecordTypeId : Utilities.partnerLeadRecordTypeId;
         //add logic to send notification to new lead owner
     }
 

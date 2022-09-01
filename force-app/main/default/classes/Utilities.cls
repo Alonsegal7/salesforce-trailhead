@@ -320,7 +320,7 @@ public without sharing class Utilities {
     public static Map<Id,User> activeUsersMap {  
         get {  
             if (activeUsersMap == null) {  
-                activeUsersMap = new Map<Id,User>([SELECT Id FROM User WHERE IsActive = true]);
+                activeUsersMap = new Map<Id,User>([SELECT Id, Group__c FROM User WHERE IsActive = true]);
             }
             return activeUsersMap;  
         }  
