@@ -177,6 +177,8 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     // it runs an update DML if called from after trigger
     public static list <sobject> markRecordsToSync(list <sobject> sobject_list, map <id,sobject> sobject_oldmap, Boolean runUpdateDML){
         list <sobject> recordsToUpdate_list = new list <sobject>();
+        list <sobject> recordsToUpdate_list_RealTime = new list <sobject>();
+
         for (sobject rec : sobject_list){
             if(rec.get('Need_Sync_to_BB__c') == true || rec.get('Need_Sync_to_BB__c') == 'true') continue;
             string sobjectType = string.valueof(rec.getSObjectType());
@@ -199,7 +201,13 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         if(!recordsToUpdate_list.isEmpty()){
             setNeedSyncToBB(recordsToUpdate_list, true, runUpdateDML); // runUpdateDML = Trigger.isAfter
         }
+
+        if (!recordsToUpdate_list_RealTime.isEmpty()) {//real time action
+            System.enqueueJob(new sendCalloutToBBQueue(recordsToUpdate_list_RealTime));
+
+        }
         return recordsToUpdate_list;
+        return recordsToUpdate_list_RealTime;
     }
 
     //method to check if the fields from fieldsSet were updated
@@ -210,46 +218,47 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         string fsname = null;
         if (cmt!=null && cmt.Field_Set_Name__c!=null) fsname = cmt.Field_Set_Name__c;
         else return res;
-        
-        Schema.FieldSet fs = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get(fsname);
-
-        if(fs != null){ //check if field from fieldSet was updated
-            for(Schema.FieldSetMember fsm : fs.getFields()){
+        List<String> listForCalloutType = fsname.split(',');
+        for (string fldSetName : listForCalloutType) {
+            if (fldSetName=='UpdateCalloutFields') {
+                Schema.FieldSet fsScheduled = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get('UpdateCalloutFields');
+            }
+            if (fldSetName=='UpdateCallOutFieldsRealTime') {
+                Schema.FieldSet fsRealTime = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get('UpdateCallOutFieldsRealTime');
+            }
+        }
+        if(fsScheduled != null){ //check if field  from fieldSet Scheduled was updated, if so will sync in the object time interval 
+            for(Schema.FieldSetMember fsm : fsScheduled.getFields()){
                 if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
-                    res = true; 
+                        res = true; 
                 }  
-            } 
+            }
+        }
+
+        if(fsRealTime != null){ //check if field  from fieldSet realtime was updated, if so will add the object to the queue
+            for(Schema.FieldSetMember fsm : fsRealTime.getFields()){
+                if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
+                    recordsToUpdate_list_RealTime.add(rec);
+                }  
+            }
         }
         return res;
     }
 }
 
-    /* Account Callout:
-        BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
-        String sch = '0 10 * * * ?';
-        system.schedule('Sync Opps to BB', sch, p1);
+//* Account Callout:
+        // BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
+        // String sch = '0 10 * * * ?';
+        // system.schedule('Sync Opps to BB', sch, p1);
 
-        BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
-        String sch = '0 20 * * * ?';
-        system.schedule('Sync Opps to BB', sch, p1);
+        // BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
+        // String sch = '0 15 * * * ?';
+        // system.schedule('Sync Opps to BB', sch, p1);
 
-        BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
-        String sch = '0 30 * * * ?';
-        system.schedule('Sync Opps to BB', sch, p1);
+        // BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
+        // String sch = '0 30 * * * ?';
+        // system.schedule('Sync Opps to BB', sch, p1);
 
-        BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
-        String sch = '0 40 * * * ?';
-        system.schedule('Sync Opps to BB', sch, p1);
-
-        BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
-        String sch = '0 50 * * * ?';
-        system.schedule('Sync Opps to BB', sch, p1);
-
-        BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
-        String sch = '0 0 * * * ?';
-        system.schedule('Sync Opps to BB', sch, p1);
-
-        single batch - you need to set the start query limit and sobject type in the constructor and batch size in the execute
-        BigBrain_CalloutService p2 = new BigBrain_CalloutService(200, 'Account');   
-        Database.executeBatch(p2, 20);     
-     */
+        // BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
+        // String sch = '0 60 * * * ?';
+        // system.schedule('Sync Opps to BB', sch, p1);
