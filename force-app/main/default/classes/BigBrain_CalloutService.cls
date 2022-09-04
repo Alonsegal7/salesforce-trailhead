@@ -193,9 +193,18 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
             if (cmt.UPDATE__c && sobject_oldmap!=null && cmt.Field_Set_Name__c==null){ //update w/o fieldsSet
                 recordsToUpdate_list.add(rec); 
             }
-            if (cmt.UPDATE__c && sobject_oldmap!=null && cmt.Field_Set_Name__c!=null && sobject_oldmap!=null && sobject_oldmap.containsKey(rec.id) && isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt)) { //update with fieldSet
-                recordsToUpdate_list.add(rec); 
-            }
+            
+            if (cmt.UPDATE__c 
+                && sobject_oldmap!=null 
+                && sobject_oldmap.containsKey(rec.id)){
+                    if(cmt.Field_Set_Name_RT__c!=null && isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt.Field_Set_Name_RT__c)){ //is updated not rt fieldset
+                        recordsToUpdate_list_RealTime.add(rec); 
+                        //if apex limit reached-> list for update schdiled, else add to real time list 
+                    }
+                    else(cmt.Field_Set_Name__c!=null&&isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt.Field_Set_Name__c)){ //is updated rt fieldset
+                        recordsToUpdate_list.add(rec); 
+                    }
+            }    
         }
         if(!recordsToUpdate_list.isEmpty()){
             setNeedSyncToBB(recordsToUpdate_list, true, runUpdateDML); // runUpdateDML = Trigger.isAfter
@@ -203,44 +212,23 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         //Noam - make sure that this function will work 
         if (!recordsToUpdate_list_RealTime.isEmpty()) {//real time action
             System.enqueueJob(new sendCalloutToBBQueue(recordsToUpdate_list_RealTime));
-
         }
         return recordsToUpdate_list;
     }
 
     //method to check if the fields from fieldsSet were updated
     //field set name is taken from Field_Set_Name__c field on BigBrain_Callout_Control__mdt CMT by the sobject type
-    private static boolean isChangedByFieldSet(sobject rec, string sobjectType, sobject oldRec, BigBrain_Callout_Control__mdt cmt){
+    private static boolean isChangedByFieldSet(sobject rec, string sobjectType, sobject oldRec, String fsname){
         boolean res = false;
-        list <sobject> recordsToUpdate_list_RealTime = new list <sobject>();
-        if (rec==null || sobjectType==null || oldRec==null) return res;
-        string fsname = null;
-        if (cmt!=null && cmt.Field_Set_Name__c!=null) fsname = cmt.Field_Set_Name__c;
-        else return res;
-        List<String> listForCalloutType = fsname.split(',');
-        for (string fldSetName : listForCalloutType) {
-            //for Scheduled 
-            if (fldSetName=='UpdateCalloutFields') {
-                Schema.FieldSet fsScheduled = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get('UpdateCalloutFields');
-                if(fsScheduled != null){ //check if field  from fieldSet Scheduled was updated, if so will sync in the object time interval 
-                    for(Schema.FieldSetMember fsm : fsScheduled.getFields()){
-                        if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
-                                res = true; 
-                        }  
-                    }
-                }        
+        if(fsname == null) return res;
+        Schema.FieldSet fs = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get(fsname);
+        if(fs != null){ 
+            for(Schema.FieldSetMember fsm : fs.getFields()){
+                if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
+                    res = true; 
+                }  
             }
-            if (fldSetName=='UpdateCallOutFieldsRealTime') {
-                Schema.FieldSet fsRealTime = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get('UpdateCallOutFieldsRealTime');
-                if(fsRealTime != null){ //check if field  from fieldSet realtime was updated, if so will add the object to the queue
-                    for(Schema.FieldSetMember fsm : fsRealTime.getFields()){
-                        if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
-                            recordsToUpdate_list_RealTime.add(rec);
-                        }  
-                    }
-                }
-            }
-        }
+        }        
         return res;
     }
 }
