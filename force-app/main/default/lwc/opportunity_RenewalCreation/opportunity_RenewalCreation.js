@@ -149,7 +149,7 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
         console.log('!!!');
         this.showSpinner = true;
         const conIds = [this.recordId];
-        createRenewalOpportunities({renewalContractIds: conIds}).then((response)=>{
+        createRenewalOpportunities({renewalContractIds: conIds,Source:'Manual Renewal Creation From Contract'}).then((response)=>{
             this.showSpinner = false;
             this.opportunityId = response[0].Id;
             console.log('### succcess - this.opportunityId: '+this.opportunityId);
