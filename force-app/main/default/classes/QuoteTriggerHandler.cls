@@ -48,26 +48,22 @@ public without sharing class QuoteTriggerHandler {
         //try { delete deleteList2; } catch(DmlException e) {}//QLIs
         system.debug('Raz Ben Ron HQA deleteList1: '+deleteList1);
         delete deleteList1;//Quotes
+        //List<Quote> relevantQuotes = [SELECT Id,Billing_Entity__c, Opportunity.Billing_Entity__c FROM quote WHERE Opportunity.Billing_Entity__c != null and Id IN: quotesIds];
 
     }*/
-    //Quote Is Created, connect the Opp billing entity to the Quote. 
+    //Quote Is Created (document type has been updated to Sales Order), connect the Opp billing entity to the Quote. 
     public static void connectQuoteToBE(List<Quote> newQuotes, Map<Id,Quote> oldQuotes){
         Set<Id> oppIds = new Set<Id>();
         for (Quote newQuote : newQuotes){
             if(newQuote.Document_Type__c != oldQuotes.get(newQuote.Id).Document_Type__c && newQuote.Document_Type__c=='Sales Order')
-                system.debug('Noam in condition for changing'+ newQuote.Id );
                 oppIds.add(newQuote.OpportunityId);
         }
-        
-        Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>();
-        List<Quote> relevantQuotes = [SELECT Id,Billing_Entity__c, Opportunity.Billing_Entity__c FROM quote WHERE Opportunity.Billing_Entity__c != null and Id IN: quotesIds];
-        system.debug('Noam relevantQuotes In condition'+ relevantQuotes );
-        for(Quote quote : relevantQuotes){
-            system.debug('Noam Quote'+ quote);
-            system.debug('Noam Opp BE'+ quote.Opportunity.Billing_Entity__c);
-            quote.Billing_Entity__c = quote.Opportunity.Billing_Entity__c;
-            system.debug('Noam Quote BE'+ quote.Billing_Entity__c);
-
+        if (oppIds.isEmpty()) return;
+        Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>([SELECT Id, Billing_Entity__c FROM Opportunity WHERE Id IN: oppIds]);
+        for(Quote quote : newQuotes){
+            if (oppMap.containsKey(quote.OpportunityId)){
+                quote.Billing_Entity__c = oppMap.get(quote.OpportunityId).Billing_Entity__c;              
+            }
         }
     }
 
