@@ -1,4 +1,4 @@
-public with sharing class QuoteTriggerHandler {
+public without sharing class QuoteTriggerHandler {
     public void syncQuoteLineItems(List<Quote> newList, Map<Id, Quote> oldMap) {
         List<Id> syncedQuotes = new List<Id>();
         for (Quote q : newList){
@@ -52,13 +52,14 @@ public with sharing class QuoteTriggerHandler {
     }*/
     //Quote Is Created, connect the Opp billing entity to the Quote. 
     public static void connectQuoteToBE(List<Quote> newQuotes, Map<Id,Quote> oldQuotes){
-        List<Id> quotesIds = new List<Id>();
+        Set<Id> oppIds = new Set<Id>();
         for (Quote newQuote : newQuotes){
             if(newQuote.Document_Type__c != oldQuotes.get(newQuote.Id).Document_Type__c && newQuote.Document_Type__c=='Sales Order')
                 system.debug('Noam in condition for changing'+ newQuote.Id );
-                quotesIds.add(newQuote.Id);
+                oppIds.add(newQuote.OpportunityId);
         }
         
+        Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>();
         List<Quote> relevantQuotes = [SELECT Id,Billing_Entity__c, Opportunity.Billing_Entity__c FROM quote WHERE Opportunity.Billing_Entity__c != null and Id IN: quotesIds];
         system.debug('Noam relevantQuotes In condition'+ relevantQuotes );
         for(Quote quote : relevantQuotes){
