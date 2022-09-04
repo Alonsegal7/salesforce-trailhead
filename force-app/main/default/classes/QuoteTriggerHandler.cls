@@ -63,8 +63,10 @@ public with sharing class QuoteTriggerHandler {
         system.debug('Noam relevantQuotes In condition'+ relevantQuotes );
         for(Quote quote : relevantQuotes){
             system.debug('Noam Quote'+ quote);
-            system.debug('Noam BE'+ quote.Opportunity.Billing_Entity__c);
+            system.debug('Noam Opp BE'+ quote.Opportunity.Billing_Entity__c);
             quote.Billing_Entity__c = quote.Opportunity.Billing_Entity__c;
+            system.debug('Noam Quote BE'+ quote.Billing_Entity__c);
+
         }
     }
 
