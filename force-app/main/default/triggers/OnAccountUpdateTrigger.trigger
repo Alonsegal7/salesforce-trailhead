@@ -30,6 +30,7 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
             Partners_SharingService.createAccountShares(trigger.new, trigger.oldMap);
             Partners_SharingService.createAccountSharesOwnerChange(trigger.new, trigger.oldMap);
             Account_LeadsCapForPartnerCompany.Account_LeadsCapForPartnerCompany(trigger.new,trigger.oldmap);
+            Account_CreatePodAssignmentPartners.Account_CreatePodAssignmentPartners(trigger.new, trigger.oldMap);
         }
         if(Trigger.isUpdate){
             // Partner Commission - start 
