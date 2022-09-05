@@ -38,7 +38,7 @@ public with sharing class Contract_DefineDefaultPROAssignment {
                         c.Primary_Renewal_Owner__c = primaryMA1.OwnerId; // for partners - the owner is the account owenr 
                         c.Define_Default_PRO_Assignment__c = false;
                         if(partnersPodMap.containskey(primaryMA1.Channel_Partner__c)){ //assign RM in RM field 
-                            c.Renewal_Manager__c=partnersPodMap.get(primaryMA1.OwnerId).Renewal_Manager__c;
+                            c.Renewal_Manager__c=partnersPodMap.get(primaryMA1.Channel_Partner__c).Renewal_Manager__c;
                         }
                         contractsToUpdate.add(c);
                     } //Account Co-Sell - Account owner (from Sales) + define the PRO to be the sales RM 
