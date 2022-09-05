@@ -23,7 +23,7 @@ public with sharing class Contract_DefineDefaultPROAssignment {
             salesPodMap.put(Pod.Sales_Pod_Lead__c,Pod);
         }
         //Map for Pod's for Partners - In case we need to update the PRO to be the RM. 
-        for(Pod_Assignment__c Pod: [select id,Partner_Pod_Lead_Partner_Company__c,Renewal_Manager__c from Pod_Assignment__c where Sales_Pod_Lead__c in: relevantPartnerCompanyIds AND Status__c='Active']){
+        for(Pod_Assignment__c Pod: [select id,Partner_Pod_Lead_Partner_Company__c,Renewal_Manager__c from Pod_Assignment__c where Partner_Pod_Lead_Partner_Company__c in: relevantPartnerCompanyIds AND Status__c='Active']){
             partnersPodMap.put(Pod.Partner_Pod_Lead_Partner_Company__c,Pod);
         }
     
@@ -69,8 +69,6 @@ public with sharing class Contract_DefineDefaultPROAssignment {
                         if(salesPodMap.containskey(primaryMA1.OwnerId)){
                             c.Primary_Renewal_Owner__c = salesPodMap.get(primaryMA1.OwnerId).Renewal_Manager__c; //else - RM is the PRO
                             c.Renewal_Manager__c = salesPodMap.get(primaryMA1.OwnerId).Renewal_Manager__c;
-                            system.debug('RM Noam'+c.Renewal_Manager__c);
-                            system.debug('RM Contract Noam'+c.Renewal_Manager__c);
                             c.Define_Default_PRO_Assignment__c = false;
                             contractsToUpdate.add(c);
                         }else{
