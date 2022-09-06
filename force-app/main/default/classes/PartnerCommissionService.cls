@@ -334,6 +334,12 @@ public class PartnerCommissionService {
                 }
         }
 
+        //if start date was missing and wasnt added to the filed 
+        if(newPc.Start_Date__c == null){
+            newPc.Start_Date__c = Datetime.now();
+            newPc.Missing_Start_Date__c = true;
+        }
+
         //end date logic
         if(isMonthly){ //monthly end date is always +1 year to the start date
             newPC.End_Date__c = newPC.Start_Date__c.addYears(1); 
