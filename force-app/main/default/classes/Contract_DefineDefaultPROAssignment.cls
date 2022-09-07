@@ -34,6 +34,8 @@ public with sharing class Contract_DefineDefaultPROAssignment {
                 //---partner Logic & Logic to CO-sell Accounts---            
                 if (primaryMA1.Owner_is_Partner__c && primaryMA1.Channel_Partner__c != null) //Account is a partner account or a co-sell account (partner+sales)
                 {
+                    system.debug('Noam Owner is partner in condition'+primaryMA1.Owner_is_Partner__c );
+                    system.debug('Noam Owner is partner in channel manager'+primaryMA1.Channel_Partner__c );
                     if(primaryMA1.Owner.Profile.Name =='Partner Community Custom' || primaryMA1.Owner.Profile.Name =='Channel Managers'){ //Account Owner managed by partner user or a CPM   
                         c.Primary_Renewal_Owner__c = primaryMA1.OwnerId; // for partners - the owner is the account owenr 
                         c.Define_Default_PRO_Assignment__c = false;
@@ -43,6 +45,7 @@ public with sharing class Contract_DefineDefaultPROAssignment {
                         contractsToUpdate.add(c);
                     } //Account Co-Sell - Account owner (from Sales) + define the PRO to be the sales RM 
                     else{
+                        system.debug('Noam in else condition '+salesPodMap.get(primaryMA1.OwnerId).Renewal_Manager__c);
                         //owner is from Sales team, therfore will find the RM from the sales Pod
                         if(salesPodMap.containskey(primaryMA1.OwnerId)){
                             c.Primary_Renewal_Owner__c = salesPodMap.get(primaryMA1.OwnerId).Renewal_Manager__c;

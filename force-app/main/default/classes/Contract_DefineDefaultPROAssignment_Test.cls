@@ -27,6 +27,11 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         contract4.Status__c='Active';
         contractsToCreate.add(contract4);
 
+        Contract contract5 = TestObjectCreator.CreateContract(company);
+        contract5.Name = 'Test contract 5';
+        contract5.Status__c='Active';
+        contractsToCreate.add(contract5);
+
         insert contractsToCreate;
 
         //create partner company 
@@ -89,7 +94,15 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         maCoSellSalesLead.OwnerId = user2SalesAESmb.Id;
         maCoSellSalesLead.active_contract__c = contract4.id;
         accountdToCreate.add(maCoSellSalesLead);
-        System.debug('maCoSellSalesLead- Noam'+maCoSellSalesLead);
+        //MA Is co-sell - Sales rep is account owner + No Pod for user  
+        Account maCoSellSalesLeadNoPod = TestObjectCreator.CreateMondayAccount(company);
+        maCoSellSalesLeadNoPod.Name='CoSellAccountSalesLeadNoPod';
+        maCoSellSalesLeadNoPod.ARR__c = 500;
+        maCoSellSalesLeadNoPod.Channel_Partner__c=partnersList.get(0).Id;
+        maCoSellSalesLeadNoPod.OwnerId = user1SalesAMEnt.Id;
+        maCoSellSalesLeadNoPod.active_contract__c = contract5.id;
+        accountdToCreate.add(maCoSellSalesLeadNoPod);
+        System.debug('CoSellAccountSalesLeadNoPod- Noam'+maCoSellSalesLeadNoPod);
         //MA managed by sales rep (AM + Segment Enterprise)
         Account maSalesEntAM = TestObjectCreator.CreateMondayAccount(company);
         maSalesEntAM.Name='SalesMAAM';
@@ -108,7 +121,6 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         System.debug('maSalesSmbAE- Noam'+maSalesSmbAE);
 
         insert accountdToCreate;
-
         //creation of Pod Assignment for Partner Company
         List<Pod_Assignment__c> podsToCreate = new List<Pod_Assignment__c>();
         Pod_Assignment__c podForPartnerCompany = new Pod_Assignment__c(
@@ -137,6 +149,10 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         contractsToUpdate.add(contract2);
         contract3.Main_Monday_Account_Related__c = maSalesSmbAE.id;
         contractsToUpdate.add(contract3);
+        contract4.Main_Monday_Account_Related__c = maCoSellSalesLead.id;
+        contractsToUpdate.add(contract4);
+        contract5.Main_Monday_Account_Related__c = maCoSellSalesLeadNoPod.id;
+        contractsToUpdate.add(contract5);
 
         update contractsToUpdate;
 
@@ -152,9 +168,10 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
     @isTest
     static void maOwnerIsPartnerPROShouldBeAccountOwner() {
         Account maPartner = [SELECT Id,Name,ARR__c,OwnerId FROM Account WHERE ARR__c = 100 LIMIT 1 ];
-        Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c FROM Contract WHERE Name = 'Test contract 1' LIMIT 1 ];
+        Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c,Main_Monday_Account_Related__c FROM Contract WHERE Name = 'Test contract 1' LIMIT 1 ];
         Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c WHERE Pod_Type__c='Partners' LIMIT 1];
         con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        System.debug('Noam con main MA releated'+con.Main_Monday_Account_Related__c);
         update con;
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
@@ -166,10 +183,13 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
     @IsTest
     static void maIsCoSellOwnerIsSalesPROIsRenewalManager() {
         Account maCoSellSalesLead = [SELECT Id,Name,ARR__c,OwnerId FROM Account WHERE ARR__c = 300 LIMIT 1 ];
-        Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c FROM Contract WHERE Name = 'Test contract 4' LIMIT 1 ];
+        Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c,Main_Monday_Account_Related__c FROM Contract WHERE Name = 'Test contract 4' LIMIT 1 ];
         Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c WHERE Pod_Type__c='Sales' LIMIT 1];
         con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
         update con;
+        System.debug('Noam con pro'+con.Primary_Renewal_Owner__c);
+        System.debug('Noam con main MA releated'+con.Main_Monday_Account_Related__c);
+        System.debug('Noam Quary'+ [SELECT Id,Primary_Renewal_Owner__c,Renewal_Manager__c,Main_Monday_Account_Related__c,(SELECT Id, OwnerId,Channel_Partner__c,Owner_is_Partner__c,Owner.Segment__c,Owner.Business_Role__c,Owner.Profile.Name FROM Accounts__r ORDER BY ARR__C DESC NULLS LAST LIMIT 1) FROM Contract WHERE Status__c = 'Active' and (EndDate =: con.EndDate or Define_Default_PRO_Assignment__c=true)  and Primary_Renewal_Owner__c = null and Main_Monday_Account_Related__c <> null ORDER BY EndDate DESC]);
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
         Database.executeBatch(batch, 30);
@@ -177,6 +197,24 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         con=[SELECT Primary_Renewal_Owner__c,Name FROM Contract WHERE Name = 'Test contract 4' LIMIT 1]; 
         system.debug('Noam Contract 4- CO SELL'+con.Primary_Renewal_Owner__c);
         system.assertEquals(con.Primary_Renewal_Owner__c, pod.Renewal_Manager__c); //following the logic, the Sales Pod RM should be the PRO
+
+    }
+    @IsTest
+    static void maIsCoSellOwnerIsSalesPROIsRenewalManagerNoPod() {
+        Account maCoSellSalesLeadNoPod = [SELECT Id,Name,ARR__c,OwnerId FROM Account WHERE ARR__c = 500 LIMIT 1 ];
+        Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c,Main_Monday_Account_Related__c FROM Contract WHERE Name = 'Test contract 5' LIMIT 1 ];
+        con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        update con;
+        System.debug('Noam con pro'+con.Primary_Renewal_Owner__c);
+        System.debug('Noam con main MA releated'+con.Main_Monday_Account_Related__c);
+        System.debug('Noam Quary'+ [SELECT Id,Primary_Renewal_Owner__c,Renewal_Manager__c,Main_Monday_Account_Related__c,(SELECT Id, OwnerId,Channel_Partner__c,Owner_is_Partner__c,Owner.Segment__c,Owner.Business_Role__c,Owner.Profile.Name FROM Accounts__r ORDER BY ARR__C DESC NULLS LAST LIMIT 1) FROM Contract WHERE Status__c = 'Active' and (EndDate =: con.EndDate or Define_Default_PRO_Assignment__c=true)  and Primary_Renewal_Owner__c = null and Main_Monday_Account_Related__c <> null ORDER BY EndDate DESC]);
+        Test.startTest();
+        Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
+        Database.executeBatch(batch, 30);
+        Test.stopTest();
+        con=[SELECT Primary_Renewal_Owner__c,Name FROM Contract WHERE Name = 'Test contract 5' LIMIT 1]; 
+        system.debug('Noam Contract 4- CO SELL'+con.Primary_Renewal_Owner__c);
+        system.assertEquals(con.Primary_Renewal_Owner__c, maCoSellSalesLeadNoPod.OwnerId); //following the logic, the Sales Pod RM should be the PRO
 
     }
 
