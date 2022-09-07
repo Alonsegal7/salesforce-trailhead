@@ -277,6 +277,17 @@ public without sharing class Utilities {
         set;  
     }
 
+    public static Id partnerOppRecordTypeId {  
+        get {  
+            if (partnerOppRecordTypeId == null) {  
+                partnerOppRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();  
+            }
+            return partnerOppRecordTypeId;  
+        }  
+        set;  
+    }
+
+
     public static Id internalLeadRecordTypeId {  
         get {  
             if (internalLeadRecordTypeId == null) {  

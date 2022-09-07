@@ -35,11 +35,11 @@ public without sharing class Opportunity_RenewalCreation {
     */
     @AuraEnabled
     public static List<Opportunity> createRenewalOpportunities(List<Id> renewalContractIds,String Source){
-        Id internalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
-        Id partnerOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
         Id currentUserProfile = userinfo.getProfileId();
         Id qli, subs, billingEntity;
         String pricingVersion, paymentTerms, paymentMethod = '';
+        //Id internalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
+        //Id partnerOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
         List<Contract> relevantContracts =  new List<Contract>([
             SELECT Id, Name, EndDate,Renewal_Manager__c, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Opp_Created_from_Contract__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c, CurrencyIsoCode, Renewal_Opportunity_Creation_Status__c, Last_Event_Payment_Method__c, Last_SO_Event_Payment_Terms__c,
             (SELECT Id, Billing_Entity__c FROM Contract_Events__r ORDER BY CreatedDate DESC LIMIT 1),
@@ -53,7 +53,7 @@ public without sharing class Opportunity_RenewalCreation {
         for (Contract c : relevantContracts) {
             Account primaryMa= c.accounts__r[0];
             //if (primaryMa.of_open_opps__c == 0){ //maybe we would add here more conditions in cases that the num of open opps bigger then 1 
-                Id getRelevantRT = (primaryMa.Owner_s_Profile__c == 'Partner Community Custom' || primaryMa.Owner_s_Profile__c == 'Channel Managers') ? partnerOppRtId : internalOppRtId;   
+                Id getRelevantRT = (primaryMa.Owner_s_Profile__c == 'Partner Community Custom' || primaryMa.Owner_s_Profile__c == 'Channel Managers') ? Utilities.partnerOppRecordTypeId :Utilities.internalOppRecordTypeId;   
                 renewalOppsToCreate.add(new Opportunity(
                     Name = primaryMa.Company__r.Name + ' - ' + c.Period__c + ' - ' + c.contract_Seats__c + ' - ' + c.Tier__c + ' - ' + 'Flat Renewal',
                     Company__c = primaryMa.Company__c,
