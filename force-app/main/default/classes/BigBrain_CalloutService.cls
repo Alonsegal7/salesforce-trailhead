@@ -50,7 +50,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         get {
             if (bigBrainCalloutControl_cmt == null) {
                 bigBrainCalloutControl_cmt = new map<string,BigBrain_Callout_Control__mdt>();
-                for(BigBrain_Callout_Control__mdt cmt: [select id,DELETE__c,INSERT__c,UPDATE__c,Field_Set_Name__c,masterlabel from BigBrain_Callout_Control__mdt]){
+                for(BigBrain_Callout_Control__mdt cmt: [select id,DELETE__c,INSERT__c,UPDATE__c,Field_Set_Name__c,Field_Set_Name_RealTime__c,masterlabel from BigBrain_Callout_Control__mdt]){
                     bigBrainCalloutControl_cmt.put(cmt.masterlabel.tolowercase(), cmt);
                 }
             }
@@ -194,23 +194,26 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
                 recordsToUpdate_list.add(rec); 
             }
             
-            if (cmt.UPDATE__c 
-                && sobject_oldmap!=null 
-                && sobject_oldmap.containsKey(rec.id)){
-                    if(cmt.Field_Set_Name_RT__c!=null && isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt.Field_Set_Name_RT__c)){ //is updated not rt fieldset
-                        recordsToUpdate_list_RealTime.add(rec); 
-                        //if apex limit reached-> list for update schdiled, else add to real time list 
+            if (cmt.UPDATE__c && sobject_oldmap!=null && sobject_oldmap.containsKey(rec.id)){
+                    if(cmt.Field_Set_Name_RealTime__c!=null && isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt.Field_Set_Name_RealTime__c)){
+                        if(ApexLimits.queueableLimitReached()) { //if apex limit reached-> add the object to the list for update scheduled, else add to the real time list 
+                            recordsToUpdate_list.add(rec); 
+                        }
+                        else{
+                            recordsToUpdate_list_RealTime.add(rec); //limit has not reached->update the record in RT
+                        }
                     }
-                    else(cmt.Field_Set_Name__c!=null&&isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt.Field_Set_Name__c)){ //is updated rt fieldset
+                    else if(cmt.Field_Set_Name__c!=null && isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt.Field_Set_Name__c)){ //if the recoed has no RT (thrtfore not yet updated), add the object to sync list 
                         recordsToUpdate_list.add(rec); 
                     }
             }    
         }
-        if(!recordsToUpdate_list.isEmpty()){
+
+        if(!recordsToUpdate_list.isEmpty()){ //scheduled action - will be synced defined by the time interval 
             setNeedSyncToBB(recordsToUpdate_list, true, runUpdateDML); // runUpdateDML = Trigger.isAfter
         }
-        //Noam - make sure that this function will work 
-        if (!recordsToUpdate_list_RealTime.isEmpty()) {//real time action
+
+        if (!recordsToUpdate_list_RealTime.isEmpty()) { //real time action - send the object in real time to queue
             System.enqueueJob(new sendCalloutToBBQueue(recordsToUpdate_list_RealTime));
         }
         return recordsToUpdate_list;
@@ -233,7 +236,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     }
 }
 
-//* Account Callout:
+//* Account Callout - Noam - for Scheduled:
         // BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
         // String sch = '0 10 * * * ?';
         // system.schedule('Sync Opps to BB', sch, p1);
