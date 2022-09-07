@@ -1,4 +1,4 @@
-public with sharing class QuoteTriggerHandler {
+public without sharing class QuoteTriggerHandler {
     public void syncQuoteLineItems(List<Quote> newList, Map<Id, Quote> oldMap) {
         List<Id> syncedQuotes = new List<Id>();
         for (Quote q : newList){
@@ -48,8 +48,25 @@ public with sharing class QuoteTriggerHandler {
         //try { delete deleteList2; } catch(DmlException e) {}//QLIs
         system.debug('Raz Ben Ron HQA deleteList1: '+deleteList1);
         delete deleteList1;//Quotes
+        //List<Quote> relevantQuotes = [SELECT Id,Billing_Entity__c, Opportunity.Billing_Entity__c FROM quote WHERE Opportunity.Billing_Entity__c != null and Id IN: quotesIds];
 
     }*/
+    //Quote Is Created (document type has been updated to Sales Order), connect the Opp billing entity to the Quote. 
+    public static void connectQuoteToBE(List<Quote> newQuotes, Map<Id,Quote> oldQuotes){
+        Set<Id> oppIds = new Set<Id>();
+        for (Quote newQuote : newQuotes){
+            if(newQuote.Document_Type__c != oldQuotes.get(newQuote.Id).Document_Type__c && newQuote.Document_Type__c=='Sales Order')
+                oppIds.add(newQuote.OpportunityId);
+        }
+        if (oppIds.isEmpty()) return;
+        Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>([SELECT Id, Billing_Entity__c FROM Opportunity WHERE Id IN: oppIds]);
+        for(Quote quote : newQuotes){
+            if (oppMap.containsKey(quote.OpportunityId)){
+                quote.Billing_Entity__c = oppMap.get(quote.OpportunityId).Billing_Entity__c;              
+            }
+        }
+    }
+
     public static void handleQuoteArchived(List<Quote> newQuotes, Map<Id, Quote> oldQuotes) {
         try{
             Set<Id> archivedQuoteIds= new Set<Id>();

@@ -5,6 +5,7 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, after delete,
             if (newQuote.Billing_Entity__c != null && oldQuote.Billing_Entity__c != newQuote.Billing_Entity__c)
             { QuoteTriggerHandler.SyncPriorityId(newQuote); }
         }
+        QuoteTriggerHandler.connectQuoteToBE(Trigger.new,Trigger.oldMap);
     }
     if (Trigger.isAfter && Trigger.isUpdate) {
         Quote_CreateQuoteHistory.CreateQuoteHistory(Trigger.new,Trigger.oldMap);
