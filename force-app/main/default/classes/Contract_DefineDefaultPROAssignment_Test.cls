@@ -22,6 +22,11 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         contract3.Status__c='Active';
         contractsToCreate.add(contract3);
 
+        Contract contract4 = TestObjectCreator.CreateContract(company);
+        contract4.Name = 'Test contract 4';
+        contract4.Status__c='Active';
+        contractsToCreate.add(contract4);
+
         insert contractsToCreate;
 
         //create partner company 
@@ -33,7 +38,7 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
                             Signature_Approval_Status__c = 'Approved'
                         ));
         insert partnersList;
-        //creatr partner contact
+        //create partner contact
         Contact con = new Contact(Email='demo1@randomdemodomain.com', FirstName = 'test', LastName = 'bla', AccountId = partnersList.get(0).Id);
         insert con;
         List<User> usersToCreate = new List<User>();
@@ -76,6 +81,15 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         maPartner.active_contract__c = contract1.id;
         accountdToCreate.add(maPartner);
         System.debug('maPartner- Noam'+maPartner);
+        //MA Is co-sell - Sales rep is account owner 
+        Account maCoSellSalesLead = TestObjectCreator.CreateMondayAccount(company);
+        maCoSellSalesLead.Name='CoSellAccountSalesLead';
+        maCoSellSalesLead.ARR__c = 300;
+        maCoSellSalesLead.Channel_Partner__c=partnersList.get(0).Id;
+        maCoSellSalesLead.OwnerId = user2SalesAESmb.Id;
+        maCoSellSalesLead.active_contract__c = contract4.id;
+        accountdToCreate.add(maCoSellSalesLead);
+        System.debug('maCoSellSalesLead- Noam'+maCoSellSalesLead);
         //MA managed by sales rep (AM + Segment Enterprise)
         Account maSalesEntAM = TestObjectCreator.CreateMondayAccount(company);
         maSalesEntAM.Name='SalesMAAM';
@@ -150,7 +164,20 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
        system.assertEquals(con.Primary_Renewal_Owner__c, maPartner.OwnerId); //following the logic, the Account Owner should be the RM from the Pod Assignment
     }  
     @IsTest
-    static void maOwnerIsPartnerPROIsRenewalManager() {
+    static void maIsCoSellOwnerIsSalesPROIsRenewalManager() {
+        Account maCoSellSalesLead = [SELECT Id,Name,ARR__c,OwnerId FROM Account WHERE ARR__c = 300 LIMIT 1 ];
+        Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c FROM Contract WHERE Name = 'Test contract 4' LIMIT 1 ];
+        Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c WHERE Pod_Type__c='Sales' LIMIT 1];
+        con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        update con;
+        Test.startTest();
+        Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
+        Database.executeBatch(batch, 30);
+        Test.stopTest();
+        con=[SELECT Primary_Renewal_Owner__c,Name FROM Contract WHERE Name = 'Test contract 4' LIMIT 1]; 
+        system.debug('Noam Contract 4- CO SELL'+con.Primary_Renewal_Owner__c);
+        system.assertEquals(con.Primary_Renewal_Owner__c, pod.Renewal_Manager__c); //following the logic, the Sales Pod RM should be the PRO
+
     }
 
     @IsTest
