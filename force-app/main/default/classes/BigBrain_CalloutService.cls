@@ -209,7 +209,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
             }    
         }
 
-        if(!recordsToUpdate_list.isEmpty()){ //scheduled action - will be synced defined by the time interval 
+        if(!recordsToUpdate_list.isEmpty()){ //scheduled action - will be synced depends on the time interval 
             setNeedSyncToBB(recordsToUpdate_list, true, runUpdateDML); // runUpdateDML = Trigger.isAfter
         }
 
