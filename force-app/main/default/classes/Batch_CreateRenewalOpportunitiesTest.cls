@@ -17,18 +17,24 @@ public without sharing class Batch_CreateRenewalOpportunitiesTest {
         Account comp = TestObjectCreator.CreateCompany();
         
         Contract con = TestObjectCreator.CreateContract(comp);
-        con.Primary_Renewal_Owner__c = userRecord.Id;
-        con.EndDate = dueDate;
-        con.Status__c = 'Active';
-        update con;
         
         Account ma = TestObjectCreator.CreateMondayAccount(comp);
         ma.Active_Contract__c = con.Id;
         ma.ARR__c = 100;
         update ma;
         
-        Opportunity opportunity = TestObjectCreator.CreateOpp(ma);
-        Quote quoteNewCont = TestObjectCreator.CreateNonContractQuote(opportunity, 'New Contract');
+        con.Main_Monday_Account_Related__c= ma.Id;
+        con.Primary_Renewal_Owner__c = userRecord.Id;
+        con.EndDate = dueDate;
+        con.Status__c = 'Active';
+        update con;
+
+        Opportunity opportunity1= TestObjectCreator.CreateOpp(ma);
+  
+        Opportunity opportunity2 = TestObjectCreator.CreateOpp(ma);
+        update opportunity2;
+
+        Quote quoteNewCont = TestObjectCreator.CreateNonContractQuote(opportunity1, 'New Contract');
         QuoteLineItem qli = TestObjectCreator.CreateQuoteLineItem(quoteNewCont, 'License', 1, 1.0);
         
         Contract_Product__c conProd = new Contract_Product__C (Contract__c = con.Id);
