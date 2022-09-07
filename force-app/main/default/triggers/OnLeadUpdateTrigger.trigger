@@ -1,12 +1,12 @@
 trigger OnLeadUpdateTrigger on Lead (after insert, after update, after delete, before insert, before update) {
     
     if(Trigger.isBefore){
-        if (Trigger.isUpdate || Trigger.isInsert){
+        if (Trigger.isUpdate || Trigger.isInsert){ //note: the order of execution here is important, edit carefully
             Lead_MapRegions.Lead_MapRegions(Trigger.new,Trigger.oldMap);
+            Lead_RelatedCompanyLogic.updateRelatedCompany(Trigger.new, Trigger.oldMap);
             Account_RegionalCompanyService.linkLeadsToExistingRegionalCompanies(Trigger.new,Trigger.oldMap);
             Lead_SetPartnerCompany.Lead_SetPartnerCompany(Trigger.new,Trigger.oldMap);
             Lead_StampsService.run(Trigger.new,Trigger.oldMap);
-            Lead_RelatedCompanyLogic.updateRelatedCompany(Trigger.new, Trigger.oldMap);
         }
         if(Trigger.isUpdate){
             Partners_SharingService.createLeadShares_ManualTrigger(Trigger.new);

@@ -8,16 +8,20 @@ public with sharing class SalesOrderErrorHandlingService {
             quote.BigBrain_Preview_API_Status__c='Request Sent';//indicate the quote that the request was out for bb
 
             if (!Test.isRunningTest()) {
-                res = BigBrainAPI.getSalesOrderPreview(pulseId,quoteId);
+                res = BigBrainAPI.getSalesOrderPreview(pulseId,quoteId);//first try
+                ResponseWrapper wrapedRes = ResponseWrapper.parse(res);//parse to see if fails
+                if (wrapedRes.message!=null) {//message!= null means that bb returned error
+                    res = BigBrainAPI.getSalesOrderPreview(pulseId,quoteId);//try again
+                }
+                system.debug('BigBrainFinalRes'+res);
                 status = HandleOrderErrors(res,quoteId);
-                system.debug('resssss'+res);
             }
             else{
                 string fakeRes = '{"valid":false,"validation_errors":["missing license period","not assigned to contract","no corresponding plan"],"validation_warnings":["account is not paying"],"arr":"4560.0","added_arr":"4560.0","list_price":"4560.0"}';
                 status=HandleOrderErrors(fakeRes,quoteId);
             }
 
-            if (status!='Valid' && status!='Invalid') {//bb returned general error - set status to system error
+            if (status!='Valid' && status!='Invalid') {//bb returned general error (on the second attamp) - set status to system error
                 quote.BigBrain_Preview_API_Status__c='System Error';
                 quote.Error_Description__c=status;
             }
@@ -97,7 +101,7 @@ public with sharing class SalesOrderErrorHandlingService {
         for (string validationWarning : wrrapedErrors.validation_warnings) {
             Order_Activation_Conflict__c conflict = new Order_Activation_Conflict__c(
                 Conflict_Description__c=validationWarning,
-                Type__c='Error',
+                Type__c='Warning',
                 Fix_Status__c='Not Required For Import',
                 Quote__c=salesOrder,
                 Key__c=validationWarning+salesOrder

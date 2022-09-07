@@ -18,12 +18,14 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, after delete,
         }
         ContractEventHandler.SalesOrderContractEvent(Trigger.new,Trigger.oldMap);
         Quote_CloseCorrectionOpp.Quote_CloseCorrectionOpp(Trigger.new, Trigger.oldMap);
-        Quote_CallBigBrainPreview.callBigBrainPreviewService(Trigger.new, Trigger.oldMap);
-
     }   
     if(Trigger.isAfter){
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
         if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);
-        if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
+        if (trigger.IsUpdate) {
+            CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
+            Quote_CallBigBrainPreview.callBigBrainPreviewService(Trigger.new, Trigger.oldMap);
+        }
+
     }
 }

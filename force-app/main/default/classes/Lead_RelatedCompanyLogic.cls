@@ -137,6 +137,7 @@ public without sharing class Lead_RelatedCompanyLogic {
         leadToUpdate.Distribution_reason__c = 'Related';
         leadToUpdate.Related_Distribution_Reason__c = reason;
         leadToUpdate.Related_Record_URL__c = 'https://monday.lightning.force.com/' +recordIdForUrl;
+        leadToUpdate.Status = 'Received';
         leadToUpdate.Related_Lead_Code__c = true;
         leadToUpdate.RecordTypeId = Utilities.activeUsersMap.get(newOwnerId)?.Group__c == 'Sales' ? Utilities.internalLeadRecordTypeId : Utilities.partnerLeadRecordTypeId;
         //add logic to send notification to new lead owner
