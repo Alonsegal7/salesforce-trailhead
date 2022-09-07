@@ -38,8 +38,6 @@ public without sharing class Opportunity_RenewalCreation {
         Id currentUserProfile = userinfo.getProfileId();
         Id qli, subs, billingEntity;
         String pricingVersion, paymentTerms, paymentMethod = '';
-        //Id internalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
-        //Id partnerOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();
         List<Contract> relevantContracts =  new List<Contract>([
             SELECT Id, Name, EndDate,Renewal_Manager__c, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Opp_Created_from_Contract__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c, CurrencyIsoCode, Renewal_Opportunity_Creation_Status__c, Last_Event_Payment_Method__c, Last_SO_Event_Payment_Terms__c,
             (SELECT Id, Billing_Entity__c FROM Contract_Events__r ORDER BY CreatedDate DESC LIMIT 1),
