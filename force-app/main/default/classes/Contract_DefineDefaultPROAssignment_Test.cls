@@ -2,10 +2,9 @@
 public with sharing class Contract_DefineDefaultPROAssignment_Test {
     @TestSetup
     static void makeData(){
-        Id ACC_PARTNER_COMP_RT_CONST = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();
         Account company = TestObjectCreator.CreateCompany();
         insert company;
-        
+        //--Contracts Creation
         List<Contract> contractsToCreate = new List<Contract>();
         Contract contract1 = TestObjectCreator.CreateContract(company);
         contract1.Name = 'Test contract 1';
@@ -32,8 +31,8 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         //create partner company 
         List<Account> partnersList = new List<Account>();
         partnersList.add(new Account(
-                            Name = 'testPartner', 
-                            RecordTypeId = ACC_PARTNER_COMP_RT_CONST,
+                            Name = 'testPartner',
+                            RecordTypeId = Utilities.partnerCompanyRecordTypeId,
                             Partner_Company_Status__c = 'Signed',
                             Signature_Approval_Status__c = 'Approved'
                         ));
@@ -172,7 +171,6 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c,Main_Monday_Account_Related__c FROM Contract WHERE Name = 'Test contract 1' LIMIT 1 ];
         Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c WHERE Pod_Type__c='Partners' LIMIT 1];
         con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
-        System.debug('Noam con main MA releated'+con.Main_Monday_Account_Related__c);
         update con;
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
@@ -188,17 +186,11 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c  WHERE Sales_Pod_Lead__c =: maCoSellSalesLead.OwnerId LIMIT 1];
         con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
         update con;
-        System.debug('Noam con pro '+con.Primary_Renewal_Owner__c);
-        System.debug('Noam Owner is partner in condition '+maCoSellSalesLead.Owner_is_Partner__c );
-        System.debug('Noam Account '+maCoSellSalesLead);
-        System.debug('Noam Con '+con);
-        System.debug('Noam Pod ' +pod);
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
         Database.executeBatch(batch, 30);
         Test.stopTest();
         con=[SELECT Primary_Renewal_Owner__c,Name FROM Contract WHERE Name = 'Test contract 4' LIMIT 1]; 
-        system.debug('Noam Contract 4- CO SELL'+con.Primary_Renewal_Owner__c);
         system.assertEquals(con.Primary_Renewal_Owner__c, pod.Renewal_Manager__c); //following the logic, the Sales Pod RM should be the PRO
 
     }
@@ -208,15 +200,11 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c,Main_Monday_Account_Related__c FROM Contract WHERE Name = 'Test contract 5' LIMIT 1 ];
         con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
         update con;
-        System.debug('Noam con pro'+con.Primary_Renewal_Owner__c);
-        System.debug('Noam con main MA releated'+con.Main_Monday_Account_Related__c);
-        System.debug('Noam Quary'+ [SELECT Id,Primary_Renewal_Owner__c,Renewal_Manager__c,Main_Monday_Account_Related__c,(SELECT Id, OwnerId,Channel_Partner__c,Owner_is_Partner__c,Owner.Segment__c,Owner.Business_Role__c,Owner.Profile.Name FROM Accounts__r ORDER BY ARR__C DESC NULLS LAST LIMIT 1) FROM Contract WHERE Status__c = 'Active' and (EndDate =: con.EndDate or Define_Default_PRO_Assignment__c=true)  and Primary_Renewal_Owner__c = null and Main_Monday_Account_Related__c <> null ORDER BY EndDate DESC]);
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
         Database.executeBatch(batch, 30);
         Test.stopTest();
         con=[SELECT Primary_Renewal_Owner__c,Name FROM Contract WHERE Name = 'Test contract 5' LIMIT 1]; 
-        system.debug('Noam Contract 4- CO SELL'+con.Primary_Renewal_Owner__c);
         system.assertEquals(con.Primary_Renewal_Owner__c, maCoSellSalesLeadNoPod.OwnerId); //following the logic, the Sales Pod RM should be the PRO
 
     }
@@ -244,16 +232,22 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c WHERE Sales_Pod_Lead__c =: maSalesSMBAE.OwnerId LIMIT 1];
         con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
         update con;
-        system.debug('Noam con'+con.Primary_Renewal_Owner__c);
-        system.debug('Noam con before change '+con);
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
         Database.executeBatch(batch, 30);
         Test.stopTest();
         con=[SELECT Primary_Renewal_Owner__c,Renewal_Manager__c,Name FROM Contract WHERE Name = 'Test contract 3' LIMIT 1]; 
-        system.debug('Noam con after change '+con);
         system.assertEquals(con.Primary_Renewal_Owner__c, pod.Renewal_Manager__c); //following the logic, the PRO should be the RM from the Pod Assignment
-        system.assertEquals(con.Renewal_Manager__c, pod.Renewal_Manager__c);
+        system.assertEquals(con.Renewal_Manager__c, pod.Renewal_Manager__c); //renewal manager should be populeted
+    }
+
+    @IsTest
+    public static void PROLogicShouldRunSchedule() {
+        String sch = '0 0 0 * * ?';
+        Test.startTest();
+        String jobId = System.schedule('myJobTestJobName', sch, new Batch_DefineDefaultPROOnContract());
+        Test.stopTest();
+        System.assertNotEquals(jobId, null);
     }
     
 }

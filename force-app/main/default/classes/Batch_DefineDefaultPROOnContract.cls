@@ -23,9 +23,7 @@ public without sharing class Batch_DefineDefaultPROOnContract implements Schedul
     public Database.QueryLocator start(Database.BatchableContext BC) {
         date today = date.today();
         date dueDate = today.addMonths(getMonthToAdd());
-        System.debug('Batch_DefineDefaultPROOnContract dueDate: '+ dueDate);
         String query = 'SELECT Id,Primary_Renewal_Owner__c,Renewal_Manager__c,(SELECT Id, OwnerId,Channel_Partner__c,Owner_is_Partner__c,Owner.Segment__c,Owner.Business_Role__c,Owner.Profile.Name FROM Accounts__r ORDER BY ARR__C DESC NULLS LAST LIMIT 1) FROM Contract WHERE Status__c = \'Active\' and (EndDate =: dueDate or Define_Default_PRO_Assignment__c=true)  and Primary_Renewal_Owner__c = null and Main_Monday_Account_Related__c <> null ORDER BY EndDate DESC';
-        System.debug('Scheduled_Batch_DefineDefaultPROOnContract relevantContractsQuery: '+ query);
         return Database.getQueryLocator(query);
     }
 
