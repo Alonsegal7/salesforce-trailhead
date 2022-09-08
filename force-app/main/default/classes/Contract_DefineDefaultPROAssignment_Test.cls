@@ -91,6 +91,7 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         maCoSellSalesLead.ARR__c = 300;
         maCoSellSalesLead.Channel_Partner__c=partnersList.get(0).Id;
         maCoSellSalesLead.OwnerId = user2SalesAESmb.Id;
+        maCoSellSalesLead.Partner__c=partnerUser.id;
         maCoSellSalesLead.active_contract__c = contract4.id;
         accountdToCreate.add(maCoSellSalesLead);
         System.debug('maCoSellSalesLead- Noam'+maCoSellSalesLead);
@@ -99,6 +100,7 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         maCoSellSalesLeadNoPod.Name='CoSellAccountSalesLeadNoPod';
         maCoSellSalesLeadNoPod.ARR__c = 500;
         maCoSellSalesLeadNoPod.Channel_Partner__c=partnersList.get(0).Id;
+        maCoSellSalesLeadNoPod.Partner__c=partnerUser.id;
         maCoSellSalesLeadNoPod.OwnerId = user3SalesAMMid.Id;
         maCoSellSalesLeadNoPod.active_contract__c = contract5.id;
         accountdToCreate.add(maCoSellSalesLeadNoPod);
@@ -181,17 +183,16 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
     }  
     @IsTest
     static void maIsCoSellOwnerIsSalesPROIsRenewalManager() {
-        Account maCoSellSalesLead = [SELECT Id,Name,ARR__c,OwnerId,Owner_is_Partner__c,Channel_Partner__c FROM Account WHERE ARR__c = 100 LIMIT 1 ];
-        Account partnerCompany = [SELECT Id FROM Account WHERE  Name = 'testPartner'];
-        maCoSellSalesLead.Channel_Partner__c = partnerCompany.Id;
-        update maCoSellSalesLead;
+        Account maCoSellSalesLead = [SELECT Id,Name,ARR__c,OwnerId,Owner_is_Partner__c FROM Account WHERE ARR__c = 300 LIMIT 1 ];
         Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c FROM Contract WHERE Name = 'Test contract 4' LIMIT 1 ];
         Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c  WHERE Sales_Pod_Lead__c =: maCoSellSalesLead.OwnerId LIMIT 1];
         con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
         update con;
-        System.debug('Noam con pro'+con.Primary_Renewal_Owner__c);
-        system.debug('Noam Owner is partner in condition'+maCoSellSalesLead.Owner_is_Partner__c );
-        system.debug('Noam Owner is partner in channel manager'+maCoSellSalesLead.Channel_Partner__c );
+        System.debug('Noam con pro '+con.Primary_Renewal_Owner__c);
+        System.debug('Noam Owner is partner in condition '+maCoSellSalesLead.Owner_is_Partner__c );
+        System.debug('Noam Account '+maCoSellSalesLead);
+        System.debug('Noam Con '+con);
+        System.debug('Noam Pod ' +pod);
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
         Database.executeBatch(batch, 30);

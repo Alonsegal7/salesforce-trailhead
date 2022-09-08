@@ -45,7 +45,7 @@ public with sharing class Contract_DefineDefaultPROAssignment {
                         contractsToUpdate.add(c);
                     } //Account Co-Sell - Account owner (from Sales) + define the PRO to be the sales RM 
                     else{
-                        system.debug('Noam in else condition '+salesPodMap.get(primaryMA1.OwnerId).Renewal_Manager__c);
+                        //system.debug('Noam in else condition '+salesPodMap.get(primaryMA1.OwnerId).Renewal_Manager__c);
                         //owner is from Sales team, therfore will find the RM from the sales Pod
                         if(salesPodMap.containskey(primaryMA1.OwnerId)){
                             c.Primary_Renewal_Owner__c = salesPodMap.get(primaryMA1.OwnerId).Renewal_Manager__c;
