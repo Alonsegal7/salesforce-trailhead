@@ -38,6 +38,7 @@ public without sharing class Opportunity_RenewalCreation {
         Id currentUserProfile = userinfo.getProfileId();
         Id qli, subs, billingEntity;
         String pricingVersion, paymentTerms, paymentMethod = '';
+        System.debug(Source);
         List<Contract> relevantContracts =  new List<Contract>([
             SELECT Id, Name, EndDate,Renewal_Manager__c, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Opp_Created_from_Contract__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c, CurrencyIsoCode, Renewal_Opportunity_Creation_Status__c, Last_Event_Payment_Method__c, Last_SO_Event_Payment_Terms__c,
             (SELECT Id, Billing_Entity__c FROM Contract_Events__r ORDER BY CreatedDate DESC LIMIT 1),
@@ -49,6 +50,9 @@ public without sharing class Opportunity_RenewalCreation {
         if(relevantContracts.isEmpty()) return renewalOppsToCreate;
         Map<Id,Contract> contractsWithIds = new Map<Id,Contract>();
         for (Contract c : relevantContracts) {
+            System.debug('Noam account primaey '+c.accounts__r[0]);
+            System.debug('Noam contract to create from opp'+relevantContracts);
+            System.debug('Noam contract event'+c.Contract_Events__r[0]);
             Account primaryMa= c.accounts__r[0];
             //if (primaryMa.of_open_opps__c == 0){ //maybe we would add here more conditions in cases that the num of open opps bigger then 1 
                 Id getRelevantRT = (primaryMa.Owner_s_Profile__c == 'Partner Community Custom' || primaryMa.Owner_s_Profile__c == 'Channel Managers') ? Utilities.partnerOppRecordTypeId :Utilities.internalOppRecordTypeId;   
@@ -78,9 +82,10 @@ public without sharing class Opportunity_RenewalCreation {
                 ));
                 c.Renewal_Opportunity_Creation_Status__c = 'Initiated';
                 c.Renewal_Opp_Created_from_Contract__c = true;
-                contractsWithIds.put(c.Id,c);  
+                contractsWithIds.put(c.Id,c); 
             //}          
         }
+        System.debug('List of opp to create '+ renewalOppsToCreate);
         
         //mark the renewal creation status for all the relevant contract as 'Initiated'
         try {
