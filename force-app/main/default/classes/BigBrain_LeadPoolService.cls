@@ -1,6 +1,6 @@
 public without sharing class BigBrain_LeadPoolService {
 
-    public static list<string> emailRecipients = new list<string>{'kseniasm@monday.com','ronilu@monday.com'};
+    public static list<string> emailRecipients = new list<string>{'kseniasm@monday.com','ronilu@monday.com','michaelim@monday.com'};
 
     public static Set<String> domainsBlackList {
         get {
