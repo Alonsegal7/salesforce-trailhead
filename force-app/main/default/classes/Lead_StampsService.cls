@@ -150,11 +150,7 @@ public without sharing class Lead_StampsService {
         Set<Id> usersIds = new Set<Id>();
         List<Lead> relevantLeads = new List<Lead>();
         for(Lead newLead: newLeads){
-            if((newLead.RecordTypeId == Utilities.internalLeadRecordTypeId || newLead.RecordTypeId == Utilities.partnerLeadRecordTypeId) &&
-                String.valueOf(newLead.OwnerId).startsWith('005') && //relevant only for owners that are users - not queue
-                (oldLeadsMap == null || //insert
-                newLead.Status != oldLeadsMap.get(newLead.Id).Status || //status change
-                (newLead.OwnerId != oldLeadsMap.get(newLead.Id).OwnerId && newLead.Status != 'Unqualified' && newLead.Status != 'Qualified'))){ //owner update on open leads
+            if(newLead.recordTypeId != Utilities.potentialPartnerLeadRecordTypeId) { 
                     usersIds.add(newLead.OwnerId); //collect user ids
                     if(oldLeadsMap != null && String.valueOf(oldLeadsMap.get(newLead.Id).OwnerId).startsWith('005')) usersIds.add(oldLeadsMap.get(newLead.Id).OwnerId); //in case prev owner is a user we need to query those users for checking if their group is integration user
                     relevantLeads.add(newLead);
@@ -182,62 +178,78 @@ public without sharing class Lead_StampsService {
                                                     UserRole.Name 
                                                     from User 
                                                     where Id in :usersIds]);
-        User currOwner;
         for(Lead leadRec: relevantLeads){
-            if(ownersMap.get(leadRec.OwnerId).Group__c == 'Integration User') continue; // we do not stamp owners that have group = integration user
-            currOwner = ownersMap.get(leadRec.OwnerId);
-            //if lead is new or (lead is existing and first user assignment)
-            if(oldLeadsMap == null 
-                || leadRec.Owner_Name_Initial__c == null // no initial owner
-                || !String.valueOf(oldLeadsMap.get(leadRec.Id).OwnerId).startsWith('005') //prev owner was queue
-                || ownersMap.get(oldLeadsMap.get(leadRec.Id).OwnerId).Group__c == 'Integration User'){ //prev owner was user with group = integration user
-                //stamp initial fields
-                leadRec.Owner_Business_Role_Initial__c = currOwner.Business_Role__c;
-                leadRec.Owner_Group_Initial__c = currOwner.Group__c;
-                leadRec.Owner_Name_Initial__c = currOwner.Name;
-                leadRec.Owner_Office_Initial__c = currOwner.Office__c;
-                leadRec.Owner_Office_Region_Initial__c = currOwner.Office_Region__c;
-                leadRec.Owner_Quota_Carrying_Initial__c = currOwner.Quota_Carrying__c;
-                leadRec.Owner_Segment_Initial__c = currOwner.Segment__c;
-                leadRec.Owner_Seniority_Initial__c = currOwner.Seniority__c;
-                leadRec.Owner_Team_Initial__c = currOwner.Team__c;
-                leadRec.Is_Owner_Outbound_Rep_Initial__c = currOwner.Outbound__c;
-                leadRec.Owner_s_Function_Initial__c = currOwner.Function__c;
-                if(oldLeadsMap == null) leadRec.Distributed_to_First__c = currOwner.Name; //only on create
+            // Record type setting, done only on new leads and owner change
+            if(oldLeadsMap == null || leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId) {
+                if(ownersMap.get(leadRec.OwnerId).Group__c == 'Sales' || (String.valueOf(leadRec.OwnerId).startsWith('005') && ownersMap.get(leadRec.OwnerId).Name.contains('Contact Sales'))) {
+                    leadRec.RecordTypeId = Utilities.internalLeadRecordTypeId;
+                }
+                if(ownersMap.get(leadRec.OwnerId).Group__c == 'Partners') {
+                    leadRec.RecordTypeId = Utilities.partnerLeadRecordTypeId;
+                }
             }
-            //update live fields
-            leadRec.Owner_Business_Role_Live__c = currOwner.Business_Role__c;
-            leadRec.Owner_Group_Live__c = currOwner.Group__c;
-            leadRec.Owner_Name_Live__c = currOwner.Name;
-            leadRec.Owner_Office_Live__c = currOwner.Office__c;
-            leadRec.Owner_Office_Region_Live__c = currOwner.Office_Region__c;
-            leadRec.Owner_Quota_Carrying_Live__c = currOwner.Quota_Carrying__c;
-            leadRec.Owner_Segment_Live__c = currOwner.Segment__c;
-            leadRec.Owner_Seniority_Live__c = currOwner.Seniority__c;
-            leadRec.Owner_Team_Live__c = currOwner.Team__c;
-            leadRec.Is_Owner_Outbound_Rep_Live__c = currOwner.Outbound__c;
-            leadRec.Owner_s_Function_Live__c = currOwner.Function__c;
-            
-            //updates on owner assignment (actual user owner, not group)
-            if(oldLeadsMap == null || leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId){ //on insert or update of OwnerId
-                // owner's manager and owner's manager team
-                if(currOwner.UserRole.Name == 'Channel Managers'){ //owner is CPM
-                    leadRec.Owner_s_Manager__c = leadRec.OwnerId;
-                    leadRec.Owner_s_Manager_Team__c = currOwner.Team__c;
-                } else if(!ownerFunctionsToExclude.contains(currOwner.Function__c)){
-                    leadRec.Owner_s_Manager__c = currOwner.ManagerId;
-                    leadRec.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
+            //owner stamps are done only on internal & partner leads
+            if ((leadRec.RecordTypeId == Utilities.internalLeadRecordTypeId || leadRec.RecordTypeId == Utilities.partnerLeadRecordTypeId) &&
+            String.valueOf(leadRec.OwnerId).startsWith('005') && //relevant only for owners that are users - not queue
+            (oldLeadsMap == null || //insert
+            leadRec.Status != oldLeadsMap.get(leadRec.Id).Status || //status change
+            (leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId && leadRec.Status != 'Unqualified' && leadRec.Status != 'Qualified'))){ //owner update on open leads {
+                User currOwner;
+                if(ownersMap.get(leadRec.OwnerId).Group__c == 'Integration User') continue; // we do not stamp owners that have group = integration user
+                currOwner = ownersMap.get(leadRec.OwnerId);
+                //if lead is new or (lead is existing and first user assignment)
+                if(oldLeadsMap == null 
+                    || leadRec.Owner_Name_Initial__c == null // no initial owner
+                    || !String.valueOf(oldLeadsMap.get(leadRec.Id).OwnerId).startsWith('005') //prev owner was queue
+                    || ownersMap.get(oldLeadsMap.get(leadRec.Id).OwnerId).Group__c == 'Integration User'){ //prev owner was user with group = integration user
+                    //stamp initial fields
+                    leadRec.Owner_Business_Role_Initial__c = currOwner.Business_Role__c;
+                    leadRec.Owner_Group_Initial__c = currOwner.Group__c;
+                    leadRec.Owner_Name_Initial__c = currOwner.Name;
+                    leadRec.Owner_Office_Initial__c = currOwner.Office__c;
+                    leadRec.Owner_Office_Region_Initial__c = currOwner.Office_Region__c;
+                    leadRec.Owner_Quota_Carrying_Initial__c = currOwner.Quota_Carrying__c;
+                    leadRec.Owner_Segment_Initial__c = currOwner.Segment__c;
+                    leadRec.Owner_Seniority_Initial__c = currOwner.Seniority__c;
+                    leadRec.Owner_Team_Initial__c = currOwner.Team__c;
+                    leadRec.Is_Owner_Outbound_Rep_Initial__c = currOwner.Outbound__c;
+                    leadRec.Owner_s_Function_Initial__c = currOwner.Function__c;
+                    if(oldLeadsMap == null) leadRec.Distributed_to_First__c = currOwner.Name; //only on create
                 }
-                //sdr bdr stamps
-                if(currOwner.Function__c == 'SDR' || currOwner.Business_Role__c == 'SDR' || currOwner.Function__c == 'BDR' || currOwner.Business_Role__c == 'BDR' || currOwner.SDR_Transition_To_AE__c){
-                    leadRec.SDR_Name__c = leadRec.OwnerId;
-                    leadRec.SDR_Name_for_reports__c = currOwner.Name;
-                    leadRec.SDR_Team__c = currOwner.Team__c;
-                    leadRec.SDR_Office_stamp__c = currOwner.Office__c;
-                    leadRec.SDR_Manager__c = currOwner.ManagerId;
-                    leadRec.SDR_Business_Role__c = currOwner.Business_Role__c;
-                }
-            } 
+                //update live fields
+                leadRec.Owner_Business_Role_Live__c = currOwner.Business_Role__c;
+                leadRec.Owner_Group_Live__c = currOwner.Group__c;
+                leadRec.Owner_Name_Live__c = currOwner.Name;
+                leadRec.Owner_Office_Live__c = currOwner.Office__c;
+                leadRec.Owner_Office_Region_Live__c = currOwner.Office_Region__c;
+                leadRec.Owner_Quota_Carrying_Live__c = currOwner.Quota_Carrying__c;
+                leadRec.Owner_Segment_Live__c = currOwner.Segment__c;
+                leadRec.Owner_Seniority_Live__c = currOwner.Seniority__c;
+                leadRec.Owner_Team_Live__c = currOwner.Team__c;
+                leadRec.Is_Owner_Outbound_Rep_Live__c = currOwner.Outbound__c;
+                leadRec.Owner_s_Function_Live__c = currOwner.Function__c;
+                
+                //updates on owner assignment (actual user owner, not group)
+                if(oldLeadsMap == null || leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId){ //on insert or update of OwnerId
+                    // owner's manager and owner's manager team
+                    if(currOwner.UserRole.Name == 'Channel Managers'){ //owner is CPM
+                        leadRec.Owner_s_Manager__c = leadRec.OwnerId;
+                        leadRec.Owner_s_Manager_Team__c = currOwner.Team__c;
+                    } else if(!ownerFunctionsToExclude.contains(currOwner.Function__c)){
+                        leadRec.Owner_s_Manager__c = currOwner.ManagerId;
+                        leadRec.Owner_s_Manager_Team__c = currOwner.Manager.Team__c;
+                    }
+                    //sdr bdr stamps
+                    if(currOwner.Function__c == 'SDR' || currOwner.Business_Role__c == 'SDR' || currOwner.Function__c == 'BDR' || currOwner.Business_Role__c == 'BDR' || currOwner.SDR_Transition_To_AE__c){
+                        leadRec.SDR_Name__c = leadRec.OwnerId;
+                        leadRec.SDR_Name_for_reports__c = currOwner.Name;
+                        leadRec.SDR_Team__c = currOwner.Team__c;
+                        leadRec.SDR_Office_stamp__c = currOwner.Office__c;
+                        leadRec.SDR_Manager__c = currOwner.ManagerId;
+                        leadRec.SDR_Business_Role__c = currOwner.Business_Role__c;
+                    }
+                } 
+            }
         }
     }
 
