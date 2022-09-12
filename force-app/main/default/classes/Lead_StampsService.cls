@@ -148,49 +148,62 @@ public without sharing class Lead_StampsService {
 
     public static void ownerStamps(List<Lead> newLeads, Map<Id,Lead> oldLeadsMap){
         Set<Id> usersIds = new Set<Id>();
+        Set<Id> queueIds = new Set<Id>();
         List<Lead> relevantLeads = new List<Lead>();
         for(Lead newLead: newLeads){
-            if(newLead.recordTypeId != Utilities.potentialPartnerLeadRecordTypeId) { 
-                    usersIds.add(newLead.OwnerId); //collect user ids
-                    if(oldLeadsMap != null && String.valueOf(oldLeadsMap.get(newLead.Id).OwnerId).startsWith('005')) usersIds.add(oldLeadsMap.get(newLead.Id).OwnerId); //in case prev owner is a user we need to query those users for checking if their group is integration user
-                    relevantLeads.add(newLead);
+            //the logic should run only on: insert, status change and owner change
+            if (oldLeadsMap == null || newLead.Status != oldLeadsMap.get(newLead.Id).Status || (newLead.OwnerId != oldLeadsMap.get(newLead.Id).OwnerId)) {
+                relevantLeads.add(newLead);
+                if (String.valueOf(newLead.OwnerId).startsWith('005')) usersIds.add(newLead.OwnerId); //current owner is a user
+                if (String.valueOf(newLead.OwnerId).startsWith('00G')) queueIds.add(newLead.OwnerId); //current owner is a queue
+                if (oldLeadsMap != null && String.valueOf(oldLeadsMap.get(newLead.Id).OwnerId).startsWith('005')) usersIds.add(oldLeadsMap.get(newLead.Id).OwnerId); //in case prev owner is a user we need to query those users for checking if their group is integration user
             }
         }
         if(relevantLeads.isEmpty()) {
             return;
         }
         Set<String> ownerFunctionsToExclude = new Set<String>{'Marketing','Product','Bot'};
-        Map<Id,User> ownersMap = new Map<Id,User>([select Id, 
-                                                    Function__c, 
-                                                    Outbound__c, 
-                                                    ManagerId, 
-                                                    Manager.Team__c, 
-                                                    Group__c, 
-                                                    Business_Role__c, 
-                                                    Segment__c, 
-                                                    Seniority__c, 
-                                                    Team__c, 
-                                                    Office__c, 
-                                                    Office_Region__c, 
-                                                    Quota_Carrying__c, 
-                                                    SDR_Transition_To_AE__c, 
-                                                    Name, 
-                                                    UserRole.Name 
-                                                    from User 
-                                                    where Id in :usersIds]);
+        Map<Id,User> ownersMap;
+        if (!usersIds.isEmpty()) {
+            ownersMap = new Map<Id,User>([SELECT Id, 
+                                                Function__c, 
+                                                Outbound__c, 
+                                                ManagerId, 
+                                                Manager.Team__c, 
+                                                Group__c, 
+                                                Business_Role__c, 
+                                                Segment__c, 
+                                                Seniority__c, 
+                                                Team__c, 
+                                                Office__c, 
+                                                Office_Region__c, 
+                                                Quota_Carrying__c, 
+                                                SDR_Transition_To_AE__c, 
+                                                Name, 
+                                                UserRole.Name 
+                                                FROM User 
+                                                WHERE Id IN :usersIds]);    
+        }
+        Map<Id,Group> queuesMap;
+        if (!queueIds.isEmpty()) { 
+            queuesMap = new Map<Id,Group>([SELECT Id, Name FROM Group WHERE Id IN: queueIds]);
+        }
         for(Lead leadRec: relevantLeads){
+            Boolean isOwnerUser = String.valueOf(leadRec.OwnerId).startsWith('005') ? true : false;
             // Record type setting, done only on new leads and owner change
             if(oldLeadsMap == null || leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId) {
-                if(ownersMap.get(leadRec.OwnerId).Group__c == 'Sales' || (String.valueOf(leadRec.OwnerId).startsWith('005') && ownersMap.get(leadRec.OwnerId).Name.contains('Contact Sales'))) {
+                // change to internal RT - if the owner is contact sales queue or owner is a sales user  
+                if((!isOwnerUser && queuesMap?.get(leadRec.OwnerId).Name.contains('Contact Sales')) || 
+                ((isOwnerUser && ownersMap?.get(leadRec.OwnerId).Group__c == 'Sales'))) {
                     leadRec.RecordTypeId = Utilities.internalLeadRecordTypeId;
                 }
-                if(ownersMap.get(leadRec.OwnerId).Group__c == 'Partners') {
+                if((isOwnerUser && ownersMap?.get(leadRec.OwnerId).Group__c == 'Partners')) {
                     leadRec.RecordTypeId = Utilities.partnerLeadRecordTypeId;
                 }
             }
             //owner stamps are done only on internal & partner leads
             if ((leadRec.RecordTypeId == Utilities.internalLeadRecordTypeId || leadRec.RecordTypeId == Utilities.partnerLeadRecordTypeId) &&
-            String.valueOf(leadRec.OwnerId).startsWith('005') && //relevant only for owners that are users - not queue
+            isOwnerUser && //relevant only for owners that are users - not queue
             (oldLeadsMap == null || //insert
             leadRec.Status != oldLeadsMap.get(leadRec.Id).Status || //status change
             (leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId && leadRec.Status != 'Unqualified' && leadRec.Status != 'Qualified'))){ //owner update on open leads {
