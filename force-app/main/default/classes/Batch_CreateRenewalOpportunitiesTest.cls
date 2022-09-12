@@ -36,13 +36,8 @@ public without sharing class Batch_CreateRenewalOpportunitiesTest {
         Contract_Product__c conProd = new Contract_Product__C (Contract__c = con.Id);
         insert conProd;
         Billing_Entity__c BE = TestObjectCreator.CreateBE();
-<<<<<<< HEAD
-        Contract_Event__c conEvent = new Contract_Event__c(isrecurring__c = true, Contract__c = con.Id, Contract_Product__c = conProd.Id, Start_Date__c = System.today(), Quote_Line_Item__c = qli.Id,Billing_Entity__c=BE.id);     
-        insert conEvent;
-=======
         Contract_Event__c conEvent = new Contract_Event__c(isrecurring__c = true, Contract__c = con.Id, Contract_Product__c = conProd.Id, Start_Date__c = System.today(), Quote_Line_Item__c = qli.Id,Billing_Entity__c=BE.id); 
         insert conEvent;    
->>>>>>> 4d1f7c612198de4f7dc1446166982fcd935ec2fc
         opportunity.StageName = 'Closed Won';
         update opportunity;
         ma= [SELECT Id,of_open_opps__c,Active_Contract__c FROM Account WHERE ARR__c = 100 LIMIT 1];
