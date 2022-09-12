@@ -237,6 +237,16 @@ public without sharing class Utilities {
         set;  
     }
 
+    public static Id partnerCompanyRecordTypeId {  
+        get {  
+            if (MARecordTypeId == null) {  
+                MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();  
+            }
+            return MARecordTypeId;  
+        }  
+        set;  
+    }
+
     public static Id CompanyRecordTypeId {  
         get {  
             if (CompanyRecordTypeId == null) {  
@@ -267,12 +277,34 @@ public without sharing class Utilities {
         set;  
     }
 
+
+    public static Id potentialPartnerLeadRecordTypeId {  
+        get {  
+            if (potentialPartnerLeadRecordTypeId == null) {  
+                potentialPartnerLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Potential_Partner').getRecordTypeId();  
+            }
+            return potentialPartnerLeadRecordTypeId;  
+        }  
+        set;  
+    }
+
+
     public static Id internalOppRecordTypeId {  
         get {  
             if (internalOppRecordTypeId == null) {  
                 internalOppRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();  
             }
             return internalOppRecordTypeId;  
+        }  
+        set;  
+    }
+
+    public static Id partnerOppRecordTypeId {  
+        get {  
+            if (partnerOppRecordTypeId == null) {  
+                partnerOppRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();  
+            }
+            return partnerOppRecordTypeId;  
         }  
         set;  
     }
@@ -320,7 +352,7 @@ public without sharing class Utilities {
     public static Map<Id,User> activeUsersMap {  
         get {  
             if (activeUsersMap == null) {  
-                activeUsersMap = new Map<Id,User>([SELECT Id, Group__c FROM User WHERE IsActive = true]);
+                activeUsersMap = new Map<Id,User>([SELECT Id FROM User WHERE IsActive = true]);
             }
             return activeUsersMap;  
         }  
