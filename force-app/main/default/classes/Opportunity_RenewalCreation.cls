@@ -50,9 +50,6 @@ public without sharing class Opportunity_RenewalCreation {
         if(relevantContracts.isEmpty()) return renewalOppsToCreate;
         Map<Id,Contract> contractsWithIds = new Map<Id,Contract>();
         for (Contract c : relevantContracts) {
-            System.debug('Noam account primaey '+c.accounts__r[0]);
-            System.debug('Noam contract to create from opp'+relevantContracts);
-            System.debug('Noam contract event'+c.Contract_Events__r[0]);
             Account primaryMa= c.accounts__r[0];
             //if (primaryMa.of_open_opps__c == 0){ //maybe we would add here more conditions in cases that the num of open opps bigger then 1 
                 Id getRelevantRT = (primaryMa.Owner_s_Profile__c == 'Partner Community Custom' || primaryMa.Owner_s_Profile__c == 'Channel Managers') ? Utilities.partnerOppRecordTypeId :Utilities.internalOppRecordTypeId;   
@@ -85,8 +82,6 @@ public without sharing class Opportunity_RenewalCreation {
                 contractsWithIds.put(c.Id,c); 
             //}          
         }
-        System.debug('List of opp to create '+ renewalOppsToCreate);
-        
         //mark the renewal creation status for all the relevant contract as 'Initiated'
         try {
             update contractsWithIds.values();
@@ -104,7 +99,6 @@ public without sharing class Opportunity_RenewalCreation {
 
         return renewalOppsToCreate;
     }
-    
     /*
     Used to mark the renewal status of contracts as Completed after a renewal opportunity is successfully created, done in queuable because the contract is locked when the opportunity is created
     */
@@ -117,16 +111,13 @@ public without sharing class Opportunity_RenewalCreation {
                     renewalOppsToContractsMap.put(opp.Selected_Company_Contract__c, opp);
                 }
             }
-            System.debug('relevantContractIds: '+ relevantContractIds);
             if (renewalOppsToContractsMap != null) {
                 List<Contract> contractsToUpdate = new List<Contract>([SELECT Id, Renewal_Opportunity_Creation_Status__c FROM Contract WHERE Id IN: renewalOppsToContractsMap.keySet()]);
-                System.debug('contractsToUpdate: '+ contractsToUpdate);
                 for (Contract c : contractsToUpdate) {
                     c.Renewal_Opportunity__c = renewalOppsToContractsMap.get(c.Id).Id;
                     if (c.Renewal_Opportunity_Creation_Status__c == 'Initiated') c.Renewal_Opportunity_Creation_Status__c = 'Completed';
                 }
                 try {
-                    System.debug('contractsToUpdate: '+ contractsToUpdate);
                     Database.update(contractsToUpdate, false);
                 } catch (Exception e) {
                     System.debug('Message: ' + e.getMessage());
