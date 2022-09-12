@@ -237,6 +237,16 @@ public without sharing class Utilities {
         set;  
     }
 
+    public static Id partnerCompanyRecordTypeId {  
+        get {  
+            if (MARecordTypeId == null) {  
+                MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();  
+            }
+            return MARecordTypeId;  
+        }  
+        set;  
+    }
+
     public static Id CompanyRecordTypeId {  
         get {  
             if (CompanyRecordTypeId == null) {  
@@ -266,6 +276,18 @@ public without sharing class Utilities {
         }  
         set;  
     }
+
+
+    public static Id potentialPartnerLeadRecordTypeId {  
+        get {  
+            if (potentialPartnerLeadRecordTypeId == null) {  
+                potentialPartnerLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Potential_Partner').getRecordTypeId();  
+            }
+            return potentialPartnerLeadRecordTypeId;  
+        }  
+        set;  
+    }
+
 
     public static Id internalOppRecordTypeId {  
         get {  

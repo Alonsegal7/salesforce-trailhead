@@ -35,7 +35,13 @@ public class PartnerCommission_PartnerTransfer_Queue implements System.Queueable
                             Renewable__c = false
                         );
                         if(pc.Close_Reason__c == null && (pc.End_Date__c == null || pc.End_Date__c >= Datetime.now())){ //pc is open - we set end date to be the last transaction time
-                            updatedPc.End_Date__c = mondayAccountsMap.get(pc.Monday_Account__c).Last_ARR_Update_Timestamp__c;
+                            Datetime setEndDateTime = mondayAccountsMap.get(pc.Monday_Account__c).Last_ARR_Update_Timestamp__c;
+
+                            if(setEndDateTime == null){
+                                setEndDateTime = Datetime.now();
+                            }
+                            
+                            updatedPc.End_Date__c = setEndDateTime;
                             updatedPc.ARR_Upon_Close__c = mondayAccountsMap.get(pc.Monday_Account__c).ARR__c;
                             updatedPc.Close_Reason__c = 'Partners Transfer';
                         }
@@ -72,7 +78,9 @@ public class PartnerCommission_PartnerTransfer_Queue implements System.Queueable
                             if(accountsMap.containsKey(mondayAccId) && accountsMap.containsKey(partnersToCreatePC.get(mondayAccId))){
                                 Partner_Commission__c newPc = pcService.createNewPc(accountsMap.get(mondayAccId), accountsMap.get(partnersToCreatePC.get(mondayAccId)), null, 'Partners Transfer');
                                 //we set start date to be 1 second after the mondayAccount.Last_ARR_Update_Timestamp__c so the new partner will get comission only for new transactions
-                                newPc.Start_Date__c = newPc.Start_Date__c.addSeconds(1); 
+                                //if newPc.Start_Date__c == null it will handled in the PartnerCommission service and will set a start date
+                                    newPc.Start_Date__c = newPc.Start_Date__c.addSeconds(1); 
+
                                 newPartnerCommissionList.add(newPc);
                             }
                         }
