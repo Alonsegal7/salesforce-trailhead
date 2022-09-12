@@ -1,6 +1,7 @@
 public without sharing class BigBrain_LeadPoolService {
 
     public static list<string> emailRecipients = new list<string>{'kseniasm@monday.com','ronilu@monday.com','michaelim@monday.com'};
+    public static set<string> countryCodes = new set<string>{'GB','IE','FR','DE','AT','CH','BE','NE','LU','CZ','PL','IL','AE','QA','BH','ZA','NO','DK','SE','FI','IS','SI','NL','ET','GH','KE','KW','MU','MZ','NG','OM','RO','RW','SA','SN','SS','UG','UZ','BG','BY','CY','EE','ES','GE','GR','HR','IT','LT','LV','SK','TR','PT','RS','RU','UA','AZ','SZ','TZ','EG','HU'};
 
     public static Set<String> domainsBlackList {
         get {
@@ -76,7 +77,7 @@ public without sharing class BigBrain_LeadPoolService {
                 for(Signup su: su_list){
                     if(su.account != null && su.account.data != null) {
                         lead l = createLead(su);
-                        if(l.CountryCode == 'FR') newLeads_list.add(l); //FOR FR PILOT
+                        if(countryCodes.contains(l.CountryCode)) newLeads_list.add(l); //for EMEA only
                     }
                 }
                 if(!newLeads_list.isEmpty()) {
