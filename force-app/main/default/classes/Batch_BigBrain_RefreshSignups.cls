@@ -19,11 +19,10 @@ public without sharing class Batch_BigBrain_RefreshSignups implements Database.B
     public Database.QueryLocator start(Database.BatchableContext BC){
         try {
             Id rawSignupRtId = Utilities.rawSignupRecordTypeId;
-            Id preLeadRtId = Utilities.preLeadRecordTypeId;
-            Datetime trial_dt = Date.today().addDays(-13);
-            String query = 'select id, primary_pulse_account_id__c from Lead where primary_pulse_account_id__c != null and createdDate >=: trial_dt'; //trial not expired - for all
+            set<Id> unlimited_rt = new set<Id>{Utilities.preLeadRecordTypeId, Utilities.internalLeadRecordTypeId, Utilities.partnerLeadRecordTypeId};
+            String query = 'select id, primary_pulse_account_id__c, passed_14_days_since_signup__c from Lead where primary_pulse_account_id__c != null and passed_14_days_since_signup__c = false'; //trial not expired - for all
             if(this.IS_LIMITED) query += ' and RecordTypeId =: rawSignupRtId and Signup_Cleanup_Reason__c = \'domain_null\''; //limited - raw signus with domain null
-            else query += ' and RecordTypeId =: preLeadRtId'; //unlimited - pre leads , get score and engagement
+            else query += ' and RecordTypeId in: unlimited_rt'; //unlimited - pre/internal/partner leads refresh score, engagement and numberOfEmployees in case it was null before
             return Database.getQueryLocator(query);
         } catch(Exception e){
             Utilities.sendEmail('Failed to refresh data (start)', e.getMessage() + e.getStackTraceString(), BigBrain_LeadPoolService.emailRecipients); 
