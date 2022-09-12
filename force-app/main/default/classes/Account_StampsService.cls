@@ -1,10 +1,11 @@
 public with sharing class Account_StampsService {
-    
+
     public static void run(List<Account> newAccounts, map<Id,Account> oldAccounts){
         try {
             // if(oldAccounts == null) getValuesOnCreate(newAccounts);
             UpdateOwnerStamps(newAccounts,oldAccounts);
             handleOngoingUpdates(newAccounts,oldAccounts);
+            updateCSMAssignmentTimestamp(newAccounts, oldAccounts);
         } catch(Exception e) {
             Utilities.sendDebugEmail('Error in Account_StampsService',e,e.getMessage());
         }
@@ -76,6 +77,21 @@ public with sharing class Account_StampsService {
             }
             if (acc.RecordTypeId == Utilities.CompanyRecordTypeId && (oldAccounts == null || acc.NumberOfEmployees != oldAccounts.get(acc.Id).NumberOfEmployees)) {
                 acc.Company_Size__c = acc.NumberOfEmployees != null ? Utilities.getCompanySizeRange(acc.NumberOfEmployees) : null;
+            }
+        }
+    }
+
+    /*  before insert & update
+        Update CSM_assignment_Timestamp__c when CSM__c is changed (not null) or if record is created with CSM__c --> based on this item:
+            https://monday.monday.com/boards/2016847993/pulses/3133829657
+        Object: Account
+        Fields: CSM__c and CSM_assignment_Timestamp__c
+    */
+    public static void updateCSMAssignmentTimestamp(List<Account> newAccounts, Map<Id, Account> oldAccounts){
+
+        for(Account acc : newAccounts){
+            if((oldAccounts == null || (oldAccounts != null && acc.CSM__c != oldAccounts.get(acc.Id).CSM__c)) && acc.CSM__c != null){
+                acc.CSM_assignment_Timestamp__c = System.today();
             }
         }
     }
