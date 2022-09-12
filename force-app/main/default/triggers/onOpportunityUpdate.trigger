@@ -27,6 +27,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         Partners_SharingService.createOpportunityShares_ManualTrigger(Trigger.new);
         Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(Trigger.new, Trigger.oldMap);
         if(!Opportunity_CoSellSyncService.checkIfSecondaryOppsUpdateAllowed()) lockedValidationService.cosellLockValidation(Trigger.new, Trigger.oldMap);
+        //Opportunity_OppTypeService.Opportunity_OppTypeService(Trigger.new, Trigger.oldMap);
     }
     
     //AFTER UPDATE
@@ -41,6 +42,9 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
             partnerCommission.partnerCommissionFromGbOpp(Trigger.new, Trigger.oldMap);
         }
         Opportunity_CoSellSyncService.syncCoSellOppsClosedWon(Trigger.new, Trigger.oldMap);
+        if(Contract_PostSigneChanges.firstRunOpp){
+            Contract_PostSigneChanges.HandleLostOpptyForQuote(Trigger.new, Trigger.oldMap);
+        }
     }
 
     //AFTER INSERT

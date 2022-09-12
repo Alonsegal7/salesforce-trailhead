@@ -278,6 +278,18 @@ public without sharing class Utilities {
         set;  
     }
 
+
+    public static Id potentialPartnerLeadRecordTypeId {  
+        get {  
+            if (potentialPartnerLeadRecordTypeId == null) {  
+                potentialPartnerLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Potential_Partner').getRecordTypeId();  
+            }
+            return potentialPartnerLeadRecordTypeId;  
+        }  
+        set;  
+    }
+
+
     public static Id internalOppRecordTypeId {  
         get {  
             if (internalOppRecordTypeId == null) {  
@@ -341,7 +353,7 @@ public without sharing class Utilities {
     public static Map<Id,User> activeUsersMap {  
         get {  
             if (activeUsersMap == null) {  
-                activeUsersMap = new Map<Id,User>([SELECT Id, Group__c FROM User WHERE IsActive = true]);
+                activeUsersMap = new Map<Id,User>([SELECT Id FROM User WHERE IsActive = true]);
             }
             return activeUsersMap;  
         }  

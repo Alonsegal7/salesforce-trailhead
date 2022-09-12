@@ -7,6 +7,9 @@ public with sharing class Lead_StampsServiceTest {
         profileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
         userRecord = TestUtils.getUserWithoutRole(profileId);
         insert userRecord;
+        User salesUser = [SELECT id FROM USER WHERE group__c = 'Sales' AND IsActive = true LIMIT 1];
+        User partnerUser = [SELECT id FROM USER WHERE group__c = 'Partners' AND IsActive = true LIMIT 1];
+        User bizOpsUser = [SELECT id FROM USER WHERE group__c = 'BizOps' AND IsActive = true LIMIT 1];
         //create companies - one with ARR > 0 and one with ARR = 0
         List<Account> comps = new List<Account>();
         comps.add(TestObjectCreator.CreateCompany());
@@ -69,6 +72,9 @@ public with sharing class Lead_StampsServiceTest {
         LeadsToInsert.add(new Lead(LastName = 'test2', Email = 'test2@monday.com', Company = 'test2')); //lead2 w/o related company
         LeadsToInsert.add(new Lead(LastName = 'test3', Email = 'test3@monday.com', Account_ARR__c = 500, LeadSource='Outsource', Company = 'test3')); //Outbound lead
         LeadsToInsert.add(new Lead(LastName = 'test4', Email = 'test4@monday.com', Related_Company__c = comps.get(0).Id, Company = 'test4')); //lead w/ related outbound company
+        LeadsToInsert.add(new Lead(LastName='Saleslead', Company='acme', OwnerId = salesUser.Id));
+        LeadsToInsert.add(new Lead(LastName='Partnerlead', Company='acme', OwnerId = salesUser.Id));
+        LeadsToInsert.add(new Lead(LastName='Otherlead', Company='acme', OwnerId = salesUser.Id));
         insert LeadsToInsert;
     }
 
@@ -469,5 +475,77 @@ public with sharing class Lead_StampsServiceTest {
         System.assertEquals('Sign up', lead1.Sub_source__c);
         System.assertEquals('Outsource', lead1.First_Lead_Source__c);
         System.assertEquals('Website - Contact Sales', lead1.LeadSource);
+    }
+
+    @isTest
+    static void shouldSetRTOnCreate(){
+        
+        List<Lead> leadsToCheck = [SELECT OwnerId, RecordType.DeveloperName FROM Lead WHERE Company='acme'];
+        Set<Id> ownerIds = new Set<Id>();
+        for(Lead l : leadsToCheck){
+            ownerIds.add(l.OwnerId);
+        }
+        Map<Id,User> ownersGroups= new Map<Id,User>([SELECT Group__c FROM User WHERE Id IN: ownerIds]);
+        system.assert(leadsToCheck.size()==3);
+        for (Lead l : leadsToCheck){
+            String currentGroup = ownersGroups.get(l.ownerId).group__c;
+            if(currentGroup == 'Sales'){
+                system.assertEquals('Internal_Lead', l.recordType.developerName);
+            }
+            else if (currentGroup == 'Partners'){
+                system.assertEquals('Partner_Lead', l.recordType.developerName);
+            }
+            else{ //check that default RT was set
+                system.assertEquals('Internal_Lead', l.recordType.developerName); 
+            }
+        }
+    }
+    
+    @istest
+    static void shouldSetRTForBulkCreate () {
+        User salesUser = [SELECT id FROM USER WHERE group__c = 'Sales' AND IsActive = true LIMIT 1];
+        Integer leadCounter;
+        List<Lead> leadsToCreate = new List<Lead>();
+        for(leadCounter = 0; leadCounter < 200; leadCounter++){
+            Lead newLead = new Lead();
+            newLead.LastName = 'test';
+            newLead.email = 'test'+leadCounter+'@monday.com';
+            newLead.Company = 'test';
+            newLead.OwnerId = salesUser.id;
+            leadsToCreate.add(newLead);
+        }
+        if(!leadsToCreate.isEmpty()){
+            insert leadsToCreate;
+        }
+        Boolean isMatch = true;
+        List<Lead> allLeads = [SELECT Id,RecordTypeId FROM Lead];
+        for(Lead checkRTLead: allLeads){
+            System.assertEquals(Utilities.internalLeadRecordTypeId, checkRTLead.RecordTypeId);
+        }
+    }
+
+    @IsTest
+    static void ShouldChangeOwnerOnUpdate(){
+
+        List<Lead> leadsToUpdate = [SELECT OwnerId, LastName FROM Lead];
+
+        User salesUser = [SELECT id FROM USER WHERE group__c = 'Sales' AND IsActive = true LIMIT 1];
+        User partnerUser = [SELECT id FROM USER WHERE group__c = 'Partners' AND IsActive = true LIMIT 1];
+        User bizOpsUser = [SELECT id FROM USER WHERE group__c = 'BizOps' AND IsActive = true LIMIT 1];
+        Group contactSales = [SELECT id FROM Group WHERE Name = 'Contact Sales' LIMIT 1];
+
+
+        for (Lead l : leadsToUpdate) {
+            if (l.LastName == 'Saleslead') l.OwnerId = partnerUser.Id;
+            if(l.LastName == 'Partnerlead') l.OwnerId = contactSales.Id;
+            if(l.LastName == 'Otherlead') l.OwnerId = salesUser.Id;
+        }
+        update leadsToUpdate;
+        List<lead> updatedLeadList = [SELECT Id, RecordTypeId, LastName, Ownerid, Owner_s_Group__c FROM Lead];
+        for (Lead l : updatedLeadList) {
+            if (l.LastName == 'Saleslead') System.assertEquals(Utilities.partnerLeadRecordTypeId, l.RecordTypeId);
+            if (l.LastName == 'Partnerlead') System.assertEquals(Utilities.internalLeadRecordTypeId, l.RecordTypeId);
+            if (l.LastName == 'Otherlead') System.assertEquals(Utilities.internalLeadRecordTypeId, l.RecordTypeId);
+        }
     }
 }
