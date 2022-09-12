@@ -6,8 +6,8 @@ public without sharing class Lead_RelatedCompanyLogic {
             List<Lead> rawSignUpsWithDomain = new List<Lead>();
             Set<String> domainsFromLeads = new Set<String>();
             for(Lead lead : rawLeads) {
-                if(lead.RecordTypeId == Utilities.rawSignupRecordTypeId && lead.BB_Account_Domain__c <> '' && lead.Signup_Cleanup_Reason__c == null && 
-                (oldLeads == null || oldLeads?.get(lead.Id).BB_Account_Domain__c == '') || lead.Manual_Trigger__c == 'Run Related Company Logic') {
+                if(lead.RecordTypeId == Utilities.rawSignupRecordTypeId && !String.isBlank(lead.BB_Account_Domain__c) && String.isBlank(lead.Signup_Cleanup_Reason__c) && 
+                (oldLeads == null || String.isBlank(oldLeads?.get(lead.Id).BB_Account_Domain__c) || lead.Manual_Trigger__c == 'Run Related Company Logic')) {
                     rawSignUpsWithDomain.add(lead);
                     domainsFromLeads.add(lead.BB_Account_Domain__c);
                     if(lead.Manual_Trigger__c == 'Run Related Company Logic') lead.Manual_Trigger__c = '';
@@ -148,40 +148,37 @@ public without sharing class Lead_RelatedCompanyLogic {
 
     private static Map<Id,Map<String, Object>> getCompanyWithRelatedObjects(Set<Id> companyIds) {
         Map<Id,Map<String, Object>> companyRelatedObjects = new Map<Id,Map<String, Object>>();
-        if (companyRelatedObjects == null || companyRelatedObjects.keySet().isEmpty()) {
-            companyRelatedObjects = new Map<Id,Map<String, Object>>();
-            List<Account> mondayAccountsList = [SELECT Id, OwnerId, BillingCountry, Company__c FROM Account WHERE Eligible_For_Related__c = true AND RecordTypeId =: Utilities.MARecordTypeId AND Company__c IN: companyIds AND Arr__c>0 ORDER BY Arr__c DESC]; 
-            List<Opportunity> oppList = [SELECT Id, OwnerId, Monday_Account_Country__c, Company__c FROM Opportunity WHERE Eligible_For_Related__c = true AND Company__c IN: companyIds AND IsClosed = false ORDER BY CreatedDate DESC];
-            for(Account ma : mondayAccountsList) {
-                if (companyRelatedObjects.containsKey(ma.Company__c)) {
-                    if (companyRelatedObjects.get(ma.Company__c).containsKey('paying_monday_accounts')) {
-                        ((List<Account>)companyRelatedObjects.get(ma.Company__c).get('paying_monday_accounts')).add(ma);
-                    }
-                    else {
-                        companyRelatedObjects.get(ma.Company__c).put('paying_monday_accounts', new List<Account>{ma});
-                    }
+        List<Account> mondayAccountsList = [SELECT Id, OwnerId, BillingCountry, Company__c FROM Account WHERE Eligible_For_Related__c = true AND RecordTypeId =: Utilities.MARecordTypeId AND Company__c IN: companyIds AND Arr__c>0 ORDER BY Arr__c DESC]; 
+        List<Opportunity> oppList = [SELECT Id, OwnerId, Monday_Account_Country__c, Company__c FROM Opportunity WHERE Eligible_For_Related__c = true AND Company__c IN: companyIds AND IsClosed = false ORDER BY CreatedDate DESC];
+        for(Account ma : mondayAccountsList) {
+            if (companyRelatedObjects.containsKey(ma.Company__c)) {
+                if (companyRelatedObjects.get(ma.Company__c).containsKey('paying_monday_accounts')) {
+                    ((List<Account>)companyRelatedObjects.get(ma.Company__c).get('paying_monday_accounts')).add(ma);
                 }
                 else {
-                    companyRelatedObjects.put(ma.Company__c, new Map<String, Object>{
-                        'paying_monday_accounts' => new List<Account>{ma}
-                    });
-                } 
+                    companyRelatedObjects.get(ma.Company__c).put('paying_monday_accounts', new List<Account>{ma});
+                }
             }
-            for(Opportunity opp : oppList) {
-                if (companyRelatedObjects.containsKey(opp.Company__c)) {
-                    if (companyRelatedObjects.get(opp.Company__c).containsKey('open_opportunities')) {
-                        ((List<Opportunity>)companyRelatedObjects.get(opp.Company__c).get('open_opportunities')).add(opp);
-                    }
-                    else {
-                        companyRelatedObjects.get(opp.Company__c).put('open_opportunities', new List<Opportunity>{opp});
-                    }
+            else {
+                companyRelatedObjects.put(ma.Company__c, new Map<String, Object>{
+                    'paying_monday_accounts' => new List<Account>{ma}
+                });
+            } 
+        }
+        for(Opportunity opp : oppList) {
+            if (companyRelatedObjects.containsKey(opp.Company__c)) {
+                if (companyRelatedObjects.get(opp.Company__c).containsKey('open_opportunities')) {
+                    ((List<Opportunity>)companyRelatedObjects.get(opp.Company__c).get('open_opportunities')).add(opp);
                 }
                 else {
-                    companyRelatedObjects.put(opp.Company__c, new Map<String, Object>{
-                        'open_opportunities' => new List<Opportunity>{opp}
-                    });
-                } 
+                    companyRelatedObjects.get(opp.Company__c).put('open_opportunities', new List<Opportunity>{opp});
+                }
             }
+            else {
+                companyRelatedObjects.put(opp.Company__c, new Map<String, Object>{
+                    'open_opportunities' => new List<Opportunity>{opp}
+                });
+            } 
         }
         return companyRelatedObjects;
     }
