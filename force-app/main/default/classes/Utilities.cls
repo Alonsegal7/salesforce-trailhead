@@ -310,6 +310,7 @@ public without sharing class Utilities {
         set;  
     }
 
+
     public static Id internalLeadRecordTypeId {  
         get {  
             if (internalLeadRecordTypeId == null) {  

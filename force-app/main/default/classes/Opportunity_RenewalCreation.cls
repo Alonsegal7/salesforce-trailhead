@@ -18,7 +18,7 @@ public without sharing class Opportunity_RenewalCreation {
         List<Opportunity> expansionOpps = [
             SELECT Id, Name, StageName, Selected_Company_Contract__c 
             FROM Opportunity 
-            WHERE StageName != 'Closed Won' AND StageName != 'Closed Lost' AND Type = 'Expansion' AND Selected_Company_Contract__c =: recordId];
+            WHERE StageName != 'Closed Won' AND StageName != 'Closed Lost' AND Type = 'Expansion' AND Selected_Company_Contract__c=:recordId] ;
         return expansionOpps;
     }
 
@@ -34,58 +34,54 @@ public without sharing class Opportunity_RenewalCreation {
     2. For automatic renewal opportunity creation in bulk (x months before the contract end date) 
     */
     @AuraEnabled
-    public static List<Opportunity> createRenewalOpportunities(List<Id> renewalContractIds){
-
-        Id csOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
-        Id internalOppRtId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Internal_Opportunity').getRecordTypeId();
+    public static List<Opportunity> createRenewalOpportunities(List<Id> renewalContractIds,String Source){
         Id currentUserProfile = userinfo.getProfileId();
         Id qli, subs, billingEntity;
         String pricingVersion, paymentTerms, paymentMethod = '';
-        Profile userProfile = [SELECT Id, Name FROM Profile WHERE Id =: currentUserProfile];
-        Id getRelevantRT = userProfile.Name == 'Renewals' ? csOppRtId : internalOppRtId;
-
+        System.debug(Source);
         List<Contract> relevantContracts =  new List<Contract>([
-            SELECT Id, Name, EndDate, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Opp_Created_from_Contract__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c, CurrencyIsoCode, Renewal_Opportunity_Creation_Status__c, Last_Event_Payment_Method__c, Last_SO_Event_Payment_Terms__c,
+            SELECT Id, Name, EndDate,Renewal_Manager__c, Contract_ARR__c, Primary_Renewal_Owner__c, Renewal_Opp_Created_from_Contract__c, Weighted_Average_Net_Per_Unit__c, Contract_Seats__c, Tier__c, Period__c, CurrencyIsoCode, Renewal_Opportunity_Creation_Status__c, Last_Event_Payment_Method__c, Last_SO_Event_Payment_Terms__c,
             (SELECT Id, Billing_Entity__c FROM Contract_Events__r ORDER BY CreatedDate DESC LIMIT 1),
-            (SELECT Id, Name, Active_Contract__c, Company__c, Company__r.Name, Pricing_Version__c, Latest_Billing_Entity__c FROM Accounts__r WHERE ARR__c != null ORDER BY ARR__c DESC LIMIT 1)
+            (SELECT Id, Name, Active_Contract__c,Owner_s_Profile__c,Company__c,of_open_opps__c, Company__r.Name, Pricing_Version__c, Latest_Billing_Entity__c FROM Accounts__r WHERE ARR__c != null ORDER BY ARR__c DESC LIMIT 1)
             FROM Contract 
             WHERE Id IN: renewalContractIds 
-            LIMIT 200]
-        );
-
-        List<Opportunity> renewalOppsToCreate = new List<Opportunity>();
+            LIMIT 200]);
+        List<Opportunity> renewalOppsToCreate = new List<Opportunity>(); 
         if(relevantContracts.isEmpty()) return renewalOppsToCreate;
-        
         Map<Id,Contract> contractsWithIds = new Map<Id,Contract>();
         for (Contract c : relevantContracts) {
-            renewalOppsToCreate.add(new Opportunity(
-                Name = c.Accounts__r[0].Company__r.Name + ' - ' + c.Period__c + ' - ' + c.contract_Seats__c + ' - ' + c.Tier__c + ' - ' + 'Flat Renewal',
-                Company__c = c.Accounts__r[0].Company__c,
-                AccountId = c.Accounts__r[0].Id,
-                Type = 'Flat Renewal',
-                CloseDate = c.EndDate,
-                Selected_Company_Contract__c = c.Id,
-                Original_Contract_ARR__c = c.Contract_ARR__c,
-                OwnerId = c.Primary_Renewal_Owner__c,
-                RecordTypeId = getRelevantRT,
-                StageName = 'Qualified',
-                Probability = 20,
-                Expected_Seat_Price__c = c.Weighted_Average_Net_Per_Unit__c,
-                Expected_Plan_Seats__c = c.Contract_Seats__c,
-                Expected_Plan_Period__c = c.Period__c,
-                CurrencyIsoCode = c.CurrencyIsoCode,
-                Expected_Plan_Tier__c = c.Tier__c,
-                Pricing_Version__c = pricingVersion,
-                Payment_Method__c = c.Last_Event_Payment_Method__c,
-                Payment_Terms__c = c.Last_SO_Event_Payment_Terms__c,
-                Billing_Entity__c = c.Contract_Events__r[0].Billing_Entity__c,
-                Manual_Renewal_Creation__c = true
-            ));
-            c.Renewal_Opportunity_Creation_Status__c = 'Initiated';
-            c.Renewal_Opp_Created_from_Contract__c = true;
-            contractsWithIds.put(c.Id,c);            
+            Account primaryMa= c.accounts__r[0];
+            //if (primaryMa.of_open_opps__c == 0){ //maybe we would add here more conditions in cases that the num of open opps bigger then 1 
+                Id getRelevantRT = (primaryMa.Owner_s_Profile__c == 'Partner Community Custom' || primaryMa.Owner_s_Profile__c == 'Channel Managers') ? Utilities.partnerOppRecordTypeId :Utilities.internalOppRecordTypeId;   
+                renewalOppsToCreate.add(new Opportunity(
+                    Name = primaryMa.Company__r.Name + ' - ' + c.Period__c + ' - ' + c.contract_Seats__c + ' - ' + c.Tier__c + ' - ' + 'Flat Renewal',
+                    Company__c = primaryMa.Company__c,
+                    AccountId = primaryMa.Id,
+                    Type = 'Flat Renewal',
+                    CloseDate = c.EndDate,
+                    Selected_Company_Contract__c = c.Id,
+                    Original_Contract_ARR__c = c.Contract_ARR__c,
+                    OwnerId = c.Primary_Renewal_Owner__c,
+                    RecordTypeId = getRelevantRT,
+                    StageName = 'Qualified',
+                    Probability = 20,
+                    Expected_Seat_Price__c = c.Weighted_Average_Net_Per_Unit__c,
+                    Expected_Plan_Seats__c = c.Contract_Seats__c,
+                    Expected_Plan_Period__c = c.Period__c,
+                    CurrencyIsoCode = c.CurrencyIsoCode,
+                    Expected_Plan_Tier__c = c.Tier__c,
+                    Pricing_Version__c = pricingVersion,
+                    Payment_Method__c = c.Last_Event_Payment_Method__c,
+                    Payment_Terms__c = c.Last_SO_Event_Payment_Terms__c,
+                    Billing_Entity__c = c.Contract_Events__r[0].Billing_Entity__c,
+                    Renewal_Manager__c = c.Renewal_Manager__c,
+                    Renewal_Source_Creation__c = Source
+                ));
+                c.Renewal_Opportunity_Creation_Status__c = 'Initiated';
+                c.Renewal_Opp_Created_from_Contract__c = true;
+                contractsWithIds.put(c.Id,c); 
+            //}          
         }
-        
         //mark the renewal creation status for all the relevant contract as 'Initiated'
         try {
             update contractsWithIds.values();
@@ -103,7 +99,6 @@ public without sharing class Opportunity_RenewalCreation {
 
         return renewalOppsToCreate;
     }
-    
     /*
     Used to mark the renewal status of contracts as Completed after a renewal opportunity is successfully created, done in queuable because the contract is locked when the opportunity is created
     */
@@ -116,16 +111,13 @@ public without sharing class Opportunity_RenewalCreation {
                     renewalOppsToContractsMap.put(opp.Selected_Company_Contract__c, opp);
                 }
             }
-            System.debug('relevantContractIds: '+ relevantContractIds);
             if (renewalOppsToContractsMap != null) {
                 List<Contract> contractsToUpdate = new List<Contract>([SELECT Id, Renewal_Opportunity_Creation_Status__c FROM Contract WHERE Id IN: renewalOppsToContractsMap.keySet()]);
-                System.debug('contractsToUpdate: '+ contractsToUpdate);
                 for (Contract c : contractsToUpdate) {
                     c.Renewal_Opportunity__c = renewalOppsToContractsMap.get(c.Id).Id;
                     if (c.Renewal_Opportunity_Creation_Status__c == 'Initiated') c.Renewal_Opportunity_Creation_Status__c = 'Completed';
                 }
                 try {
-                    System.debug('contractsToUpdate: '+ contractsToUpdate);
                     Database.update(contractsToUpdate, false);
                 } catch (Exception e) {
                     System.debug('Message: ' + e.getMessage());
