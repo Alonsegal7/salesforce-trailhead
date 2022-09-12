@@ -1,0 +1,40 @@
+.infoBoxcontainer{
+    border: 1px solid #E6E9EF;
+    border-radius: 8px;
+    height: 65px;
+    color: white;
+    margin: 0rem 0.5rem;
+    display: block;
+    font-family: "Poppins";
+}
+
+.infoBoxData{
+    display: flex;
+    margin: 9px 0px;
+    font-weight: 400;
+}
+
+.imgIcon{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.leadBoxInfo{
+
+}
+
+.leadTitle{
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+
+.leadUrl{
+    font-style: normal;
+    font-size: 14px;
+    color:#676879;
+    line-height: 20px;
+
+}

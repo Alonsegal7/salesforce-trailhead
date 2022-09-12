@@ -1,0 +1,43 @@
+<template>
+    <lightning-card  if:true={displayComponent} class="leadContextComponent">
+
+
+        <div class="leadPoolTitle">
+            <img src={starIcon} alt="" class="starIcons">
+            The New Lead Pool Service
+            <img src={starIcon} alt="" class="starIcons">
+        </div>
+
+        <div class="leadContextContainer">
+            <!-- Display related lead if Related lead code = true &  distribution reason = Related -->
+            <div if:true={isRelated}>
+                    <lightning-layout-item padding="around-small">
+
+                        <c-lead-context-data-box    icon={iconPic}
+                                                    lead-title={leadTypeTitle}
+                                                    dock-url={docUrl}>
+                        </c-lead-context-data-box>
+
+                        <c-related-lead-component init-owner={owner}
+                        related-distribution-reason={relatedDistributionReason}
+                        related-record-url={relatedRecordUrl}>
+                        </c-related-lead-component>
+
+                    </lightning-layout-item>
+                </div>
+            </div>
+
+            <!-- Display related lead if Related lead code = true &  distribution reason = New Lead -->
+            <div if:true={isNewLead}>
+                <lightning-layout-item padding="around-small">
+                    <c-lead-context-data-box    icon={iconPic}
+                                                lead-title={leadTypeTitle}
+                                                dock-url={docUrl}>
+                    </c-lead-context-data-box>      
+                    
+                    <c-new-lead-component init-owner={owner} company-size ={companySize}  country={country} >
+                    </c-new-lead-component>
+                </lightning-layout-item>
+            </div>
+    </lightning-card>
+</template>
