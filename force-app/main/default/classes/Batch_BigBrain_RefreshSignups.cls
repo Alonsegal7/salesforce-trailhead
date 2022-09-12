@@ -20,7 +20,8 @@ public without sharing class Batch_BigBrain_RefreshSignups implements Database.B
         try {
             Id rawSignupRtId = Utilities.rawSignupRecordTypeId;
             set<Id> unlimited_rt = new set<Id>{Utilities.preLeadRecordTypeId, Utilities.internalLeadRecordTypeId, Utilities.partnerLeadRecordTypeId};
-            String query = 'select id, primary_pulse_account_id__c, passed_14_days_since_signup__c from Lead where primary_pulse_account_id__c != null and passed_14_days_since_signup__c = false'; //trial not expired - for all
+            String query = 'select id, primary_pulse_account_id__c, passed_14_days_since_signup__c from Lead';
+            query += ' where primary_pulse_account_id__c != null and passed_14_days_since_signup__c = false and Created_From_Pull_Signups_BB__c = true'; //trial not expired and created by the BigBrain_LeadPoolService - for all
             if(this.IS_LIMITED) query += ' and RecordTypeId =: rawSignupRtId and Signup_Cleanup_Reason__c = \'domain_null\''; //limited - raw signus with domain null
             else query += ' and RecordTypeId in: unlimited_rt'; //unlimited - pre/internal/partner leads refresh score, engagement and numberOfEmployees in case it was null before
             return Database.getQueryLocator(query);
