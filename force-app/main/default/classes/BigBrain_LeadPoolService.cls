@@ -246,8 +246,7 @@ public without sharing class BigBrain_LeadPoolService {
         newLead.MobilePhone = user_data.mobile;
         newLead.Phone = user_data.phone;
         newLead.Seniority__c = user_data.seniority;
-        list<string> countryCodeWithStates = new list<string>{'US','MX','IT','IN','IE','CN','CA','BR','AU'};
-        if(countryCodeWithStates.contains(newLead.CountryCode)) newLead.State = user_data.xi_region; //we set state only for countries that we have states in salesforce enabled to prevent the state error
+        if(user_data.xi_region != null && Utilities.allStates.contains(user_data.xi_region)) newLead.State = user_data.xi_region; //we set state only for countries that we have states in salesforce enabled to prevent the state error
         newLead.Title = user_data.computed_title;
         //mapping with logic
         setEnrichedPhone(newLead, user_data.enriched_phone);

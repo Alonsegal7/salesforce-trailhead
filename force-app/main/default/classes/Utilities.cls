@@ -382,4 +382,36 @@ public without sharing class Utilities {
             return null;
         }
     }
+
+    //will return the full state name (label, not code)
+    public static Set<String> allStates {
+        get {
+            if (allStates == null) {
+                Schema.DescribeFieldResult fieldResult = User.statecode.getDescribe();
+                List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+                Set<String> stateSet = new Set<String>();
+                for( Schema.PicklistEntry f : ple){
+                    stateSet.add(f.getLabel());
+                }
+            }
+            return allStates;
+        }
+        set;
+    }
+    
+    //will return the full country name (label, not code)
+    public static Set<String> allCountries {
+        get {
+            if (allCountries == null) {
+                Schema.DescribeFieldResult fieldResult = User.Countrycode.getDescribe();
+                List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+                Set<String> countrySet = new Set<String>();
+                for( Schema.PicklistEntry f : ple){
+                    countrySet.add(f.getLabel());
+                }
+            }
+            return allCountries;
+        }
+        set;
+    }
 }

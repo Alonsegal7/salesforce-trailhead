@@ -109,4 +109,10 @@ public without sharing class UtilitiesTest {
     static void getCompanySize() {
         system.assertEquals('50-99', Utilities.getCompanySizeRange(65));
     }
+
+    @isTest
+    static void getCountriesAndStates() {
+        system.assert(Utilities.allCountries().size()>0);
+        system.assert(Utilities.allStates().size()>0);
+    }
 }
