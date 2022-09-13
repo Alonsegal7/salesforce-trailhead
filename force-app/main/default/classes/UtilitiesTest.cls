@@ -112,7 +112,7 @@ public without sharing class UtilitiesTest {
 
     @isTest
     static void getCountriesAndStates() {
-        system.assert(Utilities.allCountries().size()>0);
-        system.assert(Utilities.allStates().size()>0);
+        system.assert(Utilities.allCountries.size()>0);
+        system.assert(Utilities.allStates.size()>0);
     }
 }

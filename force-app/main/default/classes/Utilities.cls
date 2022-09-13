@@ -389,9 +389,8 @@ public without sharing class Utilities {
             if (allStates == null) {
                 Schema.DescribeFieldResult fieldResult = User.statecode.getDescribe();
                 List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-                Set<String> stateSet = new Set<String>();
                 for( Schema.PicklistEntry f : ple){
-                    stateSet.add(f.getLabel());
+                    allStates.add(f.getLabel());
                 }
             }
             return allStates;
@@ -405,9 +404,8 @@ public without sharing class Utilities {
             if (allCountries == null) {
                 Schema.DescribeFieldResult fieldResult = User.Countrycode.getDescribe();
                 List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-                Set<String> countrySet = new Set<String>();
                 for( Schema.PicklistEntry f : ple){
-                    countrySet.add(f.getLabel());
+                    allCountries.add(f.getLabel());
                 }
             }
             return allCountries;
