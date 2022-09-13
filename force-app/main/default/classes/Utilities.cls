@@ -387,6 +387,7 @@ public without sharing class Utilities {
     public static Set<String> allStates {
         get {
             if (allStates == null) {
+                allStates = new Set<String>();
                 Schema.DescribeFieldResult fieldResult = User.statecode.getDescribe();
                 List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
                 for( Schema.PicklistEntry f : ple){
@@ -402,6 +403,7 @@ public without sharing class Utilities {
     public static Set<String> allCountries {
         get {
             if (allCountries == null) {
+                allCountries = new Set<String>();
                 Schema.DescribeFieldResult fieldResult = User.Countrycode.getDescribe();
                 List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
                 for( Schema.PicklistEntry f : ple){
