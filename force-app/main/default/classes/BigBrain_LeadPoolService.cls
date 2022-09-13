@@ -1,6 +1,7 @@
 public without sharing class BigBrain_LeadPoolService {
 
     public static list<string> emailRecipients = new list<string>{'kseniasm@monday.com','ronilu@monday.com','michaelim@monday.com'};
+    public static set<string> countryCodes = new set<string>{'GB','IE','FR','DE','AT','CH','BE','NE','LU','CZ','PL','IL','AE','QA','BH','ZA','NO','DK','SE','FI','IS','SI','NL','ET','GH','KE','KW','MU','MZ','NG','OM','RO','RW','SA','SN','SS','UG','UZ','BG','BY','CY','EE','ES','GE','GR','HR','IT','LT','LV','SK','TR','PT','RS','RU','UA','AZ','SZ','TZ','EG','HU'};
 
     public static Set<String> domainsBlackList {
         get {
@@ -37,7 +38,8 @@ public without sharing class BigBrain_LeadPoolService {
             }
             //query all relevant leads and update them with the refreshed data
             //we update the domain if limited = true only
-            list<lead> leads_list = [select Id, primary_pulse_account_id__c, Signup_Cleanup_Reason__c, NumberOfEmployees from lead where primary_pulse_account_id__c in: pulseIdToLead_map.keySet()];
+            list<lead> leads_list = [select Id, primary_pulse_account_id__c, Signup_Cleanup_Reason__c, NumberOfEmployees, RecordTypeId 
+                                    from lead where primary_pulse_account_id__c in: pulseIdToLead_map.keySet()];
             Datetime dt_now = Datetime.now();
             for(lead l: leads_list){
                 if(pulseIdToLead_map.containsKey(l.primary_pulse_account_id__c)){
@@ -45,11 +47,12 @@ public without sharing class BigBrain_LeadPoolService {
                     if(is_limited) {
                         l.BB_Account_Domain__c = refreshData.domain; //we update domain only for raw signups where domain was null/gmail and changed
                         l.Signup_Cleanup_Reason__c = l.Signup_Cleanup_Reason__c.replace('domain_null','').replace(';;',';');
+                    } else {
+                        l.Current_score__c = refreshData.score;
+                        if(l.RecordTypeId == Utilities.preLeadRecordTypeId) l.Distributed_score__c = refreshData.score; //we update distributed score only while the lead is still not distributed, once it is distributed we stop updating this field
+                        l.Engagement__c = refreshData.engagements;
+                        if(l.NumberOfEmployees == null && refreshData.score_params != null) l.NumberOfEmployees = refreshData.score_params.company_size;
                     }
-                    l.Current_score__c = refreshData.score;
-                    l.Distributed_score__c = refreshData.score;
-                    l.Engagement__c = refreshData.engagements;
-                    if(l.NumberOfEmployees == null && refreshData.score_params != null) l.NumberOfEmployees = refreshData.score_params.company_size;
                     l.Last_Refresh_Data_From_BB__c = dt_now;
                 }
             }
@@ -74,7 +77,7 @@ public without sharing class BigBrain_LeadPoolService {
                 for(Signup su: su_list){
                     if(su.account != null && su.account.data != null) {
                         lead l = createLead(su);
-                        if(l.CountryCode == 'FR') newLeads_list.add(l); //FOR FR PILOT
+                        if(countryCodes.contains(l.CountryCode)) newLeads_list.add(l); //for EMEA only
                     }
                 }
                 if(!newLeads_list.isEmpty()) {
