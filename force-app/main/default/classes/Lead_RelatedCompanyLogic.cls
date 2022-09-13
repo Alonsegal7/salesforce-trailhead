@@ -3,7 +3,8 @@ public without sharing class Lead_RelatedCompanyLogic {
     //expects raw signups, will determine if the leads has a related company and will update the company, runs in before (if moved to after make sure to send all the fields)
     public static void updateRelatedCompany(List<Lead> rawLeads, Map<Id,Lead> oldLeads) { 
         try {
-            List<Lead> rawSignUpsWithDomain = new List<Lead>();
+            Set<Lead> rawSignUpsWithDomain = new Set<Lead>();
+            Set<Lead> leadsWithEmployeeNumberUpdateToCompany = new Set<Lead>();
             Set<String> domainsFromLeads = new Set<String>();
             for(Lead lead : rawLeads) {
                 if(lead.RecordTypeId == Utilities.rawSignupRecordTypeId && !String.isBlank(lead.BB_Account_Domain__c) && String.isBlank(lead.Signup_Cleanup_Reason__c) && 
@@ -12,33 +13,41 @@ public without sharing class Lead_RelatedCompanyLogic {
                     domainsFromLeads.add(lead.BB_Account_Domain__c);
                     if(lead.Manual_Trigger__c == 'Run Related Company Logic') lead.Manual_Trigger__c = '';
                 }
-            }
-
-            if (rawSignUpsWithDomain.isEmpty()) return;
-            List<Lead> relatedLeads = new List<Lead>();
-            List<Lead> newLeads = new List<Lead>();
-            List<Company_Domain__c> relatedCompanyDomains = new List<Company_Domain__c>([SELECT Id, Company__c, Domain__c FROM Company_Domain__c WHERE Domain__c IN: domainsFromLeads]);
-            Map<String,Id> domainToCompanyId = new Map<String,Id>();
-            for (Company_Domain__c cd : relatedCompanyDomains) {
-                domainToCompanyId.put(cd.Domain__c, cd.Company__c);
-            }
-            for (Lead lead : rawSignUpsWithDomain) {
-                if(domainToCompanyId.containsKey(lead.BB_Account_Domain__c)) {
-                    lead.Related_Company__c = domainToCompanyId.get(lead.BB_Account_Domain__c);
-                    lead.Domain_Exists_On_Creation__c = true;
-                    relatedLeads.add(lead);
+                //NumberOfEmployees was updated on lead that has a company
+                if(oldLeads != null && lead.NumberOfEmployees != null && lead.Related_Company__c != null && lead.NumberOfEmployees != oldLeads.get(lead.Id).NumberOfEmployees) {
+                    leadsWithEmployeeNumberUpdateToCompany.add(lead);
                 }
-                else {
-                    lead.Domain_Exists_On_Creation__c = false;
-                    newLeads.add(lead);
+            }
+            if (rawSignUpsWithDomain.isEmpty() && leadsWithEmployeeNumberUpdateToCompany.isEmpty()) return;
+            if (!rawSignUpsWithDomain.isEmpty()) {
+                List<Lead> relatedLeads = new List<Lead>();
+                List<Lead> newLeads = new List<Lead>();
+                List<Company_Domain__c> relatedCompanyDomains = new List<Company_Domain__c>([SELECT Id, Company__c, Domain__c FROM Company_Domain__c WHERE Domain__c IN: domainsFromLeads]);
+                Map<String,Id> domainToCompanyId = new Map<String,Id>();
+                for (Company_Domain__c cd : relatedCompanyDomains) {
+                    domainToCompanyId.put(cd.Domain__c, cd.Company__c);
                 }
-                lead.Related_Lead_Code__c = true;
+                for (Lead lead : rawSignUpsWithDomain) {
+                    if(domainToCompanyId.containsKey(lead.BB_Account_Domain__c)) {
+                        lead.Related_Company__c = domainToCompanyId.get(lead.BB_Account_Domain__c);
+                        lead.Domain_Exists_On_Creation__c = true;
+                        relatedLeads.add(lead);
+                    }
+                    else {
+                        lead.Domain_Exists_On_Creation__c = false;
+                        newLeads.add(lead);
+                    }
+                    lead.Related_Lead_Code__c = true;
+                }
+                if(relatedLeads.size()>0) {
+                    assignOwnerForRelatedLeads(relatedLeads);
+                    leadsWithEmployeeNumberUpdateToCompany.addAll(relatedLeads);
+                }
+                if(newLeads.size()>0) createCompany(newLeads);
             }
-            if(relatedLeads.size()>0) {
-                assignOwnerForRelatedLeads(relatedLeads);
-                updateNumberOfEmployeesOnCompany(relatedLeads);
+            if (!leadsWithEmployeeNumberUpdateToCompany.isEmpty()) {
+                updateNumberOfEmployeesOnCompany(leadsWithEmployeeNumberUpdateToCompany);
             }
-            if(newLeads.size()>0) createCompany(newLeads);
         } catch (Exception e) {
             Utilities.sendDebugEmail('Error in Lead_RelatedCompanyLogic ',e,e.getMessage());
         }
@@ -183,7 +192,7 @@ public without sharing class Lead_RelatedCompanyLogic {
         return companyRelatedObjects;
     }
 
-    private static void updateNumberOfEmployeesOnCompany(List<Lead> leadsToCheck) {
+    private static void updateNumberOfEmployeesOnCompany(Set<Lead> leadsToCheck) {
         Set<Id> relatedCompanyIds = new Set<Id>();
         for (Lead lead : leadsToCheck) {
             relatedCompanyIds.add(lead.Related_Company__c);
