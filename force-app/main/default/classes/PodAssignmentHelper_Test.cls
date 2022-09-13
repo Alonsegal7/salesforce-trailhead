@@ -12,7 +12,6 @@ public with sharing class PodAssignmentHelper_Test {
             Partner_Company_Status__c = 'Signed',
             Signature_Approval_Status__c = 'Approved');
         insert PartnerCompany;
-        system.debug('Noam '+PartnerCompany);
         PartnerCompany = [SELECT Id FROM Account WHERE Partner_Company_Status__c='Signed'  LIMIT 1 ];
         Pod_Assignment__c pod = [SELECT Id,Partner_Pod_Lead_Partner_Company__c FROM Pod_Assignment__c WHERE Partner_Pod_Lead_Partner_Company__c =: PartnerCompany.Id LIMIT 1];
         system.assertEquals(PartnerCompany.Id, pod.Partner_Pod_Lead_Partner_Company__c);
@@ -61,7 +60,6 @@ public with sharing class PodAssignmentHelper_Test {
     user2SalesAESmb.Seniority__c ='Rep';
     user2SalesAESmb.LastName = 'Test AE Pod';
     usersToCreate.add(user2SalesAESmb);
-    System.debug('AE '+ user2SalesAESmb);
     insert usersToCreate;
     //check if for both users the Pod assignment has been created 
     user1SalesAMEnt= [SELECT Id,Business_Role__c FROM User WHERE LastName='Test AM Pod'  LIMIT 1];

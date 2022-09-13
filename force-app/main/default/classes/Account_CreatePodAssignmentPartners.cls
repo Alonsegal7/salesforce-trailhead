@@ -5,23 +5,17 @@ public with sharing class Account_CreatePodAssignmentPartners {
             set<Id> relevantAccountsIds= new set<Id>();
             Id PartnerCompneyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();
             for(Account acc: newAccounts){
-                system.debug('in function for insert '+ acc);
-                system.debug('in function for insert '+ acc.Partner_Company_Status__c);
-                //system.debug(oldAccountsMap.get(acc.id).Partner_Company_Status__c);
-                system.debug('in function for insert '+ oldAccountsMap);
                 //1. Partner Compeny has been created on signed status 2. Partner Compeny has been updated to be a signed partner compney 
                 if((oldAccountsMap==null && acc.RecordTypeId==PartnerCompneyRecordTypeId && acc.Partner_Company_Status__c=='Signed')||
                 (oldAccountsMap != null && acc.RecordTypeId==PartnerCompneyRecordTypeId  && 
                 acc.Partner_Company_Status__c!=oldAccountsMap.get(acc.id).Partner_Company_Status__c && acc.Partner_Company_Status__c=='Signed'))
                 {
                     relevantAccounts.add(acc);
-                    system.debug('Noam in condition');
                     //for partner company that has been updated, make sure for duplications (Pod assignemnt already has been created)
                     if(acc.Id!=null)
                     relevantAccountsIds.add(acc.Id);
                 }
             }
-            system.debug('Noam relevantAccsIds: '+relevantAccountsIds);
             if(relevantAccounts.isEmpty())
                 return;
 
@@ -30,25 +24,16 @@ public with sharing class Account_CreatePodAssignmentPartners {
             for(Pod_Assignment__c Pod: [select id,Partner_Pod_Lead_Partner_Company__c from Pod_Assignment__c where Partner_Pod_Lead_Partner_Company__c in: relevantAccountsIds AND Status__c!='Inactive']){               
                 existingPodAssignment.put(Pod.Partner_Pod_Lead_Partner_Company__c,Pod);
             }  
-            system.debug('Noam existing pod: '+existingPodAssignment);  
             list<Pod_Assignment__c> podsAssignmentToCreate= new list<Pod_Assignment__c>();
-            //list<Account> accToUpdate= new list<Account>();
             for(Account accForPodCreation:relevantAccounts){
                 if(accForPodCreation.Id==null||!existingPodAssignment.containskey(accForPodCreation.Id))
                 podsAssignmentToCreate.add(new Pod_Assignment__c(Partner_Pod_Lead_Partner_Company__c=accForPodCreation.Id,
                                                     Pod_Lead_Manager__c=accForPodCreation.OwnerId,
                                                     Pod_Type__c='Partners',
                                                     Status__c='Pending Assignment'));
-                //accToUpdate.add(new Account(id=accForPodCreation.Id,Pod_Assignment_Partners__c=podsAssignmentToCreate.id));
             }
             if(!podsAssignmentToCreate.isEmpty())
-                system.debug('create Pod: '+podsAssignmentToCreate);  
                 insert podsAssignmentToCreate;
-            // if(!accToUpdate.isEmpty())
-            //     update accToUpdate;
-        //}catch(exception e){
-            //Utilities.sendDebugEmail('Error in User_CreateLeadsCap',e,e.getMessage());   
-        //}
     }
 }
 
