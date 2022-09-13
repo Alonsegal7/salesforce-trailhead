@@ -1,7 +1,6 @@
 <template>
     <lightning-card  if:true={displayComponent} class="leadContextComponent">
 
-
         <div class="leadPoolTitle">
             <img src={starIcon} alt="" class="starIcons">
             The New Lead Pool Service
@@ -38,6 +37,11 @@
                     <c-new-lead-component init-owner={owner} company-size ={companySize}  country={country} >
                     </c-new-lead-component>
                 </lightning-layout-item>
+            </div>
+
+
+            <div>
+                <c-submit-feedback-button></c-submit-feedback-button>
             </div>
     </lightning-card>
 </template>

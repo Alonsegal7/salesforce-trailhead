@@ -13,15 +13,19 @@ const fieldArray = [
 ];
 
 export default class LeadContextComponent extends LightningElement {
-    @track displayComponent = false;//Needs to be set to false will be rendered after check 
-    @track isRelated=false;
-    @track isNewLead=false;
+    @track displayComponent = false;//Flag if displaying the component on the page
+
+    @track isRelated=false;//Flag to display related lead
+    @track isNewLead=false;//Flag to display new lead
     @track recordData=null;
 
     @track owner=null;
+
+    //Related Lead
     @track relatedDistributionReason=null;
     @track relatedRecordUrl = null;
 
+    //New Lead
     @track companySize = null;
     @track country=null;
 
@@ -29,9 +33,9 @@ export default class LeadContextComponent extends LightningElement {
     @track distributionReason=null;
 
     @track starIcon = michael_assets + '/icons/Rating.svg';
-    @track iconPic=null;
-    @track docUrl=null;
-    @track leadTypeTitle = null;
+    @track iconPic=null;//Setting the icon image based on the distribution reason 
+    @track docUrl=null;//Setting the doc url based on the distribution reason 
+    @track leadTypeTitle = null;//Setting the titleof the lead based on the distribution reason 
 
 
 
@@ -48,17 +52,22 @@ export default class LeadContextComponent extends LightningElement {
             this.relatedLeadCode = data.fields.Related_Lead_Code__c.value;
             this.distributionReason = data.fields.Distribution_reason__c.value;
 
+
+            //If relatedLeadCode is true then check if the Lead is new lead or related lead
             if(this.relatedLeadCode == true){
                 if(this.distributionReason =='Related'){
+
                     this.isRelated=true;
                     this.displayComponent = true;
+
                     this.iconPic = michael_assets + '/icons/file.svg';
                     this.docUrl='www.google.com';
                     this.leadTypeTitle = 'This Is A Related Sign Up';
                 }else if(this.distributionReason =='New lead'){
-                    console.log('In else if statment ', this.distributionReason);
+
                     this.isNewLead = true;
                     this.displayComponent = true;
+
                     this.iconPic = michael_assets + '/icons/phone.svg';
                     this.docUrl='www.google.com';
                     this.leadTypeTitle = 'This Is A New Sign Up';
@@ -73,59 +82,4 @@ export default class LeadContextComponent extends LightningElement {
         }
     }
 
-    // get relatedLeadCode(){
-    //     if(this.leadRecordData.data){
-    //         console.log('Testing line 15' , this.leadRecordData.data.fields.Related_Lead_Code__c.value);
-    //         return this.leadRecordData.data.fields.Related_Lead_Code__c.value;
-    //     }else{
-    //         return undefined;
-    //     }
-    // }
-
-
-    // get distributionReason(){
-    //     if(this.leadRecordData.data){
-    //         console.log('Testing line 15' , this.leadRecordData.data.fields.Distribution_reason__c.value);
-    //         return this.leadRecordData.data.fields.Distribution_reason__c.value;
-    //     }else{
-    //         return undefined;
-    //     } 
-    // }
-
-    // get relatedDistributionReason(){
-    //     if(this.leadRecordData.data){
-    //         // console.log('Testing line 15' , this.leadRecordData.data.fields.Related_Distribution_Reason__c.value);
-    //         return this.leadRecordData.data.fields.Related_Distribution_Reason__c.value;
-    //     }else{
-    //         return undefined;
-    //     } 
-    // }
-
-    // get ownerNameInitial(){
-    //     if(this.leadRecordData.data){
-    //         // console.log('Testing line 15' , this.leadRecordData.data.fields.Owner_Name_Initial__c.value);
-    //         return this.leadRecordData.data.fields.Owner_Name_Initial__c.value;
-    //     }else{
-    //         return undefined;
-    //     }   
-    // }
-
-    // get relatedRecordUrl(){
-    //     if(this.leadRecordData.data){
-    //         return this.leadRecordData.data.fields.Owner_Name_Initial__c.value;
-    //     }else{
-    //         return undefined;
-    //     }
-    // }
-
-    // get isDistributionReasonRelated(){
-    //     isRelatedResonTrue = this.leadRecordData.data.fields.Related_Lead_Code__c.value;
-    //     isReasonRelated = this.leadRecordData.data.fields.Distribution_reason__c.value;
-    //     console.log(isRelatedResonTrue + ' ' + isReasonRelated);
-    //     if( isRelatedResonTrue == true && isReasonRelated == 'Related'){
-    //             return true;
-    //         }else{
-    //             return false;
-    //         }
-    // }
 }

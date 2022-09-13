@@ -1,4 +1,4 @@
-.relatedBody{
+.newLeadBody{
     border: 1px solid #E6E9EF;
     border-radius: 8px;
     margin-top: 8px;
@@ -23,15 +23,16 @@
 
 
 
-.relatedReason{
+.companySize,
+.country{
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
     color: #FFFFFF;
+    display: inline;
 }
 
-.reasonLink{
-    font-style: normal;
-    color: #FFFFFF;
+.country{
+    margin-left: 15px;
 }
