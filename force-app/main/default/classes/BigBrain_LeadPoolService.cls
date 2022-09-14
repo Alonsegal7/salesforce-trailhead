@@ -81,22 +81,19 @@ public without sharing class BigBrain_LeadPoolService {
                     }
                 }
                 if(!newLeads_list.isEmpty()) {
-                    //check for dups by pulse account id and email
-                    set<string> emails = new set<string>();
+                    //check for dups by pulse account id
                     set<string> pulseIds = new set<string>();
                     map<string,lead> leadKeys = new map<string,lead>();
                     for(lead leadRec: newLeads_list){
-                        if(leadRec.Email == null || leadRec.primary_pulse_account_id__c == null) return;
-                        emails.add(leadRec.Email);
+                        if(leadRec.primary_pulse_account_id__c == null) continue;
                         pulseIds.add(leadRec.primary_pulse_account_id__c);
-                        leadKeys.put(leadRec.email + leadRec.primary_pulse_account_id__c, leadRec);
+                        leadKeys.put(leadRec.primary_pulse_account_id__c, leadRec);
                     }
-                    list<lead> existingLeads = [select Id, Email, primary_pulse_account_id__c from Lead where Email in: emails and primary_pulse_account_id__c in: pulseIds];
+                    list<lead> existingLeads = [select Id, primary_pulse_account_id__c from Lead where primary_pulse_account_id__c in: pulseIds];
                     if(!existingLeads.isEmpty()){
                         for(lead leadRec: existingLeads){
-                            String key = leadRec.email + leadRec.primary_pulse_account_id__c;
-                            if(leadKeys.containsKey(key)){
-                                leadKeys.remove(key);
+                            if(leadKeys.containsKey(leadRec.primary_pulse_account_id__c)){
+                                leadKeys.remove(leadRec.primary_pulse_account_id__c);
                             }
                         }
                         List<Lead> updatedList = leadKeys.values();
