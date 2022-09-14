@@ -22,7 +22,7 @@ public class BillingEntityHandler
         }
     }
     
-    public static void CopyPriorityId(list <Billing_Entity__c> BEList)
+    /*public static void CopyPriorityId(list <Billing_Entity__c> BEList)
     {
         List<Quote> quotesList = new List<Quote>();
             
@@ -43,7 +43,7 @@ public class BillingEntityHandler
         }
         
         update quotesList;
-    }
+    }*/
     
     public static void SetUniqueness (list <Billing_Entity__c> BEList)
     {
@@ -70,6 +70,6 @@ public class BillingEntityHandler
         
         SetUniqueness(BEList);
         if (event == 'Update') { SyncIConduct(BEList); }
-        if (event == 'Update') { CopyPriorityId(BEList); }
+        //if (event == 'Update') { CopyPriorityId(BEList); }
     }    
 }
