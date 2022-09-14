@@ -4,10 +4,14 @@ public without sharing class UtilitiesTest {
     static void makeData(){
         Id mart = Utilities.MARecordTypeId;
         Id comprt = Utilities.CompanyRecordTypeId;
+        Id pcomprt = Utilities.partnerCompanyRecordTypeId;
         Id acui = Utilities.AccountsPoolUserId;
         Id ptrt = Utilities.personalTargetRT;
+        Id iort = Utilities.internalOppRecordTypeId;
+        Id port = Utilities.partnerOppRecordTypeId;
         Id preLeadRtId = Utilities.preLeadRecordTypeId;
         Id potentialPartnerLeadRtId = Utilities.potentialPartnerLeadRecordTypeId;
+        Map<Id,User> activeUsers = Utilities.activeUsersMap; 
         string templateText = '<messaging:emailTemplate subject="{!relatedTo.Name}" recipientType="User" relatedToType="Lead"><messaging:htmlEmailBody ><ul><li>test content</li></ul></messaging:htmlEmailBody></messaging:emailTemplate>';
         EmailTemplate t = new EmailTemplate(DeveloperName = 'TestTemplateUtilitiesTest', TemplateType= 'Visualforce', FolderId = UserInfo.getUserId(),
         Name = 'TestEmailVFTemplate',
@@ -107,7 +111,23 @@ public without sharing class UtilitiesTest {
 
     @isTest
     static void getCompanySize() {
-        system.assertEquals('50-99', Utilities.getCompanySizeRange(65));
+        system.assertEquals('1-19', Utilities.getCompanySizeRange(5));
+        system.assertEquals('20-49', Utilities.getCompanySizeRange(25));
+        system.assertEquals('50-99', Utilities.getCompanySizeRange(95));
+        system.assertEquals('100-250', Utilities.getCompanySizeRange(165));
+        system.assertEquals('251-1500', Utilities.getCompanySizeRange(265));
+        system.assertEquals('1500+', Utilities.getCompanySizeRange(1565));
+    }
+
+    @isTest
+    static void getCountriesAndStates() {
+        system.assert(Utilities.allCountries.size()>0);
+        system.assert(Utilities.allStates.size()>0);
+    }
+
+    @isTest
+    static void shouldSendSlack() {
+        Utilities.sendSlackMessage('Test', 'michael-monitoring', null , null, null, null, null);
     }
 
     @isTest
