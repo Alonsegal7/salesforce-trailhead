@@ -8,15 +8,14 @@ public with sharing class SalesOrderErrorHandlingService {
             quote.BigBrain_Preview_API_Status__c='Request Sent';//indicate the quote that the request was out for bb
 
             if (!Test.isRunningTest()) {
-                res = BigBrainAPI.getSalesOrderPreview(pulseId,quoteId);//first try
-                ResponseWrapper wrapedRes = ResponseWrapper.parse(res);//parse to see if fails
-                if (wrapedRes.message!=null) {//message!= null means that bb returned error
-                    res = BigBrainAPI.getSalesOrderPreview(pulseId,quoteId);//try again
-                }
+                res = BigBrainAPI.getSalesOrderPreview(pulseId,quoteId);
                 system.debug('BigBrainFinalRes'+res);
                 status = HandleOrderErrors(res,quoteId);
             }
             else{
+                string fakeSystemError = '{"message":"Error Making Request"}';
+                status=HandleOrderErrors(fakeSystemError,quoteId);
+
                 string fakeRes = '{"valid":false,"validation_errors":["missing license period","not assigned to contract","no corresponding plan"],"validation_warnings":["account is not paying"],"arr":"4560.0","added_arr":"4560.0","list_price":"4560.0"}';
                 status=HandleOrderErrors(fakeRes,quoteId);
             }
