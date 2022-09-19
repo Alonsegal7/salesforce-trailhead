@@ -6,6 +6,7 @@
     margin: 0.25rem 0.5rem;
     font-family: "Poppins";
     font-weight: 400;
+    font-size: 15px;
 }
 
 
@@ -13,11 +14,10 @@
 .distributedOwner{
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
     line-height: 24px;
     color: #FFFFFF;
     margin-top: 9px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 
@@ -26,9 +26,9 @@
 .relatedReason{
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
     line-height: 24px;
     color: #FFFFFF;
+    margin-bottom: 10px;
 }
 
 .reasonLink{

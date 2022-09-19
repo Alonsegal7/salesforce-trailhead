@@ -32,8 +32,8 @@
 
 .feedbackImage{
     margin-right: -15px;
-    margin-top: -1px;
+    margin-top: 1px;
     z-index: 2;
     width: 35px;
-    height: 33px;
+    height: 29px;
 }

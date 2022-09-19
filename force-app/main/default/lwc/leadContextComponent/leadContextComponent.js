@@ -9,7 +9,8 @@ const fieldArray = [
     'Lead.Owner_Name_Initial__c', 
     'Lead.Related_Record_URL__c',
     'Lead.Company_Size__c',
-    'Lead.Country'
+    'Lead.Country',
+    'Lead.Long_Lead_ID__c'
 ];
 
 export default class LeadContextComponent extends LightningElement {
@@ -37,6 +38,8 @@ export default class LeadContextComponent extends LightningElement {
     @track docUrl=null;//Setting the doc url based on the distribution reason 
     @track leadTypeTitle = null;//Setting the titleof the lead based on the distribution reason 
 
+    @track feedbackFormUrl = null;
+
 
 
     @api recordId;
@@ -51,6 +54,12 @@ export default class LeadContextComponent extends LightningElement {
             this.relatedRecordUrl = data.fields.Related_Record_URL__c.value;
             this.relatedLeadCode = data.fields.Related_Lead_Code__c.value;
             this.distributionReason = data.fields.Distribution_reason__c.value;
+
+
+            //Adding link to form titan, Will add the message feedbak and feedback reason on the lead
+            this.feedbackFormUrl = `https://monday-test.formtitan.com/leadPoolFeedback?leadId=${this.recordId}#/`;
+
+            console.log('Line 60', this.feedbackFormUrl);
 
 
             //If relatedLeadCode is true then check if the Lead is new lead or related lead
@@ -80,6 +89,10 @@ export default class LeadContextComponent extends LightningElement {
         {
             console.log('Error');
         }
+    }
+
+    openFeedbackForm(){
+        window.open(this.feedbackFormUrl, '_blank').focus();
     }
 
 }
