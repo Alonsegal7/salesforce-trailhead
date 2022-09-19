@@ -8,6 +8,7 @@ trigger ContractTrigger on Contract (before insert, before update, after update,
         if (Trigger.isUpdate){
             CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
             Opportunity_RenewalCreation.updateRelatedRecordsFields(Trigger.oldMap, Trigger.newMap);
+            ContractEventHandler.ContractActivatedCheckAccount(Trigger.new,Trigger.oldMap);
         }
     }
 }

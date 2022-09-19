@@ -28,6 +28,10 @@ public with sharing class SalesOrderErrorHandlingService_Test {
         List<OpportunityLineItem> opportunityLines = new List<OpportunityLineItem>{ TestObjectCreator.CreateOpportunityProduct(opportunity, quoteLicenseLine) };
 
 
+        quoteNewCont.DH_Quote_Status__c='Won';
+        quoteNewCont.Document_Type__c='Sales Order';
+        update quoteNewCont;
+
     }
 
     @istest
