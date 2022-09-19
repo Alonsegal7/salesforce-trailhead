@@ -49,7 +49,7 @@ public without sharing class Utilities {
 		resEmail.setHtmlBody(renderedEmail.getHtmlBody());
         resEmail.setPlainTextBody(renderedEmail.getPlainTextBody());
         resEmail.setToAddresses(toAddresses);
-		resEmail.setBccAddresses(new List<String>{'kseniasm@monday.com','mayga@monday.com'});
+		//resEmail.setBccAddresses(new List<String>{'kseniasm@monday.com','mayga@monday.com'});
 		resEmail.setSaveAsActivity(false);
 
         if(ccAddresses != null) resEmail.setCcAddresses(ccAddresses);
