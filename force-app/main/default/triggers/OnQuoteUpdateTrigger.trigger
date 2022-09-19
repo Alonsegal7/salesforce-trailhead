@@ -2,8 +2,8 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, after delete,
     if(Trigger.isBefore && Trigger.isUpdate) {
         for(Quote newQuote : Trigger.new){   
             Quote oldQuote = Trigger.oldMap.get(newQuote.Id);
-            if (newQuote.Billing_Entity__c != null && oldQuote.Billing_Entity__c != newQuote.Billing_Entity__c)
-            { QuoteTriggerHandler.SyncPriorityId(newQuote); }
+            /*if (newQuote.Billing_Entity__c != null && oldQuote.Billing_Entity__c != newQuote.Billing_Entity__c)
+            { QuoteTriggerHandler.SyncPriorityId(newQuote); }*/
         }
         QuoteTriggerHandler.connectQuoteToBE(Trigger.new,Trigger.oldMap);
     }
