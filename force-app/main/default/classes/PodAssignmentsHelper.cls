@@ -4,7 +4,7 @@
         Set<Id> relvantSalesUsers = new set<Id>();
         List<Pod_Assignment__c> relvantPodAssignmentSales = new List<Pod_Assignment__c>();
         for(Pod_Assignment__c pod: newPodsAssignemnt){
-            if(oldPodsAssignemnt == null && pod.Pod_Type__c == 'Sales' &&pod.Pod_Lead_Manager__c==null){
+            if(oldPodsAssignemnt == null && pod.Pod_Type__c == 'Sales' &&pod.Pod_Lead_Manager__c==null && pod.Sales_Pod_Lead__c!=null){
                 relvantSalesUsers.add(pod.Sales_Pod_Lead__c);
                 relvantPodAssignmentSales.add(pod);
             }
@@ -21,7 +21,7 @@
         Set<Id> relvantPartnerCompenies = new set<Id>();
         List<Pod_Assignment__c> relvantPodAssignmentPartners = new List<Pod_Assignment__c>();
         for(Pod_Assignment__c pod: newPodsAssignemnt){
-            if(oldPodsAssignemnt == null && pod.Pod_Type__c == 'Partners' &&pod.Pod_Lead_Manager__c==null){
+            if(oldPodsAssignemnt == null && pod.Pod_Type__c == 'Partners' &&pod.Pod_Lead_Manager__c==null && pod.Partner_Pod_Lead_Partner_Company__c!=null){
                 relvantPartnerCompenies.add(pod.Partner_Pod_Lead_Partner_Company__c);
                 relvantPodAssignmentPartners.add(pod);
             }
