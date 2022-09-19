@@ -1,6 +1,7 @@
 public without sharing class BigBrain_LeadPoolService {
 
     public static list<string> emailRecipients = new list<string>{'kseniasm@monday.com','ronilu@monday.com','michaelim@monday.com'};
+    public static set<string> countryCodes = new set<string>{'GB','IE','FR','DE','AT','CH','BE','NE','LU','CZ','PL','IL','AE','QA','BH','ZA','NO','DK','SE','FI','IS','SI','NL','ET','GH','KE','KW','MU','MZ','NG','OM','RO','RW','SA','SN','SS','UG','UZ','BG','BY','CY','EE','ES','GE','GR','HR','IT','LT','LV','SK','TR','PT','RS','RU','UA','AZ','SZ','TZ','EG','HU'};
 
     public static Set<String> domainsBlackList {
         get {
@@ -37,7 +38,8 @@ public without sharing class BigBrain_LeadPoolService {
             }
             //query all relevant leads and update them with the refreshed data
             //we update the domain if limited = true only
-            list<lead> leads_list = [select Id, primary_pulse_account_id__c, Signup_Cleanup_Reason__c, NumberOfEmployees from lead where primary_pulse_account_id__c in: pulseIdToLead_map.keySet()];
+            list<lead> leads_list = [select Id, primary_pulse_account_id__c, Signup_Cleanup_Reason__c, NumberOfEmployees, RecordTypeId 
+                                    from lead where primary_pulse_account_id__c in: pulseIdToLead_map.keySet()];
             Datetime dt_now = Datetime.now();
             for(lead l: leads_list){
                 if(pulseIdToLead_map.containsKey(l.primary_pulse_account_id__c)){
@@ -45,11 +47,12 @@ public without sharing class BigBrain_LeadPoolService {
                     if(is_limited) {
                         l.BB_Account_Domain__c = refreshData.domain; //we update domain only for raw signups where domain was null/gmail and changed
                         l.Signup_Cleanup_Reason__c = l.Signup_Cleanup_Reason__c.replace('domain_null','').replace(';;',';');
+                    } else {
+                        l.Current_score__c = refreshData.score;
+                        if(l.RecordTypeId == Utilities.preLeadRecordTypeId) l.Distributed_score__c = refreshData.score; //we update distributed score only while the lead is still not distributed, once it is distributed we stop updating this field
+                        l.Engagement__c = refreshData.engagements;
+                        if(l.NumberOfEmployees == null && refreshData.score_params != null) l.NumberOfEmployees = refreshData.score_params.company_size;
                     }
-                    l.Current_score__c = refreshData.score;
-                    l.Distributed_score__c = refreshData.score;
-                    l.Engagement__c = refreshData.engagements;
-                    if(l.NumberOfEmployees == null && refreshData.score_params != null) l.NumberOfEmployees = refreshData.score_params.company_size;
                     l.Last_Refresh_Data_From_BB__c = dt_now;
                 }
             }
@@ -74,26 +77,23 @@ public without sharing class BigBrain_LeadPoolService {
                 for(Signup su: su_list){
                     if(su.account != null && su.account.data != null) {
                         lead l = createLead(su);
-                        if(l.CountryCode == 'FR') newLeads_list.add(l); //FOR FR PILOT
+                        if(countryCodes.contains(l.CountryCode)) newLeads_list.add(l); //for EMEA only
                     }
                 }
                 if(!newLeads_list.isEmpty()) {
-                    //check for dups by pulse account id and email
-                    set<string> emails = new set<string>();
+                    //check for dups by pulse account id
                     set<string> pulseIds = new set<string>();
                     map<string,lead> leadKeys = new map<string,lead>();
                     for(lead leadRec: newLeads_list){
-                        if(leadRec.Email == null || leadRec.primary_pulse_account_id__c == null) return;
-                        emails.add(leadRec.Email);
+                        if(leadRec.primary_pulse_account_id__c == null) continue;
                         pulseIds.add(leadRec.primary_pulse_account_id__c);
-                        leadKeys.put(leadRec.email + leadRec.primary_pulse_account_id__c, leadRec);
+                        leadKeys.put(leadRec.primary_pulse_account_id__c, leadRec);
                     }
-                    list<lead> existingLeads = [select Id, Email, primary_pulse_account_id__c from Lead where Email in: emails and primary_pulse_account_id__c in: pulseIds];
+                    list<lead> existingLeads = [select Id, primary_pulse_account_id__c from Lead where primary_pulse_account_id__c in: pulseIds];
                     if(!existingLeads.isEmpty()){
                         for(lead leadRec: existingLeads){
-                            String key = leadRec.email + leadRec.primary_pulse_account_id__c;
-                            if(leadKeys.containsKey(key)){
-                                leadKeys.remove(key);
+                            if(leadKeys.containsKey(leadRec.primary_pulse_account_id__c)){
+                                leadKeys.remove(leadRec.primary_pulse_account_id__c);
                             }
                         }
                         List<Lead> updatedList = leadKeys.values();
@@ -243,8 +243,7 @@ public without sharing class BigBrain_LeadPoolService {
         newLead.MobilePhone = user_data.mobile;
         newLead.Phone = user_data.phone;
         newLead.Seniority__c = user_data.seniority;
-        list<string> countryCodeWithStates = new list<string>{'US','MX','IT','IN','IE','CN','CA','BR','AU'};
-        if(countryCodeWithStates.contains(newLead.CountryCode)) newLead.State = user_data.xi_region; //we set state only for countries that we have states in salesforce enabled to prevent the state error
+        if(user_data.xi_region != null && Utilities.allStates.contains(user_data.xi_region)) newLead.State = user_data.xi_region; //we set state only for countries that we have states in salesforce enabled to prevent the state error
         newLead.Title = user_data.computed_title;
         //mapping with logic
         setEnrichedPhone(newLead, user_data.enriched_phone);

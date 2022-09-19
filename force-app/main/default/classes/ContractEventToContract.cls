@@ -174,13 +174,16 @@ public without sharing class ContractEventToContract {
                 relevantConts.add(con);
             }
         }
-        Map<Id, Contract> conMap = new Map<Id, Contract>(relevantConts);
-        List<Opportunity> relevantOppList = new List<Opportunity>([select id,Selected_Company_Contract__c from opportunity where IsClosed=false and Selected_Company_Contract__c in:conMap.keySet()]);
-
-        for (Opportunity opp : relevantOppList) {
-            opp.Related_Contract_ARR__c = conMap.get(opp.Selected_Company_Contract__c).Contract_ARR__c;
-            oppsToUpdate.add(opp);
+        if (!relevantConts.isempty()) {
+            Map<Id, Contract> conMap = new Map<Id, Contract>(relevantConts);
+            List<Opportunity> relevantOppList = new List<Opportunity>([select id,Selected_Company_Contract__c from opportunity where IsClosed=false and Selected_Company_Contract__c in:conMap.keySet()]);
+            
+            for (Opportunity opp : relevantOppList) {
+                opp.Related_Contract_ARR__c = conMap.get(opp.Selected_Company_Contract__c).Contract_ARR__c;
+                oppsToUpdate.add(opp);
+            }
         }
+
         if (!oppsToUpdate.isEmpty()) {
             Utilities.updateAndRetry(oppsToUpdate);
         }

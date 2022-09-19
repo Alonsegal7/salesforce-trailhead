@@ -295,6 +295,66 @@ public without sharing class ContractEventHandler {
 
     }
 
+    public static void ContractActivatedCheckAccount(List<Contract> newCont, Map<Id,Contract> oldCont){
+        Map<id, account> contAccMap = new Map<id, account>();
+        List<contract> relevantConts = new List<contract>();
+        Map<string,Subscription__c> pulseSubsMap = new Map<string,Subscription__c>();
+        List<account> acctsToUpdate = new List<account>();
+        Set<Id> relevantSubs = new Set<Id>();
+        List<Contract> conToUpdate = new List<Contract>();
+        List<Contract> ConToDeactivate = new List<Contract>();
+        Set<Id> oldAccIdToUpdate = new Set<Id>();
+        List<Contract_Event__c> conEventsToUpdate = new List<Contract_Event__c>();
+    
+        for (Contract con : newCont) {//contract was activated on bb
+            if (con.Core_Activation__c !=null && con.Core_Activation__c != oldCont.get(con.Id).Core_Activation__c) {//activated - verify activated account on subsription
+                relevantConts.add(con);
+                relevantSubs.add(con.Core_Activation__c);
+            }
+        }
+        //model the contract and subsciption to check if the contract is related to an account and if the account is related to the subscription account
+        if (!relevantConts.isempty() && !relevantSubs.isEmpty()) {
+            List<account> accts = [select id,primary_pulse_account_id__c,active_contract__c from account where active_contract__c in: relevantConts];
+            List<Subscription__c> coreActivationSubs = [select id,monday_account__c,Pulse_Account_Id__c from subscription__c where id in:relevantSubs];//handle only active subscriptions
+            List<contract_event__c> relevntEvents = [select id,Calculate_ARR__c,contract__c from contract_event__c where contract__c in:relevantConts and Calculate_ARR__c=false];//for cases where the future contract activated on BigBrain but the daily batch on sfdc didnt ran yet
+            for (Subscription__c sub : coreActivationSubs) {
+                pulseSubsMap.put(sub.Pulse_Account_Id__c,sub);
+            }
+            for (account acc : accts) {
+                contAccMap.put(acc.active_contract__c,acc);
+            }
+            for (contract con : relevantConts) {
+                if (contAccMap.get(con.Id)==null ||
+                    contAccMap.get(con.Id).primary_pulse_account_id__c!=con.Core_Activation_BB_Id__c) {//When the cont is not connected to account OR the pulse id of the sub is not the pulse of the current account - move the contract
+                    conToUpdate.add(new Contract(Id=con.Id,Continuation_Contract__c=null,Status__c='Active'));
+                    acctsToUpdate.add(new Account(Id=pulseSubsMap.get(con.Core_Activation_BB_Id__c).monday_account__c,Active_Contract__c=con.Id));
+                    oldAccIdToUpdate.add(pulseSubsMap.get(con.Core_Activation_BB_Id__c).monday_account__c);
+                }
+            }
+            list<account> oldAccCont = [select id, active_contract__c from account where id in:oldAccIdToUpdate];
+            for (account oldConAcc : oldAccCont) {
+                ConToDeactivate.add(new Contract(Id=oldConAcc.active_contract__c,status__c='Deactivated'));
+            }
+            for (contract_event__c conEv : relevntEvents) {
+                conEv.Calculate_ARR__c=true;
+                conEventsToUpdate.add(conEv);
+            }
+            if (!acctsToUpdate.isEmpty()) {
+                Utilities.sendSlackMessage('Contract was moved when it changed to active and the account is different ', 'alon-monitoring', null , null, null, '@channel Account Ids: ' + acctsToUpdate + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), null);
+                Utilities.updateAndRetry(acctsToUpdate);
+            }
+            if (!conToUpdate.isEmpty()) {
+                Utilities.updateAndRetry(conToUpdate);
+            }
+            if (!ConToDeactivate.isEmpty()) {
+                Utilities.updateAndRetry(ConToDeactivate);
+            }
+            if (!conEventsToUpdate.isEmpty()) {
+                Utilities.updateAndRetry(conEventsToUpdate);
+            }
+        }
+    }
+
 
 	private class updateOppQueueable implements System.Queueable {
         private List<Opportunity> oppToUpdateList; 

@@ -22,14 +22,14 @@ public without sharing class QuoteTriggerHandler {
         System.schedule('Batch_QuoteSync', nextFireTime, s);
     }
     
-    public static void SyncPriorityId(Quote quote) {
+    /*public static void SyncPriorityId(Quote quote) {
         Billing_Entity__c be = [
             SELECT Id, Priority_Id__c
             FROM Billing_Entity__c
             WHERE Id = :quote.Billing_Entity__c];
         
         quote.Priority_Customer_ID_Text__c = be.Priority_Id__c;
-    }
+    }*/
     
     /*public static void handleQuoteArchived(Id quoteId) {
         List<QuoteLineItem> quoteLineItems = [SELECT Id, Opportunity_Line_Item_ID__c FROM QuoteLineItem WHERE QuoteId =: quoteId];

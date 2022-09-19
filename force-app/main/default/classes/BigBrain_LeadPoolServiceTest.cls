@@ -46,7 +46,8 @@ public without sharing class BigBrain_LeadPoolServiceTest {
             Status = 'Received',
             LeadSource = 'Big Brain - Signup',
             Company = 'test',
-            primary_pulse_account_id__c = '123456'
+            primary_pulse_account_id__c = '123456',
+            Created_From_Pull_Signups_BB__c = true
         );
         insert l;
         Test.setMock(HttpCalloutMock.class, new mockRefreshSignups());

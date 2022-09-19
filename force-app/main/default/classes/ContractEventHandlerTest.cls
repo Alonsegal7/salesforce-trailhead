@@ -472,7 +472,6 @@ public with sharing class ContractEventHandlerTest {
         System.assertEquals(con1.activation_status__c ,'Pending Activation');
         System.assertEquals(conEve.activation_status__c ,'Pending Activation');
 
-
         Subscription__c sub = TestObjectCreator.CreateSubscription();
         sub.Pulse_Account_Id__c='12211';
         sub.Deactivation_Date__c=endDate;
@@ -486,14 +485,14 @@ public with sharing class ContractEventHandlerTest {
         contract con2 = [select id,Core_Activation__c,activation_status__c from contract limit 1];
         Contract_Event__c conEve1 = [select Id,activation_status__c,sku__c,Related_Activation__c, IsRecurring__c, Net_Unit_Price__c from contract_event__c where contract__c=:con.Id and sku__c='CORE-PRO' limit 1];
 
-
-
+        System.assertEquals(con2.Core_Activation__c ,sub.Id);
         System.assertEquals(con2.activation_status__c ,'Scheduled Activation');
         System.assertEquals(conEve1.activation_status__c ,'Scheduled Activation');
 
         sub.status__c='ACTIVE';
         update sub;
 
+        account acc = [select id,active_contract__c,primary_pulse_account_id__c from account where primary_pulse_account_id__c='12211' limit 1 ];
         contract con3 = [select id,Core_Activation__c,activation_status__c from contract limit 1];
         Contract_Event__c conEve3 = [select Id,activation_status__c,sku__c,Related_Activation__c, IsRecurring__c, Net_Unit_Price__c from contract_event__c where contract__c=:con.Id and sku__c='CORE-PRO' limit 1];
 
@@ -509,10 +508,28 @@ public with sharing class ContractEventHandlerTest {
 
         System.assertEquals(con4.activation_status__c ,'Inactive');
         System.assertEquals(conEve4.activation_status__c ,'Inactive');
-
-
         System.assertEquals(conEve1.Related_Activation__c ,sub.Id);
-        System.assertEquals(con2.Core_Activation__c ,sub.Id);
+
+        ma.active_contract__c = null;//we using this to test also the ContractActivatedCheckAccount function - the contract will be back when the activation will set to active
+        update ma;
+
+        System.assertEquals(ma.active_contract__c ,null);
+
+    
+        con4.Core_Activation__c=null;
+        update con4;
+
+        con4.Core_Activation__c=sub.Id;
+        update con4;
+
+        contract con5 = [select id,Core_Activation__c,activation_status__c from contract limit 1];
+
+
+        System.assertNotEquals(acc.active_contract__c ,null);
+        System.assertEquals(acc.active_contract__c ,con5.Id);
+
+
+
 
     }
 
