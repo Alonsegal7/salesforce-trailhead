@@ -39,6 +39,56 @@ public with sharing class BigBrainAPI {
         return get('/salesforce_api/plans/' + pricingVersion);
     }
 
+    public static HttpResponse refreshSignups(list<String> pulse_account_ids, Boolean limited){
+        Map<String,Object> reqBody = new Map<String,Object>();
+        reqBody.put('pulse_account_ids',pulse_account_ids);
+        reqBody.put('limited',limited);
+        string url = '/salesforce_api/signups_refresh';
+        
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='Big_Brain'][0];
+        String baseUrl = 'https://data.bigbrain.me'; //hardcoded to pull from prod on purpose
+        String userType = [select Function__c from User where Id =: UserInfo.getUserId()][0].Function__c;
+        request.setMethod('POST');
+        request.setEndpoint(baseUrl + url);
+        request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        request.setHeader('Authorization', whMTD.Key__c);
+        request.setHeader('From', UserInfo.getUserEmail());
+        request.setHeader('User-Type', userType);
+        request.setBody(JSON.serialize(reqBody));
+        request.setTimeout(120000);
+
+        HttpResponse response = http.send(request);
+        return response;
+    }
+
+    public static HttpResponse pullSignups(Datetime from_date_time, Datetime to_date_time){
+        string url = '/salesforce_api/signups?';
+        String f = string.valueOf(from_date_time).replace(' ', '%20');
+        String t = string.valueOf(to_date_time).replace(' ', '%20');
+        url += 'from_date_time='+f+'&to_date_time='+t;
+
+        //return get(url); 
+
+        //the following section is for testing the endpoint in fullsandbox while pulling signups from bb prod
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        Webhook_Key__mdt whMTD = [select id,Key__c from Webhook_Key__mdt where DeveloperName='Big_Brain'][0];
+        String baseUrl = 'https://data.bigbrain.me'; //hardcoded to pull from prod on purpose
+        String userType = [select Function__c from User where Id =: UserInfo.getUserId()][0].Function__c;
+        request.setMethod('GET');
+        request.setEndpoint(baseUrl + url);
+        request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        request.setHeader('Authorization', whMTD.Key__c);
+        request.setHeader('From', UserInfo.getUserEmail());
+        request.setHeader('User-Type', userType);
+        request.setTimeout(120000);
+
+        HttpResponse response = http.send(request);
+        return response;
+    }
+
     public static String grantAccountFeatures(String pulseAccountId, List<String> features){
         Map<String, String> requestParams = new Map<String, String>();
         Date dueDate = Date.today().addDays(30);

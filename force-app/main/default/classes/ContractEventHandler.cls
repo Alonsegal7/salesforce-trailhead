@@ -1,4 +1,4 @@
-public with sharing class ContractEventHandler {
+public without sharing class ContractEventHandler {
 
     public static Map<Id, Quote> alreadyHandledQuotes = new Map<Id, Quote>();
     public static Boolean isRevisedProRatedQuote;
@@ -104,12 +104,14 @@ public with sharing class ContractEventHandler {
                     if (!oppsToUpdate.isEmpty()) {
                         //if we run from a batch or queueable limit is reached already -> we do the update in real-time
                         //else we call a queueable for the update
+                        Utilities.cleanFlexQueue();
                         if(!System.isBatch() && !ApexLimits.queueableLimitReached()) System.enqueueJob(new updateOppQueueable(oppsToUpdate));
                         else update oppsToUpdate;
                     }
                     if (!proRatedQuotesToUpdate.isempty()) {
                         //if we run from a batch or queueable limit is reached already -> we do the update in real-time
                         //else we call a queueable for the update
+                        Utilities.cleanFlexQueue();
                         if(!System.isBatch() && !ApexLimits.queueableLimitReached()) System.enqueueJob(new updateQuoteQueueable(proRatedQuotesToUpdate));
                         else update proRatedQuotesToUpdate;
                     }
@@ -282,10 +284,12 @@ public with sharing class ContractEventHandler {
         }
 
         if (!quoteToUpdate.isempty()) {
+            Utilities.cleanFlexQueue();
             System.enqueueJob(new updateQuoteQueueable(quoteToUpdate));
         }
 
         if (!conEventsToUpdate.isempty()) {
+            Utilities.cleanFlexQueue();
             System.enqueueJob(new updateContractEventQueueable(conEventsToUpdate));
         }
 

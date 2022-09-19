@@ -237,6 +237,17 @@ public without sharing class Utilities {
         set;  
     }
 
+    public static Id partnerCompanyRecordTypeId {  
+        get {  
+            if (partnerCompanyRecordTypeId == null) {  
+                partnerCompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();  
+            }
+            return partnerCompanyRecordTypeId;  
+        }  
+        set;  
+    }
+
+
     public static Id CompanyRecordTypeId {  
         get {  
             if (CompanyRecordTypeId == null) {  
@@ -267,6 +278,18 @@ public without sharing class Utilities {
         set;  
     }
 
+
+    public static Id potentialPartnerLeadRecordTypeId {  
+        get {  
+            if (potentialPartnerLeadRecordTypeId == null) {  
+                potentialPartnerLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Potential_Partner').getRecordTypeId();  
+            }
+            return potentialPartnerLeadRecordTypeId;  
+        }  
+        set;  
+    }
+
+
     public static Id internalOppRecordTypeId {  
         get {  
             if (internalOppRecordTypeId == null) {  
@@ -276,6 +299,17 @@ public without sharing class Utilities {
         }  
         set;  
     }
+
+    public static Id partnerOppRecordTypeId {  
+        get {  
+            if (partnerOppRecordTypeId == null) {  
+                partnerOppRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();  
+            }
+            return partnerOppRecordTypeId;  
+        }  
+        set;  
+    }
+
 
     public static Id internalLeadRecordTypeId {  
         get {  

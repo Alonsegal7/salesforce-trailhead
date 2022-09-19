@@ -142,6 +142,19 @@ public class PartnerCommissionServiceTest {
         System.assertNotEquals(null, pcList.get(1).End_Date__c);
     }
 
+    static testmethod void testPartnerCommissionCreationFromARRWithDateNull(){
+        Account mondayAcc = [select Id from Account where RecordTypeId =: Utilities.MARecordTypeId limit 1];
+        mondayAcc.ARR__c = 0;
+        mondayAcc.Last_ARR_Update_Timestamp__c = null;
+        Test.startTest();
+        update mondayAcc;
+        System.debug(mondayAcc);
+        Test.stopTest();
+        List<Partner_Commission__c> pcList = [select Id, End_Date__c from Partner_Commission__c order by End_Date__c NULLS FIRST];
+        System.assertEquals(1, pcList.size());
+        System.assertNotEquals(null, pcList.get(0).End_Date__c);
+    }
+
     static testmethod void testPartnerTransfer(){
         Opportunity opp = [select Channel_Partner__c from Opportunity limit 1];
         Account mondayAcc = [select Id from Account where Channel_Partner__c =: opp.Channel_Partner__c limit 1];

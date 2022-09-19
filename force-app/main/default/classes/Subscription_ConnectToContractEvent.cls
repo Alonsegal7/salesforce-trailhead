@@ -55,11 +55,10 @@ public without sharing class Subscription_ConnectToContractEvent {
                         sub.Product__c=prodBySKUs.get(sub.SKU__c).Id;
                     }
                     sub.Monday_Account__c=acc.Id;
-                    conProdsKeys.add(sub.Contract__c+sub.SKU__c);//Check if Extract added seats to sub
-
                     if(sub.Status__c=='ACTIVE'&&sub.Contract__c==null){//if contract is selected in BB, do not create/connect to another contract
                         if(acc.Active_Contract__c!=null&&sub.Deactivation_Date__c==acc.Active_Contract__r.EndDate){//connect to existing active contract (Different end date will create a new contract)
                             sub.Contract__c=acc.Active_Contract__c;
+                            conProdsKeys.add(sub.Contract__c+sub.SKU__c);//Check if Extract added seats to sub
                         }
                         else if(acc.Active_Contract__c!=null&&sub.Deactivation_Date__c!=acc.Active_Contract__r.EndDate) {//Active Contract is related to the account and subscription dates are above contract end date -needs to decativate
                                 priorContsMap.put(sub.BigBrain_Id__c,acc.Active_Contract__c);//We use this map in order to update this contract on the new contract created
