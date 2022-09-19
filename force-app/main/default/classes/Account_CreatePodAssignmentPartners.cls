@@ -16,14 +16,14 @@ public with sharing class Account_CreatePodAssignmentPartners {
                     relevantAccountsIds.add(acc.Id);
                 }
             }
-            if(relevantAccounts.isEmpty())
-                return;
-
+            if(relevantAccounts.isEmpty()) return;
             //look for existing Pods Assignemnt in order to prevent duplications
             map<id,Pod_Assignment__c> existingPodAssignment= new map<id,Pod_Assignment__c>();
-            for(Pod_Assignment__c Pod: [select id,Partner_Pod_Lead_Partner_Company__c from Pod_Assignment__c where Partner_Pod_Lead_Partner_Company__c in: relevantAccountsIds AND Status__c!='Inactive']){               
-                existingPodAssignment.put(Pod.Partner_Pod_Lead_Partner_Company__c,Pod);
-            }  
+            if(!relevantAccountsIds.isEmpty()){
+                for(Pod_Assignment__c Pod: [select id,Partner_Pod_Lead_Partner_Company__c from Pod_Assignment__c where Partner_Pod_Lead_Partner_Company__c in: relevantAccountsIds AND Status__c!='Inactive']){               
+                    existingPodAssignment.put(Pod.Partner_Pod_Lead_Partner_Company__c,Pod);
+                }  
+            }
             list<Pod_Assignment__c> podsAssignmentToCreate= new list<Pod_Assignment__c>();
             for(Account accForPodCreation:relevantAccounts){
                 if(accForPodCreation.Id==null||!existingPodAssignment.containskey(accForPodCreation.Id))

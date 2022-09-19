@@ -12,7 +12,7 @@ public without sharing class User_CreatePodAssignment {
                     relevantUsers.add(user);
                     //for user that has been updated, make sure for duplications
                     if(user.Id!=null)
-                        relevantUsersIds.add(user.Id);
+                    relevantUsersIds.add(user.Id);
                 }
             }
             if(relevantUsers.isEmpty())
@@ -20,9 +20,12 @@ public without sharing class User_CreatePodAssignment {
 
             //look for existing Active Pods Assignemnt in order to prevent duplications
             map<id,Pod_Assignment__c> existingPodAssignment= new map<id,Pod_Assignment__c>();
-            for(Pod_Assignment__c Pod: [select id,Sales_Pod_Lead__c from Pod_Assignment__c where Sales_Pod_Lead__c in: relevantUsersIds AND Status__c!='Inactive']){
-                existingPodAssignment.put(Pod.Sales_Pod_Lead__c,Pod);
-            } 
+            if(!relevantUsersIds.isEmpty()){
+                for(Pod_Assignment__c Pod: [select id,Sales_Pod_Lead__c from Pod_Assignment__c where Sales_Pod_Lead__c in: relevantUsersIds AND Status__c!='Inactive']){
+                    existingPodAssignment.put(Pod.Sales_Pod_Lead__c,Pod);
+                }
+            }
+
             list<Pod_Assignment__c> podsAssignmentToCreate= new list<Pod_Assignment__c>();
             for(User user:relevantUsers){
                 if(user.Id==null||!existingPodAssignment.containskey(user.Id))
