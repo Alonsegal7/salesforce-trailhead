@@ -4,7 +4,7 @@ public class IConductServiceTest {
     @isTest
 	static void handleBillingEntitySync() {
         Test.startTest();
-        Billing_Entity__c be = new Billing_Entity__c(Name = 'Test billing entity');
+        Billing_Entity__c be = TestObjectCreator.CreateBE();
         insert be;
         
         System.enqueueJob(new IConductService('BillingEntityERPInsertUpdateSync',be.Id));
@@ -15,7 +15,7 @@ public class IConductServiceTest {
     public static void handleQuoteSync() {
         Test.startTest();
         
-        Billing_Entity__c be = new Billing_Entity__c(Name = 'Test billing entity');
+        Billing_Entity__c be = TestObjectCreator.CreateBE();
         insert be;
         
         System.enqueueJob(new IConductService('QuoteERPInsertOnlySync',be.Id));
