@@ -189,7 +189,8 @@ public class TestObjectCreator
         Contract c = new Contract(
             Name = 'Test contract',
             Seats__c = 5,
-        	AccountId = account.Id
+        	AccountId = account.Id,
+            Tier__c = 'Pro'
         );
         
         if (persistImmediate) insert c;
