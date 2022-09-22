@@ -194,8 +194,8 @@ public without sharing class Lead_StampsService {
         }
         for(Lead leadRec: relevantLeads){
             Boolean isOwnerUser = String.valueOf(leadRec.OwnerId).startsWith('005') ? true : false;
-            // Record type setting, done only on new leads and owner change
-            if(oldLeadsMap == null || leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId) {
+            // Record type setting, done only on new leads and owner change, excluding potential partner leads
+            if(leadRec.RecordTypeId != Utilities.potentialPartnerLeadRecordTypeId && (oldLeadsMap == null || leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId)) {
                 // change to internal RT - if the owner is contact sales queue or owner is a sales user  
                 if((!isOwnerUser && queuesMap?.get(leadRec.OwnerId).Name.contains('Contact Sales')) || 
                 ((isOwnerUser && ownersMap?.get(leadRec.OwnerId).Group__c == 'Sales'))) {
