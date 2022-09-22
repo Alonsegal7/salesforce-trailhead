@@ -1,0 +1,28 @@
+<template>
+    <lightning-card>
+        <div class="dailyQuotaComponent">My Team's Daily Quota</div>
+        <lightning-layout>
+
+            <lightning-layout-item size="12" class="thContainer">
+                <lightning-layout-item size="1" padding="around-small" class="tableTh"></lightning-layout-item>
+                <lightning-layout-item size="1" padding="around-small" class="tableTh">Full Name</lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small" class="tableTh">Signups Daily Quota</lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small" class="tableTh">Sign Ups Countries</lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small" class="tableTh">Leads Recieved Today</lightning-layout-item>
+                <lightning-layout-item size="1" padding="around-small" class="tableTh">AVG Score Today</lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small" class="tableTh">Sign Up > Opp %</lightning-layout-item>
+                <lightning-layout-item size="1" padding="around-small" class="tableTh">Total Open Leads</lightning-layout-item>
+            </lightning-layout-item>
+            
+            <lightning-layout-item size="12" padding="around-small"  class="trContainer">
+                <ul>
+                    <template for:each={theTeamMembers} for:item="teamMember" if:true={isDataAvilable}>
+                        <li key={teamMember.Name}>
+                            <c-team-member-quota team-member-info={teamMember}></c-team-member-quota>
+                        </li>
+                    </template>
+                </ul>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

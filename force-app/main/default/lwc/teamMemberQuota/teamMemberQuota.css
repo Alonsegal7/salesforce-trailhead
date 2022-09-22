@@ -1,0 +1,38 @@
+.trContainer{
+    left:0;
+}
+
+.tableTr{
+    display: inline-block;
+    text-align: center;
+}
+
+.imageContainer{
+    border-radius: 50px;
+    height: 55px;
+    width: 55px;
+}
+
+.dailyQuotaInput{
+    text-align: center;
+    width: 60px;
+    border-color: transparent;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.editIcon{
+    margin-left: -10px;
+}
