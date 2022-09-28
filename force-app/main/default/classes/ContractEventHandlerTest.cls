@@ -101,7 +101,7 @@ public with sharing class ContractEventHandlerTest {
         proRataQuoteLicenseLine.ServiceDate=startDate;
         proRataQuoteLicenseLine.End_Date__c=endDate;
         proRataQuoteLicenseLine.Duration__c=12;
-        proRataQuoteLicenseLine.Tier__c='Enterprise';
+        proRataQuoteLicenseLine.Tier__c='Pro';
         proRataQuoteLicenseLine.List_Price__c=38;
         proRataQuoteLicenseLine.Net_Per_Unit__c=263;
         proRataQuoteLicenseLine.Added_Seats__c=53;
