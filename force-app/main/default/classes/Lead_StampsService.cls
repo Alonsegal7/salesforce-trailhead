@@ -76,7 +76,6 @@ public without sharing class Lead_StampsService {
             lead.Account_Arr_on_Lead_Creation__c = lead.Account_ARR__c;
             lead.Type__c = lead.Account_ARR__c > 0 ? 'Expansion' : 'New Business';
             lead.Received_timestamp__c = Date.today();
-            lead.Company_Size__c = lead.NumberOfEmployees != null ? Utilities.getCompanySizeRange(lead.NumberOfEmployees) : null;
         }
     }
 
