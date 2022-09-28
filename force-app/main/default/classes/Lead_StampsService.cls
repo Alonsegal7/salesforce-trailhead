@@ -60,8 +60,8 @@ public without sharing class Lead_StampsService {
             if(lead.Reached_Out_To__c && lead.First_Reachout_Timestamp__c == null && (oldLeads == null || !oldLeads.get(lead.Id).Reached_Out_To__c)){ //reached out to is marked as true on insert/update and timestamp is null
                 lead.First_Reachout_Timestamp__c = Datetime.now();
             }
-            //company size changed
-            if(oldLeads == null || lead.NumberOfEmployees != oldLeads.get(lead.Id).NumberOfEmployees) {
+            //new lead w/o company size or existing lead with number of employees change
+            if((oldLeads == null && String.isBlank(lead.Company_Size__c)) || (oldLeads != null && lead.NumberOfEmployees != oldLeads.get(lead.Id).NumberOfEmployees)) {
                 lead.Company_Size__c = lead.NumberOfEmployees != null ? Utilities.getCompanySizeRange(lead.NumberOfEmployees) : null;
             }  
         }
@@ -194,8 +194,8 @@ public without sharing class Lead_StampsService {
         }
         for(Lead leadRec: relevantLeads){
             Boolean isOwnerUser = String.valueOf(leadRec.OwnerId).startsWith('005') ? true : false;
-            // Record type setting, done only on new leads and owner change
-            if(oldLeadsMap == null || leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId) {
+            // Record type setting, done only on new leads and owner change, excluding potential partner leads
+            if(leadRec.RecordTypeId != Utilities.potentialPartnerLeadRecordTypeId && (oldLeadsMap == null || leadRec.OwnerId != oldLeadsMap.get(leadRec.Id).OwnerId)) {
                 // change to internal RT - if the owner is contact sales queue or owner is a sales user  
                 if((!isOwnerUser && queuesMap?.get(leadRec.OwnerId).Name.contains('Contact Sales')) || 
                 ((isOwnerUser && ownersMap?.get(leadRec.OwnerId).Group__c == 'Sales'))) {

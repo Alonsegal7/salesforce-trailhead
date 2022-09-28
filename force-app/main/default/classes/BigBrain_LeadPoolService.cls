@@ -244,7 +244,7 @@ public without sharing class BigBrain_LeadPoolService {
         newLead.Phone = user_data.phone;
         newLead.Seniority__c = user_data.seniority;
         if(user_data.xi_region != null && Utilities.allStates.contains(user_data.xi_region)) newLead.State = user_data.xi_region; //we set state only for countries that we have states in salesforce enabled to prevent the state error
-        newLead.Title = user_data.computed_title;
+        newLead.Title = user_data.computed_title != null ? (user_data.computed_title).left(128) : null; //this field has 128 char limit
         //mapping with logic
         setEnrichedPhone(newLead, user_data.enriched_phone);
         setLeadName(newLead, user_data.name);
