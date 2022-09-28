@@ -46,7 +46,7 @@ public without sharing class BigBrain_LeadPoolService {
                     RefreshSignupData refreshData = pulseIdToLead_map.get(l.primary_pulse_account_id__c);
                     if(is_limited) {
                         l.BB_Account_Domain__c = refreshData.domain; //we update domain only for raw signups where domain was null/gmail and changed
-                        l.Signup_Cleanup_Reason__c = l.Signup_Cleanup_Reason__c.replace('domain_null','').replace(';;',';');
+                        l.Signup_Cleanup_Reason__c = l.Signup_Cleanup_Reason__c?.replace('domain_null','')?.replace(';;',';');
                     } else {
                         l.Current_score__c = refreshData.score;
                         if(l.RecordTypeId == Utilities.preLeadRecordTypeId) l.Distributed_score__c = refreshData.score; //we update distributed score only while the lead is still not distributed, once it is distributed we stop updating this field
