@@ -70,7 +70,7 @@ export default class LeadContextComponent extends LightningElement {
                     this.displayComponent = true;
 
                     this.iconPic = michael_assets + '/icons/file.svg';
-                    this.docUrl='www.google.com';
+                    this.docUrl='https://monday.monday.com/docs/3298342646';
                     this.leadTypeTitle = 'This Is A Related Sign Up';
                 }else if(this.distributionReason =='New lead'){
 
@@ -78,7 +78,7 @@ export default class LeadContextComponent extends LightningElement {
                     this.displayComponent = true;
 
                     this.iconPic = michael_assets + '/icons/phone.svg';
-                    this.docUrl='www.google.com';
+                    this.docUrl='https://monday.monday.com';
                     this.leadTypeTitle = 'This Is A New Sign Up';
                     this.companySize = data.fields.Company_Size__c.value;
                     this.country = data.fields.Country.value;
@@ -87,7 +87,7 @@ export default class LeadContextComponent extends LightningElement {
         }
         else if(error)
         {
-            console.log('Error');
+            console.log('From wire leadRecordData Error line 90');
         }
     }
 
