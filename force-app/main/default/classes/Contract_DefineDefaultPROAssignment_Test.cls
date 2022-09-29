@@ -4,29 +4,67 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
     static void makeData(){
         Account company = TestObjectCreator.CreateCompany();
         insert company;
-        //--Contracts Creation
+        //--Contracts Creation + con event creation + product creation
+        Product2 prodForExisitngEvent = TestObjectCreator.CreateProduct();
+        insert prodForExisitngEvent;
         List<Contract> contractsToCreate = new List<Contract>();
         Contract contract1 = TestObjectCreator.CreateContract(company);
         contract1.Name = 'Test contract 1';
         contract1.Status__c='Active';
+        contract1.Last_Event_Payment_Method__c='WIRE';
+        contract1.Period__c = 'Yearly';
         contractsToCreate.add(contract1);
         Contract contract2 = TestObjectCreator.CreateContract(company);
         contract2.Name = 'Test contract 2';
         contract2.Status__c='Active';
+        contract2.Last_Event_Payment_Method__c='WIRE';
+        contract2.Period__c = 'Yearly';
         contractsToCreate.add(contract2);
         Contract contract3 = TestObjectCreator.CreateContract(company);
         contract3.Name = 'Test contract 3';
         contract3.Status__c='Active';
+        contract3.Last_Event_Payment_Method__c='WIRE';
+        contract3.Period__c = 'Yearly';
         contractsToCreate.add(contract3);
         Contract contract4 = TestObjectCreator.CreateContract(company);
         contract4.Name = 'Test contract 4';
         contract4.Status__c='Active';
+        contract4.Last_Event_Payment_Method__c='WIRE';
+        contract4.Period__c = 'Yearly';
         contractsToCreate.add(contract4);
         Contract contract5 = TestObjectCreator.CreateContract(company);
         contract5.Name = 'Test contract 5';
         contract5.Status__c='Active';
+        contract5.Last_Event_Payment_Method__c='WIRE';
+        contract5.Period__c = 'Yearly';
         contractsToCreate.add(contract5);
         insert contractsToCreate;
+        //contracts products
+        List<Contract_Product__c> contractsProductsToCreate = new List<Contract_Product__c>();
+        Contract_Product__c conProd1 = new Contract_Product__c(Contract__c=contract1.Id,Product__c=prodForExisitngEvent.Id);
+        contractsProductsToCreate.add(conProd1);
+        Contract_Product__c conProd2 = new Contract_Product__c(Contract__c=contract2.Id,Product__c=prodForExisitngEvent.Id);
+        contractsProductsToCreate.add(conProd2);
+        Contract_Product__c conProd3 = new Contract_Product__c(Contract__c=contract3.Id,Product__c=prodForExisitngEvent.Id);
+        contractsProductsToCreate.add(conProd3);
+        Contract_Product__c conProd4 = new Contract_Product__c(Contract__c=contract4.Id,Product__c=prodForExisitngEvent.Id);
+        contractsProductsToCreate.add(conProd4);
+        Contract_Product__c conProd5 = new Contract_Product__c(Contract__c=contract5.Id,Product__c=prodForExisitngEvent.Id);
+        contractsProductsToCreate.add(conProd5);
+        insert contractsProductsToCreate;
+        //contracts events
+        List<Contract_Event__c> contractsEventsToCreate = new List<Contract_Event__c>();
+        Contract_Event__c conEvent1 = new Contract_Event__c(Contract__c=contract1.Id, Calculate_Arr__c=true, Contract_Product__c=conProd1.Id, Product__c= prodForExisitngEvent.Id,SKU__c='CORE-PRO',IsRecurring__c=true, ARR__c=123, Quantity__c=20,Quantity_Unit_Of_Measure__c='Seats');
+        contractsEventsToCreate.add(conEvent1);
+        Contract_Event__c conEvent2 = new Contract_Event__c(Contract__c=contract2.Id, Calculate_Arr__c=true, Contract_Product__c=conProd2.Id, Product__c= prodForExisitngEvent.Id,SKU__c='CORE-PRO',IsRecurring__c=true, ARR__c=123, Quantity__c=20,Quantity_Unit_Of_Measure__c='Seats');
+        contractsEventsToCreate.add(conEvent2);
+        Contract_Event__c conEvent3 = new Contract_Event__c(Contract__c=contract3.Id, Calculate_Arr__c=true, Contract_Product__c=conProd3.Id, Product__c= prodForExisitngEvent.Id,SKU__c='CORE-PRO',IsRecurring__c=true, ARR__c=123, Quantity__c=20,Quantity_Unit_Of_Measure__c='Seats');
+        contractsEventsToCreate.add(conEvent3);
+        Contract_Event__c conEvent4 = new Contract_Event__c(Contract__c=contract4.Id, Calculate_Arr__c=true, Contract_Product__c=conProd4.Id, Product__c= prodForExisitngEvent.Id,SKU__c='CORE-PRO',IsRecurring__c=true, ARR__c=123, Quantity__c=20,Quantity_Unit_Of_Measure__c='Seats');
+        contractsEventsToCreate.add(conEvent4);
+        Contract_Event__c conEvent5 = new Contract_Event__c(Contract__c=contract5.Id, Calculate_Arr__c=true, Contract_Product__c=conProd5.Id, Product__c= prodForExisitngEvent.Id,SKU__c='CORE-PRO',IsRecurring__c=true, ARR__c=123, Quantity__c=20,Quantity_Unit_Of_Measure__c='Seats');
+        contractsEventsToCreate.add(conEvent5);
+        insert contractsEventsToCreate;
 
         //create partner company 
         List<Account> partnersList = new List<Account>();

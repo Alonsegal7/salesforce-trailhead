@@ -8,8 +8,9 @@ public without sharing class Account_SyncPROAssignment {
             }
         }
         if(contractsIdsForChangeDefualtProAssignemnt.isEmpty()) return;
-        for (Contract con : [select Id,Define_Default_PRO_Assignment__c from Contract where Id in: contractsIdsForChangeDefualtProAssignemnt 
-        and (Renewal_Opp_Created_from_Contract__c = false and Primary_Renewal_Owner__c!=null)]) {
+        date conEndDateQ1 = date.newInstance(2023, 03, 31); 
+        for (Contract con : [select Id,Define_Default_PRO_Assignment__c from Contract where Id in: contractsIdsForChangeDefualtProAssignemnt and (Renewal_Opp_Created_from_Contract__c = false AND Primary_Renewal_Owner__c!=null AND EndDate <=:conEndDateQ1)]) 
+        {
             con.Define_Default_PRO_Assignment__c = true;
             contractsToUpdate.add(con);
         }
