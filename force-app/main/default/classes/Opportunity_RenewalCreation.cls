@@ -27,6 +27,19 @@ public without sharing class Opportunity_RenewalCreation {
         List<Account> mondayAcc = [SELECT Id, Name, Active_Contract__c, Company__c FROM Account WHERE Active_Contract__c =: recordId AND ARR__c != null ORDER BY ARR__c DESC LIMIT 1];
         return mondayAcc;
     }
+
+    @AuraEnabled(cacheable=true)
+    public static Id checkCurrentContract(Id recordId){
+        String sObjName = recordId.getSObjectType().getDescribe().getName();
+        if (sObjName == 'Account'){
+            return [SELECT Active_Contract__c  FROM Account WHERE Id =: recordId LIMIT 1]?.Active_Contract__c;
+    
+         }
+        else{
+             return recordId;
+
+        }
+    }
     
     /*
     Create new Renewal Opportunities, can be used:

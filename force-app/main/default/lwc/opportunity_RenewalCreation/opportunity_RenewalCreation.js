@@ -6,9 +6,12 @@ import createRenewalOpportunities from '@salesforce/apex/Opportunity_RenewalCrea
 import checkOpenRenewalOpps from '@salesforce/apex/Opportunity_RenewalCreation.checkOpenRenewalOpps';
 import checkOpenExpansionOpps from '@salesforce/apex/Opportunity_RenewalCreation.checkOpenExpansionOpps';
 import checkRelatedMAs from '@salesforce/apex/Opportunity_RenewalCreation.checkRelatedMAs';
+import checkCurrentContract from '@salesforce/apex/Opportunity_RenewalCreation.checkCurrentContract';
 import primaryRenewalOwner from "@salesforce/schema/Contract.Primary_Renewal_Owner__c";
 import renewal_primaryRenewalLabel from '@salesforce/label/c.renewal_primaryRenewalLabel';
 import renewal_relatedMondayAccountLabel from '@salesforce/label/c.renewal_relatedMondayAccountLabel';
+//mport Contract from '@salesforce/schema/Order.Contract';
+//import ContractId from '@salesforce/schema/Order.ContractId';
 
 export default class Opportunity_RenewalCreation extends NavigationMixin(LightningElement){//
     label = {
@@ -30,6 +33,7 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
     primaryRenewalExist = false;
     displayOpportunity = false;
     primaryRenewalOwner;
+    relevantRecordId;
     primaryRenewal = '';
 
     /*  Get the 'Primary_Renewal_Owner__c' fron Contract level
@@ -38,42 +42,45 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
         - It will disable the 'Create Renewal Opportunity' button
         In order to enable the button --> the user must populate the 'Primary_Renewal_Owner__c' field --> No refresh needed
     */
-    @wire(getRecord, { recordId: '$recordId', fields: [primaryRenewalOwner] })
+    @wire(checkCurrentContract,{recordId: '$recordId'})
+    contractId({error,data}){
+        if(data){
+            console.log('Noam data'+ JSON.stringify(data))
+            this.relevantRecordId = data;
+        }
+        if(error){
+            console.log('Error Wasnt able to find record Id '+ error.body.message); 
+            this.error = error; 
+        }
+    }
+    
+    @wire(getRecord, { recordId: '$relevantRecordId', fields: [primaryRenewalOwner] })
     contractRecord({ error, data }) {
         if(data){
-            console.log('### data: ' + data);
-            console.log('### data_v1: ' + JSON.stringify(data));
             this.primaryRenewal = getFieldValue(data, primaryRenewalOwner);
-            console.log('### primaryRenewal: ' + this.primaryRenewal);
             this.primaryRenewalExist = false;
             this.buttonDisplayed = false;
             if(this.primaryRenewal == null || this.primaryRenewal == ''){
                 this.primaryRenewalExist = true;
                 this.buttonDisplayed = true;
-                console.log('### this.primaryRenewalExist: ' + this.primaryRenewalExist);
             }
-        }
-
+        }       
         if(error){
             console.log('### error - contractRecord: ' + error.body.message);
             this.error = error;
         }
     }
 
-    @wire(checkRelatedMAs, { recordId: '$recordId' })
+    @wire(checkRelatedMAs, { recordId: '$relevantRecordId' })
     mondayAccList({ error, data }) {
-        console.log('### data: ' + data);
         if (data) {
 			// find how many items are in caselist for each loop
-			console.log(' No of accs --> ' + data.length);
             this.mondayAcc = data;
             this.error = undefined;
             if(data.length == 0){
-                console.log('### in if: ' + data.length);
                 this.buttonDisplayed = true;
                 this.mondayAccExist = true;
             }
-            console.log('### mondayAccExist: ' + this.mondayAccExist);
         }
         
         else if (error) {
@@ -82,23 +89,18 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
         }
     }
 
-    @wire(checkOpenRenewalOpps, { recordId: '$recordId' })
+    @wire(checkOpenRenewalOpps, { recordId: '$relevantRecordId'})
     renewalOppList({ error, data }) {
-        console.log('### data: ' + data);
         if (data) {
-			console.log(' No of opps --> ' + data.length);
             this.renewalOppty = data;
             this.error = undefined;
             if(data.length > 0){
-                console.log('### in if: ' + data.length);
                 this.renewalOppEsixt = true;
             }
 
             else {
-                console.log('### in else: ' + data.length);
                 this.renewalOppEsixt = false;
             }
-            console.log('### renewalOppEsixt: ' + this.renewalOppEsixt);
         }
         
         else if (error) {
@@ -107,7 +109,7 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
         }
     }
 
-    @wire(checkOpenExpansionOpps, { recordId: '$recordId' })
+    @wire(checkOpenExpansionOpps, { recordId: '$relevantRecordId' })
     expansionList({ error, data }) {
         console.log('### data_v1: ' + data);
         if (data) {
@@ -148,7 +150,7 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
     handleClick() {
         console.log('!!!');
         this.showSpinner = true;
-        const conIds = [this.recordId];
+        const conIds = [this.relevantRecordId];
         createRenewalOpportunities({renewalContractIds: conIds,Source:'Manual Renewal Creation From Contract'}).then((response)=>{
             this.showSpinner = false;
             this.opportunityId = response[0].Id;
