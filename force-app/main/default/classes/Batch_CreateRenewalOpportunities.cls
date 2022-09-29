@@ -6,7 +6,7 @@ public without sharing class Batch_CreateRenewalOpportunities implements Schedul
 
     //should be replaced with dynamic cmt
     public static Boolean getShouldRun() {
-        return true;
+        return false;
     }
 
     //should be replaced with dynamic cmt
