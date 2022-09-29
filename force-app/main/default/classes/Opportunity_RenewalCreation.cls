@@ -168,7 +168,7 @@ public without sharing class Opportunity_RenewalCreation {
             }
         }
         if (!relevantContMap.isEmpty()) {
-            List<Account> realtedMA = [SELECT Id, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: relevantContMap.keySet() AND ARR__c != null ORDER BY ARR__c DESC];
+            List<Account> realtedMA = [SELECT Id, Renewal_Owner__c,Renewal_Manager__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: relevantContMap.keySet() AND ARR__c != null ORDER BY ARR__c DESC];
             //RM + PRO has been updated 
             if(NeedToUpdatePRO && NeedToUpdateRM){
                 for (Account acc : realtedMA) {
