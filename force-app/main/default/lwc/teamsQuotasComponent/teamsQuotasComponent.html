@@ -18,11 +18,16 @@
                 <ul>
                     <template for:each={theTeamMembers} for:item="teamMember" if:true={isDataAvilable}>
                         <li key={teamMember.Name}>
-                            <c-team-member-quota team-member-info={teamMember}></c-team-member-quota>
+                            <c-team-member-quota team-member-info={teamMember} oneditquotaclik={handleDailyQuotaChanged}></c-team-member-quota>
                         </li>
                     </template>
                 </ul>
             </lightning-layout-item>
         </lightning-layout>
+
+        <lightning-layout-item if:true={openModal}>
+                <c-edit-popup onclosepopup={closePopUp} member-quota-detail={selectedQuota}></c-edit-popup>
+        </lightning-layout-item>
+
     </lightning-card>
 </template>
