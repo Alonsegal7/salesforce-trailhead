@@ -157,10 +157,10 @@ public without sharing class Opportunity_RenewalCreation {
             if((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c) || singleCon.Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c || singleCon.Renewal_Manager__c != oldContracts.get(singleCon.Id).Renewal_Manager__c){
                 relevantContMap.put(singleCon.Id, singleCon);
                 if ((newContracts.get(singleCon.Id).Renewal_Manager__c != oldContracts.get(singleCon.Id).Renewal_Manager__c)) {
-                    NeedToUpdatePRO=true;
+                    NeedToUpdateRM=true;
                 }
                 if ((newContracts.get(singleCon.Id).Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c)) {
-                    NeedToUpdateRM=true;
+                    NeedToUpdatePRO=true;
                 }
                 if ((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c)) {
                     NeedToUpdateOpp=true;
