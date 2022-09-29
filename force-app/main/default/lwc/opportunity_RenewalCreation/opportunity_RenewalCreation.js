@@ -20,7 +20,6 @@ export default class Opportunity_RenewalCreation extends NavigationMixin(Lightni
     };
 
     @api recordId;
-    @api objectApiName;
     @track opportunityId;
     @track renewalOppty;
     @track expansionOppty;
