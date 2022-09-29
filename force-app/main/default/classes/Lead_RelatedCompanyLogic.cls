@@ -199,13 +199,18 @@ public without sharing class Lead_RelatedCompanyLogic {
         }
         if (relatedCompanyIds.isEmpty()) return;
         Map<Id,Account> companiesMap = new Map<Id,Account>([SELECT Id, NumberOfEmployees FROM Account WHERE Id IN: relatedCompanyIds]);
-        List<Account> companiesToUpdate = new List<Account>();
+        Map<Id,Account> companiesToUpdateMap = new Map<Id,Account>(); //a map is used because 2 signups can point to the same company, in this case we will take the one with the larger size
         for (Lead lead : leadsToCheck) {
             if (lead.NumberOfEmployees != companiesMap.get(lead.Related_Company__c).NumberOfEmployees) {
-                companiesToUpdate.add(new Account(Id = lead.Related_Company__c, NumberOfEmployees = lead.NumberOfEmployees));
+                if (!companiesToUpdateMap.containsKey(lead.Related_Company__c)) {
+                    companiesToUpdateMap.put(lead.Related_Company__c, new Account(Id = lead.Related_Company__c, NumberOfEmployees = lead.NumberOfEmployees));
+                }
+                else if (lead.NumberOfEmployees > companiesToUpdateMap.get(lead.Related_Company__c).NumberOfEmployees) {
+                    companiesToUpdateMap.get(lead.Related_Company__c).NumberOfEmployees = lead.NumberOfEmployees;
+                }
             }
         }
-        update companiesToUpdate;
+        update companiesToUpdateMap.values();
     }
 
     public static void createCompany(List<Lead> leadsToCreateCompanyFor) {
