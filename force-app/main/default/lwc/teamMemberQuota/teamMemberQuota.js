@@ -8,8 +8,9 @@ export default class TeamMemberQuota extends LightningElement {
     @track editIcon = quotas_assets + '/iconsQuota/edit.svg';
 
 
+    //Padd custom event to the parent if the user clicked on the edit button 
     openEditQuotaHandler(){
-        console.log('In openEditQuotaHandler');
+        console.log('In openEditQuotaHandler');//Will be deleted
         const tileClicked = new CustomEvent('editquotaclik', {detail: this.teamMemberInfo, openWindow: true});
         this.dispatchEvent(tileClicked);
     }

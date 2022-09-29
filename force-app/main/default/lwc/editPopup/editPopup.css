@@ -1,8 +1,18 @@
 .dailyQuotaInput{
+    width: 33%;
     margin-top: 10px;
+    padding: 0px;
+    margin-bottom: 15px;
     /* text-align: center; */
 }
 
+.popUpP{
+    font-size: 15px;
+}
+
+.submitBtn{
+    background-color: rgb(87, 155, 252);
+}
 /* textarea:focus, input:focus{
     outline: none;
 } */

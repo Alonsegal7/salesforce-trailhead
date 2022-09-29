@@ -17,15 +17,34 @@
                 </header>
                 <!-- Modal/Popup Box LWC body starts here -->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <p>Enter the new amount of daily signups quotas for {memberQuotaDetail.Name}</p>
-                    <label for="quotasAmount">Number of new Quots:</label>
-                    <lightning-input type="number" class="dailyQuotaInput" id="quotasAmount" value={newValue} onchange={newQuotaValue}></lightning-input>
+                    <p class="popUpP">Enter the new amount of daily signups quotas for {memberQuotaDetail.Name}</p>
+
+                <lightning-layout-item>
+                    <template if:true={memberQuotaDetail.Leads_Quotas__r}>
+                        <template for:each={memberQuotaDetail.Leads_Quotas__r} for:item="signUpDailyQuota">
+                            <ul key={signUpDailyQuota.Id}>
+                                <lightning-record-edit-form onsuccess={handleSuccess} record-id={signUpDailyQuota.Id} object-api-name="Lead_Quota__c">
+                                    <lightning-input-field field-name="Sign_Up_Daily_Quota__c" class="dailyQuotaInput"></lightning-input-field>
+
+
+                                    <lightning-button
+                                                        class="slds-m-top_small submitBtn"
+                                                        variant="brand"
+                                                        type="submit"
+                                                        name="update"
+                                                        label="Update"
+                                    >
+                                    </lightning-button>
+                                </lightning-record-edit-form>
+
+                                <!-- <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button> -->
+
+                            </ul>
+                        </template>
+                    </template>
+                </lightning-layout-item>
+
                 </div>
-                <!-- Modal/Popup Box LWC footer starts here -->
-                <footer class="slds-modal__footer">
-                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
-                    <button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button>
-                </footer>
             </div>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>

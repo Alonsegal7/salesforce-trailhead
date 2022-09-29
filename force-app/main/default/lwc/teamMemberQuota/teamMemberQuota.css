@@ -13,3 +13,18 @@
     width: 55px;
 }
 
+.dailyQuotaInput{
+    display: inline-block;
+    margin-right:5px;
+}
+
+.actualOpenLeads{
+    display: inline-block;
+    color: green;
+}
+
+.limitLeads{
+    display: inline-block;
+    color: red;
+}
+
