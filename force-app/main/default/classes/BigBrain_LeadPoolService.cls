@@ -1,6 +1,6 @@
 public without sharing class BigBrain_LeadPoolService {
 
-    public static list<string> emailRecipients = new list<string>{'kseniasm@monday.com','ronilu@monday.com','michaelim@monday.com'};
+    public static list<string> emailRecipients = new list<string>{'kseniasm@monday.com','ronilu@monday.com','michaelim@monday.com','razbe@monday.com'};
     public static set<string> countryCodes = new set<string>{'GB','IE','FR','DE','AT','CH','BE','NE','LU','CZ','PL','IL','AE','QA','BH','ZA','NO','DK','SE','FI','IS','SI','NL','ET','GH','KE','KW','MU','MZ','NG','OM','RO','RW','SA','SN','SS','UG','UZ','BG','BY','CY','EE','ES','GE','GR','HR','IT','LT','LV','SK','TR','PT','RS','RU','UA','AZ','SZ','TZ','EG','HU'};
 
     public static Set<String> domainsBlackList {
@@ -46,7 +46,7 @@ public without sharing class BigBrain_LeadPoolService {
                     RefreshSignupData refreshData = pulseIdToLead_map.get(l.primary_pulse_account_id__c);
                     if(is_limited) {
                         l.BB_Account_Domain__c = refreshData.domain; //we update domain only for raw signups where domain was null/gmail and changed
-                        l.Signup_Cleanup_Reason__c = l.Signup_Cleanup_Reason__c.replace('domain_null','').replace(';;',';');
+                        l.Signup_Cleanup_Reason__c = l.Signup_Cleanup_Reason__c?.replace('domain_null','')?.replace(';;',';');
                     } else {
                         l.Current_score__c = refreshData.score;
                         if(l.RecordTypeId == Utilities.preLeadRecordTypeId) l.Distributed_score__c = refreshData.score; //we update distributed score only while the lead is still not distributed, once it is distributed we stop updating this field
@@ -244,7 +244,7 @@ public without sharing class BigBrain_LeadPoolService {
         newLead.Phone = user_data.phone;
         newLead.Seniority__c = user_data.seniority;
         if(user_data.xi_region != null && Utilities.allStates.contains(user_data.xi_region)) newLead.State = user_data.xi_region; //we set state only for countries that we have states in salesforce enabled to prevent the state error
-        newLead.Title = user_data.computed_title;
+        newLead.Title = user_data.computed_title != null ? (user_data.computed_title).left(128) : null; //this field has 128 char limit
         //mapping with logic
         setEnrichedPhone(newLead, user_data.enriched_phone);
         setLeadName(newLead, user_data.name);

@@ -17,6 +17,7 @@ trigger OnQuoteUpdateTrigger on Quote (after insert, after update, after delete,
             Quote_CallQuoteSync.Quote_CallQuoteSync(Trigger.new,Trigger.oldMap);
         }
         ContractEventHandler.SalesOrderContractEvent(Trigger.new,Trigger.oldMap);
+        Quote_SyncToExternal.syncActivationStatusToExternal(Trigger.new,Trigger.oldMap);
         Quote_CloseCorrectionOpp.Quote_CloseCorrectionOpp(Trigger.new, Trigger.oldMap);
     }   
     if(Trigger.isAfter){
