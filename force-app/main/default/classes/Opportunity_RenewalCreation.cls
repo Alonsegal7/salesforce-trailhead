@@ -136,20 +136,47 @@ public without sharing class Opportunity_RenewalCreation {
         List<Account> accsToUpdate = new List<Account>();
         Map<Id, Contract> relevantContMap = new Map<Id, Contract>();
         Boolean NeedToUpdateOpp=false;
+        Boolean NeedToUpdatePRO=false;
+        Boolean NeedToUpdateRM=false;
+
 
         for (Contract singleCon : newContracts.values()) {
-            if((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c) || singleCon.Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c){
+            if((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c) || singleCon.Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c || singleCon.Renewal_Manager__c != oldContracts.get(singleCon.Id).Renewal_Manager__c){
                 relevantContMap.put(singleCon.Id, singleCon);
+                if ((newContracts.get(singleCon.Id).Renewal_Manager__c != oldContracts.get(singleCon.Id).Renewal_Manager__c)) {
+                    NeedToUpdatePRO=true;
+                }
+                if ((newContracts.get(singleCon.Id).Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c)) {
+                    NeedToUpdateRM=true;
+                }
                 if ((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c)) {
                     NeedToUpdateOpp=true;
                 }
             }
         }
         if (!relevantContMap.isEmpty()) {
-            List<Account> realtedMA = [SELECT Id, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: relevantContMap.keySet() AND ARR__c != null ORDER BY ARR__c DESC];  
-            for (Account acc : realtedMA) {
-                acc.Renewal_Owner__c  = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
-                accsToUpdate.add(acc);
+            List<Account> realtedMA = [SELECT Id, Renewal_Owner__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: relevantContMap.keySet() AND ARR__c != null ORDER BY ARR__c DESC];
+            //RM + PRO has been updated 
+            if(NeedToUpdatePRO && NeedToUpdateRM){
+                for (Account acc : realtedMA) {
+                    acc.Renewal_Owner__c  = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
+                    acc.Renewal_Manager__c  = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
+                    accsToUpdate.add(acc);
+                }
+            }
+            //only the RM has been updated 
+            if(!NeedToUpdatePRO && NeedToUpdateRM){
+                for (Account acc : realtedMA) {
+                    acc.Renewal_Manager__c  = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
+                    accsToUpdate.add(acc);
+                }
+            }
+            //only the PRO has been updated
+            if(NeedToUpdatePRO && !NeedToUpdateRM){
+                for (Account acc : realtedMA) {
+                    acc.Renewal_Owner__c  = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
+                    accsToUpdate.add(acc);
+                }
             }
         }   
          if (NeedToUpdateOpp) {
