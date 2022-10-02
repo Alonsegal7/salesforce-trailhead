@@ -9,6 +9,7 @@ const fieldArray = [
     'Lead.Owner_Name_Initial__c', 
     'Lead.Related_Record_URL__c',
     'Lead.Company_Size__c',
+    'Lead.Comp_Size_Formula__c',
     'Lead.Country',
     'Lead.Long_Lead_ID__c'
 ];
@@ -57,9 +58,7 @@ export default class LeadContextComponent extends LightningElement {
 
 
             //Adding link to form titan, Will add the message feedbak and feedback reason on the lead
-            this.feedbackFormUrl = `https://monday-test.formtitan.com/leadPoolFeedback?leadId=${this.recordId}#/`;
-
-            console.log('Line 60', this.feedbackFormUrl);
+            // this.feedbackFormUrl = 'https://forms.monday.com/forms/7f75d98aace78ed4c34bdbf543f070f0?r=use1';
 
 
             //If relatedLeadCode is true then check if the Lead is new lead or related lead
@@ -80,7 +79,7 @@ export default class LeadContextComponent extends LightningElement {
                     this.iconPic = michael_assets + '/icons/phone.svg';
                     this.docUrl='https://monday.monday.com';
                     this.leadTypeTitle = 'This Is A New Sign Up';
-                    this.companySize = data.fields.Company_Size__c.value;
+                    this.companySize = data.fields.Comp_Size_Formula__c.value;
                     this.country = data.fields.Country.value;
                 }
             }
@@ -89,10 +88,6 @@ export default class LeadContextComponent extends LightningElement {
         {
             console.log('From wire leadRecordData Error line 90');
         }
-    }
-
-    openFeedbackForm(){
-        window.open(this.feedbackFormUrl, '_blank').focus();
     }
 
 }

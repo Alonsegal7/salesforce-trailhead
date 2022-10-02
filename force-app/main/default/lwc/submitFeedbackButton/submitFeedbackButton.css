@@ -3,6 +3,10 @@
     margin-right: 0.5rem;
 }
 
+.submitButtonContainer :hover{
+    cursor: pointer;
+}
+
 .img_btn{
     display: inline-block;
     display: flex;
@@ -36,4 +40,17 @@
     z-index: 2;
     width: 35px;
     height: 29px;
+}
+
+.cloneIcon{
+    display: inline-block;
+}
+
+/* .cloneIcon{
+    position: absolute;
+    z-index: 5;
+} */
+
+.cloneIcon:hover{
+    cursor: pointer;
 }
