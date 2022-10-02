@@ -20,7 +20,7 @@
                 <ul>
                     <template for:each={teamMembers} for:item="teamMember" if:true={isDataAvilable}>
                         <li key={teamMember.Name}>
-                            <c-team-member-quota team-member-info={teamMember} oneditquotaclik={handleDailyQuotaChanged}></c-team-member-quota>
+                            <c-team-member-quota team-member-info={teamMember} team-memebr-name={teamMember.Name} oneditquotaclik={handleDailyQuotaChanged}></c-team-member-quota>
                         </li>
                     </template>
                 </ul>

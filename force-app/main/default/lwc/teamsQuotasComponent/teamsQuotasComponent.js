@@ -4,12 +4,14 @@ import { refreshApex } from '@salesforce/apex';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import getMyTeamQuoats from '@salesforce/apex/TeamQuotaComponentHelper.getMyTeamQuoats';
+import getAVGDistributedScore from '@salesforce/apex/TeamQuotaComponentHelper.getAVGDistributedScore';
 
 
 export default class TeamQuotaComponent extends LightningElement {
 
     //Will hold the data from the apex method using @wire 
     @track teamMembers;
+    @track teamMembersMap;
 
     //If we get data from @wire then dispay the records of the team members else dont 
     @track isDataAvilable =false;
@@ -34,6 +36,20 @@ export default class TeamQuotaComponent extends LightningElement {
             console.log('line 21 ', this.isDataAvilable);//To be delted
         }else if(result.error){
             console.log('Wasnt able to fatch data ', result.error);
+        }
+    }
+
+
+    @wire(getAVGDistributedScore, {userId:'$userId'})
+    teamMembersDistributedScore(result){
+        if(result.data){
+            console.log('Line 45', JSON.stringify(result.data));
+
+             this.teamMembersMap = new Map(result.data.map(obj => [ obj.Owner_Name_Initial__c, obj.expr0]));
+
+            console.log('Line 49 ' ,this.teamMembersMap); 
+        }else if(result.error){
+            console.log('Line 47 ', error);
         }
     }
 
