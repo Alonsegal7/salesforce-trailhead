@@ -1,3 +1,8 @@
+.THIS .slds-input:focus, .THIS .slds-input:active {
+    border-color: transparent;
+    box-shadow: none;
+}
+
 .trContainer{
     left:0;
 }
@@ -9,8 +14,8 @@
 
 .imageContainer{
     border-radius: 50px;
-    height: 55px;
-    width: 55px;
+    height: 40px;
+    width: 40px;
 }
 
 .dailyQuotaInput{
@@ -21,10 +26,17 @@
 .actualOpenLeads{
     display: inline-block;
     color: green;
+    margin-right: 3px;
 }
 
 .limitLeads{
     display: inline-block;
     color: red;
+    margin-left: 3px;
+}
+
+.dailyQuotaForm{
+    display: inline-block;
+    width: 55px;
 }
 
