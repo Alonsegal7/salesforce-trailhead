@@ -201,7 +201,7 @@ public without sharing class Lead_RelatedCompanyLogic {
         Map<Id,Account> companiesMap = new Map<Id,Account>([SELECT Id, NumberOfEmployees FROM Account WHERE Id IN: relatedCompanyIds]);
         Map<Id,Account> companiesToUpdateMap = new Map<Id,Account>(); //a map is used because 2 signups can point to the same company, in this case we will take the one with the larger size
         for (Lead lead : leadsToCheck) {
-            if (lead.NumberOfEmployees != companiesMap.get(lead.Related_Company__c).NumberOfEmployees) {
+            if (lead.NumberOfEmployees > companiesMap.get(lead.Related_Company__c).NumberOfEmployees) {
                 if (!companiesToUpdateMap.containsKey(lead.Related_Company__c)) {
                     companiesToUpdateMap.put(lead.Related_Company__c, new Account(Id = lead.Related_Company__c, NumberOfEmployees = lead.NumberOfEmployees));
                 }
