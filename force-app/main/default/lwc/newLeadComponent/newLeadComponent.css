@@ -37,3 +37,7 @@
 .country{
     margin-left: 15px;
 }
+
+.profileUrl:hover{
+cursor: pointer;
+}

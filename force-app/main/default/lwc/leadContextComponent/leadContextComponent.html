@@ -19,7 +19,8 @@
 
                         <c-related-lead-component init-owner={owner}
                         related-distribution-reason={relatedDistributionReason}
-                        related-record-url={relatedRecordUrl}>
+                        related-record-url={relatedRecordUrl}
+                        profile-url={ownerProfile}>
                         </c-related-lead-component>
 
                     </lightning-layout-item>
@@ -34,7 +35,7 @@
                                                 doc-url={docUrl}>
                     </c-lead-context-data-box>      
                     
-                    <c-new-lead-component init-owner={owner} company-size ={companySize}  country={country} >
+                    <c-new-lead-component init-owner={owner} company-size ={companySize}  country={country} profile-url={ownerProfile}>
                     </c-new-lead-component>
                 </lightning-layout-item>
             </div>
