@@ -47,7 +47,13 @@ export default class TeamQuotaComponent extends LightningElement {
 
              this.teamMembersMap = new Map(result.data.map(obj => [ obj.Owner_Name_Initial__c, obj.expr0]));
 
+             this.teamMembers.forEach(member => {
+                member.avgScore = this.teamMembersMap.get('member.Name')
+                    this.selectedQuota = member;
+                });
+                console.log('Line 54' , JSON.stringify(this.teamMembers));
             console.log('Line 49 ' ,this.teamMembersMap); 
+
         }else if(result.error){
             console.log('Line 47 ', error);
         }
