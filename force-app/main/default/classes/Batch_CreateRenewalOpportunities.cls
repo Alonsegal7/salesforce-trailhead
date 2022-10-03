@@ -6,9 +6,17 @@ public without sharing class Batch_CreateRenewalOpportunities implements Schedul
 
     //should be replaced with dynamic cmt
     public static Boolean getShouldRun() {
-        return false;
+        string getRenewalAutomaticCreationStatus = '';
+        Apex_Services_Status__mdt RenewalAutomaticCreationStatus = [SELECT Id, Label, Status__c FROM Apex_Services_Status__mdt WHERE Label = 'RenewalAutomaticCreation'][0];
+		getRenewalAutomaticCreationStatus = RenewalAutomaticCreationStatus.Status__c;
+		if (getRenewalAutomaticCreationStatus == 'Active'){
+            return true;
+        }
+        else{
+            return false;
+        }
+        //return false;
     }
-
     //should be replaced with dynamic cmt
     public static Integer getMonthToAdd() {
         return 2;
