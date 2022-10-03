@@ -2,6 +2,7 @@ public without sharing class BigBrain_LeadPoolService {
 
     public static list<string> emailRecipients = new list<string>{'kseniasm@monday.com','ronilu@monday.com','michaelim@monday.com','razbe@monday.com'};
     public static set<string> countryCodes = new set<string>{'GB','IE','FR','DE','AT','CH','BE','NE','LU','CZ','PL','IL','AE','QA','BH','ZA','NO','DK','SE','FI','IS','SI','NL','ET','GH','KE','KW','MU','MZ','NG','OM','RO','RW','SA','SN','SS','UG','UZ','BG','BY','CY','EE','ES','GE','GR','HR','IT','LT','LV','SK','TR','PT','RS','RU','UA','AZ','SZ','TZ','EG','HU'};
+    public static Boolean recoveryCreated = false;
 
     public static Set<String> domainsBlackList {
         get {
@@ -102,38 +103,69 @@ public without sharing class BigBrain_LeadPoolService {
                         Database.insert(newLeads_list);
                     }
                 }
-                updateCustomSetting(cs, to_date_time, true);
+                updateCustomSetting(cs, to_date_time, true, null, null);
                 Utilities.sendEmail('Successfull signups pull from '+ string.valueOf(from_date_time) + ' to ' + string.valueOf(to_date_time), string.valueOf(newLeads_list.size()) + ' signups pulled', emailRecipients); 
             } else {
-                updateCustomSetting(cs, null, false);
-                sendSlackBBError(res.getBody(), 'Failed signups pull from '+ string.valueOf(from_date_time) + ' to ' + string.valueOf(to_date_time), res.getStatusCode());
+                String exceptionSubject = 'Failed signups pull from '+ string.valueOf(from_date_time) + ' to ' + string.valueOf(to_date_time);
+                String exceptionBody = 'HTTP request failure. Error code: ' + res.getStatusCode();
+                updateCustomSetting(cs, to_date_time, false, exceptionSubject, exceptionBody);
+                sendSlackBBError(res.getBody(), exceptionSubject, res.getStatusCode());
             }
         } catch (Exception e){
-            updateCustomSetting(cs, null, false);
-            Utilities.sendEmail('Failed signups pull from '+ string.valueOf(from_date_time) + ' to ' + string.valueOf(to_date_time), e.getMessage() + e.getStackTraceString(), emailRecipients); 
+            System.debug('BigBrain_LeadPoolService Exception caught 1: '+e.getMessage());
+            String exceptionSubject = 'Failed signups pull from '+ string.valueOf(from_date_time) + ' to ' + string.valueOf(to_date_time);
+            String exceptionBody = 'Internal Exception: ' + e.getMessage() + e.getStackTraceString();
+            if (!recoveryCreated) { //prevents creation of a duplicate recovery cs for the same slice, in case there was an http error and then an error in it's error handler after the recovery is already created
+                updateCustomSetting(cs, to_date_time, false, exceptionSubject, exceptionBody);
+            }
+            Utilities.sendEmail(exceptionSubject, exceptionBody, emailRecipients); 
         }
     }
 
     private static void sendSlackBBError(string body, string subject, integer statusCode){
-        string msg;
-        Map<String,Object> resJson = (Map<String,Object>)JSON.deserializeUntyped(body);  
-        if(resJson.containsKey('message')){
-            msg = String.valueOf(resJson.get('message')).replace('\'','');
+        string msg = '';
+        if (!String.isBlank(body)) {
+            Map<String,Object> resJson = (Map<String,Object>)JSON.deserializeUntyped(body);  
+            if(resJson.containsKey('message')){
+                msg = String.valueOf(resJson.get('message')).replace('\'','');
+            }
         }
         Utilities.sendEmail(subject, 'Status Code: '+statusCode+' Body: '+msg , emailRecipients); 
     }
 
-    private static void updateCustomSetting(bb_signups_controls__c cs, Datetime success_datetime, Boolean is_success){
+    private static void updateCustomSetting(bb_signups_controls__c cs, Datetime success_datetime, Boolean is_success, String exception_subject, String exception_body){
         if(cs == null) return;
-        if(is_success){
-            cs.number_of_failures_in_a_row__c = 0;
-            if(cs.is_recovery__c) cs.active__c = false;
-            else cs.last_success_datetime__c = success_datetime;
-        } else {
-            cs.number_of_failures_in_a_row__c++;
-            if(cs.number_of_failures_in_a_row__c >= 5) cs.active__c = false;
+        List<bb_signups_controls__c> csToUpsert = new List<bb_signups_controls__c>();
+        if (!cs.is_recovery__c) { //main cs
+            if(!is_success){ //handle main cs failure, create recovery
+                bb_signups_controls__c recovery_cs = new bb_signups_controls__c(
+                    active__c = true,
+                    is_recovery__c = true,
+                    last_success_datetime__c = cs.last_success_datetime__c,
+                    exception_subject__c = exception_subject?.length() > 100 ? exception_subject?.left(100) : exception_subject,
+                    exception_body__c = exception_body?.length() > 255 ? exception_body?.left(255) : exception_body,
+                    name = 'recovery'+string.valueOf(cs.last_success_datetime__c)
+                );
+                recoveryCreated = true;
+                csToUpsert.add(recovery_cs);
+            }
+            cs.last_success_datetime__c = success_datetime; //in any way move the last success forward
         }
-        Database.update(cs);
+        else { //cs is a recovery 
+            if(is_success){ //successfull recovery
+                cs.number_of_failures_in_a_row__c = 0;
+                cs.active__c = false;
+            } else { //handle recovery failure
+                if(cs.number_of_failures_in_a_row__c >= 5) {
+                    cs.active__c = false; //will disable the recovery cs, a scheduled instance of Monitoring_ScheduledToSlack.monitorLeadPoolSignupsPull() will notify biztech for manual intervention
+                }
+                else {
+                    cs.number_of_failures_in_a_row__c++;
+                }
+            }
+        }
+        csToUpsert.add(cs);
+        upsert csToUpsert;
     }
 
     private static Lead createLead(Signup su){
