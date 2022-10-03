@@ -151,7 +151,12 @@ public without sharing class Opportunity_RenewalCreation {
         Map<Id,Contract> relevantContMap = new map <Id,Contract>();
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
         List<Account> accsToUpdate = new List<Account>();
+        /* 1. create set ids all accounts  for relvant contracts from acount id 
+            2.go to new contracts, for each relvent contract add the related monday accounts of set Ids of Account & add to relvant contracy list . 
+            3. map  creation for all accounts, map creation for account to update (empty map)
+            4. running on relvant contracts -> based on conditions (will be in functions) will add to map to update 
 
+        */
         for (Contract con : newContracts) {
             if(((con.Main_Monday_Account_Related__c != null) && (con.Renewal_Manager__c != oldContracts.get(con.Id).Renewal_Manager__c  || con.Primary_Renewal_Owner__c != oldContracts.get(con.Id).Primary_Renewal_Owner__c)) || con.Contract_ARR__c != oldContracts.get(con.Id).Contract_ARR__c){
                 relevantContMap.put(con.Id, con);
@@ -182,6 +187,9 @@ public without sharing class Opportunity_RenewalCreation {
             }
 
         }
+
+
+
         if(!oppsIdsToChangeContractARR.isEmpty()){
             List<Opportunity> oppList = [SELECT Id, Selected_Company_Contract__c, Original_Contract_ARR__c FROM Opportunity WHERE Selected_Company_Contract__c IN: oppsIdsToChangeContractARR AND RecordType.DeveloperName = 'CS_Opportunity' AND StageName != 'Closed Won' AND StageName != 'Closed Lost'];
             if (!oppList.isEmpty()) {
