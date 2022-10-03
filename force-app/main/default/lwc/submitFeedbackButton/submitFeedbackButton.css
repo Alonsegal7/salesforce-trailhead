@@ -1,0 +1,39 @@
+.submitButtonContainer{
+    margin-top: -8px;
+    margin-right: 0.5rem;
+}
+
+.img_btn{
+    display: inline-block;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.buttonTextContainer{
+    background: #A358DF;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 135px;
+    height: 31px;
+    display: inline-grid; 
+    cursor: pointer;
+}
+
+.buttonText{
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: #F5F5F5;
+    float: right;
+    padding: 5px 4px 5px 12px;
+}
+
+.feedbackImage{
+    margin-right: -15px;
+    margin-top: 1px;
+    z-index: 2;
+    width: 35px;
+    height: 29px;
+}

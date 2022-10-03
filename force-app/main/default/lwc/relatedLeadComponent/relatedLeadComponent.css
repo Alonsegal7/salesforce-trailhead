@@ -1,0 +1,37 @@
+.relatedBody{
+    border: 1px solid #E6E9EF;
+    border-radius: 8px;
+    margin-top: 8px;
+    padding-left: 8px;
+    margin: 0.25rem 0.5rem;
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 15px;
+}
+
+
+
+.distributedOwner{
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #FFFFFF;
+    margin-top: 9px;
+    margin-bottom: 5px;
+}
+
+
+
+
+.relatedReason{
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+}
+
+.reasonLink{
+    font-style: normal;
+    color: #FFFFFF;
+}
