@@ -144,63 +144,53 @@ public without sharing class Opportunity_RenewalCreation {
     Contract changes triggering the logic: Contract ARR, Renewal Manager, Primary Renewal Owner
     Related objects updated by this logic: Accounts (MAs), Opportunities   
     */
-    public static void updateRelatedRecordsFields(Map<Id, Contract> oldContracts, Map<Id, Contract> newContracts){
+    public static void updateRelatedRecordsFields(List <Contract> newContracts, Map<Id, Contract> oldContracts){
+        Set<Id> accountsIdsToChangePRO = new Set<Id>();
+        Set<Id> accountsIdsToChangeRM = new Set<Id>();
+        Set<Id> oppsIdsToChangeContractARR = new Set<Id>();
+        Map<Id,Contract> relevantContMap = new map <Id,Contract>();
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
         List<Account> accsToUpdate = new List<Account>();
-        Map<Id, Contract> relevantContMap = new Map<Id, Contract>();
-        Boolean NeedToUpdateOpp=false;
-        Boolean NeedToUpdatePRO=false;
-        Boolean NeedToUpdateRM=false;
 
+        for (Contract con : newContracts) {
+            if(((con.Main_Monday_Account_Related__c != null) && (con.Renewal_Manager__c != oldContracts.get(con.Id).Renewal_Manager__c  || con.Primary_Renewal_Owner__c != oldContracts.get(con.Id).Primary_Renewal_Owner__c)) || con.Contract_ARR__c != oldContracts.get(con.Id).Contract_ARR__c){
+                relevantContMap.put(con.Id, con);
+            }
+            if ((con.Renewal_Manager__c != oldContracts.get(con.Id).Renewal_Manager__c && con.Main_Monday_Account_Related__c != null)) {
+                accountsIdsToChangeRM.add(con.Main_Monday_Account_Related__c);
+            }
+            if ((con.Primary_Renewal_Owner__c != oldContracts.get(con.Id).Primary_Renewal_Owner__c  && con.Main_Monday_Account_Related__c != null)) {
+                accountsIdsToChangePRO.add(con.Main_Monday_Account_Related__c);
+            }
+            if ((con.Contract_ARR__c != oldContracts.get(con.Id).Contract_ARR__c)) {
+                oppsIdsToChangeContractARR.add(con.Id);
+            }
+        }
+        if (relevantContMap.isEmpty()) return;
 
-        for (Contract singleCon : newContracts.values()) {
-            if((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c) || singleCon.Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c || singleCon.Renewal_Manager__c != oldContracts.get(singleCon.Id).Renewal_Manager__c){
-                relevantContMap.put(singleCon.Id, singleCon);
-                if ((newContracts.get(singleCon.Id).Renewal_Manager__c != oldContracts.get(singleCon.Id).Renewal_Manager__c)) {
-                    NeedToUpdateRM=true;
-                }
-                if ((newContracts.get(singleCon.Id).Primary_Renewal_Owner__c != oldContracts.get(singleCon.Id).Primary_Renewal_Owner__c)) {
-                    NeedToUpdatePRO=true;
-                }
-                if ((newContracts.get(singleCon.Id).Contract_ARR__c != oldContracts.get(singleCon.Id).Contract_ARR__c)) {
-                    NeedToUpdateOpp=true;
+        if(!accountsIdsToChangeRM.isEmpty()){
+            for (account acc: [SELECT id,Renewal_Manager__c,Active_Contract__c FROM account WHERE id in: accountsIdsToChangeRM]){
+                acc.Renewal_Manager__c = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
+                accsToUpdate.add(acc);
+            }
+
+        }
+        if(!accountsIdsToChangePRO.isEmpty()){
+            for (account acc: [SELECT id,Renewal_Owner__c,Active_Contract__c FROM account WHERE id in: accountsIdsToChangePRO]){
+                acc.Renewal_Owner__c = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
+                accsToUpdate.add(acc);
+            }
+
+        }
+        if(!oppsIdsToChangeContractARR.isEmpty()){
+            List<Opportunity> oppList = [SELECT Id, Selected_Company_Contract__c, Original_Contract_ARR__c FROM Opportunity WHERE Selected_Company_Contract__c IN: oppsIdsToChangeContractARR AND RecordType.DeveloperName = 'CS_Opportunity' AND StageName != 'Closed Won' AND StageName != 'Closed Lost'];
+            if (!oppList.isEmpty()) {
+                for (Opportunity oppty : oppList) {
+                    oppty.Original_Contract_ARR__c = relevantContMap.get(oppty.Selected_Company_Contract__c).Contract_ARR__c;
+                    oppsToUpdate.add(oppty);
                 }
             }
         }
-        if (!relevantContMap.isEmpty()) {
-            List<Account> realtedMA = [SELECT Id, Renewal_Owner__c,Renewal_Manager__c, Active_Contract__c FROM Account WHERE Active_Contract__c IN: relevantContMap.keySet() AND ARR__c != null ORDER BY ARR__c DESC];
-            //RM + PRO has been updated 
-            if(NeedToUpdatePRO && NeedToUpdateRM){
-                for (Account acc : realtedMA) {
-                    acc.Renewal_Owner__c  = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
-                    acc.Renewal_Manager__c  = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
-                    accsToUpdate.add(acc);
-                }
-            }
-            //only the RM has been updated 
-            if(!NeedToUpdatePRO && NeedToUpdateRM){
-                for (Account acc : realtedMA) {
-                    acc.Renewal_Manager__c  = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
-                    accsToUpdate.add(acc);
-                }
-            }
-            //only the PRO has been updated
-            if(NeedToUpdatePRO && !NeedToUpdateRM){
-                for (Account acc : realtedMA) {
-                    acc.Renewal_Owner__c  = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
-                    accsToUpdate.add(acc);
-                }
-            }
-        }   
-         if (NeedToUpdateOpp) {
-             List<Opportunity> oppList = [SELECT Id, Selected_Company_Contract__c, Original_Contract_ARR__c FROM Opportunity WHERE Selected_Company_Contract__c IN: relevantContMap.keySet() AND RecordType.DeveloperName = 'CS_Opportunity' AND StageName != 'Closed Won' AND StageName != 'Closed Lost'];
-                 if (!oppList.isEmpty()) {
-                        for (Opportunity oppty : oppList) {
-                            oppty.Original_Contract_ARR__c = relevantContMap.get(oppty.Selected_Company_Contract__c).Contract_ARR__c;
-                            oppsToUpdate.add(oppty);
-                        }
-                    }
-                }
         if(!oppsToUpdate.isEmpty()){
             Database.update(oppsToUpdate);
         }
@@ -214,6 +204,7 @@ public without sharing class Opportunity_RenewalCreation {
     Trigger: Account created w/ Active Contract or Active contract changed on existing account
     Action: Changes the renewal owner on the contract to be the renewal owner on the account
     */
+    
     public static void getProFromActiveContract(Map<Id, Account> oldAccts, List<Account> newAccts){
         try{
         List<Account> relevanAccts = new List<Account>();
