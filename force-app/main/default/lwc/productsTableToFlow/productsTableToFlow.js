@@ -116,6 +116,7 @@ export default class ProductsTableToFlow extends LightningElement {
     handledByCurrencyChangeProcess=false;
     listOfDraftsOnCurrencyChange=[];
     currencyValues;
+    haveNonForecstDocument=false;
 
     @wire(getPicklistValues, { recordTypeId: '0121t000000LucvAAC', fieldApiName: CURRENCYISO })
     fetch({ data }) {
@@ -144,7 +145,12 @@ export default class ProductsTableToFlow extends LightningElement {
             this.pricingVersionForHtml = this.oppCurrentPriVersion;
             this.resetValues();// for cases that we change pricing version or currency, reset on load, the calculation will run on draft on the runForecastProcessOnLoad process
 
-            if (this.handledByCurrencyChangeProcess==false) {//if process handled by currency change, do not take plan, type and tier
+            if (this.syncedQuoteType=='Quote' || this.syncedQuoteType=='Sales Order') {//is quote or sales order stop process
+                this.haveNonForecstDocument=true;
+                this.showProductsTable=false;
+            }
+
+            else if (this.handledByCurrencyChangeProcess==false) {//if process handled by currency change, do not take plan, type and tier
                 this.oppExpectedPlan = getFieldValue(data, EXPECTED_PLAN_TIER);
                 this.accCurerentPlan = getFieldValue(data, CURRENT_ACCOUNT_PLAN_TIER);
                 this.oppExpectedQuoteType=getFieldValue(data, EXPECTED_QUOTE_TYPE);
