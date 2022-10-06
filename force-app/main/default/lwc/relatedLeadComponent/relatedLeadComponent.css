@@ -35,3 +35,7 @@
     font-style: normal;
     color: #FFFFFF;
 }
+
+.profileUrl:hover{
+    cursor: pointer;
+    }

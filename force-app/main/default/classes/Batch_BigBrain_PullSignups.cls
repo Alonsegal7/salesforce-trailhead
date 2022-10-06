@@ -32,6 +32,7 @@ public without sharing class Batch_BigBrain_PullSignups implements Database.Batc
                 from_dt = cs.last_success_datetime__c.addSeconds(1);
                 to_dt = datetime.now().addMinutes(-1);
                 if(to_dt > from_dt.addMinutes(15)) to_dt = from_dt.addMinutes(15); //max interval is 15 mins - for testing
+                // to_dt = to_dt > from_dt.addMinutes(15) ? from_dt.addMinutes(15) : datetime.now().addMinutes(-1); //normally there will be at least 15 mins gap between the from_dt and to_dt
             }
             BigBrain_LeadPoolService.getSignups(from_dt, to_dt, cs);
         } catch (Exception e) {

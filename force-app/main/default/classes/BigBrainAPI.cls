@@ -1,4 +1,7 @@
 public with sharing class BigBrainAPI {
+
+    public static Boolean sendBlankHttpResponseForTests = true;
+
     public class BigBrainException extends Exception {}
 
     public BigBrainAPI() { }
@@ -145,7 +148,7 @@ public with sharing class BigBrainAPI {
         setRequestHeaders(request, method, url);
         request.setBody(JSON.serialize(params));
 
-        if(Test.isRunningTest()){ return new HttpResponse(); }
+        if(Test.isRunningTest() && sendBlankHttpResponseForTests){ return new HttpResponse(); }
         HttpResponse response = http.send(request);
         return response;
     }
@@ -155,7 +158,7 @@ public with sharing class BigBrainAPI {
         HttpRequest request = new HttpRequest();
         setRequestHeaders(request, method, url);
 
-        if(Test.isRunningTest()){ return new HttpResponse(); }
+        if(Test.isRunningTest() && sendBlankHttpResponseForTests){ return new HttpResponse(); }
         HttpResponse response = http.send(request);
         return response;
     }
