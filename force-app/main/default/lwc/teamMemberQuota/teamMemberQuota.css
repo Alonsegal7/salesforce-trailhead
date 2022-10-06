@@ -23,20 +23,30 @@
     margin-right:5px;
 }
 
+.editIcon:hover{
+    cursor: pointer;
+}
+
 .actualOpenLeads{
     display: inline-block;
-    color: green;
     margin-right: 3px;
 }
 
 .limitLeads{
     display: inline-block;
-    color: red;
     margin-left: 3px;
 }
 
 .dailyQuotaForm{
     display: inline-block;
     width: 55px;
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
 }
 
