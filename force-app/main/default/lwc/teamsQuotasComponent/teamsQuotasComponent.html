@@ -1,0 +1,44 @@
+<template>
+    <template if:false={teamMembers}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+
+    <template if:true={teamMembers}>
+    <lightning-card>
+
+        <div class="dailyQuotaComponent">My Team's Daily Quota</div>
+
+        <lightning-layout>
+            <lightning-layout-item size="12" class="thContainer">
+                <lightning-layout-item size="1" padding="around-small" class="tableTh"></lightning-layout-item>
+                <lightning-layout-item size="1" padding="around-small" class="tableTh">Full Name</lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small" class="tableTh">Signups Daily Quota</lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small" class="tableTh">Leads Recieved Today</lightning-layout-item>
+                <lightning-layout-item size="1" padding="around-small" class="tableTh">AVG Score Today</lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small" class="tableTh">Sign Ups Countries</lightning-layout-item>
+                <lightning-layout-item size="1" padding="around-small" class="tableTh">Segment</lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small" class="tableTh">Total Open Leads</lightning-layout-item>
+            </lightning-layout-item>
+            
+            <lightning-layout-item size="12" padding="around-small"  class="trContainer">
+                <ul>
+                    <template for:each={teamMembers} for:item="teamMember" if:true={isDataAvilable}>
+                        <li key={teamMember.Name} class="teamMemberContainer">
+                            <c-team-member-quota  
+                            team-member-info={teamMember} 
+                            team-memebr-name={teamMember.Name} 
+                            oneditquotaclik={handleDailyQuotaChanged}>
+                            </c-team-member-quota>
+                        </li>
+                    </template>
+                </ul>
+            </lightning-layout-item>
+        </lightning-layout>
+    
+        <lightning-layout-item if:true={openModal}>
+                <c-edit-popup onclosepopup={closePopUp} member-quota-detail={selectedQuota} onupdatequota={refresh}></c-edit-popup>
+        </lightning-layout-item>
+
+    </lightning-card>
+</template>
+</template>
