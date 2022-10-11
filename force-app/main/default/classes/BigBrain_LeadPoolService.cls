@@ -82,26 +82,10 @@ public without sharing class BigBrain_LeadPoolService {
                     }
                 }
                 if(!newLeads_list.isEmpty()) {
-                    //check for dups by pulse account id
-                    set<string> pulseIds = new set<string>();
-                    map<string,lead> leadKeys = new map<string,lead>();
-                    for(lead leadRec: newLeads_list){
-                        if(leadRec.primary_pulse_account_id__c == null) continue;
-                        pulseIds.add(leadRec.primary_pulse_account_id__c);
-                        leadKeys.put(leadRec.primary_pulse_account_id__c, leadRec);
-                    }
-                    list<lead> existingLeads = [select Id, primary_pulse_account_id__c from Lead where primary_pulse_account_id__c in: pulseIds];
-                    if(!existingLeads.isEmpty()){
-                        for(lead leadRec: existingLeads){
-                            if(leadKeys.containsKey(leadRec.primary_pulse_account_id__c)){
-                                leadKeys.remove(leadRec.primary_pulse_account_id__c);
-                            }
-                        }
-                        List<Lead> updatedList = leadKeys.values();
-                        Database.insert(updatedList);
-                    } else {
-                        Database.insert(newLeads_list);
-                    }
+                    List<Lead> leadsToInsert = dedupByPulseId(newLeads_list);
+                    Database.DMLOptions dmlOptions = new Database.DMLOptions();
+                    dmlOptions.allowFieldTruncation = true;
+                    Database.insert(leadsToInsert, dmlOptions);
                 }
                 updateCustomSetting(cs, to_date_time, true, null, null);
                 Utilities.sendEmail('Successfull signups pull from '+ string.valueOf(from_date_time) + ' to ' + string.valueOf(to_date_time), string.valueOf(newLeads_list.size()) + ' signups pulled', emailRecipients); 
@@ -119,6 +103,29 @@ public without sharing class BigBrain_LeadPoolService {
                 updateCustomSetting(cs, to_date_time, false, exceptionSubject, exceptionBody);
             }
             Utilities.sendEmail(exceptionSubject, exceptionBody, emailRecipients); 
+        }
+    }
+
+    private static List<Lead> dedupByPulseId(List<Lead> inputLeads) {
+        set<string> pulseIds = new set<string>();
+        map<string,lead> leadsByPulseId = new map<string,lead>();
+        for(lead leadRec: inputLeads){
+            if(!String.isBlank(leadRec.primary_pulse_account_id__c)) {
+                pulseIds.add(leadRec.primary_pulse_account_id__c);
+                leadsByPulseId.put(leadRec.primary_pulse_account_id__c, leadRec);
+            }
+        }
+        list<lead> existingLeads = [select Id, primary_pulse_account_id__c from Lead where primary_pulse_account_id__c in: pulseIds];
+        if (existingLeads.isEmpty()) {
+            return inputLeads;
+        }
+        else {
+            for(lead leadRec: existingLeads){
+                if(leadsByPulseId.containsKey(leadRec.primary_pulse_account_id__c)){
+                    leadsByPulseId.remove(leadRec.primary_pulse_account_id__c); //when there's an existing lead with the same pulse id, we will remove it from the insert list
+                }
+            }
+            return leadsByPulseId.values();
         }
     }
 
@@ -276,7 +283,7 @@ public without sharing class BigBrain_LeadPoolService {
         newLead.Phone = user_data.phone;
         newLead.Seniority__c = user_data.seniority;
         if(user_data.xi_region != null && Utilities.allStates.contains(user_data.xi_region)) newLead.State = user_data.xi_region; //we set state only for countries that we have states in salesforce enabled to prevent the state error
-        newLead.Title = user_data.computed_title != null ? (user_data.computed_title).left(128) : null; //this field has 128 char limit
+        newLead.Title = user_data.computed_title;
         //mapping with logic
         setEnrichedPhone(newLead, user_data.enriched_phone);
         setLeadName(newLead, user_data.name);

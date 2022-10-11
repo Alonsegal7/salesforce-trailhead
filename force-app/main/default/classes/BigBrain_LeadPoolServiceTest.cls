@@ -29,7 +29,7 @@ public without sharing class BigBrain_LeadPoolServiceTest {
         System.assertEquals('Test', newLeads[0].LastName);
         System.assertEquals('FR', newLeads[0].CountryCode);
         System.assertEquals('France', newLeads[0].Country);
-        System.assertEquals('business_owner', newLeads[0].Title);
+        System.assertEquals('business_owner_toolongstringmorethen128chars_toolongstringmorethen128chars_toolongstringmorethen128chars_toolongstringmorethen12', newLeads[0].Title);
         System.assertEquals('New', newLeads[0].Status);
         System.assertEquals('Big Brain - Signup', newLeads[0].LeadSource);
         System.assertEquals('test account', newLeads[0].Company);
@@ -304,6 +304,7 @@ public without sharing class BigBrain_LeadPoolServiceTest {
 
     public class mockPullSignupsSuccess implements HttpCalloutMock{
         public HttpResponse respond(HttpRequest request){
+            String longTitle = 'business_owner_toolongstringmorethen128chars_toolongstringmorethen128chars_toolongstringmorethen128chars_toolongstringmorethen128chars';
             HttpResponse res = new HttpResponse();
             BigBrain_LeadPoolService.Signup su = new BigBrain_LeadPoolService.Signup();
             su.user = new BigBrain_LeadPoolService.UserObj();
@@ -313,7 +314,7 @@ public without sharing class BigBrain_LeadPoolServiceTest {
             su.user.data.is_gmail = false;
             su.user.data.name = 'John Test';
             su.user.data.xi_country = 'FR';
-            su.user.data.computed_title = 'business_owner';
+            su.user.data.computed_title = longTitle;
             su.user.enrichments = new BigBrain_LeadPoolService.Enrichment();
             su.account = new BigBrain_LeadPoolService.AccountObj();
             su.account.plan = new BigBrain_LeadPoolService.AccountPlan();
