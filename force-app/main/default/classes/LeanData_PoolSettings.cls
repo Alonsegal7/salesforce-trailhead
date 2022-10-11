@@ -5,29 +5,58 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
     }
 
     public static void resetCaps(){
+        Map<Id, Integer> userIdToCap = new Map<Id,Integer>();
+
         list<Lead_Quota__c > lcToUpdate =new list<Lead_Quota__c>();
-        for(Lead_Quota__c lc: [select id,Current_Sign_Up_Quota__c from Lead_Quota__c where Current_Sign_Up_Quota__c!=0]){
-            lc.Current_Sign_Up_Quota__c=0;
-            lcToUpdate.add(lc);
+        List<Lead_Quota__c> allLc=[select id, Current_Sign_Up_Quota__c, Sign_Up_Daily_Quota__c, User__c from Lead_Quota__c];
+        for(Lead_Quota__c lc: allLc){
+            if(lc.Current_Sign_Up_Quota__c > 0){
+                lc.Current_Sign_Up_Quota__c=0;
+                lcToUpdate.add(lc);
+            }
+            
+            userIdToCap.put(Id.valueOf(lc.User__c), Integer.valueOf(lc.Sign_Up_Daily_Quota__c));
         }
         if(!lcToUpdate.isEmpty()) Database.update(lcToUpdate);
 
         list<Partner_Region__c > prToUpdate =new list<Partner_Region__c>();
-        for(Partner_Region__c pr: [select id,Current_Daily_Leads_Quota__c from Partner_Region__c where Current_Daily_Leads_Quota__c !=0]){
-            pr.Current_Daily_Leads_Quota__c =0;
-            prToUpdate.add(pr);
+        List<Partner_Region__c> allPr= [select id,Current_Daily_Leads_Quota__c, Daily_Leads_Quota__c, Main_User__c from Partner_Region__c ];
+        for(Partner_Region__c pr: allPr){
+            if(pr.Current_Daily_Leads_Quota__c > 0){
+                pr.Current_Daily_Leads_Quota__c =0;
+                prToUpdate.add(pr);
+            }
+
+            userIdToCap.put(Id.valueOf(pr.Main_User__c), Integer.valueOf(pr.Daily_Leads_Quota__c));
         }
         if(!prToUpdate.isEmpty()) Database.update(prToUpdate);    
         
+        System.debug(userIdToCap);
+
         list<LeanData__Round_Robin_Setting__c > rrsToUpdate =new list<LeanData__Round_Robin_Setting__c>();
-        for(LeanData__Round_Robin_Setting__c rrs: [SELECT Id
-                                                    FROM LeanData__Round_Robin_Setting__c 
-                                                    WHERE LeanData__Pool__c != null
-                                                    AND LeanData__Status__c != 'Available']){
-            rrs.LeanData__Status__c = 'Available';
-            rrs.LeanData__Inactive_Reason__c = null;
-            rrs.Set_Current_Day_Timestamp__c = Datetime.now();
-            rrsToUpdate.add(rrs);
+
+        list<LeanData__Round_Robin_Setting__c> listRrs = [SELECT Id,
+        LeanData__User_Owner__c//add for the logic of the new set Available
+        FROM LeanData__Round_Robin_Setting__c 
+        WHERE LeanData__Pool__c != null
+        AND LeanData__Status__c != 'Available'];
+
+        for(LeanData__Round_Robin_Setting__c rrs: listRrs){
+                                                 
+            if(userIdToCap.get(rrs.LeanData__User_Owner__c) == null){
+                //Send slack notefication
+                Utilities.sendSlackMessage('Error in resetCaps LeanData_PoolSettings service wasnt able locate user from RRS', 'biz-tech-monitoring', null , null, 'Found a user with RRS without lead cap ' + rrs.LeanData__User_Owner__c, null, null);  
+            }else{
+                if(userIdToCap.get(rrs.LeanData__User_Owner__c) == 0){
+                    rrs.LeanData__Status__c = 'Unavailable';
+                }else{
+                    rrs.LeanData__Status__c = 'Available';
+                    rrs.LeanData__Inactive_Reason__c = null;
+                }
+                rrs.Set_Current_Day_Timestamp__c = Datetime.now();
+                rrsToUpdate.add(rrs);
+            }
+
         }
         if(!rrsToUpdate.isEmpty()) Database.update(rrsToUpdate);  
     }

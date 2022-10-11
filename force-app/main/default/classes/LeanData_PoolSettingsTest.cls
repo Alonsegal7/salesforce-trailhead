@@ -55,6 +55,33 @@ public without sharing class LeanData_PoolSettingsTest {
         }
     }
 
+
+    @isTest
+    static void shouldBeUnavailable() {
+
+        // 1 create lead quota (daily 10, current 5), partner region (daily 15, current 10) and rrs (status is Unavaiable)
+        // 2 run the execute
+        // 3 assert resets
+        Lead_Quota__c lq1 = [SELECT Id, Current_Sign_Up_Quota__c, Sign_Up_Daily_Quota__c FROM Lead_Quota__c WHERE Name = 'a3e5t00000088a1' LIMIT 1];
+        Partner_Region__c pr1 = [SELECT Id, Daily_Leads_Quota__c, Current_Daily_Leads_Quota__c FROM Partner_Region__c WHERE Name='test (Spain)' LIMIT 1];
+
+        pr1.Daily_Leads_Quota__c = 0;
+        update pr1;
+
+        Test.startTest();
+        
+        LeanData_PoolSettings p = new LeanData_PoolSettings();
+        String sch = '0 0 * * * ?';
+        String jobId = System.schedule('TestScheduled', sch, p);
+        
+        Test.stopTest();
+    
+        List<LeanData__Round_Robin_Setting__c> existingRRS = [SELECT Id, LeanData__Status__c FROM LeanData__Round_Robin_Setting__c LIMIT 2];
+        for (LeanData__Round_Robin_Setting__c rrs : existingRRS) {
+            System.assertEquals('Unavailable', rrs.LeanData__Status__c);
+        }
+    }
+
     @isTest
     static void shouldUpdatePoolOwnerWhenPartnerRegionMainUserChanges() 
     {    
