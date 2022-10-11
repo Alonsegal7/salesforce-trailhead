@@ -30,7 +30,7 @@ export default class TeamQuotaComponent extends LightningElement {
     @wire(getMyTeamQuoats, {userId: '$userId'})
     teamMembersList(result){
         if(result.data){
-            console.log('From wire line 22 ' , result.data);//To be delted
+            
             this.teamMembers = result.data;
             this.isDataAvilable = true; //Set the flag to be true in order to display the team member list
 
@@ -104,7 +104,7 @@ export default class TeamQuotaComponent extends LightningElement {
                  return{...member, avgScore:0}
                  
              }else{
-                 return{...member, avgScore: scoreMap.get(member.Name)}
+                 return{...member, avgScore: scoreMap.get(member.Name).toFixed(2)}
              }
              });
  
@@ -140,7 +140,19 @@ export default class TeamQuotaComponent extends LightningElement {
         //Check if the team member have a country/segment in the countryAndSegmentMap if so then add to the teamMembers list else set - and - 
         if(countryAndSegmentMap.has(member.Id)){
 
-                return{...member, countries: countryAndSegmentMap.get(member.Id).countrys.toString() , segment: countryAndSegmentMap.get(member.Id).segment.toString() }
+                let arrayToinsert = new Array();
+                let getcountryToInsert = countryAndSegmentMap.get(member.Id).countrys;
+
+                getcountryToInsert.map(item =>{ 
+                     let arrSubItem = item.split(', ');
+                    arrayToinsert = arrayToinsert.concat(arrSubItem);
+                });
+
+                arrayToinsert.sort();
+
+                let a = [...new Set(arrayToinsert)];
+                let countryToInsert = Array.from(a)
+                return{...member, countries: countryToInsert.toString() , segment: countryAndSegmentMap.get(member.Id).segment.toString() }
 
         }else{
                 return{...member, countries: '-' , segment: '-' }
@@ -149,7 +161,6 @@ export default class TeamQuotaComponent extends LightningElement {
 
             this.teamMembers = teamMembersUpdatedList;
     }
-
 
     //When user clicks on a single record of team member in order ro change the Daily Quota get the id 
     //from the child component save the select record in the parent and padd to the other child the pop edit window
@@ -175,54 +186,4 @@ export default class TeamQuotaComponent extends LightningElement {
         // forcing refresh on the page
         window.location.reload();
     }
-
-
-        // @wire(getCountriesAndSegment, {userId:'$userId'})
-    // teamMembersCountryAndSegments(result){
-    //     if(result.data){
-
-    //         console.log('Line 63 teamMembersCountryAndSegments ', JSON.stringify(result.data));
-    //         const mapOfUserCountryAndSegment = new Map();
-            
-    //         //Convert the result of the query 'teamMembersCountryAndSegments' to map in order to reduce duplecated segments and countrys for users
-    //         for(const obj of result.data){
-    //         if(obj.Country__c != undefined && obj.Segment__c != undefined){
-    //             if(mapOfUserCountryAndSegment.has(obj.LeanData__User_Owner__c)){
-    //                 if(!mapOfUserCountryAndSegment.get(obj.LeanData__User_Owner__c).countrys.includes(obj.Country__c) &&  obj.Country__c != undefined){
-    //                     mapOfUserCountryAndSegment.get(obj.LeanData__User_Owner__c).countrys.push(obj.Country__c);
-    //                 }
-                    
-    //                 if(!mapOfUserCountryAndSegment.get(obj.LeanData__User_Owner__c).segment.includes(obj.Segment__c)  &&  obj.Segment__c != undefined){
-    //                     mapOfUserCountryAndSegment.get(obj.LeanData__User_Owner__c).segment.push(obj.Segment__c);
-    //                 }
-    //             }else{
-    //                 mapOfUserCountryAndSegment.set(obj.LeanData__User_Owner__c, {countrys: [obj.Country__c], segment:  [obj.Segment__c]});
-    //             }
-    //         }
-    //         }
-
-    //         this.teamMembersCountryAndSegmentMap = mapOfUserCountryAndSegment;//Save the new Map into the teamMembersCountryAndSegmentMap
-    //         console.log('Line 55 ', this.teamMembersCountryAndSegmentMap);
-    //         // this.addCountryAndSegments(this.teamMembersCountryAndSegmentMap);
-            
-    //     }else if(result.error){
-    //         console.log('Line 67 Error ', result.error);
-    //     }
-    // }
-
-
-    // get the AVG Score Today for each team member using apex function
-    // @wire(getAVGDistributedScore, {userId:'$userId'})
-    // teamMembersDistributedScore(result){
-    //     if(result.data){
-    //         console.log('Line 45', JSON.stringify(result.data));
-
-    //          this.teamMembersMap = new Map(result.data.map(obj => [ obj.Owner_Name_Initial__c, obj.expr0]));
-    //          //Call addAvgScoreToTeamMembers function in order to add avg files to each team member record
-    //          this.addAvgScoreToTeamMembers(this.teamMembersMap);
-
-    //     }else if(result.error){
-    //         console.log('Line 47 ', result.error);
-    //     }
-    // }
 }
