@@ -21,7 +21,7 @@ public without sharing class Batch_CreateRenewalOpportunities implements Schedul
     public static Integer getMonthToAdd() {
         return 2;
     }
-    //for manual insert of a date 
+    //for manual insert of a date dd 
     public Batch_CreateRenewalOpportunities(date inputManualDate) {
         this.manualDate = inputManualDate;
     }
