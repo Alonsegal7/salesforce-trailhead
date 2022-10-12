@@ -76,9 +76,10 @@ public without sharing class LeanData_PoolSettingsTest {
         
         Test.stopTest();
     
-        List<LeanData__Round_Robin_Setting__c> existingRRS = [SELECT Id, LeanData__Status__c FROM LeanData__Round_Robin_Setting__c LIMIT 2];
+        List<LeanData__Round_Robin_Setting__c> existingRRS = [SELECT Id, LeanData__Status__c, LeanData__Inactive_Reason__c FROM LeanData__Round_Robin_Setting__c LIMIT 2];
         for (LeanData__Round_Robin_Setting__c rrs : existingRRS) {
             System.assertEquals('Unavailable', rrs.LeanData__Status__c);
+            System.assertEquals('["Lead Cap at 0 - Daily Reset"]', rrs.LeanData__Inactive_Reason__c);
         }
     }
 

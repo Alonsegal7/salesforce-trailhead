@@ -37,11 +37,7 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
 
         list<LeanData__Round_Robin_Setting__c > rrsToUpdate =new list<LeanData__Round_Robin_Setting__c>();
 
-        list<LeanData__Round_Robin_Setting__c> listRrs = [SELECT Id,
-        LeanData__User_Owner__c
-        FROM LeanData__Round_Robin_Setting__c 
-        WHERE LeanData__Pool__c != null
-        AND LeanData__Status__c != 'Available'];
+        list<LeanData__Round_Robin_Setting__c> listRrs = [SELECT Id, LeanData__User_Owner__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__Pool__c != null];
 
         for(LeanData__Round_Robin_Setting__c rrs: listRrs){
                                                  
@@ -51,11 +47,11 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
             }else{
                 if(userIdToCap.get(rrs.LeanData__User_Owner__c) == 0){
                     rrs.LeanData__Status__c = 'Unavailable';
+                    rrs.LeanData__Inactive_Reason__c = '["Lead Cap at 0 - Daily Reset"]';
                 }else{
                     rrs.LeanData__Status__c = 'Available';
                     rrs.LeanData__Inactive_Reason__c = null;
                 }
-                rrs.Set_Current_Day_Timestamp__c = Datetime.now();
                 rrsToUpdate.add(rrs);
             }
 
