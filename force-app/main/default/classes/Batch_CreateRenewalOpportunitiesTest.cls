@@ -40,10 +40,6 @@ public without sharing class Batch_CreateRenewalOpportunitiesTest {
         insert conEvent;    
         opportunity.StageName = 'Closed Won';
         update opportunity; 
-        // Apex_Services_Status__mdt renewalShouldRunCMT = [SELECT Id, Label, Status__c FROM Apex_Services_Status__mdt WHERE Label = 'RenewalAutomaticCreation'][0];
-        // renewalShouldRunCMT.Status__c = 'Active';
-        // update renewalShouldRunCMT;
-        system.debug('CMT '+ renewalShouldRunCMT);  
         Test.startTest();
         Batch_CreateRenewalOpportunities batch = new Batch_CreateRenewalOpportunities(dueDate);
         Database.executeBatch(batch, 20);
