@@ -11,8 +11,8 @@ public without sharing class LeanData_PoolSettingsTest {
         insert pcq;
         Partner_Region__c partnerRegion = new Partner_Region__c(Name='test (Spain)', Country__c = 'ES', Partner_Company__c = partnerCompany.Id, Partner_Country_Quota__c=pcq.Id, Main_User__c = partnerUser.Id, Daily_Leads_Quota__c = 15, Current_Daily_Leads_Quota__c = 10);
         insert partnerRegion;
-        LeanData__Round_Robin_Pool__c rrPoolES = new LeanData__Round_Robin_Pool__c(Name = 'a3b5t0000005CYm', LeanData__Grouping_Name__c = 'S&P-ES-FR-MM', LeanData__Object_Type__c = 'Lead');
-        LeanData__Round_Robin_Pool__c rrPoolBR = new LeanData__Round_Robin_Pool__c(Name = 'a3b5t0000005CYn', LeanData__Grouping_Name__c = 'S&P-BR-MM', LeanData__Object_Type__c = 'Lead');
+        LeanData__Round_Robin_Pool__c rrPoolES = new LeanData__Round_Robin_Pool__c(Name = 'a3b5t0000005CYm', LeanData__Grouping_Name__c = 'S&P-ES-FR-MM', LeanData__Object_Type__c = 'Lead', Country__c = 'ES');
+        LeanData__Round_Robin_Pool__c rrPoolBR = new LeanData__Round_Robin_Pool__c(Name = 'a3b5t0000005CYn', LeanData__Grouping_Name__c = 'S&P-BR-MM', LeanData__Object_Type__c = 'Lead', Country__c = 'BR');
         insert new List<LeanData__Round_Robin_Pool__c>{rrPoolBR, rrPoolES};
         LeanData__Round_Robin_Setting__c rrSettingES = new LeanData__Round_Robin_Setting__c(Name = 'a3e5t00000088mo', LeanData__Pool__c = rrPoolES.Id, LeanData__OwnerId__c = partnerUser.Id);
         LeanData__Round_Robin_Setting__c rrSettingBR = new LeanData__Round_Robin_Setting__c(Name = 'a3e5t00000088mq', LeanData__Pool__c = rrPoolBR.Id, LeanData__OwnerId__c = partnerUser.Id);

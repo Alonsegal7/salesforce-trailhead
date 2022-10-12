@@ -16,7 +16,7 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
         */
 
         //Part 1 - Create the 3 maps: usersByTypes, leadQuotasToUpdate and partnerRegionsToUpdate. Also reset the daily caps to 0
-        
+
         Map<Id,String> usersByTypes = new Map<Id,String>(); //the value will be 'Sales' or 'Partner' for each user, used to later query the relevant Partner Region / Lead Quota
         Map<Id,Lead_Quota__c> salesUsersQuotas = new Map<Id,Lead_Quota__c>();
         Map<String,Partner_Region__c> partnerUsersQuotas = new Map<String,Partner_Region__c>(); //the key will be the userId + the country because partner users can have more then 1 partner region (quota)
@@ -43,7 +43,10 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
 
         //Part 2 - Interate over the RRSs and update the avaiability based on the user's quota
 
-        List<LeanData__Round_Robin_Setting__c> allRRS = [SELECT Id, LeanData__User_Owner__c, LeanData__Pool__r.Country__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__Pool__c != NULL];
+        List<LeanData__Round_Robin_Setting__c> allRRS = [
+            SELECT Id, LeanData__User_Owner__c, LeanData__Pool__r.Country__c, LeanData__Status__c, LeanData__Inactive_Reason__c 
+            FROM LeanData__Round_Robin_Setting__c 
+            WHERE LeanData__Pool__c != NULL];
         List<LeanData__Round_Robin_Setting__c > RRSToUpdate = new List<LeanData__Round_Robin_Setting__c>();
 
         for (LeanData__Round_Robin_Setting__c rrs : allRRS) {
