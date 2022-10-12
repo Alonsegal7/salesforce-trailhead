@@ -39,7 +39,11 @@ public without sharing class Batch_CreateRenewalOpportunitiesTest {
         Contract_Event__c conEvent = new Contract_Event__c(isrecurring__c = true, Contract__c = con.Id, Contract_Product__c = conProd.Id, Start_Date__c = System.today(), Quote_Line_Item__c = qli.Id,Billing_Entity__c=BE.id,ARR__c=100,Status__c='Valid'); 
         insert conEvent;    
         opportunity.StageName = 'Closed Won';
-        update opportunity;   
+        update opportunity; 
+        // Apex_Services_Status__mdt renewalShouldRunCMT = [SELECT Id, Label, Status__c FROM Apex_Services_Status__mdt WHERE Label = 'RenewalAutomaticCreation'][0];
+        // renewalShouldRunCMT.Status__c = 'Active';
+        // update renewalShouldRunCMT;
+        system.debug('CMT '+ renewalShouldRunCMT);  
         Test.startTest();
         Batch_CreateRenewalOpportunities batch = new Batch_CreateRenewalOpportunities(dueDate);
         Database.executeBatch(batch, 20);

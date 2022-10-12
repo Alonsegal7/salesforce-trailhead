@@ -6,16 +6,15 @@ public without sharing class Batch_CreateRenewalOpportunities implements Schedul
 
     //should be replaced with dynamic cmt
     public static Boolean getShouldRun() {
-        // string getRenewalAutomaticCreationStatus = '';
-        // Apex_Services_Status__mdt RenewalAutomaticCreationStatus = [SELECT Id, Label, Status__c FROM Apex_Services_Status__mdt WHERE Label = 'RenewalAutomaticCreation'][0];
-		// getRenewalAutomaticCreationStatus = RenewalAutomaticCreationStatus.Status__c;
-		// if (getRenewalAutomaticCreationStatus == 'Active'){
-        //     return true;
-        // }
-        // else{
-        //     return false;
-        // }
-        return false;
+        string getRenewalAutomaticCreationStatus = '';
+        Apex_Services_Status__mdt RenewalAutomaticCreationStatus = [SELECT Id, Label, Status__c FROM Apex_Services_Status__mdt WHERE Label = 'RenewalAutomaticCreation'][0];
+		getRenewalAutomaticCreationStatus = RenewalAutomaticCreationStatus.Status__c;
+		if (getRenewalAutomaticCreationStatus == 'Active'){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     //should be replaced with dynamic cmt
     public static Integer getMonthToAdd() {
@@ -42,7 +41,10 @@ public without sharing class Batch_CreateRenewalOpportunities implements Schedul
     
            }
            System.debug('Scheduled_CreateRenewalOpportunities dueDate: '+ dueDate);
-           String query = 'SELECT Id FROM Contract WHERE Primary_Renewal_Owner__c <> null and  Status__c = \'Active\' and Main_Monday_Account_Related__r.of_open_opps__c = 0 and((Renewal_Opportunity_Creation_Status__c <> \'Completed\' and EndDate =: dueDate) or Renewal_Opportunity_Creation_Status__c = \'Initiated\') ORDER BY EndDate DESC';
+           String query = 'SELECT Id FROM Contract WHERE Primary_Renewal_Owner__c <> null and  Status__c = \'Active\' and Main_Monday_Account_Related__r.of_open_opps__c = 0 and((Renewal_Opportunity_Creation_Status__c <> \'Completed\' and EndDate =: dueDate) or Renewal_Opportunity_Creation_Status__c = \'Initiated\') ORDER BY EndDate DESC ';
+           if (!getShouldRun()){
+            query+=' LIMIT 0';
+           }
            System.debug('Scheduled_CreateRenewalOpportunities relevantContractsQuery: '+ query);
            return Database.getQueryLocator(query);
         }
