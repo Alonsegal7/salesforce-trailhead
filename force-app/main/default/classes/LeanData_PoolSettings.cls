@@ -14,8 +14,9 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
                 lc.Current_Sign_Up_Quota__c=0;
                 lcToUpdate.add(lc);
             }
-            
-            userIdToCap.put(Id.valueOf(lc.User__c), Integer.valueOf(lc.Sign_Up_Daily_Quota__c));
+            if (lc.User__c != null) {
+                userIdToCap.put(Id.valueOf(lc.User__c), Integer.valueOf(lc.Sign_Up_Daily_Quota__c));
+            }
         }
         if(!lcToUpdate.isEmpty()) Database.update(lcToUpdate);
 
@@ -26,8 +27,9 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
                 pr.Current_Daily_Leads_Quota__c =0;
                 prToUpdate.add(pr);
             }
-
-            userIdToCap.put(Id.valueOf(pr.Main_User__c), Integer.valueOf(pr.Daily_Leads_Quota__c));
+            if (pr.Main_User__c != null) {
+                userIdToCap.put(Id.valueOf(pr.Main_User__c), Integer.valueOf(pr.Daily_Leads_Quota__c));
+            }
         }
         if(!prToUpdate.isEmpty()) Database.update(prToUpdate);    
         
@@ -36,7 +38,7 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
         list<LeanData__Round_Robin_Setting__c > rrsToUpdate =new list<LeanData__Round_Robin_Setting__c>();
 
         list<LeanData__Round_Robin_Setting__c> listRrs = [SELECT Id,
-        LeanData__User_Owner__c//add for the logic of the new set Available
+        LeanData__User_Owner__c
         FROM LeanData__Round_Robin_Setting__c 
         WHERE LeanData__Pool__c != null
         AND LeanData__Status__c != 'Available'];
@@ -49,11 +51,11 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
             }else{
                 if(userIdToCap.get(rrs.LeanData__User_Owner__c) == 0){
                     rrs.LeanData__Status__c = 'Unavailable';
-                    rrs.LeanData__Inactive_Reason__c = ;
                 }else{
                     rrs.LeanData__Status__c = 'Available';
                     rrs.LeanData__Inactive_Reason__c = null;
                 }
+                rrs.Set_Current_Day_Timestamp__c = Datetime.now();
                 rrsToUpdate.add(rrs);
             }
 
