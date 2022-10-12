@@ -4,59 +4,77 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
         resetCaps();
     }
 
+    //this methods resets the caps and sets the RRS avaiability based on the quotas
     public static void resetCaps(){
-        Map<Id, Integer> userIdToCap = new Map<Id,Integer>();
+        /*
+        1. Create a map of user to user type (sales/partner)
+        2. Create a map of sales users to lead quota - sales 
+        3. Create a map of partner users to partner region - partners
+        4. Create a list of all RRS with pool with country
+        5. For each rrs, according to the user type, find it's quota
+        6. Based on the quota, set it's avaiability
+        */
 
-        list<Lead_Quota__c > lcToUpdate =new list<Lead_Quota__c>();
-        List<Lead_Quota__c> allLc=[select id, Current_Sign_Up_Quota__c, Sign_Up_Daily_Quota__c, User__c from Lead_Quota__c];
-        for(Lead_Quota__c lc: allLc){
-            if(lc.Current_Sign_Up_Quota__c > 0){
-                lc.Current_Sign_Up_Quota__c=0;
-                lcToUpdate.add(lc);
-            }
-            if (lc.User__c != null) {
-                userIdToCap.put(Id.valueOf(lc.User__c), Integer.valueOf(lc.Sign_Up_Daily_Quota__c));
-            }
-        }
-        if(!lcToUpdate.isEmpty()) Database.update(lcToUpdate);
-
-        list<Partner_Region__c > prToUpdate =new list<Partner_Region__c>();
-        List<Partner_Region__c> allPr= [select id,Current_Daily_Leads_Quota__c, Daily_Leads_Quota__c, Main_User__c from Partner_Region__c ];
-        for(Partner_Region__c pr: allPr){
-            if(pr.Current_Daily_Leads_Quota__c > 0){
-                pr.Current_Daily_Leads_Quota__c =0;
-                prToUpdate.add(pr);
-            }
-            if (pr.Main_User__c != null) {
-                userIdToCap.put(Id.valueOf(pr.Main_User__c), Integer.valueOf(pr.Daily_Leads_Quota__c));
-            }
-        }
-        if(!prToUpdate.isEmpty()) Database.update(prToUpdate);    
+        //Part 1 - Create the 3 maps: usersByTypes, leadQuotasToUpdate and partnerRegionsToUpdate. Also reset the daily caps to 0
         
-        System.debug(userIdToCap);
+        Map<Id,String> usersByTypes = new Map<Id,String>(); //the value will be 'Sales' or 'Partner' for each user, used to later query the relevant Partner Region / Lead Quota
+        Map<Id,Lead_Quota__c> salesUsersQuotas = new Map<Id,Lead_Quota__c>();
+        Map<String,Partner_Region__c> partnerUsersQuotas = new Map<String,Partner_Region__c>(); //the key will be the userId + the country because partner users can have more then 1 partner region (quota)
 
-        list<LeanData__Round_Robin_Setting__c > rrsToUpdate =new list<LeanData__Round_Robin_Setting__c>();
+        List<Lead_Quota__c> leadQuotasToUpdate = new List<Lead_Quota__c>();
+        List<Lead_Quota__c> allLeadQuotas = [SELECT Id, Current_Sign_Up_Quota__c, Sign_Up_Daily_Quota__c, User__c FROM Lead_Quota__c WHERE User__c != NULL];
+        for(Lead_Quota__c lq: allLeadQuotas){
+            if(lq.Current_Sign_Up_Quota__c > 0) {
+                leadQuotasToUpdate.add(new Lead_Quota__c(Id = lq.Id, Current_Sign_Up_Quota__c = 0));
+            }
+            usersByTypes.put(lq.User__c, 'Sales');
+            salesUsersQuotas.put(lq.User__c, lq);
+        }
+    
+        List<Partner_Region__c> partnerRegionsToUpdate = new List<Partner_Region__c>();
+        List<Partner_Region__c> allpartnerRegions= [SELECT Id,Current_Daily_Leads_Quota__c, Daily_Leads_Quota__c, Main_User__c, Country__c FROM Partner_Region__c WHERE Main_User__c != NULL];
+        for(Partner_Region__c pr: allpartnerRegions){
+            if(pr.Current_Daily_Leads_Quota__c > 0){
+                partnerRegionsToUpdate.add(new Partner_Region__c(Id = pr.Id, Current_Daily_Leads_Quota__c = 0));
+            }
+            usersByTypes.put(pr.Main_User__c, 'Partner');
+            partnerUsersQuotas.put((String)pr.Main_User__c + pr.Country__c, pr);
+        }
 
-        list<LeanData__Round_Robin_Setting__c> listRrs = [SELECT Id, LeanData__User_Owner__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__Pool__c != null];
+        //Part 2 - Interate over the RRSs and update the avaiability based on the user's quota
 
-        for(LeanData__Round_Robin_Setting__c rrs: listRrs){
-                                                 
-            if(userIdToCap.get(rrs.LeanData__User_Owner__c) == null){
-                //Send slack notefication
-                Utilities.sendSlackMessage('Error in resetCaps LeanData_PoolSettings service wasnt able locate user from RRS', 'biz-tech-monitoring', null , null, 'Found a user with RRS without lead cap ' + rrs.LeanData__User_Owner__c, null, null);  
-            }else{
-                if(userIdToCap.get(rrs.LeanData__User_Owner__c) == 0){
-                    rrs.LeanData__Status__c = 'Unavailable';
-                    rrs.LeanData__Inactive_Reason__c = '["Lead Cap at 0 - Daily Reset"]';
-                }else{
+        List<LeanData__Round_Robin_Setting__c> allRRS = [SELECT Id, LeanData__User_Owner__c, LeanData__Pool__r.Country__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__Pool__c != NULL];
+        List<LeanData__Round_Robin_Setting__c > RRSToUpdate = new List<LeanData__Round_Robin_Setting__c>();
+
+        for (LeanData__Round_Robin_Setting__c rrs : allRRS) {
+            if (usersByTypes.containsKey(rrs.LeanData__User_Owner__c)) {
+                String userType = usersByTypes.get(rrs.LeanData__User_Owner__c); //will be 'Sales' or 'Partner'
+                Decimal userQuota;
+                if (userType == 'Sales') { //sales user - get the quota from based on the user id
+                    userQuota = salesUsersQuotas.get(rrs.LeanData__User_Owner__c)?.Sign_Up_Daily_Quota__c; 
+                } else { //partner user - get the quota from based on the user id & country
+                    String userKey = (String)rrs.LeanData__User_Owner__c + rrs.LeanData__Pool__r.Country__c;
+                    userQuota = partnerUsersQuotas.get(userKey)?.Daily_Leads_Quota__c; 
+                }
+                //quota found, continue to update the availability  
+                if (userQuota > 0 && rrs.LeanData__Status__c == 'Unavailable') {
                     rrs.LeanData__Status__c = 'Available';
                     rrs.LeanData__Inactive_Reason__c = null;
+                    RRSToUpdate.add(rrs);
                 }
-                rrsToUpdate.add(rrs);
+                else if(userQuota == 0 && rrs.LeanData__Status__c == 'Available') {
+                    rrs.LeanData__Status__c = 'Unavailable';
+                    rrs.LeanData__Inactive_Reason__c = '["Lead Cap at 0 - Daily Reset"]';
+                    RRSToUpdate.add(rrs);
+                }
             }
-
+            else { //RRS with Pool and without lead cap, notify biztech
+                Utilities.sendSlackMessage('Error in LeanData_PoolSettings - resetCaps service wasnt able locate user from RRS', 'biz-tech-monitoring', null , null, 'Found a user with RRS without lead cap ' + rrs.LeanData__User_Owner__c, null, null);
+            }
         }
-        if(!rrsToUpdate.isEmpty()) Database.update(rrsToUpdate);  
+        update RRSToUpdate;
+        update leadQuotasToUpdate;
+        update partnerRegionsToUpdate;
     }
 
     public static void partnerRegionMainUserChangedUpdatePoolSetting(List<Partner_Region__c> prNew, Map<Id, Partner_Region__c> prOldMap) {
