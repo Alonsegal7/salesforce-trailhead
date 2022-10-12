@@ -49,11 +49,11 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
             }else{
                 if(userIdToCap.get(rrs.LeanData__User_Owner__c) == 0){
                     rrs.LeanData__Status__c = 'Unavailable';
+                    rrs.LeanData__Inactive_Reason__c = ;
                 }else{
                     rrs.LeanData__Status__c = 'Available';
                     rrs.LeanData__Inactive_Reason__c = null;
                 }
-                rrs.Set_Current_Day_Timestamp__c = Datetime.now();
                 rrsToUpdate.add(rrs);
             }
 
