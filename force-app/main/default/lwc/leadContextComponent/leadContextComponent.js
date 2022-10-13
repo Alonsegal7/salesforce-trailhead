@@ -1,6 +1,7 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import {createRecord, getRecord} from "lightning/uiRecordApi";
 import michael_assets from '@salesforce/resourceUrl/leadContextAssets';
+import getUserId from '@salesforce/apex/LeadContextComponentHelper.getUserId';
 
 const fieldArray = [
     'Lead.Related_Lead_Code__c', //Need to be true in both cases Related lead and New lead
@@ -57,12 +58,16 @@ export default class LeadContextComponent extends LightningElement {
             this.relatedRecordUrl = data.fields.Related_Record_URL__c.value;
             this.relatedLeadCode = data.fields.Related_Lead_Code__c.value;
             this.distributionReason = data.fields.Distribution_reason__c.value;
-            this.ownerProfile = `https://monday.lightning.force.com/lightning/r/User/${data.fields.OwnerId.value}/view`
 
-            //Adding link to form titan, Will add the message feedbak and feedback reason on the lead
-            // this.feedbackFormUrl = 'https://forms.monday.com/forms/7f75d98aace78ed4c34bdbf543f070f0?r=use1';
-
-
+            //call the getUserId in order to get the id of the initial owner user
+            getUserId({userName: this.owner})
+            .then((result)=>{
+                this.ownerProfile = `https://monday.lightning.force.com/lightning/r/User/${result[0].Id}/view`;
+            })
+            .catch((error)=>{
+                console.log('Line 66 wasnt able to get data', error);
+            })
+            
             //If relatedLeadCode is true then check if the Lead is new lead or related lead
             if(this.relatedLeadCode == true){
                 if(this.distributionReason =='Related'){
