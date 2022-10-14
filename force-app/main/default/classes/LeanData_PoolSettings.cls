@@ -6,17 +6,8 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
 
     //this methods resets the caps and sets the RRS avaiability based on the quotas
     public static void resetCaps(){
-        /*
-        1. Create a map of user to user type (sales/partner)
-        2. Create a map of sales users to lead quota - sales 
-        3. Create a map of partner users to partner region - partners
-        4. Create a list of all RRS with pool with country
-        5. For each rrs, according to the user type, find it's quota
-        6. Based on the quota, set it's avaiability
-        */
 
         //Part 1 - Create the 3 maps: usersByTypes, leadQuotasToUpdate and partnerRegionsToUpdate. Also reset the daily caps to 0
-
         Map<Id,String> usersByTypes = new Map<Id,String>(); //the value will be 'Sales' or 'Partner' for each user, used to later query the relevant Partner Region / Lead Quota
         Map<Id,Lead_Quota__c> salesUsersQuotas = new Map<Id,Lead_Quota__c>();
         Map<String,Partner_Region__c> partnerUsersQuotas = new Map<String,Partner_Region__c>(); //the key will be the userId + the country because partner users can have more then 1 partner region (quota)
@@ -30,7 +21,6 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
             usersByTypes.put(lq.User__c, 'Sales');
             salesUsersQuotas.put(lq.User__c, lq);
         }
-    
         List<Partner_Region__c> partnerRegionsToUpdate = new List<Partner_Region__c>();
         List<Partner_Region__c> allpartnerRegions= [SELECT Id,Current_Daily_Leads_Quota__c, Daily_Leads_Quota__c, Main_User__c, Country__c FROM Partner_Region__c WHERE Main_User__c != NULL];
         for(Partner_Region__c pr: allpartnerRegions){
@@ -40,9 +30,7 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
             usersByTypes.put(pr.Main_User__c, 'Partner');
             partnerUsersQuotas.put((String)pr.Main_User__c + pr.Country__c, pr);
         }
-
         //Part 2 - Interate over the RRSs and update the avaiability based on the user's quota
-
         List<LeanData__Round_Robin_Setting__c> allRRS = [
             SELECT Id, LeanData__User_Owner__c, LeanData__Pool__r.Country__c, LeanData__Status__c, LeanData__Inactive_Reason__c 
             FROM LeanData__Round_Robin_Setting__c 
