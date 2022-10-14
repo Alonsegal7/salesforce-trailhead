@@ -65,7 +65,7 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
                     rrs.LeanData__Inactive_Reason__c = null;
                     RRSToUpdate.add(rrs);
                 }
-                else if(userQuota == 0 && rrs.LeanData__Status__c == 'Available') {
+                else if(userQuota == 0) {
                     rrs.LeanData__Status__c = 'Unavailable';
                     rrs.LeanData__Inactive_Reason__c = '["Lead Cap at 0 - Daily Reset"]';
                     RRSToUpdate.add(rrs);
