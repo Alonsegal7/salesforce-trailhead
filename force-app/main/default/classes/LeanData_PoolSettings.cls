@@ -37,6 +37,8 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
             WHERE LeanData__Pool__c != NULL];
         List<LeanData__Round_Robin_Setting__c > RRSToUpdate = new List<LeanData__Round_Robin_Setting__c>();
 
+        Set<Id> usersWithRRSWithoutQuota = new Set<Id>();
+
         for (LeanData__Round_Robin_Setting__c rrs : allRRS) {
             if (usersByTypes.containsKey(rrs.LeanData__User_Owner__c)) {
                 String userType = usersByTypes.get(rrs.LeanData__User_Owner__c); //will be 'Sales' or 'Partner'
@@ -59,13 +61,19 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
                     RRSToUpdate.add(rrs);
                 }
             }
-            else { //RRS with Pool and without lead cap, notify biztech
-                Utilities.sendSlackMessage('Error in LeanData_PoolSettings - resetCaps service wasnt able locate user from RRS', 'biz-tech-monitoring', null , null, 'Found a user with RRS without lead cap ' + rrs.LeanData__User_Owner__c, null, null);
+            else { //RRS with Pool and without lead cap, add to set and notify biztech
+                usersWithRRSWithoutQuota.add(rrs.LeanData__User_Owner__c);
             }
         }
         update RRSToUpdate;
         update leadQuotasToUpdate;
         update partnerRegionsToUpdate;
+        
+        if (!usersWithRRSWithoutQuota.isEmpty()) {
+            for (Id userId : usersWithRRSWithoutQuota) {
+                Utilities.sendSlackMessage('Error in LeanData_PoolSettings - resetCaps service wasnt able locate user from RRS', 'biz-tech-monitoring', null , null, 'Found a user with RRS without lead cap ' + userId, null, null);
+            }
+        }
     }
 
     public static void partnerRegionMainUserChangedUpdatePoolSetting(List<Partner_Region__c> prNew, Map<Id, Partner_Region__c> prOldMap) {
