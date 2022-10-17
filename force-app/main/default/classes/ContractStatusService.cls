@@ -30,13 +30,13 @@ public with sharing class ContractStatusService {
         for (Contract_Product__c singleConProdEvent : conProdEvent) {
             conProdToUpdate.add(new Contract_Product__c(Id=singleConProdEvent.Id,Activation_Status__c=singleConProdEvent.Contract_Events__r[0].Activation_Status__c)); 
         }
-        update conProdToUpdate;
+        Utilities.updateAndRetry(conProdToUpdate);
 
         List<Contract> contsWithProds = [select id,Activation_Status__c,(select id,Activation_Status__c,Contract__c from Contract_Products__r) from Contract where Id in:contIds];
         for (Contract con : contsWithProds) {
             contsToUpdate.add(setContractStatus(con.Contract_Products__r));
         }
-        update contsToUpdate;
+        Utilities.updateAndRetry(contsToUpdate);
         }catch(Exception e){
             Utilities.sendDebugEmail('Error in ContractStatusService ',e,e.getMessage());   
         }
