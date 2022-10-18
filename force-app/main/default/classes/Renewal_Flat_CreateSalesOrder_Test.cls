@@ -112,7 +112,7 @@ public class Renewal_Flat_CreateSalesOrder_Test {
             System.debug('@@@Renewal_Global_Test contractQuery: ' + [SELECT Id FROM Contract WHERE Id =: con.Id LIMIT 1]);
             opportunity_RenewalCreation.checkOpenRenewalOpps(con.Id);
             List<Id> contractIdList = new List<Id>{con.Id};
-            Opportunity renewalOpp = opportunity_RenewalCreation.createRenewalOpportunities(contractIdList)[0]; 
+            Opportunity renewalOpp = opportunity_RenewalCreation.createRenewalOpportunities(contractIdList,'Automatic Renewal Creation')[0]; 
             Billing_Entity__c be = TestObjectCreator.CreateBE();
             renewalOpp.Billing_Entity__c = be.Id;
             update renewalOpp;
