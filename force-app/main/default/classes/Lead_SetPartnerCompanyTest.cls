@@ -10,9 +10,11 @@ public without sharing class Lead_SetPartnerCompanyTest {
             LastName = 'Test lName1',
             Company = 'Testco',
             Email = 'test@testco.com',
+            Status = 'New',
             Related_Company__c = comp1.Id,
             RecordTypeId = Utilities.preLeadRecordTypeId
         );
+        insert preLead;
     }
 
     @isTest
@@ -24,11 +26,11 @@ public without sharing class Lead_SetPartnerCompanyTest {
         
         Test.startTest();
         preLeadToDist.OwnerId = partnerUser.Id;
-        update partnerUser;
+        update preLeadToDist;
         Test.stopTest();
         
         preLeadToDist = [SELECT Id, RecordTypeId, Partner_Company__c FROM Lead WHERE Email = 'test@testco.com'];
-        System.assertEquals(Utilities.partnerCompanyRecordTypeId, preLeadToDist.RecordTypeId);
-        System.assertEquals(partnerCompany.Id, preLeadToDist.Parent_Company__c);
+        System.assertEquals(Utilities.partnerLeadRecordTypeId, preLeadToDist.RecordTypeId);
+        System.assertEquals(partnerCompany.Id, preLeadToDist.Partner_Company__c);
     }
 }
