@@ -163,7 +163,7 @@ public without sharing class Opportunity_RenewalCreation {
                 if(isOppDetailsChangedOnContract(con,oldContracts)){
                     oppsIdsToChangeContractARR.add(con.Id);
                 }
-                if(isPROChangedOnContract(con,oldContracts) || isRMChangeddOnContract(con,oldContracts)){
+                if(isPROChangedOnContract(con,oldContracts) && isRMChangeddOnContract(con,oldContracts)){
                     accountsIdsToUpdate.add(con.Main_Monday_Account_Related__c);
                     whatShouldIUpdateOnAccount.put(con.Main_Monday_Account_Related__c,'both');
                 }
