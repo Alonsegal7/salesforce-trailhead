@@ -2,6 +2,7 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
 
     private String query;
     private String field;
+    private String source_field;
     private String value;
     private String textForEmail;
     private Set<Id> idsToQuery;
@@ -42,6 +43,14 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
         this.textForEmail = textForEmail;
         if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
     }
+
+    public Batch_SearchAndReplace(String q, String f, String source_f, String textForEmail){
+        this.query = q;
+        this.field = f;
+        this.source_field = source_f;
+        this.textForEmail = textForEmail;
+       if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
+    }
   
     public Database.QueryLocator start(Database.BatchableContext BC){
         try{
@@ -62,6 +71,8 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
                     }
                 } else if (field != null && value != null){
                     s.put(field,value); 
+                } else if (field != null && source_field != null){
+                    s.put(field,s.get(source_field)); 
                 }
                 updatedIdsList.add(s.Id);
             }
