@@ -153,7 +153,20 @@ public without sharing class ContractEventHandler {
                 conEventsToCreate.clear();
             }
             if (!newContractEvents.isempty()) {
-                ContractEventToContract.ContractEventCreateNewContract(newContractEvents,subs,'Subscription');
+                try {
+                    ContractEventToContract.ContractEventCreateNewContract(newContractEvents,subs,'Subscription');
+                } catch (Exception ex) {
+                    if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')) {
+                        try {
+                            ContractEventToContract.ContractEventCreateNewContract(newContractEvents,subs,'Subscription');
+                        } catch (Exception e) {
+                            Utilities.sendDebugEmail('Error in ContractEventHandler ', e, e.getMessage());
+                        }
+                    }
+                    else {
+                        Utilities.sendDebugEmail('Error in ContractEventHandler ', ex, ex.getMessage());
+                    }
+                }
             }
             
         } catch (Exception e ) {

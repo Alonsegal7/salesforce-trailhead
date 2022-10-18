@@ -15,38 +15,40 @@ public without sharing class Batch_CreateRenewalOpportunities implements Schedul
         else{
             return false;
         }
-        //return false;
     }
     //should be replaced with dynamic cmt
     public static Integer getMonthToAdd() {
         return 2;
     }
-    //for manual insert of a date 
+    //for manual insert of a date dd 
     public Batch_CreateRenewalOpportunities(date inputManualDate) {
         this.manualDate = inputManualDate;
     }
     
     public void execute(SchedulableContext sc) {
-        if (!getShouldRun()) return;
         Batch_CreateRenewalOpportunities renewalBatch = new Batch_CreateRenewalOpportunities();
         Utilities.cleanFlexQueue();
         Database.executeBatch(renewalBatch,10);
     }
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        date dueDate;
-         if(this.manualDate != null){
-             dueDate = this.manualDate;
- 
-         }else{
-             dueDate = date.today().addMonths(getMonthToAdd());
- 
-         }
-        System.debug('Scheduled_CreateRenewalOpportunities dueDate: '+ dueDate);
-        String query = 'SELECT Id FROM Contract WHERE Primary_Renewal_Owner__c <> null and  Status__c = \'Active\' and Main_Monday_Account_Related__r.of_open_opps__c = 0 and((Renewal_Opportunity_Creation_Status__c <> \'Completed\' and EndDate =: dueDate) or Renewal_Opportunity_Creation_Status__c = \'Initiated\') ORDER BY EndDate DESC';
-        System.debug('Scheduled_CreateRenewalOpportunities relevantContractsQuery: '+ query);
-        return Database.getQueryLocator(query);
-    }
+            date dueDate;
+            if(this.manualDate != null){
+                dueDate = this.manualDate;
+    
+            }else{
+                dueDate = date.today().addMonths(getMonthToAdd());
+    
+           }
+           System.debug('Scheduled_CreateRenewalOpportunities dueDate: '+ dueDate);
+           String query = 'SELECT Id FROM Contract WHERE Primary_Renewal_Owner__c <> null and  Status__c = \'Active\' and Main_Monday_Account_Related__r.Owner_is_Partner__c = false and Main_Monday_Account_Related__r.of_open_opps__c = 0 and and((Renewal_Opportunity_Creation_Status__c <> \'Completed\' and EndDate =: dueDate) or Renewal_Opportunity_Creation_Status__c = \'Initiated\') ORDER BY EndDate DESC ';
+           if (!getShouldRun()&& !test.isRunningTest()){
+            query+=' LIMIT 0';
+           }
+           System.debug('Scheduled_CreateRenewalOpportunities relevantContractsQuery: '+ query);
+           return Database.getQueryLocator(query);
+        }
+
 
     public void execute(Database.BatchableContext BC, List<sObject> scope){
         List<Id> contractIds = new List<Id>();

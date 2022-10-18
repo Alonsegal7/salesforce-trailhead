@@ -72,8 +72,6 @@ public without sharing class Lead_RelatedCompanyLogicTest {
         System.assertEquals(true, rawSignUpA.Domain_Exists_On_Creation__c);
         System.assertEquals(compA.Id, rawSignUpA.Related_Company__c);
         System.assertEquals(compA.Id, rawSignUpA.Parent_Company__c);
-        System.assertEquals(900, compA.NumberOfEmployees);
-        System.assertEquals('251-1500', compA.Company_Size__c);
     }
 
     @isTest
@@ -467,7 +465,7 @@ public without sharing class Lead_RelatedCompanyLogicTest {
         insert rawSignUps;
         
         Test.startTest();
-        rawSignUpA.NumberOfEmployees = 900;
+        rawSignUpA.NumberOfEmployees = 1900; //the number of employees on the company is 1600 so there should be an update
         update rawSignUpA;
         Test.stopTest();
         
@@ -478,8 +476,31 @@ public without sharing class Lead_RelatedCompanyLogicTest {
         System.assertEquals(true, rawSignUpA.Domain_Exists_On_Creation__c);
         System.assertEquals(compA.Id, rawSignUpA.Related_Company__c);
         System.assertEquals(compA.Id, rawSignUpA.Parent_Company__c);
-        System.assertEquals(900, compA.NumberOfEmployees);
-        System.assertEquals('251-1500', compA.Company_Size__c);
+        System.assertEquals(1900, compA.NumberOfEmployees);
+        System.assertEquals('1500+', compA.Company_Size__c);
+        System.assertEquals('1500+', rawSignUpA.Company_Size__c);
+    }
+    @isTest
+    static void shouldNotUpdateCompanyEmployeeseOnLeadEmployeesUpdate() {
+        
+        Lead rawSignUpA = new Lead(LastName = 'rawSignUpA', Company = 'CompA', RecordTypeId = Utilities.rawSignupRecordTypeId, BB_Account_Domain__c = 'compa.fr');
+        List<Lead> rawSignUps = new List<Lead>{rawSignUpA};
+        insert rawSignUps;
+        
+        Test.startTest();
+        rawSignUpA.NumberOfEmployees = 900; //the number of employees on the company is 1600 so there should be an update
+        update rawSignUpA;
+        Test.stopTest();
+        
+        rawSignUpA = [SELECT Id, Related_Company__c, Parent_Company__c, Company_Size__c, Domain_Exists_On_Creation__c, Related_Lead_Code__c FROM Lead WHERE Id =: rawSignUpA.Id];
+        Account compA = [SELECT Id, NumberOfEmployees, Company_Size__c  FROM Account WHERE Name = 'compA - Enterprise'];
+
+        System.assertEquals(true, rawSignUpA.Related_Lead_Code__c);
+        System.assertEquals(true, rawSignUpA.Domain_Exists_On_Creation__c);
+        System.assertEquals(compA.Id, rawSignUpA.Related_Company__c);
+        System.assertEquals(compA.Id, rawSignUpA.Parent_Company__c);
+        System.assertEquals(1600, compA.NumberOfEmployees);
+        System.assertEquals('1500+', compA.Company_Size__c);
         System.assertEquals('251-1500', rawSignUpA.Company_Size__c);
     }
 }

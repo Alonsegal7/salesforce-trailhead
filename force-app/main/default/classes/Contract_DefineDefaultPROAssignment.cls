@@ -33,7 +33,7 @@ public with sharing class Contract_DefineDefaultPROAssignment {
                         c.Renewal_Manager__c=partnersPodMap.get(primaryMA1.Channel_Partner__c).Renewal_Manager__c;
                     }
                 } 
-                if(isOwnerEntAM(primaryMA1)){ //if AM & Mid-Market or ENT ->P PRO is Account Owner
+                if(isOwnerEntAM(primaryMA1)){ //if AM & Mid-Market or ENT ->PRO is Account Owner
                     c.Primary_Renewal_Owner__c =primaryMA1.OwnerId;  
                     if(salesPodMap.containskey(primaryMA1.OwnerId)){ //assign RM in RM field 
                         c.Renewal_Manager__c=salesPodMap.get(primaryMA1.OwnerId).Renewal_Manager__c;

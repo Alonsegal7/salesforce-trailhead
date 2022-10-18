@@ -101,14 +101,19 @@ public without sharing class Subscription_ConnectToContractEvent {
         List<Subscription__c> sortedSubsByContractCoreProduct = new List<Subscription__c>();
         List<Subscription__c> NotCoreSubs = new List<Subscription__c>();
         try {
-        for (Subscription__c sub : subs) {
-            if (sub.SKU__c.contains('CORE')) {
-                sortedSubsByContractCoreProduct.add(sub);
+            for (Subscription__c sub : subs) {
+                if (sub.SKU__c != null) {
+                    if (sub.SKU__c.contains('CORE')) {
+                        sortedSubsByContractCoreProduct.add(sub);
+                    }
+                    else {
+                        NotCoreSubs.add(sub);
+                    }
+                }
+                else {
+                    NotCoreSubs.add(sub);
+                }
             }
-            else {
-                NotCoreSubs.add(sub);
-            }
-        }
         if (!NotCoreSubs.isempty()) {
             sortedSubsByContractCoreProduct.addall(NotCoreSubs);
         }

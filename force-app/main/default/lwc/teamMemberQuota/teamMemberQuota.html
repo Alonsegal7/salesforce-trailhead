@@ -1,0 +1,48 @@
+<template>
+    <template if:true={teamMemberInfo}>
+
+        <lightning-layout-item size="12" class="trContainer">
+
+            <lightning-layout-item size="1" padding="around-small" class="tableTr"><img src={teamMemberInfo.MediumPhotoUrl} alt="" class="imageContainer"></lightning-layout-item>
+            <lightning-layout-item size="1" padding="around-small" class="tableTr">{teamMemberInfo.Name}</lightning-layout-item>
+
+            <lightning-layout-item size="2" padding="around-small" class="tableTr">
+                <template if:true={teamMemberInfo.Leads_Quotas__r}>
+                    <template for:each={teamMemberInfo.Leads_Quotas__r} for:item="currDailyQuots">
+                        <li key={currDailyQuots.Id}>
+                            <p class="dailyQuotaInput">{currDailyQuots.Sign_Up_Daily_Quota__c}</p>
+                            <img src={editIcon} alt="" class="editIcon" onclick={openEditQuotaHandler}>
+                        </li>
+                    </template>
+                </template>
+            </lightning-layout-item> 
+
+            <lightning-layout-item size="2" padding="around-small" class="tableTr">
+                <template if:true={teamMemberInfo.Leads_Quotas__r}>
+                    <template for:each={teamMemberInfo.Leads_Quotas__r} for:item="currQuots">
+                        <li key={currQuots.Id}>
+                            {currQuots.Current_Sign_Up_Quota__c}
+                        </li>
+                    </template>
+                </template>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="1" padding="around-small" class="tableTr">{teamMemberInfo.avgScore}</lightning-layout-item>
+
+            <lightning-layout-item size="2" padding="around-small" class="tableTr">{teamMemberInfo.countries}</lightning-layout-item>
+            
+            <lightning-layout-item size="1" padding="around-small" class="tableTr">{teamMemberInfo.segment}</lightning-layout-item>
+
+            <lightning-layout-item size="2" padding="around-small" class="tableTr">
+                <template if:true={teamMemberInfo.Lead_Caps__r}>
+                    <template for:each={teamMemberInfo.Lead_Caps__r} for:item="currCap">
+                        <li key={currCap.Id} class={teamMemberInfo.color}>
+                            <p class="actualOpenLeads">{currCap.Open_Leads_Actual__c}</p>/<p class="limitLeads">{currCap.Open_Leads_Limit__c}</p>
+                        </li>
+                    </template>
+                </template>
+            </lightning-layout-item>
+
+        </lightning-layout-item>
+    </template>
+</template>
