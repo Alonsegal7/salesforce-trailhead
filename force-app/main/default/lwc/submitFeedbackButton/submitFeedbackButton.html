@@ -1,8 +1,12 @@
 <template>
+    <!-- <div class="cloneIcon">
+       
+    </div> -->
     <div class="submitButtonContainer">
         <div class="img_btn">
+            <lightning-icon icon-name="action:clone" alternative-text="clone" title="clone" size="xx-small" class="cloneIcon" onclick={copyLeadUrl}></lightning-icon>
             <img src={feedbackIcon} alt="" class="feedbackImage">
-            <div class="buttonTextContainer">
+            <div class="buttonTextContainer" onclick={openFeedbackForm}>
                 <div class="buttonText">Submit Feedback</div> 
             </div>
         </div>

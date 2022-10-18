@@ -279,10 +279,11 @@ public with sharing class Lead_StampsServiceTest {
     }
     @istest
     static void handleStatusTimestamps(){
-        Lead leadRevicedStatus = [select id, Status,unqualified_timestamp__c,Unqualified_Timestamp_DT__c,Nurturing_Timestamp__c,Received_Timestamp_DT__c,Received_timestamp__c,Attempting_timestamp__c,Attempting_Timestamp_DT__c,Contacted_timestamp__c,Contacted_Timestamp_DT__c,Meeting_Scheduled_Timestamp_DT__c,Qualified_Timestamp_DT__c,Qualified_timestamp__c,Enriched_phone__c,Phone from lead where Company='ReceivedStatusLead' and status='Received' limit 1];
+        Lead leadRevicedStatus = [select id, Status,unqualified_timestamp__c,Unqualified_Timestamp_DT__c,Nurturing_Timestamp__c,Received_Timestamp_DT__c,Initial_Received_Timestamp__c,Received_timestamp__c,Attempting_timestamp__c,Attempting_Timestamp_DT__c,Contacted_timestamp__c,Contacted_Timestamp_DT__c,Meeting_Scheduled_Timestamp_DT__c,Qualified_Timestamp_DT__c,Qualified_timestamp__c,Enriched_phone__c,Phone from lead where Company='ReceivedStatusLead' and status='Received' limit 1];
 
         system.assertEquals(Date.today(), leadRevicedStatus.Received_timestamp__c);
         system.assertEquals(date.today(), leadRevicedStatus.Received_Timestamp_DT__c.date());
+        system.assertEquals(date.today(), leadRevicedStatus.Initial_Received_Timestamp__c.date());
 
         system.assertEquals(null, leadRevicedStatus.unqualified_timestamp__c);
         system.assertEquals(null, leadRevicedStatus.Unqualified_Timestamp_DT__c);
@@ -450,6 +451,25 @@ public with sharing class Lead_StampsServiceTest {
     }
 
     @isTest
+    static void shouldNotChangeInitialReceivedOnResubmit(){
+        
+        Lead lead1 = [SELECT Id, Initial_Received_Timestamp__c, Received_Timestamp_DT__c FROM Lead WHERE Company = 'ReceivedStatusLead' limit 1];
+        System.assertEquals(lead1.Received_Timestamp_DT__c, lead1.Initial_Received_Timestamp__c);
+        
+        lead1.Status = 'Unqualified';
+        update lead1;
+
+        Test.startTest();
+        lead1.LeadSource = 'Website - Contact Sales';
+        lead1.Status = 'Received';
+        update lead1;
+        Test.stopTest();
+        
+        lead1 = [SELECT Id, Initial_Received_Timestamp__c, Received_Timestamp_DT__c FROM Lead WHERE Company = 'ReceivedStatusLead' limit 1]; 
+        System.assertNotEquals(lead1.Received_Timestamp_DT__c, lead1.Initial_Received_Timestamp__c);
+    }
+
+    @isTest
     static void shouldNotMarkChannelOnResubmit(){
         
         Lead lead1 = [SELECT Id, LeadSource, Channel_Lead_Source__c from Lead WHERE Email = 'test3@monday.com' limit 1];
@@ -506,7 +526,7 @@ public with sharing class Lead_StampsServiceTest {
         User salesUser = [SELECT id FROM USER WHERE group__c = 'Sales' AND IsActive = true LIMIT 1];
         Integer leadCounter;
         List<Lead> leadsToCreate = new List<Lead>();
-        for(leadCounter = 0; leadCounter < 200; leadCounter++){
+        for(leadCounter = 0; leadCounter < 100; leadCounter++){
             Lead newLead = new Lead();
             newLead.LastName = 'test';
             newLead.email = 'test'+leadCounter+'@monday.com';
@@ -520,8 +540,9 @@ public with sharing class Lead_StampsServiceTest {
         Boolean isMatch = true;
         List<Lead> allLeads = [SELECT Id,RecordTypeId FROM Lead];
         for(Lead checkRTLead: allLeads){
-            System.assertEquals(Utilities.internalLeadRecordTypeId, checkRTLead.RecordTypeId);
+            isMatch = Utilities.internalLeadRecordTypeId == checkRTLead.RecordTypeId;
         }
+        System.assert(isMatch);
     }
 
     @IsTest

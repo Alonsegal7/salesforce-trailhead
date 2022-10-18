@@ -1,6 +1,6 @@
 <template>
     <div class="relatedBody">
-            <p class="distributedOwner">Distributed To {initOwner}</p>
-            <p class="relatedReason">Reason:<a href={relatedRecordUrl} class="reasonLink"> {relatedDistributionReason}</a></p>
+            <p class="distributedOwner">Distributed To <a href={profileUrl} style="all: unset;" class="profileUrl">{initOwner}</a></p>
+            <p class="relatedReason">Reason:<a href= 'https://monday.lightning.force.com/lightning/r/User/${relatedRecordUrl}/view' class="reasonLink"> {relatedDistributionReason}</a></p>
     </div>
 </template>

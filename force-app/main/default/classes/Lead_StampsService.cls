@@ -145,6 +145,9 @@ public without sharing class Lead_StampsService {
                         if (lead.Status == statusMeta.Name) break; // when reached the curr lead status - exit
                     }
                 }
+                if (lead.Initial_Received_Timestamp__c == null && lead.Received_Timestamp_DT__c != null) { 
+                    lead.Initial_Received_Timestamp__c = lead.Received_Timestamp_DT__c; //this field should only be stamped once, when the Received_Timestamp_DT__c is populated for the first time
+                }
             }
         }
     }

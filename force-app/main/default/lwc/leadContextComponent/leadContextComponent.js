@@ -9,8 +9,10 @@ const fieldArray = [
     'Lead.Owner_Name_Initial__c', 
     'Lead.Related_Record_URL__c',
     'Lead.Company_Size__c',
+    'Lead.Comp_Size_Formula__c',
     'Lead.Country',
-    'Lead.Long_Lead_ID__c'
+    'Lead.Long_Lead_ID__c',
+    'Lead.OwnerId'
 ];
 
 export default class LeadContextComponent extends LightningElement {
@@ -21,6 +23,7 @@ export default class LeadContextComponent extends LightningElement {
     @track recordData=null;
 
     @track owner=null;
+    @track ownerProfile=null;
 
     //Related Lead
     @track relatedDistributionReason=null;
@@ -54,12 +57,10 @@ export default class LeadContextComponent extends LightningElement {
             this.relatedRecordUrl = data.fields.Related_Record_URL__c.value;
             this.relatedLeadCode = data.fields.Related_Lead_Code__c.value;
             this.distributionReason = data.fields.Distribution_reason__c.value;
-
+            this.ownerProfile = `https://monday.lightning.force.com/lightning/r/User/${data.fields.OwnerId.value}/view`
 
             //Adding link to form titan, Will add the message feedbak and feedback reason on the lead
-            this.feedbackFormUrl = `https://monday-test.formtitan.com/leadPoolFeedback?leadId=${this.recordId}#/`;
-
-            console.log('Line 60', this.feedbackFormUrl);
+            // this.feedbackFormUrl = 'https://forms.monday.com/forms/7f75d98aace78ed4c34bdbf543f070f0?r=use1';
 
 
             //If relatedLeadCode is true then check if the Lead is new lead or related lead
@@ -78,9 +79,9 @@ export default class LeadContextComponent extends LightningElement {
                     this.displayComponent = true;
 
                     this.iconPic = michael_assets + '/icons/phone.svg';
-                    this.docUrl='https://monday.monday.com';
+                    this.docUrl='https://monday.monday.com/docs/3315821052';
                     this.leadTypeTitle = 'This Is A New Sign Up';
-                    this.companySize = data.fields.Company_Size__c.value;
+                    this.companySize = data.fields.Comp_Size_Formula__c.value;
                     this.country = data.fields.Country.value;
                 }
             }
@@ -89,10 +90,6 @@ export default class LeadContextComponent extends LightningElement {
         {
             console.log('From wire leadRecordData Error line 90');
         }
-    }
-
-    openFeedbackForm(){
-        window.open(this.feedbackFormUrl, '_blank').focus();
     }
 
 }
