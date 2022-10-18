@@ -20,6 +20,14 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
        if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
     }
 
+    public Batch_SearchAndReplace(String q, String f, String v, String textForEmail, String source_f){
+        this.query = q;
+        this.field = f;
+        this.source_field = source_f;
+        this.textForEmail = textForEmail;
+       if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
+    }
+  
     public Batch_SearchAndReplace(String q, Map<String,String> fieldsToValuesMap, String textForEmail){
         this.query = q;
         this.fieldsToValuesMap = fieldsToValuesMap;
@@ -44,14 +52,6 @@ public class Batch_SearchAndReplace implements Database.Batchable<sObject>, Data
         if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
     }
 
-    public Batch_SearchAndReplace(String q, String f, String source_f, String textForEmail){
-        this.query = q;
-        this.field = f;
-        this.source_field = source_f;
-        this.textForEmail = textForEmail;
-       if(UserInfo.getProfileId() == '00e1t000001bu2uAAA') emailRecepients.add(UserInfo.getUserEmail());
-    }
-  
     public Database.QueryLocator start(Database.BatchableContext BC){
         try{
             if(query == null) query = 'select Id from ' + sobjectName + ' where Id in: idsToQuery';
