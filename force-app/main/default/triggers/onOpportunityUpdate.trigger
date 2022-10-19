@@ -10,6 +10,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         Opportunity_GreenBucketLogic.Opportunity_GreenBucketLogic(Trigger.new, Trigger.oldMap);
         Partners_SharingService.newPartnerOppsSharingValidation(Trigger.new);
         Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(Trigger.new, Trigger.oldMap);
+        Opportunity_OppTypeService.Opportunity_OppTypeService(Trigger.new, Trigger.oldMap);
     }
     
     //BEFORE UPDATE
@@ -27,7 +28,7 @@ trigger onOpportunityUpdate on Opportunity (after insert, after update, after de
         Partners_SharingService.createOpportunityShares_ManualTrigger(Trigger.new);
         Account_RegionalCompanyService.linkOppsToExistingRegionalCompanies(Trigger.new, Trigger.oldMap);
         if(!Opportunity_CoSellSyncService.checkIfSecondaryOppsUpdateAllowed()) lockedValidationService.cosellLockValidation(Trigger.new, Trigger.oldMap);
-        //Opportunity_OppTypeService.Opportunity_OppTypeService(Trigger.new, Trigger.oldMap);
+        Opportunity_OppTypeService.Opportunity_OppTypeService(Trigger.new, Trigger.oldMap);
     }
     
     //AFTER UPDATE
