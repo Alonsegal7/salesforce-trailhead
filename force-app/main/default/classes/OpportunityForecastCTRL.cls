@@ -98,6 +98,7 @@ public without sharing class OpportunityForecastCTRL {
                 qlisToCreate.add(new QuoteLineItem(
                     QuoteId=quote.Id,
                     Is_Primary__c=true,
+                    Tier__c=tier,
                     PricebookEntryId=mappedSkuCurrencyToPBE.get('ARR-BALANCE'+oppty.CurrencyIsoCode),
                     UnitPrice=0,
                     ARR__c=(oppty.prior_arr__c*(-1)),
@@ -115,6 +116,8 @@ public without sharing class OpportunityForecastCTRL {
             }
             return qlisToCreate;
         } catch (Exception e) {
+            Utilities.sendSlackMessage('Forecast was not created!! check, update, and fix', 'alon-monitoring', null , null, null, '@exception ' + e + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), null);
+            Utilities.sendEmail('Forecast ARR update error!','Please go back to the opportunity  (Link: '+'https://monday.lightning.force.com/'+oppId+') and re-update the forecast. if you still having issues, please open a ticket at the business support board here -->  https://wkf.ms/3uWxgNX and show add this to the ticket:'+e.getMessage() + '\n' + e.getStackTraceString(),new list<String>{userinfo.getUserEmail(),'biztech@monday.com','alonse@monday.com'}); 
             throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
         }
 
@@ -133,9 +136,9 @@ public without sharing class OpportunityForecastCTRL {
     return productsMap;
    }
 
-   @AuraEnabled
+   @AuraEnabled 
    public static List<quotelineitem> getCurrentQuoteLineItems(Id quoteId){
-   List<quotelineitem> qlis = [select Product_Identifier_SKU__c, Added_Seats__c,Tier__c,Net_Per_Unit__c,Seats__c,Discount,DealHub_Net_Price__c,List_Price__c,CurrencyIsoCode from quotelineitem where quoteid =: quoteId];
+   List<quotelineitem> qlis = [select Product_Identifier_SKU__c,quote.DH_Tier__c, Added_Seats__c,Tier__c,Net_Per_Unit__c,Seats__c,Discount,DealHub_Net_Price__c,List_Price__c,CurrencyIsoCode from quotelineitem where quoteid =: quoteId];
     return qlis;
    }
 
