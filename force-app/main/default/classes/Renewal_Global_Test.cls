@@ -36,7 +36,7 @@ public class Renewal_Global_Test {
 
         System.runAs(userRecord){
             opportunity_RenewalCreation.checkOpenRenewalOpps(con.Id);
-            opportunity_RenewalCreation.createRenewalOpportunities(contractIdList); 
+            opportunity_RenewalCreation.createRenewalOpportunities(contractIdList,'Automatic Renewal Creation'); 
             opportunity_RenewalCreation.checkOpenExpansionOpps(con.Id);
         }
         Test.stopTest();
@@ -79,7 +79,7 @@ public class Renewal_Global_Test {
         
         System.runAs(userRecord){
             opportunity_RenewalCreation.checkOpenRenewalOpps(con.Id);
-            opportunity_RenewalCreation.createRenewalOpportunities(contractIdList); 
+            opportunity_RenewalCreation.createRenewalOpportunities(contractIdList,'Automatic Renewal Creation'); 
         }
     }
 

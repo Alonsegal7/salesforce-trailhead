@@ -112,12 +112,12 @@ public class Renewal_Flat_CreateSalesOrder_Test {
             System.debug('@@@Renewal_Global_Test contractQuery: ' + [SELECT Id FROM Contract WHERE Id =: con.Id LIMIT 1]);
             opportunity_RenewalCreation.checkOpenRenewalOpps(con.Id);
             List<Id> contractIdList = new List<Id>{con.Id};
-            Opportunity renewalOpp = opportunity_RenewalCreation.createRenewalOpportunities(contractIdList)[0]; 
+            Opportunity renewalOpp = opportunity_RenewalCreation.createRenewalOpportunities(contractIdList,'Automatic Renewal Creation')[0]; 
             Billing_Entity__c be = TestObjectCreator.CreateBE();
             renewalOpp.Billing_Entity__c = be.Id;
             update renewalOpp;
             System.debug('@@@Renewal Opp Id: '+renewalOpp);
-            System.debug('@@@Renewal Opp Id: '+[SELECT Id,Selected_Company_Contract__c FROM Opportunity WHERE RecordTypeId = :CSRecordTypeId]);
+            System.debug('@@@Renewal Opp Id: '+[SELECT Id,Selected_Company_Contract__c FROM Opportunity WHERE Type = 'Flat Renewal' LIMIT 1]);
         }
     }
     
@@ -128,8 +128,8 @@ public class Renewal_Flat_CreateSalesOrder_Test {
         
         Test.startTest();
 
-        Id CSRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
-        Opportunity renewalOpp = [SELECT Id,Selected_Company_Contract__c FROM Opportunity WHERE RecordTypeId = :CSRecordTypeId][0];
+        //Id CSRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('CS_Opportunity').getRecordTypeId();
+        Opportunity renewalOpp = [SELECT Id,Selected_Company_Contract__c FROM Opportunity WHERE Type = 'Flat Renewal' LIMIT 1];
 
         System.debug('@@@Renewal_Global_Test renewalOpp: '+renewalOpp.Id);
         System.debug('@@@Renewal_Global_Test renewaContract: '+renewalOpp.Selected_Company_Contract__c);

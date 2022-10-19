@@ -4,6 +4,7 @@ trigger onUserUpdate on User (after insert, after update, after delete) {
         if(Trigger.isInsert || Trigger.isUpdate){
             Partners_SharingService.handleEligibleUsersUserRole(Trigger.new, Trigger.oldMap);
             User_CommunityPublicGroupService.addRemoved_PartnerCommunityUsersPG(Trigger.new, Trigger.oldMap);
+            User_CreatePodAssignment.User_CreatePodAssignment(trigger.new, trigger.oldMap);
         }
         if (Trigger.isDelete) {
             CalloutHandler.HandleCallout (trigger.old,'Delete',null);

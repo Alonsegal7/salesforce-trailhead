@@ -14,33 +14,35 @@
 
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-                        <property name="jsonSkusData" type="String" label="dealhu API JSON" 
-                        description="the JSON file returned from dealhub via APIb"/>
-                        <property name="duration" type="Integer" label="Duration" 
-                        description="The deal total duration"/>
-                        <property name="pricingVersion" type="String" label="Pricing Version" 
-                        description="The Pricing Version"/>
-                        <property name="crrncyIso" type="String" label="Currency Code" 
-                        description="The deal currency"/>
-                        <property name="parentRecId" type="String" label="ParentId" 
-                        description="The parent id of the record which the products will be created on"/>
-                        <property name="context" type="String" label="Process (PartnerSOR or quote)" 
-                        description="The context of this component - if it is PartnerSOR, it will create SOR records if it is quote, it will create quote and line items. make sure to send the parent id (SOR or Opportuinty) at the ParentId input field"/>
-                        <propertyType name="T" extends="SObject" label="Product Table" description="Plesae make sure to add only the Product list from the product get records" />
-                        <property label="Products List" name="Products" role="inputOnly" type="{T[]}" />
-                        <property name="contractId" type="String" label="Account Current Contract Id" 
-                        description="In case of pro-rated"/>
-                        <property name="productColumnWidth" type="String" label="Product Column Width" 
-                        description="The Product Column Width"/>
-                        <property name="unitPriceColumnWidth" type="Integer" label="Unit Price Column Width" 
-                        description="The Unit Price Column Width"/>
-                        <property name="quantityColumnWidth" type="Integer" label="Quantity Column Width" 
-                        description="The Quantity Column Width"/>
-                        <property name="discountColumnWidth" type="Integer" label="Discount Column Width" 
-                        description="The Discount Column Width"/>
-                        <property name="totalColumnWidth" type="Integer" label="Total Column Width" 
-                        description="The Total Column Width"/>
-                        <property name="recordId" type="String" label="Record Id" description="Automatically bind the page's record id to the component variable"/>
+            <property name="jsonSkusData" type="String" label="dealhu API JSON" 
+            description="the JSON file returned from dealhub via APIb"/>
+            <propertyType name="T" extends="SObject" label="Product Table" description="Plesae make sure to add only the Product list from the product get records" />
+            <property label="Products List" name="Products" role="inputOnly" type="{T[]}" />
+            <property name="psorTier" type="String" label="Tier" 
+            description="Tier"/>
+            <property name="duration" type="Integer" label="Duration" 
+            description="The deal total duration"/>
+            <property name="pricingVersion" type="String" label="Pricing Version" 
+            description="The Pricing Version"/>
+            <property name="crrncyIso" type="String" label="Currency Code" 
+            description="The deal currency"/>
+            <property name="parentRecId" type="String" label="ParentId" 
+            description="The parent id of the record which the products will be created on"/>
+            <property name="context" type="String" label="Process (PartnerSOR or quote)" 
+            description="The context of this component - if it is PartnerSOR, it will create SOR records if it is quote, it will create quote and line items. make sure to send the parent id (SOR or Opportuinty) at the ParentId input field"/>
+            <property name="contractId" type="String" label="Account Current Contract Id" 
+            description="In case of pro-rated"/>
+            <property name="productColumnWidth" type="String" label="Product Column Width" 
+            description="The Product Column Width"/>
+            <property name="unitPriceColumnWidth" type="Integer" label="Unit Price Column Width" 
+            description="The Unit Price Column Width"/>
+            <property name="quantityColumnWidth" type="Integer" label="Quantity Column Width" 
+            description="The Quantity Column Width"/>
+            <property name="discountColumnWidth" type="Integer" label="Discount Column Width" 
+            description="The Discount Column Width"/>
+            <property name="totalColumnWidth" type="Integer" label="Total Column Width" 
+            description="The Total Column Width"/>
+            <property name="recordId" type="String" label="Record Id" description="Automatically bind the page's record id to the component variable"/>
 
         </targetConfig>
 
