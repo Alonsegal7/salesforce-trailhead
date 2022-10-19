@@ -41,7 +41,7 @@ public without sharing class Batch_CreateRenewalOpportunities implements Schedul
     
            }
            System.debug('Scheduled_CreateRenewalOpportunities dueDate: '+ dueDate);
-           String query = 'SELECT Id FROM Contract WHERE Primary_Renewal_Owner__c <> null and  Status__c = \'Active\' and Main_Monday_Account_Related__r.Owner_is_Partner__c = false and Main_Monday_Account_Related__r.of_open_opps__c = 0 and and((Renewal_Opportunity_Creation_Status__c <> \'Completed\' and EndDate =: dueDate) or Renewal_Opportunity_Creation_Status__c = \'Initiated\') ORDER BY EndDate DESC ';
+           String query = 'SELECT Id FROM Contract WHERE Primary_Renewal_Owner__c <> null and  Status__c = \'Active\' and Main_Monday_Account_Related__r.Owner_is_Partner__c = false and Main_Monday_Account_Related__r.of_open_opps__c = 0 and((Renewal_Opportunity_Creation_Status__c <> \'Completed\' and EndDate =: dueDate) or Renewal_Opportunity_Creation_Status__c = \'Initiated\') ORDER BY EndDate DESC ';
            if (!getShouldRun()&& !test.isRunningTest()){
             query+=' LIMIT 0';
            }

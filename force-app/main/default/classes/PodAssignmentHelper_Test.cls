@@ -33,7 +33,7 @@ public with sharing class PodAssignmentHelper_Test {
         update PartnerCompany; 
         //Pod assignment should be created
         PartnerCompany = [SELECT Id FROM Account WHERE Partner_Company_Status__c='Signed'  LIMIT 1 ];
-        Pod_Assignment__c pod = [SELECT Id,Partner_Pod_Lead_Partner_Company__c FROM Pod_Assignment__c WHERE Partner_Pod_Lead_Partner_Company__c =: PartnerCompany.Id LIMIT 1];
+        Pod_Assignment__c pod = [SELECT Id,Status__c,Renewal_Manager__c,Partner_Pod_Lead_Partner_Company__c FROM Pod_Assignment__c WHERE Partner_Pod_Lead_Partner_Company__c =: PartnerCompany.Id LIMIT 1];
         system.assertEquals(PartnerCompany.Id, pod.Partner_Pod_Lead_Partner_Company__c);
         //should be created on Pending assigmnet status with no renewal manager 
         system.assertEquals(pod.Status__c,'Pending Assignment');

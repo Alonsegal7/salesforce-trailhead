@@ -121,7 +121,6 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         maPartner.OwnerId = partnerUser.Id;
         maPartner.active_contract__c = contract1.id;
         accountdToCreate.add(maPartner);
-        System.debug('maPartner- Noam'+maPartner);
         //MA Is co-sell - Sales rep is account owner 
         Account maCoSellSalesLead = TestObjectCreator.CreateMondayAccount(company);
         maCoSellSalesLead.Name='CoSellAccountSalesLead';
@@ -131,7 +130,6 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         maCoSellSalesLead.Partner__c=partnerUser.id;
         maCoSellSalesLead.active_contract__c = contract4.id;
         accountdToCreate.add(maCoSellSalesLead);
-        System.debug('maCoSellSalesLead- Noam'+maCoSellSalesLead);
         //MA Is co-sell - Sales rep is account owner + No existing Pod for user  
         Account maCoSellSalesLeadNoPod = TestObjectCreator.CreateMondayAccount(company);
         maCoSellSalesLeadNoPod.Name='CoSellAccountSalesLeadNoPod';
@@ -141,7 +139,6 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         maCoSellSalesLeadNoPod.OwnerId = user3SalesAMMid.Id;
         maCoSellSalesLeadNoPod.active_contract__c = contract5.id;
         accountdToCreate.add(maCoSellSalesLeadNoPod);
-        System.debug('CoSellAccountSalesLeadNoPod- Noam'+maCoSellSalesLeadNoPod);
         //MA managed by sales rep (AM + Segment Enterprise)
         Account maSalesEntAM = TestObjectCreator.CreateMondayAccount(company);
         maSalesEntAM.Name='SalesMAAM';
@@ -149,7 +146,6 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         maSalesEntAM.OwnerId=user1SalesAMEnt.Id;
         maSalesEntAM.active_contract__c = contract2.id;
         accountdToCreate.add(maSalesEntAM);
-        System.debug('maSalesEntAM- Noam'+maSalesEntAM);
          //MA managed by sales rep (AE + Segment SMB)
         Account maSalesSmbAE = TestObjectCreator.CreateMondayAccount(company);
         maSalesSmbAE.Name='SalesMAAE';
@@ -157,7 +153,6 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         maSalesSmbAE.OwnerId=user2SalesAESmb.Id;
         maSalesSmbAE.active_contract__c = contract3.id;
         accountdToCreate.add(maSalesSmbAE);
-        System.debug('maSalesSmbAE- Noam'+maSalesSmbAE);
 
         insert accountdToCreate;
 
@@ -208,7 +203,8 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         Account maPartner = [SELECT Id,Name,ARR__c,OwnerId FROM Account WHERE ARR__c = 100 LIMIT 1 ];
         Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c,Main_Monday_Account_Related__c FROM Contract WHERE Name = 'Test contract 1' LIMIT 1 ];
         Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c WHERE Pod_Type__c='Partners' LIMIT 1];
-        con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        //con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        con.Define_Default_PRO_Assignment__c = true;
         update con;
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
@@ -222,7 +218,8 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         Account maCoSellSalesLead = [SELECT Id,Name,ARR__c,OwnerId,Owner_is_Partner__c FROM Account WHERE ARR__c = 300 LIMIT 1 ];
         Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c FROM Contract WHERE Name = 'Test contract 4' LIMIT 1 ];
         Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c  WHERE Sales_Pod_Lead__c =: maCoSellSalesLead.OwnerId LIMIT 1];
-        con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        //con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        con.Define_Default_PRO_Assignment__c = true;
         update con;
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
@@ -236,7 +233,8 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
     static void maIsCoSellOwnerIsSalesPROIsRenewalManagerNoPod() {
         Account maCoSellSalesLeadNoPod = [SELECT Id,Name,ARR__c,OwnerId FROM Account WHERE ARR__c = 500 LIMIT 1 ];
         Contract con = [SELECT Id, Name,Primary_Renewal_Owner__c,Main_Monday_Account_Related__c FROM Contract WHERE Name = 'Test contract 5' LIMIT 1 ];
-        con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        //con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        con.Define_Default_PRO_Assignment__c = true;
         update con;
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
@@ -252,7 +250,8 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         Account maSalesEntAM = [SELECT Id,Name,OwnerId,ARR__c FROM Account WHERE ARR__c=150  LIMIT 1 ];
         Contract con = [SELECT Id,Name,Primary_Renewal_Owner__c FROM Contract WHERE Name = 'Test contract 2' LIMIT 1 ];
         Pod_Assignment__c podForPorEntAM = [SELECT Id,Sales_Pod_Lead__c,Renewal_Manager__c FROM Pod_Assignment__c WHERE Sales_Pod_Lead__c =: maSalesEntAM.OwnerId];
-        con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        //con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        con.Define_Default_PRO_Assignment__c = true;
         update con;
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
@@ -268,7 +267,8 @@ public with sharing class Contract_DefineDefaultPROAssignment_Test {
         Account maSalesSMBAE = [SELECT Id,OwnerId,ARR__c FROM Account WHERE ARR__c =200  LIMIT 1 ];
         Contract con = [SELECT Id,Name,Primary_Renewal_Owner__c FROM Contract WHERE Name = 'Test contract 3' LIMIT 1 ];
         Pod_Assignment__c pod = [SELECT Id,Renewal_Manager__c FROM Pod_Assignment__c WHERE Sales_Pod_Lead__c =: maSalesSMBAE.OwnerId LIMIT 1];
-        con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        //con.EndDate=Date.today().addMonths(6); //contract that will be ended in 6 months, should be triggerd the PRO schduled batach
+        con.Define_Default_PRO_Assignment__c = true;
         update con;
         Test.startTest();
         Batch_DefineDefaultPROOnContract batch = new Batch_DefineDefaultPROOnContract();
