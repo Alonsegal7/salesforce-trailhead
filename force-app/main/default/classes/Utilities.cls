@@ -240,13 +240,14 @@ public without sharing class Utilities {
 
     public static Id partnerCompanyRecordTypeId {  
         get {  
-            if (MARecordTypeId == null) {  
-                MARecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();  
+            if (partnerCompanyRecordTypeId == null) {  
+                partnerCompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();  
             }
-            return MARecordTypeId;  
+            return partnerCompanyRecordTypeId;  
         }  
         set;  
     }
+
 
     public static Id CompanyRecordTypeId {  
         get {  
@@ -309,6 +310,7 @@ public without sharing class Utilities {
         }  
         set;  
     }
+
 
     public static Id internalLeadRecordTypeId {  
         get {  

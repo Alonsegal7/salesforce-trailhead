@@ -27,12 +27,11 @@ public with sharing class Dealhub_ProductPricingFlow {
         string pv = flowInputs[0].pricingVersion;
         string crrncy = flowInputs[0].currencyIsoCode;
         string tier = flowInputs[0].tier;
+        string priceResult = dealhub_Product_Pricing_Service.getPricesFromDealhub(tier,crrncy,pv,skus);
 
-        string productsParams = dealhub_Product_Pricing_Service.getProductsParameters(tier, crrncy,  pv, skus);
-        string getPrices = dealhub_Product_Pricing_Service.getProdutsPricing(productsParams);
-        System.debug('getPrices'+getPrices );
+        System.debug('priceResult'+priceResult );
 
-        results.add(new FlowOutput(getPrices));
+        results.add(new FlowOutput(priceResult));
         return results;
     }
 

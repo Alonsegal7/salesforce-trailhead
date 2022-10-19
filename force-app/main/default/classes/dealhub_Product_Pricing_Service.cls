@@ -1,14 +1,16 @@
 public with sharing class dealhub_Product_Pricing_Service {
    
-    public static boolean firstPostFired=false;
     public static Map<string, Object> globalVars = new Map<string, Object>();
-
+    public static Map<string, product2> skusProductsMap = new Map<string, product2>();
     @AuraEnabled
     public static string getPricesFromDealhub(string tier, string crrncyCode, string pricingVersion, list<string> skusList){
-        string productsParams = getProductsParameters(tier, crrncyCode,  pricingVersion, skusList);
-        string getPrices = getProdutsPricing(productsParams);
-        System.debug('getPrices'+getPrices );
-        return getPrices;
+        List<string> sku_list = setSkuList(skusList);//handle sku list and map product object 
+        string productsParamsReq = getProductsParameters(tier, crrncyCode,  pricingVersion, sku_list);//send 1st req to dealhub
+        System.debug('Parameters 1st req '+productsParamsReq );
+        string getRawPrices = getProdutsPricing(productsParamsReq);//send 2nd req to dealhub - get prices
+        string pricingObject = buildPricingObject(getRawPrices);//set and build response object
+        System.debug('final object '+pricingObject );
+        return pricingObject;
     }
     
     public static string getProductsParameters(string tier, string crrncyCode, string pricingVersion, list<string> skusList) {
@@ -17,7 +19,9 @@ public with sharing class dealhub_Product_Pricing_Service {
         globalVars.put('currency',crrncyCode);
         globalVars.put('pricing_version',pricingVersion);
         globalVars.put('tier',tier);
-        globalVars.put('firstPostFired',false);
+        globalVars.put('ENT','Enterprise');
+        globalVars.put('PRO','Pro');
+        globalVars.put('STD','Standard');
         dealhub_ProductParameters.JsonHeader paramHeaderReq = new dealhub_ProductParameters.JsonHeader();
         paramHeaderReq.currencyIsoCode = crrncyCode;
         paramHeaderReq.geo = 'US';
@@ -44,6 +48,7 @@ public with sharing class dealhub_Product_Pricing_Service {
             for (dealhub_ProductParameters.Product_factors parameter : currentSku.parameters_for.parameters) {
                 if (parameter.name == 'GQ1.Version') {
                     dealhub_PricingParameters.PricingParameter pricingParam = new dealhub_PricingParameters.PricingParameter();
+                    
                     pricingParam.name='GQ1.Version';
                     pricingParam.value=globalVars.get('pricing_version');
                     productSku.parameters.add(pricingParam);
@@ -65,7 +70,7 @@ public with sharing class dealhub_Product_Pricing_Service {
                 if (parameter.name == 'Admin_Section.Quote_Tier') {
                     dealhub_PricingParameters.PricingParameter pricingParam = new dealhub_PricingParameters.PricingParameter();
                     pricingParam.name='Admin_Section.Quote_Tier';
-                    pricingParam.value=globalVars.get('tier');
+                    pricingParam.value=globalVars.get(productSku.sku.right(3));
                     productSku.parameters.add(pricingParam);
                 }
                 if (parameter.name == 'Admin_Section.Assign_Pricing_Factor') {
@@ -107,14 +112,44 @@ public with sharing class dealhub_Product_Pricing_Service {
         req.setBody(body);
         req.setHeader('Content-Type', 'application/json;charset=UTF-8');
         req.setHeader('Authorization', 'Bearer ' + webhook_Key);
-        if (!Test.isRunningTest()){
-            HttpResponse res = http.send(req);
-            System.debug('Alonse dealhub pricing queueable res.getbody():'+res.getbody());
-            return res.getbody();
-        }
-        else {
-            string res = '{"skus":[{"sku":"CRM-PRO","parameters_for":{"product_factors":[{"name":"Added Seats","type":"number"},{"name":"Seats","type":"number"},{"name":"Duration","type":"number"},{"name":"Hours","type":"number"}],"parameters":[{"name":"Contract.New_Tier","type":"text"},{"name":"product.plan","type":"text"},{"name":"Admin_Section.Contract_Quote_Currency_Diff","type":"text"},{"name":"product.Option_Contract_Type","type":"text"},{"name":"Contract.Get_Contract_Tier","type":"text"},{"name":"GQ1.Version","type":"text"},{"name":"Partner_SO_Details.Partner_Tier","type":"text"},{"name":"GQ1.Quote_Currency","type":"text"},{"name":"product.Plan_Period","type":"text"},{"name":"Partner_SO_Details.Partner_SO_Request__cPeriod__c","type":"text"}]}},{"sku":"CORE-PRO","parameters_for":{"product_factors":[{"name":"Added Seats","type":"number"},{"name":"Seats","type":"number"},{"name":"Duration","type":"number"},{"name":"Hours","type":"number"}],"parameters":[{"name":"Contract.New_Tier","type":"text"},{"name":"Admin_Section.Renewal_List_Price","type":"number"},{"name":"Admin_Section.Opp_Owner_is_Partner","type":"text"},{"name":"product.Option_Contract_Type","type":"text"},{"name":"Admin_Section.Owner_Business_Role_Initial","type":"text"},{"name":"product.Renewed_Contract_Base_Price","type":"text"},{"name":"Select_Rollout_Plan.Rollout_Plan__cNet_Price__c","type":"number"},{"name":"product.Plan_Period","type":"text"},{"name":"Admin_Section.Active_Contract_CORE_Tier","type":"text"},{"name":"product.plan","type":"text"},{"name":"Contract.Get_Contract_Tier","type":"text"},{"name":"Admin_Section.Contract_Quote_Currency_Diff","type":"text"},{"name":"Contract.Enterprise_Pricing_Trial_Change_Tiers","type":"text"},{"name":"GQ1.Version","type":"text"},{"name":"Partner_SO_Details.Partner_Tier","type":"text"},{"name":"Partner_SO_Details.Partner_SO_Request__cPeriod__c","type":"text"}]}}]}';
-            return res;
-        }
+        HttpResponse res = http.send(req);
+        System.debug('Alonse dealhub pricing queueable res.getbody():'+res.getbody());
+        return res.getbody();
     }
+
+    public static list<string> setSkuList(list<string> skus){
+        if (skus!=null && skus.size()>0) {//it means the request specified the sku list, just map product2
+            for (product2 prod : [select id,Short_Product_Name__c, Subscription_main_tier__c,Product_Identifier__c,Product_Character__c, name from product2 where Product_Identifier__c in:skus AND isactive=true]) {
+                skusProductsMap.put(prod.Product_Identifier__c,prod);
+            }
+        }
+        else{//it means that this is a full sku request per currency
+            List<Product2> productsQry =  [select id,Short_Product_Name__c, Subscription_main_tier__c,Product_Identifier__c,Product_Character__c, name from product2 where Subscription_main_tier__c!=null AND isactive=true];
+            List<string> skusList = new List<string>();
+            for (Product2 product : productsQry) {
+                skusList.add(product.Product_Identifier__c);
+                skusProductsMap.put(product.Product_Identifier__c,product);
+            }
+            return skusList;
+        }
+        return skus;
+    }
+    public static string buildPricingObject(string dealhubRes){//create a response object
+        dealhub_parse_pricing_res pricingResponse = dealhub_parse_pricing_res.parse(dealhubRes);
+        dealhub_parse_pricing_res wrrapedPricingResponse = new dealhub_parse_pricing_res();
+        for (dealhub_parse_pricing_res.sku singleSku : pricingResponse.skus) {
+            dealhub_parse_pricing_res.sku sku= new dealhub_parse_pricing_res.sku();
+            sku.sku = singleSku.sku;
+            sku.error = singleSku.error;
+            sku.id = singleSku.id;
+            sku.price = singleSku.price;
+            sku.productName = skusProductsMap.get(singleSku.sku).Name; 
+            sku.productShortName = skusProductsMap.get(singleSku.sku).Short_Product_Name__c;
+            sku.tier=skusProductsMap.get(singleSku.sku).Subscription_main_tier__c;
+            sku.productCharacter=skusProductsMap.get(singleSku.sku).Product_Character__c;
+            wrrapedPricingResponse.skus.add(sku);
+        }
+        return JSON.serialize(wrrapedPricingResponse);
+    }
+
 }
