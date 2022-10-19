@@ -188,17 +188,19 @@ public without sharing class Opportunity_RenewalCreation {
         }
         if(!accountsIdsToUpdate.isEmpty()){
             for (Account acc: [SELECT id,Renewal_Manager__c,Renewal_Owner__c, Active_Contract__c FROM account WHERE id in: accountsIdsToUpdate]){
-                if (whatShouldIUpdateOnAccount.get(acc.Id) == 'both') {
-                    acc.Renewal_Manager__c = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
-                    acc.Renewal_Owner__c = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
+                if (relevantContMap.get(acc.Active_Contract__c) != null){
+                    if (whatShouldIUpdateOnAccount.get(acc.Id) == 'both') {
+                        acc.Renewal_Manager__c = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
+                        acc.Renewal_Owner__c = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
+                    }
+                    if (whatShouldIUpdateOnAccount.get(acc.Id) == 'PRO') {
+                        acc.Renewal_Owner__c = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
+                    }
+                    if (whatShouldIUpdateOnAccount.get(acc.Id) == 'RM') {
+                        acc.Renewal_Manager__c = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
+                    }
+                    accsToUpdate.add(acc);
                 }
-                if (whatShouldIUpdateOnAccount.get(acc.Id) == 'PRO') {
-                    acc.Renewal_Owner__c = relevantContMap.get(acc.Active_Contract__c).Primary_Renewal_Owner__c;
-                }
-                if (whatShouldIUpdateOnAccount.get(acc.Id) == 'RM') {
-                    acc.Renewal_Manager__c = relevantContMap.get(acc.Active_Contract__c).Renewal_Manager__c;
-                }
-                accsToUpdate.add(acc);
             }
         }
         if(!accsToUpdate.isEmpty()){
