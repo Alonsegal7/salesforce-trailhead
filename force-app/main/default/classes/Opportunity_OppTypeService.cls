@@ -16,7 +16,10 @@ public without sharing class Opportunity_OppTypeService {
             
             for(Opportunity opp: relevantOpps){
                 decimal oppRenewalARR=opp.Total_Renewal_ARR__c;
-                decimal contractARR=oppWithContractData.get(opp.id).Selected_Company_Contract__c==null?null:oppWithContractData.get(opp.id).Selected_Company_Contract__r.Contract_ARR__c;
+                decimal contractARR;
+                if(oppWithContractData.containsKey(opp.id)){
+                    contractARR=oppWithContractData.get(opp.id).Selected_Company_Contract__c!=null?oppWithContractData.get(opp.id).Selected_Company_Contract__r.Contract_ARR__c:null;
+                }
                 system.debug('OppTypeSer real oppRenewalARR: '+oppRenewalARR);
                 system.debug('OppTypeSer real contractARR: '+contractARR);
                 if(opp.Type=='Service'){
