@@ -3,7 +3,7 @@ public without sharing class Contract_Event_Daily_Update implements Database.Bat
     public Integer totalConEvntToUpdate=0;
 
     public Iterable<Contract_Event__c> start(Database.BatchableContext BC){
-        return [select id, start_date__c, end_date__c, Contract__r.Status__c, Contract__r.Prior_Contract__r.Id from Contract_Event__c where Calculate_ARR__c=false and isrecurring__c=true and start_date__c=today];
+        return [select id, start_date__c, end_date__c, Contract__r.Status__c, Contract__r.Prior_Contract__r.Id from Contract_Event__c where Calculate_ARR__c=false and isrecurring__c=true and start_date__c <= today and start_date__c=THIS_WEEK ];
     }
 
     public void execute(SchedulableContext sc) {

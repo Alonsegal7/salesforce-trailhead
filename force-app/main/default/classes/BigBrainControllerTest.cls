@@ -15,4 +15,20 @@ public class BigBrainControllerTest {
         BigBrainController.resetAccountTrial('test');
         BigBrainController.setPricingVersion('test', 'test');
     }
+
+    @isTest
+    static void TestPullSignups(){
+        Test.setMock(HttpCalloutMock.class, new BigBrain_LeadPoolServiceTest.mockPullSignupsSuccess());
+        Test.startTest();
+        BigBrainAPI.pullSignups(Datetime.now().addMinutes(-15), Datetime.now().addMinutes(-1));
+        Test.stopTest();
+    }
+
+    @isTest
+    static void TestRefreshSignups(){
+        Test.setMock(HttpCalloutMock.class, new BigBrain_LeadPoolServiceTest.mockRefreshSignupsSuccess());
+        Test.startTest();
+        BigBrainAPI.refreshSignups(new list<string>{'12345'}, false);
+        Test.stopTest();
+    }
 }

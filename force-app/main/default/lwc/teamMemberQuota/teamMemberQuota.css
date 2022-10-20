@@ -1,0 +1,52 @@
+.THIS .slds-input:focus, .THIS .slds-input:active {
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.trContainer{
+    left:0;
+}
+
+.tableTr{
+    display: inline-block;
+    text-align: center;
+}
+
+.imageContainer{
+    border-radius: 50px;
+    height: 40px;
+    width: 40px;
+}
+
+.dailyQuotaInput{
+    display: inline-block;
+    margin-right:5px;
+}
+
+.editIcon:hover{
+    cursor: pointer;
+}
+
+.actualOpenLeads{
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.limitLeads{
+    display: inline-block;
+    margin-left: 3px;
+}
+
+.dailyQuotaForm{
+    display: inline-block;
+    width: 55px;
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
+

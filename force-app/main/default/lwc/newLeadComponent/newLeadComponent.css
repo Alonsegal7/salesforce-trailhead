@@ -1,0 +1,43 @@
+.newLeadBody{
+    border: 1px solid #E6E9EF;
+    border-radius: 8px;
+    margin-top: 8px;
+    padding-left: 8px;
+    margin: 0.25rem 0.5rem;
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 15px;
+}
+
+
+
+.distributedOwner{
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #FFFFFF;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+
+.sizeAndCountry{
+    margin-top: 9px;
+}
+
+.companySize,
+.country{
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #FFFFFF;
+    display: inline;
+}
+
+.country{
+    margin-left: 15px;
+}
+
+.profileUrl:hover{
+cursor: pointer;
+}

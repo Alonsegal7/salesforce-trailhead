@@ -99,6 +99,17 @@ public class TestObjectCreator
         be.VAT_Number__c = 'TESTExtremelyuniquemvckjcxh43mfc';
         be.CurrencyIsoCode = 'USD';
 		be.Status__c = 'Active';
+        be.Contact_Email__c = 'test@gmail.com';
+        be.Finance_Contact_Phone__c = '0123456789';
+        be.Country__c = 'Ukraine';
+        be.City__c = 'test city';
+        be.Street__c = 'test street';
+        be.Zip_Postal_Code__c = '123456';
+        be.Shipping_Country_G__c = 'Ukraine';
+        be.Shipping_City__c= 'test city';
+        be.Shipping_Street__c = 'test street';
+        be.Shipping_Zip_Postal_Code__c = '123456';
+        be.Ship_To_Name__c = 'test name';
         
         if (persistImmediate) insert be;
         return be;
@@ -178,7 +189,8 @@ public class TestObjectCreator
         Contract c = new Contract(
             Name = 'Test contract',
             Seats__c = 5,
-        	AccountId = account.Id
+        	AccountId = account.Id,
+            Tier__c = 'Pro'
         );
         
         if (persistImmediate) insert c;
@@ -311,7 +323,7 @@ public class TestObjectCreator
 
        Profile p = [SELECT Id FROM Profile WHERE Name='Partner Community Custom'];
        User manager2 = [select Id from User where IsActive = true and Profile.Name='Channel Managers' limit 1];
-       User user = new User(ContactId = con.Id, Alias='standt1', ManagerId=manager2.Id, Country='United Kingdom',Email='demo1@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing123@monday.com');
+       User user = new User(ContactId = con.Id, Alias='standt1', ManagerId=manager2.Id, Country='United Kingdom',Email='demo1@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing123@monday.com', Group__c = 'Partners');
        insert user;
        return user;
    }

@@ -71,7 +71,8 @@ public without sharing class Batch_PartnersPOSurveySend implements Database.Batc
                                                     AccountId, Account.Name, 
                                                     ContactId, Contact.Name, Contact.PCSM_Champion__c
                                                     from AccountContactRelation 
-                                                    where AccountId in: accountToSurvey_map.keySet()];
+                                                    where AccountId in: accountToSurvey_map.keySet()
+                                                    and Contact.Partners_Stop_OB_OG_Survey__c = false];
             if(acr_list.isEmpty()) return;
             //mark accounts with champions contacts - for those accounts only champions will recieve surveys, otherwise all contacts will recieve
             Set<Id> accountsWithChampions = new Set<Id>();

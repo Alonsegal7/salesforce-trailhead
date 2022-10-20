@@ -485,6 +485,9 @@
               <c:handoverFromOpportunity aura:id="handoverScreen" context="Close Process" recordId="{!v.recordId}" onhosuccess="{!c.handleSuccessHandover}" onhoerror="{!c.handleErrorHandover}" onfoundexisting="{!c.handleExistingHandover}"></c:handoverFromOpportunity>
             </aura:if>
             <aura:if isTrue="{!v.innerPathValue == 'Activation'}">
+              <div style="padding:0.5rem;background:#16325c" >
+                <div class="slds-text-color_inverse slds-align_absolute-center">Opportunity ARR:  $<lightning:formattedNumber value="{!v.oppData.Green_Bucket_ARR_V2__c}" maximumFractionDigits="2"/>,  Signed SO: {!v.oppData.SyncedQuote.Name} </div>
+              </div>
               <c:BigBrainEmbed aura:id="activationScreen" recordId="{!v.recordId}" iframeUrl="https://new.bigbrain.me/account/change_contract" width="100%" height="500px"></c:BigBrainEmbed>
             </aura:if>
             <aura:if isTrue="{!or(v.innerPathValue == 'OppSummary', v.closedFields.Close_Process_Path__c == 'OppSummary')}">

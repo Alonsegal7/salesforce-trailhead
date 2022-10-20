@@ -3,42 +3,51 @@ public without sharing class Lead_RelatedCompanyLogic {
     //expects raw signups, will determine if the leads has a related company and will update the company, runs in before (if moved to after make sure to send all the fields)
     public static void updateRelatedCompany(List<Lead> rawLeads, Map<Id,Lead> oldLeads) { 
         try {
-            List<Lead> rawSignUpsWithDomain = new List<Lead>();
+            Set<Lead> rawSignUpsWithDomain = new Set<Lead>();
+            Set<Lead> leadsWithEmployeeNumberUpdateToCompany = new Set<Lead>();
             Set<String> domainsFromLeads = new Set<String>();
             for(Lead lead : rawLeads) {
-                if(lead.RecordTypeId == Utilities.rawSignupRecordTypeId && lead.BB_Account_Domain__c <> '' && lead.Signup_Cleanup_Reason__c == null && 
-                (oldLeads == null || oldLeads?.get(lead.Id).BB_Account_Domain__c == '') || lead.Manual_Trigger__c == 'Run Related Company Logic') {
+                if(lead.RecordTypeId == Utilities.rawSignupRecordTypeId && !String.isBlank(lead.BB_Account_Domain__c) && String.isBlank(lead.Signup_Cleanup_Reason__c) && 
+                (oldLeads == null || String.isBlank(oldLeads?.get(lead.Id).BB_Account_Domain__c) || lead.Manual_Trigger__c == 'Run Related Company Logic')) {
                     rawSignUpsWithDomain.add(lead);
                     domainsFromLeads.add(lead.BB_Account_Domain__c);
                     if(lead.Manual_Trigger__c == 'Run Related Company Logic') lead.Manual_Trigger__c = '';
                 }
-            }
-
-            if (rawSignUpsWithDomain.isEmpty()) return;
-            List<Lead> relatedLeads = new List<Lead>();
-            List<Lead> newLeads = new List<Lead>();
-            List<Company_Domain__c> relatedCompanyDomains = new List<Company_Domain__c>([SELECT Id, Company__c, Domain__c FROM Company_Domain__c WHERE Domain__c IN: domainsFromLeads]);
-            Map<String,Id> domainToCompanyId = new Map<String,Id>();
-            for (Company_Domain__c cd : relatedCompanyDomains) {
-                domainToCompanyId.put(cd.Domain__c, cd.Company__c);
-            }
-            for (Lead lead : rawSignUpsWithDomain) {
-                if(domainToCompanyId.containsKey(lead.BB_Account_Domain__c)) {
-                    lead.Related_Company__c = domainToCompanyId.get(lead.BB_Account_Domain__c);
-                    lead.Domain_Exists_On_Creation__c = true;
-                    relatedLeads.add(lead);
+                //NumberOfEmployees was updated on lead that has a company
+                if(oldLeads != null && lead.NumberOfEmployees != null && lead.Related_Company__c != null && lead.NumberOfEmployees != oldLeads.get(lead.Id).NumberOfEmployees) {
+                    leadsWithEmployeeNumberUpdateToCompany.add(lead);
                 }
-                else {
-                    lead.Domain_Exists_On_Creation__c = false;
-                    newLeads.add(lead);
+            }
+            if (rawSignUpsWithDomain.isEmpty() && leadsWithEmployeeNumberUpdateToCompany.isEmpty()) return;
+            if (!rawSignUpsWithDomain.isEmpty()) {
+                List<Lead> relatedLeads = new List<Lead>();
+                List<Lead> newLeads = new List<Lead>();
+                List<Company_Domain__c> relatedCompanyDomains = new List<Company_Domain__c>([SELECT Id, Company__c, Domain__c FROM Company_Domain__c WHERE Domain__c IN: domainsFromLeads]);
+                Map<String,Id> domainToCompanyId = new Map<String,Id>();
+                for (Company_Domain__c cd : relatedCompanyDomains) {
+                    domainToCompanyId.put(cd.Domain__c, cd.Company__c);
                 }
-                lead.Related_Lead_Code__c = true;
+                for (Lead lead : rawSignUpsWithDomain) {
+                    if(domainToCompanyId.containsKey(lead.BB_Account_Domain__c)) {
+                        lead.Related_Company__c = domainToCompanyId.get(lead.BB_Account_Domain__c);
+                        lead.Domain_Exists_On_Creation__c = true;
+                        relatedLeads.add(lead);
+                    }
+                    else {
+                        lead.Domain_Exists_On_Creation__c = false;
+                        newLeads.add(lead);
+                    }
+                    lead.Related_Lead_Code__c = true;
+                }
+                if(relatedLeads.size()>0) {
+                    assignOwnerForRelatedLeads(relatedLeads);
+                    leadsWithEmployeeNumberUpdateToCompany.addAll(relatedLeads);
+                }
+                if(newLeads.size()>0) createCompany(newLeads);
             }
-            if(relatedLeads.size()>0) {
-                assignOwnerForRelatedLeads(relatedLeads);
-                updateNumberOfEmployeesOnCompany(relatedLeads);
+            if (!leadsWithEmployeeNumberUpdateToCompany.isEmpty()) {
+                updateNumberOfEmployeesOnCompany(leadsWithEmployeeNumberUpdateToCompany);
             }
-            if(newLeads.size()>0) createCompany(newLeads);
         } catch (Exception e) {
             Utilities.sendDebugEmail('Error in Lead_RelatedCompanyLogic ',e,e.getMessage());
         }
@@ -137,8 +146,8 @@ public without sharing class Lead_RelatedCompanyLogic {
         leadToUpdate.Distribution_reason__c = 'Related';
         leadToUpdate.Related_Distribution_Reason__c = reason;
         leadToUpdate.Related_Record_URL__c = 'https://monday.lightning.force.com/' +recordIdForUrl;
+        leadToUpdate.Status = 'Received';
         leadToUpdate.Related_Lead_Code__c = true;
-        leadToUpdate.RecordTypeId = Utilities.activeUsersMap.get(newOwnerId)?.Group__c == 'Sales' ? Utilities.internalLeadRecordTypeId : Utilities.partnerLeadRecordTypeId;
         //add logic to send notification to new lead owner
     }
 
@@ -148,58 +157,61 @@ public without sharing class Lead_RelatedCompanyLogic {
 
     private static Map<Id,Map<String, Object>> getCompanyWithRelatedObjects(Set<Id> companyIds) {
         Map<Id,Map<String, Object>> companyRelatedObjects = new Map<Id,Map<String, Object>>();
-        if (companyRelatedObjects == null || companyRelatedObjects.keySet().isEmpty()) {
-            companyRelatedObjects = new Map<Id,Map<String, Object>>();
-            List<Account> mondayAccountsList = [SELECT Id, OwnerId, BillingCountry, Company__c FROM Account WHERE Eligible_For_Related__c = true AND RecordTypeId =: Utilities.MARecordTypeId AND Company__c IN: companyIds AND Arr__c>0 ORDER BY Arr__c DESC]; 
-            List<Opportunity> oppList = [SELECT Id, OwnerId, Monday_Account_Country__c, Company__c FROM Opportunity WHERE Eligible_For_Related__c = true AND Company__c IN: companyIds AND IsClosed = false ORDER BY CreatedDate DESC];
-            for(Account ma : mondayAccountsList) {
-                if (companyRelatedObjects.containsKey(ma.Company__c)) {
-                    if (companyRelatedObjects.get(ma.Company__c).containsKey('paying_monday_accounts')) {
-                        ((List<Account>)companyRelatedObjects.get(ma.Company__c).get('paying_monday_accounts')).add(ma);
-                    }
-                    else {
-                        companyRelatedObjects.get(ma.Company__c).put('paying_monday_accounts', new List<Account>{ma});
-                    }
+        List<Account> mondayAccountsList = [SELECT Id, OwnerId, BillingCountry, Company__c FROM Account WHERE Eligible_For_Related__c = true AND RecordTypeId =: Utilities.MARecordTypeId AND Company__c IN: companyIds AND Arr__c>0 ORDER BY Arr__c DESC]; 
+        List<Opportunity> oppList = [SELECT Id, OwnerId, Monday_Account_Country__c, Company__c FROM Opportunity WHERE Eligible_For_Related__c = true AND Company__c IN: companyIds AND IsClosed = false ORDER BY CreatedDate DESC];
+        for(Account ma : mondayAccountsList) {
+            if (companyRelatedObjects.containsKey(ma.Company__c)) {
+                if (companyRelatedObjects.get(ma.Company__c).containsKey('paying_monday_accounts')) {
+                    ((List<Account>)companyRelatedObjects.get(ma.Company__c).get('paying_monday_accounts')).add(ma);
                 }
                 else {
-                    companyRelatedObjects.put(ma.Company__c, new Map<String, Object>{
-                        'paying_monday_accounts' => new List<Account>{ma}
-                    });
-                } 
+                    companyRelatedObjects.get(ma.Company__c).put('paying_monday_accounts', new List<Account>{ma});
+                }
             }
-            for(Opportunity opp : oppList) {
-                if (companyRelatedObjects.containsKey(opp.Company__c)) {
-                    if (companyRelatedObjects.get(opp.Company__c).containsKey('open_opportunities')) {
-                        ((List<Opportunity>)companyRelatedObjects.get(opp.Company__c).get('open_opportunities')).add(opp);
-                    }
-                    else {
-                        companyRelatedObjects.get(opp.Company__c).put('open_opportunities', new List<Opportunity>{opp});
-                    }
+            else {
+                companyRelatedObjects.put(ma.Company__c, new Map<String, Object>{
+                    'paying_monday_accounts' => new List<Account>{ma}
+                });
+            } 
+        }
+        for(Opportunity opp : oppList) {
+            if (companyRelatedObjects.containsKey(opp.Company__c)) {
+                if (companyRelatedObjects.get(opp.Company__c).containsKey('open_opportunities')) {
+                    ((List<Opportunity>)companyRelatedObjects.get(opp.Company__c).get('open_opportunities')).add(opp);
                 }
                 else {
-                    companyRelatedObjects.put(opp.Company__c, new Map<String, Object>{
-                        'open_opportunities' => new List<Opportunity>{opp}
-                    });
-                } 
+                    companyRelatedObjects.get(opp.Company__c).put('open_opportunities', new List<Opportunity>{opp});
+                }
             }
+            else {
+                companyRelatedObjects.put(opp.Company__c, new Map<String, Object>{
+                    'open_opportunities' => new List<Opportunity>{opp}
+                });
+            } 
         }
         return companyRelatedObjects;
     }
 
-    private static void updateNumberOfEmployeesOnCompany(List<Lead> leadsToCheck) {
+    private static void updateNumberOfEmployeesOnCompany(Set<Lead> leadsToCheck) {
         Set<Id> relatedCompanyIds = new Set<Id>();
         for (Lead lead : leadsToCheck) {
             relatedCompanyIds.add(lead.Related_Company__c);
         }
         if (relatedCompanyIds.isEmpty()) return;
         Map<Id,Account> companiesMap = new Map<Id,Account>([SELECT Id, NumberOfEmployees FROM Account WHERE Id IN: relatedCompanyIds]);
-        List<Account> companiesToUpdate = new List<Account>();
+        Map<Id,Account> companiesToUpdateMap = new Map<Id,Account>(); //a map is used because 2 signups can point to the same company, in this case we will take the one with the larger size
         for (Lead lead : leadsToCheck) {
-            if (lead.NumberOfEmployees != companiesMap.get(lead.Related_Company__c).NumberOfEmployees) {
-                companiesToUpdate.add(new Account(Id = lead.Related_Company__c, NumberOfEmployees = lead.NumberOfEmployees));
+            Integer currentNumberOfEmployees = companiesMap.get(lead.Related_Company__c).NumberOfEmployees;
+            if (currentNumberOfEmployees == null || lead.NumberOfEmployees > currentNumberOfEmployees) {
+                if (!companiesToUpdateMap.containsKey(lead.Related_Company__c)) {
+                    companiesToUpdateMap.put(lead.Related_Company__c, new Account(Id = lead.Related_Company__c, NumberOfEmployees = lead.NumberOfEmployees));
+                }
+                else if (lead.NumberOfEmployees > companiesToUpdateMap.get(lead.Related_Company__c).NumberOfEmployees) {
+                    companiesToUpdateMap.get(lead.Related_Company__c).NumberOfEmployees = lead.NumberOfEmployees;
+                }
             }
         }
-        update companiesToUpdate;
+        update companiesToUpdateMap.values();
     }
 
     public static void createCompany(List<Lead> leadsToCreateCompanyFor) {

@@ -1,0 +1,54 @@
+.infoBoxcontainer{
+    border: 1px solid #E6E9EF;
+    border-radius: 8px;
+    height: 57px;
+    color: white;
+    margin: 0rem 0.5rem;
+    display: block;
+    font-family: "Poppins";
+    cursor: pointer;
+}
+
+.infoBoxcontainer:hover{
+    transform:scale(1.002,1.002);
+    box-shadow: 1px 1px #e6e9efb5;
+    background-color: #5f83d670;
+}
+
+.infoBoxData{
+    display: flex;
+    margin: 9px 0px;
+    font-weight: 400;
+}
+
+.imgIcon{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 40px;
+    width: 40px;
+}
+
+.leadBoxInfo{
+    display: block;
+    position: relative;
+}
+
+.leadTitle{
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 10px;
+}
+
+.leadUrl{
+    font-style: normal;
+    font-size: 14px;
+    color:#676879;
+    line-height: 20px;
+
+}

@@ -1,0 +1,42 @@
+.thContainer{
+    position:absolute;
+    left:0;
+    margin-bottom: 25px;
+    color: #000000;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.trContainer{
+    display: inline;
+    margin-top: 25px;
+    padding-left: 0px;
+    padding-right: 0px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+}
+
+.tableTh{
+    display: inline-block;
+    text-align: center;
+}
+
+.dailyQuotaComponent{
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    color: #000000;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+
+.teamMemberContainer{
+    border-bottom: 1px solid #0000000f;
+}
+

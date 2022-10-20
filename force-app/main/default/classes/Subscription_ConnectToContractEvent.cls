@@ -34,7 +34,7 @@ public without sharing class Subscription_ConnectToContractEvent {
                 return;
 
             map<string,Account> accountsByPulseId= new map<string,Account>(); 
-            for(Account acc: [select id,primary_pulse_account_id__c,Active_Contract__c,Company__c,Active_Contract__r.EndDate
+            for(Account acc: [select id,primary_pulse_account_id__c,Active_Contract__c,Company__c,Active_Contract__r.EndDate,Active_Contract__r.Tier__c
                                 from Account where primary_pulse_account_id__c in: subsPulseIds]){
                 if(!accountsByPulseId.containsKey(acc.primary_pulse_account_id__c))
                     accountsByPulseId.put(acc.primary_pulse_account_id__c,acc);
@@ -55,13 +55,12 @@ public without sharing class Subscription_ConnectToContractEvent {
                         sub.Product__c=prodBySKUs.get(sub.SKU__c).Id;
                     }
                     sub.Monday_Account__c=acc.Id;
-                    conProdsKeys.add(sub.Contract__c+sub.SKU__c);//Check if Extract added seats to sub
-
                     if(sub.Status__c=='ACTIVE'&&sub.Contract__c==null){//if contract is selected in BB, do not create/connect to another contract
-                        if(acc.Active_Contract__c!=null&&sub.Deactivation_Date__c==acc.Active_Contract__r.EndDate){//connect to existing active contract (Different end date will create a new contract)
+                        if(acc.Active_Contract__c!=null&&sub.Deactivation_Date__c==acc.Active_Contract__r.EndDate && sub.Tier__c.capitalize()==acc.Active_Contract__r.Tier__c){//connect to existing active contract (Different end date will create a new contract)
                             sub.Contract__c=acc.Active_Contract__c;
+                            conProdsKeys.add(sub.Contract__c+sub.SKU__c);//Check if Extract added seats to sub
                         }
-                        else if(acc.Active_Contract__c!=null&&sub.Deactivation_Date__c!=acc.Active_Contract__r.EndDate) {//Active Contract is related to the account and subscription dates are above contract end date -needs to decativate
+                        else if(acc.Active_Contract__c!=null&&(sub.Deactivation_Date__c!=acc.Active_Contract__r.EndDate || sub.Tier__c.capitalize()!=acc.Active_Contract__r.Tier__c)) {//Active Contract is related to the account and subscription dates are above contract end date or tier is different-needs to decativate
                                 priorContsMap.put(sub.BigBrain_Id__c,acc.Active_Contract__c);//We use this map in order to update this contract on the new contract created
                                 sub.ContractCreatedByThisSubscription__c=true;//This subscription is going to create the contract - indicate that on the sub
                         }
@@ -102,14 +101,19 @@ public without sharing class Subscription_ConnectToContractEvent {
         List<Subscription__c> sortedSubsByContractCoreProduct = new List<Subscription__c>();
         List<Subscription__c> NotCoreSubs = new List<Subscription__c>();
         try {
-        for (Subscription__c sub : subs) {
-            if (sub.SKU__c.contains('CORE')) {
-                sortedSubsByContractCoreProduct.add(sub);
+            for (Subscription__c sub : subs) {
+                if (sub.SKU__c != null) {
+                    if (sub.SKU__c.contains('CORE')) {
+                        sortedSubsByContractCoreProduct.add(sub);
+                    }
+                    else {
+                        NotCoreSubs.add(sub);
+                    }
+                }
+                else {
+                    NotCoreSubs.add(sub);
+                }
             }
-            else {
-                NotCoreSubs.add(sub);
-            }
-        }
         if (!NotCoreSubs.isempty()) {
             sortedSubsByContractCoreProduct.addall(NotCoreSubs);
         }

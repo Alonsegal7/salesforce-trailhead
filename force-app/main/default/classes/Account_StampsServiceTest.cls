@@ -129,4 +129,15 @@ public with sharing class Account_StampsServiceTest {
         acc = [SELECT Id, Partner__c FROM Account LIMIT 1];
         system.assertEquals(partnerUserId, acc.Partner__c);
     }
+    
+    @isTest
+    static void updateCSMAssignmentTimestamp(){ //Account_StampsService.updateCSMAssignmentTimestamp --> CSM_assignment_Timestamp__c  populated based on CSM__c assignment
+        User user1 = [SELECT Id FROM User WHERE LastName = 'Test1' LIMIT 1];
+        Account acc = [SELECT Id, CSM__c, CSM_assignment_Timestamp__c  FROM Account WHERE OwnerId =: user1.Id LIMIT 1];
+		acc.CSM__c = user1.Id;
+        update acc;
+        
+        Account updatedAcc = [SELECT Id, CSM__c, CSM_assignment_Timestamp__c  FROM Account WHERE Id =: acc.Id LIMIT 1];
+        System.assertNotEquals(updatedAcc.CSM_assignment_Timestamp__c , null);
+    }
 }

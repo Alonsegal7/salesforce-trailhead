@@ -15,6 +15,8 @@ public without sharing class Utilities {
         //optional
         @InvocableVariable(label='ccRecipients (separated by comma)' required=false)
         public list<String> ccRecipients;
+        @InvocableVariable(label='bccRecipients (separated by comma)' required=false)
+        public list<String> bccRecipients;
         @InvocableVariable(label='reply to address' required=false)
         public String replyTo;
         @InvocableVariable(label='Sender Display Name (in case you fill this, the email will be sent from the running user)' required=false)
@@ -31,7 +33,7 @@ public without sharing class Utilities {
         try {
             List<Messaging.SingleEmailMessage> allEmailsToSend = new List<Messaging.SingleEmailMessage>();
             for(sendEmailRequest req : requests){
-                Messaging.SingleEmailMessage m = generateEmail(req.toAddress, req.ccRecipients, req.replyTo, req.whoId, req.emailTempUniqName, req.senderDisplayName, req.oweaAddress);
+                Messaging.SingleEmailMessage m = generateEmail(req.toAddress, req.ccRecipients, req.bccRecipients, req.replyTo, req.whoId, req.emailTempUniqName, req.senderDisplayName, req.oweaAddress);
                 if(m != null)allEmailsToSend.add(m);
             }
             if(!allEmailsToSend.isEmpty()) Messaging.sendEmail(allEmailsToSend);
@@ -40,7 +42,7 @@ public without sharing class Utilities {
         }
     }
 
-    public static Messaging.SingleEmailMessage generateEmail(List<String> toAddresses, List<String> ccAddresses, String replyTo, Id targetObjectId, String emailTempUniqName, String senderDisplayName, String oweaAddress){
+    public static Messaging.SingleEmailMessage generateEmail(List<String> toAddresses, List<String> ccAddresses, List<String> bccAddresses, String replyTo, Id targetObjectId, String emailTempUniqName, String senderDisplayName, String oweaAddress){
         List<EmailTemplate> emailTemp_list = [select Id from EmailTemplate where DeveloperName =: emailTempUniqName limit 1];
         if(emailTemp_list == null || emailTemp_list.isEmpty()) return null;
         Messaging.SingleEmailMessage renderedEmail = Messaging.renderStoredEmailTemplate(emailTemp_list[0].Id, targetObjectId, null);
@@ -49,10 +51,9 @@ public without sharing class Utilities {
 		resEmail.setHtmlBody(renderedEmail.getHtmlBody());
         resEmail.setPlainTextBody(renderedEmail.getPlainTextBody());
         resEmail.setToAddresses(toAddresses);
-		resEmail.setBccAddresses(new List<String>{'kseniasm@monday.com','mayga@monday.com'});
 		resEmail.setSaveAsActivity(false);
-
         if(ccAddresses != null) resEmail.setCcAddresses(ccAddresses);
+        if(bccAddresses != null) resEmail.setBccAddresses(bccAddresses);
 		if(replyTo != null && replyTo != '') resEmail.setReplyTo(replyTo); 
         if(oweaAddress != null && oweaAddress != ''){
             list<orgWideEmailAddress> owea_list = [select Id from orgWideEmailAddress where Address =: oweaAddress limit 1];
@@ -237,6 +238,17 @@ public without sharing class Utilities {
         set;  
     }
 
+    public static Id partnerCompanyRecordTypeId {  
+        get {  
+            if (partnerCompanyRecordTypeId == null) {  
+                partnerCompanyRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Company').getRecordTypeId();  
+            }
+            return partnerCompanyRecordTypeId;  
+        }  
+        set;  
+    }
+
+
     public static Id CompanyRecordTypeId {  
         get {  
             if (CompanyRecordTypeId == null) {  
@@ -267,6 +279,18 @@ public without sharing class Utilities {
         set;  
     }
 
+
+    public static Id potentialPartnerLeadRecordTypeId {  
+        get {  
+            if (potentialPartnerLeadRecordTypeId == null) {  
+                potentialPartnerLeadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Potential_Partner').getRecordTypeId();  
+            }
+            return potentialPartnerLeadRecordTypeId;  
+        }  
+        set;  
+    }
+
+
     public static Id internalOppRecordTypeId {  
         get {  
             if (internalOppRecordTypeId == null) {  
@@ -276,6 +300,17 @@ public without sharing class Utilities {
         }  
         set;  
     }
+
+    public static Id partnerOppRecordTypeId {  
+        get {  
+            if (partnerOppRecordTypeId == null) {  
+                partnerOppRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Partner_Opportunity').getRecordTypeId();  
+            }
+            return partnerOppRecordTypeId;  
+        }  
+        set;  
+    }
+
 
     public static Id internalLeadRecordTypeId {  
         get {  
@@ -320,7 +355,7 @@ public without sharing class Utilities {
     public static Map<Id,User> activeUsersMap {  
         get {  
             if (activeUsersMap == null) {  
-                activeUsersMap = new Map<Id,User>([SELECT Id, Group__c FROM User WHERE IsActive = true]);
+                activeUsersMap = new Map<Id,User>([SELECT Id FROM User WHERE IsActive = true]);
             }
             return activeUsersMap;  
         }  
@@ -349,5 +384,37 @@ public without sharing class Utilities {
         else {
             return null;
         }
+    }
+
+    //will return the full state name (label, not code)
+    public static Set<String> allStates {
+        get {
+            if (allStates == null) {
+                allStates = new Set<String>();
+                Schema.DescribeFieldResult fieldResult = User.statecode.getDescribe();
+                List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+                for( Schema.PicklistEntry f : ple){
+                    allStates.add(f.getLabel());
+                }
+            }
+            return allStates;
+        }
+        set;
+    }
+    
+    //will return the full country name (label, not code)
+    public static Set<String> allCountries {
+        get {
+            if (allCountries == null) {
+                allCountries = new Set<String>();
+                Schema.DescribeFieldResult fieldResult = User.Countrycode.getDescribe();
+                List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+                for( Schema.PicklistEntry f : ple){
+                    allCountries.add(f.getLabel());
+                }
+            }
+            return allCountries;
+        }
+        set;
     }
 }

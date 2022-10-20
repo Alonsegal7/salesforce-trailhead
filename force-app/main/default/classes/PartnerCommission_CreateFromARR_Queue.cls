@@ -40,7 +40,8 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
                             if(pc.Is_Future_Payment__c){ //when arr drops to zero on a monthly plan we set percentage to 0
                                 if(mondayAccount.ARR__c == 0) newPartnerCommissionList.add(new Partner_Commission__c(Id = pc.Id, Percentage__c = 0));
                             } else {
-                                newPartnerCommissionList.add(new Partner_Commission__c(Id = pc.Id, End_Date__c = mondayAccount.Last_ARR_Update_Timestamp__c.addSeconds(-1), ARR_Upon_Close__c = mondayAccount.ARR__c, Close_Reason__c = 'ARR below TH'));
+                                Datetime timeToSet = mondayAccount.Last_ARR_Update_Timestamp__c;
+                                newPartnerCommissionList.add(new Partner_Commission__c(Id = pc.Id, End_Date__c = setPcEndTime(timeToSet) , ARR_Upon_Close__c = mondayAccount.ARR__c, Close_Reason__c = 'ARR below TH'));
                             }
                         }
                     }
@@ -64,5 +65,15 @@ public class PartnerCommission_CreateFromARR_Queue implements System.Queueable {
             pcService.sendErrorEmail(CLASS_NAME_CONST, ex.getMessage());
             throw ex;
         }
+    }
+
+    private static Datetime setPcEndTime(Datetime endTime){
+        if(endTime == null){
+            System.debug(Datetime.now());
+            return Datetime.now();
+        }else{
+            System.debug(endTime.addSeconds(-1));
+            return endTime.addSeconds(-1);
+        } 
     }
 }

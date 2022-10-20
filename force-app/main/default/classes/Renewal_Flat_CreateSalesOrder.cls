@@ -75,7 +75,7 @@ public with sharing class Renewal_Flat_CreateSalesOrder {
                 Pricebook2Id = standardPriceBookId,
                 Pricing_Version__c = opp.Pricing_Version__c,
                 Payment_Terms__c = opp.Payment_Terms__c,
-                Priority_Customer_ID_Text__c = oppsWithBEs.get(opp.Id).Priority_Id__c,
+                //Priority_Customer_ID_Text__c = oppsWithBEs.get(opp.Id).Priority_Id__c,
                 ShippingStreet=oppsWithBEs.get(opp.Id).Shipping_Street__c,
                 ShippingPostalCode=oppsWithBEs.get(opp.Id).Shipping_Zip_Postal_Code__c,
                 ShippingCity=oppsWithBEs.get(opp.Id).Shipping_City__c,

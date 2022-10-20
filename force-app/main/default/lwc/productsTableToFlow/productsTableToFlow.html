@@ -3,7 +3,8 @@
        <template if:true={isLoading}>
           <lightning-spinner alternative-text="Loading" variant="brand" size="large"> </lightning-spinner>
        </template>
-       <template if:true={isQuoteContext}>
+         <template if:true={isQuoteContext}>
+            <template if:false={haveNonForecstDocument}>      
           <lightning-layout multiple-rows class="account-info" >
              <lightning-layout-item padding="horizontal-small">
                 <div class="header-column">
@@ -13,7 +14,6 @@
              <lightning-layout-item >
                 <div class="slds-p-vertical_small">
                    <p class="slds-text-title_bold" >Forecast </p>
-                   <p class="slds-p-vertical_small" >We would love to hear your feedback  <a target="_blank" href="https://forms.monday.com/forms/38bee1fd03d4bd51f29e7d70ae92d591?r=use1">Here :)</a></p>
                 </div>
              </lightning-layout-item>
              <lightning-layout-item size="12" padding="horizontal-small">
@@ -73,6 +73,10 @@
              </lightning-layout-item>
           </lightning-layout>
        </template>
+       <template if:true={haveNonForecstDocument}>     
+          <div class="slds-text-body_regular slds-text-heading_small slds-text-align_center" >You can't change/create a forecast to an opportunity that has a Quote or a Sales order - If you want to perform changes, please update the information on dealhub         </div>
+       </template>
+      </template>
        <template if:true={showProductsTable}>
           <div class="slds-p-vertical_x-small" style="position:relative" >
              <lightning-datatable key-field="sku" 
