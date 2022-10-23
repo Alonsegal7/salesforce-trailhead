@@ -133,6 +133,16 @@ public without sharing class LeanData_PoolSettingsTest {
 
     @isTest
     static void prDailyQuotaChanged(){
+        Partner_Region__c partnerRegion = [SELECT Id, Country__c, Main_User__c FROM Partner_Region__c WHERE Name='test (Brazil)'];
+        LeanData__Round_Robin_Setting__c getRRSBefore = [SELECT Id, LeanData__OwnerId__c, LeanData__Grouping_Name__c, LeanData__Pool__c, LeanData__Pool__r.Country__c, LeanData__Status__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c = :partnerRegion.Main_User__c AND LeanData__Pool__r.Country__c = :partnerRegion.Country__c ];
         
+        Test.startTest();
+        partnerRegion.Daily_Leads_Quota__c = 0;
+        update partnerRegion;
+        Test.stopTest();
+
+        LeanData__Round_Robin_Setting__c getRRS = [SELECT Id, LeanData__OwnerId__c, LeanData__Grouping_Name__c, LeanData__Pool__c, LeanData__Pool__r.Country__c, LeanData__Status__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c = :partnerRegion.Main_User__c AND LeanData__Pool__r.Country__c = :partnerRegion.Country__c];
+
+        System.assertEquals('Unavailable', getRRS.LeanData__Status__c);
     }
 }

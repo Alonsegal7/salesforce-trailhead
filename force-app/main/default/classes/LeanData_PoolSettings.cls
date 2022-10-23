@@ -107,29 +107,25 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
 
 
 
-    public static void partnerRegionDailyQuotaChanged(Map<Id, Partner_Region__c> prNew, Map<Id, Partner_Region__c> prOldMap){
+    public static void partnerRegionDailyQuotaChanged(List<Partner_Region__c> prNew, Map<Id, Partner_Region__c> prOldMap){
 
         Set<Id> relevantOwners = new Set<Id>();
-        // Set<Id> prToAdd = new Set<Id>();
         List<String> dailyLeadQuotaChangedToZero = new  List<String>();
-        // List<String> dailyLeadQuotaGraterThenZero = new  List<String>();
         Map<String, LeanData__Round_Robin_Setting__c> mapOfReleventRRS = new Map<String, LeanData__Round_Robin_Setting__c>();
-    //    Map<String, LeanData__Round_Robin_Setting__c> mapOfReleventRRSToDelete = new Map<String, LeanData__Round_Robin_Setting__c>();
 
         for(Partner_Region__c pr: prNew){
             if(prOldMap.containsKey(pr.Id)){
                 if(prOldMap.get(pr.Id).Daily_Leads_Quota__c > 0 && pr.Daily_Leads_Quota__c == 0){
                     //List of RRS update to unavailable 
                     dailyLeadQuotaChangedToZero.add((String)pr.Main_User__c+pr.Country__c);
+                    relevantOwners.add(pr.Main_User__c);
                 }
-                relevantOwners.add(pr.Main_User__c);
             }
         }
 
 
         List<LeanData__Round_Robin_Setting__c> releventRRSlist = [SELECT Id, LeanData__Pool__r.LeanData__Grouping_Name__c, LeanData__OwnerId__c, LeanData__Pool__r.Country__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c IN: relevantOwners];
         List<LeanData__Round_Robin_Setting__c> rrsToUnavialbe = new List<LeanData__Round_Robin_Setting__c>();
-        // List<LeanData__Round_Robin_Setting__c> rrsToUpdate = new List<LeanData__Round_Robin_Setting__c>();
 
         for(LeanData__Round_Robin_Setting__c rrs : releventRRSlist){
             mapOfReleventRRS.put((String)rrs.LeanData__OwnerId__c+rrs.LeanData__Pool__r.Country__c, rrs);
