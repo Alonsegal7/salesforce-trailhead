@@ -79,4 +79,9 @@ public without sharing class LeanData_PoolSettingsTest {
         System.assertEquals(partnerUser2.Id, rrSettingES.LeanData__OwnerId__c);
         System.assertEquals(partnerUser1.Id, rrSettingBR.LeanData__OwnerId__c); //check that the owner wasn't changed on a different pool user1 was assigned to
     }
+
+    @isTest
+    static void prDailyQuotaChanged(){
+        
+    }
 }
