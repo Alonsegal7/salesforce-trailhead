@@ -57,7 +57,12 @@ public without sharing class OpportunityForecastCTRL {
                 Pricing_Version__c = oppty.Pricing_Version__c
             );
 
-            Database.insert(quote);
+            try {
+                Database.insert(quote);
+            } catch (Exception ex) {
+                Utilities.sendEmail('Forecast ARR update error!','Please go back to the opportunity  (Link: '+'https://monday.lightning.force.com/'+oppId+') and re-update the forecast. if you still having issues, please open a ticket at the business support board here -->  https://wkf.ms/3uWxgNX and show add this to the ticket:'+ex.getMessage() + '\n' + ex.getStackTraceString(),new list<String>{userinfo.getUserEmail(),'biztech@monday.com','alonse@monday.com'});   
+            }
+
 
           Map<string, Id> mappedSkuCurrencyToPBE = new Map<string, Id>();
             for (PricebookEntry pbe : [SELECT Id, CurrencyIsoCode, ProductCode, Product2.Product_Identifier__c, Pricebook2Id FROM PricebookEntry WHERE Product2.Product_Identifier__c IN: relevantSKUs AND Pricebook2Id = :standardPriceBookId]) {
@@ -106,21 +111,26 @@ public without sharing class OpportunityForecastCTRL {
             }
             
             if (!qlisToCreate.isempty()) {
-                insert qlisToCreate;
+                try {
+                    insert qlisToCreate;
+                } catch (Exception ex) {
+                    Utilities.sendEmail('Forecast ARR update error!','Please go back to the opportunity  (Link: '+'https://monday.lightning.force.com/'+oppId+') and re-update the forecast. if you still having issues, please open a ticket at the business support board here -->  https://wkf.ms/3uWxgNX and show add this to the ticket:'+ex.getMessage() + '\n' + ex.getStackTraceString(),new list<String>{userinfo.getUserEmail(),'biztech@monday.com','alonse@monday.com'});   
+
+                }
             }
 
             oppsToUpdate.add(new opportunity(id=oppty.Id,SyncedQuoteId=quote.Id,Expected_Quote_Type__c=contractType));
 
             if (!oppsToUpdate.isempty()) {
-                update oppsToUpdate;
+                System.enqueueJob(new updateOppQueueable(oppsToUpdate)); 
             }
+
             return qlisToCreate;
         } catch (Exception e) {
-            Utilities.sendSlackMessage('Forecast was not created!! check, update, and fix', 'alon-monitoring', null , null, null, '@exception ' + e + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), null);
+            Utilities.sendSlackMessage('Forecast was not created!! check, update, and fix (Opp Id:'+oppId+'', 'biz-tech-monitoring', null , null, null, 'exception: ' + e.getMessage() + '\n' + e.getStackTraceString() + ' <br/>Date: ' + date.today() + ' ' + datetime.now().format('E'), null);
             Utilities.sendEmail('Forecast ARR update error!','Please go back to the opportunity  (Link: '+'https://monday.lightning.force.com/'+oppId+') and re-update the forecast. if you still having issues, please open a ticket at the business support board here -->  https://wkf.ms/3uWxgNX and show add this to the ticket:'+e.getMessage() + '\n' + e.getStackTraceString(),new list<String>{userinfo.getUserEmail(),'biztech@monday.com','alonse@monday.com'}); 
-            throw new AuraHandledException(e.getMessage() + '\n' + e.getStackTraceString());
+            return null;
         }
-
    }
 
     @AuraEnabled
@@ -184,6 +194,16 @@ public without sharing class OpportunityForecastCTRL {
             else {
                 System.debug('Message: ' + ex.getMessage());
             }
+        }
+    }
+
+    private class updateOppQueueable implements System.Queueable {
+        private List<Opportunity> oppsToUpdateList; 
+        public updateOppQueueable(List<Opportunity> oppsToUpdateList) {
+            this.oppsToUpdateList = oppsToUpdateList;
+        }
+        public void execute(System.QueueableContext ctx) {
+            Utilities.updateAndRetry(oppsToUpdateList);
         }
     }
 }
