@@ -22,7 +22,7 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
             salesUsersQuotas.put(lq.User__c, lq);
         }
         List<Partner_Region__c> partnerRegionsToUpdate = new List<Partner_Region__c>();
-        List<Partner_Region__c> allpartnerRegions= [SELECT Id,Current_Daily_Leads_Quota__c, Daily_Leads_Quota__c, Main_User__c, Country__c FROM Partner_Region__c WHERE Main_User__c != NULL];
+        List<Partner_Region__c> allpartnerRegions= [SELECT Id,Current_Daily_Leads_Quota__c, Daily_Leads_Quota__c, Main_User__c, Country__c FROM Partner_Region__c WHERE Main_User__c != NULL AND Daily_Leads_Quota__c > 0];
         for(Partner_Region__c pr: allpartnerRegions){
             if(pr.Current_Daily_Leads_Quota__c > 0){
                 partnerRegionsToUpdate.add(new Partner_Region__c(Id = pr.Id, Current_Daily_Leads_Quota__c = 0));
