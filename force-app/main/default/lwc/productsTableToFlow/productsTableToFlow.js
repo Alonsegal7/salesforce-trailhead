@@ -69,6 +69,7 @@ export default class ProductsTableToFlow extends LightningElement {
     @api quantityColumnWidth;
     @api discountColumnWidth;
     @api totalColumnWidth;
+    @api submitAsPromise='false';
     tableErrors = { rows: {}, table: {} };
     data;
     listOfDrafts = [];
@@ -233,7 +234,7 @@ export default class ProductsTableToFlow extends LightningElement {
             this.currStateData=null;//if pricing version or currency is different then current forecast, refersh table data
             this.currentContractCoreProductQty=0;
         }
-        if (this.shouldRunCallout==true) {
+        if (this.shouldRunCallout==true && this.tierSelection!=null && this.oppCurrentCrrncy!=null && this.oppCurrentPriVersion!=null ) {
             this.defineDealhubProductRequest(this.tierSelection,this.oppCurrentCrrncy,this.oppCurrentPriVersion);
         }
         else{
@@ -243,6 +244,7 @@ export default class ProductsTableToFlow extends LightningElement {
 
 
     setTableValues(){
+        if (this.context==undefined ) return;
         console.log('set values');
         this.data =this.context=='quote' ? this.jsonSkusData : JSON.parse(this.jsonSkusData).skus;//Parse dealhub api response TODO - handle psor flow (on psor flow, api handled by the flow)
         this.data.forEach(entity => { //set values on load (also if we have exiting data, to allow additional products, init all data all the time)
@@ -526,30 +528,62 @@ export default class ProductsTableToFlow extends LightningElement {
                 }
             
                 if(this.context=='quote'){
-                    try {
-                        insertForecastQuote( {oppId: this.oppData.id, productsData: JSON.stringify(this.productsToInsert), tier: this.tierSelection, contractType: this.ContractTypeVal});
-                        this.calculateProductsPricing(this.listOfDrafts);//Calculate pricing again 
-                        this.handledByCurrencyChangeProcess=false;
-                        this.dispatchEvent(
-                            new ShowToastEvent({
-                                title: 'Success!',
-                                message: '💰Forecast Submitted Successfully💰 (It might take a few seconds until the opportunity is updated)',
-                                variant: 'success',
-                            }),
-                        );
-                        this.isLoading=false;
-
-                    } catch (error) {
-                        this.validateSubmit==true
-                        this.isLoading=false;
-                        this.dispatchEvent(
-                            new ShowToastEvent({
-                                title: 'Products Error - Please contact BizOps ',
-                                message: error.body.message,
-                                variant: 'error',
-                            }),
-                        );
+                    if (this.submitAsPromise=='false') {
+                        try {
+                            insertForecastQuote( {oppId: this.oppData.id, productsData: JSON.stringify(this.productsToInsert), tier: this.tierSelection, contractType: this.ContractTypeVal});
+                            this.calculateProductsPricing(this.listOfDrafts);//Calculate pricing again 
+                            this.handledByCurrencyChangeProcess=false;
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Success!',
+                                    message: '💰Forecast Submitted Successfully💰 (It might take a few seconds until the opportunity is updated)',
+                                    variant: 'success',
+                                }),
+                            );
+                            this.isLoading=false;
+    
+                        } catch (error) {
+                            this.validateSubmit==true
+                            this.isLoading=false;
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Products Error - Please contact BizOps ',
+                                    message: error.body.message,
+                                    variant: 'error',
+                                }),
+                            );
+                        }
                     }
+                    else{
+                        insertForecastQuote( {oppId: this.oppData.id, productsData: JSON.stringify(this.productsToInsert), tier: this.tierSelection, contractType: this.ContractTypeVal}).then((res)=>{
+                            console.log('inserting quote '+ this.oppCurrentCrrncy);
+                            if (res[0]!=null) {
+                                this.handledByCurrencyChangeProcess=false;
+                                this.calculateProductsPricing(this.listOfDrafts);//Calculate pricing again after quote was inserted
+                                this.syncedQuote=res[0].QuoteId;
+                                this.dispatchEvent(
+                                    new ShowToastEvent({
+                                        title: 'Success!',
+                                        message: '💰Forecast Updated Successfully💰',
+                                        variant: 'success',
+                                    }),
+                                );
+                            }
+                            
+                            this.isLoading=false;
+                        }).catch(error => {
+                            this.validateSubmit==true
+                            this.isLoading=false;
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Products Error - Please contact BizOps ',
+                                    message: error.body.message,
+                                    variant: 'error',
+                                }),
+                            );
+                        }); 
+                    }
+
                 }
             }
         }, '0202');
@@ -782,7 +816,7 @@ export default class ProductsTableToFlow extends LightningElement {
         this.isLoading=true;
         try {
             let priceRes = await getPricesFromDealhub({tier: null, crrncyCode: crrncyCode, pricingVersion: "V"+pricingVersion, skusList: null });//send request to dh
-            if(priceRes!=null){
+            if(priceRes!=null && this.context!=undefined){
                 this.productPricingObject=priceRes;
                 this.setProductsTableOutput(tier,this.isEligableForProducts(pricingVersion),this.productPricingObject);
             }
