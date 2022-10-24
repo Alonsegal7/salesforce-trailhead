@@ -109,10 +109,18 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
 
     public static void partnerRegionDailyQuotaChanged(List<Partner_Region__c> prNew, Map<Id, Partner_Region__c> prOldMap){
 
-        Set<Id> relevantOwners = new Set<Id>();
-        List<String> dailyLeadQuotaChangedToZero = new  List<String>();
-        Map<String, LeanData__Round_Robin_Setting__c> mapOfReleventRRS = new Map<String, LeanData__Round_Robin_Setting__c>();
 
+        //Store all the relevant PR Ids in order to pull later using soql
+        Set<Id> relevantOwners = new Set<Id>();
+
+        //List of all PR_MAIN_USER+COUNTRY where daily lead qouta changed to 0
+        List<String> dailyLeadQuotaChangedToZero = new  List<String>();
+
+        //Map of <PR_MAIN_USER+COUNTRY, RRS> 
+        Map<String, LeanData__Round_Robin_Setting__c> mapOfReleventRRS = new Map<String, LeanData__Round_Robin_Setting__c>(); 
+
+
+        //Find all the PR where Daily_Leads_Quota__c changd to 0 and add to dailyLeadQuotaChangedToZero list and add to relevantOwners set
         for(Partner_Region__c pr: prNew){
             if(prOldMap.containsKey(pr.Id)){
                 if(prOldMap.get(pr.Id).Daily_Leads_Quota__c > 0 && pr.Daily_Leads_Quota__c == 0){
@@ -125,6 +133,8 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
 
 
         List<LeanData__Round_Robin_Setting__c> releventRRSlist = [SELECT Id, LeanData__Pool__r.LeanData__Grouping_Name__c, LeanData__OwnerId__c, LeanData__Pool__r.Country__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c IN: relevantOwners];
+        
+        //Will store the List of all RRS thats needs to set to unavilable
         List<LeanData__Round_Robin_Setting__c> rrsToUnavialbe = new List<LeanData__Round_Robin_Setting__c>();
 
         for(LeanData__Round_Robin_Setting__c rrs : releventRRSlist){
@@ -132,6 +142,7 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
         }
 
 
+        //loop through all relevant RRS where the PR was changed to zero and status needs to be set to unavilable 
         for(String prIdCountry :dailyLeadQuotaChangedToZero){
             if(mapOfReleventRRS.containsKey(prIdCountry)){
                 rrsToUnavialbe.add(new LeanData__Round_Robin_Setting__c(
