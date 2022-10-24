@@ -145,8 +145,7 @@ public without sharing class LeanData_PoolSettingsTest {
         Test.startTest();
         partnerRegion.Daily_Leads_Quota__c = 0;
         partnerRegion3.Daily_Leads_Quota__c = 7;
-        update partnerRegion;
-        update partnerRegion3;
+        update new List<Partner_Region__c>{partnerRegion, partnerRegion3};
         Test.stopTest();
 
         LeanData__Round_Robin_Setting__c getRRS = [SELECT Id, LeanData__OwnerId__c, LeanData__Grouping_Name__c, LeanData__Pool__c, LeanData__Pool__r.Country__c, LeanData__Status__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c = :partnerRegion.Main_User__c AND LeanData__Pool__r.Country__c = :partnerRegion.Country__c];
