@@ -11,10 +11,10 @@
         <target>lightningCommunity__Default</target>
 
     </targets>
-
+    
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="jsonSkusData" type="String" label="dealhu API JSON" 
+            <property name="jsonSkusData" type="String" label="dealhu API JSON" role="inputOnly"
             description="the JSON file returned from dealhub via APIb"/>
             <propertyType name="T" extends="SObject" label="Product Table" description="Plesae make sure to add only the Product list from the product get records" />
             <property label="Products List" name="Products" role="inputOnly" type="{T[]}" />
@@ -32,6 +32,8 @@
             description="The context of this component - if it is PartnerSOR, it will create SOR records if it is quote, it will create quote and line items. make sure to send the parent id (SOR or Opportuinty) at the ParentId input field"/>
             <property name="contractId" type="String" label="Account Current Contract Id" 
             description="In case of pro-rated"/>
+            <property name="submitAsPromise" type="Boolean" label="submit As Promise (for quotes only)" 
+            description="If you want the quote creation by flow to wait untill the quote created - set true"/>
             <property name="productColumnWidth" type="String" label="Product Column Width" 
             description="The Product Column Width"/>
             <property name="unitPriceColumnWidth" type="Integer" label="Unit Price Column Width" 
