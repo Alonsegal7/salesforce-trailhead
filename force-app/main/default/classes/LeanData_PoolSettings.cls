@@ -1,5 +1,5 @@
 public without sharing class LeanData_PoolSettings implements Schedulable{
-    
+
     public void execute(SchedulableContext sc) {
         resetCaps();
     }
@@ -116,9 +116,9 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
         //List of all PR_MAIN_USER+COUNTRY where daily lead qouta changed to 0
         List<String> dailyLeadQuotaChangedToZero = new  List<String>();
 
-        //Map of <PR_MAIN_USER+COUNTRY, RRS> 
-        Map<String, LeanData__Round_Robin_Setting__c> mapOfReleventRRS = new Map<String, LeanData__Round_Robin_Setting__c>(); 
+        List<Partner_Region__c> dailyLeadQuotaChangedFromZero= new List<Partner_Region__c>();
 
+        Set<String> setOfCountries = new Set<String>();
 
         //Find all the PR where Daily_Leads_Quota__c changd to 0 and add to dailyLeadQuotaChangedToZero list and add to relevantOwners set
         for(Partner_Region__c pr: prNew){
@@ -127,30 +127,72 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
                     dailyLeadQuotaChangedToZero.add((String)pr.Main_User__c+pr.Country__c);
                     relevantOwners.add(pr.Main_User__c);
                 }
+                else if((prOldMap == null && pr.Daily_Leads_Quota__c > 0 )||(prOldMap != null && pr.Daily_Leads_Quota__c > 0 && prOldMap.get(pr.Id).Daily_Leads_Quota__c == 0)){
+
+                    dailyLeadQuotaChangedFromZero.add(pr);
+                    setOfCountries.add(pr.Country__c);
+                }                
         }
 
+        if(!dailyLeadQuotaChangedFromZero.isEmpty()){
 
-        List<LeanData__Round_Robin_Setting__c> releventRRSlist = [SELECT Id, LeanData__Pool__r.LeanData__Grouping_Name__c, LeanData__OwnerId__c, LeanData__Pool__r.Country__c, LeanData__Inactive_Reason__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c IN: relevantOwners];
-        
-        //Will store the List of all RRS thats needs to set to unavilable
-        List<LeanData__Round_Robin_Setting__c> rrsToUnavailable = new List<LeanData__Round_Robin_Setting__c>();
+            List<LeanData__Round_Robin_Pool__c> allLeanDataPools = [SELECT Id ,Country__c  FROM LeanData__Round_Robin_Pool__c WHERE Country__c IN :setOfCountries];
+            Map<String, List<LeanData__Round_Robin_Pool__c>> poolsByCountry =  new Map<String, List<LeanData__Round_Robin_Pool__c>>();
 
-        for(LeanData__Round_Robin_Setting__c rrs : releventRRSlist){
-            mapOfReleventRRS.put((String)rrs.LeanData__OwnerId__c+rrs.LeanData__Pool__r.Country__c, rrs);
-        }
+            //List of all PR_MAIN_USER+COUNTRY where daily lead qouta changed to >0
+            List<LeanData__Round_Robin_Setting__c> rrsToInsert = new  List<LeanData__Round_Robin_Setting__c>();
+
+            for(LeanData__Round_Robin_Pool__c pl : allLeanDataPools){
+                if(poolsByCountry.containsKey(pl.Country__c)){
+                    poolsByCountry.get(pl.Country__c).add(pl);
+                }else{
+                    poolsByCountry.put(pl.Country__c, new List<LeanData__Round_Robin_Pool__c>{pl});
+                }
+            }
+
+            for(Partner_Region__c pr : dailyLeadQuotaChangedFromZero){
+                if(poolsByCountry.containsKey(pr.Country__c)){
+                    for(LeanData__Round_Robin_Pool__c rrp : poolsByCountry.get(pr.Country__c)){
+                        rrsToInsert.add(new LeanData__Round_Robin_Setting__c(
+                            // Name = 'a3e5t00000088mo',
+                            LeanData__Pool__c = rrp.Id,
+                            LeanData__OwnerId__c = pr.Main_User__c,
+                            LeanData__Status__c = 'Available'
+                        ));
+                    }
+                }
+            }
 
 
-        //loop through all relevant RRS where the PR was changed to zero and status needs to be set to unavilable 
-        for(String prIdCountry :dailyLeadQuotaChangedToZero){
-            if(mapOfReleventRRS.containsKey(prIdCountry)){
-                rrsToUnavailable.add(new LeanData__Round_Robin_Setting__c(
-                    Id=mapOfReleventRRS.get(prIdCountry).Id,
-                    LeanData__Status__c='Unavailable',
-                    LeanData__Inactive_Reason__c = 'Daily lead quota changed to zero.'
-                ));
+            if(!rrsToInsert.isEmpty()){
+                insert rrsToInsert;
             }
         }
 
-        update rrsToUnavailable;
+        if(!dailyLeadQuotaChangedToZero.isEmpty()){
+            
+            List<LeanData__Round_Robin_Setting__c> releventRRSlist = [SELECT Id, LeanData__Pool__r.LeanData__Grouping_Name__c, LeanData__OwnerId__c, LeanData__Pool__r.Country__c, LeanData__Inactive_Reason__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c IN: relevantOwners];
+            
+            //Map of <PR_MAIN_USER+COUNTRY, RRS> 
+            Map<String, LeanData__Round_Robin_Setting__c> mapOfReleventRRS = new Map<String, LeanData__Round_Robin_Setting__c>(); 
+        
+            //Will store the List of all RRS thats needs to set to unavilable
+            List<LeanData__Round_Robin_Setting__c> rrsToUnavailable = new List<LeanData__Round_Robin_Setting__c>();
+    
+            for(LeanData__Round_Robin_Setting__c rrs : releventRRSlist){
+                mapOfReleventRRS.put((String)rrs.LeanData__OwnerId__c+rrs.LeanData__Pool__r.Country__c, rrs);
+            }
+    
+            //loop through all relevant RRS where the PR was changed to zero then add the RRS id to the list and delete from the DB
+            for(String prIdCountry :dailyLeadQuotaChangedToZero){
+                if(mapOfReleventRRS.containsKey(prIdCountry)){
+                    rrsToUnavailable.add(mapOfReleventRRS.get(prIdCountry));
+                }
+            }
+    
+            delete rrsToUnavailable;
+        }
+
+
     }
 }
