@@ -14,6 +14,7 @@ public without sharing class LeanData_PoolSettingsTest {
         Partner_Region__c partnerRegion = new Partner_Region__c(Name='test (Spain)', Country__c = 'ES', Partner_Company__c = partnerCompany.Id, Partner_Country_Quota__c=pcq.Id, Main_User__c = partnerUser.Id, Daily_Leads_Quota__c = 15, Current_Daily_Leads_Quota__c = 10);
         Partner_Region__c partnerRegion2 = new Partner_Region__c(Name='test (Brazil)', Country__c = 'BR', Partner_Company__c = partnerCompany.Id, Partner_Country_Quota__c=pcq.Id, Main_User__c = partnerUser.Id, Daily_Leads_Quota__c = 10, Current_Daily_Leads_Quota__c = 2);
         Partner_Region__c partnerRegion3 = new Partner_Region__c(Name='test (France)', Country__c = 'FR', Partner_Company__c = partnerCompany.Id, Partner_Country_Quota__c=pcq.Id, Main_User__c = partnerUser.Id, Daily_Leads_Quota__c = 10, Current_Daily_Leads_Quota__c = 2);
+        Partner_Region__c partnerRegion3 = new Partner_Region__c(Name='test (Israel)', Country__c = 'IL', Partner_Company__c = partnerCompany.Id, Partner_Country_Quota__c=pcq.Id, Main_User__c = partnerUser.Id, Daily_Leads_Quota__c = 0, Current_Daily_Leads_Quota__c = 0);
         insert new List<Partner_Region__c>{partnerRegion, partnerRegion2, partnerRegion3};
         Lead_Quota__c lq1 = new Lead_Quota__c(Current_Sign_Up_Quota__c = 5, Sign_Up_Daily_Quota__c = 10, User__c = salesUser1.Id, Name = 'a3e5t00000088a1');
         Lead_Quota__c lq2 = new Lead_Quota__c(Current_Sign_Up_Quota__c = 15, Sign_Up_Daily_Quota__c = 2, User__c = salesUser2.Id, Name = 'a3e5t00000088a2');
@@ -21,6 +22,8 @@ public without sharing class LeanData_PoolSettingsTest {
         LeanData__Round_Robin_Pool__c rrPoolES = new LeanData__Round_Robin_Pool__c(Name = 'a3b5t0000005CYm', LeanData__Grouping_Name__c = 'S&P-ES-FR-MM', LeanData__Object_Type__c = 'Lead', Country__c = 'ES');
         LeanData__Round_Robin_Pool__c rrPoolBR = new LeanData__Round_Robin_Pool__c(Name = 'a3b5t0000005CYn', LeanData__Grouping_Name__c = 'S&P-BR-MM', LeanData__Object_Type__c = 'Lead', Country__c = 'BR');
         LeanData__Round_Robin_Pool__c rrPoolFR = new LeanData__Round_Robin_Pool__c(Name = 'a3b5t0000005CYo', LeanData__Grouping_Name__c = 'S&P-FR-MM', LeanData__Object_Type__c = 'Lead', Country__c = 'FR');
+        LeanData__Round_Robin_Pool__c rrPoolIL1 = new LeanData__Round_Robin_Pool__c(Name = 'a3b5t0000005CYa', LeanData__Grouping_Name__c = 'S&P-IL-MM', LeanData__Object_Type__c = 'Lead', Country__c = 'IL');
+        LeanData__Round_Robin_Pool__c rrPoolIL2 = new LeanData__Round_Robin_Pool__c(Name = 'a3b5t0000005CYb', LeanData__Grouping_Name__c = 'S&P-IL-ENT', LeanData__Object_Type__c = 'Lead', Country__c = 'IL');
         insert new List<LeanData__Round_Robin_Pool__c>{rrPoolBR, rrPoolES, rrPoolFR};
         LeanData__Round_Robin_Setting__c rrSettingPartnerES = new LeanData__Round_Robin_Setting__c(Name = 'a3e5t00000088mo', LeanData__Pool__c = rrPoolES.Id, LeanData__OwnerId__c = partnerUser.Id, LeanData__Status__c = 'Unavailable');
         LeanData__Round_Robin_Setting__c rrSettingPartnerBR = new LeanData__Round_Robin_Setting__c(Name = 'a3e5t00000088mq', LeanData__Pool__c = rrPoolBR.Id, LeanData__OwnerId__c = partnerUser.Id, LeanData__Status__c = 'Available');
@@ -135,7 +138,7 @@ public without sharing class LeanData_PoolSettingsTest {
     }
 
     @isTest
-    static void prDailyQuotaChanged(){
+    static void prDailyQuotaChangedToZeroShouldDeleteRRS(){
         Partner_Region__c partnerRegion = [SELECT Id, Country__c, Main_User__c FROM Partner_Region__c WHERE Name='test (Brazil)'];
         LeanData__Round_Robin_Setting__c getRRSBefore = [SELECT Id, LeanData__OwnerId__c, LeanData__Grouping_Name__c, LeanData__Pool__c, LeanData__Pool__r.Country__c, LeanData__Status__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c = :partnerRegion.Main_User__c AND LeanData__Pool__r.Country__c = :partnerRegion.Country__c ];
         
@@ -148,10 +151,25 @@ public without sharing class LeanData_PoolSettingsTest {
         update new List<Partner_Region__c>{partnerRegion, partnerRegion3};
         Test.stopTest();
 
-        LeanData__Round_Robin_Setting__c getRRS = [SELECT Id, LeanData__OwnerId__c, LeanData__Grouping_Name__c, LeanData__Pool__c, LeanData__Pool__r.Country__c, LeanData__Status__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c = :partnerRegion.Main_User__c AND LeanData__Pool__r.Country__c = :partnerRegion.Country__c];
+        Integer getRRSCountBR = [SELECT COUNT(Id) FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c = :partnerRegion.Main_User__c AND LeanData__Pool__r.Country__c = :partnerRegion.Country__c];
         LeanData__Round_Robin_Setting__c getRRSFR = [SELECT Id, LeanData__OwnerId__c, LeanData__Grouping_Name__c, LeanData__Pool__c, LeanData__Pool__r.Country__c, LeanData__Status__c FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c = :partnerRegion3.Main_User__c AND LeanData__Pool__r.Country__c = :partnerRegion3.Country__c];
 
-        System.assertEquals('Unavailable', getRRS.LeanData__Status__c);
+        System.assertEquals(0, getRRSCountBR);
         System.assertEquals('Available', getRRSFR.LeanData__Status__c);
     }
+
+    @isTest
+    static void prDailyQuotaChangedFromZeroShouldCreateRRS(){
+        Partner_Region__c partnerRegion = [SELECT Id, Country__c, Main_User__c FROM Partner_Region__c WHERE Name='test (Israel)'];
+        System.assertEquals(0, [SELECT COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c = :partnerRegion.Main_User__c AND LeanData__Pool__r.Country__c = :partnerRegion.Country__c]);
+        
+        Test.startTest();
+        partnerRegion.Daily_Leads_Quota__c = 5;
+        update new List<Partner_Region__c>{partnerRegion};
+        Test.stopTest();
+
+        Integer countRRS = [SELECT COUNT(Id) FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c = :partnerRegion.Main_User__c AND LeanData__Pool__r.Country__c = :partnerRegion.Country__c AND LeanData__Status__c = 'Available'];
+        System.assertEquals(2, countRRS);
+    }
+
 }
