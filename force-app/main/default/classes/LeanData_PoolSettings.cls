@@ -68,12 +68,6 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
         update RRSToUpdate;
         update leadQuotasToUpdate;
         update partnerRegionsToUpdate;
-        
-        if (!usersWithRRSWithoutQuota.isEmpty()) {
-            for (Id userId : usersWithRRSWithoutQuota) {
-                Utilities.sendSlackMessage('Error in LeanData_PoolSettings - resetCaps service wasnt able locate user from RRS', 'biz-tech-monitoring', null , null, 'Found a user with RRS without lead cap ' + userId, null, null);
-            }
-        }
     }
 
     public static void partnerRegionMainUserChangedUpdatePoolSetting(List<Partner_Region__c> prNew, Map<Id, Partner_Region__c> prOldMap) {
