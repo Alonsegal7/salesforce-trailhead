@@ -138,7 +138,7 @@ public without sharing class LeanData_PoolSettingsTest {
         // LeanData__Round_Robin_Setting__c rrSettingES = [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser2.id];
         // LeanData__Round_Robin_Setting__c rrSettingBR = [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser1.id];
         System.assertEquals(1 , [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser2.id]);
-        System.assertEquals(1,  [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser1.id]); //check that the owner wasn't changed on a different pool user1 was assigned to
+        System.assertEquals(2,  [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser1.id]); //check that the owner wasn't changed on a different pool user1 was assigned to
     }
 
     @isTest
