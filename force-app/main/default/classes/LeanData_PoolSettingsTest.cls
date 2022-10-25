@@ -128,17 +128,15 @@ public without sharing class LeanData_PoolSettingsTest {
         User partnerUser1 = [SELECT Id FROM User WHERE Email='demo1@randomdemodomain.com'];
         User partnerUser2 = new User(ContactId = con.Id, Alias='standt2', ManagerId=manager2.Id, Country='United Kingdom',Email='demo2@randomdemodomain.com',EmailEncodingKey='UTF-8', LastName='Testing2', LanguageLocaleKey='en_US',LocaleSidKey='en_US',ProfileId = p.Id,TimeZoneSidKey='America/Los_Angeles', UserName='testing1231@monday.com');
         insert partnerUser2;
-        Partner_Region__c partnerRegion = [SELECT Id FROM Partner_Region__c WHERE Name = 'test (Spain)'];
+        Partner_Region__c partnerRegion = [SELECT Id, Country__c FROM Partner_Region__c WHERE Name = 'test (Spain)'];
 
         Test.startTest();
         partnerRegion.Main_User__c = partnerUser2.Id;
         update partnerRegion;
         Test.stopTest();
 
-        // LeanData__Round_Robin_Setting__c rrSettingES = [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser2.id];
-        // LeanData__Round_Robin_Setting__c rrSettingBR = [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser1.id];
-        System.assertEquals(1 , [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser2.id]);
-        System.assertEquals(2,  [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser1.id]); //check that the owner wasn't changed on a different pool user1 was assigned to
+        System.assertEquals(0,  [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser1.id AND LeanData__Pool__r.Country__c =: partnerRegion.Country__c]); //check that the owner wasn't changed on a different pool user1 was assigned to
+        System.assertEquals(1 , [SELECT  COUNT() FROM LeanData__Round_Robin_Setting__c WHERE LeanData__OwnerId__c =  :partnerUser2.id AND LeanData__Pool__r.Country__c =: partnerRegion.Country__c]);
     }
 
     @isTest
