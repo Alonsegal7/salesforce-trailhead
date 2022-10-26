@@ -72,14 +72,7 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
                 pr.Current_Daily_Leads_Quota__c = 0;
             }
             partnerRegionsToUpdate.addAll(PRsWithZeroQuotaAndNonZeroCap);
-        }
-        List<Lead_Quota__c> LQsWithZeroQuotaAndNonZeroCap = [SELECT Id, Current_Sign_Up_Quota__c FROM Lead_Quota__c WHERE Current_Sign_Up_Quota__c > 0 AND Sign_Up_Daily_Quota__c = 0];
-        if (!LQsWithZeroQuotaAndNonZeroCap.isEmpty()) {
-            for (Lead_Quota__c lq : LQsWithZeroQuotaAndNonZeroCap) {
-                lq.Current_Sign_Up_Quota__c = 0;
-            }
-            leadQuotasToUpdate.addAll(LQsWithZeroQuotaAndNonZeroCap);
-        }
+        }        
         update RRSToUpdate;
         update leadQuotasToUpdate;
         update partnerRegionsToUpdate;
