@@ -62,7 +62,7 @@ global with sharing class LeanDataCustomInterface extends LeanData.CustomInterfa
 
 			//SOQL once per batch slice
 			if(partnerRegions == null){
-				partnerRegions = [SELECT Id, Name, Partner_Company__c, Country__c, Main_User__c, Daily_Leads_Quota__c, Current_Daily_Leads_Quota__c, Main_User_Email__c, Partner_Country_Quota__c, Current_Country_Daily_Quota__c, Partner_Country_Quota__r.Total_Country_Cap_For_Partners__c, Country_Quota_Type__c, Partner_Company__r.Region__c FROM Partner_Region__c];
+				partnerRegions = [SELECT Id, Name, Partner_Company__c, Country__c, Main_User__c, Daily_Leads_Quota__c, Current_Daily_Leads_Quota__c, Main_User_Email__c, Partner_Country_Quota__c, Current_Country_Daily_Quota__c, Partner_Country_Quota__r.Total_Country_Cap_For_Partners__c, Country_Quota_Type__c, Partner_Company__r.Region__c FROM Partner_Region__c WHERE Daily_Leads_Quota__c > 0];
 				
 				for(Partner_Region__c pr : partnerRegions){
 					String userPartner = (String)pr.Main_User__c + pr.Country__c;
