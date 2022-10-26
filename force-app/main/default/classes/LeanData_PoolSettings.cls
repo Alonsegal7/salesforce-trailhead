@@ -65,6 +65,21 @@ public without sharing class LeanData_PoolSettings implements Schedulable{
                 usersWithRRSWithoutQuota.add(rrs.LeanData__User_Owner__c);
             }
         }
+        //Part 3 - check if there are PRs/LQs with 0 quota and nonzero cap, reset those as well
+        List<Partner_Region__c> PRsWithZeroQuotaAndNonZeroCap = [SELECT Id, Current_Daily_Leads_Quota__c FROM Partner_Region__c WHERE Daily_Leads_Quota__c = 0 AND Current_Daily_Leads_Quota__c > 0];
+        if (PRsWithZeroQuotaAndNonZeroCap != null) {
+            for (Partner_Region__c pr : PRsWithZeroQuotaAndNonZeroCap) {
+                pr.Current_Daily_Leads_Quota__c = 0;
+            }
+            partnerRegionsToUpdate.addAll(PRsWithZeroQuotaAndNonZeroCap);
+        }
+        List<Lead_Quota__c> LQsWithZeroQuotaAndNonZeroCap = [SELECT Id, Current_Sign_Up_Quota__c FROM Lead_Quota__c WHERE Current_Sign_Up_Quota__c > 0 AND Sign_Up_Daily_Quota__c = 0];
+        if (!LQsWithZeroQuotaAndNonZeroCap.isEmpty()) {
+            for (Lead_Quota__c lq : LQsWithZeroQuotaAndNonZeroCap) {
+                lq.Current_Sign_Up_Quota__c = 0;
+            }
+            leadQuotasToUpdate.addAll(LQsWithZeroQuotaAndNonZeroCap);
+        }
         update RRSToUpdate;
         update leadQuotasToUpdate;
         update partnerRegionsToUpdate;
