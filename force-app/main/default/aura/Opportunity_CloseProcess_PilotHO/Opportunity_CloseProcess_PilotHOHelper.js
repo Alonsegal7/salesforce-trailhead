@@ -12,6 +12,7 @@
             if (state == "SUCCESS") {
 				console.log('opp close proc ho: callback_closedStageSelected SUCCESS');
                 var storeResponse = response.getReturnValue();
+				console.log('Line 15 ' , storeResponse );
 				if (storeResponse != null){
                     storeResponse = JSON.parse(storeResponse);
 					if (storeResponse.hasOwnProperty('opportunity')){

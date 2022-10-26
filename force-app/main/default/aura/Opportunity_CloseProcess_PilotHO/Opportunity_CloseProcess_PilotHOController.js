@@ -59,6 +59,26 @@
     //helper.callback_saveManualFields(component, event, helper);
   },
 
+  checkPostiveNegativeOtherFeedback: function (component, event, helper) {
+    var value = event.getParam("value");
+
+    if(event.getSource().get("v.fieldName") == 'Deal_Enablers_1__c'){
+      if(value == 'Other'){
+        component.set('v.showPostiveFeedbackOther', true);
+      }else{
+        component.set('v.showPostiveFeedbackOther', false);
+      }
+    }
+
+    if(event.getSource().get("v.fieldName") == 'Deal_Blockers_1__c'){
+      if(value == 'Other'){
+        component.set('v.showNegativeFeedbackOther', true);
+      }else{
+        component.set('v.showNegativeFeedbackOther', false);
+      }
+    }
+  },
+
   handleStatusChange_Handover: function (component, event, helper) {
     if (event.getParam("status") === "FINISHED") {
       helper.callback_closeOpp(component, event, helper, "Closed Won");
