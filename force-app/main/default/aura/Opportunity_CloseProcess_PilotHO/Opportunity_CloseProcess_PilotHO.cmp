@@ -33,6 +33,10 @@
   <aura:attribute name="filetype" type="List" default="['.png', '.jpg', '.jpeg', '.pdf']" />
   <aura:attribute name="multiple" type="Boolean" default="true" />
   <aura:attribute name="disabled" type="Boolean" default="true" />
+
+  <aura:attribute name="showNegativeFeedbackOther" type="Boolean" default="true" />
+  <aura:attribute name="showPostiveFeedbackOther" type="Boolean" default="true" />
+  
   <!--File upload improved attributes-->
   <lightning:quickActionAPI aura:id="quickActionAPI" />
   <lightning:notificationsLibrary aura:id="notifLib" />
@@ -311,6 +315,17 @@
                               <lightning:inputField rendered="" variant="label-stacked" required="{!field.required}" fieldName="{!field.fieldPath}" />
                             </div>
                           </aura:if>
+    
+                           <!-- Addd logic to check if the filed api is postive feedbacl or negative and the current selection is other them show the new text box filed -->
+                           <div class="slds-col">
+                           <aura:if isTrue="{!v.showNegativeFeedbackOther}">
+                            <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Negative_Feedback_Other__c" required="true" value="{!v.Negative_Feedback_Other__c}" />
+                            </aura:if>
+                        
+                            <aura:if isTrue="{!v.showPostiveFeedbackOther}">
+                            <lightning:inputField aura:id="ClosedLostFieldCheck" fieldName="Positive_Feedback_Other__c" required="true" value="{!v.Positive_Feedback_Other__c}" />
+                            </aura:if>
+                          </div> 
                         </aura:iteration>
                       </div>
                       <div class="slds-col slds-grid slds-size_1-of-3 slds-wrap slds-grid_vertical-align-start slds-p-top--medium">
