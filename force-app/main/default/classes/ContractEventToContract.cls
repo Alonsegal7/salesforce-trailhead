@@ -25,7 +25,20 @@ public without sharing class ContractEventToContract {
         }
         //Now, insert the contract and assign the contract events to the created contract     
         if (!createdContsMap.isEmpty()) {
-            insert createdContsMap.values();
+            try {
+                insert createdContsMap.values();
+            } catch (Exception ex) {
+                if(ex.getMessage().containsIgnoreCase('UNABLE_TO_LOCK_ROW')) {
+                    try {
+                        insert createdContsMap.values();
+                    } catch (Exception e) {
+                        Utilities.sendDebugEmail('Error in ContractEventToContract - Insert contract values from map failed after retry on unable to lock row', e, e.getMessage());
+                    }
+                }
+                else {
+                    Utilities.sendDebugEmail('Error in ContractEventToContract - Insert contract values from map failed not unable to lock row ', ex, ex.getMessage());
+                }
+            }
             for (Id key : conEvents.keyset()) {
                 for (Contract_Event__c conEvnt : conEvents.get(key)) {
                     conProdMap.put(string.valueof(createdContsMap.get(key).Id) + string.valueof(conEvnt.Product__c),createContractProduct(conEvnt,createdContsMap.get(key)));
