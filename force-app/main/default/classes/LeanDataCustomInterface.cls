@@ -204,7 +204,7 @@ global with sharing class LeanDataCustomInterface extends LeanData.CustomInterfa
           'Colombia' => 'CO',
           'Costa Rica' => 'CR',
           'Cyprus' => 'CY',
-          'Czechia' => 'CZ',
+          'Czech Republic' => 'CZ',
           'Germany' => 'DE',
           'Denmark' => 'DK',
           'Ecuador' => 'EC',
