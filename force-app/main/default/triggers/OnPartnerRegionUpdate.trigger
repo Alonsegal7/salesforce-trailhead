@@ -6,5 +6,8 @@ trigger OnPartnerRegionUpdate on Partner_Region__c (after insert, after update, 
             LeanData_PoolSettings.partnerRegionMainUserChangedUpdatePoolSetting(trigger.new, trigger.oldMap);
             CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
         }
+        if(trigger.isUpdate || trigger.isInsert){
+            LeanData_PoolSettings.partnerRegionDailyQuotaChanged(trigger.new, trigger.oldMap);
+        }
     }
 }
