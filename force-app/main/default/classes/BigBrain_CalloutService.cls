@@ -13,7 +13,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         scheduled job - you need to set the batch size, start query limit and sobject type in the constructor
         BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 500, 'Opportunity');
         String sch = '0 15 * * * ?';
-        system.schedule('test schedule BigBrain_CalloutService', sch, p);
+        system.schedule('Sync Opps to BB', sch, p1);
 
         single batch - you need to set the start query limit and sobject type in the constructor and batch size in the execute
         BigBrain_CalloutService p2 = new BigBrain_CalloutService(200, 'Account');   
@@ -50,7 +50,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
         get {
             if (bigBrainCalloutControl_cmt == null) {
                 bigBrainCalloutControl_cmt = new map<string,BigBrain_Callout_Control__mdt>();
-                for(BigBrain_Callout_Control__mdt cmt: [select id,DELETE__c,INSERT__c,UPDATE__c,Field_Set_Name__c,masterlabel from BigBrain_Callout_Control__mdt]){
+                for(BigBrain_Callout_Control__mdt cmt: [select id,DELETE__c,INSERT__c,UPDATE__c,Field_Set_Name__c,Field_Set_Name_RealTime__c,masterlabel from BigBrain_Callout_Control__mdt]){
                     bigBrainCalloutControl_cmt.put(cmt.masterlabel.tolowercase(), cmt);
                 }
             }
@@ -177,6 +177,7 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
     // it runs an update DML if called from after trigger
     public static list <sobject> markRecordsToSync(list <sobject> sobject_list, map <id,sobject> sobject_oldmap, Boolean runUpdateDML){
         list <sobject> recordsToUpdate_list = new list <sobject>();
+        list <sobject> recordsToUpdate_list_RealTime = new list <sobject>();
         for (sobject rec : sobject_list){
             if(rec.get('Need_Sync_to_BB__c') == true || rec.get('Need_Sync_to_BB__c') == 'true') continue;
             string sobjectType = string.valueof(rec.getSObjectType());
@@ -192,34 +193,62 @@ public without sharing class BigBrain_CalloutService implements Database.Batchab
             if (cmt.UPDATE__c && sobject_oldmap!=null && cmt.Field_Set_Name__c==null){ //update w/o fieldsSet
                 recordsToUpdate_list.add(rec); 
             }
-            if (cmt.UPDATE__c && sobject_oldmap!=null && cmt.Field_Set_Name__c!=null && sobject_oldmap!=null && sobject_oldmap.containsKey(rec.id) && isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt)) { //update with fieldSet
-                recordsToUpdate_list.add(rec); 
-            }
+            
+            if (cmt.UPDATE__c && sobject_oldmap!=null && sobject_oldmap.containsKey(rec.id)){
+                    if(cmt.Field_Set_Name_RealTime__c!=null && isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt.Field_Set_Name_RealTime__c)){
+                        if(ApexLimits.queueableLimitReached()) { //if apex limit reached-> add the object to the list for update scheduled, else add to the real time list 
+                            recordsToUpdate_list.add(rec); 
+                        }
+                        else{
+                            recordsToUpdate_list_RealTime.add(rec); //limit has not reached->update the record in RT
+                        }
+                    }
+                    else if(cmt.Field_Set_Name__c!=null && isChangedByFieldSet(rec, sobjectType, sobject_oldmap.get(rec.id), cmt.Field_Set_Name__c)){ //if the recoed has no RT (thrtfore not yet updated), add the object to sync list 
+                        recordsToUpdate_list.add(rec); 
+                    }
+            }    
         }
-        if(!recordsToUpdate_list.isEmpty()){
+
+        if(!recordsToUpdate_list.isEmpty()){ //scheduled action - will be synced depends on the time interval 
             setNeedSyncToBB(recordsToUpdate_list, true, runUpdateDML); // runUpdateDML = Trigger.isAfter
+        }
+
+        if (!recordsToUpdate_list_RealTime.isEmpty()) { //real time action - send the object in real time to queue
+            System.enqueueJob(new sendCalloutToBBQueue(recordsToUpdate_list_RealTime));
         }
         return recordsToUpdate_list;
     }
 
     //method to check if the fields from fieldsSet were updated
     //field set name is taken from Field_Set_Name__c field on BigBrain_Callout_Control__mdt CMT by the sobject type
-    private static boolean isChangedByFieldSet(sobject rec, string sobjectType, sobject oldRec, BigBrain_Callout_Control__mdt cmt){
+    private static boolean isChangedByFieldSet(sobject rec, string sobjectType, sobject oldRec, String fsname){
         boolean res = false;
-        if (rec==null || sobjectType==null || oldRec==null) return res;
-        string fsname = null;
-        if (cmt!=null && cmt.Field_Set_Name__c!=null) fsname = cmt.Field_Set_Name__c;
-        else return res;
-        
+        if(fsname == null) return res;
         Schema.FieldSet fs = bigBrain_Callout_Objs_Describe.get(sobjectType).fieldSets.getMap().get(fsname);
-
-        if(fs != null){ //check if field from fieldSet was updated
+        if(fs != null){ 
             for(Schema.FieldSetMember fsm : fs.getFields()){
                 if (rec.get(fsm.getFieldPath()) != oldRec.get(fsm.getFieldPath())) { 
                     res = true; 
                 }  
-            } 
-        }
+            }
+        }        
         return res;
     }
 }
+
+//* Account Callout - Noam - for Scheduled:
+        // BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
+        // String sch = '0 10 * * * ?';
+        // system.schedule('Sync Opps to BB', sch, p1);
+
+        // BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
+        // String sch = '0 15 * * * ?';
+        // system.schedule('Sync Opps to BB', sch, p1);
+
+        // BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
+        // String sch = '0 30 * * * ?';
+        // system.schedule('Sync Opps to BB', sch, p1);
+
+        // BigBrain_CalloutService p1 = new BigBrain_CalloutService(20, 200, 'Account');
+        // String sch = '0 60 * * * ?';
+        // system.schedule('Sync Opps to BB', sch, p1);

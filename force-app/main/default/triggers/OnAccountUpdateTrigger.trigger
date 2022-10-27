@@ -65,7 +65,12 @@ trigger OnAccountUpdateTrigger on Account (before insert,before update,before de
         }
 
         if (Trigger.isDelete) CalloutHandler.HandleCallout (trigger.old,'Delete',null);
-        if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);
-        if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
+        //if (trigger.isInsert) CalloutHandler.HandleCallout (trigger.new,'Insert',null);
+        //if (trigger.IsUpdate) CalloutHandler.HandleCallout (trigger.new,'Update',trigger.oldmap);
     }
+    //BB Callout - for account 
+    if(Trigger.isInsert || Trigger.isUpdate) {
+        BigBrain_CalloutService.markRecordsToSync(Trigger.new, Trigger.oldMap, Trigger.isAfter);
+    }
+
 }
